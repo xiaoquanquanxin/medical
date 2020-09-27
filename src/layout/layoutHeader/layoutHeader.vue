@@ -1,16 +1,16 @@
 <template>
     <a-layout-header style="background: #fff; padding: 0">
         <a-row type="flex" justify="space-around" align="middle">
-            <a-col :span="2">
+            <a-col :sm="4" :md="2">
                 <a-icon
                         class="trigger"
                         :type="collapsed ? 'menu-unfold' : 'menu-fold'"
                         @click="() => (collapsed = !collapsed)"
                 />
             </a-col>
-            <a-col :span="22">
+            <a-col :sm="20" :md="22">
                 <a-row type="flex" justify="end">
-                    <a-col :span="4">
+                    <a-col :sm="8" :md="4">
                         <div>
                             <a-avatar :size="36" icon="user"/>
                             <a-dropdown>
@@ -32,13 +32,13 @@
                             </a-dropdown>
                         </div>
                     </a-col>
-                    <a-col :span="2">
+                    <a-col :sm="3" :md="2">
                         <a-badge count="0" show-zero>
                             <a-icon type="bell"/>
                             <a class="head-example"></a>
                         </a-badge>
                     </a-col>
-                    <a-col :span="2">
+                    <a-col :sm="3" :md="2">
                         关机
                     </a-col>
                 </a-row>
