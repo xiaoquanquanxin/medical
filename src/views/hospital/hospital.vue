@@ -45,6 +45,7 @@
                 :columns="columns"
                 :data-source="data"
                 :scroll="scroll"
+                :pagination="false"
         >
             <span slot="tags" slot-scope="tags">
                 <a-tag v-for="tag in tags"
@@ -54,6 +55,22 @@
                 </a-tag>
             </span>
         </a-table>
+        <a-row type="flex" justify="end" class="a-input-group">
+            <a-pagination
+                    v-model="pagination.current"
+                    :page-size-options="pagination.pageSizeOptions"
+                    :total="pagination.total"
+                    show-size-changer
+                    :page-size="pagination.pageSize"
+                    @showSizeChange="onShowSizeChange"
+                    @change="pageChange"
+            >
+                <template slot="buildOptionText" slot-scope="props">
+                    <span v-if="props.value !== '50'">{{ props.value }}条/页</span>
+                    <span v-if="props.value === '50'">全部</span>
+                </template>
+            </a-pagination>
+        </a-row>
     </div>
 </template>
 <script>
@@ -86,7 +103,7 @@
         },
     ];
     const data = [];
-    for (let i = 0; i < 46; i++) {
+    for (let i = 0; i < 10; i++) {
         data.push({
             key: i,
             hospital: `xx医院`,
@@ -107,6 +124,13 @@
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
                 scroll: {},
 
+                //  分页信息
+                pagination: {
+                    pageSizeOptions: ['10', '20', '30', '40', '50'],
+                    current: 1,
+                    pageSize: 10,
+                    total: 50,
+                }
             };
         },
         computed: {
@@ -115,21 +139,23 @@
             },
         },
         mounted(){
-            this.scroll = { x: 820, y: 'calc(100vh - 310px)' };
+            this.scroll = { x: 820, y: 'calc(100vh - 390px)' };
         },
         methods: {
-            start(){
-                this.loading = true;
-                // ajax request after empty completing
-                setTimeout(() => {
-                    this.loading = false;
-                    this.selectedRowKeys = [];
-                }, 1000);
-            },
             onSelectChange(selectedRowKeys){
                 console.log('selectedRowKeys changed: ', selectedRowKeys);
                 this.selectedRowKeys = selectedRowKeys;
             },
+
+            onShowSizeChange(current, pageSize){
+                console.log(current);
+                console.log(pageSize);
+                this.pagination.pageSize = pageSize;
+            },
+            pageChange(current, pageSize){
+                console.log(current);
+                console.log(pageSize);
+            }
         },
     };
 </script>
