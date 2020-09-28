@@ -24,7 +24,8 @@
 </script>
 <style lang="stylus">
     .layout-content
-        padding: 24px;
-        background: white;
-        max-height: calc(100vh - 50px - 64px);
+        padding 24px;
+        background white;
+        max-height calc(100vh - 50px - 64px);
+        overflow auto;
 </style>
