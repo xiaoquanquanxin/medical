@@ -37,8 +37,7 @@ router.beforeEach(async (to, from, next) => {
 	}
 	console.log('添加路由，元信息是');
 	console.log(to.meta);
-	await store.dispatch('sidebar/setOpenRouteKey', to.meta.openRouteKey);
-	await store.dispatch('sidebar/setSelectRouteKey', to.meta.selectRouteKey);
+	await store.dispatch('routeList/setCurrentMeta', to.meta);
 	console.log('设置被选中完成了');
 	next();
 })
