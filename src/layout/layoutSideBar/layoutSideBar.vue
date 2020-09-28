@@ -57,19 +57,19 @@
             },
             routes(){
                 const { routes } = this.$store.state.routeList;
-                console.log(TOJSON(routes));
+                //  console.log(TOJSON(routes));
                 return routes;
             },
             currentMeta(){
                 const { currentMeta } = this.$store.state.routeList;
-                console.log(TOJSON(currentMeta));
+                //  console.log(TOJSON(currentMeta));
                 return currentMeta;
             }
         },
         methods: {
             //	跳转
             jumpTo(item){
-                console.log(item.path);
+                //  console.log(item.path);
                 //  自己不跳转自己
                 if (this.$route.path === item.path) {
                     return;
