@@ -18,7 +18,7 @@ export const asyncRoutesList = [
 		},
 		path: '/hospital/newHospital',
 		name: 'newHospital',
-		component: () => import(/* webpackChunkName: "about" */ '@/views/hospital/newHospital.vue'),
+		component: () => import(/* webpackChunkName: "newHospital" */ '@/views/hospital/newHospital.vue'),
 		hidden: true
 	},
 	{
@@ -47,7 +47,7 @@ export const asyncRoutesList = [
 		},
 		path: '/doctor',
 		name: 'doctor',
-		component: () => import(/* webpackChunkName: "newDepartment" */ '@/views/doctor/doctor.vue'),
+		component: () => import(/* webpackChunkName: "doctor" */ '@/views/doctor/doctor.vue'),
 	},
 	{
 		meta: {
@@ -56,7 +56,7 @@ export const asyncRoutesList = [
 		},
 		path: '/doctor/newDoctor',
 		name: 'newDoctor',
-		component: () => import(/* webpackChunkName: "newDepartment" */ '@/views/doctor/newDoctor.vue'),
+		component: () => import(/* webpackChunkName: "newDoctor" */ '@/views/doctor/newDoctor.vue'),
 		hidden: true
 	},
 	{
@@ -66,7 +66,7 @@ export const asyncRoutesList = [
 		},
 		path: '/user',
 		name: 'user',
-		component: () => import(/* webpackChunkName: "userManagement" */ '@/views/user/user.vue'),
+		component: () => import(/* webpackChunkName: "user" */ '@/views/user/user.vue'),
 	},
 	{
 		meta: {
@@ -75,7 +75,7 @@ export const asyncRoutesList = [
 		},
 		path: '/user/newUser',
 		name: 'newUser',
-		component: () => import(/* webpackChunkName: "userManagement" */ '@/views/user/newUser.vue'),
+		component: () => import(/* webpackChunkName: "newUser" */ '@/views/user/newUser.vue'),
 		hidden: true,
 	},
 	{
@@ -85,7 +85,7 @@ export const asyncRoutesList = [
 		},
 		path: '/user/editUser/:id',
 		name: 'editUser',
-		component: () => import(/* webpackChunkName: "userManagement" */ '@/views/user/newUser.vue'),
+		component: () => import(/* webpackChunkName: "newUser" */ '@/views/user/newUser.vue'),
 		hidden: true,
 	},
 	{
@@ -95,7 +95,7 @@ export const asyncRoutesList = [
 		},
 		path: '/familyGroup',
 		name: 'familyGroup',
-		component: () => import(/* webpackChunkName: "userManagement" */ '@/views/familyGroup/familyGroup.vue'),
+		component: () => import(/* webpackChunkName: "familyGroup" */ '@/views/familyGroup/familyGroup.vue'),
 	},
 	{
 		meta: {
@@ -104,7 +104,7 @@ export const asyncRoutesList = [
 		},
 		path: '/familyGroup/newFamilyGroup',
 		name: 'newFamilyGroup',
-		component: () => import(/* webpackChunkName: "userManagement" */ '@/views/familyGroup/newFamilyGroup.vue'),
+		component: () => import(/* webpackChunkName: "newFamilyGroup" */ '@/views/familyGroup/newFamilyGroup.vue'),
 		hidden: true,
 	},
 	{
@@ -114,7 +114,7 @@ export const asyncRoutesList = [
 		},
 		path: '/companyInfo',
 		name: 'companyInfo',
-		component: () => import(/* webpackChunkName: "userManagement" */ '@/views/companyInfo/companyInfo.vue'),
+		component: () => import(/* webpackChunkName: "companyInfo" */ '@/views/companyInfo/companyInfo.vue'),
 	},
 	{
 		meta: {
@@ -123,7 +123,7 @@ export const asyncRoutesList = [
 		},
 		path: '/commodity',
 		name: 'commodity',
-		component: () => import(/* webpackChunkName: "userManagement" */ '@/views/commodity/commodity.vue'),
+		component: () => import(/* webpackChunkName: "commodity" */ '@/views/commodity/commodity.vue'),
 	},
 	{
 		meta: {
@@ -132,7 +132,7 @@ export const asyncRoutesList = [
 		},
 		path: '/commodity/addCommodity',
 		name: 'addCommodity',
-		component: () => import(/* webpackChunkName: "userManagement" */ '@/views/commodity/addCommodity.vue'),
+		component: () => import(/* webpackChunkName: "addCommodity" */ '@/views/commodity/addCommodity.vue'),
 		hidden: true,
 	},
 	{
@@ -142,7 +142,7 @@ export const asyncRoutesList = [
 		},
 		path: '/statistical',
 		name: 'statistical',
-		component: () => import(/* webpackChunkName: "userManagement" */ '@/views/statistical/statistical.vue'),
+		component: () => import(/* webpackChunkName: "statistical" */ '@/views/statistical/statistical.vue'),
 	},
 	{
 		meta: {
@@ -151,7 +151,7 @@ export const asyncRoutesList = [
 		},
 		path: '/scheme',
 		name: 'scheme',
-		component: () => import(/* webpackChunkName: "userManagement" */ '@/views/scheme/scheme.vue'),
+		component: () => import(/* webpackChunkName: "scheme" */ '@/views/scheme/scheme.vue'),
 	},
 	{
 		meta: {
@@ -160,7 +160,7 @@ export const asyncRoutesList = [
 		},
 		path: '/mission',
 		name: 'mission',
-		component: () => import(/* webpackChunkName: "userManagement" */ '@/views/mission/mission.vue'),
+		component: () => import(/* webpackChunkName: "mission" */ '@/views/mission/mission.vue'),
 	},
 	{
 		meta: {
@@ -179,7 +179,7 @@ export const asyncRoutesList = [
 				},
 				name: 'changePassword',
 				path: '/system/changePassword',
-				component: () => import(/* webpackChunkName: "userManagement" */ '@/views/system/changePassword.vue'),
+				component: () => import(/* webpackChunkName: "changePassword" */ '@/views/system/changePassword.vue'),
 			},
 			{
 				meta: {
@@ -189,7 +189,7 @@ export const asyncRoutesList = [
 				},
 				name: 'role',
 				path: '/system/role',
-				component: () => import(/* webpackChunkName: "userManagement" */ '@/views/system/role.vue'),
+				component: () => import(/* webpackChunkName: "role" */ '@/views/system/role.vue'),
 			},
 			{
 				meta: {
@@ -199,7 +199,7 @@ export const asyncRoutesList = [
 				},
 				name: 'account',
 				path: '/system/account',
-				component: () => import(/* webpackChunkName: "userManagement" */ '@/views/system/account.vue'),
+				component: () => import(/* webpackChunkName: "account" */ '@/views/system/account.vue'),
 			},
 		]
 	},
