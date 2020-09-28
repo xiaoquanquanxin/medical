@@ -6,7 +6,7 @@ import {asyncRoutesList} from "@/router/modules/asyncRoutes"
 
 Vue.use(VueRouter);
 const createRouter = (routesList: RouteConfig[]) => new VueRouter({
-	mode: 'hash',
+	mode: 'history',
 	routes: routesList.concat(syncRoutesList)
 });
 
