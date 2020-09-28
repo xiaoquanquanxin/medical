@@ -1,18 +1,18 @@
 <template>
     <a-layout id="layout">
-        <LayoutSlider/>
+        <layoutSideBar/>
         <LayoutMain/>
     </a-layout>
 </template>
 <script lang="ts">
 	import {Vue, Component} from 'vue-property-decorator';
-	import LayoutSlider from '@/layout/layoutSider/layoutSlider.vue';
+	
 	import LayoutMain from '@/layout/layoutMain/layoutMain.vue';
-
+	import LayoutSideBar from '@/layout/layoutSideBar/layoutSideBar.vue';
 
 	@Component({
 		components: {
-			LayoutSlider,
+			LayoutSideBar,
 			LayoutMain,
 		}
 	})
