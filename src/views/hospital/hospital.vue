@@ -1,11 +1,145 @@
 <template>
-    <p>医院管理</p>
+    <div>
+        <p>医院管理</p>
+        <a-input-group class="a-input-group">
+            <a-row :gutter="8">
+                <a-col :span="5">
+                    <a-input default-value=""/>
+                </a-col>
+                <a-col :span="5">
+                    <a-select default-value="Option1" style="width:100%;">
+                        <a-select-option value="Option1">
+                            Option1
+                        </a-select-option>
+                        <a-select-option value="Option2">
+                            Option2
+                        </a-select-option>
+                    </a-select>
+                </a-col>
+                <a-col :span="5">
+                    <a-select default-value="Option1" style="width:100%;">
+                        <a-select-option value="Option1">
+                            Option1
+                        </a-select-option>
+                        <a-select-option value="Option2">
+                            Option2
+                        </a-select-option>
+                    </a-select>
+                </a-col>
+                <a-col :span="5">
+                    <a-button type="primary">
+                        搜索
+                    </a-button>
+                </a-col>
+            </a-row>
+        </a-input-group>
+        <a-input-group class="a-input-group">
+            <a-col :span="5">
+                <a-button type="primary">
+                    搜索
+                </a-button>
+            </a-col>
+        </a-input-group>
+        <a-table
+                :row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
+                :columns="columns"
+                :data-source="data"
+                :scroll="scroll"
+        >
+            <span slot="tags" slot-scope="tags">
+                <a-tag v-for="tag in tags"
+                       :key="tag"
+                       :color="tag === 'loser' ? 'volcano' : tag.length > 5 ? 'geekblue' : 'green'"
+                >{{ tag.toUpperCase() }}
+                </a-tag>
+            </span>
+        </a-table>
+    </div>
 </template>
 <script>
+    const columns = [
+        {
+            title: '医院名称',
+            dataIndex: 'hospital',
+            width: 100,
+        },
+        {
+            title: '城市',
+            dataIndex: 'city',
+            width: 100,
+        },
+        {
+            title: '状态',
+            dataIndex: 'status',
+            width: 100,
+        },
+        {
+            title: '医院图标',
+            dataIndex: 'icon',
+            width: 100,
+        },
+        {
+            title: '操作',
+            dataIndex: 'tags',
+            key: 'tags',
+            scopedSlots: { customRender: 'tags' },
+        },
+    ];
+    const data = [];
+    for (let i = 0; i < 46; i++) {
+        data.push({
+            key: i,
+            hospital: `xx医院`,
+            city: '上海',
+            status: String(i % 2),
+            icon: '医院图标',
+            tags: ['编辑', '关联科室'],
+        });
+    }
     export default {
-        name: 'hospital',
+        data(){
+            return {
+                data,
+                columns,
+                selectedRowKeys: [], // Check here to configure the default column
+                loading: false,
 
+                //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
+                scroll: {},
+
+            };
+        },
+        computed: {
+            hasSelected(){
+                return this.selectedRowKeys.length > 0;
+            },
+        },
+        mounted(){
+            this.scroll = { x: 820, y: 'calc(100vh - 310px)' };
+        },
+        methods: {
+            start(){
+                this.loading = true;
+                // ajax request after empty completing
+                setTimeout(() => {
+                    this.loading = false;
+                    this.selectedRowKeys = [];
+                }, 1000);
+            },
+            onSelectChange(selectedRowKeys){
+                console.log('selectedRowKeys changed: ', selectedRowKeys);
+                this.selectedRowKeys = selectedRowKeys;
+            },
+        },
     };
 </script>
 <style scoped lang="stylus">
+    .a-input-group
+        padding-top 10px;
+        padding-bottom 10px;
+    
+    .a-input-group + .a-input-group
+        padding-top: 0;
 </style>
+
+
