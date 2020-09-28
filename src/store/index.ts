@@ -20,5 +20,12 @@ const store = new Vuex.Store({
 	modules,
 	getters
 });
-	// console.log(store);
+// console.log(store);
 export default store;
+
+//	commit范型
+export interface COMMIT_INTERFACE<T> {
+	commit: Function;
+	state: T;
+}
+
