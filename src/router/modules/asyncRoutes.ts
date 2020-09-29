@@ -200,6 +200,16 @@ export const asyncRoutesList = [
 	},
 	{
 		meta: {
+			chName: '添加商品',
+			selectRouteKey: 'commodity',
+		},
+		path: '/commodity/editCommodity/:commodityId',
+		name: 'editCommodity',
+		component: () => import(/* webpackChunkName: "addCommodity" */ '@/views/commodity/addCommodity.vue'),
+		hidden: true,
+	},
+	{
+		meta: {
 			chName: '统计管理',
 			selectRouteKey: 'statistical',
 		},
