@@ -26,9 +26,11 @@
         </a-input-group>
         <a-input-group class="a-input-group">
             <a-col :span="5">
-                <a-button type="primary" @click="addDepartment()">
-                    新增科室
-                </a-button>
+                <router-link :to="{name:'addDepartment'}">
+                    <a-button type="primary">
+                        新增科室
+                    </a-button>
+                </router-link>
             </a-col>
         </a-input-group>
         <!--表格-->
@@ -172,11 +174,6 @@
             pageChange(current, pageSize){
                 console.log(current);
                 console.log(pageSize);
-            },
-            //  新增科室
-            addDepartment(){
-                console.log('新增科室');
-                this.$router.push({ path: '/department/addDepartment' });
             },
             //  编辑科室
             editDepartment(sItem, sIndex, extra){
