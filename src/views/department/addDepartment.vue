@@ -22,12 +22,13 @@
 </template>
 <script>
     export default {
-        name: 'addDepartment',
         beforeCreate(){
             this.form = this.$form.createForm(this);
         },
         data(){
             return {
+                //  科室id
+                departmentId: this.$route.params.departmentId,
                 //  表单大小
                 formItemLayout: {
                     labelCol: { span: 6 },
@@ -45,6 +46,10 @@
                     },]
                 }],
             };
+        },
+        created(){
+            //  console.log(this.$route.params);
+            console.log('是编辑？', !!this.departmentId);
         },
         methods: {
             handleSubmit(e){
