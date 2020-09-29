@@ -72,12 +72,13 @@
         </a-row>
         <!--莫泰框-->
         <a-modal v-model="dialogVisible"
+                 :maskClosable="false"
                  centered
                  width="800"
-                 title="Modal"
+                 title="关联科室"
                  ok-text="确认"
                  cancel-text="取消"
-                 @ok="hideModal">
+                 @ok="modalCheck()">
             <RelatedDepartments/>
         </a-modal>
     </div>
@@ -85,6 +86,7 @@
 <script>
     //  关联科室 穿梭框
     import RelatedDepartments from '@/components/relatedDepartments.vue';
+    import { mapGetters, mapActions } from 'vuex';
 
     const columns = [
         {
@@ -129,6 +131,14 @@
         components: {
             RelatedDepartments,
         },
+        computed: {
+            ...mapGetters([
+                'shuttleBox',
+            ]),
+            modalTargetKeys(){
+                return this.$store.state.shuttleBox.modalTargetKeys;
+            }
+        },
         data(){
             return {
                 data,
@@ -147,13 +157,8 @@
                     total: 50,
                 },
                 //  展示莫泰框
-                dialogVisible: false,
+                dialogVisible: true,
             };
-        },
-        computed: {
-            hasSelected(){
-                return this.selectedRowKeys.length > 0;
-            },
         },
         mounted(){
             this.scroll = { x: 820, y: 'calc(100vh - 398px)' };
@@ -194,6 +199,13 @@
             //  关联科室
             relatedDepartments(scope, sItem, sIndex, extra){
                 this.showModal();
+            },
+            //  检查莫泰框的值
+            modalCheck(){
+                console.log(this.modalTargetKeys);
+                console.log('发请求吧');
+                return;
+                this.hideModal();
             },
             //  开启、关闭莫泰框
             showModal(){
