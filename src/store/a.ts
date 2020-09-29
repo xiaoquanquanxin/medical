@@ -14,7 +14,9 @@ export const routeMap = {
 	//  医生管理
 	'doctor': true,
 	//  新增医生
-	'newDoctor': true,
+	'addDoctor': true,
+	//  编辑医生
+	'editDoctor': true,
 	//  用户管理
 	'user': true,
 	//  新增用户
