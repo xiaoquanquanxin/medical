@@ -182,7 +182,6 @@
                 console.log('selectedRowKeys changed: ', selectedRowKeys);
                 this.selectedRowKeys = selectedRowKeys;
             },
-
             //  展示的每一页数据变换
             onShowSizeChange(current, pageSize){
                 console.log(current);
