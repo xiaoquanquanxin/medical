@@ -91,6 +91,35 @@ export const asyncRoutesList = [
 	},
 	{
 		meta: {
+			chName: '疾病管理',
+			selectRouteKey: 'disease',
+		},
+		path: '/disease',
+		name: 'disease',
+		component: () => import(/* webpackChunkName: "disease" */ '@/views/disease/disease.vue'),
+	},
+	{
+		meta: {
+			chName: '新增疾病',
+			selectRouteKey: 'disease',
+		},
+		path: '/disease/addDisease',
+		name: 'addDisease',
+		component: () => import(/* webpackChunkName: "addDisease" */ '@/views/disease/addDisease.vue'),
+		hidden: true
+	},
+	{
+		meta: {
+			chName: '编辑疾病',
+			selectRouteKey: 'disease',
+		},
+		path: '/disease/editDisease/:diseaseId',
+		name: 'editDisease',
+		component: () => import(/* webpackChunkName: "addDisease" */ '@/views/disease/addDisease.vue'),
+		hidden: true
+	},
+	{
+		meta: {
 			chName: '用户管理',
 			selectRouteKey: 'user',
 		},
