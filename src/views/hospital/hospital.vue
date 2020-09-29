@@ -99,6 +99,7 @@
     //  关联科室 穿梭框
     import RelatedDepartments from '@/components/relatedDepartments.vue';
     import { mapGetters, mapActions } from 'vuex';
+    import { dialogMethods } from '../../utils/methods';
 
     const columns = [
         {
@@ -177,6 +178,7 @@
             this.scroll = { x: 820, y: 'calc(100vh - 398px)' };
         },
         methods: {
+            ...dialogMethods,
             //  选中表格数据
             onSelectChange(selectedRowKeys){
                 console.log('selectedRowKeys changed: ', selectedRowKeys);
@@ -223,13 +225,6 @@
                 console.log('发请求吧');
                 return;
                 this.hideModal();
-            },
-            //  开启、关闭莫泰框
-            showModal(){
-                this.dialogVisible = true;
-            },
-            hideModal(){
-                this.dialogVisible = false;
             },
         },
     };
