@@ -5,10 +5,8 @@ import store from './store'
 import {Button, message} from 'ant-design-vue';
 import Antd from 'ant-design-vue';
 import "./css/reset.css";
-import "./css/layout.css";
-
 import 'ant-design-vue/dist/antd.css';
-
+import "./css/layout.css";
 
 Vue.use(Antd);
 Vue.config.productionTip = false
