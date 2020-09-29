@@ -161,7 +161,7 @@
 
             //  编辑商品
             editCommodity(sItem, sIndex){
-                this.$router.push({ name: 'editCommodity', params: { hospitalId: sIndex } });
+                this.$router.push({ name: 'editCommodity', params: { commodityId: sIndex } });
             },
             //  上架
             onShelf(){},
