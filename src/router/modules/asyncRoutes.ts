@@ -52,6 +52,16 @@ export const asyncRoutesList = [
 	},
 	{
 		meta: {
+			chName: '编辑科室',
+			selectRouteKey: 'department',
+		},
+		path: '/department/editDepartment/:departmentId',
+		name: 'editDepartment',
+		component: () => import(/* webpackChunkName: "addDepartment" */ '@/views/department/addDepartment.vue'),
+		hidden: true,
+	},
+	{
+		meta: {
 			chName: '医生管理',
 			selectRouteKey: 'doctor',
 		},
@@ -64,9 +74,9 @@ export const asyncRoutesList = [
 			chName: '新增医生',
 			selectRouteKey: 'doctor',
 		},
-		path: '/doctor/newDoctor',
-		name: 'newDoctor',
-		component: () => import(/* webpackChunkName: "newDoctor" */ '@/views/doctor/newDoctor.vue'),
+		path: '/doctor/addDoctor',
+		name: 'addDoctor',
+		component: () => import(/* webpackChunkName: "addDoctor" */ '@/views/doctor/addDoctor.vue'),
 		hidden: true
 	},
 	{
