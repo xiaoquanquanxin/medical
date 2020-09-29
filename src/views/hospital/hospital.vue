@@ -91,13 +91,13 @@
                  ok-text="确认"
                  cancel-text="取消"
                  @ok="modalCheck()">
-            <RelatedDepartments v-if="dialogVisible"/>
+            <ShuttleBox v-if="dialogVisible"/>
         </a-modal>
     </div>
 </template>
 <script>
     //  关联科室 穿梭框
-    import RelatedDepartments from '@/components/relatedDepartments.vue';
+    import ShuttleBox from '@/components/shuttleBox.vue';
     import { mapGetters, mapActions } from 'vuex';
     import { dialogMethods } from '../../utils/methods';
 
@@ -143,7 +143,7 @@
     }
     export default {
         components: {
-            RelatedDepartments,
+            ShuttleBox,
         },
         computed: {
             ...mapGetters([
