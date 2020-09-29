@@ -257,7 +257,7 @@
     };
 </script>
 <style scoped lang="stylus">
-    @import "~@/css/layout.css";
+    
     
     .form
         width 800px;
