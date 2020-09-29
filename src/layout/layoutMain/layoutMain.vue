@@ -26,6 +26,7 @@
     .layout-content
         padding 24px;
         background white;
+        //  layout的高度
         max-height calc(100vh - 50px - 64px);
-        overflow auto;
+        overflow hidden;
 </style>

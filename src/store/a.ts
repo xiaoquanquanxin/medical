@@ -2,7 +2,7 @@ export const routeMap = {
 	//  医院管理
 	'hospital': true,
 	//  新增医院
-	'newHospital': true,
+	'addHospital': true,
 	//  科室管理
 	'administrativeOffice': true,
 	//  新增科室

@@ -16,9 +16,9 @@ export const asyncRoutesList = [
 			chName: '新增医院',
 			selectRouteKey: 'hospital',
 		},
-		path: '/hospital/newHospital',
-		name: 'newHospital',
-		component: () => import(/* webpackChunkName: "newHospital" */ '@/views/hospital/newHospital.vue'),
+		path: '/hospital/addHospital',
+		name: 'addHospital',
+		component: () => import(/* webpackChunkName: "addHospital" */ '@/views/hospital/addHospital.vue'),
 		hidden: true
 	},
 	{
