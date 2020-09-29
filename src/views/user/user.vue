@@ -30,18 +30,17 @@
                 :pagination="false"
         >
             <div
-                    slot="a-switch"
-                    slot-scope="sItem,sIndex,extra"
+                    slot="familyGroup"
+                    slot-scope="scope,sItem,sIndex,extra"
             >
-                <a-switch checked-children="开" un-checked-children="关"
-                          :default-checked="!!sIndex"
-                          @change="aSwitchChange(sItem,sIndex, $event)"
-                />
+                <router-link :to="{name: 'familyGroup', params:{familyGroup: sIndex}}">
+                    {{sItem.familyGroup}}
+                </router-link>
             </div>
             <div slot="tags" slot-scope="scope,sItem,sIndex,extra">
                 <a-space size="small">
-                    <a @click="editDisase(sItem,sIndex,extra)">编辑</a>
-                    <a @click="deleteDisase(sItem)">删除</a>
+                    <a @click="editUser(sItem,sIndex,extra)">编辑</a>
+                    <a @click="deleteUser(sItem)">删除</a>
                 </a-space>
             </div>
         </a-table>
@@ -67,15 +66,40 @@
 <script>
     const columns = [
         {
-            title: '科室名称',
-            dataIndex: 'department',
+            title: '姓名',
+            dataIndex: 'name',
             width: 100,
         },
         {
-            title: '状态',
-            dataIndex: 'status',
+            title: '性别',
+            dataIndex: 'sex',
             width: 100,
-            scopedSlots: { customRender: 'a-switch' },
+        },
+        {
+            title: '医院',
+            dataIndex: '',
+            width: 100,
+        },
+        {
+            title: '科室',
+            dataIndex: '',
+            width: 100,
+        },
+        {
+            title: '主治医生',
+            dataIndex: '',
+            width: 100,
+        },
+        {
+            title: '家庭组',
+            dataIndex: 'familyGroup',
+            width: 100,
+            scopedSlots: { customRender: 'familyGroup' }
+        },
+        {
+            title: '小程序id',
+            dataIndex: 'applets',
+            width: 100,
         },
         {
             title: '操作',
@@ -90,6 +114,7 @@
             key: i,
             department: `xx科室`,
             status: String(i % 2),
+            familyGroup: 'xxx',
             tags: ['编辑', '删除', '关联疾病'],
         });
     }
@@ -107,7 +132,7 @@
                 selectedRowKeys: [], // Check here to configure the default column
 
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
-                scroll: { x: 820, y: 'calc(100vh - 324px)' },
+                scroll: { x: 880, y: 'calc(100vh - 324px)' },
 
                 //  分页信息
                 pagination: {
@@ -141,6 +166,29 @@
             pageChange(current, pageSize){
                 console.log(current);
                 console.log(pageSize);
+            },
+            //  编辑用户
+            editUser(sItem, sIndex){
+                this.$router.push({ name: 'editUser', params: { userId: sIndex } });
+            },
+            //  删除用户
+            deleteUser(sItem){
+                console.log(sItem);
+                this.$confirm({
+                    title: `确定删除${sItem.disease}`,
+                    //  content: 'Bla bla ...',
+                    okText: '确认',
+                    cancelText: '取消',
+                    onOk(){
+                        return new Promise((resolve, reject) => {
+                            console.log('发请求');
+                            setTimeout(Math.random() > 0.5 ? resolve : reject, 1111);
+                        }).catch(() => console.log('Oops errors!'));
+                    },
+                    onCancel(){
+                        console.log('取消');
+                    },
+                });
             },
         }
     };
