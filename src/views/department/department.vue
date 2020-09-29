@@ -41,7 +41,7 @@
         >
             <div
                     slot="a-switch"
-                    slot-scope="scope,sItem,sIndex,extra"
+                    slot-scope="sItem,sIndex,extra"
             >
                 <a-switch checked-children="开" un-checked-children="关"
                           :default-checked="!!sIndex"
@@ -50,9 +50,9 @@
             </div>
             <div slot="tags" slot-scope="scope,sItem,sIndex,extra">
                 <a-space size="small">
-                    <a @click="editDepartment(scope,sItem,sIndex,extra)">编辑</a>
-                    <a @click="deleteDepartment(scope,sItem)">删除</a>
-                    <a @click="relatedDepartment(scope,sItem,sIndex,extra)">关联科室</a>
+                    <a @click="editDepartment(sItem,sIndex,extra)">编辑</a>
+                    <a @click="deleteDepartment(sItem)">删除</a>
+                    <a @click="relatedDepartment(sItem,sIndex,)">关联科室</a>
                 </a-space>
             </div>
         </a-table>
@@ -73,12 +73,24 @@
                 </template>
             </a-pagination>
         </a-row>
+        <!--莫泰框-->
+        <a-modal v-model="dialogVisible"
+                 :maskClosable="false"
+                 centered
+                 width="800"
+                 title="关联科室"
+                 ok-text="确认"
+                 cancel-text="取消"
+                 @ok="modalCheck()">
+            <RelatedDepartments/>
+        </a-modal>
     </div>
 </template>
 <script>
     //  关联科室 穿梭框
     import RelatedDepartments from '@/components/relatedDepartments.vue';
     import { mapGetters, mapActions } from 'vuex';
+    import { dialogMethods } from '../../utils/methods';
 
     const columns = [
         {
@@ -110,6 +122,17 @@
     }
     //  科室管理
     export default {
+        components: {
+            RelatedDepartments,
+        },
+        computed: {
+            ...mapGetters([
+                'shuttleBox',
+            ]),
+            modalTargetKeys(){
+                return this.$store.state.shuttleBox.modalTargetKeys;
+            }
+        },
         data(){
             return {
                 data,
@@ -132,6 +155,7 @@
             };
         },
         methods: {
+            ...dialogMethods,
             //  选中表格数据
             onSelectChange(selectedRowKeys){
                 console.log('selectedRowKeys changed: ', selectedRowKeys);
@@ -154,11 +178,11 @@
                 this.$router.push({ path: '/department/addDepartment' });
             },
             //  编辑科室
-            editDepartment(scope, sItem, sIndex, extra){
+            editDepartment(sItem, sIndex, extra){
                 this.$router.push({ name: 'editDepartment', params: { departmentId: sIndex } });
             },
             //  删除科室
-            deleteDepartment(scope, sItem){
+            deleteDepartment(sItem){
                 console.log(sItem.department);
                 this.$confirm({
                     title: `确定删除${sItem.department}`,
@@ -175,7 +199,19 @@
                         console.log('取消');
                     },
                 });
-            }
+            },
+            //  关联科室
+            relatedDepartment(sItem, sIndex){
+                console.log(sItem, sIndex);
+                this.showModal();
+            },
+            //  检查莫泰框的值
+            modalCheck(){
+                console.log(this.modalTargetKeys);
+                console.log('发请求吧');
+                return;
+                this.hideModal();
+            },
         }
     };
 </script>
