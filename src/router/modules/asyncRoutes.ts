@@ -142,7 +142,7 @@ export const asyncRoutesList = [
 			chName: '编辑用户',
 			selectRouteKey: 'user',
 		},
-		path: '/user/editUser/:id',
+		path: '/user/editUser/:userId',
 		name: 'editUser',
 		component: () => import(/* webpackChunkName: "newUser" */ '@/views/user/newUser.vue'),
 		hidden: true,
