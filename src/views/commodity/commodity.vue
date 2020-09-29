@@ -26,9 +26,11 @@
         </a-input-group>
         <a-input-group class="a-input-group">
             <a-col :span="5">
-                <a-button type="primary" @click="addcommodity()">
-                    新增商品
-                </a-button>
+                <router-link :to="{name:'addCommodity'}">
+                    <a-button type="primary">
+                        新增商品
+                    </a-button>
+                </router-link>
             </a-col>
         </a-input-group>
         <!--表格-->
@@ -156,7 +158,7 @@
                 console.log(current);
                 console.log(pageSize);
             },
-            
+
             //  编辑商品
             editCommodity(){
 
