@@ -3,6 +3,8 @@ export const routeMap = {
 	'hospital': true,
 	//  新增医院
 	'addHospital': true,
+	//	编辑医院
+	'editHospital': true,
 	//  科室管理
 	'administrativeOffice': true,
 	//  新增科室
