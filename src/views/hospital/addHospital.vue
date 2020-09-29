@@ -12,6 +12,7 @@
         </a-form-item>
         <a-form-item label="地址" has-feedback>
             <a-select placeholder="请选择地址"
+                      v-decorator="addrDecorator"
             >
                 <a-select-option v-for="(item,index) in addrList"
                                  :value="index"
@@ -177,14 +178,18 @@
 </template>
 <script>
     export default {
+        beforeCreate(){
+            this.form = this.$form.createForm(this, {
+                //  设置表单域内字段 id 的前缀
+                name: '',
+                //  任一表单域的值发生改变时的回调 ⚠️ 回调中手动调用 this.$forceUpdate() 更新组件
+                onValuesChange: (props, values) => {},
+            });
+        },
         data(){
             return {
-                form: this.$form.createForm(this, {
-                    //  设置表单域内字段 id 的前缀
-                    name: '',
-                    //  任一表单域的值发生改变时的回调 ⚠️ 回调中手动调用 this.$forceUpdate() 更新组件
-                    onValuesChange: (props, values) => {},
-                }),
+                //  医院id
+                hospitalId: this.$route.params.hospitalId,
                 //  表单大小
                 formItemLayout: {
                     labelCol: { span: 6 },
@@ -202,6 +207,11 @@
                     },]
                 }],
 
+                //  地址
+                addrDecorator: ['addr', {
+                    initialValue: null,
+                }],
+
                 //  地址下拉
                 addrList: []
             };
@@ -210,9 +220,15 @@
 
         },
         mounted(){
+            //  编辑
             setTimeout(() => {
                 this.addrList = ['山西', '陕西省', '北京市'];
-            });
+                this.$nextTick(() => {
+                    this.form.setFieldsValue({
+                        addr: 1
+                    });
+                });
+            }, 1000);
         },
         methods: {
             handleSubmit(e){
