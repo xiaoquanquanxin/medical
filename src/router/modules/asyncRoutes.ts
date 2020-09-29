@@ -127,16 +127,17 @@ export const asyncRoutesList = [
 		name: 'user',
 		component: () => import(/* webpackChunkName: "user" */ '@/views/user/user.vue'),
 	},
-	{
-		meta: {
-			chName: '新增用户',
-			selectRouteKey: 'user',
-		},
-		path: '/user/newUser',
-		name: 'newUser',
-		component: () => import(/* webpackChunkName: "newUser" */ '@/views/user/newUser.vue'),
-		hidden: true,
-	},
+	//	⚠️原型图没有
+	// {
+	// 	meta: {
+	// 		chName: '新增用户',
+	// 		selectRouteKey: 'user',
+	// 	},
+	// 	path: '/user/newUser',
+	// 	name: 'newUser',
+	// 	component: () => import(/* webpackChunkName: "newUser" */ '@/views/user/newUser.vue'),
+	// 	hidden: true,
+	// },
 	{
 		meta: {
 			chName: '编辑用户',
@@ -150,16 +151,17 @@ export const asyncRoutesList = [
 	{
 		meta: {
 			chName: '家庭组',
-			selectRouteKey: 'familyGroup',
+			selectRouteKey: 'user',
 		},
 		path: '/familyGroup',
 		name: 'familyGroup',
 		component: () => import(/* webpackChunkName: "familyGroup" */ '@/views/familyGroup/familyGroup.vue'),
+		hidden: true,
 	},
 	{
 		meta: {
 			chName: '新增家庭组',
-			selectRouteKey: 'familyGroup',
+			selectRouteKey: 'user',
 		},
 		path: '/familyGroup/newFamilyGroup',
 		name: 'newFamilyGroup',
