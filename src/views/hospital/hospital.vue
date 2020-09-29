@@ -91,7 +91,7 @@
                  ok-text="确认"
                  cancel-text="取消"
                  @ok="modalCheck()">
-            <RelatedDepartments/>
+            <RelatedDepartments v-if="dialogVisible"/>
         </a-modal>
     </div>
 </template>
