@@ -23,6 +23,16 @@ export const asyncRoutesList = [
 	},
 	{
 		meta: {
+			chName: '编辑医院',
+			selectRouteKey: 'hospital',
+		},
+		path: '/hospital/editHospital/:hospitalId',
+		name: 'editHospital',
+		component: () => import(/* webpackChunkName: "addHospital" */ '@/views/hospital/addHospital.vue'),
+		hidden: true
+	},
+	{
+		meta: {
 			chName: '科室管理',
 			selectRouteKey: 'administrativeOffice',
 		},
