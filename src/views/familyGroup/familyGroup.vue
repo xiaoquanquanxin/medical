@@ -21,7 +21,11 @@
                 size="middle"
                 :pagination="false"
                 :scroll="{ x: 1000,y: 240 }"
-        />
+        >
+            <div slot="tags" slot-scope="scope,sItem,sIndex,extra">
+                <a @click="exitFamilyGroup(sItem,sIndex,extra)">退出</a>
+            </div>
+        </a-table>
     </div>
 </template>
 <script>
@@ -99,6 +103,22 @@
         methods: {
             exitFamilyGroup(sItem){
                 console.log(sItem);
+                this.$confirm({
+                    title: `确定退出${sItem.disease}`,
+                    //  content: 'Bla bla ...',
+                    okText: '确认',
+                    okType: 'danger',
+                    cancelText: '取消',
+                    onOk(){
+                        return new Promise((resolve, reject) => {
+                            console.log('发请求');
+                            setTimeout(Math.random() > 0.5 ? resolve : reject, 1111);
+                        }).catch(() => console.log('Oops errors!'));
+                    },
+                    onCancel(){
+                        console.log('取消');
+                    },
+                });
             }
         }
     };
