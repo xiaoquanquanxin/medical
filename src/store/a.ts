@@ -25,8 +25,9 @@ export const routeMap = {
 	'editDoctor': true,
 	//  用户管理
 	'user': true,
+	//	⚠️原型图没有
 	//  新增用户
-	'newUser': true,
+	// 'newUser': true,
 	//  编辑用户
 	'editUser': true,
 	//  家庭组
