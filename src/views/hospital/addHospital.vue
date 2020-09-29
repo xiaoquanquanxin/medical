@@ -17,6 +17,7 @@
                 >
                     <a-select-option v-for="(item,index) in addrList"
                                      :value="index"
+                                     :key="index"
                     >
                         {{item}}--{{index}}
                     </a-select-option>
