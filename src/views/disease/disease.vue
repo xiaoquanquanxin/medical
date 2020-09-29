@@ -52,7 +52,7 @@
                 <a-space size="small">
                     <a @click="editDisease(sItem,sIndex,extra)">编辑</a>
                     <a @click="deleteDisease(sItem)">删除</a>
-                    <a @click="relatedDisease(sItem,sIndex,)">关联疾病</a>
+                    <!--                    <a @click="relatedDisease(sItem,sIndex,)">关联疾病</a>-->
                 </a-space>
             </div>
         </a-table>
@@ -74,23 +74,23 @@
             </a-pagination>
         </a-row>
         <!--莫泰框-->
-        <a-modal v-model="dialogVisible"
-                 :maskClosable="false"
-                 centered
-                 width="800"
-                 title="关联疾病"
-                 ok-text="确认"
-                 cancel-text="取消"
-                 @ok="modalCheck()">
-            <ShuttleBox v-if="dialogVisible"/>
-        </a-modal>
+        <!--        <a-modal v-model="dialogVisible"-->
+        <!--                 :maskClosable="false"-->
+        <!--                 centered-->
+        <!--                 width="800"-->
+        <!--                 title="关联疾病"-->
+        <!--                 ok-text="确认"-->
+        <!--                 cancel-text="取消"-->
+        <!--                 @ok="modalCheck()">-->
+        <!--            <ShuttleBox v-if="dialogVisible"/>-->
+        <!--        </a-modal>-->
     </div>
 </template>
 <script>
     //  关联疾病 穿梭框
-    import ShuttleBox from '@/components/shuttleBox.vue';
-    import { mapGetters, mapActions } from 'vuex';
-    import { dialogMethods } from '../../utils/methods';
+    //    import ShuttleBox from '@/components/shuttleBox.vue';
+    //  import { mapGetters, mapActions } from 'vuex';
+    //    import { dialogMethods } from '../../utils/methods';
 
     const columns = [
         {
@@ -117,21 +117,21 @@
             key: i,
             disease: `xx疾病`,
             status: String(i % 2),
-            tags: ['编辑', '删除', '关联疾病'],
+            tags: ['编辑', '删除',],
         });
     }
     //  疾病管理
     export default {
         components: {
-            ShuttleBox,
+//            ShuttleBox,
         },
         computed: {
-            ...mapGetters([
-                'shuttleBox',
-            ]),
-            modalTargetKeys(){
-                return this.$store.state.shuttleBox.modalTargetKeys;
-            }
+//            ...mapGetters([
+//                'shuttleBox',
+//            ]),
+//            modalTargetKeys(){
+//                return this.$store.state.shuttleBox.modalTargetKeys;
+//            }
         },
         data(){
             return {
@@ -158,7 +158,7 @@
             this.scroll = { x: 820, y: 'calc(100vh - 398px)' };
         },
         methods: {
-            ...dialogMethods,
+            //  ...dialogMethods,
             //  选中表格数据
             onSelectChange(selectedRowKeys){
                 console.log('selectedRowKeys changed: ', selectedRowKeys);
@@ -203,19 +203,19 @@
                     },
                 });
             },
-            //  关联疾病
-            relatedDisease(sItem, sIndex){
-                console.log(this.dialogVisible);
-                this.showModal();
-                console.log(this.dialogVisible);
-            },
-            //  检查莫泰框的值
-            modalCheck(){
-                console.log(this.modalTargetKeys);
-                console.log('发请求吧');
-                return;
-                this.hideModal();
-            },
+//            //  关联疾病
+//            relatedDisease(sItem, sIndex){
+//                console.log(this.dialogVisible);
+//                this.showModal();
+//                console.log(this.dialogVisible);
+//            },
+//            //  检查莫泰框的值
+//            modalCheck(){
+//                console.log(this.modalTargetKeys);
+//                console.log('发请求吧');
+//                return;
+//                this.hideModal();
+//            },
         }
     };
 </script>
