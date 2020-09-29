@@ -47,13 +47,12 @@
                 :scroll="scroll"
                 :pagination="false"
         >
-            <span slot="tags" slot-scope="tags">
-                <a-tag v-for="tag in tags"
-                       :key="tag"
-                       :color="tag === 'loser' ? 'volcano' : tag.length > 5 ? 'geekblue' : 'green'"
-                >{{ tag.toUpperCase() }}
-                </a-tag>
-            </span>
+            <div slot="tags" slot-scope="scope,sItem,sIndex,extra">
+                <a-space size="small">
+                    <a @click="editHospital(scope,sItem,sIndex,extra)">编辑</a>
+                    <a>关联科室</a>
+                </a-space>
+            </div>
         </a-table>
         <a-row type="flex" justify="end" class="a-input-group">
             <a-pagination
@@ -162,6 +161,17 @@
             //  新增医院
             addHospital(){
                 this.$router.push({ path: '/hospital/addHospital' });
+            },
+
+            //  编辑医院
+            editHospital(scope, sItem, sIndex, extra){
+//                console.log(scope);
+//                console.log(sItem);
+//                console.log(sIndex);
+//                console.log(extra);
+//                console.log(sIndex)
+                //
+                this.$router.push({ name: 'editHospital', params: { hospitalId: sIndex } });
             }
         },
     };
