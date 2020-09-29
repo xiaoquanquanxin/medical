@@ -48,7 +48,7 @@ const actions = {
 		return new Promise(resolve => {
 			setTimeout(() => {
 				resolve(map);
-			}, 1000);
+			}, 0);
 		})
 			.then((list => {
 				// const routesList = convertRouting(list);
