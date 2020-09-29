@@ -26,9 +26,11 @@
         </a-input-group>
         <a-input-group class="a-input-group">
             <a-col :span="5">
-                <a-button type="primary" @click="addDisease()">
-                    新增疾病
-                </a-button>
+                <router-link :to="{name:'addDisease'}">
+                    <a-button type="primary">
+                        新增科室
+                    </a-button>
+                </router-link>
             </a-col>
         </a-input-group>
         <!--表格-->
@@ -172,11 +174,6 @@
             pageChange(current, pageSize){
                 console.log(current);
                 console.log(pageSize);
-            },
-            //  新增疾病
-            addDisease(){
-                console.log('新增疾病');
-                this.$router.push({ path: '/disease/addDisease' });
             },
             //  编辑疾病
             editDisease(sItem, sIndex, extra){
