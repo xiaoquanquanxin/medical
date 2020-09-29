@@ -13,10 +13,11 @@
 		}
 	})
 	export default class App extends Vue {
-	
+
 	}
 </script>
 <style lang="stylus">
+    
     #app {
         height: 100vh;
     }
