@@ -142,20 +142,23 @@
             this.scroll = { x: 820, y: 'calc(100vh - 390px)' };
         },
         methods: {
+            //  选中表格数据
             onSelectChange(selectedRowKeys){
                 console.log('selectedRowKeys changed: ', selectedRowKeys);
                 this.selectedRowKeys = selectedRowKeys;
             },
 
+            //  展示的每一页数据变换
             onShowSizeChange(current, pageSize){
                 console.log(current);
                 console.log(pageSize);
                 this.pagination.pageSize = pageSize;
             },
+            //  切换分页页码
             pageChange(current, pageSize){
                 console.log(current);
                 console.log(pageSize);
-            }
+            },
         },
     };
 </script>
