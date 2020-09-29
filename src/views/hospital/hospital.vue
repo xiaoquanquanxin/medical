@@ -233,14 +233,6 @@
     };
 </script>
 <style scoped lang="stylus">
-    @import "~@/css/layout.css";
-    
-    .a-input-group
-        padding-top 10px;
-        padding-bottom 10px;
-    
-    .a-input-group + .a-input-group
-        padding-top: 0;
 </style>
 
 
