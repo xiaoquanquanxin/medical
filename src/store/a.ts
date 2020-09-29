@@ -6,7 +6,7 @@ export const routeMap = {
 	//	编辑医院
 	'editHospital': true,
 	//  科室管理
-	'administrativeOffice': true,
+	'department': true,
 	//  新增科室
 	'addDepartment': true,
 	//  医生管理
