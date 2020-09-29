@@ -3,7 +3,9 @@
         <LayoutHeader/>
         <LayoutBreadcrumb/>
         <a-layout-content class="layout-content">
-            <router-view/>
+            <div class="layout-content-inner">
+                <router-view/>
+            </div>
         </a-layout-content>
     </a-layout>
 </template>
@@ -22,11 +24,15 @@
 
 	}
 </script>
-<style lang="stylus">
+<style scoped lang="stylus">
     .layout-content
-        padding 24px;
         background white;
         //  layout的高度
         max-height calc(100vh - 50px - 64px);
         overflow hidden;
+    
+    .layout-content-inner
+        height 100%;
+        position relative;
+        overflow auto;
 </style>
