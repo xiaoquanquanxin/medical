@@ -36,9 +36,11 @@
         </a-input-group>
         <a-input-group class="a-input-group">
             <a-col :span="5">
-                <a-button type="primary" @click="addHospital()">
-                    新增医院
-                </a-button>
+                <router-link :to="{name:'addHospital'}">
+                    <a-button type="primary">
+                        新增医院
+                    </a-button>
+                </router-link>
             </a-col>
         </a-input-group>
         <!--表格-->
@@ -192,10 +194,6 @@
             pageChange(current, pageSize){
                 console.log(current);
                 console.log(pageSize);
-            },
-            //  新增医院
-            addHospital(){
-                this.$router.push({ path: '/hospital/addHospital' });
             },
 
             //  切换状态
