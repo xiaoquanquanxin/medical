@@ -50,8 +50,9 @@
             </div>
             <div slot="tags" slot-scope="scope,sItem,sIndex,extra">
                 <a-space size="small">
-                    <a @click="editHospital(scope,sItem,sIndex,extra)">编辑</a>
-                    <a @click="relatedDepartments(scope,sItem,sIndex,extra)">关联科室</a>
+                    <a @click="editDepartment(scope,sItem,sIndex,extra)">编辑</a>
+                    <a @click="deleteDepartment(scope,sItem)">删除</a>
+                    <a @click="relatedDepartment(scope,sItem,sIndex,extra)">关联科室</a>
                 </a-space>
             </div>
         </a-table>
@@ -81,13 +82,8 @@
 
     const columns = [
         {
-            title: '医院名称',
+            title: '科室名称',
             dataIndex: 'department',
-            width: 100,
-        },
-        {
-            title: '城市',
-            dataIndex: 'city',
             width: 100,
         },
         {
@@ -95,11 +91,6 @@
             dataIndex: 'status',
             width: 100,
             scopedSlots: { customRender: 'a-switch' },
-        },
-        {
-            title: '医院图标',
-            dataIndex: 'icon',
-            width: 100,
         },
         {
             title: '操作',
@@ -112,11 +103,9 @@
     for (let i = 0; i < 10; i++) {
         data.push({
             key: i,
-            department: `xx医院`,
-            city: '上海',
+            department: `xx科室`,
             status: String(i % 2),
-            icon: '医院图标',
-            tags: ['编辑', '关联科室'],
+            tags: ['编辑', '删除', '关联科室'],
         });
     }
     //  科室管理
@@ -143,17 +132,50 @@
             };
         },
         methods: {
-            //  新增科室
-            addDepartment(){
-                console.log('新增科室');
-                this.$router.push({ path: '/department/addDepartment' });
-            },
             //  选中表格数据
             onSelectChange(selectedRowKeys){
                 console.log('selectedRowKeys changed: ', selectedRowKeys);
                 this.selectedRowKeys = selectedRowKeys;
             },
-
+            //  展示的每一页数据变换
+            onShowSizeChange(current, pageSize){
+                console.log(current);
+                console.log(pageSize);
+                this.pagination.pageSize = pageSize;
+            },
+            //  切换分页页码
+            pageChange(current, pageSize){
+                console.log(current);
+                console.log(pageSize);
+            },
+            //  新增科室
+            addDepartment(){
+                console.log('新增科室');
+                this.$router.push({ path: '/department/addDepartment' });
+            },
+            //  编辑科室
+            editDepartment(scope, sItem, sIndex, extra){
+                this.$router.push({ name: 'editDepartment', params: { departmentId: sIndex } });
+            },
+            //  删除科室
+            deleteDepartment(scope, sItem){
+                console.log(sItem.department);
+                this.$confirm({
+                    title: `确定删除${sItem.department}`,
+                    //  content: 'Bla bla ...',
+                    okText: '确认',
+                    cancelText: '取消',
+                    onOk(){
+                        return new Promise((resolve, reject) => {
+                            console.log('发请求');
+                            setTimeout(Math.random() > 0.5 ? resolve : reject, 1111);
+                        }).catch(() => console.log('Oops errors!'));
+                    },
+                    onCancel(){
+                        console.log('取消');
+                    },
+                });
+            }
         }
     };
 </script>
