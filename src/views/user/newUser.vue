@@ -1,6 +1,6 @@
 <template>
     <div class="layout-content-inner-main">
-        <p>新增医生</p>
+        <p>编辑用户</p>
         <a-form class="form"
                 :form="form"
                 v-bind="formItemLayout"
