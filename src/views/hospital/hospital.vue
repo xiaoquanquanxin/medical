@@ -50,7 +50,7 @@
             <div slot="tags" slot-scope="scope,sItem,sIndex,extra">
                 <a-space size="small">
                     <a @click="editHospital(scope,sItem,sIndex,extra)">编辑</a>
-                    <a>关联科室</a>
+                    <a @click="relatedDepartments(scope,sItem,sIndex,extra)">关联科室</a>
                 </a-space>
             </div>
         </a-table>
@@ -70,9 +70,22 @@
                 </template>
             </a-pagination>
         </a-row>
+        <!--莫泰框-->
+        <a-modal v-model="dialogVisible"
+                 centered
+                 width="800"
+                 title="Modal"
+                 ok-text="确认"
+                 cancel-text="取消"
+                 @ok="hideModal">
+            <RelatedDepartments/>
+        </a-modal>
     </div>
 </template>
 <script>
+    //  关联科室 穿梭框
+    import RelatedDepartments from '@/components/relatedDepartments.vue';
+
     const columns = [
         {
             title: '医院名称',
@@ -113,6 +126,9 @@
         });
     }
     export default {
+        components: {
+            RelatedDepartments,
+        },
         data(){
             return {
                 data,
@@ -129,7 +145,9 @@
                     current: 1,
                     pageSize: 10,
                     total: 50,
-                }
+                },
+                //  展示莫泰框
+                dialogVisible: false,
             };
         },
         computed: {
@@ -172,7 +190,18 @@
 //                console.log(sIndex)
                 //
                 this.$router.push({ name: 'editHospital', params: { hospitalId: sIndex } });
-            }
+            },
+            //  关联科室
+            relatedDepartments(scope, sItem, sIndex, extra){
+                this.showModal();
+            },
+            //  开启、关闭莫泰框
+            showModal(){
+                this.dialogVisible = true;
+            },
+            hideModal(){
+                this.dialogVisible = false;
+            },
         },
     };
 </script>
