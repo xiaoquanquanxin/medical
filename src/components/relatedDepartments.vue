@@ -42,6 +42,7 @@
         },
         mounted(){
             this.getMock();
+            console.log('mounted🍉，发请求');
         },
         methods: {
             //  设置莫泰框选择的值到store
