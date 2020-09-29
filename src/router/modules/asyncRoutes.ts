@@ -81,6 +81,16 @@ export const asyncRoutesList = [
 	},
 	{
 		meta: {
+			chName: '编辑医生',
+			selectRouteKey: 'doctor',
+		},
+		path: '/doctor/editDoctor/:doctorId',
+		name: 'editDoctor',
+		component: () => import(/* webpackChunkName: "addDoctor" */ '@/views/doctor/addDoctor.vue'),
+		hidden: true
+	},
+	{
+		meta: {
 			chName: '用户管理',
 			selectRouteKey: 'user',
 		},
