@@ -62,35 +62,6 @@ export const asyncRoutesList = [
 	},
 	{
 		meta: {
-			chName: '医生管理',
-			selectRouteKey: 'doctor',
-		},
-		path: '/doctor',
-		name: 'doctor',
-		component: () => import(/* webpackChunkName: "doctor" */ '@/views/doctor/doctor.vue'),
-	},
-	{
-		meta: {
-			chName: '新增医生',
-			selectRouteKey: 'doctor',
-		},
-		path: '/doctor/addDoctor',
-		name: 'addDoctor',
-		component: () => import(/* webpackChunkName: "addDoctor" */ '@/views/doctor/addDoctor.vue'),
-		hidden: true
-	},
-	{
-		meta: {
-			chName: '编辑医生',
-			selectRouteKey: 'doctor',
-		},
-		path: '/doctor/editDoctor/:doctorId',
-		name: 'editDoctor',
-		component: () => import(/* webpackChunkName: "addDoctor" */ '@/views/doctor/addDoctor.vue'),
-		hidden: true
-	},
-	{
-		meta: {
 			chName: '疾病管理',
 			selectRouteKey: 'disease',
 		},
@@ -116,6 +87,35 @@ export const asyncRoutesList = [
 		path: '/disease/editDisease/:diseaseId',
 		name: 'editDisease',
 		component: () => import(/* webpackChunkName: "addDisease" */ '@/views/disease/addDisease.vue'),
+		hidden: true
+	},
+	{
+		meta: {
+			chName: '医生管理',
+			selectRouteKey: 'doctor',
+		},
+		path: '/doctor',
+		name: 'doctor',
+		component: () => import(/* webpackChunkName: "doctor" */ '@/views/doctor/doctor.vue'),
+	},
+	{
+		meta: {
+			chName: '新增医生',
+			selectRouteKey: 'doctor',
+		},
+		path: '/doctor/addDoctor',
+		name: 'addDoctor',
+		component: () => import(/* webpackChunkName: "addDoctor" */ '@/views/doctor/addDoctor.vue'),
+		hidden: true
+	},
+	{
+		meta: {
+			chName: '编辑医生',
+			selectRouteKey: 'doctor',
+		},
+		path: '/doctor/editDoctor/:doctorId',
+		name: 'editDoctor',
+		component: () => import(/* webpackChunkName: "addDoctor" */ '@/views/doctor/addDoctor.vue'),
 		hidden: true
 	},
 	{
