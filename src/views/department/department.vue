@@ -52,7 +52,7 @@
                 <a-space size="small">
                     <a @click="editDepartment(sItem,sIndex,extra)">编辑</a>
                     <a @click="deleteDepartment(sItem)">删除</a>
-                    <a @click="relatedDepartment(sItem,sIndex,)">关联科室</a>
+                    <a @click="relatedDisease(sItem,sIndex,)">关联疾病</a>
                 </a-space>
             </div>
         </a-table>
@@ -78,16 +78,16 @@
                  :maskClosable="false"
                  centered
                  width="800"
-                 title="关联科室"
+                 title="关联疾病"
                  ok-text="确认"
                  cancel-text="取消"
                  @ok="modalCheck()">
-            <RelatedDepartments/>
+            <RelatedDepartments v-if="dialogVisible"/>
         </a-modal>
     </div>
 </template>
 <script>
-    //  关联科室 穿梭框
+    //  关联疾病 穿梭框
     import RelatedDepartments from '@/components/relatedDepartments.vue';
     import { mapGetters, mapActions } from 'vuex';
     import { dialogMethods } from '../../utils/methods';
@@ -117,7 +117,7 @@
             key: i,
             department: `xx科室`,
             status: String(i % 2),
-            tags: ['编辑', '删除', '关联科室'],
+            tags: ['编辑', '删除', '关联疾病'],
         });
     }
     //  科室管理
@@ -200,10 +200,11 @@
                     },
                 });
             },
-            //  关联科室
-            relatedDepartment(sItem, sIndex){
-                console.log(sItem, sIndex);
+            //  关联疾病
+            relatedDisease(sItem, sIndex){
+                console.log(this.dialogVisible);
                 this.showModal();
+                console.log(this.dialogVisible);
             },
             //  检查莫泰框的值
             modalCheck(){
