@@ -132,7 +132,7 @@
                 selectedRowKeys: [], // Check here to configure the default column
 
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
-                scroll: { x: 880, y: 'calc(100vh - 324px)' },
+                scroll: { x: 880, y: 'calc(100vh - 350px)' },
 
                 //  分页信息
                 pagination: {
@@ -178,6 +178,7 @@
                     title: `确定删除${sItem.disease}`,
                     //  content: 'Bla bla ...',
                     okText: '确认',
+                    okType: 'danger',
                     cancelText: '取消',
                     onOk(){
                         return new Promise((resolve, reject) => {

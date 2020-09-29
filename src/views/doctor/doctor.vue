@@ -189,6 +189,7 @@
                     title: `确定删除${sItem.doctor}`,
                     //  content: 'Bla bla ...',
                     okText: '确认',
+                    okType: 'danger',
                     cancelText: '取消',
                     onOk(){
                         return new Promise((resolve, reject) => {
