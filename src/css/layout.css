@@ -2,3 +2,13 @@
 .layout-content-inner-main {
     padding: 24px;
 }
+
+/*按钮组的基础间距*/
+.a-input-group {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.a-input-group + .a-input-group {
+    padding-top: 0;
+}
