@@ -47,6 +47,15 @@
                 :scroll="scroll"
                 :pagination="false"
         >
+            <div
+                    slot="a-switch"
+                    slot-scope="scope,sItem,sIndex,extra"
+            >
+                <a-switch checked-children="开" un-checked-children="关"
+                          :default-checked="!!sIndex"
+                          @change="aSwitchChange(sItem,sIndex, $event)"
+                />
+            </div>
             <div slot="tags" slot-scope="scope,sItem,sIndex,extra">
                 <a-space size="small">
                     <a @click="editHospital(scope,sItem,sIndex,extra)">编辑</a>
@@ -103,6 +112,7 @@
             title: '状态',
             dataIndex: 'status',
             width: 100,
+            scopedSlots: { customRender: 'a-switch' },
         },
         {
             title: '医院图标',
@@ -157,7 +167,7 @@
                     total: 50,
                 },
                 //  展示莫泰框
-                dialogVisible: true,
+                dialogVisible: false,
             };
         },
         mounted(){
@@ -184,6 +194,11 @@
             //  新增医院
             addHospital(){
                 this.$router.push({ path: '/hospital/addHospital' });
+            },
+
+            //  切换状态
+            aSwitchChange(sItem, sIndex, checked){
+                console.log(sItem, sIndex, checked);
             },
 
             //  编辑医院
