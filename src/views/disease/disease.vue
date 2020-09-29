@@ -28,7 +28,7 @@
             <a-col :span="5">
                 <router-link :to="{name:'addDisease'}">
                     <a-button type="primary">
-                        新增科室
+                        新增疾病
                     </a-button>
                 </router-link>
             </a-col>
