@@ -43,9 +43,9 @@
         >
             <div slot="tags" slot-scope="scope,sItem,sIndex,extra">
                 <a-space size="small">
-                    <a @click="editCommodity(scope,sItem,sIndex,extra)">编辑</a>
-                    <a @click="onShelf(scope,sItem,sIndex,extra)">上架</a>
-                    <a @click="offShelf(scope,sItem,sIndex,extra)">下架</a>
+                    <a @click="editCommodity(sItem,sIndex,extra)">编辑</a>
+                    <a @click="onShelf(sItem,sIndex,extra)">上架</a>
+                    <a @click="offShelf(sItem,sIndex,extra)">下架</a>
                 </a-space>
             </div>
         </a-table>
@@ -160,8 +160,8 @@
             },
 
             //  编辑商品
-            editCommodity(){
-
+            editCommodity(sItem, sIndex){
+                this.$router.push({ name: 'editCommodity', params: { hospitalId: sIndex } });
             },
             //  上架
             onShelf(){},
