@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="hospital">
         <p>医院管理</p>
         <a-input-group class="a-input-group">
             <a-row :gutter="8">
@@ -167,6 +167,8 @@
     };
 </script>
 <style scoped lang="stylus">
+    .hospital
+        padding:20px;
     .a-input-group
         padding-top 10px;
         padding-bottom 10px;
