@@ -8,7 +8,7 @@ export const routeMap = {
 	//  科室管理
 	'administrativeOffice': true,
 	//  新增科室
-	'newDepartment': true,
+	'addDepartment': true,
 	//  医生管理
 	'doctor': true,
 	//  新增医生
