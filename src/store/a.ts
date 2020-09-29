@@ -17,6 +17,12 @@ export const routeMap = {
 	'addDoctor': true,
 	//  编辑医生
 	'editDoctor': true,
+	//  疾病管理
+	'disease': true,
+	//  新增疾病
+	'addDisease': true,
+	//  编辑疾病
+	'editDisease': true,
 	//  用户管理
 	'user': true,
 	//  新增用户
