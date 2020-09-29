@@ -24,7 +24,8 @@
 </template>
 <script>
     import { mapGetters, mapActions } from 'vuex';
-    //  关联科室
+    
+    //  穿梭框
     export default {
         computed: {
             ...mapGetters([
