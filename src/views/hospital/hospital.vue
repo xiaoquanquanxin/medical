@@ -1,5 +1,5 @@
 <template>
-    <div class="hospital">
+    <div class="layout-content-inner-main">
         <p>医院管理</p>
         <a-input-group class="a-input-group">
             <a-row :gutter="8">
@@ -139,7 +139,7 @@
             },
         },
         mounted(){
-            this.scroll = { x: 820, y: 'calc(100vh - 390px)' };
+            this.scroll = { x: 820, y: 'calc(100vh - 398px)' };
         },
         methods: {
             //  选中表格数据
@@ -167,8 +167,8 @@
     };
 </script>
 <style scoped lang="stylus">
-    .hospital
-        padding:20px;
+    @import "~@/css/layout.css";
+    
     .a-input-group
         padding-top 10px;
         padding-bottom 10px;
