@@ -9,6 +9,8 @@ export const routeMap = {
 	'department': true,
 	//  新增科室
 	'addDepartment': true,
+	//  编辑科室
+	'editDepartment': true,
 	//  医生管理
 	'doctor': true,
 	//  新增医生
