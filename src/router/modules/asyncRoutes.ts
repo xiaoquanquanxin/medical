@@ -45,9 +45,9 @@ export const asyncRoutesList = [
 			chName: '新增科室',
 			selectRouteKey: 'administrativeOffice',
 		},
-		path: '/administrativeOffice/newDepartment',
-		name: 'newDepartment',
-		component: () => import(/* webpackChunkName: "newDepartment" */ '@/views/administrativeOffice/newDepartment.vue'),
+		path: '/administrativeOffice/addDepartment',
+		name: 'addDepartment',
+		component: () => import(/* webpackChunkName: "addDepartment" */ '@/views/administrativeOffice/addDepartment.vue'),
 		hidden: true,
 	},
 	{
