@@ -141,7 +141,7 @@
                 loading: false,
 
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
-                scroll: {},
+                scroll: { x: 820, y: 'calc(100vh - 398px)' },
 
                 //  分页信息
                 pagination: {
@@ -154,9 +154,7 @@
                 dialogVisible: false,
             };
         },
-        mounted(){
-            this.scroll = { x: 820, y: 'calc(100vh - 398px)' };
-        },
+
         methods: {
             ...dialogMethods,
             //  选中表格数据
