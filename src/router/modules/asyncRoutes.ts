@@ -153,30 +153,32 @@ export const asyncRoutesList = [
 			chName: '家庭组',
 			selectRouteKey: 'user',
 		},
-		path: '/familyGroup',
+		path: '/user/familyGroup',
 		name: 'familyGroup',
 		component: () => import(/* webpackChunkName: "familyGroup" */ '@/views/familyGroup/familyGroup.vue'),
 		hidden: true,
 	},
-	{
-		meta: {
-			chName: '新增家庭组',
-			selectRouteKey: 'user',
-		},
-		path: '/familyGroup/newFamilyGroup',
-		name: 'newFamilyGroup',
-		component: () => import(/* webpackChunkName: "newFamilyGroup" */ '@/views/familyGroup/newFamilyGroup.vue'),
-		hidden: true,
-	},
-	{
-		meta: {
-			chName: '公司信息',
-			selectRouteKey: 'companyInfo',
-		},
-		path: '/companyInfo',
-		name: 'companyInfo',
-		component: () => import(/* webpackChunkName: "companyInfo" */ '@/views/companyInfo/companyInfo.vue'),
-	},
+	//	⚠️原型图没有
+	// {
+	// 	meta: {
+	// 		chName: '新增家庭组',
+	// 		selectRouteKey: 'user',
+	// 	},
+	// 	path: '/familyGroup/newFamilyGroup',
+	// 	name: 'newFamilyGroup',
+	// 	component: () => import(/* webpackChunkName: "newFamilyGroup" */ '@/views/familyGroup/newFamilyGroup.vue'),
+	// 	hidden: true,
+	// },
+	//	⚠️原型图没有
+	// {
+	// 	meta: {
+	// 		chName: '公司信息',
+	// 		selectRouteKey: 'companyInfo',
+	// 	},
+	// 	path: '/companyInfo',
+	// 	name: 'companyInfo',
+	// 	component: () => import(/* webpackChunkName: "companyInfo" */ '@/views/companyInfo/companyInfo.vue'),
+	// },
 	{
 		meta: {
 			chName: '商品管理',

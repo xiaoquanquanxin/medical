@@ -32,10 +32,12 @@ export const routeMap = {
 	'editUser': true,
 	//  家庭组
 	'familyGroup': true,
+	//	⚠️原型图没有
 	//  新增家庭组
-	'newFamilyGroup': true,
+	// 'newFamilyGroup': true,
+	//	⚠️原型图没有
 	//  公司信息
-	'companyInfo': true,
+	//	'companyInfo': true,
 	//  商品管理
 	'commodity': true,
 	//  添加商品
