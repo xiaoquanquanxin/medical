@@ -154,6 +154,9 @@
                 dialogVisible: false,
             };
         },
+        mounted(){
+            this.scroll = { x: 820, y: 'calc(100vh - 398px)' };
+        },
         methods: {
             ...dialogMethods,
             //  选中表格数据
