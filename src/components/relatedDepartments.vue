@@ -45,7 +45,7 @@
         },
         methods: {
             //  设置莫泰框选择的值到store
-            ...mapActions(['shuttleBox/setModalTargetKey']),
+            ...mapActions('shuttleBox', ['setModalTargetKey']),
             getMock(props){
                 //  console.log(props);
                 const targetKeys = [];
@@ -69,7 +69,7 @@
                 //  console.log(targetKeys, direction, moveKeys);
                 console.log(targetKeys);
                 this.targetKeys = targetKeys;
-                this['shuttleBox/setModalTargetKey'](targetKeys);
+                this.setModalTargetKey(targetKeys);
             },
             //  重置
             reset(props){
