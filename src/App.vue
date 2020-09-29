@@ -16,8 +16,7 @@
 
 	}
 </script>
-<style lang="stylus">
-    
+<style lang="css">
     #app {
         height: 100vh;
     }
