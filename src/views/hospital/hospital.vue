@@ -1,6 +1,7 @@
 <template>
     <div class="layout-content-inner-main">
         <p>医院管理</p>
+        <!--搜索相关-->
         <a-input-group class="a-input-group">
             <a-row :gutter="8">
                 <a-col :span="5">
@@ -40,6 +41,7 @@
                 </a-button>
             </a-col>
         </a-input-group>
+        <!--表格-->
         <a-table
                 :row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                 :columns="columns"
@@ -63,6 +65,7 @@
                 </a-space>
             </div>
         </a-table>
+        <!--分页-->
         <a-row type="flex" justify="end" class="a-input-group">
             <a-pagination
                     v-model="pagination.current"
