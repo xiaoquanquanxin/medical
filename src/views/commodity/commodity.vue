@@ -161,6 +161,7 @@
 
             //  编辑商品
             editCommodity(sItem, sIndex){
+                //  console.log(sIndex);
                 this.$router.push({ name: 'editCommodity', params: { commodityId: sIndex } });
             },
             //  上架
