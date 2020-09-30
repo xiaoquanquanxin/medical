@@ -3,5 +3,6 @@ const getters = {
 	routeList: (state: any) => state.app.routeList,
 	shuttleBox: (state: any) => state.app.shuttleBox,
 	roleBox: (state: any) => state.app.roleBox,
+	accountBox: (state: any) => state.app.accountBox,
 };
 export default getters;
