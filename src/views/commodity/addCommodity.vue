@@ -210,7 +210,7 @@
 </template>
 <script>
     import { dialogMethods, dialogData } from '@/utils/dialog';
-    import { formItemLayout } from '@/utils/layout.ts;
+    import { formItemLayout } from '@/utils/layout.ts';
 
     export default {
         beforeCreate(){

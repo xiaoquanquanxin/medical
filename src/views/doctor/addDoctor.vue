@@ -21,7 +21,7 @@
     </div>
 </template>
 <script>
-    import { formItemLayout } from '@/utils/layout.ts;
+    import { formItemLayout } from '@/utils/layout.ts';
 
     export default {
         beforeCreate(){
