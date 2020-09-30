@@ -234,6 +234,7 @@
             }, 1000);
         },
         methods: {
+            //    表单提交
             handleSubmit(e){
                 e.preventDefault();
                 this.form.validateFields((err, values) => {
@@ -257,8 +258,6 @@
     };
 </script>
 <style scoped lang="stylus">
-    
-    
     .form
         width 800px;
     
