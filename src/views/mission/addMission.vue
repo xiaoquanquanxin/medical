@@ -28,7 +28,22 @@
                          v-decorator="articleNameDecorator"
                 />
             </a-form-item>
-            
+            <a-form-item label="文章内容">
+                <!--                <editor-->
+                <!--                                        style="width:calc((100vw - 200px) * .65)"-->
+                <!--                        api-key="no-api-key"-->
+                <!--                        :init="tinymceOption"-->
+                <!--                />-->
+                <VueQuillEditor ref="myTextEditor"
+                                style="width:calc((100vw - 200px) * .65);min-width: 800px"
+                                class="editor"
+                                v-model="content"
+                                :options="quillOption"
+                                @change="onEditorChange"
+                ></VueQuillEditor>
+                <a-input type="hidden" v-decorator="contentDecorator"
+                />
+            </a-form-item>
             <a-form-item :wrapper-col="{ span: 4, offset: 7 }">
                 <a-button type="primary" html-type="submit">
                     保存
@@ -39,14 +54,28 @@
 </template>
 <script>
     import { formItemLayout } from '@/utils/layout.ts';
+    import Editor from '@tinymce/tinymce-vue';
+
+    //  富文本
+    import 'quill/dist/quill.core.css';
+    import 'quill/dist/quill.snow.css';
+    import 'quill/dist/quill.bubble.css';
+    import VueQuillEditor from 'vue-quill-editor/src/editor';
 
     export default {
+        components: {
+            Editor,
+            VueQuillEditor,
+        },
         beforeCreate(){
             this.form = this.$form.createForm(this);
         },
         data(){
             return {
                 formItemLayout,
+
+                //  富文本
+                content: `<div><p>biaotimfaefpiaw;</p><p>biaotimfaefpiaw就发i饿哦啊我屁股</p><p>biaotimfaefpiaw就发i饿哦啊我屁股</p><p>biaotimfaefpiaw就发i饿哦啊我屁股</p><img src="https://thumb1.pianshen.com/192/02/02c4960c5f2ce7ec1c93ec826e454890.png" alt=""></div>`,
 
                 articleNameDecorator: ['articleName', {
                     initialValue: '经纬医院',
@@ -68,9 +97,38 @@
                         message: '请输入医院名称'
                     },]
                 }],
+                contentDecorator: ['content', {
+                    initialValue: this.content,
+                    rules: [{
+                        required: true,
+                        message: '请输入文字内容'
+                    },]
+                }],
 
                 //  文章类型列表
                 articleTypeList: [],
+
+                //  富文本编辑器初始化
+                tinymceOption: {
+                    height: 500,
+                    menubar: false,
+                    plugins: [
+                        'advlist autolink lists link image charmap print preview anchor',
+                        'searchreplace visualblocks code fullscreen',
+                        'insertdatetime media table paste code help wordcount'
+                    ],
+                    toolbar:
+                        'undo redo | formatselect | bold italic backcolor | \
+                        alignleft aligncenter alignright alignjustify | \
+                        bullist numlist outdent indent | removeformat | help'
+
+                },
+
+                //  第一种富文本
+                quillOption: {
+                    placeholder: '编辑文章内容'
+                },
+
             };
         },
         mounted(){
@@ -91,6 +149,16 @@
                     }
                 });
             },
+
+            //  编辑好富文本
+            onEditorChange(data){
+                this.form.setFieldsValue({
+                    content: data.html
+                });
+            }
         }
     };
 </script>
+<style scoped>
+    @import '~@/css/quill.css';
+</style>
