@@ -237,6 +237,24 @@ export const asyncRoutesList = [
 	},
 	{
 		meta: {
+			chName: '新增宣教',
+			selectRouteKey: 'mission',
+		},
+		path: '/mission/addMission',
+		name: 'addMission',
+		component: () => import(/* webpackChunkName: "addMission" */ '@/views/mission/addMission.vue'),
+	},
+	{
+		meta: {
+			chName: '编辑宣教',
+			selectRouteKey: 'mission',
+		},
+		path: '/mission/editMission/:missionId',
+		name: 'editMission',
+		component: () => import(/* webpackChunkName: "addMission" */ '@/views/mission/addMission.vue'),
+	},
+	{
+		meta: {
 			chName: '系统设置',
 			selectRouteKey: 'system',
 		},

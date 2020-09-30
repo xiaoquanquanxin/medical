@@ -50,6 +50,10 @@ export const routeMap = {
 	'scheme': true,
 	//  宣教管理
 	'mission': true,
+	//	新增宣教
+	'addMission': true,
+	//	编辑宣教
+	'editMission': true,
 	//  系统设置
 	'system': true,
 	//  修改密码
