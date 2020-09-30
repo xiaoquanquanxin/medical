@@ -52,6 +52,7 @@
             };
         },
         methods: {
+            //    表单提交
             handleSubmit(e){
                 console.log(e);
                 e.preventDefault();
@@ -93,7 +94,7 @@
         text-align: center;
         font-size: 30px;
     }
-  
+    
     
     .login-form-forgot {
         float: right;
