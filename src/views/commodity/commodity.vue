@@ -125,7 +125,7 @@
                 data,
                 columns,
                 selectedRowKeys: [], // Check here to configure the default column
-                loading: false,
+                
 
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
                 scroll: { x: 820, y: 'calc(100vh - 398px)' },
