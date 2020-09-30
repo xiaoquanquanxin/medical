@@ -70,6 +70,8 @@
     </div>
 </template>
 <script>
+    import { formItemLayout } from '@/utils/layout.js';
+
     export default {
         beforeCreate(){
             this.form = this.$form.createForm(this);
@@ -78,10 +80,7 @@
             return {
                 userId: this.$route.params.userId,
                 //  表单大小
-                formItemLayout: {
-                    labelCol: { span: 6 },
-                    wrapperCol: { offset: 1, span: 8 },
-                },
+                formItemLayout,
 
                 //  用户名称规则
                 userNameDecorator: ['userName', {
