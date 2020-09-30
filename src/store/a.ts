@@ -42,6 +42,8 @@ export const routeMap = {
 	'commodity': true,
 	//  添加商品
 	'addCommodity': true,
+	//  编辑商品
+	'editCommodity': true,
 	//  统计管理
 	'statistical': true,
 	//  方案管理
