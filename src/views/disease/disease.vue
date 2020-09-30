@@ -95,7 +95,7 @@
     //  import { mapGetters, mapActions } from 'vuex';
     //    import { dialogMethods, dialogData } from '@/utils/dialog';
 
-    import { pagination } from '@/utils/pagination.js';
+    import { pagination } from '@/utils/pagination.ts';
     import { dialogMethods, dialogData } from '@/utils/dialog';
     const columns = [
         {

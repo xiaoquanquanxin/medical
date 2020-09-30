@@ -69,7 +69,7 @@
     </div>
 </template>
 <script>
-    import { pagination } from '@/utils/pagination.js';
+    import { pagination } from '@/utils/pagination.ts';
 
     const columns = [
         {
