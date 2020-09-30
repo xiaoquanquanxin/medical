@@ -209,7 +209,7 @@
     </div>
 </template>
 <script>
-    import { dialogMethods } from '@/utils/methods';
+    import { dialogMethods, dialogData } from '@/utils/methods';
     import { formItemLayout } from '@/utils/layout.js';
 
     export default {
@@ -224,6 +224,7 @@
         data(){
             return {
                 //  表单大小
+                //  表单大小
                 formItemLayout,
                 //  商品名称
                 commodityNameDecorator: ['hospitalName', {
@@ -236,8 +237,8 @@
                         message: '请输入商品名称'
                     },]
                 }],
-                //  展示莫泰框
-                dialogVisible: false,
+                //  莫泰框
+                dialogData,
             };
         },
         methods: {
