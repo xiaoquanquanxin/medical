@@ -52,6 +52,7 @@
             console.log('是编辑？', !!this.departmentId);
         },
         methods: {
+            //    表单提交
             handleSubmit(e){
                 e.preventDefault();
                 this.form.validateFields((err, values) => {
