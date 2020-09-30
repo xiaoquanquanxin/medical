@@ -1,4 +1,4 @@
-//	账号弹框
+//	新建、编辑账号弹框
 import {COMMIT_INTERFACE} from "@/store"
 
 interface STATE {
