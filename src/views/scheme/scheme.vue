@@ -54,8 +54,8 @@
         >
             <div slot="tags" slot-scope="scope,sItem,sIndex,extra">
                 <a-space size="small">
-                    <a @click="editAccount(sItem,sIndex)">编辑</a>
-                    <a @click="deleteAccount(sItem,sIndex)">删除</a>
+                    <a @click="editScheme(sItem,sIndex)">编辑</a>
+                    <a @click="deleteScheme(sItem,sIndex)">删除</a>
                 </a-space>
             </div>
         </a-table>
@@ -80,6 +80,8 @@
 </template>
 <script>
     import { pagination } from '@/utils/pagination.ts';
+    import { dialogMethods, dialogData } from '@/utils/dialog';
+    import { oneRowSearch } from '../../utils/tableScroll';
 
     const columns = [
         {
@@ -129,13 +131,16 @@
                 selectedRowKeys: [], // Check here to configure the default column
 
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
-                scroll: { x: 820, y: 'calc(100vh - 350px)' },
+                scroll: oneRowSearch,
                 //  分页信息
                 pagination,
-
+                //  莫泰框
+                dialogData,
             };
         },
         methods: {
+            //  莫泰框方法
+            ...dialogMethods,
             //  选中表格数据
             onSelectChange(selectedRowKeys){
                 console.log('selectedRowKeys changed: ', selectedRowKeys);
@@ -151,6 +156,31 @@
             pageChange(current, pageSize){
                 console.log(current);
                 console.log(pageSize);
+            },
+
+            //  编辑管理
+            editScheme(sItem, sIndex){
+                this.showModal();
+            },
+            //  删除管理
+            deleteScheme(sItem, sIndex){
+                this.$confirm({
+                    title: `确定删除${sItem.disease}`,
+                    //  content: 'Bla bla ...',
+                    //  content: (h)=>{h(test)},
+                    okText: '确认',
+                    okType: 'danger',
+                    cancelText: '取消',
+                    onOk(){
+                        return new Promise((resolve, reject) => {
+                            console.log('发请求');
+                            setTimeout(Math.random() > 0.5 ? resolve : reject, 1111);
+                        }).catch(() => console.log('Oops errors!'));
+                    },
+                    onCancel(){
+                        console.log('取消');
+                    },
+                });
             },
         }
     };
