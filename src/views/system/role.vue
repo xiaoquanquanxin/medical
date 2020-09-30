@@ -78,7 +78,7 @@
 <script>
     import RoleBox from '@/components/roleBox.vue';
     import { dialogMethods, dialogData } from '@/utils/dialog';
-    import { pagination } from '@/utils/pagination.js';
+    import { pagination } from '@/utils/pagination.ts';
 
     const columns = [
         {
