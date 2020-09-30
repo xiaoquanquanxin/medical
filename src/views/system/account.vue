@@ -80,6 +80,7 @@
     import { pagination } from '@/utils/pagination.ts';
     import AccountBox from '@/components/accountBox.vue';
     import { mapGetters, mapActions } from 'vuex';
+    import { towRowSearch } from '../../utils/tableScroll';
 
     const columns = [
         {
@@ -132,7 +133,7 @@
                 selectedRowKeys: [], // Check here to configure the default column
 
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
-                scroll: { x: 820, y: 'calc(100vh - 398px)' },
+                scroll: towRowSearch,
                 //  分页信息
                 pagination,
                 //  莫泰框
