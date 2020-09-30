@@ -77,7 +77,7 @@
 </template>
 <script>
     import RoleBox from '@/components/roleBox.vue';
-    import { dialogMethods, dialogData } from '@/utils/methods';
+    import { dialogMethods, dialogData } from '@/utils/dialog';
     import { pagination } from '@/utils/pagination.js';
 
     const columns = [
