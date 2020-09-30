@@ -64,6 +64,8 @@
     </div>
 </template>
 <script>
+    import { pagination } from '@/utils/pagination.js';
+
     const columns = [
         {
             title: '姓名',
@@ -135,12 +137,7 @@
                 scroll: { x: 880, y: 'calc(100vh - 350px)' },
 
                 //  分页信息
-                pagination: {
-                    pageSizeOptions: ['10', '20', '30', '40', '50'],
-                    current: 1,
-                    pageSize: 10,
-                    total: 50,
-                },
+                pagination,
             };
         },
         methods: {
