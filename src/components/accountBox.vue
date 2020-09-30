@@ -21,16 +21,25 @@
 </template>
 <script>
     import { formItemLayout } from '@/utils/layout.ts';
-    
+    import { mapGetters, mapActions } from 'vuex';
+
     export default {
         beforeCreate(){
             this.form = this.$form.createForm(this);
+        },
+        computed: {
+            ...mapGetters([
+                'accountBox',
+            ]),
+            id(){
+                return this.$store.state.accountBox.id;
+            }
         },
         data(){
             return {
                 //  表单大小
                 formItemLayout,
-                
+
                 accountNameDecorator: ['accountName', {
                     initialValue: '普通疾病',
                     rules: [{
@@ -75,8 +84,10 @@
         },
         created(){
             this.handleSubmit.bind(this);
+            console.log('是编辑？');
+            console.log(this.id);
         },
-        methods:{
+        methods: {
             //    表单提交
             handleSubmit(){
                 return new Promise(((resolve, reject) => {
