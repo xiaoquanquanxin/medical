@@ -242,6 +242,7 @@
             };
         },
         methods: {
+            //  莫泰框方法
             ...dialogMethods,
             //    表单提交
             handleSubmit(e){

@@ -17,7 +17,7 @@
         <a-input-group class="a-input-group">
             <a-col :span="5">
                 <!--                <router-link :to="{name:'addHospital'}">-->
-                <a-button type="primary" @click="showModal()">
+                <a-button type="primary" @click="newAccount()">
                     新建账号
                 </a-button>
                 <!--                </router-link>-->
@@ -79,6 +79,7 @@
     import { dialogMethods, dialogData } from '@/utils/dialog';
     import { pagination } from '@/utils/pagination.ts';
     import AccountBox from '@/components/accountBox.vue';
+    import { mapGetters, mapActions } from 'vuex';
 
     const columns = [
         {
@@ -139,7 +140,11 @@
             };
         },
         methods: {
+            //  莫泰框方法
+            //  莫泰框方法
             ...dialogMethods,
+
+            ...mapActions('shuttleBox', ['setModalTargetKey']),
             //  选中表格数据
             onSelectChange(selectedRowKeys){
                 console.log('selectedRowKeys changed: ', selectedRowKeys);
@@ -167,6 +172,9 @@
                 });
             },
 
+            newAccount(){
+
+            },
             //  编辑账号
             editAccount(sItem, sIndex){
 

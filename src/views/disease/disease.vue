@@ -155,7 +155,8 @@
         },
 
         methods: {
-            //  ...dialogMethods,
+            //  //  莫泰框方法
+            ...dialogMethods,
             //  选中表格数据
             onSelectChange(selectedRowKeys){
                 console.log('selectedRowKeys changed: ', selectedRowKeys);
