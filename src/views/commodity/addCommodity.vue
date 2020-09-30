@@ -196,8 +196,8 @@
             </a-form-item>
         </a-form>
         <!--莫泰框-->
-        <a-modal v-model="dialogVisible"
-                 v-if="dialogVisible"
+        <a-modal v-model="dialogData.dialogVisible"
+                 v-if="dialogData.dialogVisible"
                  :maskClosable="false"
                  centered
                  :width="800"
