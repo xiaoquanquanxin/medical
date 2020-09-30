@@ -70,6 +70,7 @@
 </template>
 <script>
     import { pagination } from '@/utils/pagination.js';
+
     const columns = [
         {
             title: '商品名称',
@@ -126,15 +127,12 @@
                 data,
                 columns,
                 selectedRowKeys: [], // Check here to configure the default column
-                
 
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
                 scroll: { x: 820, y: 'calc(100vh - 398px)' },
 
                 //  分页信息
                 pagination,
-                //  展示莫泰框
-                dialogVisible: false,
             };
         },
         methods: {
