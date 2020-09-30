@@ -10,9 +10,9 @@ export const dialogData = {
 //  开启、关闭莫泰框
 export const dialogMethods = {
     showModal(){
-        this.dialogVisible = true;
+        this.dialogData.visible = true;
     },
     hideModal(){
-        this.dialogVisible = false;
+        this.dialogData.visible = false;
     },
 };
