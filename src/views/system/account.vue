@@ -141,10 +141,9 @@
         },
         methods: {
             //  莫泰框方法
-            //  莫泰框方法
             ...dialogMethods,
-
-            ...mapActions('shuttleBox', ['setModalTargetKey']),
+            //  新建、编辑账号弹框
+            ...mapActions('accountBox', ['setAccountBoxId']),
             //  选中表格数据
             onSelectChange(selectedRowKeys){
                 console.log('selectedRowKeys changed: ', selectedRowKeys);
@@ -172,12 +171,14 @@
                 });
             },
 
+            //  新建账号
             newAccount(){
-
+                this.setAccountBoxId();
+                this.showModal();
             },
             //  编辑账号
             editAccount(sItem, sIndex){
-
+                this.setAccountBoxId(sIndex);
                 this.showModal();
             },
             //  删除账号
