@@ -95,6 +95,8 @@
     //  import { mapGetters, mapActions } from 'vuex';
     //    import { dialogMethods } from '../../utils/methods';
 
+    import { pagination } from '@/utils/pagination.js';
+    
     const columns = [
         {
             title: '疾病名称',
@@ -146,13 +148,8 @@
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
                 scroll: { x: 820, y: 'calc(100vh - 398px)' },
 
-                //  分页信息
-                pagination: {
-                    pageSizeOptions: ['10', '20', '30', '40', '50'],
-                    current: 1,
-                    pageSize: 10,
-                    total: 50,
-                },
+                //    分页信息
+                pagination,
                 //  展示莫泰框
                 dialogVisible: false,
             };
