@@ -209,7 +209,7 @@
     </div>
 </template>
 <script>
-    import { dialogMethods, dialogData } from '@/utils/methods';
+    import { dialogMethods, dialogData } from '@/utils/dialog';
     import { formItemLayout } from '@/utils/layout.js';
 
     export default {

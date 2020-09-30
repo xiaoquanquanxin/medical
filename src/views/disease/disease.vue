@@ -93,10 +93,10 @@
     //  关联疾病 穿梭框
     //    import ShuttleBox from '@/components/shuttleBox.vue';
     //  import { mapGetters, mapActions } from 'vuex';
-    //    import { dialogMethods, dialogData } from '@/utils/methods';
+    //    import { dialogMethods, dialogData } from '@/utils/dialog';
 
     import { pagination } from '@/utils/pagination.js';
-    import { dialogMethods, dialogData } from '@/utils/methods';
+    import { dialogMethods, dialogData } from '@/utils/dialog';
     const columns = [
         {
             title: '疾病名称',

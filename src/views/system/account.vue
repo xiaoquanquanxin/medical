@@ -76,7 +76,7 @@
     </div>
 </template>
 <script>
-    import { dialogMethods, dialogData } from '@/utils/methods';
+    import { dialogMethods, dialogData } from '@/utils/dialog';
     import { pagination } from '@/utils/pagination.js';
     import AccountBox from '@/components/accountBox.vue';
 
