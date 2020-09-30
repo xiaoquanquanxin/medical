@@ -41,8 +41,7 @@
                                 :options="quillOption"
                                 @change="onEditorChange"
                 ></VueQuillEditor>
-                <a-input type="hidden" v-decorator="contentDecorator"
-                />
+                <a-input type="hidden" v-decorator="contentDecorator"/>
             </a-form-item>
             <a-form-item :wrapper-col="{ span: 4, offset: 7 }">
                 <a-button type="primary" html-type="submit">
@@ -75,7 +74,8 @@
                 formItemLayout,
 
                 //  富文本
-                content: `<div><p>biaotimfaefpiaw;</p><p>biaotimfaefpiaw就发i饿哦啊我屁股</p><p>biaotimfaefpiaw就发i饿哦啊我屁股</p><p>biaotimfaefpiaw就发i饿哦啊我屁股</p><img src="https://thumb1.pianshen.com/192/02/02c4960c5f2ce7ec1c93ec826e454890.png" alt=""></div>`,
+                //  content: `<div><p>biaotimfaefpiaw;</p><p>biaotimfaefpiaw就发i饿哦啊我屁股</p><p>biaotimfaefpiaw就发i饿哦啊我屁股</p><p>biaotimfaefpiaw就发i饿哦啊我屁股</p><img src="https://thumb1.pianshen.com/192/02/02c4960c5f2ce7ec1c93ec826e454890.png" alt=""></div>`,
+                content: '',
 
                 articleNameDecorator: ['articleName', {
                     initialValue: '经纬医院',
