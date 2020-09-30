@@ -21,6 +21,7 @@
     </div>
 </template>
 <script>
+    import { formItemLayout } from '@/utils/layout.js';
     export default {
         beforeCreate(){
             this.form = this.$form.createForm(this);
@@ -30,10 +31,7 @@
                 //  医生id
                 doctorId: this.$route.params.doctorId,
                 //  表单大小
-                formItemLayout: {
-                    labelCol: { span: 6 },
-                    wrapperCol: { offset: 1, span: 8 },
-                },
+                formItemLayout,
                 //  医生名称
                 doctorNameDecorator: ['doctorName', {
                     initialValue: '普通医生',

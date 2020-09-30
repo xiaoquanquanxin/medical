@@ -21,6 +21,8 @@
     </div>
 </template>
 <script>
+    import { formItemLayout } from '@/utils/layout.js';
+
     export default {
         beforeCreate(){
             this.form = this.$form.createForm(this);
@@ -30,10 +32,7 @@
                 //  疾病id
                 diseaseId: this.$route.params.diseaseId,
                 //  表单大小
-                formItemLayout: {
-                    labelCol: { span: 6 },
-                    wrapperCol: { offset: 1, span: 8 },
-                },
+                formItemLayout,
                 //  疾病名称
                 diseaseNameDecorator: ['diseaseName', {
                     initialValue: '普通疾病',

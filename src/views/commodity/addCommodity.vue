@@ -204,12 +204,12 @@
                  ok-text="确认"
                  cancel-text="取消"
                  @ok="modalCheck()">
-            
         </a-modal>
     </div>
 </template>
 <script>
-    import { dialogMethods } from '../../utils/methods';
+    import { dialogMethods } from '@/utils/methods';
+    import { formItemLayout } from '@/utils/layout.js';
 
     export default {
         beforeCreate(){
@@ -223,10 +223,7 @@
         data(){
             return {
                 //  表单大小
-                formItemLayout: {
-                    labelCol: { span: 6 },
-                    wrapperCol: { offset: 1, span: 8 },
-                },
+                formItemLayout,
                 //  商品名称
                 commodityNameDecorator: ['hospitalName', {
                     initialValue: '商品名称',

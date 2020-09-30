@@ -180,6 +180,9 @@
     </div>
 </template>
 <script>
+    import { formItemLayout } from '@/utils/layout.js';
+    import { TOJSON } from '@/utils/common';
+    
     export default {
         beforeCreate(){
             this.form = this.$form.createForm(this, {
@@ -191,13 +194,10 @@
         },
         data(){
             return {
+                formItemLayout,
                 //  医院id
                 hospitalId: this.$route.params.hospitalId,
-                //  表单大小
-                formItemLayout: {
-                    labelCol: { span: 6 },
-                    wrapperCol: { offset: 1, span: 8 },
-                },
+
                 //  医院名称
                 hospitalNameDecorator: ['hospitalName', {
                     initialValue: '经纬医院',

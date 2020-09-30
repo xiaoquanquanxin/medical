@@ -21,6 +21,8 @@
     </div>
 </template>
 <script>
+    import { formItemLayout } from '@/utils/layout.js';
+
     export default {
         beforeCreate(){
             this.form = this.$form.createForm(this);
@@ -30,10 +32,7 @@
                 //  科室id
                 departmentId: this.$route.params.departmentId,
                 //  表单大小
-                formItemLayout: {
-                    labelCol: { span: 6 },
-                    wrapperCol: { offset: 1, span: 8 },
-                },
+                formItemLayout,
                 //  科室名称
                 departmentNameDecorator: ['departmentName', {
                     initialValue: '普通科室',
