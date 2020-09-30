@@ -33,7 +33,7 @@
                 <a-input placeholder="请输入商品关键字"/>
             </a-form-item>
             <a-form-item label="售卖分类">
-                <a-button type="primary" @click>关联售卖分类</a-button>
+                <a-button type="primary" @click="associationSaleCategory()">关联售卖分类</a-button>
             </a-form-item>
             <a-form-item label="商品品牌" has-feedback>
                 <a-select placeholder="请选择商品品牌"
@@ -195,9 +195,22 @@
                 </a-button>
             </a-form-item>
         </a-form>
+        <!--莫泰框-->
+        <a-modal v-model="dialogVisible"
+                 :maskClosable="false"
+                 centered
+                 width="800"
+                 title="关联科室"
+                 ok-text="确认"
+                 cancel-text="取消"
+                 @ok="modalCheck()">
+            
+        </a-modal>
     </div>
 </template>
 <script>
+    import { dialogMethods } from '../../utils/methods';
+
     export default {
         beforeCreate(){
             this.form = this.$form.createForm(this, {
@@ -225,9 +238,12 @@
                         message: '请输入商品名称'
                     },]
                 }],
+                //  展示莫泰框
+                dialogVisible: false,
             };
         },
         methods: {
+            ...dialogMethods,
             //    表单提交
             handleSubmit(e){
                 e.preventDefault();
@@ -240,6 +256,20 @@
                     }
                 });
             },
+
+            //  关联销售分类
+            associationSaleCategory(){
+                this.showModal();
+            },
+
+            //  检查莫泰框的值
+            modalCheck(){
+                console.log('检查莫泰框的值');
+                console.log('发请求吧');
+                return;
+                this.hideModal();
+            },
+
         }
     };
 </script>
