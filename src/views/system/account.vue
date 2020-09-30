@@ -56,22 +56,27 @@
             </a-pagination>
         </a-row>
         <!--莫泰框-->
-        <a-modal v-model="dialogVisible"
-                 v-if="dialogVisible"
+        <a-modal v-model="dialogData.visible"
+                 v-if="dialogData.visible"
                  :maskClosable="false"
                  :centered="true"
                  :width="800"
                  title="关联科室"
-                 ok-text="确认"
-                 cancel-text="取消"
-                 content="12"
-                 @ok="modalCheck()">
+        >
             <AccountBox ref="accountBox"/>
+            <template slot="footer">
+                <a-button key="back" @click="hideModal">
+                    返回
+                </a-button>
+                <a-button key="submit" type="primary" :loading="dialogData.submitLoading" @click="modalCheck">
+                    确定
+                </a-button>
+            </template>
         </a-modal>
     </div>
 </template>
 <script>
-    import { dialogMethods } from '@/utils/methods';
+    import { dialogMethods, dialogData } from '@/utils/methods';
     import { pagination } from '@/utils/pagination.js';
     import AccountBox from '@/components/accountBox.vue';
 
@@ -114,7 +119,7 @@
             tags: ['编辑', '关联科室'],
         });
     }
-    
+
     export default {
         components: {
             AccountBox,
@@ -129,8 +134,8 @@
                 scroll: { x: 820, y: 'calc(100vh - 398px)' },
                 //  分页信息
                 pagination,
-                //  展示莫泰框
-                dialogVisible: false,
+                //  莫泰框
+                dialogData,
             };
         },
         methods: {
@@ -165,10 +170,10 @@
             //  编辑账号
             editAccount(sItem, sIndex){
 
+                this.showModal();
             },
             //  删除账号
             deleteAccount(sItem, sIndex){
-               
                 this.$confirm({
                     title: `确定删除${sItem.disease}`,
                     //  content: 'Bla bla ...',
