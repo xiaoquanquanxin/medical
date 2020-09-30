@@ -30,7 +30,7 @@
 <script>
     import { TreeSelect } from 'ant-design-vue';
     //  import { mapGetters, mapActions } from 'vuex';
-    import { formItemLayout } from '@/utils/layout.js';
+    import { formItemLayout } from '@/utils/layout.ts';
 
     const SHOW_PARENT = TreeSelect.SHOW_PARENT;
 
