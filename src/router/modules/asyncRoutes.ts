@@ -145,7 +145,7 @@ export const asyncRoutesList = [
 		},
 		path: '/user/editUser/:userId',
 		name: 'editUser',
-		component: () => import(/* webpackChunkName: "newUser" */ '@/views/user/newUser.vue'),
+		component: () => import(/* webpackChunkName: "newUser" */ '@/views/user/editUser.vue'),
 		hidden: true,
 	},
 	{
