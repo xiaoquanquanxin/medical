@@ -8,12 +8,12 @@
         >
             <a-form-item label="输入新密码">
                 <a-input placeholder="输入新密码"
-                        v-decorator="newPasswordDecorator"
+                         v-decorator="newPasswordDecorator"
                 />
             </a-form-item>
             <a-form-item label="确认新密码">
                 <a-input placeholder="确认新密码"
-                        v-decorator="newPasswordDecorator"
+                         v-decorator="newPasswordDecorator"
                 />
             </a-form-item>
             <a-form-item :wrapper-col="{ span: 4, offset: 7 }">
@@ -34,6 +34,7 @@
         },
         data(){
             return {
+                //  表单大小
                 formItemLayout,
                 //  输入新密码的校验
                 newPasswordDecorator: ['diseaseName', {
