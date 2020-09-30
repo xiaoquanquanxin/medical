@@ -97,6 +97,7 @@
 
     import { pagination } from '@/utils/pagination.ts';
     import { dialogMethods, dialogData } from '@/utils/dialog';
+    import { towRowSearch } from '../../utils/tableScroll';
     const columns = [
         {
             title: '疾病名称',
