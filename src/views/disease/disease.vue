@@ -76,8 +76,8 @@
             </a-pagination>
         </a-row>
         <!--莫泰框-->
-        <!--        <a-modal v-model="dialogVisible"
-                 v-if="dialogVisible"-->
+        <!--        <a-modal v-model="dialogData.dialogVisible"
+                 v-if="dialogData.dialogVisible"-->
         <!--                 :maskClosable="false"-->
         <!--                 centered-->
         <!--                 :width="800"-->
@@ -93,10 +93,10 @@
     //  关联疾病 穿梭框
     //    import ShuttleBox from '@/components/shuttleBox.vue';
     //  import { mapGetters, mapActions } from 'vuex';
-    //    import { dialogMethods } from '../../utils/methods';
+    //    import { dialogMethods, dialogData } from '@/utils/methods';
 
     import { pagination } from '@/utils/pagination.js';
-    
+    import { dialogMethods, dialogData } from '@/utils/methods';
     const columns = [
         {
             title: '疾病名称',
@@ -143,15 +143,14 @@
                 data,
                 columns,
                 selectedRowKeys: [], // Check here to configure the default column
-                
 
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
                 scroll: { x: 820, y: 'calc(100vh - 398px)' },
 
                 //    分页信息
                 pagination,
-                //  展示莫泰框
-                dialogVisible: false,
+                //  莫泰框
+                dialogData,
             };
         },
 
