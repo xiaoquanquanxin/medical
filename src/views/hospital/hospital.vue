@@ -86,14 +86,15 @@
         </a-row>
         <!--莫泰框-->
         <a-modal v-model="dialogVisible"
+                 v-if="dialogVisible"
                  :maskClosable="false"
                  centered
-                 width="800"
+                 :width="800"
                  title="关联科室"
                  ok-text="确认"
                  cancel-text="取消"
                  @ok="modalCheck()">
-            <ShuttleBox v-if="dialogVisible"/>
+            <ShuttleBox/>
         </a-modal>
     </div>
 </template>
