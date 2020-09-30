@@ -81,6 +81,7 @@
                 value: ['0-0-0'],
                 treeData: null,
                 SHOW_PARENT,
+                //  表单大小
                 formItemLayout,
                 characterNameDecorator: ['characterName', {
                     initialValue: '商品名称',
