@@ -180,7 +180,7 @@
     </div>
 </template>
 <script>
-    import { formItemLayout } from '@/utils/layout.js';
+    import { formItemLayout } from '@/utils/layout.ts;
     import { TOJSON } from '@/utils/common';
     
     export default {

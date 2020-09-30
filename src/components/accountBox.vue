@@ -20,7 +20,7 @@
     </a-form>
 </template>
 <script>
-    import { formItemLayout } from '@/utils/layout.js';
+    import { formItemLayout } from '@/utils/layout.ts;
     
     export default {
         beforeCreate(){
