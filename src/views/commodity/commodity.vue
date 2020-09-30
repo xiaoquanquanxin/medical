@@ -69,6 +69,7 @@
     </div>
 </template>
 <script>
+    import { pagination } from '@/utils/pagination.js';
     const columns = [
         {
             title: '商品名称',
@@ -131,12 +132,7 @@
                 scroll: { x: 820, y: 'calc(100vh - 398px)' },
 
                 //  分页信息
-                pagination: {
-                    pageSizeOptions: ['10', '20', '30', '40', '50'],
-                    current: 1,
-                    pageSize: 10,
-                    total: 50,
-                },
+                pagination,
                 //  展示莫泰框
                 dialogVisible: false,
             };
