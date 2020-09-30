@@ -62,8 +62,8 @@
             </a-pagination>
         </a-row>
         <!--莫泰框-->
-        <a-modal v-model="dialogVisible"
-                 v-if="dialogVisible"
+        <a-modal v-model="dialogData.dialogVisible"
+                 v-if="dialogData.dialogVisible"
                  :maskClosable="false"
                  :centered="true"
                  :width="800"
@@ -77,7 +77,7 @@
 </template>
 <script>
     import RoleBox from '@/components/roleBox.vue';
-    import { dialogMethods } from '@/utils/methods';
+    import { dialogMethods, dialogData } from '@/utils/methods';
     import { pagination } from '@/utils/pagination.js';
 
     const columns = [
@@ -139,8 +139,8 @@
                 scroll: { x: 820, y: 'calc(100vh - 398px)' },
                 //  分页信息
                 pagination,
-                //  展示莫泰框
-                dialogVisible: false,
+                //  莫泰框
+                dialogData,
             };
         },
         methods: {
