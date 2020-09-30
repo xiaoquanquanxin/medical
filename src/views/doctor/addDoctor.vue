@@ -22,6 +22,7 @@
 </template>
 <script>
     import { formItemLayout } from '@/utils/layout.js';
+
     export default {
         beforeCreate(){
             this.form = this.$form.createForm(this);
