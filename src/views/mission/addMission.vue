@@ -29,18 +29,23 @@
                 />
             </a-form-item>
             <a-form-item label="文章内容">
-                <!--                <editor-->
-                <!--                                        style="width:calc((100vw - 200px) * .65)"-->
-                <!--                        api-key="no-api-key"-->
-                <!--                        :init="tinymceOption"-->
-                <!--                />-->
-                <VueQuillEditor ref="myTextEditor"
-                                style="width:calc((100vw - 200px) * .65);min-width: 800px"
-                                class="editor"
-                                v-model="content"
-                                :options="quillOption"
-                                @change="onEditorChange"
-                ></VueQuillEditor>
+<!--                第二种富文本，这个需要看-->
+<!--                https://www.tiny.cloud/my-account/onboarding/-->
+<!--                然后添加域名-->
+                <editor
+                        apiKey="ax7la7fczawlydmei7y1gttafpt6j86etih6n23k3w1if78e"
+                        style="width:calc((100vw - 200px) * .65)"
+                        api-key="no-api-key"
+                        :init="tinymceOption"
+                />
+                <!--第一种富文本-->
+                <!--                <VueQuillEditor ref="myTextEditor"-->
+                <!--                                style="width:calc((100vw - 200px) * .65);min-width: 800px"-->
+                <!--                                class="editor"-->
+                <!--                                v-model="content"-->
+                <!--                                :options="quillOption"-->
+                <!--                                @change="onEditorChange"-->
+                <!--                ></VueQuillEditor>-->
                 <a-input type="hidden" v-decorator="contentDecorator"/>
             </a-form-item>
             <a-form-item :wrapper-col="{ span: 4, offset: 7 }">
@@ -107,28 +112,22 @@
 
                 //  文章类型列表
                 articleTypeList: [],
-
-                //  富文本编辑器初始化
-                tinymceOption: {
-                    height: 500,
-                    menubar: false,
-                    plugins: [
-                        'advlist autolink lists link image charmap print preview anchor',
-                        'searchreplace visualblocks code fullscreen',
-                        'insertdatetime media table paste code help wordcount'
-                    ],
-                    toolbar:
-                        'undo redo | formatselect | bold italic backcolor | \
-                        alignleft aligncenter alignright alignjustify | \
-                        bullist numlist outdent indent | removeformat | help'
-
-                },
+                
 
                 //  第一种富文本
                 quillOption: {
                     placeholder: '编辑文章内容'
                 },
 
+                //  第二种富文本
+                tinymceOption: {
+                    height: 300,
+                    menubar: false,
+                    language: 'zh_CN',
+                    toolbar: ['searchreplace bold italic underline strikethrough alignleft aligncenter alignright outdent indent  blockquote undo redo removeformat subscript superscript code codesample', 'hr bullist numlist link image charmap preview anchor pagebreak insertdatetime media table emoticons forecolor backcolor fullscreen'],
+                    plugins: ['advlist anchor autolink autosave code codesample colorpicker colorpicker contextmenu directionality emoticons fullscreen hr image imagetools insertdatetime link lists media nonbreaking noneditable pagebreak paste preview print save searchreplace spellchecker tabfocus table template textcolor textpattern visualblocks visualchars wordcount'],
+                },
+                
             };
         },
         mounted(){
@@ -150,12 +149,14 @@
                 });
             },
 
-            //  编辑好富文本
-            onEditorChange(data){
-                this.form.setFieldsValue({
-                    content: data.html
-                });
-            }
+//            //  第一种编辑好富文本
+//            onEditorChange(data){
+//                //  console.log(data.html);
+//                this.form.setFieldsValue({
+//                    content: data.html
+//                });
+//            }
+
         }
     };
 </script>
