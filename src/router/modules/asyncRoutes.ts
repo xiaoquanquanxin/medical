@@ -221,6 +221,8 @@ export const asyncRoutesList = [
 		meta: {
 			chName: '方案管理',
 			selectRouteKey: 'scheme',
+			//	虽然有子项，但作为一个项存在，而不是一个菜单
+			isMenuItem: true,
 		},
 		path: '/scheme',
 		name: 'scheme',
