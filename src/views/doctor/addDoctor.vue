@@ -12,6 +12,61 @@
                         v-decorator="doctorNameDecorator"
                 />
             </a-form-item>
+            <a-form-item label="性别" has-feedback>
+                <a-select placeholder="请选择性别"
+                          v-decorator="doctorNameDecorator"
+                >
+                    <a-select-option value="1">1</a-select-option>
+                    <a-select-option value="3">2</a-select-option>
+                </a-select>
+            </a-form-item>
+            <a-form-item label="医院" has-feedback>
+                <a-select placeholder="请选择医院"
+                          v-decorator="doctorNameDecorator"
+                >
+                    <a-select-option value="1">1</a-select-option>
+                    <a-select-option value="3">2</a-select-option>
+                </a-select>
+            </a-form-item>
+            <a-form-item label="科室" has-feedback>
+                <a-select placeholder="请选择科室"
+                          v-decorator="doctorNameDecorator"
+                >
+                    <a-select-option value="1">1</a-select-option>
+                    <a-select-option value="3">2</a-select-option>
+                </a-select>
+            </a-form-item>
+            <a-form-item label="医生类型" has-feedback>
+                <a-select placeholder="请选择医生类型"
+                          v-decorator="doctorNameDecorator"
+                >
+                    <a-select-option value="1">1</a-select-option>
+                    <a-select-option value="3">2</a-select-option>
+                </a-select>
+            </a-form-item>
+            <a-form-item label="医生职称" has-feedback>
+                <a-select placeholder="请选择医生职称"
+                          v-decorator="doctorNameDecorator"
+                >
+                    <a-select-option value="1">1</a-select-option>
+                    <a-select-option value="3">2</a-select-option>
+                </a-select>
+            </a-form-item>
+            <a-form-item label="手机号">
+                <a-input
+                        v-decorator="doctorNameDecorator"
+                />
+            </a-form-item>
+            <a-form-item label="登录密码">
+                <a-input
+                        v-decorator="doctorNameDecorator"
+                />
+            </a-form-item>
+            <a-form-item label="确认密码">
+                <a-input
+                        v-decorator="doctorNameDecorator"
+                />
+            </a-form-item>
             <a-form-item :wrapper-col="{ span: 4, offset: 7 }">
                 <a-button type="primary" html-type="submit">
                     保存
