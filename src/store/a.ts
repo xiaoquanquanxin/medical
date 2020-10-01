@@ -48,6 +48,12 @@ export const routeMap = {
 	'statistical': true,
 	//  方案管理
 	'scheme': true,
+	//	口服肠内营养补充
+	'oral': true,
+	//	肠内营养支持
+	'intestinal': true,
+	//	膳食营养计划
+	'dietary': true,
 	//  宣教管理
 	'mission': true,
 	//	新增宣教
