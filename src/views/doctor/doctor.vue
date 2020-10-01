@@ -8,6 +8,32 @@
                     <a-input default-value=""/>
                 </a-col>
                 <a-col :span="5">
+                    <a-input default-value=""/>
+                </a-col>
+                <a-col :span="5">
+                    <a-input default-value=""/>
+                </a-col>
+                <a-col :span="5">
+                    <a-select default-value="Option1" style="width:100%;">
+                        <a-select-option value="Option1">
+                            Option1
+                        </a-select-option>
+                        <a-select-option value="Option2">
+                            Option2
+                        </a-select-option>
+                    </a-select>
+                </a-col>
+                <a-col :span="5">
+                    <a-select default-value="Option1" style="width:100%;">
+                        <a-select-option value="Option1">
+                            Option1
+                        </a-select-option>
+                        <a-select-option value="Option2">
+                            Option2
+                        </a-select-option>
+                    </a-select>
+                </a-col>
+                <a-col :span="5">
                     <a-select default-value="Option1" style="width:100%;">
                         <a-select-option value="Option1">
                             Option1
@@ -54,7 +80,7 @@
                 <a-space size="small">
                     <a @click="editDoctor(sItem,sIndex,extra)">编辑</a>
                     <a @click="deleteDoctor(sItem)">删除</a>
-                    <a @click="relatedDisease(sItem,sIndex,)">关联疾病</a>
+<!--                    <a @click="relatedDisease(sItem,sIndex,)">关联疾病</a>-->
                 </a-space>
             </div>
         </a-table>
@@ -99,15 +125,43 @@
 
     const columns = [
         {
-            title: '医生名称',
+            title: '姓名',
             dataIndex: 'doctor',
+            width: 100,
+        },
+        {
+            title: '手机号',
+            dataIndex: 'phone',
+            width: 100,
+        }, {
+            title: '性别',
+            dataIndex: 'sex',
             width: 100,
         },
         {
             title: '状态',
             dataIndex: 'status',
             width: 100,
-            scopedSlots: { customRender: 'a-switch' },
+        },
+        {
+            title: '医院',
+            dataIndex: 'hospital',
+            width: 100,
+        },
+        {
+            title: '科室',
+            dataIndex: 'department',
+            width: 100,
+        },
+        {
+            title: '医生类型',
+            dataIndex: 'doctorType',
+            width: 100,
+        },
+        {
+            title: '医生职称',
+            dataIndex: 'doctorTitle',
+            width: 100,
         },
         {
             title: '操作',
@@ -122,7 +176,7 @@
             key: i,
             doctor: `xx医生`,
             status: String(i % 2),
-            tags: ['编辑', '删除', '关联疾病'],
+            tags: ['编辑', '删除'],
         });
     }
     //  医生管理
@@ -197,12 +251,12 @@
                     },
                 });
             },
-            //  关联疾病
-            relatedDisease(sItem, sIndex){
-                console.log(this.dialogVisible);
-                this.showModal();
-                console.log(this.dialogVisible);
-            },
+//            //  关联疾病
+//            relatedDisease(sItem, sIndex){
+//                console.log(this.dialogVisible);
+//                this.showModal();
+//                console.log(this.dialogVisible);
+//            },
             //  检查莫泰框的值
             modalCheck(){
                 console.log(this.modalTargetKeys);
