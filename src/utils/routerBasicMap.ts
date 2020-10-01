@@ -1,25 +1,5 @@
-//  把服务端的路由，根据 routerId 字段，转为前端路由，这里需要一个 map：routerBasicMap 作比对
-// export function convertRouting(data: any): RouteConfig[] {
-// 	if (!data || !data.length) {
-// 		return [];
-// 	}
-// 	return data.map((item: any, index: number): any => {
-// 		const {id} = item;
-// 		const children = convertRouting(item.children);
-// 		console.log(asyncRoutesMap[id]);
-// 		// @ts-ignore
-// 		return Object.assign({}, asyncRoutesMap[id], children && children.length && {children});
-// 	})
-// }
-
+import store from "@/store"
 import {RouteConfig} from "vue-router"
-
-/**
- * @routes:{haveChildren:boolean}
- * */
-// function convertRoutingItem() {
-//
-// }
 
 //	根据数据觉定返回那些路由被展示
 export function setRouteListByMap(map: any, asyncRoutesList: any): RouteConfig[] {
@@ -33,7 +13,18 @@ export function setRouteListByMap(map: any, asyncRoutesList: any): RouteConfig[]
 				const children = setRouteListByMap(map, item.children);
 				item.children = children;
 			}
-			list.push(item)
+			//	如果是用户列表路由
+			if (item.meta.isUserList) {
+				//	如果没有子路由，直接抛出错误
+				if (!item.children.length) {
+					throw new Error('用户列表必须要有子路由，因为要指定重定向');
+				}
+				item.redirect = item.children[0].path;
+				console.log(item.children);
+				//	放在特殊的列表里
+				store.dispatch('routeList/setUserRouteList', item.children);
+			}
+			list.push(item);
 		}
 	});
 	return list;
