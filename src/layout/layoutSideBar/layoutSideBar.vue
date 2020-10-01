@@ -43,7 +43,7 @@
 </template>
 <script>
     import { mapGetters } from 'vuex';
-    import { TOJSON } from '@/utils/common';
+    import { jumpTo } from '@/utils/routerMeta';
 
     export default {
         name: 'layoutSideBar',
@@ -67,22 +67,7 @@
             }
         },
         methods: {
-            //	跳转
-            jumpTo(item){
-                //  console.log(item.path);
-                //  自己不跳转自己
-                if (this.$route.path === item.path) {
-                    return;
-                }
-//                //  父级组件不能跳
-//                if (item.children && item.children.length) {
-//                    return;
-//                }
-                this.$router.push({ path: item.path });
-            },
-            id(){
-                return Math.random();
-            }
+            jumpTo,
         }
 
     };
