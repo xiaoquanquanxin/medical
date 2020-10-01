@@ -1,5 +1,5 @@
 <template>
-    <div class="">
+    <div class="layout-content-inner-main">
         <!--搜索相关-->
         <a-input-group class="a-input-group">
             <a-row :gutter="8">

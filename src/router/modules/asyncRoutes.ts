@@ -1,5 +1,5 @@
 import LayoutStair from '@/layout/layoutStair/layoutStair.vue';
-
+import Scheme from '@/views/scheme/scheme.vue';
 //	异步路由
 export const asyncRoutesList = [
 	{
@@ -221,12 +221,56 @@ export const asyncRoutesList = [
 		meta: {
 			chName: '方案管理',
 			selectRouteKey: 'scheme',
+			//	有页面内的横向子路由
+			hasTransverseSubPaths: true,
 			//	虽然有子项，但作为一个项存在，而不是一个菜单
 			isMenuItem: true,
 		},
-		path: '/scheme',
 		name: 'scheme',
-		component: () => import(/* webpackChunkName: "scheme" */ '@/views/scheme/scheme.vue'),
+		path: '/scheme',
+		component: Scheme,
+		children: [
+			{
+				meta: {
+					//	oral:口服
+					chName: '口服肠内营养补充',
+					selectRouteKey: 'scheme',
+						//	是scheme路由的某一项子路由
+					userSelectKey: 'oral',
+				},
+				name: 'oral',
+				path: '/scheme/oral',
+				component: () => import(/* webpackChunkName: "oral" */ '@/views/scheme/oral.vue'),
+				hidden: true
+			},
+			{
+				meta: {
+					//	intestinal:肠内
+					chName: '肠内营养补充',
+					selectRouteKey: 'scheme',
+					//	是scheme路由的某一项子路由
+					userSelectKey: 'intestinal',
+				},
+				name: 'intestinal',
+				path: '/scheme/intestinal',
+				component: () => import(/* webpackChunkName: "intestinal" */ '@/views/scheme/intestinal.vue'),
+				hidden: true
+			},
+			{
+				meta: {
+					//	dietary:膳食
+					chName: '肠内营养补充',
+					selectRouteKey: 'scheme',
+					//	是scheme路由的某一项子路由
+					userSelectKey: 'dietary',
+				},
+				name: 'dietary',
+				path: '/scheme/dietary',
+				component: () => import(/* webpackChunkName: "intestinal" */ '@/views/scheme/intestinal.vue'),
+				hidden: true
+			}
+		],
+		redirect: '/scheme/oral',
 	},
 	{
 		meta: {
