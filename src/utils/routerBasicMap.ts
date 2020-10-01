@@ -19,7 +19,7 @@ export function setRouteListByMap(map: any, asyncRoutesList: any): RouteConfig[]
 				if (!item.children.length) {
 					throw new Error('用户列表必须要有子路由，因为要指定重定向');
 				}
-				console.log(item.children);
+				//	console.log(item.children);
 				//	放在特殊的列表里
 				store.dispatch('routeList/setUserRouteList', item.children);
 			}
