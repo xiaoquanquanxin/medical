@@ -235,7 +235,7 @@ export const asyncRoutesList = [
 					//	oral:口服
 					chName: '口服肠内营养补充',
 					selectRouteKey: 'scheme',
-						//	是scheme路由的某一项子路由
+					//	是scheme路由的某一项子路由
 					userSelectKey: 'oral',
 				},
 				name: 'oral',
@@ -246,7 +246,7 @@ export const asyncRoutesList = [
 			{
 				meta: {
 					//	intestinal:肠内
-					chName: '肠内营养补充',
+					chName: '肠内营养支持',
 					selectRouteKey: 'scheme',
 					//	是scheme路由的某一项子路由
 					userSelectKey: 'intestinal',
@@ -259,7 +259,7 @@ export const asyncRoutesList = [
 			{
 				meta: {
 					//	dietary:膳食
-					chName: '肠内营养补充',
+					chName: '膳食营养计划',
 					selectRouteKey: 'scheme',
 					//	是scheme路由的某一项子路由
 					userSelectKey: 'dietary',
