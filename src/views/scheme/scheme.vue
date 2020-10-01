@@ -1,6 +1,5 @@
 <template>
     <div>
-        <p>方案管理</p>
         <a-menu v-if="currentMeta"
                 v-model="userSelectKey"
                 mode="horizontal">
