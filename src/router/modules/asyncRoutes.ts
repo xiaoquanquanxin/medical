@@ -266,7 +266,7 @@ export const asyncRoutesList = [
 				},
 				name: 'dietary',
 				path: '/scheme/dietary',
-				component: () => import(/* webpackChunkName: "intestinal" */ '@/views/scheme/intestinal.vue'),
+				component: () => import(/* webpackChunkName: "dietary" */ '@/views/scheme/dietary.vue'),
 				hidden: true
 			}
 		],
