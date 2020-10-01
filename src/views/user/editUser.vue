@@ -60,9 +60,6 @@
             <a-form-item label="家庭组">
                 <a-input placeholder="请输入家庭组"/>
             </a-form-item>
-            <a-form-item label="小程序ID">
-                <a-input placeholder="请输入小程序ID"/>
-            </a-form-item>
             <a-form-item :wrapper-col="{ span: 4, offset: 7 }">
                 <a-button type="primary" html-type="submit">保存</a-button>
             </a-form-item>
