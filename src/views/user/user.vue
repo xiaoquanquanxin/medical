@@ -19,6 +19,13 @@
                 <a-col :span="4">
                     <a-button type="primary" @click="searchBtn()">搜索</a-button>
                 </a-col>
+                <a-col :span="4">
+                    <a-select default-value="Option1" style="width:100%;">
+                        <a-select-option value="Option1">
+                            Option1
+                        </a-select-option>
+                    </a-select>
+                </a-col>
             </a-row>
         </a-input-group>
         <!--表格-->
@@ -100,7 +107,12 @@
             scopedSlots: { customRender: 'familyGroup' }
         },
         {
-            title: '小程序id',
+            title: '是否为患者',
+            dataIndex: 'applets',
+            width: 120,
+        },
+        {
+            title: '状态',
             dataIndex: 'applets',
             width: 100,
         },
