@@ -59,12 +59,12 @@
                     //  width: 100,
                 },
                 {
-                    title: '群主',
+                    title: '是否是患者',
                     dataIndex: 'isGroupManager',
                     //  width: 100,
                 },
                 {
-                    title: 'MDT',
+                    title: '角色',
                     dataIndex: 'MDT',
                     //  width: 100,
                 },
