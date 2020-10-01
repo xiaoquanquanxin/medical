@@ -44,6 +44,15 @@
                 </a-col>
             </a-row>
         </a-input-group>
+        <a-input-group class="a-input-group">
+            <a-col :span="5">
+                <router-link :to="{name:'addDisease'}">
+                    <a-button type="primary">
+                        新增方案
+                    </a-button>
+                </router-link>
+            </a-col>
+        </a-input-group>
         <!--表格-->
         <a-table
                 :row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
