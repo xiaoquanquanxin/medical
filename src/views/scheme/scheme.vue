@@ -17,7 +17,6 @@
 </template>
 <script>
     import { mapGetters } from 'vuex';
-    import { TOJSON } from '@/utils/common';
     import { jumpTo } from '@/utils/routerMeta';
 
     export default {
@@ -27,7 +26,7 @@
             ]),
             userRouteList(){
                 const { userRouteList } = this.$store.state.routeList;
-                console.table(TOJSON(userRouteList)[0]);
+                //  console.table(TOJSON(userRouteList)[0]);
                 return userRouteList;
             },
             currentMeta(){

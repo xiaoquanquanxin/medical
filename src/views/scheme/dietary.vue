@@ -93,22 +93,22 @@
 
     const columns = [
         {
-            title: '账号',
+            title: '方案名称',
             dataIndex: 'hospital',
             width: 100,
         },
         {
-            title: '创建时间',
+            title: '能量',
             dataIndex: 'city',
             width: 100,
         },
         {
-            title: '创建人',
+            title: '食物类型',
             dataIndex: 'status',
             width: 100,
         },
         {
-            title: '角色',
+            title: '疾病',
             dataIndex: 'icon',
             width: 100,
         },
