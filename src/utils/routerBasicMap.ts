@@ -13,8 +13,8 @@ export function setRouteListByMap(map: any, asyncRoutesList: any): RouteConfig[]
 				const children = setRouteListByMap(map, item.children);
 				item.children = children;
 			}
-			//	如果是用户列表路由
-			if (item.meta.isSchemeList) {
+			//	有页面内的横向子路由
+			if (item.meta.hasTransverseSubPaths) {
 				//	如果没有子路由，直接抛出错误
 				if (!item.children.length) {
 					throw new Error('用户列表必须要有子路由，因为要指定重定向');
