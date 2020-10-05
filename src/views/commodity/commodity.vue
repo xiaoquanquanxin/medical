@@ -48,6 +48,9 @@
                     <a @click="offShelf(sItem,sIndex,extra)">下架</a>
                 </a-space>
             </div>
+            <template slot="priceView" slot-scope="scope,sItem,sIndex,extra">
+                <a @click="priceView(sItem)">查看</a>
+            </template>
         </a-table>
         <!--分页-->
         <a-row type="flex" justify="end" class="a-input-group">
@@ -66,11 +69,36 @@
                 </template>
             </a-pagination>
         </a-row>
+        <!--莫泰框-->
+        <a-modal v-model="dialogData.visible"
+                 v-if="dialogData.visible"
+                 :maskClosable="false"
+                 centered
+                 :width="800"
+                 title="查看商品"
+                 ok-text="确认"
+                 cancel-text="取消"
+                 @ok="modalCheck()">
+            <a-table
+                    :columns="countTableColumns"
+                    :data-source="countTableData"
+                    :pagination="false"
+                    bordered
+            >
+                <!--单位-->
+                <div slot="unit" slot-scope="scope,sItem,sIndex,extra">
+                    <a-space size="small">
+                        <a-input placeholder="输入值" v-model="sItem.price"/>
+                    </a-space>
+                </div>
+            </a-table>
+        </a-modal>
     </div>
 </template>
 <script>
     import { pagination } from '@/utils/pagination.ts';
     import { towRowSearch } from '../../utils/tableScroll';
+    import { dialogMethods, dialogData } from '@/utils/dialog';
 
     const columns = [
         {
@@ -97,6 +125,7 @@
             title: '价格',
             dataIndex: 'price',
             width: 100,
+            scopedSlots: { customRender: 'priceView' },
         },
         {
             title: '状态',
@@ -122,8 +151,84 @@
         });
     }
 
+    //  查看详情的表格
+    const countTableData = [
+        {
+            key: Math.random(),
+            name: '山西省人民医院',
+            relative: '10克',
+            unit: '勺',
+            shoppingType: 'A商品',
+            price: null,
+        },
+        {
+            key: Math.random(),
+            name: '山西省人民医院',
+            relative: '10克',
+            unit: 'ml',
+            shoppingType: 'B商品',
+            price: null,
+        },
+        {
+            key: Math.random(),
+            name: '山西省肿瘤医院',
+            relative: '110克',
+            unit: '勺',
+            shoppingType: 'A商品',
+            price: null,
+        },
+        {
+            key: Math.random(),
+            name: '山西省肿瘤医院',
+            relative: '110克',
+            unit: 'ml',
+            shoppingType: 'B商品',
+            price: null,
+        },
+    ];
     export default {
         data(){
+            const countTableColumns = [
+                {
+                    dataIndex: 'name',
+                    title: 'Name',
+                    width: 200,
+                    customRender: (text, row, index) => {
+                        const obj = {
+                            children: text,
+                            attrs: {},
+                        };
+                        if (index === 0) {
+                            obj.attrs.rowSpan = 2;
+                        } else if (index === 2) {
+                            obj.attrs.rowSpan = 2;
+                        } else {
+                            obj.attrs.rowSpan = 0;
+                        }
+                        return obj;
+                    },
+                },
+                {
+                    //  单位
+                    title: '单位',
+                    key: 'unit',
+                    dataIndex: 'unit',
+                },
+                {
+                    //  单位关系
+                    title: '单位关系',
+                    key: 'relative',
+                    dataIndex: 'relative',
+                },
+                {
+                    //  价格
+                    title: '价格',
+                    key: 'price',
+                    dataIndex: 'price',
+                    width: 300,
+                    scopedSlots: { customRender: 'unit' },
+                },
+            ];
             return {
                 data,
                 columns,
@@ -134,9 +239,19 @@
 
                 //  分页信息
                 pagination,
+                //  莫泰框
+                dialogData,
+                //  弹框表格的数据
+                countTableColumns,
+                countTableData,
             };
         },
+        created(){
+            this.dialogData.visible = true;
+        },
         methods: {
+            //  莫泰框方法
+            ...dialogMethods,
             //  选中表格数据
             onSelectChange(selectedRowKeys){
                 console.log('selectedRowKeys changed: ', selectedRowKeys);
@@ -162,7 +277,20 @@
             //  上架
             onShelf(){},
             //  下架
-            offShelf(){}
+            offShelf(){},
+            //  价格查看
+            priceView(sItem){
+                console.log(sItem);
+                this.showModal();
+            },
+            //  确认查看价格
+            modalCheck(){
+                console.log('保存接口');
+                console.log(this.countTableData[0]);
+                setTimeout(() => {
+                    this.hideModal();
+                }, 1000);
+            }
         }
     };
 </script>
