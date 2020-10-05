@@ -2,49 +2,40 @@
 import {COMMIT_INTERFACE} from "@/store"
 
 interface STATE {
-	//	选择时间的列表数据
-	timeListData: []
-	//	选择时间的被选中数据
-	chooseTimeListData: any[]
-	//	选择时间的列表数据
-	shoppingListData: []
-	//	选择时间的被选中数据
-	chooseShoppingListData: any[]
+	//	商品列表数据
+	shoppingList: []
+	//	被选中的商品列表
+	chooseShoppingList: any[]
+	//	被选中的时间
+	chooseTime: string
 }
 
 const state: STATE = {
-	timeListData: [],
-	chooseTimeListData: [],
-	shoppingListData: [],
-	chooseShoppingListData: []
+	shoppingList: [],
+	chooseShoppingList: [],
+	chooseTime: ''
 }
 
 const mutations = {
-	SET_TIME_LIST_DATA: (state: STATE, timeListData: []) => {
-		state.timeListData = timeListData;
+	SET_SHOPPING_LIST: (state: STATE, shoppingList: []) => {
+		state.shoppingList = shoppingList;
 	},
-	SET_CHOOSE_TIME_LIST_DATA: (state: STATE, chooseTimeListData: []) => {
-		state.chooseTimeListData = chooseTimeListData;
+	SET_CHOOSE_SHOPPING_LIST: (state: STATE, chooseShoppingList: []) => {
+		state.chooseShoppingList = chooseShoppingList;
 	},
-	SET_SHOPPING_LIST_DATA: (state: STATE, shoppingListData: []) => {
-		state.shoppingListData = shoppingListData;
-	},
-	SET_CHOOSE_SHOPPING_LIST_DATA: (state: STATE, chooseShoppingListData: []) => {
-		state.chooseShoppingListData = chooseShoppingListData;
+	SET_CHOOSE_TIME: (state: STATE, chooseTime: string) => {
+		state.chooseTime = chooseTime;
 	}
 }
 const actions = {
-	setTimeListData: ({commit}: COMMIT_INTERFACE<STATE>, timeListData: []) => {
-		commit('SET_TIME_LIST_DATA', timeListData);
+	setShoppingList: ({commit}: COMMIT_INTERFACE<STATE>, shoppingList: []) => {
+		commit('SET_SHOPPING_LIST', shoppingList);
 	},
-	setChooseTimeListData: ({commit}: COMMIT_INTERFACE<STATE>, chooseTimeListData: []) => {
-		commit('SET_CHOOSE_TIME_LIST_DATA', chooseTimeListData);
+	setChooseShoppingList: ({commit}: COMMIT_INTERFACE<STATE>, chooseShoppingList: []) => {
+		commit('SET_CHOOSE_SHOPPING_LIST', chooseShoppingList);
 	},
-	setShoppingListData: ({commit}: COMMIT_INTERFACE<STATE>, shoppingListData: []) => {
-		commit('SET_SHOPPING_LIST_DATA', shoppingListData);
-	},
-	setChooseShoppingListData: ({commit}: COMMIT_INTERFACE<STATE>, chooseShoppingListData: []) => {
-		commit('SET_CHOOSE_SHOPPING_LIST_DATA', chooseShoppingListData);
+	setChooseTime: ({commit}: COMMIT_INTERFACE<STATE>, chooseTime: string) => {
+		commit('SET_CHOOSE_TIME', chooseTime);
 	}
 }
 
