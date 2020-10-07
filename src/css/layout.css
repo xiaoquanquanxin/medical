@@ -12,3 +12,22 @@
 .a-input-group + .a-input-group {
     padding-top: 0;
 }
+
+
+/*特殊的表头是选择框的那种*/
+.custom-select-title-table .ant-table-thead > tr > th[colspan]:not([colspan='1']) {
+    text-align: left;
+}
+
+/*特殊的表头是选择框的那种*/
+.custom-select-title-table .ant-table-thead > tr > th .ant-table-header-column {
+    display: block !important;
+}
+
+
+/*上传图片*/
+/*上传图片后的默认图*/
+.upload-default-img {
+    width: 100%;
+    display: block;
+}
