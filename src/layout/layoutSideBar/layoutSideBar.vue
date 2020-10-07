@@ -1,5 +1,5 @@
 <template>
-    <a-layout-sider v-model="collapsed" :trigger="null" collapsible="">
+    <a-layout-sider v-model="collapsed" :trigger="null" collapsible="" class="slider">
         <div class="logo"></div>
         <a-menu v-if="(currentMeta)"
                 :default-selected-keys="[currentMeta.selectRouteKey||'']"
@@ -7,6 +7,7 @@
                 mode="inline"
                 theme="dark"
                 :inline-collapsed="collapsed"
+                class="menu"
         >
             <template
                     v-for="item in routes"
@@ -72,3 +73,12 @@
 
     };
 </script>
+<style scoped lang="stylus">
+    .slider
+        overflow hidden;
+    .menu
+        overflow scroll;
+        height calc(100vh - 52px);
+        padding-bottom 20px;
+
+</style>
