@@ -4,6 +4,8 @@ export const dialogData = {
 	visible: false,
 	//  提交按钮loading
 	submitLoading: false,
+	//	标题
+	title: null,
 };
 
 //  莫泰框方法
@@ -17,4 +19,9 @@ export const dialogMethods = {
 		// @ts-ignore
 		this.dialogData.visible = false;
 	},
+	//	设置莫泰框标题名称
+	setDialogTitle(title: string | null) {
+		// @ts-ignore
+		this.dialogData.title = title;
+	}
 };
