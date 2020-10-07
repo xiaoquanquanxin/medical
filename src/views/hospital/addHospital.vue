@@ -181,7 +181,6 @@
 </template>
 <script>
     import { formItemLayout } from '@/utils/layout.ts';
-    import { TOJSON } from '@/utils/common';
     
     export default {
         beforeCreate(){
