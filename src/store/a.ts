@@ -109,22 +109,39 @@ export const routeMap = {
 	'reportedLoss': true,
 
 
+	/**
+	 * 🍉🍉🍉🍉
+	 * 医院部分
+	 * */
 
-	//	⚠️原型图没有
-	//  新增用户
-	// 'newUser': true,
-	//  编辑用户
-	'editUser': true,
-	//  家庭组
-	'familyGroup': true,
-	//	⚠️原型图没有
-	//  新增家庭组
-	// 'newFamilyGroup': true,
-	//	⚠️原型图没有
-	//  公司信息
-	//	'companyInfo': true,
 
-	//  统计管理
-	'statistical': true,
+
+
+
 
 };
+
+
+
+//  家庭组
+//	⚠️应该是按钮权限
+//	'familyGroup': true,
+
+
+//	⚠️原型图没有
+//  新增用户
+// 'newUser': true,
+//  编辑用户
+//	'editUser': true,
+
+//	⚠️原型图没有
+//  新增家庭组
+// 'newFamilyGroup': true,
+//	⚠️原型图没有
+//  公司信息
+//	'companyInfo': true,
+
+//  统计管理
+//	'statistical': true,
+
+
