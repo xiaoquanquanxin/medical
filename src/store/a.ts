@@ -1,4 +1,6 @@
 export const routeMap = {
+	//	仓库管理
+	'entrepot': true,
 	//	渠道商管理
 	'distributors': true,
 	//	供应商管理
@@ -117,12 +119,7 @@ export const routeMap = {
 	 * */
 
 
-
-
-
-
 };
-
 
 
 //  家庭组
