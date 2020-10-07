@@ -1,4 +1,30 @@
 export const routeMap = {
+	//	渠道商管理
+	'distributors': true,
+	//	供应商管理
+	'supplier': true,
+	//	新增供应商
+	'addSupplier': true,
+	//	用户管理
+	'user': true,
+	//	普通用户
+	'ordinaryUser': true,
+	//	患者用户
+	'patientsUser': true,
+	//  商品管理
+	'commodity': true,
+	//	商品列表
+	'commodityList': true,
+	//  添加商品
+	'addCommodity': true,
+	//  编辑商品
+	'editCommodity': true,
+	//	分类管理
+	'commodityClassification': true,
+	//	品牌管理
+	'brand': true,
+	//	生产厂家管理
+	'manufacturer': true,
 	//  医院管理
 	'hospital': true,
 	//  新增医院
@@ -17,14 +43,73 @@ export const routeMap = {
 	'addDisease': true,
 	//  编辑疾病
 	'editDisease': true,
+	//  处方审核管理
+	'scheme': true,
+	//	口服肠内营养补充
+	'oral': true,
+	//	新增口服肠内营养补充
+	'addOral': true,
+	//	编辑口服肠内营养补充
+	'editOral': true,
+	//	肠内营养支持
+	'intestinal': true,
+	//	膳食营养计划
+	'dietary': true,
+	//	评估调查表管理
+	'questionnaire': true,
+	//  宣教管理
+	'mission': true,
+	//	新增宣教
+	'addMission': true,
+	//	编辑宣教
+	'editMission': true,
+	//  系统管理
+	'system': true,
+	//  修改密码
+	'changePassword': true,
+	//	⚠️原型图没有了
+	// //  角色管理
+	// 'role': true,
+	// //  账号管理
+	// 'account': true,
+
+
+	/**
+	 * 🍉🍉🍉🍉
+	 * 供应商部分
+	 * */
+
+	//	商品查看
+	'viewGoods': true,
+
+
+	/**
+	 * 🍉🍉🍉🍉
+	 * 渠道商部分
+	 * */
 	//  医生管理
 	'doctor': true,
 	//  新增医生
 	'addDoctor': true,
 	//  编辑医生
 	'editDoctor': true,
-	//  用户管理
-	'user': true,
+	//	订单管理
+	'order': true,
+	//	订单详情
+	'orderDetail': true,
+	//	库房管理
+	'warehouse': true,
+	//	商品库存
+	'inventory': true,
+	//	出库
+	'outbound': true,
+	//	入库
+	'putInStorage': true,
+	//	报损
+	'reportedLoss': true,
+
+
+
 	//	⚠️原型图没有
 	//  新增用户
 	// 'newUser': true,
@@ -38,34 +123,8 @@ export const routeMap = {
 	//	⚠️原型图没有
 	//  公司信息
 	//	'companyInfo': true,
-	//  商品管理
-	'commodity': true,
-	//  添加商品
-	'addCommodity': true,
-	//  编辑商品
-	'editCommodity': true,
+
 	//  统计管理
 	'statistical': true,
-	//  方案管理
-	'scheme': true,
-	//	口服肠内营养补充
-	'oral': true,
-	//	肠内营养支持
-	'intestinal': true,
-	//	膳食营养计划
-	'dietary': true,
-	//  宣教管理
-	'mission': true,
-	//	新增宣教
-	'addMission': true,
-	//	编辑宣教
-	'editMission': true,
-	//  系统设置
-	'system': true,
-	//  修改密码
-	'changePassword': true,
-	//  角色管理
-	'role': true,
-	//  账号管理
-	'account': true,
+
 };
