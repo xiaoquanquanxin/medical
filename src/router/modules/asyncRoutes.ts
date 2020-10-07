@@ -42,7 +42,17 @@ export const asyncRoutesList = [
 		},
 		name: 'addSupplier',
 		path: '/addSupplier',
-		component: () => import(/* webpackChunkName: "changePassword" */ '@/views/supplier/addSupplier.vue'),
+		component: () => import(/* webpackChunkName: "addSupplier" */ '@/views/supplier/addSupplier.vue'),
+		hidden: true,
+	},
+	{
+		meta: {
+			chName: '编辑供应商',
+			selectRouteKey: 'supplier',
+		},
+		name: 'editSupplier',
+		path: '/editSupplier/:supplierId',
+		component: () => import(/* webpackChunkName: "addSupplier" */ '@/views/supplier/addSupplier.vue'),
 		hidden: true,
 	},
 	//	用户管理【平台用户】
