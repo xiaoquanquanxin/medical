@@ -15,53 +15,51 @@
                         placeholder="请输入供应商名称"
                 />
             </a-form-item>
-            <div style="display: none">
-                <a-form-item label="供应商编码">
-                    <a-input
-                            v-decorator="supplierCodeDecorator"
-                            placeholder="请输入供应商编码"
-                    />
-                </a-form-item>
-                <a-form-item label="地址">
-                    <a-select placeholder="请选择地址"
-                              v-decorator="addressDecorator"
-                    >
-                        <a-select-option value="">
-                            请选择地址
-                        </a-select-option>
-                        <!--                    <a-select-option v-for="(item,index) in addrList"-->
-                        <!--                                     :value="index"-->
-                        <!--                                     :key="index"-->
-                        <!--                    >-->
-                        <!--                        {{item}}&#45;&#45;{{index}}-->
-                        <!--                    </a-select-option>-->
-                    </a-select>
-                </a-form-item>
-                <a-form-item label="详细地址">
-                    <a-input
-                            v-decorator="detailedAddressDecorator"
-                            placeholder="请输入详细地址"
-                    />
-                </a-form-item>
-                <a-form-item label="联系人">
-                    <a-input
-                            v-decorator="contactDecorator"
-                            placeholder="请输入联系人"
-                    />
-                </a-form-item>
-                <a-form-item label="手机号">
-                    <a-input
-                            v-decorator="phoneNumberDecorator"
-                            placeholder="请输入手机号"
-                    />
-                </a-form-item>
-                <a-form-item label="邮箱">
-                    <a-input
-                            v-decorator="emailDecorator"
-                            placeholder="请输入邮箱"
-                    />
-                </a-form-item>
-            </div>
+            <a-form-item label="供应商编码">
+                <a-input
+                        v-decorator="supplierCodeDecorator"
+                        placeholder="请输入供应商编码"
+                />
+            </a-form-item>
+            <a-form-item label="地址">
+                <a-select placeholder="请选择地址"
+                          v-decorator="addressDecorator"
+                >
+                    <a-select-option value="">
+                        请选择地址
+                    </a-select-option>
+                    <!--                    <a-select-option v-for="(item,index) in addrList"-->
+                    <!--                                     :value="index"-->
+                    <!--                                     :key="index"-->
+                    <!--                    >-->
+                    <!--                        {{item}}&#45;&#45;{{index}}-->
+                    <!--                    </a-select-option>-->
+                </a-select>
+            </a-form-item>
+            <a-form-item label="详细地址">
+                <a-input
+                        v-decorator="detailedAddressDecorator"
+                        placeholder="请输入详细地址"
+                />
+            </a-form-item>
+            <a-form-item label="联系人">
+                <a-input
+                        v-decorator="contactDecorator"
+                        placeholder="请输入联系人"
+                />
+            </a-form-item>
+            <a-form-item label="手机号">
+                <a-input
+                        v-decorator="phoneNumberDecorator"
+                        placeholder="请输入手机号"
+                />
+            </a-form-item>
+            <a-form-item label="邮箱">
+                <a-input
+                        v-decorator="emailDecorator"
+                        placeholder="请输入邮箱"
+                />
+            </a-form-item>
             <p>上传证件</p>
             <hr>
             <br>
