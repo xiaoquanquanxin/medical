@@ -1,6 +1,16 @@
 import LayoutStair from '@/layout/layoutStair/layoutStair.vue';
 import Scheme from '@/views/scheme/scheme.vue';
 //	异步路由
+/**
+ *
+ * chName			:	中文名
+ * selectRouteKey	:	被选中的菜单的key，不区分一级二级，只要是蓝色的就是
+ * openRouteKey		:	展开的菜单的key
+ * name				:	路由名称
+ * path				:	路由地址
+ * hidden			:	隐藏
+ *
+ * **/
 export const asyncRoutesList = [
 
 	/**
@@ -11,7 +21,6 @@ export const asyncRoutesList = [
 		meta: {
 			chName: '渠道商管理',
 			selectRouteKey: 'distributors',
-			openRouteKey: 'platform',
 		},
 		name: 'distributors',
 		path: '/distributors',
@@ -21,7 +30,6 @@ export const asyncRoutesList = [
 		meta: {
 			chName: '供应商管理',
 			selectRouteKey: 'supplier',
-			openRouteKey: 'platform',
 		},
 		name: 'supplier',
 		path: '/supplier',
@@ -30,8 +38,7 @@ export const asyncRoutesList = [
 	{
 		meta: {
 			chName: '新增供应商',
-			selectRouteKey: 'addSupplier',
-			openRouteKey: 'platform',
+			selectRouteKey: 'supplier',
 		},
 		name: 'addSupplier',
 		path: '/addSupplier',
