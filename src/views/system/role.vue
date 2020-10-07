@@ -62,8 +62,8 @@
             </a-pagination>
         </a-row>
         <!--莫泰框-->
-        <a-modal v-model="dialogData.dialogVisible"
-                 v-if="dialogData.dialogVisible"
+        <a-modal v-model="dialogData.visible"
+                 v-if="dialogData.visible"
                  :maskClosable="false"
                  :centered="true"
                  :width="800"
