@@ -1,6 +1,5 @@
 <template>
     <div class="layout-content-inner-main">
-        <p>新增或编辑渠道商</p>
         <a-form class="form"
                 :form="form"
                 v-bind="formItemLayout"
