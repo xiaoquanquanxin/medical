@@ -1,6 +1,5 @@
 <template>
     <div class="layout-content-inner-main">
-        <p>用户管理</p>
         <!--搜索相关-->
         <a-input-group class="a-input-group">
             <a-row :gutter="8">
@@ -8,46 +7,77 @@
                     <a-input v-model="name" placeholder="请输入姓名"/>
                 </a-col>
                 <a-col :span="5">
-                    <a-input v-model="doctor" placeholder="请输入主治医生"/>
+                    <a-select v-model="hospital" style="width:100%;">
+                        <a-select-option :value='null'>
+                            请选择医院
+                        </a-select-option>
+                        <a-select-option value="Option2">
+                            Option2
+                        </a-select-option>
+                    </a-select>
                 </a-col>
                 <a-col :span="5">
-                    <a-input v-model="hospital" placeholder="请输入医院"/>
+                    <a-select v-model="department" style="width:100%;">
+                        <a-select-option :value='null'>
+                            请选择科室
+                        </a-select-option>
+                        <a-select-option value="Option2">
+                            Option2
+                        </a-select-option>
+                    </a-select>
                 </a-col>
                 <a-col :span="5">
-                    <a-input v-model="department" placeholder="请输入科室"/>
+                    <a-select v-model="doctor" style="width:100%;">
+                        <a-select-option :value='null'>
+                            请选择主治医生
+                        </a-select-option>
+                        <a-select-option value="Option2">
+                            Option2
+                        </a-select-option>
+                    </a-select>
+                </a-col>
+                <a-col :span="5">
+                    <a-select v-model="isPatient" style="width:100%;">
+                        <a-select-option :value='null'>
+                            是否为患者
+                        </a-select-option>
+                        <a-select-option value="Option2">
+                            是
+                        </a-select-option>
+                        <a-select-option value="Option2">
+                            否
+                        </a-select-option>
+                    </a-select>
+                </a-col>
+                <a-col :span="5">
+                    <a-select v-model="status" style="width:100%;">
+                        <a-select-option :value='null'>
+                            状态
+                        </a-select-option>
+                        <a-select-option value="Option2">
+                            是
+                        </a-select-option>
+                        <a-select-option value="Option2">
+                            否
+                        </a-select-option>
+                    </a-select>
                 </a-col>
                 <a-col :span="4">
                     <a-button type="primary" @click="searchBtn()">搜索</a-button>
-                </a-col>
-                <a-col :span="4">
-                    <a-select default-value="Option1" style="width:100%;">
-                        <a-select-option value="Option1">
-                            Option1
-                        </a-select-option>
-                    </a-select>
                 </a-col>
             </a-row>
         </a-input-group>
         <!--表格-->
         <a-table
-                :row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                 :columns="columns"
                 :data-source="data"
                 :scroll="scroll"
                 :pagination="false"
         >
-            <div
-                    slot="familyGroup"
-                    slot-scope="scope,sItem,sIndex,extra"
-            >
-                <router-link :to="{name: 'familyGroup', params:{familyGroup: sIndex}}">
-                    {{sItem.familyGroup}}
-                </router-link>
-            </div>
             <div slot="tags" slot-scope="scope,sItem,sIndex,extra">
                 <a-space size="small">
                     <a @click="editUser(sItem,sIndex,extra)">编辑</a>
-                    <a @click="deleteUser(sItem)">删除</a>
+                    <!--                    <a @click="deleteUser(sItem)">删除</a>-->
                 </a-space>
             </div>
         </a-table>
@@ -68,11 +98,26 @@
                 </template>
             </a-pagination>
         </a-row>
+        <!--莫泰框-->
+        <a-modal v-model="dialogData.visible"
+                 v-if="dialogData.visible"
+                 :maskClosable="false"
+                 centered
+                 :width="800"
+                 title="编辑患者用户"
+                 ok-text="确认"
+                 cancel-text="取消"
+                 @ok="modalCheck()">
+            <EditPatientsUser ref="refEditPatientsUser"/>
+        </a-modal>
     </div>
 </template>
 <script>
     import { pagination } from '@/utils/pagination.ts';
     import { oneRowSearch } from '../../utils/tableScroll';
+    import { mapGetters, mapActions } from 'vuex';
+    import { dialogMethods, dialogData } from '@/utils/dialog';
+    import EditPatientsUser from '@/components/editPatientsUser/editPatientsUser.vue';
 
     const columns = [
         {
@@ -100,12 +145,7 @@
             dataIndex: '',
             width: 100,
         },
-        {
-            title: '家庭组',
-            dataIndex: 'familyGroup',
-            width: 100,
-            scopedSlots: { customRender: 'familyGroup' }
-        },
+
         {
             title: '是否为患者',
             dataIndex: 'applets',
@@ -113,7 +153,7 @@
         },
         {
             title: '状态',
-            dataIndex: 'applets',
+            dataIndex: 'status',
             width: 100,
         },
         {
@@ -129,42 +169,48 @@
             key: i,
             department: `xx科室`,
             status: String(i % 2),
-            familyGroup: 'xxx',
             tags: ['编辑', '删除', '关联疾病'],
         });
     }
     //  用户管理
     export default {
+        components:{
+            EditPatientsUser,
+        },
         data(){
             return {
                 name: null,
-                doctor: null,
                 hospital: null,
                 department: null,
+                doctor: null,
+                isPatient: null,
+                status: null,
 
                 data,
                 columns,
-                selectedRowKeys: [], // Check here to configure the default column
 
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
                 scroll: oneRowSearch,
 
                 //  分页信息
                 pagination,
+                //  莫泰框
+                dialogData,
             };
         },
         methods: {
+            //  莫泰框方法
+            ...dialogMethods,
+            //  编辑用userId
+            ...mapActions('patientsUser', [
+                'setPatientsUserId',
+            ]),
             //  搜索
             searchBtn(){
                 console.log(this.name);
                 console.log(this.doctor);
                 console.log(this.hospital);
                 console.log(this.department);
-            },
-            //  选中表格数据
-            onSelectChange(selectedRowKeys){
-                console.log('selectedRowKeys changed: ', selectedRowKeys);
-                this.selectedRowKeys = selectedRowKeys;
             },
             //  展示的每一页数据变换
             onShowSizeChange(current, pageSize){
@@ -178,8 +224,9 @@
                 console.log(pageSize);
             },
             //  编辑用户
-            editUser(sItem, sIndex){
-                this.$router.push({ name: 'editUser', params: { userId: sIndex } });
+            editUser(sItem){
+                this.setPatientsUserId(1243323);
+                this.showModal();
             },
             //  删除用户
             deleteUser(sItem){
@@ -201,6 +248,15 @@
                     },
                 });
             },
+            //
+            modalCheck(){
+                const promise = this.$refs.refEditPatientsUser.handleSubmit();
+                promise.then(v => {
+                    this.hideModal();
+                }).catch(error => {
+                    console.log('有错');
+                });
+            }
         }
     };
 </script>
