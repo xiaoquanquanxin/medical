@@ -11,7 +11,8 @@ const getters = {
 	distributors: (state: any) => state.app.distributors,
 	//	家庭组
 	familyGroup: (state: any) => state.app.familyGroup,
-
+	//	患者用户
+	patientsUser: (state: any) => state.app.patientsUser,
 
 
 	accountBox: (state: any) => state.app.accountBox,
