@@ -102,7 +102,6 @@
     </div>
 </template>
 <script>
-    //  关联科室 穿梭框
     import ShuttleBox from '@/components/shuttleBox.vue';
     import { mapGetters, mapActions } from 'vuex';
     import { pagination } from '@/utils/pagination.ts';
@@ -149,6 +148,7 @@
             tags: ['编辑', '关联科室'],
         });
     }
+    //  医院管理
     export default {
         components: {
             ShuttleBox,
