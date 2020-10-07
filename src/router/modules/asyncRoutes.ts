@@ -59,6 +59,17 @@ export const asyncRoutesList = [
 			},
 			{
 				meta: {
+					chName: '家庭组',
+					selectRouteKey: 'ordinaryUser',
+					openRouteKey: 'user',
+				},
+				path: '/user/familyGroup',
+				name: 'familyGroup',
+				component: () => import(/* webpackChunkName: "familyGroup" */ '@/views/familyGroup/familyGroup.vue'),
+				hidden: true,
+			},
+			{
+				meta: {
 					chName: '患者用户',
 					selectRouteKey: 'patientsUser',
 					openRouteKey: 'user',
@@ -493,29 +504,9 @@ export const asyncRoutesList = [
 	 * 🍉🍉🍉🍉
 	 * 医院部分
 	 * */
-	{
-		meta: {
-			chName: '编辑用户',
-			selectRouteKey: 'user',
-		},
-		path: '/user/editUser/:userId',
-		name: 'editUser',
-		component: () => import(/* webpackChunkName: "newUser" */ '@/views/user/editUser.vue'),
-		hidden: true,
-	},
-	{
-		meta: {
-			chName: '家庭组',
-			selectRouteKey: 'user',
-		},
-		path: '/user/familyGroup',
-		name: 'familyGroup',
-		component: () => import(/* webpackChunkName: "familyGroup" */ '@/views/familyGroup/familyGroup.vue'),
-		hidden: true,
-	},
+
 
 ]
-
 
 
 //	⚠️原型图没有
@@ -530,9 +521,6 @@ export const asyncRoutesList = [
 // 	hidden: true,
 // },
 
-
-
-//	⚠️原型图没有了
 // {
 // 	meta: {
 // 		chName: '角色管理',
@@ -554,7 +542,6 @@ export const asyncRoutesList = [
 // 	component: () => import(/* webpackChunkName: "account" */ '@/views/system/account.vue'),
 // },
 
-
 // {
 // 	meta: {
 // 		chName: '统计管理',
@@ -565,8 +552,6 @@ export const asyncRoutesList = [
 // 	component: () => import(/* webpackChunkName: "statistical" */ '@/views/statistical/statistical.vue'),
 // },
 
-
-//	⚠️原型图没有
 // {
 // 	meta: {
 // 		chName: '新增家庭组',
@@ -577,7 +562,7 @@ export const asyncRoutesList = [
 // 	component: () => import(/* webpackChunkName: "newFamilyGroup" */ '@/views/familyGroup/newFamilyGroup.vue'),
 // 	hidden: true,
 // },
-//	⚠️原型图没有
+
 // {
 // 	meta: {
 // 		chName: '公司信息',
@@ -588,3 +573,13 @@ export const asyncRoutesList = [
 // 	component: () => import(/* webpackChunkName: "companyInfo" */ '@/views/companyInfo/companyInfo.vue'),
 // },
 
+// {
+// 	meta: {
+// 		chName: '编辑用户',
+// 		selectRouteKey: 'user',
+// 	},
+// 	path: '/user/editUser/:userId',
+// 	name: 'editUser',
+// 	component: () => import(/* webpackChunkName: "newUser" */ '@/views/user/editUser.vue'),
+// 	hidden: true,
+// },
