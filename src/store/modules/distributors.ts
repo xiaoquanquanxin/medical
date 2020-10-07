@@ -128,3 +128,37 @@ export default {
 	mutations,
 	actions
 }
+
+
+//            //	渠道商名称
+//            channelName(){
+//                return this.$store.state.distributors.channelName;
+//            },
+//            //	渠道商编码
+//            channelCode(){
+//                return this.$store.state.distributors.channelCode;
+//            },
+//            //	渠道商地区-省份
+//            province(){
+//                return this.$store.state.distributors.province;
+//            },
+//            //	渠道商地区-市区
+//            city(){
+//                return this.$store.state.distributors.city;
+//            },
+//            //	选择仓库
+//            warehouse(){
+//                return this.$store.state.distributors.warehouse;
+//            },
+//            //	登录账户
+//            loginAccount(){
+//                return this.$store.state.distributors.loginAccount;
+//            },
+//            //	登录密码
+//            password(){
+//                return this.$store.state.distributors.password;
+//            },
+//            //	确认密码
+//            confirmPassword(){
+//                return this.$store.state.distributors.confirmPassword;
+//            },
