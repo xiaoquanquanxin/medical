@@ -58,17 +58,18 @@ export const asyncRoutesList = [
 				path: '/platformUser/ordinaryUser',
 				component: () => import(/* webpackChunkName: "platformUser" */ '@/views/platformUser/ordinaryUser.vue'),
 			},
-			{
-				meta: {
-					chName: '家庭组',
-					selectRouteKey: 'ordinaryUser',
-					openRouteKey: 'platformUser',
-				},
-				path: '/platformUser/familyGroup',
-				name: 'familyGroup',
-				component: () => import(/* webpackChunkName: "familyGroup" */ '@/views/familyGroup/familyGroup.vue'),
-				hidden: true,
-			},
+			//	⚠️应该是按钮权限
+			// {
+			// 	meta: {
+			// 		chName: '家庭组',
+			// 		selectRouteKey: 'ordinaryUser',
+			// 		openRouteKey: 'platformUser',
+			// 	},
+			// 	path: '/platformUser/familyGroup',
+			// 	name: 'familyGroup',
+			// 	component: () => import(/* webpackChunkName: "familyGroup" */ '@/views/familyGroup/familyGroup.vue'),
+			// 	hidden: true,
+			// },
 			{
 				meta: {
 					chName: '患者用户',
