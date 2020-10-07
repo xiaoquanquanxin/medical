@@ -5,6 +5,8 @@ export const routeMap = {
 	'supplier': true,
 	//	新增供应商
 	'addSupplier': true,
+	//	编辑供应商
+	'editSupplier': true,
 	//	用户管理【平台用户】
 	'platformUser': true,
 	//	普通用户
