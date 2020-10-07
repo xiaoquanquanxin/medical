@@ -60,20 +60,22 @@
         }
     };
 </script>
-<style lang="stylus" scoped>
-    .login-form
+<style scoped>
+    .login-form {
         /*max-width: 300px;*/
-        position: absolute;
+        position: fixed;
         top: 0;
         bottom: 0;
         left: 0;
         right: 0;
         margin: auto;
-        background-image: url(http://172.16.1.236/IotBg.jpg);
+        /*background-image: url(http://172.16.1.236/IotBg.jpg);*/
+        background-color: lightgrey;
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center center;
-        z-index: + 1;
+        z-index: +1;
+    }
     
     .login-wrap {
         width: 400px;
@@ -86,7 +88,7 @@
         left: 0;
         right: 0;
         margin: auto;
-        z-index: + 1;
+        z-index: +1;
         background: white;
     }
     
@@ -106,7 +108,7 @@
     
     #right-block {
         position: absolute;
-        z-index: + 1;
+        z-index: +1;
         top: 0;
         left: 0;
         right: 0;
