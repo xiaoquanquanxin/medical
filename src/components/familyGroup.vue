@@ -30,6 +30,8 @@
     </div>
 </template>
 <script>
+    import { mapGetters, mapActions } from 'vuex';
+
     const columns = [
         {
             title: '姓名',
@@ -69,11 +71,25 @@
     }
     //  家庭组
     export default {
+        computed: {
+            ...mapGetters([
+                'familyGroup',
+            ]),
+            viewFamilyGroupId(){
+                return this.$store.state.familyGroup.viewFamilyGroupId;
+            },
+        },
         data(){
             return {
                 data,
                 columns,
             };
+        },
+        created(){
+            console.log(this.viewFamilyGroupId);
+        },
+        mounted(){
+
         },
         methods: {
             //  退出家庭组
