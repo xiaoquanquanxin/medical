@@ -38,32 +38,33 @@ export const asyncRoutesList = [
 		component: () => import(/* webpackChunkName: "changePassword" */ '@/views/supplier/addSupplier.vue'),
 		hidden: true,
 	},
+	//	用户管理【平台用户】
 	{
 		meta: {
 			chName: '用户管理',
-			selectRouteKey: 'user',
+			selectRouteKey: 'platformUser',
 		},
-		path: '/user',
-		name: 'user',
+		path: '/platformUser',
+		name: 'platformUser',
 		component: LayoutStair,
 		children: [
 			{
 				meta: {
 					chName: '普通用户',
 					selectRouteKey: 'ordinaryUser',
-					openRouteKey: 'user',
+					openRouteKey: 'platformUser',
 				},
 				name: 'ordinaryUser',
-				path: '/user/ordinaryUser',
-				component: () => import(/* webpackChunkName: "user" */ '@/views/user/ordinaryUser.vue'),
+				path: '/platformUser/ordinaryUser',
+				component: () => import(/* webpackChunkName: "platformUser" */ '@/views/platformUser/ordinaryUser.vue'),
 			},
 			{
 				meta: {
 					chName: '家庭组',
 					selectRouteKey: 'ordinaryUser',
-					openRouteKey: 'user',
+					openRouteKey: 'platformUser',
 				},
-				path: '/user/familyGroup',
+				path: '/platformUser/familyGroup',
 				name: 'familyGroup',
 				component: () => import(/* webpackChunkName: "familyGroup" */ '@/views/familyGroup/familyGroup.vue'),
 				hidden: true,
@@ -72,11 +73,11 @@ export const asyncRoutesList = [
 				meta: {
 					chName: '患者用户',
 					selectRouteKey: 'patientsUser',
-					openRouteKey: 'user',
+					openRouteKey: 'platformUser',
 				},
 				name: 'patientsUser',
-				path: '/user/patientsUser',
-				component: () => import(/* webpackChunkName: "user" */ '@/views/user/patientsUser.vue'),
+				path: '/platformUser/patientsUser',
+				component: () => import(/* webpackChunkName: "platformUser" */ '@/views/platformUser/patientsUser.vue'),
 			}
 		],
 	},
@@ -97,7 +98,7 @@ export const asyncRoutesList = [
 				},
 				name: 'commodityList',
 				path: '/commodity/commodityList',
-				component: () => import(/* webpackChunkName: "user" */ '@/views/commodity/commodityList.vue'),
+				component: () => import(/* webpackChunkName: "platformUser" */ '@/views/commodity/commodityList.vue'),
 			},
 			{
 				meta: {
@@ -127,7 +128,7 @@ export const asyncRoutesList = [
 				},
 				name: 'commodityClassification',
 				path: '/commodity/commodityClassification',
-				component: () => import(/* webpackChunkName: "user" */ '@/views/commodity/commodityClassification.vue'),
+				component: () => import(/* webpackChunkName: "platformUser" */ '@/views/commodity/commodityClassification.vue'),
 			},
 			{
 				meta: {
@@ -137,7 +138,7 @@ export const asyncRoutesList = [
 				},
 				name: 'brand',
 				path: '/commodity/brand',
-				component: () => import(/* webpackChunkName: "user" */ '@/views/commodity/brand.vue'),
+				component: () => import(/* webpackChunkName: "platformUser" */ '@/views/commodity/brand.vue'),
 			},
 			{
 				meta: {
@@ -147,7 +148,7 @@ export const asyncRoutesList = [
 				},
 				name: 'manufacturer',
 				path: '/commodity/manufacturer',
-				component: () => import(/* webpackChunkName: "user" */ '@/views/commodity/manufacturer.vue'),
+				component: () => import(/* webpackChunkName: "platformUser" */ '@/views/commodity/manufacturer.vue'),
 			}
 		]
 	},
@@ -513,11 +514,11 @@ export const asyncRoutesList = [
 // {
 // 	meta: {
 // 		chName: '新增用户',
-// 		selectRouteKey: 'user',
+// 		selectRouteKey: 'platformUser',
 // 	},
-// 	path: '/user/newUser',
+// 	path: '/platformUser/newUser',
 // 	name: 'newUser',
-// 	component: () => import(/* webpackChunkName: "newUser" */ '@/views/user/newUser.vue'),
+// 	component: () => import(/* webpackChunkName: "newUser" */ '@/views/platformUser/newUser.vue'),
 // 	hidden: true,
 // },
 
@@ -555,7 +556,7 @@ export const asyncRoutesList = [
 // {
 // 	meta: {
 // 		chName: '新增家庭组',
-// 		selectRouteKey: 'user',
+// 		selectRouteKey: 'platformUser',
 // 	},
 // 	path: '/familyGroup/newFamilyGroup',
 // 	name: 'newFamilyGroup',
@@ -576,10 +577,10 @@ export const asyncRoutesList = [
 // {
 // 	meta: {
 // 		chName: '编辑用户',
-// 		selectRouteKey: 'user',
+// 		selectRouteKey: 'platformUser',
 // 	},
-// 	path: '/user/editUser/:userId',
+// 	path: '/platformUser/editUser/:platformUserId',
 // 	name: 'editUser',
-// 	component: () => import(/* webpackChunkName: "newUser" */ '@/views/user/editUser.vue'),
+// 	component: () => import(/* webpackChunkName: "newUser" */ '@/views/platformUser/editUser.vue'),
 // 	hidden: true,
 // },
