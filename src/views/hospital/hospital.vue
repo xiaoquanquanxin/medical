@@ -5,10 +5,13 @@
         <a-input-group class="a-input-group">
             <a-row :gutter="8">
                 <a-col :span="5">
-                    <a-input default-value=""/>
+                    <a-input default-value="" placeholder="请输入医院名称"/>
                 </a-col>
                 <a-col :span="5">
-                    <a-select default-value="Option1" style="width:100%;">
+                    <a-select default-value="''" style="width:100%;">
+                        <a-select-option value="''">
+                            省市
+                        </a-select-option>
                         <a-select-option value="Option1">
                             Option1
                         </a-select-option>
@@ -18,12 +21,12 @@
                     </a-select>
                 </a-col>
                 <a-col :span="5">
-                    <a-select default-value="Option1" style="width:100%;">
-                        <a-select-option value="Option1">
-                            Option1
+                    <a-select default-value="1" style="width:100%;">
+                        <a-select-option value="1">
+                            正常
                         </a-select-option>
-                        <a-select-option value="Option2">
-                            Option2
+                        <a-select-option value="0">
+                            关闭
                         </a-select-option>
                     </a-select>
                 </a-col>
@@ -85,8 +88,8 @@
             </a-pagination>
         </a-row>
         <!--莫泰框-->
-        <a-modal v-model="dialogData.dialogVisible"
-                 v-if="dialogData.dialogVisible"
+        <a-modal v-model="dialogData.visible"
+                 v-if="dialogData.visible"
                  :maskClosable="false"
                  centered
                  :width="800"
@@ -105,6 +108,7 @@
     import { pagination } from '@/utils/pagination.ts';
     import { dialogMethods, dialogData } from '@/utils/dialog';
     import { towRowSearch } from '../../utils/tableScroll';
+
     const columns = [
         {
             title: '医院名称',
