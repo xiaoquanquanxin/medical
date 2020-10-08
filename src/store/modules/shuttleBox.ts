@@ -30,7 +30,7 @@ const mutations = {
 }
 //	'shuttleBox/setModalTargetKey'
 const actions = {
-	setModalType({commit}: COMMIT_INTERFACE<STATE>, shuttleBoxType: string) {
+	setShuttleBoxType({commit}: COMMIT_INTERFACE<STATE>, shuttleBoxType: string) {
 		commit('SET_SHUTTLE_BOX_TYPE', shuttleBoxType)
 	},
 	setModalTargetKey({commit}: COMMIT_INTERFACE<STATE>, modalTargetKeys: Array<any>) {
