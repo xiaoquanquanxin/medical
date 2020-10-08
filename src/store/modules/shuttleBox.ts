@@ -3,8 +3,8 @@ import {COMMIT_INTERFACE} from "@/store"
 
 //	穿梭框区分类型
 export const SHUTTLE_BOX = {
-	//	查看市场价
-	CHECK_MARKET_PRICES: 'CHECK_MARKET_PRICES',
+	//	商品列表 - 授权
+	DIALOG_AUTHORIZATION: 'DIALOG_AUTHORIZATION',
 };
 
 
