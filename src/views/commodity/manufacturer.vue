@@ -130,6 +130,7 @@
         });
     }
 
+    //  生产厂家
     export default {
         components: {
             AddManufacturerBox
