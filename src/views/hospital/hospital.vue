@@ -86,7 +86,7 @@
                 </template>
             </a-pagination>
         </a-row>
-        <!--莫泰框-->
+        <!--关联科室-->
         <a-modal v-model="dialogDataRelatedDepartments.visible"
                  v-if="dialogDataRelatedDepartments.visible"
                  :maskClosable="false"
