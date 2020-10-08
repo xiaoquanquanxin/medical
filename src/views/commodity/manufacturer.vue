@@ -4,11 +4,11 @@
         <a-input-group class="a-input-group">
             <a-row :gutter="8">
                 <a-col :span="5">
-                    <a-input v-model="selectData.manufacturerName" placeholder="请输入生产厂家名称"/>
+                    <a-input v-model="searchData.manufacturerName" placeholder="请输入生产厂家名称"/>
                 </a-col>
                 <a-col :span="5">
                     <a-select
-                            v-model="selectData.status"
+                            v-model="searchData.status"
                             placeholder="请选择商品状态"
                             style="width:100%;"
                     >
@@ -150,10 +150,7 @@
                 dialogDataAddManufacturer: this.initModal(DIALOG_TYPE.ADD_MANUFACTURER),
 
                 //  搜索数据
-                selectData: {
-                    //  manufacturerName: null,
-                    //  status: null,
-                }
+                searchData: {},
             };
         },
         created(){
