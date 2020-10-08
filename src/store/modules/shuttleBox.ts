@@ -5,6 +5,8 @@ import {COMMIT_INTERFACE} from "@/store"
 export const SHUTTLE_BOX = {
 	//	商品列表 - 授权
 	DIALOG_AUTHORIZATION: 'DIALOG_AUTHORIZATION',
+	//	医院管理 - 关联科室
+	RELATED_DEPARTMENTS: 'RELATED_DEPARTMENTS',
 };
 
 
