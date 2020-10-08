@@ -1,7 +1,7 @@
 //	穿梭框
 import {COMMIT_INTERFACE} from "@/store"
 
-//	穿梭框区分类型
+//	穿梭框区分类型，每个用到穿梭框的都要有引入
 export const SHUTTLE_BOX = {
 	//	商品列表 - 授权
 	DIALOG_AUTHORIZATION: 'DIALOG_AUTHORIZATION',
