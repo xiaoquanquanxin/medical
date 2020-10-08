@@ -1,27 +1,43 @@
 //  莫泰框数据
-export const dialogData = {
-	//  是否展示莫泰框
-	visible: false,
-	//  提交按钮loading
-	submitLoading: false,
-	//	标题
-	title: null,
+
+interface DialogItem {
+	visible: boolean;
+	title: string;
+}
+
+interface DialogData {
+	[key: string]: DialogItem;
+}
+
+export const dialogData: DialogData = {
+	// //  是否展示莫泰框
+	// visible: false,
+	// //  提交按钮loading
+	// submitLoading: false,
+	// //	标题
+	// title: null,
 };
+
 
 //  莫泰框方法
 //  开启、关闭莫泰框
 export const dialogMethods = {
-	showModal() {
-		// @ts-ignore
-		this.dialogData.visible = true;
+	initModal(dialogKey: string, title?: string) {
+		return dialogData[dialogKey] = {
+			visible: false,
+			title: title || '',
+		};
 	},
-	hideModal() {
+	showModal(dialogKey: string) {
 		// @ts-ignore
-		this.dialogData.visible = false;
+		dialogData[dialogKey].visible = true;
+	},
+	hideModal(dialogKey: string) {
+		// @ts-ignore
+		dialogData[dialogKey].visible = false;
 	},
 	//	设置莫泰框标题名称
-	setDialogTitle(title: string | null) {
-		// @ts-ignore
-		this.dialogData.title = title;
+	setDialogTitle(dialogKey: string, title: string = '') {
+		dialogData[dialogKey].title = title;
 	}
 };
