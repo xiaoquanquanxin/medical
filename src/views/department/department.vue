@@ -5,10 +5,15 @@
         <a-input-group class="a-input-group">
             <a-row :gutter="8">
                 <a-col :span="5">
-                    <a-input default-value=""/>
+                    <a-input v-model="searchData.departmentName"
+                             placeholder="请输入科室名称"
+                    />
                 </a-col>
                 <a-col :span="5">
-                    <a-select default-value="Option1" style="width:100%;">
+                    <a-select v-model="searchData.status"
+                              style="width:100%;"
+                              placeholder="请选择状态"
+                    >
                         <a-select-option value="Option1">
                             Option1
                         </a-select-option>
@@ -35,7 +40,6 @@
         </a-input-group>
         <!--表格-->
         <a-table
-                :row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                 :columns="columns"
                 :data-source="data"
                 :scroll="scroll"
@@ -52,9 +56,10 @@
             </div>
             <div slot="tags" slot-scope="scope,sItem,sIndex,extra">
                 <a-space size="small">
-                    <a @click="editDepartment(sItem,sIndex,extra)">编辑</a>
-                    <a @click="deleteDepartment(sItem)">删除</a>
-                    <a @click="relatedDisease(sItem,sIndex,)">关联疾病</a>
+                    <a @click="editDepartment(sItem)">编辑</a>
+                    <!--                    <a @click="deleteDepartment(sItem)">删除</a>-->
+                    <a @click="relatedDisease(sItem)">关联疾病</a>
+                    <a @click="relatedQuestionnaire(sItem)">关联评估调查表</a>
                 </a-space>
             </div>
         </a-table>
@@ -75,38 +80,51 @@
                 </template>
             </a-pagination>
         </a-row>
-        <!--莫泰框-->
-        <a-modal v-model="dialogData.dialogVisible"
-                 v-if="dialogData.dialogVisible"
+        <!--关联疾病-->
+        <a-modal v-model="dialogDataAssociatedDisease.visible"
+                 v-if="dialogDataAssociatedDisease.visible"
                  :maskClosable="false"
                  centered
                  :width="800"
                  title="关联疾病"
                  ok-text="确认"
                  cancel-text="取消"
-                 @ok="modalCheck()">
-            <ShuttleBox/>
+                 @ok="associatedDiseaseModalCheck('refAssociatedDisease')">
+            <ShuttleBox ref="refAssociatedDisease"/>
+        </a-modal>
+        <!--关联评估调查表-->
+        <a-modal v-model="dialogDataQuestionnaire.visible"
+                 v-if="dialogDataQuestionnaire.visible"
+                 :maskClosable="false"
+                 centered
+                 :width="800"
+                 title="关联评估调查表"
+                 ok-text="确认"
+                 cancel-text="取消"
+                 @ok="questionnaireModalCheck('refQuestionnaire')">
+            <ShuttleBox ref="refQuestionnaire"/>
         </a-modal>
     </div>
 </template>
 <script>
-    //  关联疾病 穿梭框
+    //    穿梭框
     import ShuttleBox from '@/components/shuttleBox.vue';
     import { mapGetters, mapActions } from 'vuex';
-    import { dialogMethods, dialogData } from '@/utils/dialog';
+    import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
     import { pagination } from '@/utils/pagination.ts';
     import { towRowSearch } from '../../utils/tableScroll';
+    import { SHUTTLE_BOX } from '../../store/modules/shuttleBox';
 
     const columns = [
         {
             title: '科室名称',
             dataIndex: 'department',
-            width: 100,
+            width: 150,
         },
         {
             title: '状态',
             dataIndex: 'status',
-            width: 100,
+            width: 150,
             scopedSlots: { customRender: 'a-switch' },
         },
         {
@@ -122,7 +140,7 @@
             key: i,
             department: `xx科室`,
             status: String(i % 2),
-            tags: ['编辑', '删除', '关联疾病'],
+            tags: ['编辑', '关联疾病'],
         });
     }
     //  科室管理
@@ -130,38 +148,34 @@
         components: {
             ShuttleBox,
         },
-        computed: {
-            ...mapGetters([
-                'shuttleBox',
-            ]),
-            modalTargetKeys(){
-                return this.$store.state.shuttleBox.modalTargetKeys;
-            }
-        },
+
         data(){
             return {
                 data,
                 columns,
-                selectedRowKeys: [], // Check here to configure the default column
 
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
                 scroll: towRowSearch,
 
                 //  分页信息
                 pagination,
-                //  莫泰框
-                dialogData,
+                //  关联疾病
+                dialogDataAssociatedDisease: this.initModal(DIALOG_TYPE.ASSOCIATED_DISEASE),
+                //  关联评估调查表
+                dialogDataQuestionnaire: this.initModal(DIALOG_TYPE.QUESTIONNAIRE),
+
+                //  搜索数据
+                searchData: {},
             };
         },
 
         methods: {
             //  莫泰框方法
             ...dialogMethods,
-            //  选中表格数据
-            onSelectChange(selectedRowKeys){
-                console.log('selectedRowKeys changed: ', selectedRowKeys);
-                this.selectedRowKeys = selectedRowKeys;
-            },
+            ...mapActions('shuttleBox', [
+                //  设置穿梭框类型
+                'setShuttleBoxType',
+            ]),
             //  展示的每一页数据变换
             onShowSizeChange(current, pageSize){
                 console.log(current);
@@ -174,44 +188,60 @@
                 console.log(pageSize);
             },
             //  编辑科室
-            editDepartment(sItem, sIndex, extra){
-                this.$router.push({ name: 'editDepartment', params: { departmentId: sIndex } });
+            editDepartment(sItem){
+                this.$router.push({ name: 'editDepartment', params: { departmentId: '12343312' } });
             },
-            //  删除科室
-            deleteDepartment(sItem){
-                console.log(sItem.department);
-                this.$confirm({
-                    title: `确定删除${sItem.department}`,
-                    //  content: 'Bla bla ...',
-                    okText: '确认',
-                    okType: 'danger',
-                    cancelText: '取消',
-                    onOk(){
-                        return new Promise((resolve, reject) => {
-                            console.log('发请求');
-                            setTimeout(Math.random() > 0.5 ? resolve : reject, 1111);
-                        }).catch(() => console.log('Oops errors!'));
-                    },
-                    onCancel(){
-                        console.log('取消');
-                    },
-                });
+
+            //  关联疾病
+            relatedDisease(sItem){
+                this.showModal(DIALOG_TYPE.ASSOCIATED_DISEASE);
+                this.setShuttleBoxType(SHUTTLE_BOX.ASSOCIATED_DISEASE);
+            },
+            //  关联评估调查表
+            relatedQuestionnaire(sItem){
+                this.showModal(DIALOG_TYPE.QUESTIONNAIRE);
+                this.setShuttleBoxType(SHUTTLE_BOX.QUESTIONNAIRE);
             },
             //  关联疾病
-            relatedDisease(sItem, sIndex){
-                console.log(this.dialogVisible);
-                this.showModal();
-                console.log(this.dialogVisible);
+            associatedDiseaseModalCheck(refAssociatedDisease){
+                const promise = this.$refs[refAssociatedDisease].handleSubmit();
+                promise.then(v => {
+                    this.hideModal(DIALOG_TYPE.ASSOCIATED_DISEASE);
+                }).catch(error => {
+                    console.log('有错');
+                });
             },
-            //  检查莫泰框的值
-            modalCheck(){
-                console.log(this.modalTargetKeys);
-                console.log('发请求吧');
-                return;
-                this.hideModal();
+            //  关联评估调查表
+            questionnaireModalCheck(refQuestionnaire){
+                const promise = this.$refs[refQuestionnaire].handleSubmit();
+                promise.then(v => {
+                    this.hideModal(DIALOG_TYPE.QUESTIONNAIRE);
+                }).catch(error => {
+                    console.log('有错');
+                });
             },
         }
     };
+    //  删除科室
+    //    deleteDepartment(sItem){
+    //        console.log(sItem.department);
+    //        this.$confirm({
+    //            title: `确定删除${sItem.department}`,
+    //            //  content: 'Bla bla ...',
+    //            okText: '确认',
+    //            okType: 'danger',
+    //            cancelText: '取消',
+    //            onOk(){
+    //                return new Promise((resolve, reject) => {
+    //                    console.log('发请求');
+    //                    setTimeout(Math.random() > 0.5 ? resolve : reject, 1111);
+    //                }).catch(() => console.log('Oops errors!'));
+    //            },
+    //            onCancel(){
+    //                console.log('取消');
+    //            },
+    //        });
+    //    },
 </script>
 <style scoped lang="stylus">
 </style>
