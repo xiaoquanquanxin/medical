@@ -18,6 +18,8 @@ const getters = {
 	familyGroup: (state: any) => state.app.familyGroup,
 	//	患者用户
 	patientsUser: (state: any) => state.app.patientsUser,
+	//	商品管理
+	commodity: (state: any) => state.app.commodity,
 
 
 	accountBox: (state: any) => state.app.accountBox,
