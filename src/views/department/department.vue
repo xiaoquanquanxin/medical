@@ -187,6 +187,10 @@
                 console.log(current);
                 console.log(pageSize);
             },
+            //  切换状态
+            aSwitchChange(sItem, checked){
+                console.log(sItem, checked);
+            },
             //  编辑科室
             editDepartment(sItem){
                 this.$router.push({ name: 'editDepartment', params: { departmentId: '12343312' } });
