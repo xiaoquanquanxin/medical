@@ -60,7 +60,7 @@
                  :maskClosable="false"
                  centered
                  :width="800"
-                 title="查看分类"
+                 :title="dialogDataAddClassification.visible"
                  ok-text="确认"
                  cancel-text="取消"
                  @ok="classificationBoxModalCheck('refAddClassificationBox')">
@@ -122,7 +122,7 @@
                 pagination,
 
                 //  新增、编辑分类管理莫泰框
-                dialogDataAddClassification: this.initModal(DIALOG_TYPE.dialogDataAddClassification),
+                dialogDataAddClassification: this.initModal(DIALOG_TYPE.ADD_CLASSIFICATION),
 
                 //  搜索数据
                 selectData: {
@@ -155,14 +155,14 @@
 
             //  新增分类
             addClassification(){
-                this.setDialogTitle(DIALOG_TYPE.dialogDataAddClassification, '添加分类');
-                this.showModal(DIALOG_TYPE.dialogDataAddClassification);
+                this.setDialogTitle(DIALOG_TYPE.ADD_CLASSIFICATION, '添加分类');
+                this.showModal(DIALOG_TYPE.ADD_CLASSIFICATION);
                 this.setClassificationId(0);
             },
             //  编辑分类
             editClassification(sItem){
-                this.setDialogTitle(DIALOG_TYPE.dialogDataAddClassification, '编辑分类');
-                this.showModal(DIALOG_TYPE.dialogDataAddClassification);
+                this.setDialogTitle(DIALOG_TYPE.ADD_CLASSIFICATION, '编辑分类');
+                this.showModal(DIALOG_TYPE.ADD_CLASSIFICATION);
                 this.setClassificationId(123344);
             },
             //  删除分类
@@ -189,7 +189,7 @@
             classificationBoxModalCheck(refAddClassificationBox){
                 const promise = this.$refs[refAddClassificationBox].handleSubmit();
                 promise.then(v => {
-                    this.hideModal(DIALOG_TYPE.dialogDataAddClassification);
+                    this.hideModal(DIALOG_TYPE.ADD_CLASSIFICATION);
                 }).catch(error => {
                     console.log('有错');
                 });
