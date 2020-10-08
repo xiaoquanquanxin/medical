@@ -31,3 +31,9 @@
     width: 100%;
     display: block;
 }
+
+/*弹框里的表格的最大高度*/
+.tableInModalBox {
+    max-height: 500px;
+    overflow: auto;
+}
