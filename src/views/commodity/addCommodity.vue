@@ -1,22 +1,25 @@
 <template>
     <div class="layout-content-inner-main">
-        <p>新增商品</p>
         <a-form class="form"
                 :form="form"
                 v-bind="formItemLayout"
                 @submit="handleSubmit"
                 autocomplete="off"
         >
-            <p>基本信息</p>
-            <hr>
+            <!--            <div style="display: none">-->
             <a-form-item label="商品名称">
-                <a-input v-decorator="commodityNameDecorator" placeholder="请输入商品名称"/>
+                <a-input
+                        v-decorator="commodityNameDecorator"
+                        placeholder="请输入商品名称"/>
             </a-form-item>
             <a-form-item label="商品货号">
-                <a-input placeholder="请输入商品货号"/>
+                <a-input
+                        v-decorator="itemNoDecorator"
+                        placeholder="请输入商品货号"/>
             </a-form-item>
-            <a-form-item label="商品类型" has-feedback>
-                <a-select placeholder="请选择商品类型"
+            <a-form-item label="商品条码" has-feedback>
+                <a-select placeholder="请选择商品条码"
+                          v-decorator="barcodeDecorator"
                 >
                     <a-select-option value="1">
                         xxx
@@ -26,17 +29,30 @@
                     </a-select-option>
                 </a-select>
             </a-form-item>
-            <a-form-item label="商品买点">
-                <a-input placeholder="请输入商品买点"/>
-            </a-form-item>
             <a-form-item label="商品关键字">
-                <a-input placeholder="请输入商品关键字"/>
+                <a-select mode="tags"
+                          placeholder="请输入商品关键字"
+                          style="width: 100%"
+                          :token-separators="[',']"
+                          v-decorator="keywordsDecorator"
+                          @change="autoSplitChange"
+                />
             </a-form-item>
-            <a-form-item label="售卖分类">
-                <a-button type="primary" @click="associationSaleCategory()">关联售卖分类</a-button>
+            <a-form-item label="商品分类" has-feedback>
+                <a-select placeholder="请选择商品分类"
+                          v-decorator="classificationDecorator"
+                >
+                    <a-select-option value="1">
+                        xxx
+                    </a-select-option>
+                    <a-select-option value="2">
+                        xxx
+                    </a-select-option>
+                </a-select>
             </a-form-item>
             <a-form-item label="商品品牌" has-feedback>
                 <a-select placeholder="请选择商品品牌"
+                          v-decorator="brandDecorator"
                 >
                     <a-select-option value="1">
                         xxx
@@ -48,6 +64,7 @@
             </a-form-item>
             <a-form-item label="供应商" has-feedback>
                 <a-select placeholder="请选择供应商"
+                          v-decorator="supplierDecorator"
                 >
                     <a-select-option value="1">
                         xxx
@@ -57,8 +74,19 @@
                     </a-select-option>
                 </a-select>
             </a-form-item>
-            <a-form-item label="业务类型" has-feedback>
-                <a-select placeholder="请选择业务类型"
+            <a-form-item label="厂家">
+                <a-input
+                        v-decorator="manufacturerDecorator"
+                        placeholder="请输入厂家"/>
+            </a-form-item>
+            <a-form-item label="通用名">
+                <a-input
+                        v-decorator="commonNameDecorator"
+                        placeholder="请输入请输入通用名"/>
+            </a-form-item>
+            <a-form-item label="保存方式" has-feedback>
+                <a-select placeholder="请选择保存方式"
+                          v-decorator="saveTypeDecorator"
                 >
                     <a-select-option value="1">
                         xxx
@@ -68,126 +96,113 @@
                     </a-select-option>
                 </a-select>
             </a-form-item>
-            <a-form-item label="商户虚拟库存">
-                <a-input placeholder="请输入商户虚拟库存"/>
+            <a-form-item label="规格">
+                <a-input
+                        v-decorator="specificationsDecorator"
+                        placeholder="请输入规格"/>
             </a-form-item>
-            <a-form-item label="虚拟销量">
-                <a-input placeholder="请输入虚拟销量"/>
+            <a-form-item label="基本单位">
+                <div style="overflow: auto;width:1230px;">
+                    <a-table
+                            :columns="basicTableColumns"
+                            :data-source="basicTableData"
+                            :pagination="false"
+                    >
+                        <div slot="unit" slot-scope="scope,sItem,sIndex,extra">
+                            <a-select placeholder="请选择单位"
+                                      v-model="sItem.unit"
+                            >
+                                <a-select-option value="1">
+                                    xxx
+                                </a-select-option>
+                                <a-select-option value="2">
+                                    xxx
+                                </a-select-option>
+                            </a-select>
+                        </div>
+                        <div slot="unitRelations" slot-scope="scope,sItem,sIndex,extra">
+                            <a-input placeholder="请输入单位关系"
+                                     v-model="sItem.unitRelations"
+                            />
+                        </div>
+                        <div slot="price" slot-scope="scope,sItem,sIndex,extra">
+                            <a-input placeholder="请输入价格"
+                                     v-model="sItem.price"
+                            />
+                        </div>
+                        <div slot="energy" slot-scope="scope,sItem,sIndex,extra">
+                            <a-input placeholder="请输入能量"
+                                     v-model="sItem.energy"
+                            />
+                        </div>
+                        <div slot="protein" slot-scope="scope,sItem,sIndex,extra">
+                            <a-input
+                                    placeholder="请输入蛋白质"
+                                    v-model="sItem.protein"
+                            />
+                        </div>
+                        <div slot="fat" slot-scope="scope,sItem,sIndex,extra">
+                            <a-input
+                                    placeholder="请输入脂肪"
+                                    v-model="sItem.fat"
+                            />
+                        </div>
+                        <div slot="carbohydrate" slot-scope="scope,sItem,sIndex,extra">
+                            <a-input
+                                    placeholder="请输入碳水化合物"
+                                    v-model="sItem.carbohydrate"
+                            />
+                        </div>
+                    </a-table>
+                    <a-button type="primary" v-if="isAddBtn" @click="addAuxiliaryUnits">
+                        添加
+                    </a-button>
+                </div>
             </a-form-item>
-            <a-form-item label="限购数量">
-                <a-input placeholder="请输入限购数量"/>
-            </a-form-item>
-            <a-form-item label="是否为称重商品">
-                <a-switch checked-children="是" un-checked-children="否"/>
-            </a-form-item>
+            <a-row style="margin-top: -20px;margin-bottom:20px;">
+                <a-col :offset="6">
+                    <a-form-item label="">
+                        <a-input type="hidden"
+                                 v-decorator="basicUnitDecorator"
+                                 placeholder="请输入基本单位"/>
+                    </a-form-item>
+                </a-col>
+            </a-row>
             <a-form-item label="商品图片">
                 <div class="dropbox">
-                    <a-upload-dragger>
-                        <p class="ant-upload-drag-icon">
+                    <a-upload-dragger
+                            action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                            list-type="picture-card"
+                            @change="uploadHandleChange"
+                            :show-upload-list="false"
+                    >
+                        <img v-if="commodityImageThumbUrl"
+                             :src="commodityImageThumbUrl"
+                             class="upload-default-img"
+                             alt=""/>
+                        <p v-else class="ant-upload-drag-icon">
                             <a-icon type="inbox"/>
                         </p>
+                        <p>点击上传证件</p>
                     </a-upload-dragger>
+                    <p style="width:calc((100vw - 200px) * .65)">
+                        大小：500K，格式:jpeg、png，建议700*700，最多可上传7张图片，*图片按照顺序显示，第一张图片默认为主图</p>
+                    <a-input
+                            type="hidden"
+                            v-decorator="businessLicenseDecorator"
+                    />
                 </div>
-                <!--                <p style="white-space: nowrap;">大小：500K，格式:jpeg、png，建议700*700，最多可上传7张图片，*图片按照顺序显示，第一张图片默认为主图</p>-->
-                <p style="width:calc((100vw - 200px) * .65)">
-                    大小：500K，格式:jpeg、png，建议700*700，最多可上传7张图片，*图片按照顺序显示，第一张图片默认为主图</p>
             </a-form-item>
-            <a-form-item label="商品视频">
-                <div class="dropbox">
-                    <a-upload-dragger>
-                        <p class="ant-upload-drag-icon">
-                            <a-icon type="inbox"/>
-                        </p>
-                    </a-upload-dragger>
-                </div>
-                <p style="white-space: nowrap;">大小：小于100MB，格式:mp4</p>
-            </a-form-item>
+            <!--            </div>-->
             <a-form-item label="商品介绍️">
-                ❌❌❌
-                <a-input placeholder="请输入商品介绍"/>
-            </a-form-item>
-            <p>SKU信息</p>
-            <hr>
-            <a-form-item label="是否开启SKU">
-                <a-switch checked-children="是" un-checked-children="否"/>
-            </a-form-item>
-            <p>配送方式</p>
-            <hr>
-            <a-form-item label="是否开启配送方式">
-                <a-switch checked-children="是" un-checked-children="否"/>
-            </a-form-item>
-            <a-form-item label="设置配送方式">
-                <a-checkbox-group style="width:400px;">
-                    <a-row>
-                        <a-col :span="24">
-                            <a-row type="flex" align="middle">
-                                <a-col :span="6">
-                                    <a-checkbox value="A">
-                                        A
-                                    </a-checkbox>
-                                </a-col>
-                                <a-col :span="14">
-                                    <a-select placeholder="请选择商品类型"
-                                    >
-                                        <a-select-option value="1">
-                                            xxx
-                                        </a-select-option>
-                                        <a-select-option value="2">
-                                            xxx
-                                        </a-select-option>
-                                    </a-select>
-                                </a-col>
-                            </a-row>
-                        </a-col>
-                        <br>
-                        <br>
-                        <a-col :span="24">
-                            <a-row type="flex" align="middle">
-                                <a-col :span="6">
-                                    <a-checkbox value="A">
-                                        A
-                                    </a-checkbox>
-                                </a-col>
-                                <a-col :span="14">
-                                    <a-select placeholder="请选择商品类型"
-                                    >
-                                        <a-select-option value="1">
-                                            xxx
-                                        </a-select-option>
-                                        <a-select-option value="2">
-                                            xxx
-                                        </a-select-option>
-                                    </a-select>
-                                </a-col>
-                            </a-row>
-                        </a-col>
-                        <br>
-                        <br>
-                        <a-col :span="24">
-                            <a-row type="flex" align="middle">
-                                <a-col :span="6">
-                                    <a-checkbox value="A">
-                                        A
-                                    </a-checkbox>
-                                </a-col>
-                                <a-col :span="14">
-                                    <a-select placeholder="请选择商品类型"
-                                    >
-                                        <a-select-option value="1">
-                                            xxx
-                                        </a-select-option>
-                                        <a-select-option value="2">
-                                            xxx
-                                        </a-select-option>
-                                    </a-select>
-                                </a-col>
-                            </a-row>
-                        </a-col>
-                    </a-row>
-                </a-checkbox-group>
-            </a-form-item>
-            <a-form-item label="状态">
-                <a-switch v-decorator="['switch', { valuePropName: 'checked' }]"/>
+                <VueQuillEditor ref="myTextEditor"
+                                style="width:calc((100vw - 200px) * .65);min-width: 800px"
+                                class="editor"
+                                v-model="productDescription"
+                                :options="quillOption"
+                                @change="onEditorChange"
+                ></VueQuillEditor>
+                <a-input type="hidden"/>
             </a-form-item>
             <a-form-item :wrapper-col="{ span: 4, offset: 7 }">
                 <a-button type="primary" html-type="submit">
@@ -195,83 +210,331 @@
                 </a-button>
             </a-form-item>
         </a-form>
-        <!--莫泰框-->
-        <a-modal v-model="dialogData.visible"
-                 v-if="dialogData.visible"
-                 :maskClosable="false"
-                 centered
-                 :width="800"
-                 title="关联科室"
-                 ok-text="确认"
-                 cancel-text="取消"
-                 @ok="modalCheck()">
-        </a-modal>
     </div>
 </template>
 <script>
     import { dialogMethods, dialogData } from '@/utils/dialog';
     import { formItemLayout } from '@/utils/layout.ts';
+    import VueQuillEditor from 'vue-quill-editor/src/editor';
 
+    //  基本单位表格
+    const basicTableData = [
+        {
+            key: Math.random(),
+            name: '基本单位',
+            unit: undefined,
+            unitRelations: null,
+            price: null,
+            energy: null,
+            protein: null,
+            fat: null,
+            carbohydrate: null,
+        },
+    ];
+    //  标准单位
+    const standardUnit = {
+        key: Math.random(),
+        name: '标准单位',
+        unit: undefined,
+        unitRelations: null,
+        price: null,
+        energy: null,
+        protein: null,
+        fat: null,
+        carbohydrate: null,
+    };
+    //  辅助单位
+    const auxiliaryUnitsData = {
+        key: Math.random(),
+        name: '辅助单位',
+        unit: undefined,
+        unitRelations: null,
+        price: null,
+        energy: null,
+        protein: null,
+        fat: null,
+        carbohydrate: null,
+    };
+    //  基本单位表格
+    const basicTableColumns = [
+        {
+            title: '',
+            key: '类型',
+            dataIndex: 'name',
+            width: 100,
+        },
+        {
+            title: '单位',
+            key: 'unit',
+            dataIndex: 'unit',
+            width: 150,
+            scopedSlots: { customRender: 'unit' }
+        },
+        {
+            title: '单位关系',
+            key: 'unitRelations',
+            dataIndex: 'unitRelations',
+            width: 200,
+            scopedSlots: { customRender: 'unitRelations' }
+        },
+        {
+            title: '价格',
+            key: 'price',
+            dataIndex: 'price',
+            width: 150,
+            scopedSlots: { customRender: 'price' }
+        },
+        {
+            title: '能量kcal',
+            key: 'energy',
+            dataIndex: 'energy',
+            width: 150,
+            scopedSlots: { customRender: 'energy' }
+        },
+        {
+            title: '蛋白质g',
+            key: 'protein',
+            dataIndex: 'protein',
+            width: 150,
+            scopedSlots: { customRender: 'protein' }
+        },
+        {
+            title: '脂肪g',
+            key: 'fat',
+            dataIndex: 'fat',
+            width: 150,
+            scopedSlots: { customRender: 'fat' }
+        },
+        {
+            title: '碳水化合物g',
+            key: 'carbohydrate',
+            dataIndex: 'carbohydrate',
+            width: 180,
+            scopedSlots: { customRender: 'carbohydrate' }
+        }
+    ];
     export default {
+        components: {
+            VueQuillEditor,
+        },
         beforeCreate(){
-            this.form = this.$form.createForm(this, {
-                //  设置表单域内字段 id 的前缀
-                name: '',
-                //  任一表单域的值发生改变时的回调 ⚠️ 回调中手动调用 this.$forceUpdate() 更新组件
-                onValuesChange: (props, values) => {},
-            });
+            this.form = this.$form.createForm(this);
+        },
+        computed: {
+            //  网络环境
+            isLocalAreaNetwork(){
+                return this.$store.state.userInfo.isLocalAreaNetwork;
+            },
+            //  是否展示添加按钮
+            isAddBtn(){
+                return this.basicTableData.length === 2;
+            }
         },
         data(){
             return {
-                //  表单大小
+                //  商品id
+                commodityId: this.$route.params.commodityId,
                 //  表单大小
                 formItemLayout,
                 //  商品名称
-                commodityNameDecorator: ['hospitalName', {
-                    initialValue: '商品名称',
+                commodityNameDecorator: ['commodityName', {
                     rules: [{
-                        max: 11,
-                        message: '最多11位',
-                    }, {
                         required: true,
                         message: '请输入商品名称'
                     },]
                 }],
+                //  商品货号
+                itemNoDecorator: ['itemNo', {
+                    rules: [{
+                        required: true,
+                        message: '请输入商品货号'
+                    },]
+                }],
+                //  商品条码
+                barcodeDecorator: ['barcode', {
+                    rules: [{
+                        required: true,
+                        message: '请选择商品条码'
+                    },]
+                }],
+                //  商品关键字
+                keywordsDecorator: ['keywords', {
+                    rules: [{
+                        required: true,
+                        message: '请输入商品关键字'
+                    },]
+                }],
+                //  商品分类
+                classificationDecorator: ['classification', {
+                    rules: [{
+                        required: true,
+                        message: '请选择商品分类'
+                    },]
+                }],
+                //  商品品牌
+                brandDecorator: ['brand', {
+                    rules: [{
+                        required: true,
+                        message: '请选择商品品牌'
+                    },]
+                }],
+                //  供应商
+                supplierDecorator: ['supplier', {
+                    rules: [{
+                        required: true,
+                        message: '请选择供应商'
+                    },]
+                }],
+                //  供应商
+                manufacturerDecorator: ['manufacturer', {
+                    rules: [{
+                        required: true,
+                        message: '请输入供应商'
+                    },]
+                }],
+                //  通用名
+                commonNameDecorator: ['commonName', {
+                    rules: [{
+                        required: true,
+                        message: '请输入通用名'
+                    },]
+                }],
+                //  保存方式
+                saveTypeDecorator: ['saveType', {
+                    rules: [{
+                        required: true,
+                        message: '请选择保存方式'
+                    },]
+                }],
+                //  规格
+                specificationsDecorator: ['specifications', {
+                    rules: [{
+                        required: true,
+                        message: '请输入规格'
+                    },]
+                }],
+                //  基本单位
+                basicUnitDecorator: ['basicUnit', {
+                    rules: [{
+                        required: true,
+                        message: '请输入基本单位',
+                    },]
+                }],
+
+                //  商品图片
+                businessLicenseDecorator: ['commodityImage', {
+                    rules: [{
+                        required: true,
+                        message: '请上传商品图片'
+                    },]
+                }],
+                //  商品介绍富文本
+                productDescription: '1221',
+
+                //  商品图片的封面
+                commodityImageThumbUrl: '',
+
+                //  第一种富文本
+                quillOption: {
+                    placeholder: '编辑商品介绍'
+                },
+
+                //  基本单位表格
+                basicTableColumns,
+                basicTableData,
                 //  莫泰框
                 dialogData,
             };
         },
+        created(){
+            console.log('是编辑？', !!this.commodityId);
+            //  如果是新增，并且是院内
+            if (!this.commodityId && this.isLocalAreaNetwork) {
+                this.basicTableData.push(standardUnit);
+            }
+//            let aaa = 0
+//            this.basicTableColumns.forEach((item) => {
+//                aaa+=item.width
+//            });
+//            console.log(aaa);
+
+        },
         methods: {
             //  莫泰框方法
             ...dialogMethods,
+            //  添加辅助单位
+            addAuxiliaryUnits(){
+                this.basicTableData.push(auxiliaryUnitsData);
+            },
+            //  自动分词，商品关键字用
+            autoSplitChange(value){
+                console.log(`selected ${value}`);
+            },
+            //  营业执照
+            uploadHandleChange({ fileList }){
+                const { response } = fileList[0];
+                if (response && response.status === 'done') {
+                    //  console.log(this);
+                    //  console.log('封面', response.thumbUrl);
+                    //  console.log('图片', response.url);
+                    this.form.setFieldsValue({
+                        commodityImage: response.url,
+                    });
+                    this.commodityImageThumbUrl = response.thumbUrl;
+                }
+            },
+            //  第一种编辑好富文本
+            onEditorChange(data){
+                this.productDescription = data.html;
+            },
+            //  基础单位变化，造成基础单位表单验证的结果
+            basicUnitCheck(){
+                let basicUnit = 1;
+                for (let i = 0; i < this.basicTableData.length; i++) {
+                    const {
+                        unit,
+                        unitRelations,
+                        price,
+                        energy,
+                        protein,
+                        fat,
+                        carbohydrate,
+                    } = this.basicTableData[i];
+                    if (unit === undefined
+                        || unitRelations === null
+                        || price === null
+                        || energy === null
+                        || protein === null
+                        || fat === null
+                        || carbohydrate === null
+                    ) {
+                        basicUnit = '';
+                        break;
+                    }
+                }
+                this.form.setFieldsValue({
+                    basicUnit,
+                });
+            },
             //    表单提交
             handleSubmit(e){
                 e.preventDefault();
-                this.form.validateFields((err, values) => {
-                    console.log(err);
-                    console.table(values);
-                    console.log(values.hospitalIcon);
-                    if (!err) {
-                        console.log('Received values of form: ', values);
-                    }
+                this.basicUnitCheck();
+                this.$nextTick(() => {
+                    this.form.validateFields((err, values) => {
+                        console.log(err);
+                        console.table(values);
+                        console.log(values.keywords);
+                        if (!err) {
+                            console.log('Received values of form: ', values);
+                        }
+                    });
                 });
             },
-
-            //  关联销售分类
-            associationSaleCategory(){
-                this.showModal();
-            },
-
-            //  检查莫泰框的值
-            modalCheck(){
-                console.log('检查莫泰框的值');
-                console.log('发请求吧');
-                return;
-                this.hideModal();
-            },
-
         }
     };
 </script>
 <style scoped lang="stylus">
 </style>
+
+
