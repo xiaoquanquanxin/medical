@@ -38,7 +38,7 @@
     overflow: auto;
 }
 
-/*穿梭框，第一个列表不要全部按钮*/
+/*穿梭框，第一个列表不要全部按钮 第一个按钮*/
 .ant-transfer .ant-transfer-list.ant-transfer-list-with-footer:first-child .ant-transfer-list-footer .ant-btn.ant-btn-sm {
     visibility: hidden;
 }
