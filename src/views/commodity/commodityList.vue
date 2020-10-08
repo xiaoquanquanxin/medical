@@ -206,7 +206,7 @@
             operation: ['编辑', '关联科室'],
         });
     }
-
+    
     //  查看详情的表格
     const countTableData = [
         {
