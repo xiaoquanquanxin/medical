@@ -19,6 +19,15 @@ export const asyncRoutesList = [
 	 * */
 	{
 		meta: {
+			chName: '仓库管理',
+			selectRouteKey: 'entrepot',
+		},
+		name: 'entrepot',
+		path: '/entrepot',
+		component: () => import(/* webpackChunkName: "entrepot" */ '@/views/entrepot/entrepot.vue'),
+	},
+	{
+		meta: {
 			chName: '渠道商管理',
 			selectRouteKey: 'distributors',
 		},
@@ -121,7 +130,8 @@ export const asyncRoutesList = [
 			{
 				meta: {
 					chName: '添加商品',
-					selectRouteKey: 'commodity',
+					selectRouteKey: 'commodityList',
+					openRouteKey: 'commodity',
 				},
 				path: '/commodity/addCommodity',
 				name: 'addCommodity',
@@ -131,7 +141,8 @@ export const asyncRoutesList = [
 			{
 				meta: {
 					chName: '编辑商品',
-					selectRouteKey: 'commodity',
+					selectRouteKey: 'commodityList',
+					openRouteKey: 'commodity',
 				},
 				path: '/commodity/editCommodity/:commodityId',
 				name: 'editCommodity',
