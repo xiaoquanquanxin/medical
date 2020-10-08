@@ -59,11 +59,7 @@
 <script>
     import { formItemLayout } from '@/utils/layout.ts';
     import Editor from '@tinymce/tinymce-vue';
-
-    //  富文本
-    import 'quill/dist/quill.core.css';
-    import 'quill/dist/quill.snow.css';
-    import 'quill/dist/quill.bubble.css';
+    
     import VueQuillEditor from 'vue-quill-editor/src/editor';
 
     export default {
@@ -161,5 +157,5 @@
     };
 </script>
 <style scoped>
-    @import '~@/css/quill.css';
+    /*@import '~@/css/quill.css';*/
 </style>
