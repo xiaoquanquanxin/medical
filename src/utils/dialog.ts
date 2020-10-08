@@ -29,6 +29,8 @@ export const DIALOG_TYPE: DialogType = {
 	VIEW_MARKET_PRICE: 'VIEW_MARKET_PRICE',
 	//  查看市场价格弹框
 	AUTHORIZATION: 'AUTHORIZATION',
+	//  新增、编辑分类管理莫泰框
+	dialogDataAddClassification:'dialogDataAddClassification',
 }
 
 
