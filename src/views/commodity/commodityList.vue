@@ -10,7 +10,7 @@
                     <a-input v-model="searchData.articleNumber" placeholder="请输入商品货号"/>
                 </a-col>
                 <a-col :span="5">
-                    <a-select v-model="searchData.brand" style="width:100%;">
+                    <a-select v-model="searchData.brand" style="width:100%;" placeholder="请选择品牌">
                         <a-select-option value="">
                             品牌
                         </a-select-option>
@@ -20,7 +20,7 @@
                     </a-select>
                 </a-col>
                 <a-col :span="5">
-                    <a-select v-model="searchData.classification" style="width:100%;">
+                    <a-select v-model="searchData.classification" style="width:100%;" placeholder="请选择分类">
                         <a-select-option value="">
                             分类
                         </a-select-option>
@@ -30,7 +30,7 @@
                     </a-select>
                 </a-col>
                 <a-col :span="5">
-                    <a-select v-model="searchData.status" style="width:100%;">
+                    <a-select v-model="searchData.status" style="width:100%;" placeholder="请选择状态">
                         <a-select-option value="">
                             状态
                         </a-select-option>
@@ -307,13 +307,7 @@
                 countTableData,
 
                 //  搜索数据
-                searchData: {
-                    commodityName: null,
-                    articleNumber: null,
-                    brand: null,
-                    classification: null,
-                    status: null,
-                }
+                searchData: {},
             };
         },
         created(){
