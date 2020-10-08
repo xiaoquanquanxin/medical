@@ -123,7 +123,7 @@
 <script>
     import { pagination } from '@/utils/pagination.ts';
     import { towRowSearch } from '../../utils/tableScroll';
-    import { dialogMethods, dialogData, DIALOG_TYPE } from '@/utils/dialog';
+    import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
     import { mapGetters, mapActions } from 'vuex';
     import ShuttleBox from '@/components/shuttleBox.vue';
     import ViewPrice from '@/components/commodity/viewPrice.vue';
@@ -206,7 +206,7 @@
             operation: ['编辑', '关联科室'],
         });
     }
-    
+
     //  查看详情的表格
     const countTableData = [
         {
