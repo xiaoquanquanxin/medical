@@ -1,5 +1,5 @@
 <template>
-    <div style="max-height: 500px;overflow: auto">
+    <div class="table-in-box">
         <a-table
                 :columns="columns"
                 :data-source="data"
