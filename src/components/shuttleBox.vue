@@ -51,14 +51,44 @@
             //  console.log(this.shuttleBoxBasicData);
             this.shuttleBoxBasicData = (() => {
                 switch (this.shuttleBoxType) {
+                    //	商品列表 - 授权
                     case SHUTTLE_BOX.DIALOG_AUTHORIZATION:
                         return {
-                            title: ['渠道商列表', '渠道商'],
+                            title: ['渠道商列表', '已选渠道商列表'],
                             //	请求数据
                             requestDataUrl: 'requestDataUrl',
                             //	提交数据
                             submitDataUrl: 'submitDataUrl',
                         };
+                    //	医院管理 - 关联科室
+                    case SHUTTLE_BOX.RELATED_DEPARTMENTS:
+                        return {
+                            title: ['科室列表', '已选科室列表'],
+                            //	请求数据
+                            requestDataUrl: 'requestDataUrl',
+                            //	提交数据
+                            submitDataUrl: 'submitDataUrl',
+                        };
+
+                    //	科室管理 - 关联疾病
+                    case SHUTTLE_BOX.ASSOCIATED_DISEASE:
+                        return {
+                            title: ['疾病列表', '已选疾病列表'],
+                            //	请求数据
+                            requestDataUrl: 'requestDataUrl',
+                            //	提交数据
+                            submitDataUrl: 'submitDataUrl',
+                        };
+                    //	科室管理 - 关联评估调查表
+                    case SHUTTLE_BOX.QUESTIONNAIRE:
+                        return {
+                            title: ['评估调查列表', '已选评估调查列表'],
+                            //	请求数据
+                            requestDataUrl: 'requestDataUrl',
+                            //	提交数据
+                            submitDataUrl: 'submitDataUrl',
+                        };
+
                     default:
                         return {};
                 }
