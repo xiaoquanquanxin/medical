@@ -69,11 +69,11 @@
         >
             <div
                     slot="a-switch"
-                    slot-scope="sItem,sIndex,extra"
+                    slot-scope="scope,sItem,sIndex,extra"
             >
                 <a-switch checked-children="开" un-checked-children="关"
                           :default-checked="!!sIndex"
-                          @change="aSwitchChange(sItem,sIndex, $event)"
+                          @change="aSwitchChange(sItem,$event)"
                 />
             </div>
             <div slot="tags" slot-scope="scope,sItem,sIndex,extra">
@@ -102,8 +102,8 @@
             </a-pagination>
         </a-row>
         <!--莫泰框-->
-        <a-modal v-model="dialogData.dialogVisible"
-                 v-if="dialogData.dialogVisible"
+        <a-modal v-model="dialogData.visible"
+                 v-if="dialogData.visible"
                  :maskClosable="false"
                  centered
                  :width="800"
@@ -116,7 +116,7 @@
     </div>
 </template>
 <script>
-    //  关联疾病 穿梭框
+    //    穿梭框
     import ShuttleBox from '@/components/shuttleBox.vue';
     import { mapGetters, mapActions } from 'vuex';
     import { dialogMethods, dialogData } from '@/utils/dialog';
@@ -227,6 +227,11 @@
                 console.log(current);
                 console.log(pageSize);
             },
+            //  切换状态
+            aSwitchChange(sItem, checked){
+                console.log(sItem, checked);
+            },
+            
             //  编辑医生
             editDoctor(sItem, sIndex, extra){
                 this.$router.push({ name: 'editDoctor', params: { doctorId: sIndex } });
@@ -253,9 +258,9 @@
             },
 //            //  关联疾病
 //            relatedDisease(sItem, sIndex){
-//                console.log(this.dialogVisible);
+//                console.log(this.visible);
 //                this.showModal();
-//                console.log(this.dialogVisible);
+//                console.log(this.visible);
 //            },
             //  检查莫泰框的值
             modalCheck(){
