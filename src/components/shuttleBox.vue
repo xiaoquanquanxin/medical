@@ -8,7 +8,7 @@
             :target-keys="targetKeys"
             :render="item => `${item.title}-${item.description}`"
             @change="handleChange"
-            :titles="['啊啊啊', 'bbb']"
+            :titles="shuttleBoxBasicData.title"
     >
         <span slot="notFoundContent">暂无数据</span>
         <a-button
@@ -24,30 +24,50 @@
 </template>
 <script>
     import { mapGetters, mapActions } from 'vuex';
-    
+    import { SHUTTLE_BOX } from '../store/modules/shuttleBox';
+
+    //	穿梭框的基础数据
+    export const SHUTTLE_BOX_BASIC_DATA = {};
+
     //  穿梭框
     export default {
         computed: {
-            ...mapGetters([
-                'shuttleBox',
-            ]),
-            modalTargetKeys(){
-                return this.$store.state.shuttleBox.modalTargetKeys;
-            }
+            //  穿梭框类型
+            shuttleBoxType(){
+                return this.$store.state.shuttleBox.shuttleBoxType;
+            },
         },
         data(){
             return {
                 mockData: [],
-                targetKeys: this.modalTargetKeys,
+                targetKeys: [],
+                //  请求相关数据
+                shuttleBoxBasicData: {},
             };
         },
-        mounted(){
+        created(){
+            //  console.log(SHUTTLE_BOX_BASIC_DATA);
+            //  console.log(this.shuttleBoxType);
+            //  console.log(this.shuttleBoxBasicData);
+            this.shuttleBoxBasicData = (() => {
+                switch (this.shuttleBoxType) {
+                    case SHUTTLE_BOX.DIALOG_AUTHORIZATION:
+                        return {
+                            title: ['渠道商列表', '渠道商'],
+                            //	请求数据
+                            requestDataUrl: 'requestDataUrl',
+                            //	提交数据
+                            submitDataUrl: 'submitDataUrl',
+                        };
+                    default:
+                        return {};
+                }
+            })();
+            this.handleSubmit = this.handleSubmit.bind(this);
             this.getMock();
-            console.log('mounted🍉，发请求');
+            console.log('mounted🍉，发请求', '类型是', this.shuttleBoxType);
         },
         methods: {
-            //  设置莫泰框选择的值到store
-            ...mapActions('shuttleBox', ['setModalTargetKey']),
             getMock(props){
                 //  console.log(props);
                 const targetKeys = [];
@@ -71,7 +91,6 @@
                 //  console.log(targetKeys, direction, moveKeys);
                 console.log(targetKeys);
                 this.targetKeys = targetKeys;
-                this.setModalTargetKey(targetKeys);
             },
             //  重置
             reset(props){
@@ -79,6 +98,22 @@
                 console.log(props);
                 console.log(props.dataSource);
                 this.targetKeys = [];
+            },
+
+            //  发请求
+            handleSubmit(){
+                return new Promise(((resolve, reject) => {
+                    console.log(this.targetKeys);
+                    resolve();
+                }))
+                    .then(v => {
+                        return new Promise(((resolve, reject) => {
+                            console.log('发请求吧');
+                            setTimeout(() => {
+                                resolve();
+                            }, 1000);
+                        }));
+                    });
             },
         },
     };
