@@ -37,3 +37,8 @@
     max-height: 500px;
     overflow: auto;
 }
+
+/*穿梭框，第一个列表不要全部按钮*/
+.ant-transfer .ant-transfer-list.ant-transfer-list-with-footer:first-child .ant-transfer-list-footer .ant-btn.ant-btn-sm {
+    visibility: hidden;
+}
