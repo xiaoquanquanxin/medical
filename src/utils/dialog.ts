@@ -33,6 +33,10 @@ export const DIALOG_TYPE: DialogType = {
 	ADD_CLASSIFICATION: 'ADD_CLASSIFICATION',
 	//	新增、编辑品牌管理莫泰框
 	ADD_BRAND: 'ADD_BRAND',
+	//	新增、编辑生产厂家莫泰框
+	ADD_MANUFACTURER: 'ADD_MANUFACTURER',
+	//	医院管理 - 关联科室
+	RELATED_DEPARTMENTS: 'RELATED_DEPARTMENTS',
 }
 
 
