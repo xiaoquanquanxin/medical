@@ -5,10 +5,15 @@
         <a-input-group class="a-input-group">
             <a-row :gutter="8">
                 <a-col :span="5">
-                    <a-input default-value=""/>
+                    <a-input v-model="searchData.diseaseName"
+                             placeholder="请输入疾病名称"
+                    />
                 </a-col>
                 <a-col :span="5">
-                    <a-select default-value="Option1" style="width:100%;">
+                    <a-select v-model="searchData.status"
+                              style="width:100%;"
+                              placeholder="请选择状态"
+                    >
                         <a-select-option value="Option1">
                             Option1
                         </a-select-option>
@@ -35,22 +40,20 @@
         </a-input-group>
         <!--表格-->
         <a-table
-                :row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                 :columns="columns"
                 :data-source="data"
                 :scroll="scroll"
                 :pagination="false"
         >
-            <div
-                    slot="a-switch"
-                    slot-scope="sItem,sIndex,extra"
+            <div slot="a-switch"
+                 slot-scope="scope,sItem,sIndex,extra"
             >
                 <a-switch checked-children="开" un-checked-children="关"
                           :default-checked="!!sIndex"
-                          @change="aSwitchChange(sItem,sIndex, $event)"
+                          @change="aSwitchChange(sItem,$event)"
                 />
             </div>
-            <div slot="tags" slot-scope="scope,sItem,sIndex,extra">
+            <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
                 <a-space size="small">
                     <a @click="editDisease(sItem,sIndex,extra)">编辑</a>
                     <a @click="deleteDisease(sItem)">删除</a>
@@ -75,46 +78,30 @@
                 </template>
             </a-pagination>
         </a-row>
-        <!--莫泰框-->
-        <!--        <a-modal v-model="dialogData.visible"
-                 v-if="dialogData.visible"-->
-        <!--                 :maskClosable="false"-->
-        <!--                 centered-->
-        <!--                 :width="800"-->
-        <!--                 title="关联疾病"-->
-        <!--                 ok-text="确认"-->
-        <!--                 cancel-text="取消"-->
-        <!--                 @ok="modalCheck()">-->
-        <!--            <ShuttleBox/>-->
-        <!--        </a-modal>-->
     </div>
 </template>
 <script>
-    //  关联疾病 穿梭框
-    //    import ShuttleBox from '@/components/shuttleBox.vue';
-    //  import { mapGetters, mapActions } from 'vuex';
-    //    import { dialogMethods, dialogData } from '@/utils/dialog';
-
     import { pagination } from '@/utils/pagination.ts';
     import { dialogMethods, dialogData } from '@/utils/dialog';
     import { towRowSearch } from '../../utils/tableScroll';
+
     const columns = [
         {
             title: '疾病名称',
             dataIndex: 'disease',
-            width: 100,
+            width: 150,
         },
         {
             title: '状态',
             dataIndex: 'status',
-            width: 100,
+            width: 150,
             scopedSlots: { customRender: 'a-switch' },
         },
         {
             title: '操作',
-            dataIndex: 'tags',
-            key: 'tags',
-            scopedSlots: { customRender: 'tags' },
+            dataIndex: 'operation',
+            key: 'operation',
+            scopedSlots: { customRender: 'operation' },
         },
     ];
     const data = [];
@@ -123,27 +110,15 @@
             key: i,
             disease: `xx疾病`,
             status: String(i % 2),
-            tags: ['编辑', '删除',],
+            operation: null,
         });
     }
     //  疾病管理
     export default {
-        components: {
-//            ShuttleBox,
-        },
-        computed: {
-//            ...mapGetters([
-//                'shuttleBox',
-//            ]),
-//            modalTargetKeys(){
-//                return this.$store.state.shuttleBox.modalTargetKeys;
-//            }
-        },
         data(){
             return {
                 data,
                 columns,
-                selectedRowKeys: [], // Check here to configure the default column
 
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
                 scroll: towRowSearch,
@@ -152,17 +127,15 @@
                 pagination,
                 //  莫泰框
                 dialogData,
+                //  搜索数据
+                searchData: {},
             };
         },
 
         methods: {
             //  //  莫泰框方法
             ...dialogMethods,
-            //  选中表格数据
-            onSelectChange(selectedRowKeys){
-                console.log('selectedRowKeys changed: ', selectedRowKeys);
-                this.selectedRowKeys = selectedRowKeys;
-            },
+
             //  展示的每一页数据变换
             onShowSizeChange(current, pageSize){
                 console.log(current);
@@ -173,6 +146,11 @@
             pageChange(current, pageSize){
                 console.log(current);
                 console.log(pageSize);
+            },
+
+            //  切换状态
+            aSwitchChange(sItem, checked){
+                console.log(sItem, checked);
             },
             //  编辑疾病
             editDisease(sItem, sIndex, extra){
@@ -198,19 +176,6 @@
                     },
                 });
             },
-//            //  关联疾病
-//            relatedDisease(sItem, sIndex){
-//                console.log(this.visible);
-//                this.showModal();
-//                console.log(this.dialogVisible);
-//            },
-//            //  检查莫泰框的值
-//            modalCheck(){
-//                console.log(this.modalTargetKeys);
-//                console.log('发请求吧');
-//                return;
-//                this.hideModal();
-//            },
         }
     };
 </script>
