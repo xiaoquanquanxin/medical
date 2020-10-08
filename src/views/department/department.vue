@@ -47,11 +47,11 @@
         >
             <div
                     slot="a-switch"
-                    slot-scope="sItem,sIndex,extra"
+                    slot-scope="scope,sItem,sIndex,extra"
             >
                 <a-switch checked-children="开" un-checked-children="关"
                           :default-checked="!!sIndex"
-                          @change="aSwitchChange(sItem,sIndex, $event)"
+                          @change="aSwitchChange(sItem,$event)"
                 />
             </div>
             <div slot="tags" slot-scope="scope,sItem,sIndex,extra">
