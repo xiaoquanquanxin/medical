@@ -4,7 +4,7 @@
         <a-input-group class="a-input-group">
             <a-row :gutter="8">
                 <a-col :span="5">
-                    <a-input v-model="selectData.classificationName" placeholder="请输入分类名称"/>
+                    <a-input v-model="searchData.classificationName" placeholder="请输入分类名称"/>
                 </a-col>
                 <a-col :span="5">
                     <a-button type="primary">
@@ -125,10 +125,7 @@
                 dialogDataAddClassification: this.initModal(DIALOG_TYPE.ADD_CLASSIFICATION),
 
                 //  搜索数据
-                selectData: {
-                    classificationName: null,
-                }
-
+                searchData: {},
             };
         },
         created(){
