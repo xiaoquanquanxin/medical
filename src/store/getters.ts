@@ -7,6 +7,9 @@ const getters = {
 	shuttleBox: (state: any) => state.app.shuttleBox,
 	roleBox: (state: any) => state.app.roleBox,
 
+	//	用户信息
+	userInfo: (state: any) => state.app.userInfo,
+
 	//	仓库管理
 	entrepot: (state: any) => state.app.entrepot,
 	//	渠道商管理
