@@ -38,7 +38,7 @@
             >
                 <a-switch checked-children="开" un-checked-children="关"
                           :default-checked="!!sIndex"
-                          @change="aSwitchChange(sItem,sIndex, $event)"
+                          @change="aSwitchChange(sItem,$event)"
                 />
             </div>
             <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
