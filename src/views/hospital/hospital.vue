@@ -1,6 +1,5 @@
 <template>
     <div class="layout-content-inner-main">
-        <p>医院管理</p>
         <!--搜索相关-->
         <a-input-group class="a-input-group">
             <a-row :gutter="8">
@@ -48,7 +47,6 @@
         </a-input-group>
         <!--表格-->
         <a-table
-                :row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                 :columns="columns"
                 :data-source="data"
                 :scroll="scroll"
@@ -60,13 +58,14 @@
             >
                 <a-switch checked-children="开" un-checked-children="关"
                           :default-checked="!!sIndex"
-                          @change="aSwitchChange(sItem,sIndex, $event)"
+                          @change="aSwitchChange(sItem,$event)"
                 />
             </div>
-            <div slot="tags" slot-scope="scope,sItem,sIndex,extra">
+            <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
                 <a-space size="small">
-                    <a @click="editHospital(scope,sItem,sIndex,extra)">编辑</a>
-                    <a @click="relatedDepartments(scope,sItem,sIndex,extra)">关联科室</a>
+                    <a @click="editHospital(sItem)">编辑</a>
+                    <a @click="relatedDepartments(sItem)">关联科室</a>
+                    <a @click="associatedChannelProvider(sItem)">关联渠道商</a>
                 </a-space>
             </div>
         </a-table>
@@ -88,25 +87,39 @@
             </a-pagination>
         </a-row>
         <!--莫泰框-->
-        <a-modal v-model="dialogData.visible"
-                 v-if="dialogData.visible"
+        <a-modal v-model="dialogDataRelatedDepartments.visible"
+                 v-if="dialogDataRelatedDepartments.visible"
                  :maskClosable="false"
                  centered
                  :width="800"
                  title="关联科室"
                  ok-text="确认"
                  cancel-text="取消"
-                 @ok="modalCheck()">
-            <ShuttleBox/>
+                 @ok="relatedDepartmentsModalCheck('refShuttleBox')">
+            <ShuttleBox ref="refShuttleBox"/>
+        </a-modal>
+        <!--关联渠道商-->
+        <a-modal v-model="dialogDataDistributors.visible"
+                 v-if="dialogDataDistributors.visible"
+                 :maskClosable="false"
+                 centered
+                 :width="800"
+                 title="关联渠道商"
+                 ok-text="确认"
+                 cancel-text="取消"
+                 @ok="channelProviderBoxModalCheck('refChannelProviderBox')">
+            <ChannelProviderBox ref="refChannelProviderBox"/>
         </a-modal>
     </div>
 </template>
 <script>
     import ShuttleBox from '@/components/shuttleBox.vue';
+    import ChannelProviderBox from '@/components/hospital/channelProviderBox.vue';
     import { mapGetters, mapActions } from 'vuex';
     import { pagination } from '@/utils/pagination.ts';
-    import { dialogMethods, dialogData } from '@/utils/dialog';
+    import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
     import { towRowSearch } from '../../utils/tableScroll';
+    import { SHUTTLE_BOX } from '../../store/modules/shuttleBox';
 
     const columns = [
         {
@@ -132,9 +145,9 @@
         },
         {
             title: '操作',
-            dataIndex: 'tags',
-            key: 'tags',
-            scopedSlots: { customRender: 'tags' },
+            dataIndex: 'operation',
+            key: 'operation',
+            scopedSlots: { customRender: 'operation' },
         },
     ];
     const data = [];
@@ -145,18 +158,16 @@
             city: '上海',
             status: String(i % 2),
             icon: '医院图标',
-            tags: ['编辑', '关联科室'],
+            operation: ['编辑', '关联科室'],
         });
     }
     //  医院管理
     export default {
         components: {
             ShuttleBox,
+            ChannelProviderBox,
         },
         computed: {
-            ...mapGetters([
-                'shuttleBox',
-            ]),
             modalTargetKeys(){
                 return this.$store.state.shuttleBox.modalTargetKeys;
             }
@@ -165,24 +176,29 @@
             return {
                 data,
                 columns,
-                selectedRowKeys: [], // Check here to configure the default column
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
                 scroll: towRowSearch,
                 //  分页信息
                 pagination,
-                //  莫泰框
-                dialogData,
+                //  关联科室莫泰框
+                dialogDataRelatedDepartments: this.initModal(DIALOG_TYPE.RELATED_DEPARTMENTS),
+                //  关联渠道商
+                dialogDataDistributors: this.initModal(DIALOG_TYPE.ASSOCIATED_CHANNEL_PROVIDER),
             };
         },
 
         methods: {
             //  莫泰框方法
             ...dialogMethods,
-            //  选中表格数据
-            onSelectChange(selectedRowKeys){
-                console.log('selectedRowKeys changed: ', selectedRowKeys);
-                this.selectedRowKeys = selectedRowKeys;
-            },
+            ...mapActions('shuttleBox', [
+                //  设置穿梭框类型
+                'setShuttleBoxType',
+            ]),
+            ...mapActions('hospital', [
+                //  关联渠道商
+                'setDistributorsId',
+            ]),
+
             //  展示的每一页数据变换
             onShowSizeChange(current, pageSize){
                 console.log(current);
@@ -196,31 +212,43 @@
             },
 
             //  切换状态
-            aSwitchChange(sItem, sIndex, checked){
-                console.log(sItem, sIndex, checked);
+            aSwitchChange(sItem, $event){
+                console.log(sItem, $event);
             },
 
             //  编辑医院
-            editHospital(scope, sItem, sIndex, extra){
-//                console.log(scope);
-//                console.log(sItem);
-//                console.log(sIndex);
-//                console.log(extra);
-//                console.log(sIndex)
-                //
-                this.$router.push({ name: 'editHospital', params: { hospitalId: sIndex } });
+            editHospital(sItem){
+                this.$router.push({ name: 'editHospital', params: { hospitalId: '123232' } });
             },
-            //  关联科室
-            relatedDepartments(scope, sItem, sIndex, extra){
-                this.showModal();
+            //  关联科室操作
+            relatedDepartments(){
+                this.showModal(DIALOG_TYPE.RELATED_DEPARTMENTS);
+                this.setShuttleBoxType(SHUTTLE_BOX.RELATED_DEPARTMENTS);
             },
-            //  检查莫泰框的值
-            modalCheck(){
-                console.log(this.modalTargetKeys);
-                console.log('发请求吧');
-                return;
-                this.hideModal();
+            //  关联渠道商
+            associatedChannelProvider(){
+                this.showModal(DIALOG_TYPE.ASSOCIATED_CHANNEL_PROVIDER);
+                this.setDistributorsId(12334);
             },
+            //  关联科室确定
+            relatedDepartmentsModalCheck(refShuttleBox){
+                const promise = this.$refs[refShuttleBox].handleSubmit();
+                promise.then(v => {
+                    this.hideModal(DIALOG_TYPE.RELATED_DEPARTMENTS);
+                }).catch(error => {
+                    console.log('有错');
+                });
+            },
+            //  关联渠道商确定
+            channelProviderBoxModalCheck(refChannelProviderBox){
+                const promise = this.$refs[refChannelProviderBox].handleSubmit();
+                promise.then(v => {
+                    this.hideModal(DIALOG_TYPE.ASSOCIATED_CHANNEL_PROVIDER);
+                }).catch(error => {
+                    console.log(error);
+                    console.log('有错');
+                });
+            }
         },
     };
 </script>
