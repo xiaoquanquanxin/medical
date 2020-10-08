@@ -10,7 +10,7 @@ export const SHUTTLE_BOX = {
 
 interface STATE {
 	modalTargetKeys: Array<any>;
-	shuttleBoxBasicData: any;
+	//	shuttleBoxBasicData: any;
 	shuttleBoxType: string;
 }
 
@@ -18,7 +18,7 @@ const state: STATE = {
 	//	穿梭框的类型	🔥🔥🔥 类型非常重要，用于决定拉什么数据
 	shuttleBoxType: '',
 	//	穿梭框的基础数据
-	shuttleBoxBasicData: null,
+	//	shuttleBoxBasicData: null,
 	//	穿梭框的数据
 	modalTargetKeys: [],
 }
