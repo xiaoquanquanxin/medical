@@ -4,3 +4,7 @@
 export const oneRowSearch = {x: 820, y: 'calc(100vh - 350px)'};
 //	有2排搜索按钮
 export const towRowSearch = {x: 820, y: 'calc(100vh - 398px)'};
+
+
+//	弹框table
+export const modalTableScroll = {x: 750, y: 400};
