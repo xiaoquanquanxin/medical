@@ -5,7 +5,7 @@
             @submit="handleSubmit"
             autocomplete="off"
     >
-        <a-form-item label="仓库名称">
+        <a-form-item label="品牌名称">
             <a-input
                     v-decorator="categoryNameDecorator"
                     placeholder="请输入品牌名称"
