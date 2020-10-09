@@ -55,6 +55,7 @@
             return {
                 data,
                 columns,
+                //	弹框table的scroll
                 modalTableScroll,
                 //  默认被选中的值
                 selectedRowKeys: [3]
