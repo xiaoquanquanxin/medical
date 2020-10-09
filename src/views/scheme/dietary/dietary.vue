@@ -72,7 +72,7 @@
         >
             <div slot="tags" slot-scope="scope,sItem,sIndex,extra">
                 <a-space size="small">
-                    <router-link :to="{name:'editDietary',params:{editDietaryId:'123'}}">编辑</router-link>
+                    <router-link :to="{name:'editDietary',params:{dietaryId:'123'}}">编辑</router-link>
                     <a @click="deleteScheme(sItem,sIndex)">删除</a>
                 </a-space>
             </div>
