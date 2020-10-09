@@ -140,17 +140,3 @@
         }
     };
 </script>
-<style scoped>
-    /*负数表格下的每一项*/
-    .negative-margin-item {
-        border-bottom: 1px solid #e8e8e8;
-        display: block;
-        width: 100%;
-        /*line-height: 40px;*/
-        padding: 16px;
-    }
-    
-    .negative-margin-item:last-child {
-        border-bottom: none;
-    }
-</style>
