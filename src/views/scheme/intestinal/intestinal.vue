@@ -4,12 +4,17 @@
         <a-input-group class="a-input-group">
             <a-row :gutter="8">
                 <a-col :span="5">
-                    <a-input default-value=""/>
+                    <a-input v-model="searchData.schemeName"
+                             placeholder="请输入方案名称"
+                    />
                 </a-col>
                 <a-col :span="5">
-                    <a-select default-value="Option1" style="width:100%;">
-                        <a-select-option value="Option1">
-                            Option1
+                    <a-select v-model="searchData.energy"
+                              style="width:100%;"
+                              placeholder="请选择能量"
+                    >
+                        <a-select-option value="">
+                            分类
                         </a-select-option>
                         <a-select-option value="Option2">
                             Option2
@@ -17,9 +22,12 @@
                     </a-select>
                 </a-col>
                 <a-col :span="5">
-                    <a-select default-value="Option1" style="width:100%;">
-                        <a-select-option value="Option1">
-                            Option1
+                    <a-select v-model="searchData.method"
+                              style="width:100%;"
+                              placeholder="请选择使用方法"
+                    >
+                        <a-select-option value="">
+                            分类
                         </a-select-option>
                         <a-select-option value="Option2">
                             Option2
@@ -27,9 +35,12 @@
                     </a-select>
                 </a-col>
                 <a-col :span="5">
-                    <a-select default-value="Option1" style="width:100%;">
-                        <a-select-option value="Option1">
-                            Option1
+                    <a-select v-model="searchData.department"
+                              style="width:100%;"
+                              placeholder="请选择科室"
+                    >
+                        <a-select-option value="">
+                            分类
                         </a-select-option>
                         <a-select-option value="Option2">
                             Option2
@@ -45,7 +56,7 @@
         </a-input-group>
         <a-input-group class="a-input-group">
             <a-col :span="5">
-                <router-link :to="{name:'addDisease'}">
+                <router-link :to="{name:'addIntestinal'}">
                     <a-button type="primary">
                         新增方案
                     </a-button>
@@ -62,8 +73,8 @@
         >
             <div slot="tags" slot-scope="scope,sItem,sIndex,extra">
                 <a-space size="small">
-                    <a @click="editScheme(sItem,sIndex)">编辑</a>
-                    <a @click="deleteScheme(sItem,sIndex)">删除</a>
+                    <router-link :to="{name:'editIntestinal',params:{intestinalId:'123'}}">编辑</router-link>
+                    <a @click="deleteScheme(sItem)">删除</a>
                 </a-space>
             </div>
         </a-table>
@@ -88,8 +99,7 @@
 </template>
 <script>
     import { pagination } from '@/utils/pagination.ts';
-    import { dialogMethods, dialogData } from '@/utils/dialog';
-    import { oneRowSearch } from '../../utils/tableScroll';
+    import { oneRowSearch } from '../../../utils/tableScroll';
 
     const columns = [
         {
@@ -142,13 +152,11 @@
                 scroll: oneRowSearch,
                 //  分页信息
                 pagination,
-                //  莫泰框
-                dialogData,
+                //  搜索数据
+                searchData: {},
             };
         },
         methods: {
-            //  莫泰框方法
-            ...dialogMethods,
             //  选中表格数据
             onSelectChange(selectedRowKeys){
                 console.log('selectedRowKeys changed: ', selectedRowKeys);
@@ -165,13 +173,8 @@
                 console.log(current);
                 console.log(pageSize);
             },
-
-            //  编辑管理
-            editScheme(sItem, sIndex){
-                this.showModal();
-            },
             //  删除管理
-            deleteScheme(sItem, sIndex){
+            deleteScheme(sItem){
                 this.$confirm({
                     title: `确定删除${sItem.disease}`,
                     //  content: 'Bla bla ...',
