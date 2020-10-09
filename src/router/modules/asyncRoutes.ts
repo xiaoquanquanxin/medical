@@ -293,7 +293,7 @@ export const asyncRoutesList = [
 				},
 				name: 'oral',
 				path: '/scheme/oral',
-				component: () => import(/* webpackChunkName: "oral" */ '@/views/scheme/oral.vue'),
+				component: () => import(/* webpackChunkName: "oral" */ '@/views/scheme/oral/oral.vue'),
 				hidden: true
 			},
 			{
@@ -306,7 +306,7 @@ export const asyncRoutesList = [
 				},
 				name: 'intestinal',
 				path: '/scheme/intestinal',
-				component: () => import(/* webpackChunkName: "intestinal" */ '@/views/scheme/intestinal.vue'),
+				component: () => import(/* webpackChunkName: "intestinal" */ '@/views/scheme/intestinal/intestinal.vue'),
 				hidden: true
 			},
 			{
@@ -332,7 +332,7 @@ export const asyncRoutesList = [
 		},
 		path: '/scheme/addOral',
 		name: 'addOral',
-		component: () => import(/* webpackChunkName: "addOral" */ '@/views/scheme/addOral.vue'),
+		component: () => import(/* webpackChunkName: "addOral" */ '@/views/scheme/oral/addOral.vue'),
 		hidden: true
 	},
 	{
@@ -342,7 +342,7 @@ export const asyncRoutesList = [
 		},
 		path: '/scheme/editOral/:oralId',
 		name: 'editOral',
-		component: () => import(/* webpackChunkName: "addOral" */ '@/views/scheme/addOral.vue'),
+		component: () => import(/* webpackChunkName: "addOral" */ '@/views/scheme/oral/addOral.vue'),
 		hidden: true
 	},
 	{
