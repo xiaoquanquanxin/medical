@@ -6,5 +6,5 @@ export const oneRowSearch = {x: 820, y: 'calc(100vh - 350px)'};
 export const towRowSearch = {x: 820, y: 'calc(100vh - 398px)'};
 
 
-//	弹框table
+//	弹框table的scroll
 export const modalTableScroll = {x: 750, y: 400};
