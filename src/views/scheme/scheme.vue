@@ -17,6 +17,7 @@
 <script>
     import { jumpTo } from '@/utils/routerMeta';
 
+    //  处方模板管理
     export default {
         computed: {
             userRouteList(){
