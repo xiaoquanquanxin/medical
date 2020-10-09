@@ -47,6 +47,7 @@ export const routeMap = {
 	'addDisease': true,
 	//  编辑疾病
 	'editDisease': true,
+
 	//  处方审核管理
 	'scheme': true,
 	//	口服肠内营养补充
@@ -63,6 +64,11 @@ export const routeMap = {
 	'editIntestinal': true,
 	//	膳食营养计划
 	'dietary': true,
+	//	新增
+	'addDietary': true,
+	//	编辑
+	'editDietary': true,
+
 	//	评估调查表管理
 	'questionnaire': true,
 	//  宣教管理
