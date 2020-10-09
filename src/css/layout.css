@@ -15,13 +15,46 @@
 
 
 /*特殊的表头是选择框的那种*/
-.custom-select-title-table .ant-table-thead > tr > th[colspan]:not([colspan='1']) {
-    text-align: left;
+.custom-select-title-table .ant-table-bordered .ant-table-body > table {
+    border-top: none;
+    border-left: none;
 }
 
 /*特殊的表头是选择框的那种*/
-.custom-select-title-table .ant-table-thead > tr > th .ant-table-header-column {
-    display: block !important;
+.custom-select-title-table .ant-table-thead > tr:first-child > th:last-child {
+    border-right: none;
+}
+
+/*特殊的表头是选择框的那种*/
+.custom-select-title-table .ant-table-bordered .ant-table-tbody > tr > td:last-child {
+    border-right: none;
+}
+
+/*特殊的表头是选择框的那种*/
+.custom-select-title-table .ant-table-bordered .ant-table-tbody > tr:last-child > td {
+    border-bottom: none;
+}
+
+/*特殊的表头是选择框的那种*/
+.custom-select-title-table .ant-table-bordered.ant-table-empty .ant-table-placeholder {
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+}
+
+/*表组*/
+.table-group {
+    min-width: 700px;
+    border: 1px solid #e8e8e8;
+    border-bottom: none;
+}
+
+/*表组的头*/
+.table-group-title {
+    height: 54px;
+    background-color: #fafafa;
+    border-bottom: 1px solid #e8e8e8;
+    padding: 0 16px;
 }
 
 
@@ -41,4 +74,10 @@
 /*穿梭框，第一个列表不要全部按钮 第一个按钮*/
 .ant-transfer .ant-transfer-list.ant-transfer-list-with-footer:first-child .ant-transfer-list-footer .ant-btn.ant-btn-sm {
     visibility: hidden;
+}
+
+
+/*负数的margin，主要用于表格*/
+.negative-margin-16 {
+    margin: -16px;
 }
