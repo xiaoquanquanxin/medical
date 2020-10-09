@@ -65,7 +65,6 @@
         </a-input-group>
         <!--表格-->
         <a-table
-                :row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                 :columns="columns"
                 :data-source="data"
                 :scroll="scroll"
@@ -146,7 +145,6 @@
             return {
                 data,
                 columns,
-                selectedRowKeys: [], // Check here to configure the default column
 
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
                 scroll: oneRowSearch,
@@ -157,11 +155,6 @@
             };
         },
         methods: {
-            //  选中表格数据
-            onSelectChange(selectedRowKeys){
-                console.log('selectedRowKeys changed: ', selectedRowKeys);
-                this.selectedRowKeys = selectedRowKeys;
-            },
             //  展示的每一页数据变换
             onShowSizeChange(current, pageSize){
                 console.log(current);
