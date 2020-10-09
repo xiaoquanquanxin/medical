@@ -39,7 +39,7 @@
                 </a-select>
             </a-form-item>
             <a-form-item label="肠内营养支持">
-                <div class="table-group" style="width:calc((100vw - 200px) * .65)">
+                <div class="table-group" style="width:calc((100vw - 200px)*.65)">
                     <!--表头-->
                     <a-row type="flex" justify="start" align="middle" class="table-group-title">
                         <a-col :span="4">
@@ -77,18 +77,18 @@
                             </a-select>
                         </a-col>
                     </a-row>
-                    <a-row type="flex" justify="space-between" align="middle">
-                        <a-col :span="4">
+                    <!--选择商品表格-->
+                    <a-row type="flex" justify="space-between" align="middle" class="table-group-row">
+                        <a-col :span="3">
                             <a-row type="flex" justify="center" align="middle">
                                 <a-space size="small">
                                     <a @click="selectCommodity()">选择商品</a>
                                 </a-space>
                             </a-row>
                         </a-col>
-                        <a-col :span="20" style="border-left: 1px solid #e8e8e8;">
-                            <!--类型表格-->
-                            <a-table :columns="typeTableColumns"
-                                     :data-source="typeTableData"
+                        <a-col :span="21" class="col-right">
+                            <a-table :columns="commodityTableColumns"
+                                     :data-source="commodityTableData"
                                      :pagination="false"
                                      bordered
                                      class="custom-select-title-table">
@@ -117,31 +117,73 @@
                             </a-table>
                         </a-col>
                     </a-row>
-                    <!--数据表格-->
-                    <a-table
-                            :columns="countTableColumns"
-                            :data-source="countTableData"
-                            :pagination="false"
-                            :showHeader="false"
-                            bordered
-                    >
-                        <!--单位-->
-                        <div slot="unit" slot-scope="scope,sItem,sIndex,extra">
-                            <a-space size="small">
-                                {{sItem.commodityName}}
-                                <span>
-                          <a-input placeholder="输入值"/>
-                    </span>
-                                {{scope}}
-                            </a-space>
-                        </div>
-                        <!--操作-->
-                        <div slot="tags" slot-scope="scope,sItem,sIndex,extra">
-                            <a-space size="small">
-                                <a @click="deleteCountTable(sItem,sIndex)">删除</a>
-                            </a-space>
-                        </div>
-                    </a-table>
+                    <!--选择时间表格-->
+                    <a-row type="flex" justify="space-between" align="middle" class="table-group-row">
+                        <a-col :span="3">
+                            <a-row type="flex" justify="center" align="middle">
+                                <a-space size="small">
+                                    <a @click="chooseTime()">选择时间</a>
+                                </a-space>
+                            </a-row>
+                        </a-col>
+                        <a-col :span="21" class="col-right">
+                            <a-table
+                                    :columns="timeTableColumns"
+                                    :data-source="timeTableData"
+                                    :pagination="false"
+                                    bordered
+                                    class="custom-select-title-table">
+                                <!--商品名称-->
+                                <div slot="commodityName"
+                                     slot-scope="scope,sItem,sIndex,extra"
+                                     class="negative-margin-16"
+                                >
+                                    <div v-for="item in scope.list"
+                                         class="negative-margin-item"
+                                    >
+                                        {{item.commodityName}}
+                                    </div>
+                                </div>
+                                <!--使用量-->
+                                <div slot="dosage"
+                                     slot-scope="scope,sItem,sIndex,extra"
+                                     class="negative-margin-16"
+                                >
+                                    <div v-for="item in scope.list"
+                                         class="negative-margin-item is-input"
+                                    >
+                                        <a-space size="small">
+                                            <a-input placeholder="请输入使用量" v-model="item.dosage"/>
+                                            {{item.unit}}
+                                        </a-space>
+                                    </div>
+                                </div>
+                                <!--温水-->
+                                <div slot="warmWater"
+                                     slot-scope="scope,sItem,sIndex,extra"
+                                     class="negative-margin-16"
+                                >
+                                    <div class="negative-margin-item is-input">
+                                        <a-space size="small">
+                                            <a-input placeholder="请输入温水" v-model="scope.warmWater"/>
+                                        </a-space>
+                                    </div>
+                                </div>
+                                <!--操作-->
+                                <div slot="operation" slot-scope="scope,sItem,sIndex,extra"
+                                     class="negative-margin-16"
+                                >
+                                    <div v-for="(item,index) in scope.list"
+                                         class="negative-margin-item"
+                                    >
+                                        <a-space size="small">
+                                            <a @click="deleteTimeTable(scope,index,sItem,sIndex)">删除</a>
+                                        </a-space>
+                                    </div>
+                                </div>
+                            </a-table>
+                        </a-col>
+                    </a-row>
                 </div>
             </a-form-item>
             <!--保存-->
@@ -163,46 +205,35 @@
                  @ok="selectCommodityModalCheck('refSelectCommodity')">
             <SelectCommodity ref="refSelectCommodity"/>
         </a-modal>
+        <!--选择时间莫泰框-->
+        <a-modal v-model="dialogDataSelectTime.visible"
+                 v-if="dialogDataSelectTime.visible"
+                 :maskClosable="false"
+                 centered
+                 :width="200"
+                 title="选择时间"
+                 ok-text="确认"
+                 cancel-text="取消"
+                 @ok="selectTimeModalCheck">
+            <a-time-picker
+                    v-model="selectTimeMoment"
+                    @change="selectTimeChange"
+                    format="HH:mm"/>
+        </a-modal>
     </div>
 </template>
 <script>
+    import moment from 'moment';
+
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
     import { mapGetters, mapActions } from 'vuex';
     import SelectCommodity from '@/components/prescriptionTemplate/selectCommodity.vue';
     import { formItemLayout } from '@/utils/layout.ts';
 
-    const countTableData = [
-        {
-            key: Math.random(),
-            name: '添加时间',
-            time: '7:00',
-            unit: '勺',
-            commodityName: 'A商品',
-        },
-        {
-            key: Math.random(),
-            name: '添加时间',
-            time: '7:00',
-            unit: 'ml',
-            commodityName: 'B商品',
-        },
-        {
-            key: Math.random(),
-            name: '添加时间',
-            time: '8:00',
-            unit: '勺',
-            commodityName: 'A商品',
-        },
-        {
-            key: Math.random(),
-            name: '添加时间',
-            time: '8:00',
-            unit: 'ml',
-            commodityName: 'B商品',
-        },
-    ];
+    import TemplateRemarkInput from '@/components/prescriptionTemplate/templateRemarkInput';
 
-    const typeTableColumns = [
+    //  选择商品表格列的意义
+    const commodityTableColumns = [
         {
             title: '商品名称',
             dataIndex: 'commodityName',
@@ -233,6 +264,7 @@
             scopedSlots: { customRender: 'operation' },
         },
     ];
+
     export default {
         beforeCreate(){
             this.form = this.$form.createForm(this);
@@ -245,63 +277,70 @@
             originCommodityList(){
                 return JSON.parse(JSON.stringify(this.$store.state.prescriptionTemplate.originCommodityList));
             },
-//            //  被选中的数据
-//            selectedCommodityList(){
-//                return this.$store.state.prescriptionTemplate.selectedCommodityList;
-//            },
+            //  备注
+            remark(){
+                return this.$store.state.prescriptionTemplate.remark;
+            },
         },
         data(){
-            const countTableColumns = [
-                {
-                    dataIndex: 'name',
-                    colSpan: 100,
-                    width: 150,
-                    customRender: (text, row, index) => {
-                        const obj = {
-
-                            attrs: {},
-                        };
-                        if (index === 0) {
-                            //  console.log(countTableData.length);
-                            obj.attrs.rowSpan = countTableData.length;
-                        } else {
-                            obj.attrs.rowSpan = 0;
-                        }
-                        return obj;
-                    },
-                },
-                {
-                    //  时间
-                    colSpan: 0,
-                    key: 'time',
-                    dataIndex: 'time',
-                    width: 100,
-                },
-                {
-                    //  单位
-                    colSpan: 0,
-                    key: 'unit',
-                    dataIndex: 'unit',
-                    width: 300,
-                    scopedSlots: { customRender: 'unit' },
-                },
-                {
-                    colSpan: 0,
-                    dataIndex: 'tags',
-                    key: 'tags',
-                    width: 100,
-                    scopedSlots: { customRender: 'tags' },
-                },
-            ];
             return {
                 //  选择商品表格数据
-                typeTableData: [],
-                typeTableColumns,
-                countTableData,
-                countTableColumns,
+                commodityTableData: [],
+                commodityTableColumns,
+
+                //  选择时间表格数据
+                timeTableData: [],
+                //  选择时间表格列的意义
+                timeTableColumns: [
+                    {
+                        title: '时间',
+                        dataIndex: 'time',
+                        width: 100,
+                    },
+                    {
+                        title: '商品名称',
+                        width: 200,
+                        scopedSlots: { customRender: 'commodityName' },
+                    },
+                    {
+                        title: '使用量',
+                        width: 200,
+                        scopedSlots: { customRender: 'dosage' }
+                    },
+                    {
+                        title: '温水/ml',
+                        width: 200,
+                        scopedSlots: { customRender: 'warmWater' }
+                    },
+                    {
+                        title: '操作',
+                        width: 100,
+                        scopedSlots: { customRender: 'operation' },
+                    },
+                    {
+                        title: '备注',
+                        dataIndex: 'remark',
+                        width: 200,
+                        rowSpan: 100,
+                        customRender: (text, row, index) => {
+                            const obj = {
+                                children: this.$createElement(TemplateRemarkInput),
+                                attrs: {},
+                            };
+                            if (index === 0) {
+                                obj.attrs.rowSpan = 10000;
+                            } else {
+                                obj.attrs.rowSpan = 0;
+                            }
+                            return obj;
+                        },
+                    },
+                ],
 
                 //	处方模板管理 - 增加口服肠内补充方案 - 选择商品
                 dialogDataSelectCommodity: this.initModal(DIALOG_TYPE.TEMPLATE_SELECT_COMMODITY),
+                //  处方模板管理 - 增加口服肠内补充方案 - 选择时间
+                dialogDataSelectTime: this.initModal(DIALOG_TYPE.TEMPLATE_SELECT_TIME),
 
                 formItemLayout,
 
@@ -320,11 +359,16 @@
                     },]
                 }],
 
-                //  表格数据
+                //  表单中表格的数据 ：能量、 食用方法
                 tableForm: {
                     //  能量  energyId
                     //  食用方法  tableForm
-                }
+                },
+
+                //  选择时间的值的对象
+                selectTimeMoment: null,
+                //  选择时间的值
+                selectTimeValue: null,
             };
         },
         mounted(){
@@ -343,6 +387,8 @@
 //            this.setShoppingList(shoppingList);
         },
         methods: {
+            //  时间选择器的方法
+            moment,
             //  莫泰框方法
             ...dialogMethods,
 //            ...mapActions('addOral', [
@@ -421,7 +467,7 @@
                     this.hideModal(DIALOG_TYPE.TEMPLATE_SELECT_COMMODITY);
                     console.log('源数据', JSON.stringify(this.originCommodityList));
                     //  只展示被选中的
-                    this.typeTableData = this.originCommodityList.filter(item => item.isCheckboxChecked);
+                    this.commodityTableData = this.originCommodityList.filter(item => item.isCheckboxChecked);
                 }).catch(error => {
                     console.log(error);
                     console.log('有错');
@@ -430,22 +476,72 @@
 
             //  选择时间
             chooseTime(){
+                //  如果没有选择商品数据，先添加选择商品数据
+                if (!this.commodityTableData.length) {
+                    this.$error({ title: '请先选择商品' });
+                    return;
+                }
+                console.log('实际是新增一条时间');
+                this.selectTimeValue = '00:00';
+                //  初始化时间
+                this.selectTimeMoment = this.moment(this.selectTimeValue, 'HH:mm');
+                //  弹框
+                this.showModal(DIALOG_TYPE.TEMPLATE_SELECT_TIME);
+            },
 
+            //  选择时间的变换
+            selectTimeChange(value, selectTimeValue){
+                this.selectTimeValue = selectTimeValue;
+            },
+
+            //  确定选择的时间
+            selectTimeModalCheck(){
+                console.log(this.selectTimeValue);
+                console.log(this.commodityTableData);
+                //  子列表数据
+                const list = this.commodityTableData.map(item => {
+                    const child = item.buyUnitList.filter(_item => _item.isRadioChecked);
+                    return JSON.parse(JSON.stringify(child[0]));
+                });
+                console.log(JSON.parse(JSON.stringify(list)));
+                //  一条数据
+                const data = {
+                    //  key
+                    key: Math.random(),
+                    //  时间
+                    time: this.selectTimeValue,
+                    //  温水
+                    warmWater: null,
+                    //  子列表
+                    list,
+                };
+                //  新增一条数据
+                this.timeTableData.push(data);
+                //  关闭时间选择
+                this.hideModal(DIALOG_TYPE.TEMPLATE_SELECT_TIME);
             },
 
             //  删除类型表格的一行
             deleteTypeTable(sItem, sIndex){
-                this.typeTableData.splice(sIndex, 1);
+                this.commodityTableData.splice(sIndex, 1);
             },
             //  删除数据表格的一行
-            deleteCountTable(){
-
+            deleteTimeTable(scope, index, sItem, sIndex){
+                //  console.log(scope, index, sItem, sIndex);
+                scope.list.splice(index, 1);
+                //  如果删除完了这一列，需要删时间的主数据
+                if (scope.list.length === 0) {
+                    this.timeTableData.splice(sIndex, 1);
+                }
+                console.log(JSON.parse(JSON.stringify(this.timeTableData)));
             },
 
             //  表单提交 保存
             handleSubmit(e){
                 e.preventDefault();
-                console.log(this.typeTableData);
+                console.log(this.commodityTableData);
+                console.log('备注🍌',this.remark);
+                console.log(this.timeTableData);
                 this.form.validateFields((err, values) => {
                     console.table(values);
                     console.log(!err);
@@ -453,6 +549,20 @@
             },
         }
     };
+
+    //  todo    删除时间的某一类之后，删除全部的这个类型的数据，前端有风险
 </script>
 <style scoped>
+    .col-right {
+        border-left: 1px solid #e8e8e8;
+    }
+    
+    .table-group-row {
+        border-bottom: 1px solid #e8e8e8;
+    }
 </style>
+<!--<a-time-picker-->
+<!--        :use12Hours="false"-->
+<!--        format="h:mm a"-->
+<!--        @change="onChange"-->
+<!--        placeholder="请新增时间"/>-->
