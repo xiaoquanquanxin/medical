@@ -309,7 +309,6 @@ export const asyncRoutesList = [
 			},
 			{
 				meta: {
-					//	dietary:膳食
 					chName: '膳食营养计划',
 					selectRouteKey: 'scheme',
 					//	是scheme路由的某一项子路由
@@ -317,7 +316,7 @@ export const asyncRoutesList = [
 				},
 				name: 'dietary',
 				path: '/scheme/dietary',
-				component: () => import(/* webpackChunkName: "dietary" */ '@/views/scheme/dietary.vue'),
+				component: () => import(/* webpackChunkName: "dietary" */ '@/views/scheme/dietary/dietary.vue'),
 				hidden: true
 			}
 		],
@@ -363,6 +362,28 @@ export const asyncRoutesList = [
 		component: () => import(/* webpackChunkName: "addIntestinal" */ '@/views/scheme/intestinal/addIntestinal.vue'),
 		hidden: true
 	},
+	{
+		meta: {
+			chName: '新增膳食营养计划',
+			selectRouteKey: 'scheme',
+		},
+		path: '/scheme/addDietary',
+		name: 'addDietary',
+		component: () => import(/* webpackChunkName: "addDietary" */ '@/views/scheme/dietary/addDietary.vue'),
+		hidden: true
+	},
+	{
+		meta: {
+			chName: '编辑膳食营养计划',
+			selectRouteKey: 'scheme',
+		},
+		path: '/scheme/editDietary/:dietaryId',
+		name: 'editDietary',
+		component: () => import(/* webpackChunkName: "addDietary" */ '@/views/scheme/dietary/addDietary.vue'),
+		hidden: true
+	},
+
+
 	{
 		meta: {
 			chName: '评估调查表管理',
