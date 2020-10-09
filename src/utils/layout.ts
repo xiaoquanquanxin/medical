@@ -2,8 +2,8 @@
 
 //  表单大小
 export const formItemLayout = {
-    labelCol: { span: 3 },
-    wrapperCol: { offset: 1, span: 4 },
+    labelCol: { span: 4 },
+    wrapperCol: { offset: 1, span: 5 },
 };
 
 
