@@ -332,7 +332,7 @@ export const asyncRoutesList = [
 		},
 		path: '/scheme/addOral',
 		name: 'addOral',
-		component: () => import(/* webpackChunkName: "addDisease" */ '@/views/scheme/addOral.vue'),
+		component: () => import(/* webpackChunkName: "addOral" */ '@/views/scheme/addOral.vue'),
 		hidden: true
 	},
 	{
@@ -342,7 +342,7 @@ export const asyncRoutesList = [
 		},
 		path: '/scheme/editOral/:oralId',
 		name: 'editOral',
-		component: () => import(/* webpackChunkName: "addDisease" */ '@/views/scheme/addOral.vue'),
+		component: () => import(/* webpackChunkName: "addOral" */ '@/views/scheme/addOral.vue'),
 		hidden: true
 	},
 	{
