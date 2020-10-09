@@ -21,6 +21,9 @@ const getters = {
 	//	商品管理
 	commodity: (state: any) => state.app.commodity,
 
+	//	处方模板管理
+	prescriptionTemplate: (state: any) => state.app.prescriptionTemplate,
+
 
 	accountBox: (state: any) => state.app.accountBox,
 	addOral: (state: any) => state.app.addOral,
