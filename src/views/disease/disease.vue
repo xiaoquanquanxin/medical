@@ -81,7 +81,6 @@
 </template>
 <script>
     import { pagination } from '@/utils/pagination.ts';
-    import { dialogMethods, dialogData } from '@/utils/dialog';
     import { towRowSearch } from '../../utils/tableScroll';
 
     const columns = [
@@ -124,17 +123,12 @@
 
                 //    分页信息
                 pagination,
-                //  莫泰框
-                dialogData,
                 //  搜索数据
                 searchData: {},
             };
         },
 
         methods: {
-            //  //  莫泰框方法
-            ...dialogMethods,
-
             //  展示的每一页数据变换
             onShowSizeChange(current, pageSize){
                 console.log(current);
