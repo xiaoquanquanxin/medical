@@ -57,6 +57,10 @@ export const routeMap = {
 	'editOral': true,
 	//	肠内营养支持
 	'intestinal': true,
+	//	新增肠内营养支持
+	'addIntestinal': true,
+	//	编辑肠内营养支持
+	'editIntestinal': true,
 	//	膳食营养计划
 	'dietary': true,
 	//	评估调查表管理
