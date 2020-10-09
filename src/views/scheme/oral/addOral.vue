@@ -1,71 +1,115 @@
 <template>
     <div class="layout-content-inner-main">
-        <!--类型表格-->
-        <a-table :columns="typeTableColumns"
-                 :data-source="typeTableData"
-                 :pagination="false"
-                 bordered
-                 class="custom-select-title-table">
-            <!--表头-->
-            <div slot="slotTitle" slot-scope="scope,sItem,sIndex,extra">
-                <a-row type="flex" justify="start" align="middle">
-                    <a-col :span="4">
-                        肠内营养支持
-                    </a-col>
-                    <a-col :span="5">
-                        <a-select default-value="Option1" style="width:100%;">
-                            <a-select-option value="Option1">
-                                Option1
-                            </a-select-option>
-                            <a-select-option value="Option2">
-                                Option2
-                            </a-select-option>
-                        </a-select>
-                    </a-col>
-                    <a-col :span="5" :offset="10">
-                        <a-select default-value="Option1" style="width:100%;">
-                            <a-select-option value="Option1">
-                                Option1
-                            </a-select-option>
-                            <a-select-option value="Option2">
-                                Option2
-                            </a-select-option>
-                        </a-select>
-                    </a-col>
-                </a-row>
-            </div>
-            <!--操作-->
-            <div slot="tags" slot-scope="scope,sItem,sIndex,extra">
-                <a-space size="small">
-                    <a @click="deleteTypeTable(sItem,sIndex)">删除</a>
-                </a-space>
-            </div>
-        </a-table>
-        <!--数据表格-->
-        <a-table
-                :columns="countTableColumns"
-                :data-source="countTableData"
-                :pagination="false"
-                :showHeader="false"
-                bordered
-        >
-            <!--单位-->
-            <div slot="unit" slot-scope="scope,sItem,sIndex,extra">
-                <a-space size="small">
-                    {{sItem.shoppingType}}
-                    <span>
+        <!--搜索相关-->
+        <a-input-group class="a-input-group">
+            <a-row :gutter="8">
+                <a-col :span="5">
+                    <a-select v-model="searchData.hospital"
+                              style="width:100%;"
+                              placeholder="请选医院"
+                    >
+                        <a-select-option value="">
+                            分类
+                        </a-select-option>
+                        <a-select-option value="Option2">
+                            Option2
+                        </a-select-option>
+                    </a-select>
+                </a-col>
+                <a-col :span="6">
+                    <a-select v-model="searchData.nutritionPlan"
+                              style="width:100%;"
+                              placeholder="请选膳选择处方类型"
+                    >
+                        <a-select-option value="">
+                            分类
+                        </a-select-option>
+                        <a-select-option value="Option2">
+                            Option2
+                        </a-select-option>
+                    </a-select>
+                </a-col>
+                <a-col :span="3">
+                    <a-button type="primary">
+                        搜索
+                    </a-button>
+                </a-col>
+            </a-row>
+        </a-input-group>
+        <div class="table-group">
+            <!--类型表格-->
+            <a-table :columns="typeTableColumns"
+                     :data-source="typeTableData"
+                     :pagination="false"
+                     bordered
+                     class="custom-select-title-table">
+                <!--表头-->
+                <div slot="slotTitle" slot-scope="scope,sItem,sIndex,extra">
+                    <a-row type="flex" justify="start" align="middle">
+                        <a-col :span="4">
+                            肠内营养支持
+                        </a-col>
+                        <a-col :span="5">
+                            <a-select v-model="searchData.energy"
+                                      style="width:100%;"
+                                      placeholder="请选能量"
+                            >
+                                <a-select-option value="Option1">
+                                    Option1
+                                </a-select-option>
+                                <a-select-option value="Option2">
+                                    Option2
+                                </a-select-option>
+                            </a-select>
+                        </a-col>
+                        <a-col :span="5" :offset="10">
+                            <a-select v-model="searchData.eatingWay"
+                                      style="width:100%;"
+                                      placeholder="请选食用方法"
+                            >
+                                <a-select-option value="Option1">
+                                    Option1
+                                </a-select-option>
+                                <a-select-option value="Option2">
+                                    Option2
+                                </a-select-option>
+                            </a-select>
+                        </a-col>
+                    </a-row>
+                </div>
+                <!--操作-->
+                <div slot="tags" slot-scope="scope,sItem,sIndex,extra">
+                    <a-space size="small">
+                        <a @click="deleteTypeTable(sItem,sIndex)">删除</a>
+                    </a-space>
+                </div>
+            </a-table>
+            <!--数据表格-->
+            <a-table
+                    :columns="countTableColumns"
+                    :data-source="countTableData"
+                    :pagination="false"
+                    :showHeader="false"
+                    bordered
+            >
+                <!--单位-->
+                <div slot="unit" slot-scope="scope,sItem,sIndex,extra">
+                    <a-space size="small">
+                        {{sItem.shoppingType}}
+                        <span>
                           <a-input placeholder="输入值"/>
                     </span>
-                    {{scope}}
-                </a-space>
-            </div>
-            <!--操作-->
-            <div slot="tags" slot-scope="scope,sItem,sIndex,extra">
-                <a-space size="small">
-                    <a @click="deleteCountTable(sItem,sIndex)">删除</a>
-                </a-space>
-            </div>
-        </a-table>
+                        {{scope}}
+                    </a-space>
+                </div>
+                <!--操作-->
+                <div slot="tags" slot-scope="scope,sItem,sIndex,extra">
+                    <a-space size="small">
+                        <a @click="deleteCountTable(sItem,sIndex)">删除</a>
+                    </a-space>
+                </div>
+            </a-table>
+        </div>
         <br>
         <a-button key="submit" type="primary" @click="submitFn">
             确定
@@ -133,7 +177,7 @@
                     },
                     dataIndex: 'name',
                     colSpan: 100,
-                    width: 200,
+                    width: 150,
                     customRender: (text, row, index) => {
                         const obj = {
                             children: this.$createElement(AddOralChooseShopping),
@@ -152,6 +196,7 @@
                     colSpan: 0,
                     key: 'shoppingType',
                     dataIndex: 'shoppingType',
+                    width: 100,
                 },
                 {
                     //  单价
@@ -172,7 +217,7 @@
                 {
                     dataIndex: 'name',
                     colSpan: 100,
-                    width: 200,
+                    width: 150,
                     customRender: (text, row, index) => {
                         const obj = {
                             children: this.$createElement(AddOralChooseTime),
@@ -192,6 +237,7 @@
                     colSpan: 0,
                     key: 'time',
                     dataIndex: 'time',
+                    width: 100,
                 },
                 {
                     //  单位
@@ -213,7 +259,10 @@
                 typeTableData,
                 typeTableColumns,
                 countTableData,
-                countTableColumns
+                countTableColumns,
+
+                //  搜索数据
+                searchData: {},
             };
         },
         mounted(){
@@ -259,4 +308,7 @@
     };
 </script>
 <style scoped>
+    .table-group {
+        min-width: 700px;
+    }
 </style>
