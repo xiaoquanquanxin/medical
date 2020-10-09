@@ -1,14 +1,13 @@
 <template>
     <div>
         <a-menu v-if="currentMeta"
-                v-model="userSelectKey"
+                v-model="transverseSubPaths"
                 mode="horizontal">
             <a-menu-item
                     v-for="item in userRouteList"
                     :key="item.name"
                     @click="jumpTo(item)"
             >
-                <a-icon type="mail"/>
                 {{item.meta.chName}}
             </a-menu-item>
         </a-menu>
@@ -16,14 +15,10 @@
     </div>
 </template>
 <script>
-    import { mapGetters } from 'vuex';
     import { jumpTo } from '@/utils/routerMeta';
 
     export default {
         computed: {
-            ...mapGetters([
-                'routeList',
-            ]),
             userRouteList(){
                 const { userRouteList } = this.$store.state.routeList;
                 //  console.table(TOJSON(userRouteList)[0]);
@@ -36,11 +31,12 @@
         },
         data(){
             return {
-                userSelectKey: []
+                transverseSubPaths: []
             };
         },
         created(){
-            this.userSelectKey = [this.currentMeta.userSelectKey];
+            //	是scheme路由的某一项子路由
+            this.transverseSubPaths = [this.currentMeta.transverseSubPaths];
         },
         methods: {
             jumpTo,
