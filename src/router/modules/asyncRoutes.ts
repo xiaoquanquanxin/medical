@@ -285,7 +285,6 @@ export const asyncRoutesList = [
 		children: [
 			{
 				meta: {
-					//	oral:口服
 					chName: '口服肠内营养补充',
 					selectRouteKey: 'scheme',
 					//	是scheme路由的某一项子路由
@@ -298,7 +297,6 @@ export const asyncRoutesList = [
 			},
 			{
 				meta: {
-					//	intestinal:肠内
 					chName: '肠内营养支持',
 					selectRouteKey: 'scheme',
 					//	是scheme路由的某一项子路由
@@ -343,6 +341,26 @@ export const asyncRoutesList = [
 		path: '/scheme/editOral/:oralId',
 		name: 'editOral',
 		component: () => import(/* webpackChunkName: "addOral" */ '@/views/scheme/oral/addOral.vue'),
+		hidden: true
+	},
+	{
+		meta: {
+			chName: '新增肠内营养支持',
+			selectRouteKey: 'scheme',
+		},
+		path: '/scheme/addIntestinal',
+		name: 'addIntestinal',
+		component: () => import(/* webpackChunkName: "addIntestinal" */ '@/views/scheme/oral/addIntestinal.vue'),
+		hidden: true
+	},
+	{
+		meta: {
+			chName: '编辑肠内营养支持',
+			selectRouteKey: 'scheme',
+		},
+		path: '/scheme/editIntestinal/:intestinalId',
+		name: 'editIntestinal',
+		component: () => import(/* webpackChunkName: "addIntestinal" */ '@/views/scheme/oral/addIntestinal.vue'),
 		hidden: true
 	},
 	{
