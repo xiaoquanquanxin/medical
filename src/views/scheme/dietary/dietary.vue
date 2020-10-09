@@ -4,12 +4,17 @@
         <a-input-group class="a-input-group">
             <a-row :gutter="8">
                 <a-col :span="5">
-                    <a-input default-value=""/>
+                    <a-input v-model="searchData.schemeName"
+                             placeholder="请输入方案名称"
+                    />
                 </a-col>
                 <a-col :span="5">
-                    <a-select default-value="Option1" style="width:100%;">
-                        <a-select-option value="Option1">
-                            Option1
+                    <a-select v-model="searchData.energy"
+                              style="width:100%;"
+                              placeholder="请选择能量"
+                    >
+                        <a-select-option value="">
+                            分类
                         </a-select-option>
                         <a-select-option value="Option2">
                             Option2
@@ -17,9 +22,12 @@
                     </a-select>
                 </a-col>
                 <a-col :span="5">
-                    <a-select default-value="Option1" style="width:100%;">
-                        <a-select-option value="Option1">
-                            Option1
+                    <a-select v-model="searchData.method"
+                              style="width:100%;"
+                              placeholder="请选择使用方法"
+                    >
+                        <a-select-option value="">
+                            分类
                         </a-select-option>
                         <a-select-option value="Option2">
                             Option2
@@ -27,9 +35,12 @@
                     </a-select>
                 </a-col>
                 <a-col :span="5">
-                    <a-select default-value="Option1" style="width:100%;">
-                        <a-select-option value="Option1">
-                            Option1
+                    <a-select v-model="searchData.department"
+                              style="width:100%;"
+                              placeholder="请选择科室"
+                    >
+                        <a-select-option value="">
+                            分类
                         </a-select-option>
                         <a-select-option value="Option2">
                             Option2
@@ -45,7 +56,7 @@
         </a-input-group>
         <a-input-group class="a-input-group">
             <a-col :span="5">
-                <router-link :to="{name:'addOral'}">
+                <router-link :to="{name:'addDietary'}">
                     <a-button type="primary">
                         新增方案
                     </a-button>
@@ -54,7 +65,6 @@
         </a-input-group>
         <!--表格-->
         <a-table
-                :row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                 :columns="columns"
                 :data-source="data"
                 :scroll="scroll"
@@ -62,7 +72,7 @@
         >
             <div slot="tags" slot-scope="scope,sItem,sIndex,extra">
                 <a-space size="small">
-                    <a @click="editScheme(sItem,sIndex)">编辑</a>
+                    <router-link :to="{name:'editDietary',params:{editDietaryId:'123'}}">编辑</router-link>
                     <a @click="deleteScheme(sItem,sIndex)">删除</a>
                 </a-space>
             </div>
@@ -88,8 +98,7 @@
 </template>
 <script>
     import { pagination } from '@/utils/pagination.ts';
-    import { dialogMethods, dialogData } from '@/utils/dialog';
-    import { oneRowSearch } from '../../utils/tableScroll';
+    import { oneRowSearch } from '../../../utils/tableScroll';
 
     const columns = [
         {
@@ -131,29 +140,22 @@
         });
     }
 
+    //  膳食营养计划
     export default {
         data(){
             return {
                 data,
                 columns,
-                selectedRowKeys: [], // Check here to configure the default column
 
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
                 scroll: oneRowSearch,
                 //  分页信息
                 pagination,
-                //  莫泰框
-                dialogData,
+                //  搜索数据
+                searchData: {},
             };
         },
         methods: {
-            //  莫泰框方法
-            ...dialogMethods,
-            //  选中表格数据
-            onSelectChange(selectedRowKeys){
-                console.log('selectedRowKeys changed: ', selectedRowKeys);
-                this.selectedRowKeys = selectedRowKeys;
-            },
             //  展示的每一页数据变换
             onShowSizeChange(current, pageSize){
                 console.log(current);
@@ -164,11 +166,6 @@
             pageChange(current, pageSize){
                 console.log(current);
                 console.log(pageSize);
-            },
-
-            //  编辑管理
-            editScheme(sItem, sIndex){
-                this.showModal();
             },
             //  删除管理
             deleteScheme(sItem, sIndex){
