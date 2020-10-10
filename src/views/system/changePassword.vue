@@ -26,6 +26,7 @@
 </template>
 <script>
     import { formItemLayout } from '@/utils/layout.ts';
+    import { compareToFirstPassword } from '../../utils/validate';
 
     export default {
         name: 'changePassword',
@@ -51,29 +52,21 @@
                             message: '请输入新密码'
                         },
                         {
-                            validator: this.compareToFirstPassword,
+                            validator: this.compareToFirstPassword('password'),
                         },
                     ],
                 }],
             };
         },
         methods: {
-            //  与第一密码比较
-            compareToFirstPassword(rule, value, callback){
-                const form = this.form;
-                if (value && value !== form.getFieldValue('password')) {
-                    callback('确认密码不对');
-                } else {
-                    callback();
-                }
-            },
+            //  与第一密码比较，用于确认密码
+            compareToFirstPassword,
             //    表单提交
             handleSubmit(e){
                 e.preventDefault();
                 this.form.validateFields((err, values) => {
                     console.log(err);
                     console.table(values);
-                    console.log(values.hospitalIcon);
                     if (!err) {
                         console.log('Received values of form: ', values);
                     }
