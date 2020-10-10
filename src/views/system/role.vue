@@ -37,7 +37,7 @@
             >
                 <a @click="toViewPermissions(sItem,sIndex)">查看</a>
             </div>
-            <div slot="tags" slot-scope="scope,sItem,sIndex,extra">
+            <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
                 <a-space size="small">
                     <a @click="editPermissions(sItem,sIndex)">编辑</a>
                     <a @click="deletePermissions(sItem,sIndex)">删除</a>
@@ -109,9 +109,8 @@
         },
         {
             title: '操作',
-            dataIndex: 'tags',
-            key: 'tags',
-            scopedSlots: { customRender: 'tags' },
+            dataIndex: 'operation',
+            scopedSlots: { customRender: 'operation' },
         },
     ];
     const data = [];

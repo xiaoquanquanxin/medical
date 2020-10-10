@@ -51,7 +51,7 @@
                 :scroll="scroll"
                 :pagination="false"
         >
-            <div slot="tags" slot-scope="scope,sItem,sIndex,extra">
+            <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
                 <a-space size="small">
                     <a @click="editMission(sItem,sIndex,extra)">编辑</a>
                 </a-space>
@@ -102,9 +102,8 @@
         },
         {
             title: '操作',
-            dataIndex: 'tags',
-            key: 'tags',
-            scopedSlots: { customRender: 'tags' },
+            dataIndex: 'operation',
+            scopedSlots: { customRender: 'operation' },
         },
     ];
     const data = [];

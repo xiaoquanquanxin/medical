@@ -70,7 +70,7 @@
                 :scroll="scroll"
                 :pagination="false"
         >
-            <div slot="tags" slot-scope="scope,sItem,sIndex,extra">
+            <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
                 <a-space size="small">
                     <router-link :to="{name:'editOral',params:{oralId:'123'}}">编辑</router-link>
                     <a @click="deleteScheme(sItem)">删除</a>
@@ -122,9 +122,8 @@
         },
         {
             title: '操作',
-            dataIndex: 'tags',
-            key: 'tags',
-            scopedSlots: { customRender: 'tags' },
+            dataIndex: 'operation',
+            scopedSlots: { customRender: 'operation' },
         },
     ];
     const data = [];

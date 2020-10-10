@@ -9,7 +9,7 @@
                 :pagination="false"
                 :scroll="{ x: 1000,y: 240 }"
         >
-            <div slot="tags" slot-scope="scope,sItem,sIndex,extra">
+            <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
                 <a @click="exitFamilyGroup(sItem,sIndex,extra)">退出</a>
             </div>
         </a-table>
@@ -22,7 +22,7 @@
                 :pagination="false"
                 :scroll="{ x: 1000,y: 240 }"
         >
-            <div slot="tags" slot-scope="scope,sItem,sIndex,extra">
+            <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
                 <a @click="exitFamilyGroup(sItem,sIndex,extra)">退出</a>
             </div>
         </a-table>
@@ -70,9 +70,8 @@
                 },
                 {
                     title: '操作',
-                    dataIndex: 'tags',
-                    key: 'tags',
-                    scopedSlots: { customRender: 'tags' },
+                    dataIndex: 'operation',
+                    scopedSlots: { customRender: 'operation' },
                 },
             ],
         },
