@@ -137,10 +137,10 @@
             //  莫泰框方法
             ...dialogMethods,
 
-            ...mapActions('warehouse', [
-                //	被选中的出库id
-                'setOutboundId',
-            ]),
+//            ...mapActions('warehouse', [
+//                //	被选中的出库id
+//                'setOutboundId',
+//            ]),
 
             //  展示的每一页数据变换
             onShowSizeChange(current, pageSize){
@@ -156,7 +156,7 @@
 
             //  出库
             outboundClick(){
-                this.setOutboundId('123');
+                //  this.setOutboundId('123');
                 this.showModal(DIALOG_TYPE.OUTBOUND);
             },
 
