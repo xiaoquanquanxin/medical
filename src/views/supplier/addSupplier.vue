@@ -80,7 +80,7 @@
                         </p>
                         <p>点击上传证件</p>
                     </a-upload-dragger>
-                    <p>建议尺寸:750*300,格式:jpg、png</p>
+                    <p style="width:calc((100vw - 200px)*.65)">建议尺寸:750*300,格式:jpg、png</p>
                     <a-input
                             type="hidden"
                             v-decorator="businessLicenseDecorator"
@@ -95,7 +95,7 @@
                         </p>
                         <p>点击上传合同</p>
                     </a-upload-dragger>
-                    <p>格式：pdf、jpg、png</p>
+                    <p style="width:calc((100vw - 200px)*.65)">格式：pdf、jpg、png</p>
                 </div>
             </a-form-item>
             <a-form-item label="食品资格证">
@@ -106,7 +106,7 @@
                         </p>
                         <p>点击上传证件</p>
                     </a-upload-dragger>
-                    <p>建议尺寸:750*300,格式:jpg、png</p>
+                    <p style="width:calc((100vw - 200px)*.65)">建议尺寸:750*300,格式:jpg、png</p>
                 </div>
             </a-form-item>
             <a-form-item label="特医食品资格证">
@@ -117,7 +117,7 @@
                         </p>
                         <p>点击上传证件</p>
                     </a-upload-dragger>
-                    <p>建议尺寸:750*300,格式:jpg、png</p>
+                    <p style="width:calc((100vw - 200px)*.65)">建议尺寸:750*300,格式:jpg、png</p>
                 </div>
             </a-form-item>
             <a-form-item :wrapper-col="{ span: 4, offset: 5 }">
