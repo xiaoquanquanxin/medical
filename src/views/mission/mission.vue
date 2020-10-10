@@ -123,7 +123,7 @@
             return {
                 data,
                 columns,
-                selectedRowKeys: [], // Check here to configure the default column
+                
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
                 scroll: towRowSearch,
                 //  分页信息
@@ -131,11 +131,7 @@
             };
         },
         methods: {
-            //  选中表格数据
-            onSelectChange(selectedRowKeys){
-                console.log('selectedRowKeys changed: ', selectedRowKeys);
-                this.selectedRowKeys = selectedRowKeys;
-            },
+            
             //  展示的每一页数据变换
             onShowSizeChange(current, pageSize){
                 console.log(current);
