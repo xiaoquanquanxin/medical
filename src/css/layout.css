@@ -93,6 +93,7 @@
     /*line-height: 40px;*/
     padding: 16px;
 }
+
 /*如果是，input，需要小一点*/
 .negative-margin-item.is-input {
     padding-top: 10px;
@@ -101,4 +102,10 @@
 
 .negative-margin-item:last-child {
     border-bottom: none;
+}
+
+
+/*这是为了打印背景色*/
+.table-group-title {
+    -webkit-print-color-adjust: exact;
 }
