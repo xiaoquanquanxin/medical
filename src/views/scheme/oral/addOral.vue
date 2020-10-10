@@ -11,9 +11,7 @@
                         placeholder="请选择医院"
                         v-decorator="hospitalDecorator"
                 >
-                    <a-select-option value="">
-                        请选择性别
-                    </a-select-option>
+                    
                     <a-select-option value="1">
                         男
                     </a-select-option>
@@ -27,9 +25,7 @@
                         placeholder="请选择膳选择处方类型"
                         v-decorator="prescriptionTypeDecorator"
                 >
-                    <a-select-option value="">
-                        请选择性别
-                    </a-select-option>
+                    
                     <a-select-option value="1">
                         男
                     </a-select-option>
