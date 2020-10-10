@@ -541,7 +541,7 @@ export const asyncRoutesList = [
 	{
 		meta: {
 			chName: '订单管理',
-			selectRouteKey: 'orderDetail',
+			selectRouteKey: 'order',
 		},
 		path: '/orderDetail/:orderDetailId',
 		name: 'orderDetail',
