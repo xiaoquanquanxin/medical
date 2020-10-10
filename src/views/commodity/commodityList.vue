@@ -7,7 +7,7 @@
                     <a-input v-model="searchData.commodityName" placeholder="请输入商品名称"/>
                 </a-col>
                 <a-col :span="5">
-                    <a-input v-model="searchData.articleNumber" placeholder="请输入商品货号"/>
+                    <a-input v-model="searchData.itemNo" placeholder="请输入商品货号"/>
                 </a-col>
                 <a-col :span="5">
                     <a-select v-model="searchData.brand" style="width:100%;" placeholder="请选择品牌">
