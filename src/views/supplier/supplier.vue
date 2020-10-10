@@ -1,6 +1,5 @@
 <template>
     <div class="layout-content-inner-main">
-        <p>供应商管理</p>
         <!--搜索相关-->
         <a-input-group class="a-input-group">
             <a-row :gutter="8">
@@ -28,7 +27,6 @@
         </a-input-group>
         <!--表格-->
         <a-table
-                :row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                 :columns="columns"
                 :data-source="data"
                 :scroll="scroll"
@@ -127,7 +125,6 @@
             return {
                 data,
                 columns,
-                selectedRowKeys: [], // Check here to configure the default column
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
                 scroll: towRowSearch,
                 //  分页信息
@@ -136,11 +133,6 @@
         },
 
         methods: {
-            //  选中表格数据
-            onSelectChange(selectedRowKeys){
-                console.log('selectedRowKeys changed: ', selectedRowKeys);
-                this.selectedRowKeys = selectedRowKeys;
-            },
             //  展示的每一页数据变换
             onShowSizeChange(current, pageSize){
                 console.log(current);
@@ -161,15 +153,6 @@
             editDistributors(sItem){
                 console.log(sItem);
                 this.$router.push({ name: 'editSupplier', params: { supplierId: '12345' } });
-            },
-            //  检查莫泰框的值
-            modalCheck(){
-                const promise = this.$refs.refAddOrEditDistributors.handleSubmit();
-                promise.then(v => {
-                    this.hideModal();
-                }).catch(error => {
-                    console.log('有错');
-                });
             },
         },
     };
