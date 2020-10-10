@@ -1,20 +1,19 @@
 <template>
     <div class="layout-content-inner-main">
-        <p>医生管理</p>
         <!--搜索相关-->
         <a-input-group class="a-input-group">
             <a-row :gutter="8">
-                <a-col :span="5">
-                    <a-input default-value=""/>
+                <a-col :span="4">
+                    <a-input placeholder="请输入姓名" v-model="searchData.doctorName"/>
                 </a-col>
-                <a-col :span="5">
-                    <a-input default-value=""/>
+                <a-col :span="4">
+                    <a-input placeholder="请输入手机号" v-model="searchData.phoneNumber"/>
                 </a-col>
-                <a-col :span="5">
-                    <a-input default-value=""/>
-                </a-col>
-                <a-col :span="5">
-                    <a-select default-value="Option1" style="width:100%;">
+                <a-col :span="4">
+                    <a-select style="width:100%;"
+                              placeholder="请选择医院"
+                              v-model="searchData.hospital"
+                    >
                         <a-select-option value="Option1">
                             Option1
                         </a-select-option>
@@ -23,8 +22,11 @@
                         </a-select-option>
                     </a-select>
                 </a-col>
-                <a-col :span="5">
-                    <a-select default-value="Option1" style="width:100%;">
+                <a-col :span="4">
+                    <a-select style="width:100%;"
+                              placeholder="请选择科室"
+                              v-model="searchData.department"
+                    >
                         <a-select-option value="Option1">
                             Option1
                         </a-select-option>
@@ -33,17 +35,7 @@
                         </a-select-option>
                     </a-select>
                 </a-col>
-                <a-col :span="5">
-                    <a-select default-value="Option1" style="width:100%;">
-                        <a-select-option value="Option1">
-                            Option1
-                        </a-select-option>
-                        <a-select-option value="Option2">
-                            Option2
-                        </a-select-option>
-                    </a-select>
-                </a-col>
-                <a-col :span="5">
+                <a-col :span="4">
                     <a-button type="primary">
                         搜索
                     </a-button>
@@ -51,7 +43,7 @@
             </a-row>
         </a-input-group>
         <a-input-group class="a-input-group">
-            <a-col :span="5">
+            <a-col :span="4">
                 <router-link :to="{name:'addDoctor'}">
                     <a-button type="primary">
                         新增医生
@@ -61,26 +53,15 @@
         </a-input-group>
         <!--表格-->
         <a-table
-                :row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                 :columns="columns"
                 :data-source="data"
                 :scroll="scroll"
                 :pagination="false"
         >
-            <div
-                    slot="a-switch"
-                    slot-scope="scope,sItem,sIndex,extra"
-            >
-                <a-switch checked-children="开" un-checked-children="关"
-                          :default-checked="!!sIndex"
-                          @change="aSwitchChange(sItem,$event)"
-                />
-            </div>
             <div slot="tags" slot-scope="scope,sItem,sIndex,extra">
                 <a-space size="small">
-                    <a @click="editDoctor(sItem,sIndex,extra)">编辑</a>
-                    <a @click="deleteDoctor(sItem)">删除</a>
-<!--                    <a @click="relatedDisease(sItem,sIndex,)">关联疾病</a>-->
+                    <a @click="editDoctor(sItem)">编辑</a>
+                    <!--<a @click="deleteDoctor(sItem)">删除</a>-->
                 </a-space>
             </div>
         </a-table>
@@ -100,25 +81,13 @@
                 </template>
             </a-pagination>
         </a-row>
-        <!--莫泰框-->
-        <a-modal v-model="dialogData.visible"
-                 v-if="dialogData.visible"
-                 :maskClosable="false"
-                 centered
-                 :width="800"
-                 title="关联疾病"
-                 ok-text="确认"
-                 cancel-text="取消"
-                 @ok="modalCheck()">
-            <ShuttleBox/>
-        </a-modal>
     </div>
 </template>
 <script>
     //    穿梭框
     import ShuttleBox from '@/components/shuttleBox.vue';
     import { mapGetters, mapActions } from 'vuex';
-    import { dialogMethods, dialogData } from '@/utils/dialog';
+    import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
     import { pagination } from '@/utils/pagination.ts';
     import { towRowSearch } from '../../utils/tableScroll';
 
@@ -135,11 +104,6 @@
         }, {
             title: '性别',
             dataIndex: 'sex',
-            width: 100,
-        },
-        {
-            title: '状态',
-            dataIndex: 'status',
             width: 100,
         },
         {
@@ -175,46 +139,29 @@
             key: i,
             doctor: `xx医生`,
             status: String(i % 2),
-            tags: ['编辑', '删除'],
         });
     }
     //  医生管理
     export default {
-        components: {
-            ShuttleBox,
-        },
-        computed: {
-            ...mapGetters([
-                'shuttleBox',
-            ]),
-            modalTargetKeys(){
-                return this.$store.state.shuttleBox.modalTargetKeys;
-            }
-        },
         data(){
             return {
                 data,
                 columns,
-                selectedRowKeys: [], // Check here to configure the default column
 
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
                 scroll: towRowSearch,
 
                 //  分页信息
                 pagination,
-                //  莫泰框
-                dialogData,
+
+                //  搜索数据
+                searchData: {},
             };
         },
 
         methods: {
             //  莫泰框方法
             ...dialogMethods,
-            //  选中表格数据
-            onSelectChange(selectedRowKeys){
-                console.log('selectedRowKeys changed: ', selectedRowKeys);
-                this.selectedRowKeys = selectedRowKeys;
-            },
             //  展示的每一页数据变换
             onShowSizeChange(current, pageSize){
                 console.log(current);
@@ -226,48 +173,30 @@
                 console.log(current);
                 console.log(pageSize);
             },
-            //  切换状态
-            aSwitchChange(sItem, checked){
-                console.log(sItem, checked);
-            },
-            
             //  编辑医生
             editDoctor(sItem, sIndex, extra){
                 this.$router.push({ name: 'editDoctor', params: { doctorId: sIndex } });
             },
             //  删除医生
-            deleteDoctor(sItem){
-                console.log(sItem.doctor);
-                this.$confirm({
-                    title: `确定删除${sItem.doctor}`,
-                    //  content: 'Bla bla ...',
-                    okText: '确认',
-                    okType: 'danger',
-                    cancelText: '取消',
-                    onOk(){
-                        return new Promise((resolve, reject) => {
-                            console.log('发请求');
-                            setTimeout(Math.random() > 0.5 ? resolve : reject, 1111);
-                        }).catch(() => console.log('Oops errors!'));
-                    },
-                    onCancel(){
-                        console.log('取消');
-                    },
-                });
-            },
-//            //  关联疾病
-//            relatedDisease(sItem, sIndex){
-//                console.log(this.visible);
-//                this.showModal();
-//                console.log(this.visible);
+//            deleteDoctor(sItem){
+//                console.log(sItem.doctor);
+//                this.$confirm({
+//                    title: `确定删除${sItem.doctor}`,
+//                    //  content: 'Bla bla ...',
+//                    okText: '确认',
+//                    okType: 'danger',
+//                    cancelText: '取消',
+//                    onOk(){
+//                        return new Promise((resolve, reject) => {
+//                            console.log('发请求');
+//                            setTimeout(Math.random() > 0.5 ? resolve : reject, 1111);
+//                        }).catch(() => console.log('Oops errors!'));
+//                    },
+//                    onCancel(){
+//                        console.log('取消');
+//                    },
+//                });
 //            },
-            //  检查莫泰框的值
-            modalCheck(){
-                console.log(this.modalTargetKeys);
-                console.log('发请求吧');
-                return;
-                this.hideModal();
-            },
         }
     };
 </script>
