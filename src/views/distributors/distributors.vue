@@ -130,7 +130,7 @@
             city: '上海',
             status: String(i % 2),
             icon: '渠道商图标',
-            operation: ['编辑', '关联科室'],
+            
         });
     }
     //  渠道商管理
