@@ -22,9 +22,9 @@
                     </a-select>
                 </a-col>
                 <a-col :span="5">
-                    <a-select v-model="searchData.method"
+                    <a-select v-model="searchData.foodType"
                               style="width:100%;"
-                              placeholder="请选择使用方法"
+                              placeholder="请选择食物类型"
                     >
                         <a-select-option value="">
                             分类
