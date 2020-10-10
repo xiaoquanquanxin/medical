@@ -8,7 +8,7 @@
         >
             <a-form-item label="输入新密码">
                 <a-input placeholder="输入新密码"
-                         v-decorator="newPasswordDecorator"
+                         v-decorator="passwordDecorator"
                 />
             </a-form-item>
             <a-form-item label="确认新密码">
@@ -37,7 +37,7 @@
                 //  表单大小
                 formItemLayout,
                 //  输入新密码的校验
-                newPasswordDecorator: ['newPassword', {
+                passwordDecorator: ['password', {
                     rules: [{
                         required: true,
                         message: '请输入新密码'
@@ -61,7 +61,7 @@
             //  与第一密码比较
             compareToFirstPassword(rule, value, callback){
                 const form = this.form;
-                if (value && value !== form.getFieldValue('newPassword')) {
+                if (value && value !== form.getFieldValue('password')) {
                     callback('确认密码不对');
                 } else {
                     callback();
