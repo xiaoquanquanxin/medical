@@ -25,6 +25,15 @@ interface DialogType {
 
 //	莫泰框的区分类型，每个用到穿梭框的都要有引入
 export const DIALOG_TYPE: DialogType = {
+	//	新增、编辑仓库
+	ENTREPOT: 'ENTREPOT',
+	//  新增、编辑渠道商
+	DISTRIBUTORS: 'DISTRIBUTORS',
+	//  查看普通用户
+	VIEW_ORDINARY_USER: 'VIEW_ORDINARY_USER',
+	//	编辑患者用户
+	PATIENTS_USER: 'PATIENTS_USER',
+
 	//	查看市场价格弹框
 	VIEW_MARKET_PRICE: 'VIEW_MARKET_PRICE',
 	//  查看市场价格弹框
@@ -48,6 +57,7 @@ export const DIALOG_TYPE: DialogType = {
 	TEMPLATE_SELECT_COMMODITY: 'TEMPLATE_SELECT_COMMODITY',
 	//	处方模板管理 - 增加口服肠内补充方案 - 选择时间
 	TEMPLATE_SELECT_TIME: 'TEMPLATE_SELECT_TIME',
+
 }
 
 
