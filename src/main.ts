@@ -8,6 +8,9 @@ import 'ant-design-vue/dist/antd.css';
 import "./css/reset.css";
 import "./css/layout.css";
 
+//	@ts-ignore
+import Print from 'vue-print-nb';
+
 //  第一种富文本的css
 import 'quill/dist/quill.core.css';
 import 'quill/dist/quill.snow.css';
@@ -18,6 +21,7 @@ Vue.use(Antd);
 Vue.config.productionTip = false
 Vue.use(Button);
 Vue.prototype.$message = message;
+Vue.use(Print);
 
 
 new Vue({
