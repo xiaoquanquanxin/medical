@@ -53,6 +53,18 @@
                 :scroll="scroll"
                 :pagination="false"
         >
+            <!--市场价-->
+            <div slot="marketPrice" slot-scope="scope,sItem,sIndex,extra">
+                <a-space size="small">
+                    <a @click="viewMarketPrice(sItem)">查看</a>
+                </a-space>
+            </div>
+            <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
+                <a-space size="small">
+                    <a @click="onShelf(sItem)">上架</a>
+                    <a @click="offShelf(sItem)">下架</a>
+                </a-space>
+            </div>
         </a-table>
         <!--分页-->
         <a-row type="flex" justify="end" class="a-input-group">
@@ -70,6 +82,18 @@
                 </template>
             </a-pagination>
         </a-row>
+        <!--查看价格莫泰框-->
+        <a-modal v-model="dialogDataViewMarketPrice.visible"
+                 v-if="dialogDataViewMarketPrice.visible"
+                 :maskClosable="false"
+                 centered
+                 :width="800"
+                 title="查看价格"
+                 ok-text="确认"
+                 cancel-text="取消"
+                 @ok="viewMarketPriceModalCheck('refViewPrice')">
+            <ViewPrice ref="refViewPrice"/>
+        </a-modal>
     </div>
 </template>
 <script>
@@ -109,8 +133,8 @@
         },
         {
             title: '市场价',
-            dataIndex: 'ffff',
             width: 100,
+            scopedSlots: { customRender: 'marketPrice' }
         },
         {
             title: '生产厂家',
@@ -139,6 +163,7 @@
             name: '权鑫',
             sex: '男',
             familyGroup: 'xxx',
+            marketPrice: 3223,
         });
     }
     //  商品查看
@@ -147,12 +172,8 @@
             return {
                 data,
                 columns,
-                searchData: {
-                    //  仓库名称
-                    //  entrepotName: null,
-                    //  仓库代码
-                    //  entrepotCode: null,
-                },
+                //  搜索数据
+                searchData: {},
 
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
                 scroll: oneRowSearch,
@@ -173,6 +194,16 @@
             pageChange(current, pageSize){
                 console.log(current);
                 console.log(pageSize);
+            },
+
+            //  确认市场价格
+            viewMarketPriceModalCheck(refViewPrice){
+                const promise = this.$refs[refViewPrice].handleSubmit();
+                promise.then(v => {
+                    this.hideModal(DIALOG_TYPE.VIEW_MARKET_PRICE);
+                }).catch(error => {
+                    console.log('有错');
+                });
             },
 
         }
