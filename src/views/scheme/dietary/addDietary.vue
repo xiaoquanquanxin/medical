@@ -1,41 +1,34 @@
 <template>
     <div class="layout-content-inner-main">
-        <!--搜索相关-->
-        <a-input-group class="a-input-group">
-            <a-row :gutter="8">
-                <a-col :span="5">
-                    <a-select v-model="searchData.hospital"
-                              style="width:100%;"
-                              placeholder="请选医院"
-                    >
-                        <a-select-option value="">
-                            分类
-                        </a-select-option>
-                        <a-select-option value="Option2">
-                            Option2
-                        </a-select-option>
-                    </a-select>
-                </a-col>
-                <a-col :span="6">
-                    <a-select v-model="searchData.nutritionPlan"
-                              style="width:100%;"
-                              placeholder="请选膳食营养计划"
-                    >
-                        <a-select-option value="">
-                            分类
-                        </a-select-option>
-                        <a-select-option value="Option2">
-                            Option2
-                        </a-select-option>
-                    </a-select>
-                </a-col>
-                <a-col :span="3">
-                    <a-button type="primary">
-                        搜索
-                    </a-button>
-                </a-col>
-            </a-row>
-        </a-input-group>
+        <a-form class="form"
+                :form="form"
+                v-bind="formItemLayout"
+                @submit="handleSubmit"
+                autocomplete="off"
+        >
+            <a-form-item label="医院">
+                <a-select
+                        placeholder="请选择医院"
+                        v-decorator="hospitalDecorator"
+                >
+                    <a-select-option value="">
+                        请选择性别
+                    </a-select-option>
+                    <a-select-option value="1">
+                        男
+                    </a-select-option>
+                    <a-select-option value="2">
+                        女
+                    </a-select-option>
+                </a-select>
+            </a-form-item>
+            <!--保存-->
+            <a-form-item :wrapper-col="{ span: 4, offset: 5 }">
+                <a-button type="primary" html-type="submit">
+                    保存
+                </a-button>
+            </a-form-item>
+        </a-form>
         <!--表格-->
         <a-table
                 :columns="columns"
@@ -52,14 +45,11 @@
                 </a-space>
             </div>
         </a-table>
-        <br>
-        <a-button key="submit" type="primary" @click="submitFn">
-            确定
-        </a-button>
     </div>
 </template>
 <script>
     import { towRowSearch } from '@/utils/tableScroll';
+    import { formItemLayout } from '@/utils/layout.ts';
 
     const columns = [
         {
@@ -87,28 +77,35 @@
 
     //  新增、编辑营养计划
     export default {
+        beforeCreate(){
+            this.form = this.$form.createForm(this);
+        },
         data(){
             return {
                 dietaryId: this.$route.params.dietaryId,
-                
+
+                formItemLayout,
+
+                //  请选择医院
+                hospitalDecorator: ['hospital', {
+                    rules: [{
+                        required: true,
+                        message: '请选择医院'
+                    },]
+                }],
+
                 data,
                 columns,
 
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
                 scroll: towRowSearch,
 
-                //  搜索数据
-                searchData: {},
             };
         },
         created(){
             console.log('是编辑？', !!this.dietaryId);
         },
         methods: {
-            //  确定按钮
-            submitFn(){
-
-            },
             //  删除营养计划
             deleteNutritionPlan(sItem){
                 this.$confirm({
@@ -126,6 +123,17 @@
                     onCancel(){
                         console.log('取消');
                     },
+                });
+            },
+            //  表单提交 保存
+            handleSubmit(e){
+                e.preventDefault();
+                console.log(this.commodityTableData);
+                console.log('备注🍌', this.remark);
+                console.log(this.timeTableData);
+                this.form.validateFields((err, values) => {
+                    console.table(values);
+                    console.log(!err);
                 });
             },
         }

@@ -12,7 +12,7 @@
                         v-decorator="departmentNameDecorator"
                 />
             </a-form-item>
-            <a-form-item :wrapper-col="{ span: 4, offset: 7 }">
+            <a-form-item :wrapper-col="{ span: 4, offset: 5 }">
                 <a-button type="primary" html-type="submit">
                     保存
                 </a-button>
