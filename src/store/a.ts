@@ -106,6 +106,8 @@ export const routeMap = {
 	 * 🍉🍉🍉🍉
 	 * 渠道商部分
 	 * */
+	//	商品管理
+	'distributorsGoods': true,
 	//  医生管理
 	'doctor': true,
 	//  新增医生
