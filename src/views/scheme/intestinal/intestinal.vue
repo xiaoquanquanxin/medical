@@ -134,7 +134,7 @@
             city: '上海',
             status: String(i % 2),
             icon: '医院图标',
-            tags: ['编辑', '关联科室'],
+            
         });
     }
 
