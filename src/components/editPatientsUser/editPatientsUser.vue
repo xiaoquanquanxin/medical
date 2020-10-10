@@ -16,9 +16,7 @@
                 <a-select
                         v-decorator="sexDecorator"
                 >
-                    <a-select-option value="">
-                        请选择性别
-                    </a-select-option>
+                    
                     <a-select-option value="1">
                         男
                     </a-select-option>
