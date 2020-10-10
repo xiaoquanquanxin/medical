@@ -13,7 +13,7 @@
             </a-form-item>
             <a-form-item label="确认新密码">
                 <a-input placeholder="确认新密码"
-                         v-decorator="newPasswordDecorator"
+                         v-decorator="checkPasswordDecorator"
                 />
             </a-form-item>
             <a-form-item :wrapper-col="{ span: 4, offset: 5 }">
@@ -37,22 +37,36 @@
                 //  表单大小
                 formItemLayout,
                 //  输入新密码的校验
-                newPasswordDecorator: ['diseaseName', {
-                    initialValue: '',
+                newPasswordDecorator: ['newPassword', {
                     rules: [{
-                        max: 11,
-                        message: '最多11位',
-                    }, {
                         required: true,
                         message: '请输入新密码'
                     },]
                 }],
+                //  输入新密码的校验
+                checkPasswordDecorator: ['checkPassword', {
+                    rules: [
+                        {
+                            required: true,
+                            message: '请输入新密码'
+                        },
+                        {
+                            validator: this.compareToFirstPassword,
+                        },
+                    ],
+                }],
             };
         },
-        created(){
-            //  console.log(this.formItemLayout);
-        },
         methods: {
+            //  与第一密码比较
+            compareToFirstPassword(rule, value, callback){
+                const form = this.form;
+                if (value && value !== form.getFieldValue('newPassword')) {
+                    callback('确认密码不对');
+                } else {
+                    callback();
+                }
+            },
             //    表单提交
             handleSubmit(e){
                 e.preventDefault();
