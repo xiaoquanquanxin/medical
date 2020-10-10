@@ -401,6 +401,7 @@ export const asyncRoutesList = [
 		path: '/questionnaire/addQuestionnaire',
 		name: 'addQuestionnaire',
 		component: () => import(/* webpackChunkName: "addQuestionnaire" */ '@/views/questionnaire/addQuestionnaire.vue'),
+		hidden: true,
 	},
 	{
 		meta: {
@@ -410,6 +411,7 @@ export const asyncRoutesList = [
 		path: '/questionnaire/editQuestionnaire/:questionnaireId',
 		name: 'editQuestionnaire',
 		component: () => import(/* webpackChunkName: "addQuestionnaire" */ '@/views/questionnaire/addQuestionnaire.vue'),
+		hidden: true,
 	},
 	{
 		meta: {
