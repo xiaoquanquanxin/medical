@@ -49,7 +49,7 @@
                             <a-select
                                     v-model="tableForm.energyId"
                                     style="width:100%;"
-                                    placeholder="请选能量"
+                                    placeholder="请选择能量"
                                     @change="selectEnergyChange"
                             >
                                 <a-select-option value="1600">1600</a-select-option>
@@ -66,7 +66,7 @@
                             <a-select
                                     v-model="tableForm.eatingMethod"
                                     style="width:100%;"
-                                    placeholder="请选食用方法"
+                                    placeholder="请选择食用方法"
                             >
                                 <a-select-option value="Option1">
                                     Option1
