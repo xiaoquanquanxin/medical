@@ -4,10 +4,10 @@
         <a-input-group class="a-input-group">
             <a-row :gutter="8">
                 <a-col :span="5">
-                    <a-input v-model="entrepotName" placeholder="请输入仓库名称"/>
+                    <a-input v-model="searchData.entrepotName" placeholder="请输入仓库名称"/>
                 </a-col>
                 <a-col :span="5">
-                    <a-input v-model="entrepotCode" placeholder="请输入仓库代码"/>
+                    <a-input v-model="searchData.entrepotCode" placeholder="请输入仓库代码"/>
                 </a-col>
                 <a-col :span="5">
                     <a-button type="primary">
@@ -53,12 +53,12 @@
             </a-pagination>
         </a-row>
         <!--莫泰框-->
-        <a-modal v-model="dialogData.visible"
-                 v-if="dialogData.visible"
+        <a-modal v-model="dialogDataEntrepot.visible"
+                 v-if="dialogDataEntrepot.visible"
                  :maskClosable="false"
                  centered
                  :width="800"
-                 :title="dialogData.title"
+                 :title="dialogDataEntrepot.title"
                  ok-text="确认"
                  cancel-text="取消"
                  @ok="modalCheck()">
@@ -69,7 +69,7 @@
 <script>
     import { pagination } from '@/utils/pagination.ts';
     import { oneRowSearch } from '../../utils/tableScroll';
-    import { dialogMethods, dialogData } from '@/utils/dialog';
+    import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
     import { mapGetters, mapActions } from 'vuex';
     import AddOrEditEntrepot from '@/components/entrepot/addOrEditEntrepot.vue';
 
@@ -125,20 +125,21 @@
             return {
                 data,
                 columns,
-
-                //  仓库名称
-                entrepotName: null,
-                //  仓库代码
-                entrepotCode: null,
+                searchData: {
+                    //  仓库名称
+                    //  entrepotName: null,
+                    //  仓库代码
+                    //  entrepotCode: null,
+                },
 
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
                 scroll: oneRowSearch,
 
                 //  分页信息
                 pagination,
-                //  莫泰框
-                dialogData,
 
+                //	处方模板管理 - 增加口服肠内补充方案 - 选择商品
+                dialogDataEntrepot: this.initModal(DIALOG_TYPE.ENTREPOT),
             };
         },
 
@@ -162,21 +163,21 @@
             },
             //  新增仓库
             addEntrepot(){
-                this.setDialogTitle('新增仓库');
-                this.showModal();
+                this.setDialogTitle(DIALOG_TYPE.ENTREPOT, '新增仓库');
+                this.showModal(DIALOG_TYPE.ENTREPOT);
             },
             //  编辑仓库
             editEntrepot(sItem){
                 this.setEntrepotId(1234452321);
-                this.setDialogTitle('编辑仓库');
-                this.showModal();
+                this.setDialogTitle(DIALOG_TYPE.ENTREPOT, '编辑仓库');
+                this.showModal(DIALOG_TYPE.ENTREPOT);
                 console.log(sItem);
             },
             //  确定
             modalCheck(){
                 const promise = this.$refs.refAddOrEditEntrepot.handleSubmit();
                 promise.then(v => {
-                    this.hideModal();
+                    this.hideModal(DIALOG_TYPE.ENTREPOT);
                 }).catch(error => {
                     console.log('有错');
                 });
