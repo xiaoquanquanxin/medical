@@ -99,6 +99,8 @@
 <script>
     import { pagination } from '@/utils/pagination.ts';
     import { oneRowSearch } from '../../utils/tableScroll';
+    import ViewPrice from '@/components/commodity/viewPrice.vue';
+    import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
 
     const columns = [
         {
@@ -150,10 +152,17 @@
             title: '供应商',
             dataIndex: 'iii',
             width: 100,
-        }, {
+        },
+        {
             title: '更新时间',
             dataIndex: 'jjjj',
             width: 100,
+        },
+        {
+            title: '操作',
+            dataIndex: 'operation',
+            key: 'operation',
+            scopedSlots: { customRender: 'operation' },
         },
     ];
     const data = [];
@@ -168,6 +177,9 @@
     }
     //  商品查看
     export default {
+        components: {
+            ViewPrice,
+        },
         data(){
             return {
                 data,
@@ -180,10 +192,15 @@
 
                 //  分页信息
                 pagination,
+
+                //  价格莫泰框
+                dialogDataViewMarketPrice: this.initModal(DIALOG_TYPE.VIEW_MARKET_PRICE),
             };
         },
 
         methods: {
+            //  莫泰框方法
+            ...dialogMethods,
             //  展示的每一页数据变换
             onShowSizeChange(current, pageSize){
                 console.log(current);
@@ -196,6 +213,50 @@
                 console.log(pageSize);
             },
 
+            //  上架
+            onShelf(sItem){
+                this.$confirm({
+                    title: `确定上架${sItem.disease}`,
+                    //  content: 'Bla bla ...',
+                    //  content: (h)=>{h(test)},
+                    okText: '确认',
+                    cancelText: '取消',
+                    onOk(){
+                        return new Promise((resolve, reject) => {
+                            console.log('发请求');
+                            setTimeout(Math.random() > 0.5 ? resolve : reject, 1111);
+                        }).catch(() => console.log('Oops errors!'));
+                    },
+                    onCancel(){
+                        console.log('取消');
+                    },
+                });
+            },
+            //  下架
+            offShelf(sItem){
+                this.$confirm({
+                    title: `确定下架${sItem.disease}`,
+                    //  content: 'Bla bla ...',
+                    //  content: (h)=>{h(test)},
+                    okText: '确认',
+                    okType: 'danger',
+                    cancelText: '取消',
+                    onOk(){
+                        return new Promise((resolve, reject) => {
+                            console.log('发请求');
+                            setTimeout(Math.random() > 0.5 ? resolve : reject, 1111);
+                        }).catch(() => console.log('Oops errors!'));
+                    },
+                    onCancel(){
+                        console.log('取消');
+                    },
+                });
+            },
+            //  查看市场价
+            viewMarketPrice(sItem){
+                //  console.log(sItem);
+                this.showModal(DIALOG_TYPE.VIEW_MARKET_PRICE);
+            },
             //  确认市场价格
             viewMarketPriceModalCheck(refViewPrice){
                 const promise = this.$refs[refViewPrice].handleSubmit();
@@ -205,8 +266,6 @@
                     console.log('有错');
                 });
             },
-
         }
-
     };
 </script>
