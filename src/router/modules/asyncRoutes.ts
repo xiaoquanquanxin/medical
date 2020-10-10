@@ -391,7 +391,25 @@ export const asyncRoutesList = [
 		},
 		path: '/questionnaire',
 		name: 'questionnaire',
-		component: () => import(/* webpackChunkName: "disease" */ '@/views/questionnaire/questionnaire.vue'),
+		component: () => import(/* webpackChunkName: "questionnaire" */ '@/views/questionnaire/questionnaire.vue'),
+	},
+	{
+		meta: {
+			chName: '新增评估调查表',
+			selectRouteKey: 'addQuestionnaire',
+		},
+		path: '/questionnaire/addQuestionnaire',
+		name: 'addQuestionnaire',
+		component: () => import(/* webpackChunkName: "addQuestionnaire" */ '@/views/questionnaire/addQuestionnaire.vue'),
+	},
+	{
+		meta: {
+			chName: '新增评估调查表',
+			selectRouteKey: 'editQuestionnaire',
+		},
+		path: '/questionnaire/editQuestionnaire/:questionnaireId',
+		name: 'editQuestionnaire',
+		component: () => import(/* webpackChunkName: "addQuestionnaire" */ '@/views/questionnaire/addQuestionnaire.vue'),
 	},
 	{
 		meta: {
