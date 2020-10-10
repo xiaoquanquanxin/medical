@@ -1,6 +1,5 @@
 <template>
     <div class="layout-content-inner-main">
-        <p>渠道商管理</p>
         <!--搜索相关-->
         <a-input-group class="a-input-group">
             <a-row :gutter="8">
@@ -64,15 +63,15 @@
             </a-pagination>
         </a-row>
         <!--莫泰框-->
-        <a-modal v-model="dialogData.visible"
-                 v-if="dialogData.visible"
+        <a-modal v-model="dialogDataDistributors.visible"
+                 v-if="dialogDataDistributors.visible"
                  :maskClosable="false"
                  centered
                  :width="800"
-                 :title="dialogData.title"
+                 :title="dialogDataDistributors.title"
                  ok-text="确认"
                  cancel-text="取消"
-                 @ok="modalCheck()">
+                 @ok="modalCheck('refAddOrEditDistributors')">
             <AddOrEditDistributors ref="refAddOrEditDistributors"/>
         </a-modal>
     </div>
@@ -82,7 +81,7 @@
     //  新增或编辑渠道商
     import AddOrEditDistributors from '@/components/addOrEditDistributors.vue';
     import { pagination } from '@/utils/pagination.ts';
-    import { dialogMethods, dialogData } from '@/utils/dialog';
+    import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
     import { towRowSearch } from '../../utils/tableScroll';
 
     const columns = [
@@ -140,8 +139,6 @@
         components: {
             AddOrEditDistributors,
         },
-        computed: {},
-
         data(){
             return {
                 data,
@@ -151,8 +148,8 @@
                 scroll: towRowSearch,
                 //  分页信息
                 pagination,
-                //  莫泰框
-                dialogData,
+                //  新增、编辑渠道商
+                dialogDataDistributors: this.initModal(DIALOG_TYPE.DISTRIBUTORS),
             };
         },
 
@@ -187,21 +184,22 @@
 
             //  新增渠道商
             addDistributors(){
-                this.setDialogTitle('新增渠道商');
-                this.showModal();
+                this.setChannelId(0);
+                this.setDialogTitle(DIALOG_TYPE.DISTRIBUTORS, '新增渠道商');
+                this.showModal(DIALOG_TYPE.DISTRIBUTORS);
             },
 
             //  编辑渠道商
             editDistributors(sItem){
                 this.setChannelId(1234567890987654);
-                this.setDialogTitle('编辑渠道商');
-                this.showModal();
+                this.setDialogTitle(DIALOG_TYPE.DISTRIBUTORS, '编辑渠道商');
+                this.showModal(DIALOG_TYPE.DISTRIBUTORS);
             },
             //  检查莫泰框的值
-            modalCheck(){
-                const promise = this.$refs.refAddOrEditDistributors.handleSubmit();
+            modalCheck(refAddOrEditDistributors){
+                const promise = this.$refs[refAddOrEditDistributors].handleSubmit();
                 promise.then(v => {
-                    this.hideModal();
+                    this.hideModal(DIALOG_TYPE.DISTRIBUTORS);
                 }).catch(error => {
                     console.log('有错');
                 });
