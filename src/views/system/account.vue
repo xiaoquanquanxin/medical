@@ -31,7 +31,7 @@
                 :scroll="scroll"
                 :pagination="false"
         >
-            <div slot="tags" slot-scope="scope,sItem,sIndex,extra">
+            <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
                 <a-space size="small">
                     <a @click="editAccount(sItem,sIndex)">编辑</a>
                     <a @click="deleteAccount(sItem,sIndex)">删除</a>
@@ -104,9 +104,9 @@
         },
         {
             title: '操作',
-            dataIndex: 'tags',
-            key: 'tags',
-            scopedSlots: { customRender: 'tags' },
+            dataIndex: 'operation',
+            key: 'operation',
+            scopedSlots: { customRender: 'operation' },
         },
     ];
     const data = [];
@@ -117,7 +117,6 @@
             city: '上海',
             status: String(i % 2),
             icon: '医院图标',
-            tags: ['编辑', '关联科室'],
         });
     }
 
