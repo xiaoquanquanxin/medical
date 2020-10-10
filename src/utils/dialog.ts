@@ -58,6 +58,14 @@ export const DIALOG_TYPE: DialogType = {
 	//	处方模板管理 - 增加口服肠内补充方案 - 选择时间
 	TEMPLATE_SELECT_TIME: 'TEMPLATE_SELECT_TIME',
 
+	//	查看总库存
+	VIEW_TOTAL_INVENTORY: 'VIEW_TOTAL_INVENTORY',
+	//	采购操作
+	PROCUREMENT: 'PROCUREMENT',
+	//	出库操作
+	OUTBOUND: 'OUTBOUND',
+	//	入库操作
+	PUT_IN_STORE_ID: 'PUT_IN_STORE_ID',
 }
 
 
