@@ -23,6 +23,8 @@ const getters = {
 
 	//	处方模板管理
 	prescriptionTemplate: (state: any) => state.app.prescriptionTemplate,
+	//	库房管理
+	warehouse: (state: any) => state.app.warehouse,
 
 
 	accountBox: (state: any) => state.app.accountBox,
