@@ -94,6 +94,7 @@
     export default {
         data(){
             const countTableColumns = [
+                //  todo    角色区分这个对象就可以了
                 {
                     dataIndex: 'distributors',
                     title: '渠道商名称',
