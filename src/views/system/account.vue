@@ -75,7 +75,7 @@
     </div>
 </template>
 <script>
-    import { dialogMethods, dialogData } from '@/utils/dialog';
+    import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
     import { pagination } from '@/utils/pagination.ts';
     import AccountBox from '@/components/accountBox.vue';
     import { mapGetters, mapActions } from 'vuex';
@@ -129,7 +129,7 @@
             return {
                 data,
                 columns,
-                selectedRowKeys: [], // Check here to configure the default column
+                
 
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
                 scroll: towRowSearch,
@@ -144,11 +144,7 @@
             ...dialogMethods,
             //  新建、编辑账号弹框
             ...mapActions('accountBox', ['setAccountBoxId']),
-            //  选中表格数据
-            onSelectChange(selectedRowKeys){
-                console.log('selectedRowKeys changed: ', selectedRowKeys);
-                this.selectedRowKeys = selectedRowKeys;
-            },
+            
             //  展示的每一页数据变换
             onShowSizeChange(current, pageSize){
                 console.log(current);
