@@ -71,6 +71,11 @@ export const routeMap = {
 
 	//	评估调查表管理
 	'questionnaire': true,
+	//	新增评估调查表
+	'addQuestionnaire': true,
+	//	编辑评估调查表
+	'editQuestionnaire': true,
+
 	//  宣教管理
 	'mission': true,
 	//	新增宣教
