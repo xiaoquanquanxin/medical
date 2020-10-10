@@ -105,7 +105,6 @@
         {
             title: '操作',
             dataIndex: 'operation',
-            key: 'operation',
             scopedSlots: { customRender: 'operation' },
         },
     ];
