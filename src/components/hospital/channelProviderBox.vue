@@ -28,7 +28,6 @@
         },
         {
             title: '状态',
-            dataIndex: 'status',
             width: 100,
             scopedSlots: { customRender: 'a-switch' },
         },
