@@ -215,7 +215,7 @@
     </div>
 </template>
 <script>
-    import { dialogMethods, dialogData } from '@/utils/dialog';
+    import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
     import { formItemLayout } from '@/utils/layout.ts';
     import VueQuillEditor from 'vue-quill-editor/src/editor';
 
@@ -444,8 +444,6 @@
                 //  基本单位表格
                 basicTableColumns,
                 basicTableData,
-                //  莫泰框
-                dialogData,
             };
         },
         created(){
@@ -462,8 +460,6 @@
 
         },
         methods: {
-            //  莫泰框方法
-            ...dialogMethods,
             //  添加辅助单位
             addAuxiliaryUnits(){
                 this.basicTableData.push(auxiliaryUnitsData);
