@@ -98,15 +98,15 @@
             </a-pagination>
         </a-row>
         <!--莫泰框-->
-        <a-modal v-model="dialogData.visible"
-                 v-if="dialogData.visible"
+        <a-modal v-model="dialogDataPatientsUser.visible"
+                 v-if="dialogDataPatientsUser.visible"
                  :maskClosable="false"
                  centered
                  :width="800"
                  title="编辑患者用户"
                  ok-text="确认"
                  cancel-text="取消"
-                 @ok="modalCheck()">
+                 @ok="modalCheck('refEditPatientsUser')">
             <EditPatientsUser ref="refEditPatientsUser"/>
         </a-modal>
     </div>
@@ -115,7 +115,7 @@
     import { pagination } from '@/utils/pagination.ts';
     import { oneRowSearch } from '../../utils/tableScroll';
     import { mapGetters, mapActions } from 'vuex';
-    import { dialogMethods, dialogData } from '@/utils/dialog';
+    import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
     import EditPatientsUser from '@/components/editPatientsUser/editPatientsUser.vue';
 
     const columns = [
@@ -173,7 +173,7 @@
     }
     //  用户管理
     export default {
-        components:{
+        components: {
             EditPatientsUser,
         },
         data(){
@@ -193,8 +193,8 @@
 
                 //  分页信息
                 pagination,
-                //  莫泰框
-                dialogData,
+                //  编辑患者用户
+                dialogDataPatientsUser: this.initModal(DIALOG_TYPE.PATIENTS_USER),
             };
         },
         methods: {
@@ -225,7 +225,16 @@
             //  编辑用户
             editUser(sItem){
                 this.setPatientsUserId(1243323);
-                this.showModal();
+                this.showModal(DIALOG_TYPE.PATIENTS_USER);
+            },
+            //  编辑完成
+            modalCheck(refEditPatientsUser){
+                const promise = this.$refs[refEditPatientsUser].handleSubmit();
+                promise.then(v => {
+                    this.hideModal(DIALOG_TYPE.PATIENTS_USER);
+                }).catch(error => {
+                    console.log('有错');
+                });
             },
             //  删除用户
             deleteUser(sItem){
@@ -247,15 +256,6 @@
                     },
                 });
             },
-            //
-            modalCheck(){
-                const promise = this.$refs.refEditPatientsUser.handleSubmit();
-                promise.then(v => {
-                    this.hideModal();
-                }).catch(error => {
-                    console.log('有错');
-                });
-            }
         }
     };
 </script>
