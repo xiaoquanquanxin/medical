@@ -46,15 +46,15 @@
             </a-pagination>
         </a-row>
         <!--莫泰框-->
-        <a-modal v-model="dialogData.visible"
-                 v-if="dialogData.visible"
+        <a-modal v-model="dialogDataViewOrdinaryUser.visible"
+                 v-if="dialogDataViewOrdinaryUser.visible"
                  :maskClosable="false"
                  centered
                  :width="800"
                  title="查看家庭组"
                  ok-text="确认"
                  cancel-text="取消"
-                 @ok="hideModal()">
+                 @ok="modalCheck()">
             <FamilyGroup/>
         </a-modal>
     </div>
@@ -62,7 +62,7 @@
 <script>
     import { pagination } from '@/utils/pagination.ts';
     import { oneRowSearch } from '../../utils/tableScroll';
-    import { dialogMethods, dialogData } from '@/utils/dialog';
+    import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
     import FamilyGroup from '@/components/familyGroup.vue';
     import { mapGetters, mapActions } from 'vuex';
 
@@ -111,8 +111,9 @@
 
                 //  分页信息
                 pagination,
-                //  莫泰框
-                dialogData,
+                //  查看普通用户
+                dialogDataViewOrdinaryUser: this.initModal(DIALOG_TYPE.VIEW_ORDINARY_USER),
+
             };
         },
         methods: {
@@ -141,8 +142,12 @@
             viewFamilyGroup(sItem){
                 console.log(sItem);
                 this.setViewFamilyGroupId(12456789876543);
-                this.showModal();
+                this.showModal(DIALOG_TYPE.VIEW_ORDINARY_USER);
             },
+            //  关闭
+            modalCheck(){
+                this.hideModal(DIALOG_TYPE.VIEW_ORDINARY_USER);
+            }
         }
     };
 </script>
