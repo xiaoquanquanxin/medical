@@ -486,6 +486,18 @@ export const asyncRoutesList = [
 	 * 🍉🍉🍉🍉
 	 * 渠道商部分
 	 * */
+
+	{
+		meta: {
+			chName: '商品管理',
+			selectRouteKey: 'distributorsGoods',
+			openRouteKey: 'distributorsGoods',
+		},
+		name: 'distributorsGoods',
+		path: '/distributorsGoods',
+		component: () => import(/* webpackChunkName: "changePassword" */ '@/views/viewGoods/viewGoods.vue'),
+	},
+
 	{
 		meta: {
 			chName: '医生管理',
