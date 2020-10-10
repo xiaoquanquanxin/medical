@@ -54,7 +54,7 @@
                           @change="aSwitchChange(sItem,$event)"
                 />
             </div>
-            <div slot="tags" slot-scope="scope,sItem,sIndex,extra">
+            <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
                 <a-space size="small">
                     <a @click="editDepartment(sItem)">编辑</a>
                     <!--                    <a @click="deleteDepartment(sItem)">删除</a>-->
@@ -128,9 +128,9 @@
         },
         {
             title: '操作',
-            dataIndex: 'tags',
-            key: 'tags',
-            scopedSlots: { customRender: 'tags' },
+            dataIndex: 'operation',
+
+            scopedSlots: { customRender: 'operation' },
         },
     ];
     const data = [];
