@@ -385,11 +385,6 @@
                     },
                 });
             },
-            //  价格查看
-            priceView(sItem){
-                console.log(sItem);
-                this.showModal();
-            },
             //  确认市场价格
             viewMarketPriceModalCheck(refViewPrice){
                 const promise = this.$refs[refViewPrice].handleSubmit();
