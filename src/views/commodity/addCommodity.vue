@@ -154,18 +154,20 @@
                             />
                         </div>
                     </a-table>
-                    <a-button type="primary" v-if="isAddBtn" @click="addAuxiliaryUnits">
-                        添加
-                    </a-button>
                 </div>
             </a-form-item>
             <a-row style="margin-top: -20px;margin-bottom:20px;">
-                <a-col :offset="6">
+                <a-col :offset="4">
                     <a-form-item label="">
                         <a-input type="hidden"
                                  v-decorator="basicUnitDecorator"
-                                 placeholder="请输入基本单位"/>
+                        />
                     </a-form-item>
+                </a-col>
+                <a-col :offset="5">
+                    <a-button type="primary" v-if="isAddBtn" @click="addAuxiliaryUnits">
+                        添加
+                    </a-button>
                 </a-col>
             </a-row>
             <a-form-item label="商品图片">
