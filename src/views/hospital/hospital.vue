@@ -156,7 +156,7 @@
             city: '上海',
             status: String(i % 2),
             icon: '医院图标',
-            operation: ['编辑', '关联科室'],
+            
         });
     }
     //  医院管理

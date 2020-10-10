@@ -124,7 +124,7 @@
             city: '上海',
             status: String(i % 2),
             icon: '生产厂家图标',
-            operation: ['编辑', '关联科室'],
+            
         });
     }
 
