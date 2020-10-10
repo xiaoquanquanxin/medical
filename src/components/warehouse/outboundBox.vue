@@ -39,12 +39,6 @@
         beforeCreate(){
             this.form = this.$form.createForm(this);
         },
-        computed: {
-            //  出库的id
-            outboundId(){
-                return this.$store.state.warehouse.outboundId;
-            }
-        },
         data(){
             return {
                 formItemLayout,
