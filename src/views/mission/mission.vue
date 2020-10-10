@@ -69,8 +69,7 @@
                     @change="pageChange"
             >
                 <template slot="buildOptionText" slot-scope="props">
-                    <span v-if="props.value !== '50'">{{ props.value }}条/页</span>
-                    <span v-if="props.value === '50'">全部</span>
+                    <span>{{ props.value }}条/页</span>
                 </template>
             </a-pagination>
         </a-row>
