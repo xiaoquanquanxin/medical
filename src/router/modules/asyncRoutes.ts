@@ -489,17 +489,6 @@ export const asyncRoutesList = [
 
 	{
 		meta: {
-			chName: '商品管理',
-			selectRouteKey: 'distributorsGoods',
-			openRouteKey: 'distributorsGoods',
-		},
-		name: 'distributorsGoods',
-		path: '/distributorsGoods',
-		component: () => import(/* webpackChunkName: "changePassword" */ '@/views/viewGoods/viewGoods.vue'),
-	},
-
-	{
-		meta: {
 			chName: '医生管理',
 			selectRouteKey: 'doctor',
 		},
@@ -526,6 +515,17 @@ export const asyncRoutesList = [
 		name: 'editDoctor',
 		component: () => import(/* webpackChunkName: "addDoctor" */ '@/views/doctor/addDoctor.vue'),
 		hidden: true
+	},
+
+	{
+		meta: {
+			chName: '商品管理',
+			selectRouteKey: 'distributorsGoods',
+			openRouteKey: 'distributorsGoods',
+		},
+		name: 'distributorsGoods',
+		path: '/distributorsGoods',
+		component: () => import(/* webpackChunkName: "changePassword" */ '@/views/viewGoods/viewGoods.vue'),
 	},
 
 	//	订单管理
