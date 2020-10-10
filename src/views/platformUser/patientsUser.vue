@@ -167,7 +167,6 @@
             key: i,
             department: `xx科室`,
             status: String(i % 2),
-            tags: ['编辑', '删除', '关联疾病'],
         });
     }
     //  用户管理

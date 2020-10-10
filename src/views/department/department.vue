@@ -139,7 +139,6 @@
             key: i,
             department: `xx科室`,
             status: String(i % 2),
-            tags: ['编辑', '关联疾病'],
         });
     }
     //  科室管理
