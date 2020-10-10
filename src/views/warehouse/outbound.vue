@@ -129,7 +129,7 @@
                 //  分页信息
                 pagination,
 
-                //  查看总库存
+                //  出库操作
                 dialogDataOutbound: this.initModal(DIALOG_TYPE.OUTBOUND),
             };
         },
