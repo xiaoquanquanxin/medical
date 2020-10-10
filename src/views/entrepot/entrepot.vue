@@ -163,6 +163,7 @@
             },
             //  新增仓库
             addEntrepot(){
+                this.setEntrepotId(0);
                 this.setDialogTitle(DIALOG_TYPE.ENTREPOT, '新增仓库');
                 this.showModal(DIALOG_TYPE.ENTREPOT);
             },
