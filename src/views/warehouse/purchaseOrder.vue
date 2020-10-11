@@ -140,7 +140,7 @@
         });
     }
 
-    //  商品库存列表
+    //  采购订单列表
     export default {
         components: {
             ShipmentsForm,

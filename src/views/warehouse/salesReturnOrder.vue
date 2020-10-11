@@ -112,7 +112,7 @@
         });
     }
 
-    //  商品库存列表
+    //  退货订单列表
     export default {
         data(){
             return {
