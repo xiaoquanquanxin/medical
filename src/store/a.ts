@@ -133,7 +133,7 @@ export const routeMap = {
 	//	报损
 	'reportedLoss': true,
 	//	采购单
-	'purchaseList': false,
+	'purchaseList': true,
 	//	出货退货单
 	'shipmentReturn': true,
 
