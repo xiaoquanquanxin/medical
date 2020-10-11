@@ -64,6 +64,7 @@
         <!--莫泰框-->
         <a-modal v-model="dialogDataDistributors.visible"
                  v-if="dialogDataDistributors.visible"
+                 :confirm-loading="dialogDataDistributors.confirmLoading"
                  :maskClosable="false"
                  centered
                  :width="800"
@@ -190,11 +191,16 @@
             },
             //  检查莫泰框的值
             modalCheck(refAddOrEditDistributors){
+                //  防止连点
+                this.setConfirmLoading(DIALOG_TYPE.DISTRIBUTORS, true);
                 const promise = this.$refs[refAddOrEditDistributors].handleSubmit();
                 promise.then(v => {
                     this.hideModal(DIALOG_TYPE.DISTRIBUTORS);
                 }).catch(error => {
                     console.log('有错');
+                }).then(v => {
+                    //  最后设置可以再次点击
+                    this.setConfirmLoading(DIALOG_TYPE.DISTRIBUTORS, false);
                 });
             },
         },
