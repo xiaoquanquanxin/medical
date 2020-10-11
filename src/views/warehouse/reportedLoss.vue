@@ -4,7 +4,7 @@
         <a-input-group class="a-input-group">
             <a-row :gutter="8">
                 <a-col :span="6">
-                    <a-input v-model="searchData.commodityName" placeholder="请输入入库单号"/>
+                    <a-input v-model="searchData.commodityName" placeholder="请输入报损单号"/>
                 </a-col>
                 <a-col :span="5">
                     <a-input v-model="searchData.itemNo" placeholder="请输入商品货号"/>
@@ -28,8 +28,8 @@
         </a-input-group>
         <a-input-group class="a-input-group">
             <a-button type="primary"
-                      @click="putInStorageClick"
-            >入库
+                      @click="reportedLostClick"
+            >报损
             </a-button>
         </a-input-group>
         <!--表格-->
@@ -56,39 +56,34 @@
                 </template>
             </a-pagination>
         </a-row>
-        <!--入库莫泰框-->
-        <a-modal v-model="dialogDataPutInStorageBox.visible"
-                 v-if="dialogDataPutInStorageBox.visible"
+        <!--报损莫泰框-->
+        <a-modal v-model="dialogDataReportedLoss.visible"
+                 v-if="dialogDataReportedLoss.visible"
                  :maskClosable="false"
                  centered
                  :width="800"
-                 title="入库"
+                 title="报损"
                  ok-text="确认"
                  cancel-text="取消"
-                 @ok="putInStorageModalCheck('refPutInStorageBox')">
-            <PutInStorageBox ref="refPutInStorageBox"/>
+                 @ok="reportedLostModalCheck('refReportedLossBox')">
+            <ReportedLossBox ref="refReportedLossBox"/>
         </a-modal>
     </div>
 </template>
 <script>
     import { pagination } from '@/utils/pagination.ts';
     import { oneRowSearch } from '../../utils/tableScroll';
-    import PutInStorageBox from '@/components/warehouse/putInStorageBox';
+    import ReportedLossBox from '@/components/warehouse/reportedLossBox';
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
 
     const columns = [
         {
-            title: '入库单号',
+            title: '报损单号',
             dataIndex: 'commodityName',
             width: 150,
         },
         {
-            title: '入库医院',
-            dataIndex: '112',
-            width: 100,
-        },
-        {
-            title: '入库商品名称',
+            title: '报损商品名称',
             dataIndex: '11',
             width: 100,
         },
@@ -98,7 +93,7 @@
             width: 100,
         },
         {
-            title: '入库数量',
+            title: '报损数量',
             dataIndex: 'barCode',
             width: 100,
         },
@@ -111,10 +106,10 @@
         });
     }
 
-    //  入库
+    //  报损
     export default {
         components: {
-            PutInStorageBox,
+            ReportedLossBox,
         },
         data(){
             return {
@@ -128,8 +123,8 @@
                 //  分页信息
                 pagination,
 
-                //  入库操作
-                dialogDataPutInStorageBox: this.initModal(DIALOG_TYPE.PUT_IN_STORE_ID),
+                //  报损操作
+                dialogDataReportedLoss: this.initModal(DIALOG_TYPE.REPORTED_LOST),
             };
         },
         methods: {
@@ -148,16 +143,17 @@
                 console.log(pageSize);
             },
 
-            //  入库
-            putInStorageClick(){
-                this.showModal(DIALOG_TYPE.PUT_IN_STORE_ID);
+            //  报损
+            reportedLostClick(){
+                
+                this.showModal(DIALOG_TYPE.REPORTED_LOST);
             },
 
             //  确认市场价格
-            putInStorageModalCheck(refPutInStorageBox){
-                const promise = this.$refs[refPutInStorageBox].handleSubmit();
+            reportedLostModalCheck(refReportedLossBox){
+                const promise = this.$refs[refReportedLossBox].handleSubmit();
                 promise.then(v => {
-                    this.hideModal(DIALOG_TYPE.PUT_IN_STORE_ID);
+                    this.hideModal(DIALOG_TYPE.REPORTED_LOST);
                 }).catch(error => {
                     console.log('有错');
                 });
