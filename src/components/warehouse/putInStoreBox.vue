@@ -30,10 +30,11 @@
             </a-form-item>
             <a-form-item label="单位">xxxx</a-form-item>
             <a-form-item label="生产时间">xxxx</a-form-item>
-            <a-form-item label="过期时间">
+            <a-form-item label="过期日期">
                 <a-row style="width:calc((100vw - 200px)*.65)">
                     <a-col :span="7">
                         <a-date-picker
+                                placeholder="请选择过期日期"
                                 @change="onDateChange"
                         />
                         <a-input type="hidden" v-decorator="expirationTimeDecorator"/>
@@ -90,11 +91,11 @@
                         message: '请输入批次'
                     },]
                 }],
-                //  过期时间
+                //  过期日期
                 expirationTimeDecorator: ['expirationTime', {
                     rules: [{
                         required: true,
-                        message: '请选择过期时间'
+                        message: '请选择过期日期'
                     },]
                 }],
                 //  过期剩余天数
@@ -116,7 +117,7 @@
         methods: {
             //  时间选择器的方法
             moment,
-            //  选择过期时间
+            //  选择过期日期
             onDateChange(value, selectDateValue){
                 //  console.log(value.months());
                 this.form.setFieldsValue({
