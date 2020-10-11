@@ -617,6 +617,26 @@ export const asyncRoutesList = [
 				path: '/warehouse/reportedLoss',
 				name: 'reportedLoss',
 				component: () => import(/* webpackChunkName: "reportedLoss" */ '@/views/warehouse/reportedLoss.vue'),
+			},
+			{
+				meta: {
+					chName: '采购单',
+					selectRouteKey: 'purchaseList',
+					openRouteKey: 'warehouse',
+				},
+				path: '/warehouse/purchaseList',
+				name: 'purchaseList',
+				component: () => import(/* webpackChunkName: "purchaseList" */ '@/views/warehouse/purchaseList.vue'),
+			},
+			{
+				meta: {
+					chName: '出货退货单',
+					selectRouteKey: 'shipmentReturn',
+					openRouteKey: 'warehouse',
+				},
+				path: '/warehouse/shipmentReturn',
+				name: 'shipmentReturn',
+				component: () => import(/* webpackChunkName: "shipmentReturn" */ '@/views/warehouse/shipmentReturn.vue'),
 			}
 		]
 	},
