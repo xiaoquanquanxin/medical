@@ -55,6 +55,7 @@
         <!--莫泰框-->
         <a-modal v-model="dialogDataEntrepot.visible"
                  v-if="dialogDataEntrepot.visible"
+                 :confirm-loading="dialogDataEntrepot.confirmLoading"
                  :maskClosable="false"
                  centered
                  :width="800"
@@ -176,14 +177,18 @@
             },
             //  确定
             modalCheck(){
+                //  防止连点
+                this.setConfirmLoading(DIALOG_TYPE.ENTREPOT, true);
                 const promise = this.$refs.refAddOrEditEntrepot.handleSubmit();
                 promise.then(v => {
                     this.hideModal(DIALOG_TYPE.ENTREPOT);
                 }).catch(error => {
                     console.log('有错');
+                }).then(v => {
+                    //  最后设置可以再次点击
+                    this.setConfirmLoading(DIALOG_TYPE.ENTREPOT, false);
                 });
             }
         }
-
     };
 </script>
