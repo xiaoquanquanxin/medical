@@ -1,22 +1,19 @@
 //  莫泰框数据
 
 interface DialogItem {
+	//	是否展示莫泰框
 	visible: boolean;
+	//	标题
 	title: string;
+	//	莫泰框确认按钮的状态 true 可用
+	confirmLoading: boolean;
 }
 
 interface DialogData {
 	[key: string]: DialogItem;
 }
 
-export const dialogData: DialogData = {
-	// //  是否展示莫泰框
-	// visible: false,
-	// //  提交按钮loading
-	// submitLoading: false,
-	// //	标题
-	// title: null,
-};
+export const dialogData: DialogData = {};
 
 
 interface DialogType {
@@ -72,7 +69,7 @@ export const DIALOG_TYPE: DialogType = {
 	//	发货操作
 	SHIPMENTS: 'SHIPMENTS',
 	//	查看发货
-	VIEW_SHIPMENTS: 'VIEW_SHIPMENTS',
+	// VIEW_SHIPMENTS: 'VIEW_SHIPMENTS',
 	//	采购详情
 	PROCUREMENT_DETAILS: 'PROCUREMENT_DETAILS',
 
@@ -86,12 +83,16 @@ export const dialogMethods = {
 		return dialogData[dialogKey] = {
 			visible: false,
 			title: title || '',
+			//	默认可以点击莫泰框
+			confirmLoading: true,
 		};
 	},
+	//	打开莫泰框
 	showModal(dialogKey: string) {
 		// @ts-ignore
 		dialogData[dialogKey].visible = true;
 	},
+	//	关闭motion
 	hideModal(dialogKey: string) {
 		// @ts-ignore
 		dialogData[dialogKey].visible = false;
@@ -99,5 +100,9 @@ export const dialogMethods = {
 	//	设置莫泰框标题名称
 	setDialogTitle(dialogKey: string, title: string = '') {
 		dialogData[dialogKey].title = title;
+	},
+	//	点击按钮是否可用
+	setConfirmLoading(dialogKey: string, confirmLoading: boolean) {
+		dialogData[dialogKey].confirmLoading = confirmLoading;
 	}
 };
