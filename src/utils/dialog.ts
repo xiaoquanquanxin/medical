@@ -5,7 +5,7 @@ interface DialogItem {
 	visible: boolean;
 	//	标题
 	title: string;
-	//	莫泰框确认按钮的状态 true 可用
+	//	莫泰框确认按钮的状态 false 可用
 	confirmLoading: boolean;
 }
 
@@ -84,7 +84,7 @@ export const dialogMethods = {
 			visible: false,
 			title: title || '',
 			//	默认可以点击莫泰框
-			confirmLoading: true,
+			confirmLoading: false,
 		};
 	},
 	//	打开莫泰框
