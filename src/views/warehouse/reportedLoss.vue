@@ -65,15 +65,15 @@
                  title="报损"
                  ok-text="确认"
                  cancel-text="取消"
-                 @ok="reportedLostModalCheck('refReportedLossBox')">
-            <ReportedLossBox ref="refReportedLossBox"/>
+                 @ok="reportedLostModalCheck('refReportedLossForm')">
+            <ReportedLossForm ref="refReportedLossForm"/>
         </a-modal>
     </div>
 </template>
 <script>
     import { pagination } from '@/utils/pagination.ts';
     import { oneRowSearch } from '../../utils/tableScroll';
-    import ReportedLossBox from '@/components/warehouse/reportedLossBox';
+    import ReportedLossForm from '@/components/warehouse/reportedLossForm';
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
 
     const columns = [
@@ -109,7 +109,7 @@
     //  报损
     export default {
         components: {
-            ReportedLossBox,
+            ReportedLossForm,
         },
         data(){
             return {
@@ -150,8 +150,8 @@
             },
 
             //  确认市场价格
-            reportedLostModalCheck(refReportedLossBox){
-                const promise = this.$refs[refReportedLossBox].handleSubmit();
+            reportedLostModalCheck(refReportedLossForm){
+                const promise = this.$refs[refReportedLossForm].handleSubmit();
                 promise.then(v => {
                     this.hideModal(DIALOG_TYPE.REPORTED_LOST);
                 }).catch(error => {
