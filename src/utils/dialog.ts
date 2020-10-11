@@ -59,6 +59,9 @@ export const DIALOG_TYPE: DialogType = {
 	VIEW_TOTAL_INVENTORY: 'VIEW_TOTAL_INVENTORY',
 	//	采购操作
 	PROCUREMENT: 'PROCUREMENT',
+	//	退货操作
+	SALES_RETURN: 'SALES_RETURN',
+
 	//	出库操作
 	OUTBOUND: 'OUTBOUND',
 	//	入库操作
@@ -68,8 +71,6 @@ export const DIALOG_TYPE: DialogType = {
 
 	//	发货操作
 	SHIPMENTS: 'SHIPMENTS',
-	//	查看发货
-	// VIEW_SHIPMENTS: 'VIEW_SHIPMENTS',
 	//	采购详情
 	PROCUREMENT_DETAILS: 'PROCUREMENT_DETAILS',
 
