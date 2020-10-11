@@ -79,8 +79,8 @@
                  title="采购"
                  ok-text="确认"
                  cancel-text="取消"
-                 @ok="procurementModalCheck('refProcurementBox')">
-            <ProcurementBox ref="refProcurementBox"/>
+                 @ok="procurementModalCheck('refProcurementForm')">
+            <ProcurementForm ref="refProcurementForm"/>
         </a-modal>
     </div>
 </template>
@@ -88,7 +88,7 @@
     import { pagination } from '@/utils/pagination.ts';
     import { oneRowSearch } from '../../utils/tableScroll';
     import ViewTotalInventory from '@/components/warehouse/viewTotalInventory';
-    import ProcurementBox from '@/components/warehouse/procurementBox';
+    import ProcurementForm from '@/components/warehouse/procurementForm';
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
     import { mapGetters, mapActions } from 'vuex';
 
@@ -154,7 +154,7 @@
     export default {
         components: {
             ViewTotalInventory,
-            ProcurementBox,
+            ProcurementForm,
         },
         data(){
             return {
@@ -211,8 +211,8 @@
             },
 
             //  确认采购
-            procurementModalCheck(refProcurementBox){
-                const promise = this.$refs[refProcurementBox].handleSubmit();
+            procurementModalCheck(refProcurementForm){
+                const promise = this.$refs[refProcurementForm].handleSubmit();
                 promise.then(v => {
                     this.hideModal(DIALOG_TYPE.PROCUREMENT);
                 }).catch(error => {
