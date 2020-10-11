@@ -78,15 +78,15 @@
             <a-form-item label="确认密码">
                 <a-input
                         v-decorator="confirmPasswordDecorator"
-                        placeholder="请输入登录密码"
+                        placeholder="请输入确认密码"
                 />
             </a-form-item>
         </a-form>
     </div>
 </template>
 <script>
-    import { mapGetters, mapActions } from 'vuex';
     import { formItemLayout } from '@/utils/layout.ts';
+    import { compareToFirstPassword } from '@/utils/validate';
 
     //  新增或编辑渠道商
     export default {
@@ -95,9 +95,6 @@
         },
         components: {},
         computed: {
-            ...mapGetters([
-                'distributors',
-            ]),
             //	渠道商id
             channelId(){
                 return this.$store.state.distributors.channelId;
@@ -154,7 +151,7 @@
                         message: '请输入登陆账户'
                     },]
                 }],
-                //  登陆账户
+                //  登陆密码
                 passwordDecorator: ['password', {
                     initialValue: '',
                     rules: [{
@@ -162,13 +159,18 @@
                         message: '请输入登陆密码'
                     },]
                 }],
-                //  登陆账户
+                //  确认密码
                 confirmPasswordDecorator: ['confirmPassword', {
                     initialValue: '',
-                    rules: [{
-                        required: true,
-                        message: '请输入登陆密码'
-                    },]
+                    rules: [
+                        {
+                            required: true,
+                            message: '请输入确认密码'
+                        },
+                        {
+                            validator: this.compareToFirstPassword('password'),
+                        }
+                    ]
                 }],
             };
         },
@@ -186,16 +188,14 @@
             }
         },
         methods: {
-            //  渠道商store
-            ...mapActions('distributors', [
-                'setChannelId',
-            ]),
+            //  与第一密码比较，用于确认密码
+            compareToFirstPassword,
             //    表单提交
             handleSubmit(){
                 return new Promise(((resolve, reject) => {
                     console.log(this.form);
                     this.form.validateFields((err, values) => {
-                        console.table(values);
+                        console.log(values);
                         if (!err) {
                             resolve();
                         } else {
