@@ -190,11 +190,6 @@
                 this.setProcurementId('766');
                 this.showModal(DIALOG_TYPE.SHIPMENTS);
             },
-            //  采购详情
-            procurementDetails(sItem){
-                this.setProcurementId('4323543');
-                this.showModal(DIALOG_TYPE.PROCUREMENT_DETAILS);
-            },
             //  确认发货
             shipmentsModalCheck(ShipmentsForm){
                 const promise = this.$refs[ShipmentsForm].handleSubmit();
@@ -203,6 +198,12 @@
                 }).catch(error => {
                     console.log('有错');
                 });
+            },
+            
+            //  采购详情
+            procurementDetails(sItem){
+                this.setProcurementId('4323543');
+                this.showModal(DIALOG_TYPE.PROCUREMENT_DETAILS);
             },
             //  确认详情
             procurementDetailModalCheck(){
