@@ -1,5 +1,5 @@
 <template>
-    <div class="layout-content-inner-main">
+    <div class="table-in-box">
         <a-form class="form"
                 :form="form"
                 v-bind="formItemLayout"
