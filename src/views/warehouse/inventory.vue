@@ -61,6 +61,7 @@
         <!--查看总库存莫泰框-->
         <a-modal v-model="dialogDataViewTotalInventory.visible"
                  v-if="dialogDataViewTotalInventory.visible"
+                 :confirm-loading="dialogDataViewTotalInventory.confirmLoading"
                  :maskClosable="false"
                  centered
                  :width="800"
@@ -73,6 +74,7 @@
         <!--采购操作莫泰框-->
         <a-modal v-model="dialogDataProcurement.visible"
                  v-if="dialogDataProcurement.visible"
+                 :confirm-loading="dialogDataProcurement.confirmLoading"
                  :maskClosable="false"
                  centered
                  :width="800"
@@ -93,41 +95,6 @@
     import { mapGetters, mapActions } from 'vuex';
 
     const columns = [
-        {
-            title: '商品名称',
-            dataIndex: 'commodityName',
-            width: 150,
-        },
-        {
-            title: '商品货号',
-            dataIndex: '11',
-            width: 100,
-        },
-        {
-            title: '单位',
-            dataIndex: 'unit',
-            width: 100,
-        },
-        {
-            title: '商品条码',
-            dataIndex: 'barCode',
-            width: 100,
-        },
-        {
-            title: '商品供应商',
-            dataIndex: 'supplier',
-            width: 150,
-        },
-        {
-            title: '商品品牌',
-            dataIndex: 'brand',
-            width: 100,
-        },
-        {
-            title: '厂家',
-            dataIndex: 'manufacturer',
-            width: 100,
-        },
         {
             title: '总库存',
             scopedSlots: { customRender: 'totalInventory' },
@@ -212,11 +179,16 @@
 
             //  确认采购
             procurementModalCheck(refProcurementForm){
+                //  防止连点
+                this.setConfirmLoading(DIALOG_TYPE.PROCUREMENT, true);
                 const promise = this.$refs[refProcurementForm].handleSubmit();
                 promise.then(v => {
                     this.hideModal(DIALOG_TYPE.PROCUREMENT);
                 }).catch(error => {
                     console.log('有错');
+                }).then(v => {
+                    //  最后设置可以再次点击
+                    this.setConfirmLoading(DIALOG_TYPE.PROCUREMENT, false);
                 });
             },
         }
