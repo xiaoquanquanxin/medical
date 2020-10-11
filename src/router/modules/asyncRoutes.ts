@@ -570,6 +570,26 @@ export const asyncRoutesList = [
 			},
 			{
 				meta: {
+					chName: '采购订单',
+					selectRouteKey: 'purchaseOrder',
+					openRouteKey: 'warehouse',
+				},
+				path: '/warehouse/purchaseOrder',
+				name: 'purchaseOrder',
+				component: () => import(/* webpackChunkName: "purchaseOrder" */ '@/views/warehouse/purchaseOrder.vue'),
+			},
+			{
+				meta: {
+					chName: '退货订单',
+					selectRouteKey: 'salesReturnOrder',
+					openRouteKey: 'warehouse',
+				},
+				path: '/warehouse/salesReturnOrder',
+				name: 'salesReturnOrder',
+				component: () => import(/* webpackChunkName: "salesReturnOrder" */ '@/views/warehouse/salesReturnOrder.vue'),
+			},
+			{
+				meta: {
 					chName: '出库',
 					selectRouteKey: 'outbound',
 					openRouteKey: 'warehouse',
