@@ -39,6 +39,7 @@
             <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
                 <a-space size="small">
                     <a @click="procurement(sItem)">采购</a>
+                    <a @click="salesReturn(sItem)">退货</a>
                 </a-space>
             </div>
         </a-table>
@@ -84,6 +85,19 @@
                  @ok="procurementModalCheck('refProcurementForm')">
             <ProcurementForm ref="refProcurementForm"/>
         </a-modal>
+        <!--退货操作莫泰框-->
+        <a-modal v-model="dialogDataSalesReturn.visible"
+                 v-if="dialogDataSalesReturn.visible"
+                 :confirm-loading="dialogDataSalesReturn.confirmLoading"
+                 :maskClosable="false"
+                 centered
+                 :width="800"
+                 title="采购"
+                 ok-text="确认"
+                 cancel-text="取消"
+                 @ok="salesReturnModalCheck('refSalesReturnForm')">
+            <SalesReturnForm ref="refSalesReturnForm"/>
+        </a-modal>
     </div>
 </template>
 <script>
@@ -91,18 +105,65 @@
     import { oneRowSearch } from '../../utils/tableScroll';
     import ViewTotalInventory from '@/components/warehouse/viewTotalInventory';
     import ProcurementForm from '@/components/warehouse/procurementForm';
+    import SalesReturnForm from '@/components/warehouse/salesReturnForm';
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
     import { mapGetters, mapActions } from 'vuex';
 
     const columns = [
         {
-            title: '总库存',
-            scopedSlots: { customRender: 'totalInventory' },
-            width: 100,
+            title: '商品名称',
+            dataIndex: 'commodityName',
+            width: 120,
         },
         {
+            title: '商品货号',
+            dataIndex: '11',
+            width: 120,
+        },
+        {
+            title: '单位',
+            dataIndex: 'unit',
+            width: 120,
+        },
+        {
+            title: '商品条码',
+            dataIndex: 'barCode',
+            width: 120,
+        },
+        {
+            title: '商品供应商',
+            dataIndex: 'supplier',
+            width: 120,
+        },
+        {
+            title: '商品品牌',
+            dataIndex: 'brand',
+            width: 120,
+        },
+        {
+            title: '厂家',
+            dataIndex: 'manufacturer',
+            width: 120,
+        },
+        {
+            title: '总库存',
+            scopedSlots: { customRender: 'totalInventory' },
+            width: 120,
+        },
+        {
+            title: '占用库存',
+            dataIndex: 'occupyInventory',
+            width: 120,
+        },
+        {
+            title: '剩余库存',
+            dataIndex: 'remainingInventory',
+            width: 120,
+        },
+
+        {
             title: '操作',
-            width: 100,
+            width: 120,
             scopedSlots: { customRender: 'operation' },
         },
     ];
@@ -122,6 +183,7 @@
         components: {
             ViewTotalInventory,
             ProcurementForm,
+            SalesReturnForm,
         },
         data(){
             return {
@@ -139,6 +201,8 @@
                 dialogDataViewTotalInventory: this.initModal(DIALOG_TYPE.VIEW_TOTAL_INVENTORY),
                 //  采购操作
                 dialogDataProcurement: this.initModal(DIALOG_TYPE.PROCUREMENT),
+                //  退货
+                dialogDataSalesReturn: this.initModal(DIALOG_TYPE.SALES_RETURN),
             };
         },
         methods: {
@@ -167,16 +231,15 @@
                 this.setWarehouseId('123');
                 this.showModal(DIALOG_TYPE.VIEW_TOTAL_INVENTORY);
             },
+            //  确认市场价格
+            viewInventoryModalCheck(){
+                this.hideModal(DIALOG_TYPE.VIEW_TOTAL_INVENTORY);
+            },
             //  采购
             procurement(sItem){
                 this.setWarehouseId('123');
                 this.showModal(DIALOG_TYPE.PROCUREMENT);
             },
-            //  确认市场价格
-            viewInventoryModalCheck(){
-                this.hideModal(DIALOG_TYPE.VIEW_TOTAL_INVENTORY);
-            },
-
             //  确认采购
             procurementModalCheck(refProcurementForm){
                 //  防止连点
@@ -189,6 +252,26 @@
                 }).then(v => {
                     //  最后设置可以再次点击
                     this.setConfirmLoading(DIALOG_TYPE.PROCUREMENT, false);
+                });
+            },
+            //  退货
+            salesReturn(sItem){
+                this.setWarehouseId('123');
+                this.showModal(DIALOG_TYPE.SALES_RETURN);
+            },
+
+            //  确认采购
+            salesReturnModalCheck(refSalesReturnForm){
+                //  防止连点
+                this.setConfirmLoading(DIALOG_TYPE.SALES_RETURN, true);
+                const promise = this.$refs[refSalesReturnForm].handleSubmit();
+                promise.then(v => {
+                    this.hideModal(DIALOG_TYPE.SALES_RETURN);
+                }).catch(error => {
+                    console.log('有错');
+                }).then(v => {
+                    //  最后设置可以再次点击
+                    this.setConfirmLoading(DIALOG_TYPE.SALES_RETURN, false);
                 });
             },
         }
