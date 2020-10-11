@@ -81,12 +81,12 @@
         {
             title: '发货单号',
             dataIndex: 'commodityName1',
-            width: 150,
+            width: 100,
         },
         {
             title: '商品名称',
             dataIndex: 'commodityName',
-            width: 150,
+            width: 100,
         },
         {
             title: '发货医院',
@@ -111,7 +111,7 @@
         {
             title: '单价',
             dataIndex: 'supplier',
-            width: 150,
+            width: 100,
         },
         {
             title: '总金额',
