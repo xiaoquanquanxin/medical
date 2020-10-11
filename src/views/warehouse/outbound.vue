@@ -65,15 +65,15 @@
                  title="出库"
                  ok-text="确认"
                  cancel-text="取消"
-                 @ok="outboundModalCheck('refOutboundBox')">
-            <OutboundBox ref="refOutboundBox"/>
+                 @ok="outboundModalCheck('refOutboundForm')">
+            <OutboundForm ref="refOutboundForm"/>
         </a-modal>
     </div>
 </template>
 <script>
     import { pagination } from '@/utils/pagination.ts';
     import { oneRowSearch } from '../../utils/tableScroll';
-    import OutboundBox from '@/components/warehouse/outboundBox';
+    import OutboundForm from '@/components/warehouse/outboundForm';
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
     import { mapGetters, mapActions } from 'vuex';
 
@@ -115,7 +115,7 @@
     //  出库
     export default {
         components: {
-            OutboundBox,
+            OutboundForm,
         },
         data(){
             return {
@@ -161,8 +161,8 @@
             },
 
             //  确认市场价格
-            outboundModalCheck(refOutboundBox){
-                const promise = this.$refs[refOutboundBox].handleSubmit();
+            outboundModalCheck(refOutboundForm){
+                const promise = this.$refs[refOutboundForm].handleSubmit();
                 promise.then(v => {
                     this.hideModal(DIALOG_TYPE.OUTBOUND);
                 }).catch(error => {
