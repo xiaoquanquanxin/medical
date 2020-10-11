@@ -104,7 +104,7 @@
 </template>
 <script>
     import { formItemLayout } from '@/utils/layout.ts';
-    import { compareToFirstPassword } from '../../utils/validate';
+    import { compareToFirstPassword } from '@/utils/validate';
 
     export default {
         beforeCreate(){
