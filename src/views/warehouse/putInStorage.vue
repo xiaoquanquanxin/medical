@@ -57,23 +57,23 @@
             </a-pagination>
         </a-row>
         <!--入库莫泰框-->
-        <a-modal v-model="dialogDataPutInStorageBox.visible"
-                 v-if="dialogDataPutInStorageBox.visible"
+        <a-modal v-model="dialogDataPutInStorageForm.visible"
+                 v-if="dialogDataPutInStorageForm.visible"
                  :maskClosable="false"
                  centered
                  :width="800"
                  title="入库"
                  ok-text="确认"
                  cancel-text="取消"
-                 @ok="putInStorageModalCheck('refPutInStorageBox')">
-            <PutInStorageBox ref="refPutInStorageBox"/>
+                 @ok="putInStorageModalCheck('refPutInStorageForm')">
+            <PutInStorageForm ref="refPutInStorageForm"/>
         </a-modal>
     </div>
 </template>
 <script>
     import { pagination } from '@/utils/pagination.ts';
     import { oneRowSearch } from '../../utils/tableScroll';
-    import PutInStorageBox from '@/components/warehouse/putInStorageBox';
+    import PutInStorageForm from '@/components/warehouse/putInStorageForm';
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
 
     const columns = [
@@ -114,7 +114,7 @@
     //  入库
     export default {
         components: {
-            PutInStorageBox,
+            PutInStorageForm,
         },
         data(){
             return {
@@ -129,7 +129,7 @@
                 pagination,
 
                 //  入库操作
-                dialogDataPutInStorageBox: this.initModal(DIALOG_TYPE.PUT_IN_STORE_ID),
+                dialogDataPutInStorageForm: this.initModal(DIALOG_TYPE.PUT_IN_STORE_ID),
             };
         },
         methods: {
@@ -154,8 +154,8 @@
             },
 
             //  确认市场价格
-            putInStorageModalCheck(refPutInStorageBox){
-                const promise = this.$refs[refPutInStorageBox].handleSubmit();
+            putInStorageModalCheck(refPutInStorageForm){
+                const promise = this.$refs[refPutInStorageForm].handleSubmit();
                 promise.then(v => {
                     this.hideModal(DIALOG_TYPE.PUT_IN_STORE_ID);
                 }).catch(error => {
