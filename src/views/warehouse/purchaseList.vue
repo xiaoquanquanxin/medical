@@ -97,36 +97,36 @@
             dataIndex: 'commodityName',
             width: 150,
         },
-//        {
-//            title: '采购人',
-//            dataIndex: '11',
-//            width: 150,
-//        },
-//        {
-//            title: '采购时间',
-//            dataIndex: 'unit',
-//            width: 150,
-//        },
-//        {
-//            title: '商品名称',
-//            dataIndex: 'fea',
-//            width: 150,
-//        },
-//        {
-//            title: '商品供应商',
-//            dataIndex: 'barCode',
-//            width: 150,
-//        },
-//        {
-//            title: '商品品牌',
-//            dataIndex: 'fefewawa',
-//            width: 150,
-//        },
-//        {
-//            title: '采购数量（箱）',
-//            dataIndex: 'fewa',
-//            width: 150,
-//        },
+        {
+            title: '采购人',
+            dataIndex: '11',
+            width: 150,
+        },
+        {
+            title: '采购时间',
+            dataIndex: 'unit',
+            width: 150,
+        },
+        {
+            title: '商品名称',
+            dataIndex: 'fea',
+            width: 150,
+        },
+        {
+            title: '商品供应商',
+            dataIndex: 'barCode',
+            width: 150,
+        },
+        {
+            title: '商品品牌',
+            dataIndex: 'fefewawa',
+            width: 150,
+        },
+        {
+            title: '采购数量（箱）',
+            dataIndex: 'fewa',
+            width: 150,
+        },
         {
             title: '状态',
             dataIndex: 'supplier',
