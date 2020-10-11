@@ -6,14 +6,9 @@
                 @submit="handleSubmit"
                 autocomplete="off"
         >
-            <a-form-item label="商家名称">xxxx</a-form-item>
-            <a-form-item label="商品货号">xxxx</a-form-item>
-            <a-form-item label="供应商">xxxx</a-form-item>
-            <a-form-item label="商品品牌">xxxx</a-form-item>
-            <a-form-item label="厂家">xxxx</a-form-item>
-            <a-form-item label="单位">
-                <a-select placeholder="请选择单位"
-                          v-decorator="unitDecorator"
+            <a-form-item label="出库商品">
+                <a-select placeholder="请选择出库商品"
+                          v-decorator="outboundGoodsDecorator"
                 >
                     <a-select-option value="1">
                         xxx
@@ -23,16 +18,27 @@
                     </a-select-option>
                 </a-select>
             </a-form-item>
-            <a-form-item label="采购数量">
-                <a-input
-                        v-decorator="purchaseQuantityDecorator"
-                        placeholder="请输入采购数量"
-                />
+            <a-form-item label="商品货号">xxxx</a-form-item>
+            <a-form-item label="供应商">xxxx</a-form-item>
+            <a-form-item label="商品品牌">xxxx</a-form-item>
+            <a-form-item label="厂家">xxxx</a-form-item>
+            <a-form-item label="过期时间">xxxx</a-form-item>
+            <a-form-item label="出库医院">
+                <a-select placeholder="请选择出库医院"
+                          v-decorator="hospitalDecorator"
+                >
+                    <a-select-option value="1">
+                        xxx
+                    </a-select-option>
+                    <a-select-option value="2">
+                        xxx
+                    </a-select-option>
+                </a-select>
             </a-form-item>
-            <a-form-item label="备注">
+            <a-form-item label="出库数量">
                 <a-input
-                        v-decorator="remarkDecorator"
-                        placeholder="请输入备注"
+                        v-decorator="outboundQuantityDecorator"
+                        placeholder="请输入采购数量"
                 />
             </a-form-item>
         </a-form>
@@ -40,43 +46,35 @@
 </template>
 <script>
     import { formItemLayout } from '@/utils/layout.ts';
-    //  采购操作
+    //  出库操作
     export default {
         beforeCreate(){
             this.form = this.$form.createForm(this);
         },
-        computed: {
-            //  查看的id
-            warehouseId(){
-                return this.$store.state.warehouse.warehouseId;
-            }
-        },
         data(){
             return {
                 formItemLayout,
-
-                //  单位
-                unitDecorator: ['unit', {
+                //  出库商品
+                outboundGoodsDecorator: ['outboundGoods', {
                     rules: [{
                         required: true,
-                        message: '请选择单位'
+                        message: '请选择出库商品'
                     },]
                 }],
-                //  采购数量
-                purchaseQuantityDecorator: ['purchaseQuantity', {
+                //  出库医院
+                hospitalDecorator: ['hospital', {
+                    rules: [{
+                        required: true,
+                        message: '请选择出库医院'
+                    },]
+                }],
+                //  出库数量
+                outboundQuantityDecorator: ['outboundQuantity', {
                     rules: [{
                         required: true,
                         message: '请输入采购数量'
                     },]
                 }],
-                //  备注
-                remarkDecorator: ['remark', {
-                    rules: [{
-                        required: false,
-                        message: '备注'
-                    },]
-                }],
-
             };
         },
         methods: {
