@@ -107,6 +107,7 @@
         <!--授权莫泰框-->
         <a-modal v-model="dialogDataAuthorization.visible"
                  v-if="dialogDataAuthorization.visible"
+                 :confirm-loading="dialogDataAuthorization.confirmLoading"
                  :maskClosable="false"
                  centered
                  :width="800"
@@ -189,7 +190,7 @@
         {
             title: '操作',
             dataIndex: 'operation',
-            
+
             scopedSlots: { customRender: 'operation' },
         },
     ];
@@ -201,7 +202,7 @@
             city: '上海',
             status: String(i % 2),
             icon: '商品图标',
-            
+
         });
     }
 
@@ -396,11 +397,16 @@
             },
             //  确认权限
             authorizationModalCheck(refShuttleBox){
+                //  防止连点
+                this.setConfirmLoading(DIALOG_TYPE.AUTHORIZATION, true);
                 const promise = this.$refs[refShuttleBox].handleSubmit();
                 promise.then(v => {
                     this.hideModal(DIALOG_TYPE.AUTHORIZATION);
                 }).catch(error => {
                     console.log('有错');
+                }).then(v => {
+                    //  最后设置可以再次点击
+                    this.setConfirmLoading(DIALOG_TYPE.AUTHORIZATION, false);
                 });
             }
         }
