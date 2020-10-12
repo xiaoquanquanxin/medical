@@ -4,7 +4,7 @@
         <div class="menu-wrapper">
             <a-menu v-if="(currentMeta)"
                     :default-open-keys="[currentMeta.openRouteKey||'']"
-                    :selectedKeys="[selectRouteKey]"
+                    :selectedKeys="[currentMeta.selectRouteKey]"
                     mode="inline"
                     theme="dark"
                     :inline-collapsed="collapsed"
@@ -69,23 +69,9 @@
                 return currentMeta;
             }
         },
-        watch: {
-            $route(value){
-                //  console.table(JSON.parse(JSON.stringify(value.meta)));
-                //  因为有404所以需要 '' 兜底
-                this.selectRouteKey = value.meta.selectRouteKey || '';
-            }
-        },
-        data(){
-            return {
-                //  蓝色、激活、被选中的菜单
-                selectRouteKey: '',
-            };
-        },
         methods: {
             jumpTo,
         }
-
     };
 </script>
 <style scoped>
