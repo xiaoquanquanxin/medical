@@ -130,7 +130,7 @@
                     console.log(this.form);
                     this.form.validateFields((err, values) => {
                         console.table(values);
-                        console.log(values.expirationTime);
+                        console.log(err);
                         if (!err) {
                             resolve();
                         } else {
