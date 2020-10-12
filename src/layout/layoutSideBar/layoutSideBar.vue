@@ -73,7 +73,8 @@
         watch: {
             $route(value){
                 //  console.table(JSON.parse(JSON.stringify(value.meta)));
-                this.selectRouteKey = value.meta.selectRouteKey;
+                //  因为有404所以需要 '' 兜底
+                this.selectRouteKey = value.meta.selectRouteKey || '';
             }
         },
         data(){
