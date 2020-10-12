@@ -88,6 +88,7 @@
         <!--关联科室-->
         <a-modal v-model="dialogDataRelatedDepartments.visible"
                  v-if="dialogDataRelatedDepartments.visible"
+                 :confirm-loading="dialogDataRelatedDepartments.confirmLoading"
                  :maskClosable="false"
                  centered
                  :width="800"
@@ -100,6 +101,7 @@
         <!--关联渠道商-->
         <a-modal v-model="dialogDataDistributors.visible"
                  v-if="dialogDataDistributors.visible"
+                 :confirm-loading="dialogDataDistributors.confirmLoading"
                  :maskClosable="false"
                  centered
                  :width="800"
@@ -156,7 +158,7 @@
             city: '上海',
             status: String(i % 2),
             icon: '医院图标',
-            
+
         });
     }
     //  医院管理
@@ -230,21 +232,31 @@
             },
             //  关联科室确定
             relatedDepartmentsModalCheck(refShuttleBox){
+                //  防止连点
+                this.setConfirmLoading(DIALOG_TYPE.RELATED_DEPARTMENTS, true);
                 const promise = this.$refs[refShuttleBox].handleSubmit();
                 promise.then(v => {
                     this.hideModal(DIALOG_TYPE.RELATED_DEPARTMENTS);
                 }).catch(error => {
                     console.log('有错');
+                }).then(v => {
+                    //  最后设置可以再次点击
+                    this.setConfirmLoading(DIALOG_TYPE.RELATED_DEPARTMENTS, false);
                 });
             },
             //  关联渠道商确定
             channelProviderBoxModalCheck(refChannelProviderBox){
+                //  防止连点
+                this.setConfirmLoading(DIALOG_TYPE.ASSOCIATED_CHANNEL_PROVIDER, true);
                 const promise = this.$refs[refChannelProviderBox].handleSubmit();
                 promise.then(v => {
                     this.hideModal(DIALOG_TYPE.ASSOCIATED_CHANNEL_PROVIDER);
                 }).catch(error => {
                     console.log(error);
                     console.log('有错');
+                }).then(v => {
+                    //  最后设置可以再次点击
+                    this.setConfirmLoading(DIALOG_TYPE.ASSOCIATED_CHANNEL_PROVIDER, false);
                 });
             }
         },
