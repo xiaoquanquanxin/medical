@@ -1,6 +1,6 @@
 <template>
     <div>
-        <a-row type="flex" justify="space-between" align="middle" class="table-group-title">
+        <a-row type="flex" justify="space-between" align="middle" class="table-group-title no-border-bottom">
             <a-col>MDT信息</a-col>
             <a-col>
                 <a-button type="primary" @click="groupChat">群聊</a-button>
@@ -87,10 +87,4 @@
         }
     };
 </script>
-<style scoped>
-    /*todo    检查是否可以全局修改*/
-    .table-group-title {
-        border: 1px solid #e8e8e8;
-        border-bottom: none;
-    }
-</style>
+
