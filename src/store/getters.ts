@@ -26,6 +26,10 @@ const getters = {
 	//	库房管理
 	warehouse: (state: any) => state.app.warehouse,
 
+	//	🍎🍎🍎🍎🍎营养方案系统
+	//	用户列表
+	userList: (state: any) => state.app.userList,
+
 
 	accountBox: (state: any) => state.app.accountBox,
 	addOral: (state: any) => state.app.addOral,
