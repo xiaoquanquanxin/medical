@@ -5,7 +5,7 @@
                 膳食营养计划
             </a-col>
             <a-col :span="7">
-                <a-button type="primary">
+                <a-button type="primary" @click="groupChat">
                     群聊
                 </a-button>
             </a-col>
@@ -53,6 +53,11 @@
                 //  群聊信息
                 MDTData: {}
             };
+        },
+        methods: {
+            groupChat(e){
+                console.log(e);
+            }
         }
     };
 </script>
