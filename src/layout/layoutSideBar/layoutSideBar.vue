@@ -3,8 +3,8 @@
         <div class="logo"></div>
         <div class="menu-wrapper">
             <a-menu v-if="(currentMeta)"
-                    :default-selected-keys="[currentMeta.selectRouteKey||'']"
                     :default-open-keys="[currentMeta.openRouteKey||'']"
+                    :selectedKeys="[selectRouteKey]"
                     mode="inline"
                     theme="dark"
                     :inline-collapsed="collapsed"
@@ -44,6 +44,7 @@
         </div>
     </a-layout-sider>
 </template>
+<!--:default-selected-keys="[currentMeta.selectRouteKey||'']"-->
 <script>
     import { mapGetters } from 'vuex';
     import { jumpTo } from '@/utils/routerMeta';
@@ -68,6 +69,18 @@
                 //  console.log(TOJSON(currentMeta));
                 return currentMeta;
             }
+        },
+        watch: {
+            $route(value){
+                //  console.table(JSON.parse(JSON.stringify(value.meta)));
+                this.selectRouteKey = value.meta.selectRouteKey;
+            }
+        },
+        data(){
+            return {
+                //  蓝色、激活、被选中的菜单
+                selectRouteKey: '',
+            };
         },
         methods: {
             jumpTo,
