@@ -1,18 +1,24 @@
 // 	控制slider
-const state = {
+
+interface STATE {
+	//	导航是否展开折叠
+	collapsed: boolean;
+}
+
+const state: STATE = {
 	//	导航是否展开折叠
 	collapsed: false,
 };
 
 const mutations = {
-	SET_SELECT_ROUTE_KEY: (state: any, selectRouteKey: number) => {
-		state.selectRouteKey = selectRouteKey || '-1';
+	SET_COLLAPSED: (state: any, collapsed: boolean) => {
+		state.collapsed = collapsed;
 	},
 };
 
 const actions = {
-	setSelectRouteKey({commit}: { commit: Function }, selectRouteKey: number) {
-		commit('SET_SELECT_ROUTE_KEY', selectRouteKey);
+	setCollapsed({commit}: { commit: Function }, collapsed: boolean) {
+		commit('SET_COLLAPSED', collapsed);
 	},
 };
 
