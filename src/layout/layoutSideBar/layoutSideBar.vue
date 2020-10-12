@@ -4,7 +4,7 @@
         <div class="menu-wrapper">
             <a-menu v-if="(currentMeta)"
                     :default-open-keys="[currentMeta.openRouteKey||'']"
-                    :selectedKeys="[currentMeta.selectRouteKey]"
+                    :selectedKeys="[currentMeta.selectRouteKey||'']"
                     mode="inline"
                     theme="dark"
                     :inline-collapsed="collapsed"
