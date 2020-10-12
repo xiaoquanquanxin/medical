@@ -70,6 +70,7 @@
         <!--莫泰框-->
         <a-modal v-model="dialogDataAddManufacturer.visible"
                  v-if="dialogDataAddManufacturer.visible"
+                 :confirm-loading="dialogDataAddManufacturer.confirmLoading"
                  :maskClosable="false"
                  centered
                  :width="800"
@@ -124,7 +125,7 @@
             city: '上海',
             status: String(i % 2),
             icon: '生产厂家图标',
-            
+
         });
     }
 
@@ -207,11 +208,16 @@
 
             //  确认生产厂家
             manufacturerBoxModalCheck(refAddManufacturerBox){
+                //  防止连点
+                this.setConfirmLoading(DIALOG_TYPE.ADD_MANUFACTURER, true);
                 const promise = this.$refs[refAddManufacturerBox].handleSubmit();
                 promise.then(v => {
                     this.hideModal(DIALOG_TYPE.ADD_MANUFACTURER);
                 }).catch(error => {
                     console.log('有错');
+                }).then(v => {
+                    //  最后设置可以再次点击
+                    this.setConfirmLoading(DIALOG_TYPE.ADD_MANUFACTURER, false);
                 });
             }
         }
