@@ -1,7 +1,7 @@
 <template>
-    <div style="min-width: 1000px;">
+    <div style="min-width: 1000px;width:100%;">
         <a-row type="flex" justify="start" align="top">
-            <a-col style="width:300px;">
+            <a-col style="width:300px;" v-if="true">
                 <a-card title="就诊信息">
                     <a-form class="form"
                             v-bind="{
@@ -35,7 +35,7 @@
                     </a-table>
                 </a-card>
             </a-col>
-            <a-col style="width:calc(100% - 300px);">
+            <a-col style="min-width:calc(100% - 300px);">
                 <a-menu v-if="currentMeta"
                         v-model="transverseSubPaths"
                         mode="horizontal">
@@ -47,7 +47,9 @@
                         {{item.meta.chName}}
                     </a-menu-item>
                 </a-menu>
-                <router-view/>
+                <div class="router-view">
+                    <router-view/>
+                </div>
             </a-col>
         </a-row>
     </div>
@@ -117,5 +119,8 @@
     };
 </script>
 <style scoped>
-
+    .router-view {
+        height: calc(100vh - 180px);
+        overflow: auto;
+    }
 </style>
