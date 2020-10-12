@@ -70,6 +70,7 @@
         <!--莫泰框-->
         <a-modal v-model="dialogDataAddBrand.visible"
                  v-if="dialogDataAddBrand.visible"
+                 :confirm-loading="dialogDataAddBrand.confirmLoading"
                  :maskClosable="false"
                  centered
                  :width="800"
@@ -200,11 +201,16 @@
 
             //  确认品牌
             brandBoxModalCheck(refAddBrandBox){
+                //  防止连点
+                this.setConfirmLoading(DIALOG_TYPE.ADD_BRAND, true);
                 const promise = this.$refs[refAddBrandBox].handleSubmit();
                 promise.then(v => {
                     this.hideModal(DIALOG_TYPE.ADD_BRAND);
                 }).catch(error => {
                     console.log('有错');
+                }).then(v => {
+                    //  最后设置可以再次点击
+                    this.setConfirmLoading(DIALOG_TYPE.ADD_BRAND, false);
                 });
             }
         }
