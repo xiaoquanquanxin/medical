@@ -46,6 +46,7 @@
         <!--发货操作莫泰框-->
         <a-modal v-model="dialogDataShipments.visible"
                  v-if="dialogDataShipments.visible"
+                 :confirm-loading="dialogDataShipments.confirmLoading"
                  :maskClosable="false"
                  centered
                  :width="800"
@@ -192,11 +193,16 @@
             },
             //  确认发货
             shipmentsModalCheck(ShipmentsForm){
+                //  防止连点
+                this.setConfirmLoading(DIALOG_TYPE.SHIPMENTS, true);
                 const promise = this.$refs[ShipmentsForm].handleSubmit();
                 promise.then(v => {
                     this.hideModal(DIALOG_TYPE.SHIPMENTS);
                 }).catch(error => {
                     console.log('有错');
+                }).then(v => {
+                    //  最后设置可以再次点击
+                    this.setConfirmLoading(DIALOG_TYPE.SHIPMENTS, false);
                 });
             },
             
