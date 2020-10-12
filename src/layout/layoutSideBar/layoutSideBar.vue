@@ -1,45 +1,47 @@
 <template>
     <a-layout-sider v-model="collapsed" :trigger="null" collapsible="" class="slider">
         <div class="logo"></div>
-        <a-menu v-if="(currentMeta)"
-                :default-selected-keys="[currentMeta.selectRouteKey||'']"
-                :default-open-keys="[currentMeta.openRouteKey||'']"
-                mode="inline"
-                theme="dark"
-                :inline-collapsed="collapsed"
-                class="menu"
-        >
-            <template
-                    v-for="item in routes"
-                    v-if="!item.hidden"
+        <div class="menu-wrapper">
+            <a-menu v-if="(currentMeta)"
+                    :default-selected-keys="[currentMeta.selectRouteKey||'']"
+                    :default-open-keys="[currentMeta.openRouteKey||'']"
+                    mode="inline"
+                    theme="dark"
+                    :inline-collapsed="collapsed"
+                    class="menu-list"
             >
-                <a-menu-item
-                        v-if="item.meta.isMenuItem || !item.children"
-                        :key=item.name
-                        @click="jumpTo(item)"
+                <template
+                        v-for="item in routes"
+                        v-if="!item.hidden"
                 >
-                    <a-icon type="calendar"/>
-                    <span>{{item.meta.chName}}</span>
-                </a-menu-item>
-                <a-sub-menu v-else
-                            :key="item.name"
-                >
+                    <a-menu-item
+                            v-if="item.meta.isMenuItem || !item.children"
+                            :key=item.name
+                            @click="jumpTo(item)"
+                    >
+                        <a-icon type="calendar"/>
+                        <span>{{item.meta.chName}}</span>
+                    </a-menu-item>
+                    <a-sub-menu v-else
+                                :key="item.name"
+                    >
                     <span slot="title">
                         <a-icon type="appstore"/>
                         <span>{{item.meta.chName}}</span>
                     </span>
-                    <template v-for="_item in item.children"
-                              v-if="!_item.hidden"
-                    >
-                        <a-menu-item :key="_item.name"
-                                     v-if="!_item.children"
-                                     @click="jumpTo(_item)">
-                            <span>{{_item.meta.chName}}</span>
-                        </a-menu-item>
-                    </template>
-                </a-sub-menu>
-            </template>
-        </a-menu>
+                        <template v-for="_item in item.children"
+                                  v-if="!_item.hidden"
+                        >
+                            <a-menu-item :key="_item.name"
+                                         v-if="!_item.children"
+                                         @click="jumpTo(_item)">
+                                <span>{{_item.meta.chName}}</span>
+                            </a-menu-item>
+                        </template>
+                    </a-sub-menu>
+                </template>
+            </a-menu>
+        </div>
     </a-layout-sider>
 </template>
 <script>
@@ -73,12 +75,22 @@
 
     };
 </script>
-<style scoped lang="stylus">
-    .slider
-        overflow hidden;
-    .menu
-        overflow scroll;
-        height calc(100vh - 52px);
-        padding-bottom 20px;
-
+<style scoped>
+    .slider {
+        overflow: hidden;
+    }
+    
+    .menu-wrapper {
+        position: relative;
+        padding-bottom: 20px;
+        height: calc(100vh - 52px);
+        width: calc(100% + 20px);
+        overflow: scroll;
+    }
+    
+    .menu-list {
+        width: calc(100% - 20px);
+        position: relative;
+        box-sizing: border-box;
+    }
 </style>
