@@ -4,60 +4,54 @@
         <a-input-group class="a-input-group">
             <a-row :gutter="8">
                 <a-col :span="5">
-                    <a-input v-model="name" placeholder="请输入姓名"/>
+                    <a-input v-model="searchData.name" placeholder="请输入姓名"/>
                 </a-col>
                 <a-col :span="5">
-                    <a-select v-model="hospital" style="width:100%;">
-                        <a-select-option :value='null'>
-                            请选择医院
-                        </a-select-option>
+                    <a-select v-model="searchData.hospital" style="width:100%;">
                         <a-select-option value="Option2">
                             Option2
+                        </a-select-option>
+                         <a-select-option value="323">
+                            122112
                         </a-select-option>
                     </a-select>
                 </a-col>
                 <a-col :span="5">
-                    <a-select v-model="department" style="width:100%;">
-                        <a-select-option :value='null'>
-                            请选择科室
-                        </a-select-option>
+                    <a-select v-model="searchData.department" style="width:100%;">
                         <a-select-option value="Option2">
                             Option2
+                        </a-select-option>
+                         <a-select-option value="323">
+                            122112
                         </a-select-option>
                     </a-select>
                 </a-col>
                 <a-col :span="5">
-                    <a-select v-model="doctor" style="width:100%;">
-                        <a-select-option :value='null'>
-                            请选择主治医生
-                        </a-select-option>
+                    <a-select v-model="searchData.doctor" style="width:100%;">
                         <a-select-option value="Option2">
                             Option2
+                        </a-select-option>
+                         <a-select-option value="323">
+                            122112
                         </a-select-option>
                     </a-select>
                 </a-col>
                 <a-col :span="5">
-                    <a-select v-model="isPatient" style="width:100%;">
-                        <a-select-option :value='null'>
-                            是否为患者
-                        </a-select-option>
-                        <a-select-option value="Option2">
+                    <a-select v-model="searchData.isPatient" style="width:100%;">
+                        <a-select-option value="3223">
                             是
                         </a-select-option>
-                        <a-select-option value="Option2">
+                        <a-select-option value="43">
                             否
                         </a-select-option>
                     </a-select>
                 </a-col>
                 <a-col :span="5">
-                    <a-select v-model="status" style="width:100%;">
-                        <a-select-option :value='null'>
-                            状态
-                        </a-select-option>
-                        <a-select-option value="Option2">
+                    <a-select v-model="searchData.status" style="width:100%;">
+                        <a-select-option value="4">
                             是
                         </a-select-option>
-                        <a-select-option value="Option2">
+                        <a-select-option value="1">
                             否
                         </a-select-option>
                     </a-select>
@@ -177,12 +171,8 @@
         },
         data(){
             return {
-                name: null,
-                hospital: null,
-                department: null,
-                doctor: null,
-                isPatient: null,
-                status: null,
+                //  搜索数据
+                searchData: {},
 
                 data,
                 columns,
