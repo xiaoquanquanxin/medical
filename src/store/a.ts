@@ -98,16 +98,19 @@ export const routeMap = {
 	 * 供应商部分
 	 * */
 
-	//	商品查看
-	'viewGoods': true,
+	//	重复🐦
+	// //	商品查看
+	// 'viewGoods': true,
 
 
 	/**
 	 * 🍉🍉🍉🍉
 	 * 渠道商部分
 	 * */
-	//	商品管理
-	'distributorsGoods': true,
+	//	重复🐦
+	// //	商品管理
+	// 'distributorsGoods': true,
+
 	//  医生管理
 	'doctor': true,
 	//  新增医生
