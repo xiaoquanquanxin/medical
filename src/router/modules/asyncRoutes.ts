@@ -413,35 +413,38 @@ export const asyncRoutesList = [
 		component: () => import(/* webpackChunkName: "addQuestionnaire" */ '@/views/questionnaire/addQuestionnaire.vue'),
 		hidden: true,
 	},
-	{
-		meta: {
-			chName: '宣教管理',
-			selectRouteKey: 'mission',
-		},
-		path: '/mission',
-		name: 'mission',
-		component: () => import(/* webpackChunkName: "mission" */ '@/views/mission/mission.vue'),
-	},
-	{
-		meta: {
-			chName: '新增宣教',
-			selectRouteKey: 'mission',
-		},
-		path: '/mission/addMission',
-		name: 'addMission',
-		component: () => import(/* webpackChunkName: "addMission" */ '@/views/mission/addMission.vue'),
-		hidden: true,
-	},
-	{
-		meta: {
-			chName: '编辑宣教',
-			selectRouteKey: 'mission',
-		},
-		path: '/mission/editMission/:missionId',
-		name: 'editMission',
-		component: () => import(/* webpackChunkName: "addMission" */ '@/views/mission/addMission.vue'),
-		hidden: true,
-	},
+
+	//	暂停⏸️
+	//
+	// {
+	// 	meta: {
+	// 		chName: '宣教管理',
+	// 		selectRouteKey: 'mission',
+	// 	},
+	// 	path: '/mission',
+	// 	name: 'mission',
+	// 	component: () => import(/* webpackChunkName: "mission" */ '@/views/mission/mission.vue'),
+	// },
+	// {
+	// 	meta: {
+	// 		chName: '新增宣教',
+	// 		selectRouteKey: 'mission',
+	// 	},
+	// 	path: '/mission/addMission',
+	// 	name: 'addMission',
+	// 	component: () => import(/* webpackChunkName: "addMission" */ '@/views/mission/addMission.vue'),
+	// 	hidden: true,
+	// },
+	// {
+	// 	meta: {
+	// 		chName: '编辑宣教',
+	// 		selectRouteKey: 'mission',
+	// 	},
+	// 	path: '/mission/editMission/:missionId',
+	// 	name: 'editMission',
+	// 	component: () => import(/* webpackChunkName: "addMission" */ '@/views/mission/addMission.vue'),
+	// 	hidden: true,
+	// },
 
 	{
 		meta: {

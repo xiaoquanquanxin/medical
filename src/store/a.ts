@@ -76,8 +76,9 @@ export const routeMap = {
 	//	编辑评估调查表
 	'editQuestionnaire': true,
 
-	//  宣教管理
-	'mission': true,
+	//	暂停⏸️
+	// //  宣教管理
+	// 'mission': true,
 	//	新增宣教
 	'addMission': true,
 	//	编辑宣教
