@@ -143,7 +143,6 @@
                 formItemLayout,
                 //  供应商名称
                 supplierNameDecorator: ['supplierName', {
-                    initialValue: '',
                     rules: [{
                         required: true,
                         message: '请输入供应商名称'
@@ -151,7 +150,6 @@
                 }],
                 //  供应商编码
                 supplierCodeDecorator: ['supplierCode', {
-                    initialValue: '',
                     rules: [{
                         required: true,
                         message: '请输入供应商编码'
@@ -159,7 +157,6 @@
                 }],
                 //  地址
                 addressDecorator: ['address', {
-                    initialValue: '',
                     rules: [{
                         required: true,
                         message: '请选择地址'
@@ -167,7 +164,6 @@
                 }],
                 //  详细地址
                 detailedAddressDecorator: ['detailedAddress', {
-                    initialValue: '',
                     rules: [{
                         required: true,
                         message: '请输入详细地址'
@@ -175,7 +171,6 @@
                 }],
                 //  联系人
                 contactDecorator: ['contact', {
-                    initialValue: '',
                     rules: [{
                         required: true,
                         message: '请输入联系人'
@@ -183,7 +178,6 @@
                 }],
                 //  手机号
                 phoneNumberDecorator: ['phoneNumber', {
-                    initialValue: '',
                     rules: [{
                         required: true,
                         message: '请输入手机号'
@@ -191,12 +185,14 @@
                 }],
                 //  邮箱
                 emailDecorator: ['email', {
-                    initialValue: '',
+                    rules: [{
+                        required: true,
+                        message: '请输入邮箱'
+                    },]
                 }],
 
                 //  营业执照
                 businessLicenseDecorator: ['businessLicense', {
-                    initialValue: '',
                     rules: [{
                         required: true,
                         message: '请上传营业执照'

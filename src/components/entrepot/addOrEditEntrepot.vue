@@ -69,7 +69,6 @@
                 formItemLayout,
                 //  仓库名称
                 entrepotNameDecorator: ['entrepotName', {
-                    initialValue: '',
                     rules: [{
                         required: true,
                         message: '请输入渠道商名称'
@@ -77,7 +76,6 @@
                 }],
                 //  仓库编码
                 entrepotCodeDecorator: ['entrepotCode', {
-                    initialValue: '',
                     rules: [{
                         required: true,
                         message: '请输入仓库编码'
@@ -85,7 +83,6 @@
                 }],
                 //  仓库地区-省份
                 provinceDecorator: ['province', {
-                    initialValue: '',
                     rules: [{
                         required: true,
                         message: '请选择仓库地区-省份'
@@ -93,7 +90,6 @@
                 }],
                 //  仓库地区-市区
                 cityDecorator: ['city', {
-                    initialValue: '',
                     rules: [{
                         required: true,
                         message: '请选择仓库地区-市区'

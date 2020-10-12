@@ -105,7 +105,6 @@
                 formItemLayout,
                 //  渠道商名称
                 distributorsNameDecorator: ['hospitalName', {
-                    initialValue: '',
                     rules: [{
                         required: true,
                         message: '请输入渠道商名称'
@@ -113,7 +112,6 @@
                 }],
                 //  渠道商编码
                 distributorsCodeDecorator: ['distributorsCode', {
-                    initialValue: '',
                     rules: [{
                         required: true,
                         message: '请输入渠道商编码'
@@ -121,7 +119,6 @@
                 }],
                 //  渠道商地区-省份
                 provinceDecorator: ['province', {
-                    initialValue: '',
                     rules: [{
                         required: true,
                         message: '请选择渠道商地区-省份'
@@ -129,7 +126,6 @@
                 }],
                 //  渠道商地区-市区
                 cityDecorator: ['city', {
-                    initialValue: '',
                     rules: [{
                         required: true,
                         message: '请选择渠道商地区-市区'
@@ -137,7 +133,6 @@
                 }],
                 //  选择仓库
                 warehouseDecorator: ['warehouse', {
-                    initialValue: '',
                     rules: [{
                         required: true,
                         message: '请选择仓库'
@@ -145,7 +140,6 @@
                 }],
                 //  登陆账户
                 loginAccountDecorator: ['loginAccount', {
-                    initialValue: '',
                     rules: [{
                         required: true,
                         message: '请输入登陆账户'
@@ -153,7 +147,6 @@
                 }],
                 //  登陆密码
                 passwordDecorator: ['password', {
-                    initialValue: '',
                     rules: [{
                         required: true,
                         message: '请输入登陆密码'
@@ -161,7 +154,6 @@
                 }],
                 //  确认密码
                 confirmPasswordDecorator: ['confirmPassword', {
-                    initialValue: '',
                     rules: [
                         {
                             required: true,
