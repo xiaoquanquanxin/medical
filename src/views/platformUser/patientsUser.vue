@@ -100,6 +100,7 @@
         <!--莫泰框-->
         <a-modal v-model="dialogDataPatientsUser.visible"
                  v-if="dialogDataPatientsUser.visible"
+                 :confirm-loading="dialogDataPatientsUser.confirmLoading"
                  :maskClosable="false"
                  centered
                  :width="800"
@@ -227,11 +228,16 @@
             },
             //  编辑完成
             modalCheck(refEditPatientsUser){
+                //  防止连点
+                this.setConfirmLoading(DIALOG_TYPE.PATIENTS_USER, true);
                 const promise = this.$refs[refEditPatientsUser].handleSubmit();
                 promise.then(v => {
                     this.hideModal(DIALOG_TYPE.PATIENTS_USER);
                 }).catch(error => {
                     console.log('有错');
+                }).then(v => {
+                    //  最后设置可以再次点击
+                    this.setConfirmLoading(DIALOG_TYPE.PATIENTS_USER, false);
                 });
             },
             //  删除用户
