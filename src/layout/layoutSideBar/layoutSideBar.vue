@@ -61,12 +61,11 @@
             },
             routes(){
                 const { routes } = this.$store.state.routeList;
-                //  console.log(TOJSON(routes));
                 return routes;
             },
+            //  当前激活路由的元信息
             currentMeta(){
                 const { currentMeta } = this.$store.state.routeList;
-                //  console.log(TOJSON(currentMeta));
                 return currentMeta;
             }
         },
