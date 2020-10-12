@@ -182,7 +182,6 @@
 
                 //  手机号
                 phoneNumberDecorator: ['phoneNumber', {
-                    initialValue: '',
                     rules: [{
                         required: true,
                         message: '请输入手机号'

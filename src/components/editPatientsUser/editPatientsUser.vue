@@ -109,7 +109,6 @@
                 formItemLayout,
                 //  姓名
                 nameDecorator: ['name', {
-                    initialValue: '',
                     rules: [{
                         required: true,
                         message: '请输入姓名'
@@ -117,7 +116,6 @@
                 }],
                 //  性别
                 sexDecorator: ['sex', {
-                    initialValue: '',
                     rules: [{
                         required: true,
                         message: '请选择性别'
@@ -125,7 +123,6 @@
                 }],
                 //  科室
                 departmentDecorator: ['department', {
-                    initialValue: '',
                     rules: [{
                         required: true,
                         message: '请选择科室'
@@ -133,7 +130,6 @@
                 }],
                 //  医生
                 doctorDecorator: ['doctor', {
-                    initialValue: '',
                     rules: [{
                         required: true,
                         message: '请选择医生'
@@ -141,7 +137,6 @@
                 }],
                 //  是否为患者
                 isPatientsDecorator: ['isPatients', {
-                    initialValue: '',
                     rules: [{
                         required: true,
                         message: '是否为患者'
@@ -149,7 +144,6 @@
                 }],
                 //  状态
                 statusDecorator: ['status', {
-                    initialValue: '',
                     rules: [{
                         required: true,
                         message: '请选择状态'
