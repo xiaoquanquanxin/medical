@@ -16,6 +16,7 @@ import UserList from '@/views/userList/userList.vue';
  *
  * 🍌🍌children中的:
  * transverseSubPaths	:	横向子路由的name，不在左侧菜单展示。e.g.处方模板列表、用户列表【很多的那个】
+ * routerParamsKey		:	路由参数的名称，用于骚操作，病人列表-横向路由区分用
  * **/
 export const asyncRoutesList = [
 
@@ -674,8 +675,9 @@ export const asyncRoutesList = [
 					chName: '病人信息',
 					selectRouteKey: 'userList',
 					transverseSubPaths: 'patientInfo',
+					routerParamsKey: 'patientInfoId'
 				},
-				path: '/userList/patientInfo',
+				path: '/userList/patientInfo/:patientInfoId',
 				name: 'patientInfo',
 				component: () => import(/* webpackChunkName: "patientInfo" */ '@/views/userList/patientInfo.vue'),
 			},
@@ -684,8 +686,9 @@ export const asyncRoutesList = [
 					chName: '筛查',
 					selectRouteKey: 'userList',
 					transverseSubPaths: 'screening',
+					routerParamsKey: 'screeningId'
 				},
-				path: '/userList/screening',
+				path: '/userList/screening/:screeningId',
 				name: 'screening',
 				component: () => import(/* webpackChunkName: "screening" */ '@/views/userList/screening.vue'),
 			},
@@ -694,8 +697,9 @@ export const asyncRoutesList = [
 					chName: '营养评估',
 					selectRouteKey: 'userList',
 					transverseSubPaths: 'assessment',
+					routerParamsKey: 'assessmentId'
 				},
-				path: '/userList/assessment',
+				path: '/userList/assessment/:assessmentId',
 				name: 'assessment',
 				component: () => import(/* webpackChunkName: "assessment" */ '@/views/userList/assessment.vue'),
 			},
@@ -704,8 +708,9 @@ export const asyncRoutesList = [
 					chName: '营养干预',
 					selectRouteKey: 'userList',
 					transverseSubPaths: 'intervention',
+					routerParamsKey: 'interventionId'
 				},
-				path: '/userList/intervention',
+				path: '/userList/intervention/:interventionId',
 				name: 'intervention',
 				component: () => import(/* webpackChunkName: "intervention" */ '@/views/userList/intervention.vue'),
 			},
@@ -714,8 +719,9 @@ export const asyncRoutesList = [
 					chName: '病程记录',
 					selectRouteKey: 'userList',
 					transverseSubPaths: 'progressNote',
+					routerParamsKey: 'progressNoteId'
 				},
-				path: '/userList/progressNote',
+				path: '/userList/progressNote/:progressNoteId',
 				name: 'progressNote',
 				component: () => import(/* webpackChunkName: "progressNote" */ '@/views/userList/progressNote.vue'),
 			},
@@ -724,8 +730,9 @@ export const asyncRoutesList = [
 					chName: '患者反馈',
 					selectRouteKey: 'userList',
 					transverseSubPaths: 'patientReply',
+					routerParamsKey: 'patientReplyId'
 				},
-				path: '/userList/patientReply',
+				path: '/userList/patientReply/:patientReplyId',
 				name: 'patientReply',
 				component: () => import(/* webpackChunkName: "patientReply" */ '@/views/userList/patientReply.vue'),
 			},
@@ -734,13 +741,14 @@ export const asyncRoutesList = [
 					chName: '活动小结',
 					selectRouteKey: 'userList',
 					transverseSubPaths: 'activityBrief',
+					routerParamsKey: 'activityBriefId'
 				},
-				path: '/userList/activityBrief',
+				path: '/userList/activityBrief/:activityBriefId',
 				name: 'activityBrief',
 				component: () => import(/* webpackChunkName: "activityBrief" */ '@/views/userList/activityBrief.vue'),
 			},
 		],
-		redirect: '/userList/patientInfo',
+		// redirect: '/userList/patientInfo',
 	}
 ]
 
