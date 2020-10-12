@@ -43,7 +43,7 @@
                     <a-menu-item
                             v-for="item in userRouteList"
                             :key="item.name"
-                            @click="jumpTo(item)"
+                            @click="userListJumpTo(item)"
                     >
                         {{item.meta.chName}}
                     </a-menu-item>
@@ -58,7 +58,6 @@
     </div>
 </template>
 <script>
-    import { mapGetters, mapActions } from 'vuex';
     import { jumpTo } from '@/utils/routerMeta';
 
     const columns = [
@@ -101,8 +100,13 @@
             //  当前激活路由的元信息
             currentMeta(){
                 const { currentMeta } = this.$store.state.routeList;
+                this.transverseSubPaths = [currentMeta.transverseSubPaths || ''];
                 return currentMeta;
-            }
+            },
+//            //  被选中的id
+//            selectPatientInfoId(){
+//                return this.$store.state.userList.selectPatientInfoId;
+//            }
         },
         data(){
             return {
@@ -113,15 +117,11 @@
                 data,
             };
         },
-        created(){
-            //	是scheme路由的某一项子路由
-            this.transverseSubPaths = [this.currentMeta.transverseSubPaths];
-        },
         methods: {
-            ...mapActions('userList', [
-                //  设置病人列表中，被选中的userInfo
-                'setPatientListSelectUserInfo',
-            ]),
+//            ...mapActions('userList', [
+//                //  设置病人列表中，被选中的userInfo id
+//                'setSelectPatientInfoId',
+//            ]),
             jumpTo,
             //  自定义表格事件
             customRow(scope){
@@ -131,12 +131,33 @@
                     }
                 };
             },
-            //  点击事件
+            //  点击table事件
             rowClick(scope){
-                console.log(JSON.parse(JSON.stringify(scope)));
-                //  存store，具体数据在router-view的实际页面中搞
-                this.setPatientListSelectUserInfo(scope);
+                console.log('选中的列表的id ', scope.key);
+                //  todo    区分点击的是谁
+                this.$router.push({ name: 'patientInfo', params: { patientInfoId: scope.key.toString() } });
             },
+
+            //  横向路由列表，点击去哪儿
+            userListJumpTo(item){
+                //  原来的路由参数
+                const { meta: prevMeta, params } = this.$route;
+                //  console.log(prevMeta.routerParamsKey, params);
+                //  参数值
+                const id = params[prevMeta.routerParamsKey];
+                //  如果没有id，说明就不是正常的
+                if (!id) {
+                    //  去最外面就行了
+                    this.$router.push({ name: 'userList' });
+                    return;
+                }
+                //  console.log(id);
+                //  要跳转的路由参数
+                const { name, meta } = item;
+                //  console.log('路由是', name);
+                //  console.log('参数名是', meta.routerParamsKey);
+                this.$router.push({ name, params: { [meta.routerParamsKey]: id } });
+            }
         }
     };
 </script>
