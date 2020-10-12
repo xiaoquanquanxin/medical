@@ -1,10 +1,10 @@
 <template>
     <div>
-        <a-row type="flex" justify="start" align="middle" class="table-group-title">
-            <a-col :span="4">
+        <a-row type="flex" justify="space-between" align="middle" class="table-group-title">
+            <a-col>
                 膳食营养计划
             </a-col>
-            <a-col :span="7">
+            <a-col>
                 <a-button type="primary" @click="groupChat">
                     群聊
                 </a-button>
