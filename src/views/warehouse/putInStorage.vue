@@ -59,6 +59,7 @@
         <!--入库莫泰框-->
         <a-modal v-model="dialogDataPutInStorageForm.visible"
                  v-if="dialogDataPutInStorageForm.visible"
+                 :confirm-loading="dialogDataPutInStorageForm.confirmLoading"
                  :maskClosable="false"
                  centered
                  :width="800"
@@ -155,11 +156,16 @@
 
             //  确认市场价格
             putInStorageModalCheck(refPutInStorageForm){
+                //  防止连点
+                this.setConfirmLoading(DIALOG_TYPE.PUT_IN_STORE_ID, true);
                 const promise = this.$refs[refPutInStorageForm].handleSubmit();
                 promise.then(v => {
                     this.hideModal(DIALOG_TYPE.PUT_IN_STORE_ID);
                 }).catch(error => {
                     console.log('有错');
+                }).then(v => {
+                    //  最后设置可以再次点击
+                    this.setConfirmLoading(DIALOG_TYPE.PUT_IN_STORE_ID, false);
                 });
             },
         }
