@@ -678,7 +678,6 @@ export const asyncRoutesList = [
 				path: '/userList/patientInfo',
 				name: 'patientInfo',
 				component: () => import(/* webpackChunkName: "patientInfo" */ '@/views/userList/patientInfo.vue'),
-				hidden: true
 			},
 			{
 				meta: {
