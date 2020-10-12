@@ -59,6 +59,12 @@
     -webkit-print-color-adjust: exact;
 }
 
+/*仅仅不需要底部边框border-bottom*/
+.table-group-title.no-border-bottom {
+    border: 1px solid #e8e8e8;
+    border-bottom: none;
+}
+
 /*上传图片*/
 /*上传图片后的默认图*/
 .upload-default-img {
@@ -105,6 +111,11 @@
     border-bottom: none;
 }
 
+/*信息面板、描述面板的圆角*/
+.ant-descriptions-view {
+    border-radius: 0;
+}
+
 
 /*卡片标题*/
 .ant-card-head-title {
@@ -119,4 +130,12 @@
 /*卡片身体*/
 .ant-card-body {
     padding: 16px;
+}
+
+
+/*描述列表 - 患者信息那块*/
+/*每一项*/
+.ant-descriptions-row .ant-descriptions-item-content {
+    width: 20%;
+    height: 50px;
 }
