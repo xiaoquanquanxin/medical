@@ -25,6 +25,7 @@
                 //  console.table(TOJSON(userRouteList)[0]);
                 return userRouteList;
             },
+            //  当前激活路由的元信息
             currentMeta(){
                 const { currentMeta } = this.$store.state.routeList;
                 return currentMeta;
