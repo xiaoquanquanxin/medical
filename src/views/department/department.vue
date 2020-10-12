@@ -82,6 +82,7 @@
         <!--关联疾病-->
         <a-modal v-model="dialogDataAssociatedDisease.visible"
                  v-if="dialogDataAssociatedDisease.visible"
+                 :confirm-loading="dialogDataAssociatedDisease.confirmLoading"
                  :maskClosable="false"
                  centered
                  :width="800"
@@ -94,6 +95,7 @@
         <!--关联评估调查表-->
         <a-modal v-model="dialogDataQuestionnaire.visible"
                  v-if="dialogDataQuestionnaire.visible"
+                 :confirm-loading="dialogDataQuestionnaire.confirmLoading"
                  :maskClosable="false"
                  centered
                  :width="800"
@@ -206,20 +208,30 @@
             },
             //  关联疾病
             associatedDiseaseModalCheck(refAssociatedDisease){
+                //  防止连点
+                this.setConfirmLoading(DIALOG_TYPE.ASSOCIATED_DISEASE, true);
                 const promise = this.$refs[refAssociatedDisease].handleSubmit();
                 promise.then(v => {
                     this.hideModal(DIALOG_TYPE.ASSOCIATED_DISEASE);
                 }).catch(error => {
                     console.log('有错');
+                }).then(v => {
+                    //  最后设置可以再次点击
+                    this.setConfirmLoading(DIALOG_TYPE.ASSOCIATED_DISEASE, false);
                 });
             },
             //  关联评估调查表
             questionnaireModalCheck(refQuestionnaire){
+                //  防止连点
+                this.setConfirmLoading(DIALOG_TYPE.QUESTIONNAIRE, true);
                 const promise = this.$refs[refQuestionnaire].handleSubmit();
                 promise.then(v => {
                     this.hideModal(DIALOG_TYPE.QUESTIONNAIRE);
                 }).catch(error => {
                     console.log('有错');
+                }).then(v => {
+                    //  最后设置可以再次点击
+                    this.setConfirmLoading(DIALOG_TYPE.QUESTIONNAIRE, false);
                 });
             },
         }
