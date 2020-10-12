@@ -27,6 +27,7 @@
                             :data-source="data"
                             :pagination="false"
                             :scroll="{x: 'auto', y: 'calc(100vh - 500px)'}"
+                            :customRow="customRow"
                     >
                         <!--单位-->
                         <div slot="info" slot-scope="scope,sItem,sIndex,extra">
@@ -48,13 +49,16 @@
                     </a-menu-item>
                 </a-menu>
                 <div class="router-view">
-                    <router-view/>
+                    <div>
+                        <router-view/>
+                    </div>
                 </div>
             </a-col>
         </a-row>
     </div>
 </template>
 <script>
+    import { mapGetters, mapActions } from 'vuex';
     import { jumpTo } from '@/utils/routerMeta';
 
     const columns = [
@@ -114,13 +118,36 @@
             this.transverseSubPaths = [this.currentMeta.transverseSubPaths];
         },
         methods: {
+            ...mapActions('userList', [
+                //  设置病人列表中，被选中的userInfo
+                'setPatientListSelectUserInfo',
+            ]),
             jumpTo,
+            //  自定义表格事件
+            customRow(scope){
+                return {
+                    on: {
+                        click: () => {this.rowClick(scope);}
+                    }
+                };
+            },
+            //  点击事件
+            rowClick(scope){
+                console.log(JSON.parse(JSON.stringify(scope)));
+                //  存store，具体数据在router-view的实际页面中搞
+                this.setPatientListSelectUserInfo(scope);
+            },
         }
     };
 </script>
 <style scoped>
     .router-view {
         height: calc(100vh - 180px);
+        width: calc(100vw - 500px);
         overflow: auto;
+    }
+    
+    .router-view > div {
+        min-width: 800px;
     }
 </style>
