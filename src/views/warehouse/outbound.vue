@@ -59,6 +59,7 @@
         <!--出库莫泰框-->
         <a-modal v-model="dialogDataOutbound.visible"
                  v-if="dialogDataOutbound.visible"
+                 :confirm-loading="dialogDataOutbound.confirmLoading"
                  :maskClosable="false"
                  centered
                  :width="800"
@@ -160,13 +161,18 @@
                 this.showModal(DIALOG_TYPE.OUTBOUND);
             },
 
-            //  确认市场价格
+            //  确认出库
             outboundModalCheck(refOutboundForm){
+                //  防止连点
+                this.setConfirmLoading(DIALOG_TYPE.OUTBOUND, true);
                 const promise = this.$refs[refOutboundForm].handleSubmit();
                 promise.then(v => {
                     this.hideModal(DIALOG_TYPE.OUTBOUND);
                 }).catch(error => {
                     console.log('有错');
+                }).then(v => {
+                    //  最后设置可以再次点击
+                    this.setConfirmLoading(DIALOG_TYPE.OUTBOUND, false);
                 });
             },
 
