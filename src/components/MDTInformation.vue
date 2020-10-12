@@ -1,20 +1,17 @@
 <template>
     <div>
         <a-row type="flex" justify="space-between" align="middle" class="table-group-title">
+            <a-col>MDT信息</a-col>
             <a-col>
-                膳食营养计划
-            </a-col>
-            <a-col>
-                <a-button type="primary" @click="groupChat">
-                    群聊
-                </a-button>
+                <a-button type="primary" @click="groupChat">群聊</a-button>
             </a-col>
         </a-row>
         <a-table
                 :columns="columns"
                 :data-source="data"
-                :scroll="scroll"
                 :pagination="false"
+                :showHeader="false"
+                bordered
         >
             <!--主管医生-->
             <div slot="doctor" slot-scope="scope,sItem,sIndex,extra">
@@ -46,12 +43,41 @@
     </div>
 </template>
 <script>
+    const columns = [
+        {
+            dataIndex: 'doctorKey',
+            width: 100,
+        },
+        {
+            scopedSlots: { customRender: 'doctor' },
+            width: 150,
+        },
+        {
+            dataIndex: 'dietitianKey',
+            width: 100,
+        },
+        {
+            scopedSlots: { customRender: 'dietitian' },
+            width: 150,
+        },
+    ];
+    const data = [{
+        key: 1,
+        doctorKey: '主管医生',
+        doctor: '33',
+        dietitianKey: '营养师',
+        dietitian: '12',
+    }];
+
     //  MDT信息
     export default {
         data(){
             return {
                 //  群聊信息
-                MDTData: {}
+                MDTData: {},
+
+                columns,
+                data,
             };
         },
         methods: {
