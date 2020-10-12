@@ -55,8 +55,9 @@
     background-color: #fafafa;
     border-bottom: 1px solid #e8e8e8;
     padding: 0 16px;
+    /*这是为了打印背景色*/
+    -webkit-print-color-adjust: exact;
 }
-
 
 /*上传图片*/
 /*上传图片后的默认图*/
@@ -102,12 +103,6 @@
 
 .negative-margin-item:last-child {
     border-bottom: none;
-}
-
-
-/*这是为了打印背景色*/
-.table-group-title {
-    -webkit-print-color-adjust: exact;
 }
 
 
