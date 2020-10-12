@@ -87,3 +87,10 @@
         }
     };
 </script>
+<style scoped>
+    /*todo    检查是否可以全局修改*/
+    .table-group-title {
+        border: 1px solid #e8e8e8;
+        border-bottom: none;
+    }
+</style>
