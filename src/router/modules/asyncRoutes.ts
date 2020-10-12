@@ -1,15 +1,21 @@
 import LayoutStair from '@/layout/layoutStair/layoutStair.vue';
 import Scheme from '@/views/scheme/scheme.vue';
+import UserList from '@/views/userList/userList.vue';
 //	异步路由
 /**
+ * name					:	路由名称
+ * path					:	路由地址
+ * hidden				:	隐藏
  *
- * chName			:	中文名
- * selectRouteKey	:	被选中的菜单的key，不区分一级二级，只要是蓝色的就是
- * openRouteKey		:	展开的菜单的key
- * name				:	路由名称
- * path				:	路由地址
- * hidden			:	隐藏
+ * 🍌🍌meta中的:
+ * chName				:	中文名
+ * selectRouteKey		:	被选中的菜单的key，不区分一级二级，只要是蓝色的就是
+ * openRouteKey			:	展开的菜单的key
+ * hasTransverseSubPaths:	有页面内的横向子路由
+ * isMenuItem			:	虽然有子项，但作为一个项存在，而不是一个菜单
  *
+ * 🍌🍌children中的:
+ * transverseSubPaths	:	横向子路由的name，不在左侧菜单展示。e.g.处方模板列表、用户列表【很多的那个】
  * **/
 export const asyncRoutesList = [
 
@@ -649,7 +655,94 @@ export const asyncRoutesList = [
 	 * 医院部分
 	 * */
 
-
+	//	🍎🍎🍎🍎🍎营养方案系统
+	{
+		meta: {
+			chName: '用户列表',
+			selectRouteKey: 'userList',
+			//	有页面内的横向子路由
+			hasTransverseSubPaths: true,
+			//	虽然有子项，但作为一个项存在，而不是一个菜单
+			isMenuItem: true,
+		},
+		path: '/userList',
+		name: 'userList',
+		component: UserList,
+		children: [
+			{
+				meta: {
+					chName: '病人信息',
+					selectRouteKey: 'userList',
+					transverseSubPaths: 'patientInfo',
+				},
+				path: '/userList/patientInfo',
+				name: 'patientInfo',
+				component: () => import(/* webpackChunkName: "patientInfo" */ '@/views/userList/patientInfo.vue'),
+				hidden: true
+			},
+			{
+				meta: {
+					chName: '筛查',
+					selectRouteKey: 'userList',
+					transverseSubPaths: 'screening',
+				},
+				path: '/userList/screening',
+				name: 'screening',
+				component: () => import(/* webpackChunkName: "screening" */ '@/views/userList/screening.vue'),
+			},
+			{
+				meta: {
+					chName: '营养评估',
+					selectRouteKey: 'userList',
+					transverseSubPaths: 'assessment',
+				},
+				path: '/userList/assessment',
+				name: 'assessment',
+				component: () => import(/* webpackChunkName: "assessment" */ '@/views/userList/assessment.vue'),
+			},
+			{
+				meta: {
+					chName: '营养干预',
+					selectRouteKey: 'userList',
+					transverseSubPaths: 'intervention',
+				},
+				path: '/userList/intervention',
+				name: 'intervention',
+				component: () => import(/* webpackChunkName: "intervention" */ '@/views/userList/intervention.vue'),
+			},
+			{
+				meta: {
+					chName: '病程记录',
+					selectRouteKey: 'userList',
+					transverseSubPaths: 'progressNote',
+				},
+				path: '/userList/progressNote',
+				name: 'progressNote',
+				component: () => import(/* webpackChunkName: "progressNote" */ '@/views/userList/progressNote.vue'),
+			},
+			{
+				meta: {
+					chName: '患者反馈',
+					selectRouteKey: 'userList',
+					transverseSubPaths: 'patientReply',
+				},
+				path: '/userList/patientReply',
+				name: 'patientReply',
+				component: () => import(/* webpackChunkName: "patientReply" */ '@/views/userList/patientReply.vue'),
+			},
+			{
+				meta: {
+					chName: '活动小结',
+					selectRouteKey: 'userList',
+					transverseSubPaths: 'activityBrief',
+				},
+				path: '/userList/activityBrief',
+				name: 'activityBrief',
+				component: () => import(/* webpackChunkName: "activityBrief" */ '@/views/userList/activityBrief.vue'),
+			},
+		],
+		redirect: '/userList/patientInfo',
+	}
 ]
 
 
