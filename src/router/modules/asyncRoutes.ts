@@ -471,16 +471,16 @@ export const asyncRoutesList = [
 	 * 供应商部分
 	 * */
 
-	{
-		meta: {
-			chName: '商品查看',
-			selectRouteKey: 'viewGoods',
-			openRouteKey: 'viewGoods',
-		},
-		name: 'viewGoods',
-		path: '/viewGoods',
-		component: () => import(/* webpackChunkName: "changePassword" */ '@/views/viewGoods/viewGoods.vue'),
-	},
+	// {
+	// 	meta: {
+	// 		chName: '商品查看',
+	// 		selectRouteKey: 'viewGoods',
+	// 		openRouteKey: 'viewGoods',
+	// 	},
+	// 	name: 'viewGoods',
+	// 	path: '/viewGoods',
+	// 	component: () => import(/* webpackChunkName: "changePassword" */ '@/views/viewGoods/viewGoods.vue'),
+	// },
 
 	/**
 	 * 🍉🍉🍉🍉
@@ -517,16 +517,16 @@ export const asyncRoutesList = [
 		hidden: true
 	},
 
-	{
-		meta: {
-			chName: '商品管理',
-			selectRouteKey: 'distributorsGoods',
-			openRouteKey: 'distributorsGoods',
-		},
-		name: 'distributorsGoods',
-		path: '/distributorsGoods',
-		component: () => import(/* webpackChunkName: "changePassword" */ '@/views/viewGoods/viewGoods.vue'),
-	},
+	// {
+	// 	meta: {
+	// 		chName: '商品管理',
+	// 		selectRouteKey: 'distributorsGoods',
+	// 		openRouteKey: 'distributorsGoods',
+	// 	},
+	// 	name: 'distributorsGoods',
+	// 	path: '/distributorsGoods',
+	// 	component: () => import(/* webpackChunkName: "changePassword" */ '@/views/viewGoods/viewGoods.vue'),
+	// },
 
 	//	订单管理
 	{
