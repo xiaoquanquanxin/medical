@@ -56,10 +56,11 @@
         <!--莫泰框-->
         <a-modal v-model="dialogDataAddClassification.visible"
                  v-if="dialogDataAddClassification.visible"
+                 :confirm-loading="dialogDataAddClassification.confirmLoading"
                  :maskClosable="false"
                  centered
                  :width="800"
-                 :title="dialogDataAddClassification.visible"
+                 :title="dialogDataAddClassification.title"
                  ok-text="确认"
                  cancel-text="取消"
                  @ok="classificationBoxModalCheck('refAddClassificationBox')">
@@ -88,7 +89,7 @@
         {
             title: '操作',
             dataIndex: 'operation',
-            
+
             width: 150,
             scopedSlots: { customRender: 'operation' },
         },
@@ -101,7 +102,7 @@
             city: '上海',
             status: String(i % 2),
             icon: '分类图标',
-            
+
         });
     }
 
@@ -183,11 +184,16 @@
 
             //  确认分类
             classificationBoxModalCheck(refAddClassificationBox){
+                //  防止连点
+                this.setConfirmLoading(DIALOG_TYPE.ADD_CLASSIFICATION, true);
                 const promise = this.$refs[refAddClassificationBox].handleSubmit();
                 promise.then(v => {
                     this.hideModal(DIALOG_TYPE.ADD_CLASSIFICATION);
                 }).catch(error => {
                     console.log('有错');
+                }).then(v => {
+                    //  最后设置可以再次点击
+                    this.setConfirmLoading(DIALOG_TYPE.ADD_CLASSIFICATION, false);
                 });
             }
         }
