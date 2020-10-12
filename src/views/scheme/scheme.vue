@@ -33,7 +33,8 @@
         },
         data(){
             return {
-                transverseSubPaths: []
+                //  横向二级路由
+                transverseSubPaths: [],
             };
         },
         created(){
