@@ -166,6 +166,11 @@ export const routeMap = {
 	//	活动小结
 	'activityBrief': true,
 
+	//	确认入院
+	'admittedHospital': true,
+	//	新增入院
+	'newAdmittedHospital': true,
+
 };
 
 
