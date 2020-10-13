@@ -675,7 +675,7 @@ export const asyncRoutesList = [
 					chName: '病人信息',
 					selectRouteKey: 'userList',
 					transverseSubPaths: 'patientInfo',
-					routerParamsKey: 'patientInfoId'
+					routerParamsKey: 'patientInfoId',
 				},
 				path: '/userList/patientInfo/:patientInfoId',
 				name: 'patientInfo',
@@ -686,9 +686,9 @@ export const asyncRoutesList = [
 					chName: '筛查',
 					selectRouteKey: 'userList',
 					transverseSubPaths: 'screening',
-					routerParamsKey: 'screeningId'
+					routerParamsKey: 'patientInfoId',
 				},
-				path: '/userList/screening/:screeningId',
+				path: '/userList/screening/:patientInfoId',
 				name: 'screening',
 				component: () => import(/* webpackChunkName: "screening" */ '@/views/userList/screening/screening.vue'),
 			},
@@ -697,7 +697,7 @@ export const asyncRoutesList = [
 					chName: '营养评估',
 					selectRouteKey: 'userList',
 					transverseSubPaths: 'assessment',
-					routerParamsKey: 'assessmentId'
+					routerParamsKey: 'patientInfoId',
 				},
 				path: '/userList/assessment/:assessmentId',
 				name: 'assessment',
@@ -708,7 +708,7 @@ export const asyncRoutesList = [
 					chName: '营养干预',
 					selectRouteKey: 'userList',
 					transverseSubPaths: 'intervention',
-					routerParamsKey: 'interventionId'
+					routerParamsKey: 'patientInfoId',
 				},
 				path: '/userList/intervention/:interventionId',
 				name: 'intervention',
@@ -719,7 +719,7 @@ export const asyncRoutesList = [
 					chName: '病程记录',
 					selectRouteKey: 'userList',
 					transverseSubPaths: 'progressNote',
-					routerParamsKey: 'progressNoteId'
+					routerParamsKey: 'patientInfoId',
 				},
 				path: '/userList/progressNote/:progressNoteId',
 				name: 'progressNote',
@@ -730,7 +730,7 @@ export const asyncRoutesList = [
 					chName: '患者反馈',
 					selectRouteKey: 'userList',
 					transverseSubPaths: 'patientReply',
-					routerParamsKey: 'patientReplyId'
+					routerParamsKey: 'patientInfoId',
 				},
 				path: '/userList/patientReply/:patientReplyId',
 				name: 'patientReply',
@@ -741,7 +741,7 @@ export const asyncRoutesList = [
 					chName: '活动小结',
 					selectRouteKey: 'userList',
 					transverseSubPaths: 'activityBrief',
-					routerParamsKey: 'activityBriefId'
+					routerParamsKey: 'patientInfoId',
 				},
 				path: '/userList/activityBrief/:activityBriefId',
 				name: 'activityBrief',
@@ -754,8 +754,8 @@ export const asyncRoutesList = [
 			chName: '新增入院',
 			selectRouteKey: 'userList',
 		},
-		path: '/userList/newAdmittedHospital',
-		name: 'newAdmittedHospital',
+		path: '/userList/addAdmittedHospital',
+		name: 'addAdmittedHospital',
 		component: () => import(/* webpackChunkName: "admittedHospital" */ '@/views/userList/patientInfo/admittedHospital.vue'),
 		hidden: true,
 	},
@@ -764,11 +764,34 @@ export const asyncRoutesList = [
 			chName: '确认入院',
 			selectRouteKey: 'userList',
 		},
-		path: '/userList/admittedHospital/:admittedHospitalId',
+		path: '/userList/admittedHospital/:patientInfoId',
 		name: 'admittedHospital',
 		component: () => import(/* webpackChunkName: "admittedHospital" */ '@/views/userList/patientInfo/admittedHospital.vue'),
 		hidden: true,
 	},
+
+	{
+		meta: {
+			chName: '新增筛查',
+			selectRouteKey: 'userList',
+		},
+		//	病人的id
+		path: '/userList/addScreening/:patientInfoId',
+		name: 'addScreening',
+		component: () => import(/* webpackChunkName: "addScreening" */ '@/views/userList/screening/addScreening.vue'),
+		hidden: true,
+	},
+	{
+		meta: {
+			chName: '筛查详情',
+			selectRouteKey: 'userList',
+		},
+		path: '/userList/screeningDetail/:patientInfoId/:screeningDetailId',
+		name: 'screeningDetail',
+		component: () => import(/* webpackChunkName: "addScreening" */ '@/views/userList/screening/addScreening.vue'),
+		hidden: true,
+	},
+
 ]
 
 
