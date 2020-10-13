@@ -9,12 +9,12 @@
 
 /*左侧项目名*/
 .radio-group-item-label {
-    width: 250px;
+    width: 160px;
 }
 
 /*右侧内容*/
 .radio-group-item-content {
-    width: calc(100% - 250px);
+    width: calc(100% - 160px);
     border-left: 1px solid #e8e8e8;
 }
 
