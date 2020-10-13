@@ -5,13 +5,13 @@
 
 /*按钮组的基础间距*/
 .a-input-group {
-    padding-top: 10px;
+    padding-top: 0;
     padding-bottom: 10px;
 }
 
-.a-input-group:first-child {
-    padding-top: 0;
-}
+/*.a-input-group:first-child {*/
+/*    padding-top: 0;*/
+/*}*/
 
 
 /*特殊的表头是选择框的那种*/
@@ -153,9 +153,7 @@
 }
 
 /*这是为了打印背景色*/
-.ant-descriptions-bordered .ant-descriptions-item-label,
-.table-group-title {
-    /*这是为了打印背景色*/
+* {
     -webkit-print-color-adjust: exact;
 }
 
