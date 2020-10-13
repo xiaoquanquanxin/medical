@@ -11,7 +11,6 @@
                         placeholder="请选择医院"
                         v-decorator="hospitalDecorator"
                 >
-                    
                     <a-select-option value="1">
                         男
                     </a-select-option>
@@ -25,7 +24,6 @@
                         placeholder="请选择膳选择处方类型"
                         v-decorator="prescriptionTypeDecorator"
                 >
-                    
                     <a-select-option value="1">
                         男
                     </a-select-option>
@@ -496,7 +494,11 @@
                 console.log(this.commodityTableData);
                 //  子列表数据
                 const list = this.commodityTableData.map(item => {
-                    const child = item.buyUnitList.filter(_item => _item.isRadioChecked);
+                    const child = item.buyUnitList.filter((_item) => {
+                        console.log(_item.isRadioChecked);
+                        //  todo    有bug，是直接选择多选导致的
+                        return _item.isRadioChecked;
+                    });
                     return JSON.parse(JSON.stringify(child[0]));
                 });
                 console.log(JSON.parse(JSON.stringify(list)));
@@ -536,7 +538,7 @@
             handleSubmit(e){
                 e.preventDefault();
                 console.log(this.commodityTableData);
-                console.log('备注🍌',this.remark);
+                console.log('备注🍌', this.remark);
                 console.log(this.timeTableData);
                 this.form.validateFields((err, values) => {
                     console.table(values);
