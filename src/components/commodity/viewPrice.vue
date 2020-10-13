@@ -36,7 +36,7 @@
         },
         {
             key: Math.random(),
-            distributors: '小斯',
+            distributors: '渠道商2',
             hospital: '山西省人民医院',
             relative: '10克',
             shoppingType: 'B商品',
@@ -44,7 +44,7 @@
         },
         {
             key: Math.random(),
-            distributors: '小斯',
+            distributors: '渠道商2',
             hospital: '山西省肿瘤医院',
             relative: '110克',
             shoppingType: 'B商品',
@@ -52,7 +52,7 @@
         },
         {
             key: Math.random(),
-            distributors: '小斯',
+            distributors: '渠道商2',
             hospital: '山西省人民医院',
             relative: '10克',
             shoppingType: 'B商品',
@@ -60,7 +60,7 @@
         },
         {
             key: Math.random(),
-            distributors: '小斯',
+            distributors: '渠道商2',
             hospital: '山西省肿瘤医院',
             relative: '110克',
             shoppingType: 'B商品',
@@ -68,7 +68,7 @@
         },
         {
             key: Math.random(),
-            distributors: '小斯',
+            distributors: '渠道商2',
             hospital: '山西省肿瘤医院',
             relative: '110克',
             shoppingType: 'B商品',
@@ -76,7 +76,7 @@
         },
         {
             key: Math.random(),
-            distributors: '小斯',
+            distributors: '渠道商2',
             hospital: '山西省人民医院',
             relative: '10克',
             shoppingType: 'B商品',
@@ -84,7 +84,15 @@
         },
         {
             key: Math.random(),
-            distributors: '小斯',
+            distributors: '渠道商2',
+            hospital: '山西省肿瘤医院',
+            relative: '110克',
+            shoppingType: 'B商品',
+            price: null,
+        },
+        {
+            key: Math.random(),
+            distributors: '渠道商2',
             hospital: '山西省肿瘤医院',
             relative: '110克',
             shoppingType: 'B商品',
@@ -107,7 +115,7 @@
                         if (index === 0) {
                             obj.attrs.rowSpan = 2;
                         } else if (index === 2) {
-                            obj.attrs.rowSpan = 4;
+                            obj.attrs.rowSpan = 7;
                         } else {
                             obj.attrs.rowSpan = 0;
                         }

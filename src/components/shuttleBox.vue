@@ -105,8 +105,8 @@
                 for (let i = 0; i < 20; i++) {
                     const data = {
                         key: i.toString(),
-                        title: `content${i + 1}`,
-                        description: `description of content${i + 1}`,
+                        title: `渠道商${i + 1}`,
+                        description: `渠道商${i + 1}`,
                         chosen: Math.random() * 2 > 1,
                     };
                     if (data.chosen) {
