@@ -9,7 +9,7 @@
     padding-bottom: 10px;
 }
 
-.a-input-group + .a-input-group {
+.a-input-group:first-child {
     padding-top: 0;
 }
 
@@ -55,8 +55,6 @@
     background-color: #fafafa;
     border-bottom: 1px solid #e8e8e8;
     padding: 0 16px;
-    /*这是为了打印背景色*/
-    -webkit-print-color-adjust: exact;
 }
 
 /*仅仅不需要底部边框border-bottom*/
@@ -143,6 +141,7 @@
 .item-3 .ant-descriptions-row .ant-descriptions-item-content {
     width: 20%;
 }
+
 /*不同的大小，每行的数量*/
 .item-2 .ant-descriptions-row .ant-descriptions-item-content {
     width: 27%;
@@ -151,4 +150,11 @@
 /*p标签的大小*/
 .description-content {
     height: 21px;
+}
+
+/*这是为了打印背景色*/
+.ant-descriptions-bordered .ant-descriptions-item-label,
+.table-group-title {
+    /*这是为了打印背景色*/
+    -webkit-print-color-adjust: exact;
 }
