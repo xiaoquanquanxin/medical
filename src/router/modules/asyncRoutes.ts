@@ -679,7 +679,7 @@ export const asyncRoutesList = [
 				},
 				path: '/userList/patientInfo/:patientInfoId',
 				name: 'patientInfo',
-				component: () => import(/* webpackChunkName: "patientInfo" */ '@/views/userList/patientInfo.vue'),
+				component: () => import(/* webpackChunkName: "patientInfo" */ '@/views/userList/patientInfo/patientInfo.vue'),
 			},
 			{
 				meta: {
@@ -690,7 +690,7 @@ export const asyncRoutesList = [
 				},
 				path: '/userList/screening/:screeningId',
 				name: 'screening',
-				component: () => import(/* webpackChunkName: "screening" */ '@/views/userList/screening.vue'),
+				component: () => import(/* webpackChunkName: "screening" */ '@/views/userList/screening/screening.vue'),
 			},
 			{
 				meta: {
@@ -701,7 +701,7 @@ export const asyncRoutesList = [
 				},
 				path: '/userList/assessment/:assessmentId',
 				name: 'assessment',
-				component: () => import(/* webpackChunkName: "assessment" */ '@/views/userList/assessment.vue'),
+				component: () => import(/* webpackChunkName: "assessment" */ '@/views/userList/assessment/assessment.vue'),
 			},
 			{
 				meta: {
@@ -712,7 +712,7 @@ export const asyncRoutesList = [
 				},
 				path: '/userList/intervention/:interventionId',
 				name: 'intervention',
-				component: () => import(/* webpackChunkName: "intervention" */ '@/views/userList/intervention.vue'),
+				component: () => import(/* webpackChunkName: "intervention" */ '@/views/userList/intervention/intervention.vue'),
 			},
 			{
 				meta: {
@@ -723,7 +723,7 @@ export const asyncRoutesList = [
 				},
 				path: '/userList/progressNote/:progressNoteId',
 				name: 'progressNote',
-				component: () => import(/* webpackChunkName: "progressNote" */ '@/views/userList/progressNote.vue'),
+				component: () => import(/* webpackChunkName: "progressNote" */ '@/views/userList/progressNote/progressNote.vue'),
 			},
 			{
 				meta: {
@@ -734,7 +734,7 @@ export const asyncRoutesList = [
 				},
 				path: '/userList/patientReply/:patientReplyId',
 				name: 'patientReply',
-				component: () => import(/* webpackChunkName: "patientReply" */ '@/views/userList/patientReply.vue'),
+				component: () => import(/* webpackChunkName: "patientReply" */ '@/views/userList/patientReply/patientReply.vue'),
 			},
 			{
 				meta: {
@@ -745,11 +745,30 @@ export const asyncRoutesList = [
 				},
 				path: '/userList/activityBrief/:activityBriefId',
 				name: 'activityBrief',
-				component: () => import(/* webpackChunkName: "activityBrief" */ '@/views/userList/activityBrief.vue'),
+				component: () => import(/* webpackChunkName: "activityBrief" */ '@/views/userList/activityBrief/activityBrief.vue'),
 			},
 		],
-		// redirect: '/userList/patientInfo',
-	}
+	},
+	{
+		meta: {
+			chName: '新增入院',
+			selectRouteKey: 'userList',
+		},
+		path: '/userList/newAdmittedHospital',
+		name: 'newAdmittedHospital',
+		component: () => import(/* webpackChunkName: "admittedHospital" */ '@/views/userList/patientInfo/admittedHospital.vue'),
+		hidden: true,
+	},
+	{
+		meta: {
+			chName: '确认入院',
+			selectRouteKey: 'userList',
+		},
+		path: '/userList/admittedHospital/:activityBriefId',
+		name: 'admittedHospital',
+		component: () => import(/* webpackChunkName: "admittedHospital" */ '@/views/userList/patientInfo/admittedHospital.vue'),
+		hidden: true,
+	},
 ]
 
 
