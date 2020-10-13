@@ -3,9 +3,7 @@
         <!--表单头-->
         <a-input-group class="a-input-group">
             <a-col :span="5">
-                <a-button type="primary" v-print="printObj">
-                    打印
-                </a-button>
+                <a-button type="primary" v-print="printObj">打印</a-button>
             </a-col>
         </a-input-group>
         <div id="printContent">
@@ -297,8 +295,7 @@
                 printObj: {
                     id: '#printContent',
                     popTitle: '订单详情',
-                    extraCss: '',
-                    extraHead: '<meta http-equiv="Content-Language" content="zh-cn"/>'
+
                 }
             };
         },
