@@ -11,3 +11,9 @@ ul {
     padding-left: 0;
     margin-bottom: 0;
 }
+
+
+hr {
+    border-top: none;
+    margin: 0;
+}
