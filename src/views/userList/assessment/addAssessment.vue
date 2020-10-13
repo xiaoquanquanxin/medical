@@ -1051,7 +1051,7 @@
             getAssessmentDetail(){
                 //  发请求
                 console.log('病人id', this.patientInfoId);
-                console.log('详情id ,有详情id的是编辑', this.screeningDetailId);
+                console.log('详情id ,有详情id的是编辑', this.assessmentDetailId);
                 const screeningBasicInfo = [{
                     key: 1,
                     a: '姓名：小飞',

@@ -32,7 +32,7 @@
     export default {
         computed: {
             screenBottomData(){
-                console.log(this.$store.state.userList.screeningInfo);
+                //  console.log(this.$store.state.userList.screeningInfo);
                 return this.$store.state.userList.screeningInfo.screenBottomData;
             }
         },
@@ -51,7 +51,7 @@
 
         watch: {
             screenBottomData(value){
-                console.log(value)
+                //  console.log(value)
             }
         },
         created(){
