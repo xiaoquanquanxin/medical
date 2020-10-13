@@ -3,9 +3,7 @@
         <a-row type="flex" justify="space-between" align="middle" class="table-group-title no-border-bottom">
             基础信息
         </a-row>
-        <div @click="switchLabelEdit"
-             class="patient-basic-info"
-        >
+        <div class="item-3">
             <a-descriptions
                     :title="null"
                     bordered
@@ -14,215 +12,233 @@
             >
                 <a-descriptions-item label="姓名">
                     <a-input
-                            v-if="editDescriptionIndex === 0"
+                            v-if="activeElementId === 0 ||!patientBasicInfo.name"
                             placeholder="请输入姓名"
                             v-model="patientBasicInfo.name"
                             class="form-element"
+                            @focus="descriptionFormFocusFn(0)"
                     />
-                    <p :edit-description-index="0"
-                       v-else
+                    <p v-else
+                       @click="descriptionFormClickFn(0,$event)"
                        class="description-content"
                     >{{patientBasicInfo.name}}</p>
                 </a-descriptions-item>
                 <a-descriptions-item label="性别">
                     <a-input
-                            v-if="editDescriptionIndex === 1"
+                            v-if="activeElementId === 1 ||!patientBasicInfo.sex"
                             placeholder="请输入性别"
                             v-model="patientBasicInfo.sex"
                             class="form-element"
+                            @focus="descriptionFormFocusFn(1)"
                     />
-                    <p :edit-description-index="1"
-                       v-else
+                    <p v-else
+                       @click="descriptionFormClickFn(1,$event)"
                        class="description-content"
                     >{{patientBasicInfo.sex}}</p>
                 </a-descriptions-item>
                 <a-descriptions-item label="年龄">
                     <a-input
-                            v-if="editDescriptionIndex === 3"
+                            v-if="activeElementId === 3 ||!patientBasicInfo.age"
                             placeholder="请输入年龄"
                             v-model="patientBasicInfo.age"
                             class="form-element"
+                            @focus="descriptionFormFocusFn(3)"
                     />
-                    <p :edit-description-index="3"
-                       v-else
+                    <p v-else
+                       @click="descriptionFormClickFn(3,$event)"
                        class="description-content"
                     >{{patientBasicInfo.age}}</p>
                 </a-descriptions-item>
                 <a-descriptions-item label="身高">
                     <a-input
-                            v-if="editDescriptionIndex === 4"
+                            v-if="activeElementId === 4 ||!patientBasicInfo.height"
                             placeholder="请输入身高"
                             v-model="patientBasicInfo.height"
                             class="form-element"
+                            @focus="descriptionFormFocusFn(4)"
                     />
-                    <p :edit-description-index="4"
-                       v-else
+                    <p v-else
+                       @click="descriptionFormClickFn(4,$event)"
                        class="description-content"
                     >{{patientBasicInfo.height}}</p>
                 </a-descriptions-item>
                 <a-descriptions-item label="体重">
                     <a-input
-                            v-if="editDescriptionIndex === 5 || '是添加'"
+                            v-if="activeElementId === 5 ||!patientBasicInfo.weight"
                             placeholder="请输入体重"
                             v-model="patientBasicInfo.weight"
                             class="form-element"
+                            @focus="descriptionFormFocusFn(5)"
                     />
-                    <p :edit-description-index="5"
-                       v-else
+                    <p v-else
+                       @click="descriptionFormFocusFn(5)"
                        class="description-content"
                     >{{patientBasicInfo.weight}}</p>
                 </a-descriptions-item>
                 <a-descriptions-item label="BML">
                     <a-input
-                            v-if="editDescriptionIndex === 6"
+                            v-if="activeElementId === 6 ||!patientBasicInfo.BML"
                             placeholder="请输入BML"
                             v-model="patientBasicInfo.BML"
                             class="form-element"
+                            @focus="descriptionFormFocusFn(6)"
                     />
-                    <p :edit-description-index="6"
-                       v-else
+                    <p v-else
+                       @click="descriptionFormClickFn(6,$event)"
                        class="description-content"
                     >{{patientBasicInfo.BML}}</p>
                 </a-descriptions-item>
                 <a-descriptions-item label="身份证号">
                     <a-input
-                            v-if="editDescriptionIndex === 7"
+                            v-if="activeElementId === 7 ||!patientBasicInfo.idCard"
                             placeholder="请输入身份证号"
                             v-model="patientBasicInfo.idCard"
                             class="form-element"
+                            @focus="descriptionFormFocusFn(7)"
                     />
-                    <p :edit-description-index="7"
-                       v-else
+                    <p v-else
+                       @click="descriptionFormClickFn(7,$event)"
                        class="description-content"
                     >{{patientBasicInfo.idCard}}</p>
                 </a-descriptions-item>
                 <a-descriptions-item label="社保账号">
                     <a-input
-                            v-if="editDescriptionIndex === 8"
+                            v-if="activeElementId === 8 ||!patientBasicInfo.socialSecurity"
                             placeholder="请输入社保账号"
                             v-model="patientBasicInfo.socialSecurity"
                             class="form-element"
+                            @focus="descriptionFormFocusFn(8)"
                     />
-                    <p :edit-description-index="8"
-                       v-else
+                    <p v-else
+                       @click="descriptionFormClickFn(8,$event)"
                        class="description-content"
                     >{{patientBasicInfo.socialSecurity}}</p>
                 </a-descriptions-item>
                 <a-descriptions-item label="家庭住址">
                     <a-input
-                            v-if="editDescriptionIndex === 9"
+                            v-if="activeElementId === 9 ||!patientBasicInfo.addr"
                             placeholder="请输入家庭住址"
                             v-model="patientBasicInfo.addr"
                             class="form-element"
+                            @focus="descriptionFormFocusFn(9)"
                     />
-                    <p :edit-description-index="9"
-                       v-else
+                    <p v-else
+                       @click="descriptionFormClickFn(9,$event)"
                        class="description-content"
                     >{{patientBasicInfo.addr}}</p>
                 </a-descriptions-item>
                 <a-descriptions-item label="电话">
                     <a-input
-                            v-if="editDescriptionIndex === 10"
+                            v-if="activeElementId === 10 ||!patientBasicInfo.phoneNumber"
                             placeholder="请输入电话"
                             v-model="patientBasicInfo.phoneNumber"
                             class="form-element"
+                            @focus="descriptionFormFocusFn(10)"
                     />
-                    <p :edit-description-index="10"
-                       v-else
+                    <p v-else
+                       @click="descriptionFormClickFn(10,$event)"
                        class="description-content"
                     >{{patientBasicInfo.phoneNumber}}</p>
                 </a-descriptions-item>
                 <a-descriptions-item label="职业">
                     <a-input
-                            v-if="editDescriptionIndex === 11"
+                            v-if="activeElementId === 11 ||!patientBasicInfo.professional"
                             placeholder="请输入职业"
                             v-model="patientBasicInfo.professional"
                             class="form-element"
+                            @focus="descriptionFormFocusFn(11)"
                     />
-                    <p :edit-description-index="11"
-                       v-else
+                    <p v-else
+                       @click="descriptionFormClickFn(11,$event)"
                        class="description-content"
                     >{{patientBasicInfo.professional}}</p>
                 </a-descriptions-item>
                 <a-descriptions-item></a-descriptions-item>
                 <a-descriptions-item label="就诊号">
                     <a-input
-                            v-if="editDescriptionIndex === 12"
+                            v-if="activeElementId === 12 ||!patientBasicInfo.seeDoctorNumber"
                             placeholder="请输入就诊号"
                             v-model="patientBasicInfo.seeDoctorNumber"
                             class="form-element"
+                            @focus="descriptionFormFocusFn(12)"
                     />
-                    <p :edit-description-index="12"
-                       v-else
+                    <p v-else
+                       @click="descriptionFormClickFn(12,$event)"
                        class="description-content"
                     >{{patientBasicInfo.seeDoctorNumber}}</p>
                 </a-descriptions-item>
                 <a-descriptions-item label="就诊医院">
                     <a-input
-                            v-if="editDescriptionIndex === 13"
+                            v-if="activeElementId === 13 ||!patientBasicInfo.hospital"
                             placeholder="请输入就诊医院"
                             v-model="patientBasicInfo.hospital"
                             class="form-element"
+                            @focus="descriptionFormFocusFn(13)"
                     />
-                    <p :edit-description-index="13"
-                       v-else
+                    <p v-else
+                       @click="descriptionFormClickFn(13,$event)"
                        class="description-content"
                     >{{patientBasicInfo.hospital}}</p>
                 </a-descriptions-item>
                 <a-descriptions-item label="就诊科室">
                     <a-input
-                            v-if="editDescriptionIndex === 14"
+                            v-if="activeElementId === 14 ||!patientBasicInfo.department"
                             placeholder="请输入就诊科室"
                             v-model="patientBasicInfo.department"
                             class="form-element"
+                            @focus="descriptionFormFocusFn(14)"
                     />
-                    <p :edit-description-index="14"
-                       v-else
+                    <p v-else
+                       @click="descriptionFormClickFn(14,$event)"
                        class="description-content"
                     >{{patientBasicInfo.department}}</p>
                 </a-descriptions-item>
                 <a-descriptions-item label="病例号">
                     <a-input
-                            v-if="editDescriptionIndex === 15"
+                            v-if="activeElementId === 15 ||!patientBasicInfo.patientNumber"
                             placeholder="请输入病例号"
                             v-model="patientBasicInfo.patientNumber"
                             class="form-element"
+                            @focus="descriptionFormFocusFn(15)"
                     />
-                    <p :edit-description-index="15"
-                       v-else
+                    <p v-else
+                       @click="descriptionFormClickFn(15,$event)"
                        class="description-content"
                     >{{patientBasicInfo.patientNumber}}</p>
                 </a-descriptions-item>
                 <a-descriptions-item label="住院号">
                     <a-input
-                            v-if="editDescriptionIndex === 16"
+                            v-if="activeElementId === 16 ||!patientBasicInfo.admissionNumber"
                             placeholder="请输入住院号"
                             v-model="patientBasicInfo.admissionNumber"
                             class="form-element"
+                            @focus="descriptionFormFocusFn(16)"
                     />
-                    <p :edit-description-index="16"
-                       v-else
+                    <p v-else
+                       @click="descriptionFormClickFn(16,$event)"
                        class="description-content"
                     >{{patientBasicInfo.admissionNumber}}</p>
                 </a-descriptions-item>
                 <a-descriptions-item label="病床号">
                     <a-input
-                            v-if="editDescriptionIndex === 17"
+                            v-if="activeElementId === 17 ||!patientBasicInfo.sickbedNumber"
                             placeholder="请输入病床号"
                             v-model="patientBasicInfo.sickbedNumber"
                             class="form-element"
+                            @focus="descriptionFormFocusFn(17)"
                     />
-                    <p :edit-description-index="17"
-                       v-else
+                    <p v-else
+                       @click="descriptionFormClickFn(17,$event)"
                        class="description-content"
                     >{{patientBasicInfo.sickbedNumber}}</p>
                 </a-descriptions-item>
                 <a-descriptions-item label="ICD诊断">
                     <a-select style="width: 100%;"
                               placeholder="请输入ICD诊断"
-                              v-if="editDescriptionIndex === 18"
+                              v-if="activeElementId === 18 ||!patientBasicInfo.ICDDiagnosis"
                               v-model="patientBasicInfo.ICDDiagnosis"
                               class="form-element"
+                              @focus="descriptionFormFocusFn(18)"
                     >
                         <a-select-option value="1">
                             32232323
@@ -231,68 +247,73 @@
                             fewmka
                         </a-select-option>
                     </a-select>
-                    <p :edit-description-index="18"
-                       v-else
+                    <p v-else
+                       @click="descriptionFormClickFn(18,$event)"
                        class="description-content"
                     >{{patientBasicInfo.ICDDiagnosis}}</p>
                 </a-descriptions-item>
                 <a-descriptions-item label="民族">
                     <a-input
-                            v-if="editDescriptionIndex === 19"
+                            v-if="activeElementId === 19 ||!patientBasicInfo.national"
                             placeholder="请输入民族"
                             v-model="patientBasicInfo.national"
                             class="form-element"
+                            @focus="descriptionFormFocusFn(19)"
                     />
-                    <p :edit-description-index="19"
-                       v-else
+                    <p v-else
+                       @click="descriptionFormClickFn(19,$event)"
                        class="description-content"
                     >{{patientBasicInfo.national}}</p>
                 </a-descriptions-item>
                 <a-descriptions-item label="现病史">
                     <a-input
-                            v-if="editDescriptionIndex === 20"
+                            v-if="activeElementId === 20 ||!patientBasicInfo.hpi"
                             placeholder="请输入现病史"
                             v-model="patientBasicInfo.hpi"
                             class="form-element"
+                            @focus="descriptionFormFocusFn(20)"
                     />
-                    <p :edit-description-index="20"
-                       v-else
+                    <p v-else
+                       @click="descriptionFormClickFn(20,$event)"
                        class="description-content"
                     >{{patientBasicInfo.hpi}}</p>
                 </a-descriptions-item>
                 <a-descriptions-item label="过敏史">
                     <a-input
-                            v-if="editDescriptionIndex === 21"
+                            v-if="activeElementId === 21 ||!patientBasicInfo.allergy"
                             placeholder="请输入过敏史"
                             v-model="patientBasicInfo.allergy"
                             class="form-element"
+                            @focus="descriptionFormFocusFn(21)"
                     />
-                    <p :edit-description-index="21"
-                       v-else
+                    <p v-else
+                       @click="descriptionFormClickFn(21,$event)"
                        class="description-content"
                     >{{patientBasicInfo.allergy}}</p>
                 </a-descriptions-item>
                 <a-descriptions-item label="既往史">
                     <a-input
-                            v-if="editDescriptionIndex === 22"
+                            v-if="activeElementId === 22 ||!patientBasicInfo.pastHistory"
                             placeholder="请输入既往史"
                             v-model="patientBasicInfo.pastHistory"
                             class="form-element"
+                            @focus="descriptionFormFocusFn(22)"
                     />
-                    <p :edit-description-index="22"
-                       v-else
+                    <p v-else
+                       @click="descriptionFormClickFn(22,$event)"
                        class="description-content"
                     >{{patientBasicInfo.pastHistory}}</p>
                 </a-descriptions-item>
                 <a-descriptions-item label="家族史">
                     <a-input
-                            v-if="editDescriptionIndex === 23"
+                            v-if="activeElementId === 23 ||!patientBasicInfo.familyHistory"
                             placeholder="请输入家族史"
                             v-model="patientBasicInfo.familyHistory"
                             class="form-element"
+                            @focus="descriptionFormFocusFn(23)"
                     />
-                    <p :edit-description-index="23"
-                       v-else
+                    <p v-else
+                       @click="descriptionFormClickFn(23,$event)"
                        class="description-content"
                     >{{patientBasicInfo.familyHistory}}</p>
                 </a-descriptions-item>
@@ -301,7 +322,7 @@
     </div>
 </template>
 <script>
-    import { switchLabelEdit } from '@/utils/patientInfo';
+    import { descriptionsMethods } from '@/utils/patientInfo';
 
     export default {
         computed: {
@@ -313,16 +334,12 @@
         data(){
             return {
                 //  编辑的index
-                editDescriptionIndex: null,
+                activeElementId: null,
             };
         },
-        created(){
-
-        },
         methods: {
-            //  切换编辑
-            switchLabelEdit,
-
+            //	病人信息、直接编辑用的 描述框的方法
+            ...descriptionsMethods,
             //  验证表单
             handleSubmit(){
                 return new Promise(((resolve, reject) => {
