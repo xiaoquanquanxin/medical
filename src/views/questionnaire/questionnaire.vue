@@ -5,7 +5,7 @@
             <a-col :span="5">
                 <router-link :to="{name:'addQuestionnaire'}">
                     <a-button type="primary">
-                        新增疾病
+                        新增调查表
                     </a-button>
                 </router-link>
             </a-col>
@@ -43,7 +43,7 @@
 </template>
 <script>
     import { pagination } from '@/utils/pagination.ts';
-    import { towRowSearch } from '../../utils/tableScroll';
+    import { oneRowSearch } from '../../utils/tableScroll';
 
     const columns = [
         {
@@ -60,12 +60,41 @@
     const data = [
         {
             key: 1,
-            evaluationSheet: `xx医院`,
+            evaluationSheet: `xx调查表`,
         },
         {
             key: 2,
-            evaluationSheet: `xxxx`,
-        }
+            evaluationSheet: `xx调查表`,
+        },
+        {
+            key: Math.random(),
+            evaluationSheet: `xx调查表`,
+        },
+        {
+            key: Math.random(),
+            evaluationSheet: `xx调查表`,
+        },
+        {
+            key: Math.random(),
+            evaluationSheet: `xx调查表`,
+        },
+        {
+            key: Math.random(),
+            evaluationSheet: `xx调查表`,
+        },
+        {
+            key: Math.random(),
+            evaluationSheet: `xx调查表`,
+        },
+        {
+            key: Math.random(),
+            evaluationSheet: `xx调查表`,
+        },
+
+        {
+            key: Math.random(),
+            evaluationSheet: `xx调查表`,
+        },
     ];
     export default {
         data(){
@@ -73,7 +102,7 @@
                 data,
                 columns,
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
-                scroll: towRowSearch,
+                scroll: oneRowSearch,
 
                 //  分页信息
                 pagination,
