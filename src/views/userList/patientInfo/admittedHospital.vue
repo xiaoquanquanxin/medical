@@ -10,8 +10,8 @@
     </div>
 </template>
 <script>
-    import MDTInformation from '@/components/userList/MDTInformation.vue';
-    import PatientBasicInfo from '@/components/userList/patientBasicInfo.vue';
+    import MDTInformation from '@/components/userList/patientInfo/MDTInformation.vue';
+    import PatientBasicInfo from '@/components/userList/patientInfo/patientBasicInfo.vue';
     import { mapGetters, mapActions } from 'vuex';
 
     export default {
