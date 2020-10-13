@@ -121,7 +121,7 @@
     padding-bottom: 12px;
 }
 
-.ant-card-head-title {
+.ant-card-head-title, .text-align-center {
     text-align: center;
 }
 
@@ -160,4 +160,20 @@
 /*需要折行*/
 span.ant-radio + * {
     white-space: initial;
+}
+
+/*分页*/
+.a-pagination {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+/*有病了？*/
+.ant-checkbox-wrapper + .ant-checkbox-wrapper {
+    margin-left: 0;
+}
+
+/*基础选择框*/
+.basic-select-width, .basic-input-width {
+    width: 125px;
 }
