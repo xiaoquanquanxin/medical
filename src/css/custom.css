@@ -1,0 +1,42 @@
+/*每一块的单选框*/
+.radio-group-row {
+    border: 1px solid #e8e8e8;
+}
+
+.radio-group-row + .radio-group-row {
+    border-top: none;
+}
+
+/*左侧项目名*/
+.radio-group-item-label {
+    width: 250px;
+}
+
+/*右侧内容*/
+.radio-group-item-content {
+    width: calc(100% - 250px);
+    border-left: 1px solid #e8e8e8;
+}
+
+/*ul外一层*/
+.radio-group-row .radio-group {
+    width: 100%;
+}
+
+/*ul*/
+.radio-group-list {
+
+}
+
+/*li*/
+.radio-group-item {
+    padding: 8px 16px;
+    border-bottom: 1px solid #e8e8e8;
+}
+
+/*最后的li没有border-bottom*/
+.radio-group-item:last-child {
+    border-bottom: none;
+}
+
+
