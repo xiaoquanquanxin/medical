@@ -12,8 +12,8 @@ const createRouter = (routesList: RouteConfig[]) => new VueRouter({
 
 const router = createRouter([]);
 router.beforeEach(async (to, from, next) => {
-	console.log('来自哪儿', from.path);
-	console.log('去哪儿', to.path);
+	//	console.log('来自哪儿', from.path);
+	//	console.log('去哪儿', to.path);
 
 	//	如果没更新路由
 	if (store.state.routeList.routeListLength === syncRoutesListLength) {
