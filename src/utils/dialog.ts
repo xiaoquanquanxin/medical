@@ -79,6 +79,15 @@ export const DIALOG_TYPE: DialogType = {
 
 	//	确认签收
 	DETERMINE_SIGN: 'DETERMINE_SIGN',
+
+	//	病程记录弹框
+	PROGRESS_NOTE: 'PROGRESS_NOTE',
+
+	//	患者反馈弹框
+	PATIENT_REPLY: 'PATIENT_REPLY',
+
+	//	活动小结弹框
+	ACTIVITY_BRIEF: 'ACTIVITY_BRIEF',
 }
 
 
