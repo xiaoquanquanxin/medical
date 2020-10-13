@@ -46,7 +46,7 @@
             </div>
         </a-table>
         <!--分页-->
-        <a-row type="flex" justify="end" class="a-input-group">
+        <a-row type="flex" justify="end" class="a-pagination">
             <a-pagination
                     v-model="pagination.current"
                     :page-size-options="pagination.pageSizeOptions"
@@ -107,7 +107,7 @@
         },
         {
             title: '添加时间',
-            dataIndex: 'index',
+            dataIndex: 'time',
             width: 120,
         },
         {
@@ -119,7 +119,7 @@
         {
             title: '操作',
             dataIndex: 'operation',
-            
+
             scopedSlots: { customRender: 'operation' },
         },
     ];
@@ -130,8 +130,9 @@
             hospital: `xx渠道商`,
             city: '上海',
             status: String(i % 2),
-            icon: '渠道商图标',
-            
+            icon: '添加人',
+            area: '地区',
+            time: '2020-10-10'
         });
     }
     //  渠道商管理
