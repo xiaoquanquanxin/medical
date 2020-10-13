@@ -48,7 +48,7 @@
             </div>
         </a-table>
         <!--分页-->
-        <a-row type="flex" justify="end" class="a-input-group">
+        <a-row type="flex" justify="end" class="a-pagination">
             <a-pagination
                     v-model="pagination.current"
                     :page-size-options="pagination.pageSizeOptions"
@@ -77,7 +77,7 @@
         },
         {
             title: '供应商代码',
-            dataIndex: 'city',
+            dataIndex: 'code',
             width: 120,
         },
         {
@@ -87,12 +87,12 @@
         },
         {
             title: '添加人',
-            dataIndex: 'icon',
+            dataIndex: 'people',
             width: 100,
         },
         {
             title: '添加时间',
-            dataIndex: 'index',
+            dataIndex: 'time',
             width: 120,
         },
         {
@@ -112,10 +112,13 @@
         data.push({
             key: i,
             hospital: `xx供应商`,
+            code: 'xxx-xx',
             city: '上海',
             status: String(i % 2),
             icon: '供应商图标',
-            
+            area: '地区',
+            people: '许晓飞',
+            time: '2020-10-10'
         });
     }
     //  供应商管理
