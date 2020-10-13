@@ -103,10 +103,6 @@
                 this.transverseSubPaths = [currentMeta.transverseSubPaths || ''];
                 return currentMeta;
             },
-//            //  被选中的id
-//            selectPatientInfoId(){
-//                return this.$store.state.userList.selectPatientInfoId;
-//            }
         },
         data(){
             return {
@@ -118,10 +114,6 @@
             };
         },
         methods: {
-//            ...mapActions('userList', [
-//                //  设置病人列表中，被选中的userInfo id
-//                'setSelectPatientInfoId',
-//            ]),
             jumpTo,
             //  自定义表格事件
             customRow(scope){
