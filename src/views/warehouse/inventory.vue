@@ -117,7 +117,7 @@
         },
         {
             title: '商品货号',
-            dataIndex: '11',
+            dataIndex: '商品货号',
             width: 120,
         },
         {
@@ -160,7 +160,6 @@
             dataIndex: 'remainingInventory',
             width: 120,
         },
-
         {
             title: '操作',
             width: 120,
@@ -175,6 +174,15 @@
             city: '上海',
             status: String(i % 2),
             totalInventory: 322,
+            commodityName: '商品名称',
+            remainingInventory: '剩余库存',
+            occupyInventory: '占用库存',
+            manufacturer:'厂家',
+            brand:'商品品牌',
+            supplier:'商品供应商',
+            barCode:'商品条码',
+            unit:'单位',
+            商品货号:'商品货号',
         });
     }
 
