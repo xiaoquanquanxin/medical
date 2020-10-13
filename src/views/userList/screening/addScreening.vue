@@ -137,52 +137,13 @@
                 </div>
             </a-row>
             <br>
-            <!--筛查人：许晓飞-->
-            <!--            <a-row type="flex" justify="start" align="middle" class="add-screening-bottom">-->
-            <!--                <a-col class="add-screening-bottom-item">-->
-            <!--                    <a-input addon-before="筛查人：" placeholder="请输入筛查人"/>-->
-            <!--                </a-col>-->
-            <!--                <a-col class="add-screening-bottom-item">-->
-            <!--                    <a-date-picker-->
-            <!--                            addon-before="选择日期："-->
-            <!--                            placeholder="请选择日期"-->
-            <!--                            @change="onDateChange"-->
-            <!--                    />-->
-            <!--                    <a-time-picker addon-before="选择时间："-->
-            <!--                                   v-model="selectTimeMoment"-->
-            <!--                                   @change="selectTimeChange"-->
-            <!--                                   format="HH:mm"/>-->
-            <!--                </a-col>-->
-            <!--            </a-row>-->
-            <a-table
-                    :columns="screenBottomColumns"
-                    :data-source="screenBottomData"
-                    :pagination="false"
-                    :showHeader="false"
-                    bordered
-            >
-                <div slot="screeningPeople" slot-scope="scope,sItem,sIndex,extra">
-                    <a-input placeholder="请输入筛查人"/>
-                </div>
-                <div slot="date" slot-scope="scope,sItem,sIndex,extra">
-                    <a-date-picker
-                            addon-before="选择日期："
-                            placeholder="请选择日期"
-                            @change="onDateChange"
-                    />
-                </div>
-                <div slot="time" slot-scope="scope,sItem,sIndex,extra">
-                    <a-time-picker addon-before="选择时间："
-                                   v-model="selectTimeMoment"
-                                   @change="selectTimeChange"
-                                   format="HH:mm"/>
-                </div>
-            </a-table>
+            <ScreeningBottomInfo/>
         </div>
     </div>
 </template>
 <script>
     import ScreeningBasicInfo from '@/components/userList/screening/screeningBasicInfo.vue';
+    import ScreeningBottomInfo from '@/components/userList/screening/screeningBottomInfo.vue';
     import { mapGetters, mapActions } from 'vuex';
 
     //  风险筛查列
@@ -214,41 +175,10 @@
         }
     ];
 
-    //  底部信息
-    const screenBottomColumns = [
-        {
-            dataIndex: 'a',
-        },
-        {
-            dataIndex: 'b',
-            scopedSlots: { customRender: 'screeningPeople' },
-        },
-        {
-            dataIndex: 'c',
-        },
-        {
-            dataIndex: 'd',
-            scopedSlots: { customRender: 'date' }
-        },
-        {
-            dataIndex: 'e',
-        },
-        {
-            dataIndex: 'f',
-            scopedSlots: { customRender: 'time' }
-        },
-    ];
-    const screenBottomData = [
-        {
-            key: 1,
-            a: '筛查人：',
-            c: '日期',
-            e: '时间'
-        }
-    ];
     export default {
         components: {
             ScreeningBasicInfo,
+            ScreeningBottomInfo,
         },
         computed: {
             //  页面参数 - 病人id
@@ -287,15 +217,6 @@
                 nutritionScore: 1,
                 //  年龄评分
                 ageScore: 1,
-
-                //  选择时间的值的对象
-                selectTimeMoment: null,
-                //  选择时间的值
-                selectTimeValue: null,
-
-                //  底部信息
-                screenBottomColumns,
-                screenBottomData,
             };
         },
         watch: {
@@ -322,7 +243,7 @@
                 //  发请求
                 console.log('病人id', this.patientInfoId);
                 console.log('详情id ,有详情id的是编辑', this.screeningDetailId);
-                const data = [{
+                const screeningBasicInfo = [{
                     key: 1,
                     a: '姓名：小飞',
                     b: '性别：男',
@@ -331,9 +252,21 @@
                     e: '现体重：32kg',
                     f: 'BMI(kg/m2)：322',
                 }];
+                const screenBottomData = [
+                    {
+                        key: 1,
+                        a: '筛查人：',
+                        c: '日期',
+                        e: '时间'
+                    }
+                ];
                 this.setScreeningInfo({
-                    screeningBasicInfo: data,
+                    //  设置基础信息
+                    screeningBasicInfo,
+                    //  设置底部信息
+                    screenBottomData,
                 });
+
             },
             //  保存
             saveScreening(){
@@ -364,14 +297,6 @@
                 this.riskSelectedList = riskSelectedList;
             },
 
-            //  选择过期日期
-            onDateChange(value, selectDateValue){
-                console.log(selectDateValue);
-            },
-            //  选择时间的变换
-            selectTimeChange(value, selectTimeValue){
-                this.selectTimeValue = selectTimeValue;
-            },
         }
     };
 </script>
@@ -385,20 +310,5 @@
     /*最后的li没有border-bottom*/
     .check-group-item:last-child {
         border-bottom: none;
-    }
-    
-    /*底部*/
-    .add-screening-bottom {
-        border: 1px solid #e8e8e8;
-    }
-    
-    /*底部每一项*/
-    .add-screening-bottom-item {
-        padding: 16px;
-        border-right: 1px solid #e8e8e8;
-    }
-    
-    .add-screening-bottom-item:last-child {
-        border-right: none
     }
 </style>
