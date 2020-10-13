@@ -136,6 +136,19 @@
 /*描述列表 - 患者信息那块*/
 /*每一项*/
 .ant-descriptions-row .ant-descriptions-item-content {
-    width: 20%;
     height: 50px;
+}
+
+/*不同的大小，每行的数量*/
+.item-3 .ant-descriptions-row .ant-descriptions-item-content {
+    width: 20%;
+}
+/*不同的大小，每行的数量*/
+.item-2 .ant-descriptions-row .ant-descriptions-item-content {
+    width: 27%;
+}
+
+/*p标签的大小*/
+.description-content {
+    height: 21px;
 }
