@@ -10,34 +10,26 @@
             </a-col>
             <a-col :sm="20" :md="22">
                 <a-row type="flex" justify="end">
-                    <a-col :sm="8" :md="4">
-                        <div>
-                            <a-avatar :size="36" icon="user"/>
-                            <a-dropdown>
-                                <a class="ant-dropdown-link" @click="e => e.preventDefault()">
-                                    许晓飞
-                                    <a-icon type="down"/>
-                                </a>
-                                <a-menu slot="overlay" @click="onClick">
-                                    <a-menu-item key="1">
-                                        1st menu item
-                                    </a-menu-item>
-                                    <a-menu-item key="2">
-                                        2nd menu item
-                                    </a-menu-item>
-                                    <a-menu-item key="3">
-                                        3rd menu item
-                                    </a-menu-item>
-                                </a-menu>
-                            </a-dropdown>
-                        </div>
-                    </a-col>
-                    <a-col :sm="3" :md="2">
-                        <a-badge count="0" show-zero>
-                            <a-icon type="bell"/>
-                            <a class="head-example"></a>
-                        </a-badge>
-                    </a-col>
+                    <a-space>
+                        <a-avatar :size="36" icon="user"/>
+                        <a-dropdown>
+                            <a class="ant-dropdown-link" @click="e => e.preventDefault()">
+                                许晓飞
+                                <a-icon type="down"/>
+                            </a>
+                            <a-menu slot="overlay" @click="onClick">
+                                <a-menu-item key="1">
+                                    退出登陆
+                                </a-menu-item>
+                            </a-menu>
+                        </a-dropdown>
+                        <a-button>
+                            <a-badge count="3">
+                                消息
+                            </a-badge>
+                        </a-button>
+                        <span></span>
+                    </a-space>
                 </a-row>
             </a-col>
         </a-row>
@@ -67,11 +59,3 @@
 		}
 	}
 </script>
-<style scoped lang="stylus">
-    //  徽章
-    .head-example
-        width 10px;
-        height 10px;
-        border-radius 4px;
-        display inline-block;
-</style>
