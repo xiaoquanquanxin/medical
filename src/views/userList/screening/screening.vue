@@ -1,13 +1,11 @@
 <template>
     <div class="layout-content-inner-main">
         <!--搜索相关-->
-        <a-row class="a-input-group">
-            <a-col>
-                <router-link :to="{name:'addScreening',params:{patientInfoId}}">
-                    <a-button type="primary">新增</a-button>
-                </router-link>
-            </a-col>
-        </a-row>
+        <a-input-group class="a-input-group">
+            <router-link :to="{name:'addScreening',params:{patientInfoId}}">
+                <a-button type="primary">新增</a-button>
+            </router-link>
+        </a-input-group>
         <!--表格-->
         <a-table
                 :columns="columns"
