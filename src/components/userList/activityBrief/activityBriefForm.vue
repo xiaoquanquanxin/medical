@@ -26,8 +26,8 @@
             this.form = this.$form.createForm(this);
         },
         computed: {
-            progressNoteId(){
-                return this.$store.state.userList.progressNoteId;
+            activityBriefId(){
+                return this.$store.state.userList.activityBriefId;
             }
         },
         data(){
@@ -43,7 +43,7 @@
             };
         },
         created(){
-            console.log('是编辑？', !!this.progressNoteId);
+            console.log('是编辑？', !!this.activityBriefId);
         },
         methods: {
             //  表单提交 保存
