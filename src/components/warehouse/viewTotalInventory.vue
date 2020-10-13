@@ -39,7 +39,10 @@
     for (let i = 0; i < 20; i++) {
         data.push({
             key: i,
-            hospital: '经纬医院',
+            hospital: 'xx医院',
+            abutmentInventory:'暂用库存',
+            totalInventory:'总库存',
+            remainingInventory:'剩余库存',
         });
     }
     //  查看总库存
