@@ -124,12 +124,12 @@
             customRow(scope){
                 return {
                     on: {
-                        click: () => {this.rowClick(scope);}
+                        click: () => {this.tableClickFn(scope);}
                     }
                 };
             },
             //  点击table事件
-            rowClick(scope){
+            tableClickFn(scope){
                 console.log('选中的列表的id ', scope.key);
                 //  todo    区分点击的是谁
                 this.$router.push({ name: 'patientInfo', params: { patientInfoId: scope.key.toString() } });
