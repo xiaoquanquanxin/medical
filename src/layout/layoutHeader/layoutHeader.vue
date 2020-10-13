@@ -38,9 +38,6 @@
                             <a class="head-example"></a>
                         </a-badge>
                     </a-col>
-                    <a-col :sm="3" :md="2">
-                        关机
-                    </a-col>
                 </a-row>
             </a-col>
         </a-row>
