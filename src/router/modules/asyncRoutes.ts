@@ -764,7 +764,7 @@ export const asyncRoutesList = [
 			chName: '确认入院',
 			selectRouteKey: 'userList',
 		},
-		path: '/userList/admittedHospital/:activityBriefId',
+		path: '/userList/admittedHospital/:admittedHospitalId',
 		name: 'admittedHospital',
 		component: () => import(/* webpackChunkName: "admittedHospital" */ '@/views/userList/patientInfo/admittedHospital.vue'),
 		hidden: true,
