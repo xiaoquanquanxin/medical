@@ -86,22 +86,22 @@
         },
         {
             title: '出库商品名称',
-            dataIndex: '11',
+            dataIndex: '出库商品名称',
             width: 100,
         },
         {
             title: '商品货号',
-            dataIndex: 'unit',
+            dataIndex: '商品货号',
             width: 100,
         },
         {
             title: '出库数量',
-            dataIndex: 'barCode',
+            dataIndex: '出库数量',
             width: 100,
         },
         {
             title: '状态',
-            dataIndex: 'supplier',
+            dataIndex: '状态',
             width: 150,
         },
     ];
@@ -110,6 +110,10 @@
         data.push({
             key: i,
             commodityName: `xx供应商`,
+            出库商品名称:'出库商品名称',
+            商品货号:'商品货号',
+            出库数量:'出库数量',
+            状态:'状态',
         });
     }
 

@@ -85,22 +85,22 @@
         },
         {
             title: '入库医院',
-            dataIndex: '112',
+            dataIndex: '入库医院',
             width: 100,
         },
         {
             title: '入库商品名称',
-            dataIndex: '11',
+            dataIndex: '入库商品名称',
             width: 100,
         },
         {
             title: '商品货号',
-            dataIndex: 'unit',
+            dataIndex: '商品货号',
             width: 100,
         },
         {
             title: '入库数量',
-            dataIndex: 'barCode',
+            dataIndex: '入库数量',
             width: 100,
         },
     ];
@@ -109,6 +109,10 @@
         data.push({
             key: i,
             commodityName: `xx供应商`,
+            商品货号:'商品货号',
+            入库商品名称:'入库商品名称',
+            入库医院:'入库医院',
+            入库数量:'入库数量',
         });
     }
 

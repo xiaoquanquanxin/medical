@@ -84,17 +84,17 @@
         },
         {
             title: '报损商品名称',
-            dataIndex: '11',
+            dataIndex: '报损商品名称',
             width: 100,
         },
         {
             title: '商品货号',
-            dataIndex: 'unit',
+            dataIndex: '商品货号',
             width: 100,
         },
         {
             title: '报损数量',
-            dataIndex: 'barCode',
+            dataIndex: '报损数量',
             width: 100,
         },
     ];
@@ -102,7 +102,10 @@
     for (let i = 0; i < 10; i++) {
         data.push({
             key: i,
-            commodityName: `xx供应商`,
+            commodityName: `报损单号`,
+            报损数量:'报损数量',
+            商品货号:'商品货号',
+            报损商品名称:'报损商品名称',
         });
     }
 
