@@ -158,3 +158,8 @@
     /*这是为了打印背景色*/
     -webkit-print-color-adjust: exact;
 }
+
+/*需要折行*/
+span.ant-radio + * {
+    white-space: initial;
+}
