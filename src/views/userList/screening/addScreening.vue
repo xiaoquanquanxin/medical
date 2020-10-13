@@ -4,7 +4,6 @@
             <a-space>
                 <a-button type="primary" v-print="printObj">打印</a-button>
                 <a-button type="primary" @click="saveScreening">保存</a-button>
-                <a-button type="primary" @click="deleteScreening">删除</a-button>
             </a-space>
         </div>
         <div id="printContent">
@@ -271,25 +270,6 @@
             //  保存
             saveScreening(){
                 console.log('保存');
-            },
-            //  删除
-            deleteScreening(){
-                this.$confirm({
-                    title: `确定删除${212}`,
-                    //  content: 'Bla bla ...',
-                    okText: '确认',
-                    okType: 'danger',
-                    cancelText: '取消',
-                    onOk(){
-                        return new Promise((resolve, reject) => {
-                            console.log('发请求');
-                            setTimeout(Math.random() > 0.5 ? resolve : reject, 1111);
-                        }).catch(() => console.log('Oops errors!'));
-                    },
-                    onCancel(){
-                        console.log('取消');
-                    },
-                });
             },
             //  疾病评分 选中的数据
             riskSelectChange(riskSelectedList){
