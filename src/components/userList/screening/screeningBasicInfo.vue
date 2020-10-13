@@ -30,7 +30,7 @@
             dataIndex: 'f',
         },
     ];
-
+    //  基础信息
     export default {
         computed: {
             screeningBasicInfo(){
