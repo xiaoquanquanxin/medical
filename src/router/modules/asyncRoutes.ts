@@ -792,6 +792,27 @@ export const asyncRoutesList = [
 		hidden: true,
 	},
 
+	{
+		meta: {
+			chName: '新增营养评估',
+			selectRouteKey: 'userList',
+		},
+		//	病人的id
+		path: '/userList/addAssessment/:patientInfoId',
+		name: 'addAssessment',
+		component: () => import(/* webpackChunkName: "assessment" */ '@/views/userList/assessment/addAssessment.vue'),
+		hidden: true,
+	},
+	{
+		meta: {
+			chName: '营养评估详情',
+			selectRouteKey: 'userList',
+		},
+		path: '/userList/assessmentDetail/:patientInfoId/:assessmentDetailId',
+		name: 'assessmentDetail',
+		component: () => import(/* webpackChunkName: "assessment" */ '@/views/userList/assessment/addAssessment.vue'),
+		hidden: true,
+	},
 ]
 
 
