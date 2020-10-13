@@ -4,7 +4,7 @@
         <a-row type="flex" justify="space-between" align="middle">
             <a-col>
                 <a-button type="primary" @click="confirmOutHospital">确认出院</a-button>
-                <router-link :to="{name:'admittedHospital',params:{admittedHospitalId:1332}}">
+                <router-link :to="{name:'admittedHospital',params:{patientInfoId}}">
                     <a-button type="primary">
                         确认入院
                     </a-button>
@@ -32,12 +32,13 @@
             PatientBasicInfo,
         },
         computed: {
-            patientBasicInfo(){
-                return this.$store.state.userList.patientBasicInfo;
-            },
             //  群聊信息
             groupChatMessage(){
                 return this.$store.state.userList.groupChatMessage;
+            },
+            //  页面参数 - 病人id
+            patientInfoId(){
+                return this.$route.params.patientInfoId;
             }
         },
         watch: {
@@ -57,11 +58,12 @@
         },
         methods: {
             ...mapActions('userList', [
-                //  保存病人信息
+                //  保存病人信息，这是为了给组件用，而不是页面，所以要store
                 'setPatientBasicInfo',
             ]),
             //  获取病人信息数据
             getPatientInfo(){
+                console.log('病人信息tab-病人id', this.patientInfoId);
                 setTimeout(() => {
                     //  监听的参数 id病人id
                     //  console.log(this.$route.params.patientInfoId);
