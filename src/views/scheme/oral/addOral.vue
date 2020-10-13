@@ -404,7 +404,7 @@
                     //  源数据
                     const originCommodityList = [
                         {
-                            commodityName: '权鑫',
+                            commodityName: '许晓飞',
                             key: 1,
                             buyUnitList: [
                                 {
