@@ -70,6 +70,7 @@
             commodityName: `xx供应商`,
         });
     }
+    //  筛查
     export default {
         computed: {
             //  页面参数 - 病人id
