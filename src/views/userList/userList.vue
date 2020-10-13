@@ -140,7 +140,7 @@
                 //  原来的路由参数
                 const { meta: prevMeta, params } = this.$route;
                 //  console.log(prevMeta.routerParamsKey, params);
-                //  参数值
+                //  参数值 其实都叫 病人id 🆔 patientInfoId
                 const id = params[prevMeta.routerParamsKey];
                 //  如果没有id，说明就不是正常的
                 if (!id) {
