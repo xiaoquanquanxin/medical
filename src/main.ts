@@ -7,6 +7,7 @@ import Antd from 'ant-design-vue';
 import 'ant-design-vue/dist/antd.css';
 import "./css/reset.css";
 import "./css/layout.css";
+import "./css/color.css";
 
 //	@ts-ignore
 import Print from 'vue-print-nb';
