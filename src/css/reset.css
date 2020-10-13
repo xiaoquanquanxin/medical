@@ -6,3 +6,8 @@ p {
 li {
     list-style-type: none;
 }
+
+ul {
+    padding-left: 0;
+    margin-bottom: 0;
+}
