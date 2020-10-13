@@ -70,7 +70,7 @@
             </div>
         </a-table>
         <!--分页-->
-        <a-row type="flex" justify="end" class="a-input-group">
+        <a-row type="flex" justify="end" class="a-pagination">
             <a-pagination
                     v-model="pagination.current"
                     :page-size-options="pagination.pageSizeOptions"

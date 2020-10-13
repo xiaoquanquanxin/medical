@@ -90,7 +90,7 @@
             age: i,
             sex: '男',
             status: '出院',
-            name: 't-mac'
+            name: '许晓飞'
         });
     }
 

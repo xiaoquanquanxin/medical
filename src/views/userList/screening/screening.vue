@@ -52,7 +52,7 @@
         },
         {
             title: '是否有风险',
-            dataIndex: 'fefewawa',
+            dataIndex: '是否有风险',
             width: 100,
         },
         {
@@ -66,6 +66,11 @@
         data.push({
             key: i,
             commodityName: `xx供应商`,
+            筛查项目:'筛查项目',
+            是否有风险:'是否有风险',
+            评分时间:'评分时间',
+            评分人:'评分人',
+            得分:'得分',
         });
     }
     //  筛查

@@ -53,35 +53,35 @@
                     //  监听的参数 id病人id
                     //  console.log(this.$route.params.patientInfoId);
                     this.patientInfo = {
-                        name: '奋武',
+                        name: '许晓飞',
                         sex: '男',
                         age: 3232,
-                        height: 32,
-                        weight: 43,
+                        height: 'height',
+                        weight: 'weight',
                         BML: 32,
-                        idCard: '32323232',
+                        idCard: 'idCard',
                         //  社保
-                        socialSecurity: 'fjioaw',
+                        socialSecurity: '社保',
                         addr: '山西',
                         phoneNumber: 87743993292,
                         //  职业
-                        professional: '32ji',
+                        professional: '职业',
                         //  就诊号
-                        seeDoctorNumber: 'ljhgr',
+                        seeDoctorNumber: '就诊号',
                         hospital: '就诊医院',
                         department: '就诊科室',
                         //  病例号
-                        patientNumber: 'jfeiopw',
+                        patientNumber: '病例号',
                         //  住院号
-                        admissionNumber: 'fjioewngreiso',
+                        admissionNumber: '住院号',
                         //  病床号
-                        sickbedNumber: 'ng',
+                        sickbedNumber: '病床号',
                         //  ICD诊断
-                        ICDDiagnosis: 'feawiohu',
+                        ICDDiagnosis: 'ICD诊断',
                         //  民族
                         national: '汉',
                         //  现病史
-                        hpi: 'fejwi',
+                        hpi: '现病史',
                         //  过敏史
                         allergy: 'allergy',
                         //  既往史
