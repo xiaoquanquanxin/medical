@@ -65,7 +65,7 @@
                               placeholder="请选择食用方法"
                     >
                         <a-select-option :value="1">
-                            吃肉
+                            方法1
                         </a-select-option>
                         <a-select-option :value="2">
                             吃菜
@@ -107,7 +107,7 @@
                               placeholder="请选择食用方法"
                     >
                         <a-select-option :value="1">
-                            吃肉
+                            方法1
                         </a-select-option>
                         <a-select-option :value="2">
                             吃菜
