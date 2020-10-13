@@ -29,13 +29,13 @@
         data(){
             return {
                 //  如果有就是编辑
-                admittedHospitalId: this.$route.params.admittedHospitalId,
+                patientInfoId: this.$route.params.patientInfoId,
             };
         },
         created(){
-            console.log('是编辑？', !!this.admittedHospitalId);
+            console.log('是编辑？', !!this.patientInfoId);
             //  如果是添加，清空 保存病人信息
-            if (!this.admittedHospitalId) {
+            if (!this.patientInfoId) {
                 this.setPatientBasicInfo(null);
             } else {
                 //  如果是编辑，重新拉一次数据
