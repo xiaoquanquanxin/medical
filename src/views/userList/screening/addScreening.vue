@@ -43,37 +43,37 @@
                 </a-space>
             </a-row>
             <a-row type="flex" justify="space-between" align="middle" style="border: 1px solid #e8e8e8;">
-                <div style="width:250px;">
+                <div class="radio-group-item-label">
                     <div class="" style="text-align: center">疾病评分</div>
                 </div>
-                <div style="width:calc(100% - 250px);border-left: 1px solid #e8e8e8;">
+                <div class="radio-group-item-content">
                     <a-checkbox-group @change="riskSelectChange">
                         <ul class="check-group-list">
-                            <li class="check-group-item">
+                            <li class="radio-group-item">
                                 <a-checkbox value="1">髋骨折 (1分 )</a-checkbox>
                             </li>
-                            <li class="check-group-item">
+                            <li class="radio-group-item">
                                 <a-checkbox value="2">慢性疾病急性发作或有并发症者（如肝硬化、COPD、血液透析、糖尿病、恶性肿瘤）(1分 )</a-checkbox>
                             </li>
-                            <li class="check-group-item">
+                            <li class="radio-group-item">
                                 <a-checkbox value="3">腹部大手术 (2分 )</a-checkbox>
                             </li>
-                            <li class="check-group-item">
+                            <li class="radio-group-item">
                                 <a-checkbox value="4">脑卒中 (2分 )</a-checkbox>
                             </li>
-                            <li class="check-group-item">
+                            <li class="radio-group-item">
                                 <a-checkbox value="5">重度肺炎(2分 )</a-checkbox>
                             </li>
-                            <li class="check-group-item">
+                            <li class="radio-group-item">
                                 <a-checkbox value="6">血液恶性肿瘤(2分 )</a-checkbox>
                             </li>
-                            <li class="check-group-item">
+                            <li class="radio-group-item">
                                 <a-checkbox value="7">颅脑损伤(3分 )</a-checkbox>
                             </li>
-                            <li class="check-group-item">
+                            <li class="radio-group-item">
                                 <a-checkbox value="8">骨髓移植(3分 )</a-checkbox>
                             </li>
-                            <li class="check-group-item">
+                            <li class="radio-group-item">
                                 <a-checkbox value="9">大于APACHE10分的ICU患者(3分 )</a-checkbox>
                             </li>
                         </ul>
@@ -89,19 +89,19 @@
                 </a-space>
             </a-row>
             <a-row type="flex" justify="space-between" align="middle" style="border: 1px solid #e8e8e8;">
-                <div style="width:250px;">
+                <div class="radio-group-item-label">
                     <div class="" style="text-align: center">营养评分</div>
                 </div>
-                <div style="width:calc(100% - 250px);border-left: 1px solid #e8e8e8;">
+                <div class="radio-group-item-content">
                     <a-radio-group v-model="nutritionScore" style="width: 100%;">
                         <ul class="check-group-list">
-                            <li class="check-group-item">
+                            <li class="radio-group-item">
                                 <a-radio :value="1">3个月体重丢失 > 5%或食物摄入比正常需要量低25% ~ 50%(1分 )</a-radio>
                             </li>
-                            <li class="check-group-item">
+                            <li class="radio-group-item">
                                 <a-radio :value="2">一般情况差或2个月体重丢失 > 5%或食物摄入比正常需要量低50% ~ 75%(2分 )</a-radio>
                             </li>
-                            <li class="check-group-item">
+                            <li class="radio-group-item">
                                 <a-radio :value="3">BMI < 18.5，且一般情况差或1个月内体重丢失 > 5%（或3个月体重下降15%）或前1周食物摄入比正常需要量低75% ~
                                     100%(3分 )
                                 </a-radio>
@@ -119,16 +119,16 @@
                 </a-space>
             </a-row>
             <a-row type="flex" justify="space-between" align="middle" style="border: 1px solid #e8e8e8;">
-                <div style="width:250px;">
+                <div class="radio-group-item-label">
                     <div class="" style="text-align: center">营养评分</div>
                 </div>
-                <div style="width:calc(100% - 250px);border-left: 1px solid #e8e8e8;">
+                <div class="radio-group-item-content">
                     <a-radio-group v-model="ageScore" style="width: 100%;">
                         <ul class="check-group-list">
-                            <li class="check-group-item">
+                            <li class="radio-group-item">
                                 <a-radio :value="1">年龄 >= 70(1分 )</a-radio>
                             </li>
-                            <li class="check-group-item">
+                            <li class="radio-group-item">
                                 <a-radio :value="2">年龄 < 70岁(0分 )</a-radio>
                             </li>
                         </ul>
@@ -281,14 +281,5 @@
     };
 </script>
 <style>
-    /*li*/
-    .check-group-item {
-        padding: 8px 16px;
-        border-bottom: 1px solid #e8e8e8;
-    }
-    
-    /*最后的li没有border-bottom*/
-    .check-group-item:last-child {
-        border-bottom: none;
-    }
+   @import "~@/css/custom.css";
 </style>
