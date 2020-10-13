@@ -22,6 +22,11 @@
                     </a-form>
                 </a-card>
                 <a-card title="病人列表">
+                    <router-link :to="{name:'newAdmittedHospital'}">
+                        <a-button type="primary">
+                            新增用户
+                        </a-button>
+                    </router-link>
                     <a-table
                             :columns="columns"
                             :data-source="data"
