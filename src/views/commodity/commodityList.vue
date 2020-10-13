@@ -3,14 +3,14 @@
         <!--搜索相关-->
         <a-input-group class="a-input-group">
             <a-row :gutter="8">
-                <a-col :span="5">
-                    <a-input v-model="searchData.commodityName" placeholder="请输入商品名称"/>
-                </a-col>
-                <a-col :span="5">
-                    <a-input v-model="searchData.itemNo" placeholder="请输入商品货号"/>
-                </a-col>
-                <a-col :span="5">
-                    <a-select v-model="searchData.brand" style="width:100%;" placeholder="请选择品牌">
+                <a-space>
+                    <div class="basic-input-width">
+                        <a-input v-model="searchData.commodityName" placeholder="请输入商品名称"/>
+                    </div>
+                    <div class="basic-input-width">
+                        <a-input v-model="searchData.itemNo" class="basic-input-width" placeholder="请输入商品货号"/>
+                    </div>
+                    <a-select v-model="searchData.brand" class="basic-select-width" placeholder="请选择品牌">
                         <a-select-option value="">
                             品牌
                         </a-select-option>
@@ -18,9 +18,7 @@
                             Option2
                         </a-select-option>
                     </a-select>
-                </a-col>
-                <a-col :span="5">
-                    <a-select v-model="searchData.classification" style="width:100%;" placeholder="请选择分类">
+                    <a-select v-model="searchData.classification" class="basic-select-width" placeholder="请选择分类">
                         <a-select-option value="">
                             分类
                         </a-select-option>
@@ -28,9 +26,7 @@
                             Option2
                         </a-select-option>
                     </a-select>
-                </a-col>
-                <a-col :span="5">
-                    <a-select v-model="searchData.status" style="width:100%;" placeholder="请选择状态">
+                    <a-select v-model="searchData.status" class="basic-select-width" placeholder="请选择状态">
                         <a-select-option value="">
                             状态
                         </a-select-option>
@@ -38,12 +34,10 @@
                             Option2
                         </a-select-option>
                     </a-select>
-                </a-col>
-                <a-col :span="5">
                     <a-button type="primary">
                         搜索
                     </a-button>
-                </a-col>
+                </a-space>
             </a-row>
         </a-input-group>
         <a-input-group class="a-input-group">
@@ -77,7 +71,7 @@
             </div>
         </a-table>
         <!--分页-->
-        <a-row type="flex" justify="end" class="a-input-group">
+        <a-row type="flex" justify="end" class="a-pagination">
             <a-pagination
                     v-model="pagination.current"
                     :page-size-options="pagination.pageSizeOptions"
@@ -136,7 +130,7 @@
         },
         {
             title: '商品货号',
-            dataIndex: '1s ',
+            dataIndex: 'aaa',
             width: 100,
         },
         {
@@ -146,7 +140,7 @@
         },
         {
             title: '商品分类',
-            dataIndex: 'city',
+            dataIndex: '商品分类',
             width: 100,
         },
         {
@@ -202,7 +196,13 @@
             city: '上海',
             status: String(i % 2),
             icon: '商品图标',
-
+            aaa: '商品货号',
+            通用名: '通用名',
+            商品分类: '商品分类',
+            unit: '基本单位',
+            specifications: '规格',
+            manufacturer: '生产厂家',
+            
         });
     }
 
