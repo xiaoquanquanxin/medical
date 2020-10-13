@@ -174,7 +174,7 @@
     ];
     const basicData = [{
         key: 1,
-        planName: '权鑫123',
+        planName: '许晓飞123',
         cycle: '年',
         prescriptionType: '吃',
         cost: '¥20'
@@ -205,13 +205,13 @@
     ];
     const oralData = [{
         key: 1,
-        commodityName: '权鑫123',
+        commodityName: '许晓飞123',
         buyer: '年',
         unitPrice: '吃',
         quantity: '¥20'
     }, {
         key: 2,
-        commodityName: '权鑫123',
+        commodityName: '许晓飞123',
         buyer: '年',
         unitPrice: '吃',
         quantity: '¥20'
@@ -219,13 +219,13 @@
     //  肠内营养支持 数据
     const intestinalData = [{
         key: 1,
-        commodityName: '权鑫123',
+        commodityName: '许晓飞123',
         buyer: '年',
         unitPrice: '吃',
         quantity: '¥20'
     }, {
         key: 2,
-        commodityName: '权鑫123',
+        commodityName: '许晓飞123',
         buyer: '年',
         unitPrice: '吃',
         quantity: '¥20'

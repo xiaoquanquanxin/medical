@@ -20,7 +20,7 @@
     const countTableData = [
         {
             key: Math.random(),
-            distributors: '权鑫',
+            distributors: '许晓飞',
             hospital: '山西省人民医院',
             relative: '10克',
             shoppingType: 'A商品',
@@ -28,7 +28,7 @@
         },
         {
             key: Math.random(),
-            distributors: '权鑫',
+            distributors: '许晓飞',
             hospital: '山西省肿瘤医院',
             relative: '110克',
             shoppingType: 'A商品',

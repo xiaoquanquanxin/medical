@@ -64,7 +64,7 @@
     for (let i = 0; i < 10; i++) {
         data.push({
             key: i,
-            name: '权鑫',
+            name: '许晓飞',
             sex: '男',
             familyGroup: 'xxx',
         });
