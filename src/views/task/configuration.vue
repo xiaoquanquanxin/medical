@@ -56,7 +56,8 @@
             >
                 <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
                     <a-space>
-                        <router-link :to="{name:'auditDetail',params:{auditDetailId:sIndex}}">详情</router-link>
+                        <router-link :to="{name:'configurationDetail',params:{configurationDetailId:sIndex}}">详情
+                        </router-link>
                         <a @click="confirmReceiving(sItem)">确定签收</a>
                         <a @click="confirmConfig(sItem)">确定配置</a>
                     </a-space>
@@ -79,6 +80,7 @@
                 </a-pagination>
             </a-row>
         </div>
+        <!--打印-->
         <div v-show="false">
             <div id="printBottle" data-msg="打印瓶贴">
                 <ul class="bottle-list">
@@ -197,7 +199,7 @@
             width: 100,
         },
         {
-            title: '状态',
+            title: '配置状态',
             dataIndex: 'update',
             width: 100,
         },
@@ -250,7 +252,6 @@
                     id: '#printMenu',
                     popTitle: '打印配置单',
                 },
-
             };
         },
         methods: {
@@ -270,9 +271,41 @@
                 console.log(selectDateValue);
             },
             //  确定签收
-            confirmReceiving(sItem){},
+            confirmReceiving(sItem){
+                this.$confirm({
+                    title: `确定签收${sItem.disease}`,
+                    //  content: 'Bla bla ...',
+                    okText: '确认',
+                    cancelText: '取消',
+                    onOk(){
+                        return new Promise((resolve, reject) => {
+                            console.log('发请求');
+                            setTimeout(Math.random() > 0.5 ? resolve : reject, 1111);
+                        }).catch(() => console.log('Oops errors!'));
+                    },
+                    onCancel(){
+                        console.log('取消');
+                    },
+                });
+            },
             //  确定配置
-            confirmConfig(sItem){},
+            confirmConfig(sItem){
+                this.$confirm({
+                    title: `确定配置${sItem.disease}`,
+                    //  content: 'Bla bla ...',
+                    okText: '确认',
+                    cancelText: '取消',
+                    onOk(){
+                        return new Promise((resolve, reject) => {
+                            console.log('发请求');
+                            setTimeout(Math.random() > 0.5 ? resolve : reject, 1111);
+                        }).catch(() => console.log('Oops errors!'));
+                    },
+                    onCancel(){
+                        console.log('取消');
+                    },
+                });
+            },
         }
     };
 </script>
@@ -333,15 +366,3 @@
         width: 40%;
     }
 </style>
-<!--确定签收莫泰框-->
-<!--        <a-modal v-model="dialogDataActivityBrief.visible"-->
-<!--                 v-if="dialogDataActivityBrief.visible"-->
-<!--                 :maskClosable="false"-->
-<!--                 centered-->
-<!--                 :width="800"-->
-<!--                 title="活动小结"-->
-<!--                 ok-text="确认"-->
-<!--                 cancel-text="取消"-->
-<!--                 @ok="addActivityBriefModalCheck('refActivityBriefForm')">-->
-<!--            <ActivityBriefForm ref="refActivityBriefForm"/>-->
-<!--        </a-modal>-->
