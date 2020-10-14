@@ -2,23 +2,14 @@
     <div class="layout-content-inner-main">
         <!--搜索相关-->
         <a-input-group class="a-input-group">
-            <a-row :gutter="8">
-                <a-col :span="5">
-                    <a-select
-                            v-model="searchData.list"
-                            style="width:100%;"
-                            placeholder="请选择列表"
-                    >
-                        <a-select-option value="1600">1600</a-select-option>
-                        <a-select-option value="160">160</a-select-option>
-                    </a-select>
-                </a-col>
-                <a-col :span="5">
-                    <a-button type="primary">
-                        搜索
-                    </a-button>
-                </a-col>
-            </a-row>
+            <a-space>
+                <div class="basic-input-width">
+                    <a-input v-model="searchData.commodityName" placeholder="请输入评估表名"/>
+                </div>
+                <a-button type="primary">
+                    搜索
+                </a-button>
+            </a-space>
         </a-input-group>
         <a-input-group class="a-input-group">
             <router-link :to="{name:'addAssessment',params:{patientInfoId}}">
