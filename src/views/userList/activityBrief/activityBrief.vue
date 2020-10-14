@@ -103,7 +103,7 @@
                 this.showModal(DIALOG_TYPE.ACTIVITY_BRIEF);
             },
 
-            //  确认相亲
+            //  确认详情
             addActivityBriefModalCheck(refActivityBriefForm){
                 const promise = this.$refs[refActivityBriefForm].handleSubmit();
                 promise.then(v => {
