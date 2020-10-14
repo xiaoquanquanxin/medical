@@ -24,15 +24,16 @@
 
 	}
 </script>
-<style scoped lang="stylus">
-    .layout-content
-        background white;
-        //  layout的高度
-        max-height calc(100vh - 50px - 64px);
-        overflow hidden;
+<style scoped>
+    /*layout的高度 max-height: calc(100vh - 50px - 64px);*/
+    .layout-content {
+        background: white;
+        overflow: hidden;
+    }
     
-    .layout-content-inner
-        height 100%;
-        position relative;
-        overflow auto;
+    .layout-content-inner {
+        height: 100%;
+        position: relative;
+        overflow: auto;
+    }
 </style>
