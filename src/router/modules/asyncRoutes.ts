@@ -813,6 +813,90 @@ export const asyncRoutesList = [
 		component: () => import(/* webpackChunkName: "assessment" */ '@/views/userList/assessment/addAssessment.vue'),
 		hidden: true,
 	},
+
+	{
+		meta: {
+			chName: '处方审核列表',
+			selectRouteKey: 'auditList',
+		},
+		path: '/auditList',
+		name: 'auditList',
+		component: () => import(/* webpackChunkName: "doctor" */ '@/views/auditList/auditList.vue'),
+	},
+	{
+		meta: {
+			chName: '处方审核详情',
+			selectRouteKey: 'auditList',
+		},
+		path: '/auditList/auditDetail/:auditDetailId',
+		name: 'auditDetail',
+		component: () => import(/* webpackChunkName: "auditDetail" */ '@/views/auditList/auditDetail.vue'),
+		hidden: true
+	},
+
+	{
+		meta: {
+			chName: '配置任务',
+			selectRouteKey: 'task',
+		},
+		path: '/task',
+		name: 'task',
+		component: LayoutStair,
+		children: [
+			{
+				meta: {
+					chName: '配置任务',
+					selectRouteKey: 'configuration',
+					openRouteKey: 'task',
+				},
+				name: 'configuration',
+				path: '/task/configuration',
+				component: () => import(/* webpackChunkName: "configuration" */ '@/views/task/configuration.vue'),
+			},
+			{
+				meta: {
+					chName: '配置任务详情',
+					selectRouteKey: 'configurationDetail',
+					openRouteKey: 'task',
+				},
+				name: 'configurationDetail',
+				path: '/task/configurationDetail/:configurationDetailId',
+				component: () => import(/* webpackChunkName: "configurationDetail" */ '@/views/task/configurationDetail.vue'),
+				hidden: true,
+			},
+			{
+				meta: {
+					chName: '领药任务',
+					selectRouteKey: 'getDrug',
+					openRouteKey: 'task',
+				},
+				name: 'getDrug',
+				path: '/task/getDrug',
+				component: () => import(/* webpackChunkName: "getDrug" */ '@/views/task/getDrug.vue'),
+			},
+			{
+				meta: {
+					chName: '领药任务详情',
+					selectRouteKey: 'getDrugDetail',
+					openRouteKey: 'task',
+				},
+				name: 'getDrugDetail',
+				path: '/task/getDrugDetail/:getDrugDetailId',
+				component: () => import(/* webpackChunkName: "getDrugDetail" */ '@/views/task/getDrugDetail.vue'),
+				hidden: true,
+			},
+			{
+				meta: {
+					chName: '报损',
+					selectRouteKey: 'reportedLoss',
+					openRouteKey: 'task',
+				},
+				path: '/task/reportedLoss',
+				name: 'reportedLoss',
+				component: () => import(/* webpackChunkName: "reportedLoss" */ '@/views/warehouse/reportedLoss.vue'),
+			},
+		],
+	},
 ]
 
 
