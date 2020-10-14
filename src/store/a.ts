@@ -199,6 +199,8 @@ export const routeMap = {
 
 	//	收计费
 	'cost': true,
+	//	收计费
+	'costList': true,
 	//	退费记录
 	'returnPremium': true,
 	//	缴费记录
