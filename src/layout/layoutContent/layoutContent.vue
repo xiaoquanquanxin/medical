@@ -11,8 +11,9 @@
 
 	}
 </script>
-<style scoped lang="stylus">
-    .layout-content
+<style scoped>
+    .layout-content {
         padding: 24px;
         background: white;
+    }
 </style>
