@@ -897,6 +897,48 @@ export const asyncRoutesList = [
 			},
 		],
 	},
+	{
+		meta: {
+			chName: '收计费',
+			selectRouteKey: 'cost',
+		},
+		path: '/cost',
+		name: 'cost',
+		component: LayoutStair,
+		children: [
+			{
+				meta: {
+					chName: '退费记录',
+					selectRouteKey: 'returnPremium',
+					openRouteKey: 'cost',
+				},
+				name: 'returnPremium',
+				path: '/cost/returnPremium',
+				component: () => import(/* webpackChunkName: "returnPremium" */ '@/views/cost/returnPremium.vue'),
+			},
+			{
+				meta: {
+					chName: '缴费记录',
+					selectRouteKey: 'paymentRecords',
+					openRouteKey: 'cost',
+				},
+				name: 'paymentRecords',
+				path: '/cost/paymentRecords',
+				component: () => import(/* webpackChunkName: "paymentRecords" */ '@/views/cost/paymentRecords.vue'),
+			},
+			{
+				meta: {
+					chName: '收计费详情',
+					selectRouteKey: 'costDetail',
+					openRouteKey: 'cost',
+				},
+				name: 'costDetail',
+				path: '/cost/costDetail/:costDetailId',
+				component: () => import(/* webpackChunkName: "costDetail" */ '@/views/cost/costDetail.vue'),
+				hidden: true,
+			},
+		]
+	}
 ]
 
 

@@ -169,8 +169,42 @@ export const routeMap = {
 	//	确认入院
 	'admittedHospital': true,
 	//	新增入院
-	'newAdmittedHospital': true,
+	'addAdmittedHospital': true,
 
+	//	新增筛查
+	'addScreening': true,
+	//	筛查详情
+	'screeningDetail': true,
+
+	//	新增营养评估
+	'addAssessment': true,
+	//	营养评估详情
+	'assessmentDetail': true,
+
+	//	处方审核列表
+	'auditList': true,
+	//	处方审核详情
+	'auditDetail': true,
+
+	//	配置任务
+	'task': true,
+	//	配置任务
+	'configuration': true,
+	//	配置任务详情
+	'configurationDetail': true,
+	//	领药任务
+	'getDrug': true,
+	//	领药详情
+	'getDrugDetail': true,
+
+	//	收计费
+	'cost': true,
+	//	退费记录
+	'returnPremium': true,
+	//	缴费记录
+	'paymentRecords': true,
+	//	收计费详情
+	'costDetail': true,
 };
 
 
