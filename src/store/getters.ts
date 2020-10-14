@@ -30,6 +30,9 @@ const getters = {
 	//	用户列表
 	userList: (state: any) => state.app.userList,
 
+	//	收计费
+	cost: (state: any) => state.app.cost,
+
 
 	accountBox: (state: any) => state.app.accountBox,
 	addOral: (state: any) => state.app.addOral,
