@@ -13,9 +13,9 @@
                     <div class="basic-input-width">
                         <a-input v-model="searchData.commodityName" placeholder="请输入患者姓名"/>
                     </div>
-                    <div class="basic-input-width">
+                    <div class="lengthen-select-width">
                         <a-date-picker
-                                placeholder="请选择日期"
+                                placeholder="请选择配置日期"
                                 v-model="selectDateMoment"
                                 @change="onDateChange"
                         />

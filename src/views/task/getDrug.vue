@@ -15,7 +15,7 @@
                     </div>
                     <div class="basic-input-width">
                         <a-date-picker
-                                placeholder="请选择日期"
+                                placeholder="lengthen-select-width"
                                 v-model="selectDateMoment"
                                 @change="onDateChange"
                         />
