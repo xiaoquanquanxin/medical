@@ -88,6 +88,11 @@ export const DIALOG_TYPE: DialogType = {
 
 	//	活动小结弹框
 	ACTIVITY_BRIEF: 'ACTIVITY_BRIEF',
+
+	//	确定签收
+	CONFIRM_RECEIVING: 'CONFIRM_RECEIVING',
+	//	确定配置
+	CONFIRM_CONFIG: 'CONFIRM_CONFIG',
 }
 
 
