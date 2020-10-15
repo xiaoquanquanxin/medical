@@ -10,14 +10,19 @@
                     Option2
                 </a-select-option>
             </a-select>
-              <a-range-picker
+            <a-range-picker
                     class="basic-range-picker-width"
                     :placeholder="['开始日期','结束日期']"
                     @change="onRangePickerChange"
             />
-            <a-button type="primary">
-                搜索
-            </a-button>
+            <a-space>
+                <a-button type="primary">
+                    搜索
+                </a-button>
+                <a-button type="primary" @click="executeFn">
+                    执行月结
+                </a-button>
+            </a-space>
         </div>
         <!--表格-->
         <a-table
@@ -53,7 +58,7 @@
 <script>
     import { pagination } from '@/utils/pagination.ts';
     import { oneRowSearch } from '../../utils/tableScroll';
-    
+
     const columns = [
         {
             title: '序号',
@@ -146,6 +151,10 @@
             onRangePickerChange(value, selectDateValue){
                 console.log(selectDateValue);
             },
+            //  执行月结
+            executeFn(){
+                this.$router.push({ name: 'monthlyExecute', params: { monthlyExecuteId: '122' } });
+            }
         }
     };
 </script>

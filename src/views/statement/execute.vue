@@ -26,45 +26,41 @@
                     @change="onRangePickerChange"
             />
             <a-space>
-                <a-button type="primary">
-                    搜索
-                </a-button>
-                <a-button type="primary" v-print="printObj">打印</a-button>
+                <a-button type="primary">搜索</a-button>
+                <a-button type="primary" @click="confirmExecute">确认结算</a-button>
             </a-space>
         </div>
-        <div id="printContent">
-            <!--表格-->
-            <a-table
-                    :columns="columns"
-                    :data-source="data"
-                    :scroll="scroll"
-                    :pagination="false"
-            >
-            </a-table>
-            <div>
-                <ul class="statement-detail-list">
-                    <li class="statement-detail-item">
-                        <div class="statement-detail-label">现金收入总计</div>
-                        <div class="statement-detail-content red">¥32</div>
-                    </li>
-                    <li class="statement-detail-item">
-                        <div class="statement-detail-label">微信收入总计</div>
-                        <div class="statement-detail-content red">¥32</div>
-                    </li>
-                    <li class="statement-detail-item">
-                        <div class="statement-detail-label">支付宝收入总计</div>
-                        <div class="statement-detail-content red">¥32</div>
-                    </li>
-                    <li class="statement-detail-item footing">
-                        <div class="statement-detail-label">本页合计</div>
-                        <div class="statement-detail-content red">¥32</div>
-                    </li>
-                    <li class="statement-detail-item footing">
-                        <div class="statement-detail-label">总合计</div>
-                        <div class="statement-detail-content red">¥32</div>
-                    </li>
-                </ul>
-            </div>
+        <!--表格-->
+        <a-table
+                :columns="columns"
+                :data-source="data"
+                :scroll="scroll"
+                :pagination="false"
+        >
+        </a-table>
+        <div>
+            <ul class="statement-detail-list">
+                <li class="statement-detail-item">
+                    <div class="statement-detail-label">现金收入总计</div>
+                    <div class="statement-detail-content red">¥32</div>
+                </li>
+                <li class="statement-detail-item">
+                    <div class="statement-detail-label">微信收入总计</div>
+                    <div class="statement-detail-content red">¥32</div>
+                </li>
+                <li class="statement-detail-item">
+                    <div class="statement-detail-label">支付宝收入总计</div>
+                    <div class="statement-detail-content red">¥32</div>
+                </li>
+                <li class="statement-detail-item footing">
+                    <div class="statement-detail-label">本页合计</div>
+                    <div class="statement-detail-content red">¥32</div>
+                </li>
+                <li class="statement-detail-item footing">
+                    <div class="statement-detail-label">总合计</div>
+                    <div class="statement-detail-content red">¥32</div>
+                </li>
+            </ul>
         </div>
     </div>
 </template>
@@ -165,19 +161,13 @@
                 },
 
                 //  路由id
-                dailyDetailId: this.$route.params.dailyDetailId,
-                monthlyDetailId: this.$route.params.monthlyDetailId,
-
-                //  打印对象
-                printObj: {
-                    id: '#printContent',
-                    popTitle: '日结详情',
-                },
+                dailyExecuteId: this.$route.params.dailyExecuteId,
+                monthlyExecuteId: this.$route.params.monthlyExecuteId,
             };
         },
         created(){
-            console.log('日结id', this.dailyDetailId);
-            console.log('月结id', this.monthlyDetailId);
+            console.log('日结id', this.dailyExecuteId);
+            console.log('月结id', this.monthlyExecuteId);
         },
         methods: {
             //  展示的每一页数据变换
@@ -195,6 +185,24 @@
             onRangePickerChange(value, selectDateValue){
                 console.log(selectDateValue);
             },
+            //  确认结算
+            confirmExecute(){
+                this.$confirm({
+                    title: `确认结算${'xxx'}`,
+                    //  content: 'Bla bla ...',
+                    okText: '确认',
+                    cancelText: '取消',
+                    onOk(){
+                        return new Promise((resolve, reject) => {
+                            console.log('发请求');
+                            setTimeout(Math.random() > 0.5 ? resolve : reject, 1111);
+                        }).catch(() => console.log('Oops errors!'));
+                    },
+                    onCancel(){
+                        console.log('取消');
+                    },
+                });
+            }
         }
     };
 </script>

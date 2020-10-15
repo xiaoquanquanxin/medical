@@ -16,15 +16,18 @@
                     v-model="searchData.startDateMoment"
                     @change="onStartDateChange"
             />
-<!--            <a-date-picker-->
-<!--                    class="lengthen-select-width"-->
-<!--                    placeholder="请选择结束日期"-->
-<!--                    v-model="searchData.endDateMoment"-->
-<!--                    @change="onEndDateChange"-->
-<!--            />-->
-            <a-button type="primary">
-                搜索
-            </a-button>
+            <!--            <a-date-picker-->
+            <!--                    class="lengthen-select-width"-->
+            <!--                    placeholder="请选择结束日期"-->
+            <!--                    v-model="searchData.endDateMoment"-->
+            <!--                    @change="onEndDateChange"-->
+            <!--            />-->
+            <a-space>
+                <a-button type="primary">
+                    搜索
+                </a-button>
+                <a-button type="primary" @click="executeFn">执行日结</a-button>
+            </a-space>
         </div>
         <!--表格-->
         <a-table
@@ -157,6 +160,10 @@
 //            onEndDateChange(value, selectDateValue){
 //                console.log(selectDateValue);
 //            },
+            //  执行日结
+            executeFn(){
+                this.$router.push({ name: 'dailyExecute', params: { dailyExecuteId: '33' } });
+            }
         }
     };
 </script>
