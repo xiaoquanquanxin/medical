@@ -1,6 +1,4 @@
-export const TOJSON = (data: any) => {
-	if (!data) {
-		return data
-	}
-	return JSON.parse(JSON.stringify(data))
+//	阻止默认事件
+export function preventDefault(e: Event) {
+	e.preventDefault();
 }
