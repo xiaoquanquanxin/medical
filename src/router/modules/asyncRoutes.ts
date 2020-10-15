@@ -40,7 +40,7 @@ export const asyncRoutesList = [
 		},
 		name: 'distributors',
 		path: '/distributors',
-		component: () => import(/* webpackChunkName: "changePassword" */ '@/views/distributors/distributors.vue'),
+		component: () => import(/* webpackChunkName: "distributors" */ '@/views/distributors/distributors.vue'),
 	},
 	{
 		meta: {
@@ -49,7 +49,7 @@ export const asyncRoutesList = [
 		},
 		name: 'supplier',
 		path: '/supplier',
-		component: () => import(/* webpackChunkName: "changePassword" */ '@/views/supplier/supplier.vue'),
+		component: () => import(/* webpackChunkName: "supplier" */ '@/views/supplier/supplier.vue'),
 	},
 	{
 		meta: {
@@ -464,6 +464,26 @@ export const asyncRoutesList = [
 		children: [
 			{
 				meta: {
+					chName: '角色管理',
+					selectRouteKey: 'role',
+					openRouteKey: 'system',
+				},
+				name: 'role',
+				path: '/system/role',
+				component: () => import(/* webpackChunkName: "role" */ '@/views/system/role.vue'),
+			},
+			{
+				meta: {
+					chName: '账号管理',
+					selectRouteKey: 'account',
+					openRouteKey: 'system',
+				},
+				name: 'account',
+				path: '/system/account',
+				component: () => import(/* webpackChunkName: "account" */ '@/views/system/account.vue'),
+			},
+			{
+				meta: {
 					chName: '修改密码',
 					selectRouteKey: 'changePassword',
 					openRouteKey: 'system',
@@ -489,7 +509,7 @@ export const asyncRoutesList = [
 	// 	},
 	// 	name: 'viewGoods',
 	// 	path: '/viewGoods',
-	// 	component: () => import(/* webpackChunkName: "changePassword" */ '@/views/viewGoods/viewGoods.vue'),
+	// 	component: () => import(/* webpackChunkName: "viewGoods" */ '@/views/viewGoods/viewGoods.vue'),
 	// },
 
 	/**
@@ -535,7 +555,7 @@ export const asyncRoutesList = [
 	// 	},
 	// 	name: 'distributorsGoods',
 	// 	path: '/distributorsGoods',
-	// 	component: () => import(/* webpackChunkName: "changePassword" */ '@/views/viewGoods/viewGoods.vue'),
+	// 	component: () => import(/* webpackChunkName: "distributorsGoods" */ '@/views/viewGoods/viewGoods.vue'),
 	// },
 
 	//	订单管理
@@ -1052,26 +1072,6 @@ export const asyncRoutesList = [
 // 	hidden: true,
 // },
 
-// {
-// 	meta: {
-// 		chName: '角色管理',
-// 		selectRouteKey: 'role',
-// 		openRouteKey: 'system',
-// 	},
-// 	name: 'role',
-// 	path: '/system/role',
-// 	component: () => import(/* webpackChunkName: "role" */ '@/views/system/role.vue'),
-// },
-// {
-// 	meta: {
-// 		chName: '账号管理',
-// 		selectRouteKey: 'account',
-// 		openRouteKey: 'system',
-// 	},
-// 	name: 'account',
-// 	path: '/system/account',
-// 	component: () => import(/* webpackChunkName: "account" */ '@/views/system/account.vue'),
-// },
 
 // {
 // 	meta: {

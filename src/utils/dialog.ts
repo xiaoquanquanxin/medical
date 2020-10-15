@@ -93,6 +93,9 @@ export const DIALOG_TYPE: DialogType = {
 	PAY_COST: 'PAY_COST',
 	//	收计费 - 退费	⚠️ 被上面的缴费取代
 	// RETURN_COST: 'RETURN_COST',
+
+	//  新增、编辑、查看角色
+	ROLE: 'ROLE',
 }
 
 

@@ -5,7 +5,6 @@ const getters = {
 	routeList: (state: any) => state.app.routeList,
 	//	左右框
 	shuttleBox: (state: any) => state.app.shuttleBox,
-	roleBox: (state: any) => state.app.roleBox,
 
 	//	用户信息
 	userInfo: (state: any) => state.app.userInfo,
@@ -25,6 +24,9 @@ const getters = {
 	prescriptionTemplate: (state: any) => state.app.prescriptionTemplate,
 	//	库房管理
 	warehouse: (state: any) => state.app.warehouse,
+
+	//	系统管理
+	system: (state: any) => state.app.system,
 
 	//	🍎🍎🍎🍎🍎营养方案系统
 	//	用户列表
