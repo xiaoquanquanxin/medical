@@ -188,19 +188,19 @@
                     },]
                 }],
 
-                //  输入登陆密码的校验
+                //  输入登录密码的校验
                 passwordDecorator: ['password', {
                     rules: [{
                         required: true,
-                        message: '请输入登陆密码'
+                        message: '请输入登录密码'
                     },]
                 }],
-                //  输入登陆密码的校验
+                //  输入登录密码的校验
                 checkPasswordDecorator: ['checkPassword', {
                     rules: [
                         {
                             required: true,
-                            message: '请输入登陆密码'
+                            message: '请输入登录密码'
                         },
                         {
                             validator: this.compareToFirstPassword('password'),

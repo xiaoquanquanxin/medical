@@ -10,7 +10,7 @@ export const syncRoutesList: Array<any> = [
 		hidden: true
 	},
 	{
-		chName: '登陆',
+		chName: '登录',
 		path: '/login',
 		name: 'login',
 		component: Login,

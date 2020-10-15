@@ -2,60 +2,179 @@
     <div class="login-form">
         <a-form class="login-wrap"
                 @submit="handleSubmit"
+                :form="form"
+                :style="loginWrapStyle"
         >
             <a-form-item>
-                <p class="login-title">标题</p>
+                <p class="login-title">综合管理平台</p>
             </a-form-item>
             <a-form-item>
-                <a-input
-                        ref="username"
-                        placeholder="请输入用户名"
-                        v-model="form.userName"
+                <a-select default-value="1"
+                          @change="selectChange"
                 >
-                    <a-icon slot="prefix" type="user" style="color:rgba(0,0,0,.25)"/>
-                </a-input>
+                    <a-select-option value="1">
+                        平台登录
+                    </a-select-option>
+                    <a-select-option value="2">
+                        供应商登录
+                    </a-select-option>
+                    <a-select-option value="3">
+                        渠道登录
+                    </a-select-option>
+                    <a-select-option value="-1">
+                        医院登录
+                    </a-select-option>
+                </a-select>
             </a-form-item>
-            <a-form-item>
-                <a-input
-                        ref="password"
-                        type="password"
-                        placeholder="请输入密码"
-                        v-model="form.password"
-                >
-                    <a-icon slot="prefix" type="lock" style="color:rgba(0,0,0,.25)"/>
-                </a-input>
-            </a-form-item>
+            <div v-show="basicForm" data-msg="常规输入框">
+                <a-form-item>
+                    <a-input
+                            placeholder="请输入用户名"
+                            v-decorator="userNameDecorator"
+                    >
+                        <a-icon slot="prefix" type="user" class="icon-color"/>
+                    </a-input>
+                </a-form-item>
+                <a-form-item>
+                    <a-input
+                            type="password"
+                            placeholder="请输入密码"
+                            v-decorator="passwordDecorator"
+                    >
+                        <a-icon slot="prefix" type="lock" class="icon-color"/>
+                    </a-input>
+                </a-form-item>
+            </div>
+            <div v-show="!basicForm" data-msg="医院登录输入框">
+                <a-tabs default-active-key="1" tabPosition="top" style="margin-top:-20px;">
+                    <a-tab-pane key="1" tab="账号登录">
+                        <a-form-item>
+                            <a-input
+                                    placeholder="请输入用户名"
+                                    v-decorator="userNameDecorator"
+                            >
+                                <a-icon slot="prefix" type="user" class="icon-color"/>
+                            </a-input>
+                        </a-form-item>
+                        <a-form-item>
+                            <a-input
+                                    type="password"
+                                    placeholder="请输入密码"
+                                    v-decorator="userNameDecorator"
+                            >
+                                <a-icon slot="prefix" type="lock" class="icon-color"/>
+                            </a-input>
+                        </a-form-item>
+                    </a-tab-pane>
+                    <a-tab-pane key="-1" tab="验证码登录">
+                        <a-form-item>
+                            <a-input-group compact>
+                                <a-input
+                                        style="width:179px;"
+                                        placeholder="请输入手机号"
+                                        v-decorator="phoneNumberDecorator"
+                                >
+                                    <a-icon slot="prefix" type="user" class="icon-color"/>
+                                </a-input>
+                                <a-button type="primary" @click="getMessage">获取验证码</a-button>
+                            </a-input-group>
+                        </a-form-item>
+                        <a-form-item>
+                            <a-input
+                                    placeholder="请输入验证码"
+                                    v-decorator="userNameDecorator"
+                            >
+                                <a-icon slot="prefix" type="lock" class="icon-color"/>
+                            </a-input>
+                        </a-form-item>
+                    </a-tab-pane>
+                </a-tabs>
+            </div>
             <a-form-item>
                 <a-button type="primary"
                           block
-                          html-type="submit"
-                          :disabled="!(form.userName && form.password)">登陆
-                </a-button>
+                          @click="handleSubmit"
+                >登录</a-button>
             </a-form-item>
         </a-form>
     </div>
 </template>
 <script>
     export default {
-        name: 'Login',
+        beforeCreate(){
+            this.form = this.$form.createForm(this);
+        },
         data(){
             return {
-                hasErrors: (fieldsError) => {
-                    return Object.keys(fieldsError).some((field) => {
-                        return fieldsError[field];
-                    });
+                //  基础类型
+                basicForm: true,
+                //  外框的样式，主要是高度
+                loginWrapStyle: {
+                    height: '380px',
                 },
-                form: {
-                    userName: null,
-                    password: null,
-                }
+
+                //  用户名
+                userNameDecorator: ['userName', {
+                    rules: [{
+                        required: true,
+                        message: '请输入用户名'
+                    },]
+                }],
+                //  密码
+                passwordDecorator: ['password', {
+                    rules: [{
+                        required: true,
+                        message: '请输入密码'
+                    },]
+                }],
+                //  手机号
+                phoneNumberDecorator: ['phoneNumber', {
+                    rules: [{
+                        required: true,
+                        message: '请输入手机号'
+                    },]
+                }],
+                //  验证码
+                verificationDecorator: ['verification', {
+                    rules: [{
+                        required: true,
+                        message: '请输入验证码'
+                    },]
+                }],
             };
         },
         methods: {
-            //    表单提交
-            handleSubmit(e){
-                console.log(e);
-                e.preventDefault();
+            //    登录
+            handleSubmit(){
+                return new Promise(((resolve, reject) => {
+                    console.log(this.form);
+                    this.form.validateFields((err, values) => {
+                        console.table(values);
+                        if (!err) {
+                            resolve();
+                        } else {
+                            reject();
+                        }
+                    });
+                }))
+                    .then(v => {
+                        return new Promise(((resolve, reject) => {
+                            console.log('发请求吧');
+                            setTimeout(() => {
+                                resolve();
+                            }, 1000);
+                        }));
+                    });
+            },
+            //  选择登录变化
+            selectChange(e){
+                this.basicForm = e > 0;
+                this.loginWrapStyle.height = `${(e > 0) ? 380 : 420}px`;
+                this.loginWrapStyle.top = `${(e > 0) ? 0 : 40}px`;
+            },
+            //  获取短信验证码
+            getMessage(e){
+                console.log();
             }
         }
     };
@@ -79,7 +198,6 @@
     
     .login-wrap {
         width: 400px;
-        height: 380px;
         padding: 50px 60px 40px;
         border-radius: 10px;
         position: absolute;
@@ -98,20 +216,7 @@
     }
     
     
-    .login-form-forgot {
-        float: right;
-    }
-    
-    .login-form-button {
-        width: 100%;
-    }
-    
-    #right-block {
-        position: absolute;
-        z-index: +1;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
+    .icon-color {
+        color: rgba(0, 0, 0, .25);
     }
 </style>

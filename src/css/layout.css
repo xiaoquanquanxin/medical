@@ -177,3 +177,8 @@ span.ant-radio + * {
 .ant-calendar-picker {
     display: flex;
 }
+
+/*登录页面的选项卡*/
+.login-form .ant-tabs-bottom .ant-tabs-bottom-bar {
+    margin-top: 0;
+}

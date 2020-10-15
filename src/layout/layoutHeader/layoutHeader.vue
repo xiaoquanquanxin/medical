@@ -19,15 +19,15 @@
                             </a>
                             <a-menu slot="overlay" @click="onClick">
                                 <a-menu-item key="1">
-                                    退出登陆
+                                    退出登录
                                 </a-menu-item>
                             </a-menu>
                         </a-dropdown>
-<!--                        <a-button>-->
-<!--                            <a-badge count="3">-->
-<!--                                消息-->
-<!--                            </a-badge>-->
-<!--                        </a-button>-->
+                        <!--                        <a-button>-->
+                        <!--                            <a-badge count="3">-->
+                        <!--                                消息-->
+                        <!--                            </a-badge>-->
+                        <!--                        </a-button>-->
                         <span></span>
                         <span></span>
                     </a-space>
@@ -56,7 +56,7 @@
 
 
 		onClick({key}: { key: string }) {
-			console.log(`Click on item ${key}`);
+			this.$router.push({name: 'login'})
 		}
 	}
 </script>

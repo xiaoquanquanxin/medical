@@ -138,18 +138,18 @@
                         message: '请选择仓库'
                     },]
                 }],
-                //  登陆账户
+                //  登录账户
                 loginAccountDecorator: ['loginAccount', {
                     rules: [{
                         required: true,
-                        message: '请输入登陆账户'
+                        message: '请输入登录账户'
                     },]
                 }],
-                //  登陆密码
+                //  登录密码
                 passwordDecorator: ['password', {
                     rules: [{
                         required: true,
-                        message: '请输入登陆密码'
+                        message: '请输入登录密码'
                     },]
                 }],
                 //  确认密码
