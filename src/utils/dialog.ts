@@ -88,6 +88,11 @@ export const DIALOG_TYPE: DialogType = {
 
 	//	活动小结弹框
 	ACTIVITY_BRIEF: 'ACTIVITY_BRIEF',
+
+	//	收计费 - 缴费
+	PAY_COST: 'PAY_COST',
+	//	收计费 - 退费	⚠️ 被上面的缴费取代
+	// RETURN_COST: 'RETURN_COST',
 }
 
 
