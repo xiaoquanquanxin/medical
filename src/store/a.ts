@@ -125,9 +125,9 @@ export const routeMap = {
 	'warehouse': true,
 	//	商品库存
 	'inventory': true,
-	//	采购订单
+	//	医院采购订单
 	'purchaseOrder': true,
-	//	退货订单
+	//	医院退货订单
 	'salesReturnOrder': true,
 	//	出库
 	'outbound': true,
