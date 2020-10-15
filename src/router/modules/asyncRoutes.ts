@@ -1012,6 +1012,29 @@ export const asyncRoutesList = [
 				component: () => import(/* webpackChunkName: "statementDetail" */ '@/views/statement/statementDetail.vue'),
 				hidden: true,
 			},
+			{
+				meta: {
+					chName: '执行月结',
+					selectRouteKey: 'monthly',
+					openRouteKey: 'statement',
+				},
+				name: 'monthlyExecute',
+				path: '/statement/execute/:monthlyExecuteId',
+				component: () => import(/* webpackChunkName: "execute" */ '@/views/statement/execute.vue'),
+				hidden: true,
+			},
+			{
+				meta: {
+					chName: '执行日结',
+					selectRouteKey: 'daily',
+					openRouteKey: 'statement',
+				},
+				name: 'dailyExecute',
+				path: '/statement/execute/:dailyExecuteId',
+				component: () => import(/* webpackChunkName: "execute" */ '@/views/statement/execute.vue'),
+				hidden: true,
+			},
+
 		]
 	}
 ]

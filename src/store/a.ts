@@ -220,6 +220,10 @@ export const routeMap = {
 	'monthlyDetail': true,
 	//	日结详情
 	'dailyDetail': true,
+	//	执行月结
+	'monthlyExecute': true,
+	//	执行日结
+	'dailyExecute': true,
 };
 
 
