@@ -9,8 +9,9 @@
             <a-form-item label="缴费金额">
                 xxx
             </a-form-item>
-            <a-form-item label="输入缴费金额">
+            <a-form-item label="缴费金额">
                 <a-input-number
+                        placeholder="请输入"
                         :min="0"
                         :max="10"
                         v-decorator="costDecorator"
