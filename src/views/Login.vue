@@ -1,5 +1,6 @@
 <template>
     <div class="login-form">
+        背景图可+
         <a-form class="login-wrap"
                 @submit="handleSubmit"
                 :form="form"
@@ -60,7 +61,7 @@
                             <a-input
                                     type="password"
                                     placeholder="请输入密码"
-                                    v-decorator="userNameDecorator"
+                                    v-decorator="passwordDecorator"
                             >
                                 <a-icon slot="prefix" type="lock" class="icon-color"/>
                             </a-input>
@@ -82,7 +83,7 @@
                         <a-form-item>
                             <a-input
                                     placeholder="请输入验证码"
-                                    v-decorator="userNameDecorator"
+                                    v-decorator="verificationDecorator"
                             >
                                 <a-icon slot="prefix" type="lock" class="icon-color"/>
                             </a-input>
@@ -94,12 +95,15 @@
                 <a-button type="primary"
                           block
                           @click="handleSubmit"
-                >登录</a-button>
+                >登录
+                </a-button>
             </a-form-item>
         </a-form>
     </div>
 </template>
 <script>
+    import { isPhoneNumber } from '@/utils/validate';
+
     export default {
         beforeCreate(){
             this.form = this.$form.createForm(this);
@@ -130,9 +134,8 @@
                 //  手机号
                 phoneNumberDecorator: ['phoneNumber', {
                     rules: [{
-                        required: true,
-                        message: '请输入手机号'
-                    },]
+                        validator: isPhoneNumber,
+                    }]
                 }],
                 //  验证码
                 verificationDecorator: ['verification', {
@@ -144,38 +147,46 @@
             };
         },
         methods: {
-            //    登录
-            handleSubmit(){
-                return new Promise(((resolve, reject) => {
-                    console.log(this.form);
-                    this.form.validateFields((err, values) => {
-                        console.table(values);
-                        if (!err) {
-                            resolve();
-                        } else {
-                            reject();
-                        }
-                    });
-                }))
-                    .then(v => {
-                        return new Promise(((resolve, reject) => {
-                            console.log('发请求吧');
-                            setTimeout(() => {
-                                resolve();
-                            }, 1000);
-                        }));
-                    });
-            },
             //  选择登录变化
             selectChange(e){
                 this.basicForm = e > 0;
                 this.loginWrapStyle.height = `${(e > 0) ? 380 : 420}px`;
                 this.loginWrapStyle.top = `${(e > 0) ? 0 : 40}px`;
+                this.form.resetFields(['userName', 'password', 'phoneNumber', 'verification']);
             },
             //  获取短信验证码
-            getMessage(e){
-                console.log();
-            }
+            getMessage(){
+                this.form.validateFields(['phoneNumber'], { force: true });
+                const phoneNumberError = this.form.getFieldError('phoneNumber');
+                //  如果验证通过
+                if (!phoneNumberError || !phoneNumberError.length) {
+                    console.log('发请求');
+                }
+            },
+            //    登录
+            handleSubmit(){
+                new Promise(((resolve, reject) => {
+                        console.log(this.form);
+                        this.form.validateFields((err, values) => {
+                            console.table(values);
+                            if (!err) {
+                                console.log('发请求吧');
+                                setTimeout(() => {
+                                    resolve();
+                                }, 1000);
+                            } else {
+                                reject('验证错误');
+                            }
+                        });
+                    })
+                )
+                    .then(v => {
+                        console.log(v);
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            },
         }
     };
 </script>
