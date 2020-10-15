@@ -60,8 +60,8 @@
         >
             <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
                 <a-space size="small">
-                    <a @click="editDoctor(sItem)">编辑</a>
-                    <!--<a @click="deleteDoctor(sItem)">删除</a>-->
+                    <router-link :to="{name:'editDoctor',params:{doctorId:'32'}}">编辑</router-link>
+                    <a @click="deleteDoctor(sItem)">删除</a>
                 </a-space>
             </div>
         </a-table>
@@ -129,7 +129,7 @@
         {
             title: '操作',
             dataIndex: 'operation',
-            
+
             scopedSlots: { customRender: 'operation' },
         },
     ];
@@ -173,30 +173,26 @@
                 console.log(current);
                 console.log(pageSize);
             },
-            //  编辑医生
-            editDoctor(sItem, sIndex, extra){
-                this.$router.push({ name: 'editDoctor', params: { doctorId: sIndex } });
-            },
             //  删除医生
-//            deleteDoctor(sItem){
-//                console.log(sItem.doctor);
-//                this.$confirm({
-//                    title: `确定删除${sItem.doctor}`,
-//                    //  content: 'Bla bla ...',
-//                    okText: '确认',
-//                    okType: 'danger',
-//                    cancelText: '取消',
-//                    onOk(){
-//                        return new Promise((resolve, reject) => {
-//                            console.log('发请求');
-//                            setTimeout(Math.random() > 0.5 ? resolve : reject, 1111);
-//                        }).catch(() => console.log('Oops errors!'));
-//                    },
-//                    onCancel(){
-//                        console.log('取消');
-//                    },
-//                });
-//            },
+            deleteDoctor(sItem){
+                console.log(sItem.doctor);
+                this.$confirm({
+                    title: `确定删除${sItem.doctor}`,
+                    //  content: 'Bla bla ...',
+                    okText: '确认',
+                    okType: 'danger',
+                    cancelText: '取消',
+                    onOk(){
+                        return new Promise((resolve, reject) => {
+                            console.log('发请求');
+                            setTimeout(Math.random() > 0.5 ? resolve : reject, 1111);
+                        }).catch(() => console.log('Oops errors!'));
+                    },
+                    onCancel(){
+                        console.log('取消');
+                    },
+                });
+            },
         }
     };
 </script>

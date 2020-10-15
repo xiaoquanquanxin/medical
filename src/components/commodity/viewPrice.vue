@@ -9,7 +9,7 @@
             <!--单位-->
             <div slot="unit" slot-scope="scope,sItem,sIndex,extra">
                 <a-space size="small">
-                    <a-input placeholder="输入值" v-model="sItem.price"/>
+                    <a-input placeholder="输入值，只有渠道商可以输入值" v-model="sItem.price"/>
                 </a-space>
             </div>
         </a-table>
