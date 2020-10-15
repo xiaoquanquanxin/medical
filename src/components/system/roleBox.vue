@@ -6,14 +6,15 @@
             autocomplete="off"
     >
         <a-form-item label="角色名称">
-            <a-input v-decorator="characterNameDecorator" placeholder="请输入角色名称"/>
+            <a-input v-decorator="roleNameDecorator" placeholder="请输入角色名称"/>
         </a-form-item>
         <a-form-item label="角色描述">
-            <a-input placeholder="请输入角色描述"/>
+            <a-input v-decorator="roleDescriptionDecorator" placeholder="请输入角色描述"/>
         </a-form-item>
         <a-form-item label="权限">
             <a-tree-select
-                    v-model="value"
+                    v-if="treeData"
+                    v-model="treeSelectValue"
                     style="width: 100%"
                     :disabled="!treeData"
                     :tree-data="treeData"
@@ -29,7 +30,6 @@
 </template>
 <script>
     import { TreeSelect } from 'ant-design-vue';
-    //  import { mapGetters, mapActions } from 'vuex';
     import { formItemLayout } from '@/utils/layout.ts';
 
     const SHOW_PARENT = TreeSelect.SHOW_PARENT;
@@ -76,38 +76,54 @@
         beforeCreate(){
             this.form = this.$form.createForm(this);
         },
+        computed: {
+            //	角色操作类型 , 1 新增、2 编辑、3 查看
+            roleOperationType(){
+                return this.$store.state.system.roleOperationType;
+            },
+            //  被选中的角色的id
+            selectRoleId(){
+                return this.$store.state.system.selectRoleId;
+            }
+        },
         data(){
             return {
-                value: ['0-0-0'],
+                treeSelectValue: ['0-0-0'],
+                //  树的数据
                 treeData: null,
+                
                 SHOW_PARENT,
                 //  表单大小
                 formItemLayout,
-                characterNameDecorator: ['characterName', {
-                    initialValue: '商品名称',
+                //  角色名称
+                roleNameDecorator: ['roleName', {
+                    initialValue: '角色名称',
                     rules: [{
-                        max: 11,
-                        message: '最多11位',
-                    }, {
                         required: true,
-                        message: '请输入商品名称'
+                        message: '请输角色名称',
+                    },]
+                }],
+                //  角色描述
+                roleDescriptionDecorator: ['roleDescription', {
+                    initialValue: '角色描述',
+                    rules: [{
+                        required: true,
+                        message: '请输角色描述',
                     },]
                 }],
             };
         },
-        created(){
-            this.handleSubmit.bind(this);
-        },
         mounted(){
+            console.log(this.roleOperationType);
+            console.log(this.selectRoleId);
             setTimeout(() => {
                 this.treeData = treeData;
-            }, 2222);
+            }, 333);
         },
         methods: {
-            //  设置莫泰框选择的值到store
-            //  ...mapActions('roleBox', ['setPermissions']),
             //    表单提交
             handleSubmit(){
+                console.log(this.treeSelectValue)
                 return new Promise(((resolve, reject) => {
                     console.log(this.value);
                     this.form.validateFields((err, values) => {
