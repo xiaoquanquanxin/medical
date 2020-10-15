@@ -11,7 +11,7 @@
                          v-decorator="passwordDecorator"
                 />
             </a-form-item>
-            <a-form-item label="确认新密码">
+            <a-form-item label="确认新密码" required>
                 <a-input placeholder="确认新密码"
                          v-decorator="checkPasswordDecorator"
                 />
@@ -42,15 +42,11 @@
                     rules: [{
                         required: true,
                         message: '请输入新密码'
-                    },]
+                    }]
                 }],
                 //  输入新密码的校验
                 checkPasswordDecorator: ['checkPassword', {
                     rules: [
-                        {
-                            required: true,
-                            message: '请输入新密码'
-                        },
                         {
                             validator: this.compareToFirstPassword('password'),
                         },
