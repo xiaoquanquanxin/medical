@@ -96,6 +96,8 @@ export const DIALOG_TYPE: DialogType = {
 
 	//  新增、编辑、查看角色
 	ROLE: 'ROLE',
+	//	新增、编辑
+	ACCOUNT: 'ACCOUNT',
 }
 
 

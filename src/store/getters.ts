@@ -36,7 +36,6 @@ const getters = {
 	cost: (state: any) => state.app.cost,
 
 
-	accountBox: (state: any) => state.app.accountBox,
 	addOral: (state: any) => state.app.addOral,
 };
 export default getters;
