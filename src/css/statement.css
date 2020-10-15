@@ -1,0 +1,29 @@
+/*结算*/
+.statement-detail-list {
+    width: 100%;
+}
+
+.statement-detail-item {
+    display: flex;
+    justify-content: flex-end;
+    border-bottom: 1px solid #e8e8e8;
+    line-height: 52px;
+}
+
+.statement-detail-item > div {
+    display: flex;
+}
+
+.statement-detail-label {
+    padding-right: 1em;
+}
+
+.statement-detail-content {
+    border-left: 1px solid #e8e8e8;
+    width: 150px;
+    text-indent: 1em;
+}
+
+.footing {
+    background-color: #fafafa;
+}
