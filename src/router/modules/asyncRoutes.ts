@@ -908,6 +908,16 @@ export const asyncRoutesList = [
 		children: [
 			{
 				meta: {
+					chName: '收计费',
+					selectRouteKey: 'costList',
+					openRouteKey: 'cost',
+				},
+				name: 'costList',
+				path: '/cost/costList',
+				component: () => import(/* webpackChunkName: "costList" */ '@/views/cost/costList.vue'),
+			},
+			{
+				meta: {
 					chName: '退费记录',
 					selectRouteKey: 'returnPremium',
 					openRouteKey: 'cost',
@@ -929,7 +939,7 @@ export const asyncRoutesList = [
 			{
 				meta: {
 					chName: '收计费详情',
-					selectRouteKey: 'costDetail',
+					selectRouteKey: 'costList',
 					openRouteKey: 'cost',
 				},
 				name: 'costDetail',
