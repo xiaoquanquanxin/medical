@@ -1,6 +1,5 @@
 <template>
     <div class="layout-content-inner-main">
-        <p>科室管理</p>
         <!--搜索相关-->
         <a-input-group class="a-input-group">
             <a-row :gutter="8">
