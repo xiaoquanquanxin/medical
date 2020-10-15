@@ -130,7 +130,8 @@
 </template>
 <script>
     import { formItemLayout } from '@/utils/layout.ts';
-
+    import { isPhoneNumber } from '@/utils/validate';
+    
     export default {
         beforeCreate(){
             this.form = this.$form.createForm(this);
@@ -179,8 +180,7 @@
                 //  手机号
                 phoneNumberDecorator: ['phoneNumber', {
                     rules: [{
-                        required: true,
-                        message: '请输入手机号'
+                        validator: isPhoneNumber,
                     },]
                 }],
                 //  邮箱

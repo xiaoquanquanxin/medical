@@ -105,6 +105,7 @@
 <script>
     import { formItemLayout } from '@/utils/layout.ts';
     import { compareToFirstPassword } from '@/utils/validate';
+    import { isPhoneNumber } from '@/utils/validate';
 
     export default {
         beforeCreate(){
@@ -183,8 +184,7 @@
                 //  手机号
                 phoneNumberDecorator: ['phoneNumber', {
                     rules: [{
-                        required: true,
-                        message: '请输入手机号'
+                        validator: isPhoneNumber,
                     },]
                 }],
 
