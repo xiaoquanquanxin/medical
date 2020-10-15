@@ -11,6 +11,7 @@
                 <a-input
                         v-decorator="quantityDecorator"
                         placeholder="请输入收货数量"
+                        suffix="箱"
                 />
             </a-form-item>
             <a-form-item label="物流公司">sss</a-form-item>
