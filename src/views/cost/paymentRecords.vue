@@ -33,7 +33,7 @@
             >
                 <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
                     <a-space>
-                        <router-link :to="{name:'costDetail',params:{costDetailId:sIndex}}">详情</router-link>
+                        <router-link :to="{name:'paymentRecordsDetail',params:{paymentRecordsDetailId:sIndex}}">详情</router-link>
                     </a-space>
                 </div>
             </a-table>

@@ -98,7 +98,7 @@
                 this.showModal(DIALOG_TYPE.PATIENT_REPLY);
             },
 
-            //  确认相亲
+            //  确认详情
             addPatientReplyModalCheck(refPatientReplyForm){
                 const promise = this.$refs[refPatientReplyForm].handleSubmit();
                 promise.then(v => {
