@@ -1,31 +1,22 @@
 <template>
     <div class="layout-content-inner-main">
-        <p>角色管理</p>
         <!--搜索相关-->
-        <a-input-group class="a-input-group">
-            <a-row :gutter="8">
-                <a-col :span="5">
-                    <a-input default-value=""/>
-                </a-col>
-                <a-col :span="5">
-                    <a-button type="primary">
-                        搜索
-                    </a-button>
-                </a-col>
-            </a-row>
-        </a-input-group>
+        <div class="a-input-group lengthen-search-group">
+            <a-input class="basic-input-width" v-model="searchData.commodityName"
+                     placeholder="请输入角色名称"/>
+            <a-button type="primary">
+                搜索
+            </a-button>
+        </div>
         <a-input-group class="a-input-group">
             <a-col :span="5">
-                <!--                <router-link :to="{name:'addHospital'}">-->
-                <a-button type="primary" @click="showModal()">
+                <a-button type="primary" @click="addRoleFn()">
                     新建角色
                 </a-button>
-                <!--                </router-link>-->
             </a-col>
         </a-input-group>
         <!--表格-->
         <a-table
-                :row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                 :columns="columns"
                 :data-source="data"
                 :scroll="scroll"
@@ -35,12 +26,12 @@
                     slot="permissions"
                     slot-scope="scope,sItem,sIndex,extra"
             >
-                <a @click="toViewPermissions(sItem,sIndex)">查看</a>
+                <a @click="toViewRoleFn(sItem)">查看</a>
             </div>
             <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
                 <a-space size="small">
-                    <a @click="editPermissions(sItem,sIndex)">编辑</a>
-                    <a @click="deletePermissions(sItem,sIndex)">删除</a>
+                    <a @click="editRoleFn(sItem)">编辑</a>
+                    <a @click="deleteRoleFn(sItem)">删除</a>
                 </a-space>
             </div>
         </a-table>
@@ -61,24 +52,26 @@
             </a-pagination>
         </a-row>
         <!--莫泰框-->
-        <a-modal v-model="dialogData.visible"
-                 v-if="dialogData.visible"
+        <a-modal v-model="dialogDataRole.visible"
+                 v-if="dialogDataRole.visible"
+                 :confirm-loading="dialogDataRole.confirmLoading"
+                 :title="dialogDataRole.title"
                  :maskClosable="false"
                  :centered="true"
                  :width="800"
-                 title="关联科室"
                  ok-text="确认"
                  cancel-text="取消"
-                 @ok="modalCheck()">
+                 @ok="roleBoxModalCheck('refRoleBox')">
             <RoleBox ref="refRoleBox"/>
         </a-modal>
     </div>
 </template>
 <script>
-    import RoleBox from '@/components/roleBox.vue';
+    import RoleBox from '@/components/system/roleBox.vue';
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
     import { pagination } from '@/utils/pagination.ts';
     import { towRowSearch } from '../../utils/tableScroll';
+    import { mapGetters, mapActions } from 'vuex';
 
     const columns = [
         {
@@ -102,7 +95,7 @@
             width: 100,
         },
         {
-            title: '权限',
+            title: '角色',
             dataIndex: 'icon1',
             width: 100,
             scopedSlots: { customRender: 'permissions' },
@@ -121,7 +114,7 @@
             city: '上海',
             status: String(i % 2),
             icon: '医院图标',
-            
+
         });
     }
     export default {
@@ -132,20 +125,26 @@
             return {
                 data,
                 columns,
-                
-
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
                 scroll: towRowSearch,
                 //  分页信息
                 pagination,
-                //  莫泰框
-                dialogData,
+                //  搜索数据
+                searchData: {},
+
+                //  新增、编辑、查看角色
+                dialogDataRole: this.initModal(DIALOG_TYPE.ROLE),
             };
         },
         methods: {
             //  莫泰框方法
             ...dialogMethods,
-            
+            //  渠道商store
+            ...mapActions('system', [
+                'setSelectRoleId',
+                'setRoleOperationType',
+            ]),
+
             //  展示的每一页数据变换
             onShowSizeChange(current, pageSize){
                 console.log(current);
@@ -157,26 +156,43 @@
                 console.log(current);
                 console.log(pageSize);
             },
-
+            //  新增角色
+            addRoleFn(){
+                this.setSelectRoleId(0);
+                this.setRoleOperationType(1);
+                this.setDialogTitle(DIALOG_TYPE.ROLE, '新增角色');
+                this.showModal(DIALOG_TYPE.ROLE);
+            },
+            //  编辑角色
+            editRoleFn(sItem){
+                this.setSelectRoleId(2323);
+                this.setRoleOperationType(2);
+                this.setDialogTitle(DIALOG_TYPE.ROLE, '编辑角色');
+                this.showModal(DIALOG_TYPE.ROLE);
+            },
+            //  查看角色
+            toViewRoleFn(sItem){
+                this.setSelectRoleId(444);
+                this.setRoleOperationType(3);
+                this.setDialogTitle(DIALOG_TYPE.ROLE, '查看角色');
+                this.showModal(DIALOG_TYPE.ROLE);
+            },
             //  检查莫泰框的值
-            modalCheck(){
-                const promise = this.$refs.refRoleBox.handleSubmit();
+            roleBoxModalCheck(refRoleBox){
+                //  防止连点
+                this.setConfirmLoading(DIALOG_TYPE.ROLE, true);
+                const promise = this.$refs[refRoleBox].handleSubmit();
                 promise.then(v => {
-                    this.hideModal();
+                    this.hideModal(DIALOG_TYPE.ROLE);
                 }).catch(error => {
                     console.log('有错');
+                }).then(v => {
+                    //  最后设置可以再次点击
+                    this.setConfirmLoading(DIALOG_TYPE.ROLE, false);
                 });
             },
-            //  查看权限
-            toViewPermissions(){
-                this.showModal();
-            },
-            //  编辑权限
-            editPermissions(sItem){
-                this.showModal();
-            },
-            //  删除权限
-            deletePermissions(sItem){
+            //  删除角色
+            deleteRoleFn(sItem){
                 this.$confirm({
                     title: `确定删除${sItem.disease}`,
                     //  content: 'Bla bla ...',
