@@ -1092,7 +1092,7 @@
     /*表头*/
     .table-flex-title {
         display: flex;
-        justify-content: start;
+        justify-content: flex-start;
         line-height: 50px;
         padding: 0;
     }
