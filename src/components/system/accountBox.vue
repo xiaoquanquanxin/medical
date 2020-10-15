@@ -5,89 +5,91 @@
             @submit="handleSubmit"
             autocomplete="off"
     >
+        <a-form-item label="选择角色">
+            <a-select v-decorator="roleDecorator"
+                      placeholder="请选择角色">
+                <a-select-option value="">
+                    状态
+                </a-select-option>
+                <a-select-option value="Option2">
+                    Option2
+                </a-select-option>
+            </a-select>
+        </a-form-item>
         <a-form-item label="账号名称">
             <a-input v-decorator="accountNameDecorator" placeholder="请输入账号名称"/>
-        </a-form-item>
-        <a-form-item label="角色">
-            <a-input v-decorator="roleDecorator" placeholder="请输入角色"/>
         </a-form-item>
         <a-form-item label="账号密码">
             <a-input v-decorator="accountPasswordDecorator" placeholder="请输入账号密码"/>
         </a-form-item>
         <a-form-item label="确认密码">
-            <a-input v-decorator="checkPasswordDecorator" placeholder="请输入账确认密码"/>
+            <a-input v-decorator="confirmPasswordDecorator" placeholder="请输入账确认密码"/>
         </a-form-item>
     </a-form>
 </template>
 <script>
     import { formItemLayout } from '@/utils/layout.ts';
-    import { mapGetters, mapActions } from 'vuex';
+    import { compareToFirstPassword } from '@/utils/validate';
 
     export default {
         beforeCreate(){
             this.form = this.$form.createForm(this);
         },
         computed: {
-            ...mapGetters([
-                'accountBox',
-            ]),
-            id(){
-                return this.$store.state.accountBox.id;
+            selectAccountId(){
+                return this.$store.state.system.selectAccountId;
+            },
+            accountOperationType(){
+                return this.$store.state.system.accountOperationType;
             }
         },
         data(){
             return {
                 //  表单大小
                 formItemLayout,
-
-                accountNameDecorator: ['accountName', {
-                    initialValue: '普通疾病',
-                    rules: [{
-                        max: 11,
-                        message: '最多11位',
-                    }, {
-                        required: true,
-                        message: '请输入疾病名称'
-                    },]
-                }],
+                //  选择角色
                 roleDecorator: ['role', {
-                    initialValue: '普通疾病',
                     rules: [{
-                        max: 11,
-                        message: '最多11位',
-                    }, {
                         required: true,
-                        message: '请输入疾病名称'
+                        message: '请选择角色'
                     },]
                 }],
+                //  账号名称
+                accountNameDecorator: ['accountName', {
+                    rules: [{
+                        required: true,
+                        message: '请输入账号名称'
+                    },]
+                }],
+                //  账号密码
                 accountPasswordDecorator: ['password', {
-                    initialValue: '普通疾病',
                     rules: [{
-                        max: 11,
-                        message: '最多11位',
-                    }, {
                         required: true,
                         message: '请输入疾病名称'
                     },]
                 }],
-                checkPasswordDecorator: ['checkPassword', {
-                    initialValue: '普通疾病',
-                    rules: [{
-                        max: 11,
-                        message: '最多11位',
-                    }, {
-                        required: true,
-                        message: '请输入疾病名称'
-                    },]
+                //  确认密码
+                confirmPasswordDecorator: ['confirmPassword', {
+                    rules: [
+                        {
+                            required: true,
+                            message: '请输入确认密码'
+                        },
+                        {
+                            validator: this.compareToFirstPassword('password'),
+                        }
+                    ]
                 }],
             };
         },
         created(){
             this.handleSubmit.bind(this);
-            console.log('是编辑？');
-            console.log(this.id);
+            console.log('是编辑？', this.selectAccountId);
+            console.log('类型', this.accountOperationType);
         },
         methods: {
+            //  与第一密码比较，用于确认密码
+            compareToFirstPassword,
             //    表单提交
             handleSubmit(){
                 return new Promise(((resolve, reject) => {
