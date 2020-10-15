@@ -205,8 +205,21 @@ export const routeMap = {
 	'returnPremium': true,
 	//	缴费记录
 	'paymentRecords': true,
-	//	收计费详情
-	'costDetail': true,
+	//	退费详情
+	'returnPremiumDetail': true,
+	//	缴费详情
+	'paymentRecordsDetail': true,
+
+	//	日结、月结
+	'statement': true,
+	//	月结
+	'monthly': true,
+	//	日结
+	'daily': true,
+	//	月结详情
+	'monthlyDetail': true,
+	//	日结详情
+	'dailyDetail': true,
 };
 
 
