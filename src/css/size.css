@@ -14,12 +14,20 @@
 }
 
 
+/*日期选择范围*/
+.basic-range-picker-width {
+    width: 240px;
+}
+
+
 /*特殊的过长的行*/
 .lengthen-search-group > .basic-input-width,
 .lengthen-search-group > .basic-select-width,
 .lengthen-search-group > .lengthen-select-width,
+.lengthen-search-group > .basic-range-picker-width,
 .lengthen-search-group > .lengthen-input-width {
     float: left;
     margin-right: 8px;
     margin-bottom: 10px;
 }
+
