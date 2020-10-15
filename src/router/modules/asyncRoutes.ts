@@ -403,7 +403,7 @@ export const asyncRoutesList = [
 	{
 		meta: {
 			chName: '新增评估调查表',
-			selectRouteKey: 'addQuestionnaire',
+			selectRouteKey: 'questionnaire',
 		},
 		path: '/questionnaire/addQuestionnaire',
 		name: 'addQuestionnaire',
@@ -413,13 +413,14 @@ export const asyncRoutesList = [
 	{
 		meta: {
 			chName: '新增评估调查表',
-			selectRouteKey: 'editQuestionnaire',
+			selectRouteKey: 'questionnaire',
 		},
 		path: '/questionnaire/editQuestionnaire/:questionnaireId',
 		name: 'editQuestionnaire',
 		component: () => import(/* webpackChunkName: "addQuestionnaire" */ '@/views/questionnaire/addQuestionnaire.vue'),
 		hidden: true,
 	},
+
 
 	//	暂停⏸️
 	//
@@ -600,7 +601,7 @@ export const asyncRoutesList = [
 			},
 			{
 				meta: {
-					chName: '采购订单',
+					chName: '医院采购订单',
 					selectRouteKey: 'purchaseOrder',
 					openRouteKey: 'warehouse',
 				},
@@ -610,7 +611,7 @@ export const asyncRoutesList = [
 			},
 			{
 				meta: {
-					chName: '退货订单',
+					chName: '医院退货订单',
 					selectRouteKey: 'salesReturnOrder',
 					openRouteKey: 'warehouse',
 				},
