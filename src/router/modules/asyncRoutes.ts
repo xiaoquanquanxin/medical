@@ -938,13 +938,78 @@ export const asyncRoutesList = [
 			},
 			{
 				meta: {
-					chName: '收计费详情',
-					selectRouteKey: 'costList',
+					chName: '退费详情',
+					selectRouteKey: 'returnPremium',
 					openRouteKey: 'cost',
 				},
-				name: 'costDetail',
-				path: '/cost/costDetail/:costDetailId',
+				name: 'returnPremiumDetail',
+				path: '/cost/returnPremiumDetail/:returnPremiumDetailId',
 				component: () => import(/* webpackChunkName: "costDetail" */ '@/views/cost/costDetail.vue'),
+				hidden: true,
+			},
+			{
+				meta: {
+					chName: '缴费详情',
+					selectRouteKey: 'paymentRecords',
+					openRouteKey: 'cost',
+				},
+				name: 'paymentRecordsDetail',
+				path: '/cost/paymentRecordsDetail/:paymentRecordsDetailId',
+				component: () => import(/* webpackChunkName: "costDetail" */ '@/views/cost/costDetail.vue'),
+				hidden: true,
+			},
+		]
+	},
+	{
+		meta: {
+			chName: '月结',
+			selectRouteKey: 'statement',
+		},
+		path: '/statement',
+		name: 'statement',
+		component: LayoutStair,
+		children: [
+			{
+				meta: {
+					chName: '月结',
+					selectRouteKey: 'monthly',
+					openRouteKey: 'statement',
+				},
+				name: 'monthly',
+				path: '/statement/monthly',
+				component: () => import(/* webpackChunkName: "monthly" */ '@/views/statement/monthly.vue'),
+			},
+
+			{
+				meta: {
+					chName: '日结',
+					selectRouteKey: 'daily',
+					openRouteKey: 'statement',
+				},
+				name: 'daily',
+				path: '/statement/daily',
+				component: () => import(/* webpackChunkName: "daily" */ '@/views/statement/daily.vue'),
+			},
+			{
+				meta: {
+					chName: '月结详情',
+					selectRouteKey: 'monthly',
+					openRouteKey: 'statement',
+				},
+				name: 'monthlyDetail',
+				path: '/statement/monthlyDetail/:monthlyDetailId',
+				component: () => import(/* webpackChunkName: "statementDetail" */ '@/views/statement/statementDetail.vue'),
+				hidden: true,
+			},
+			{
+				meta: {
+					chName: '日结详情',
+					selectRouteKey: 'daily',
+					openRouteKey: 'statement',
+				},
+				name: 'dailyDetail',
+				path: '/statement/dailyDetail/:dailyDetailId',
+				component: () => import(/* webpackChunkName: "statementDetail" */ '@/views/statement/statementDetail.vue'),
 				hidden: true,
 			},
 		]
