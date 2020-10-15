@@ -31,30 +31,24 @@
             <a-form-item label="单位">xxxx</a-form-item>
             <a-form-item label="生产时间">xxxx</a-form-item>
             <a-form-item label="过期日期">
-                <a-row style="width:calc((100vw - 200px)*.65)">
-                    <a-col :span="7">
-                        <a-date-picker
-                                placeholder="请选择过期日期"
-                                @change="onDateChange"
-                        />
-                        <a-input type="hidden" v-decorator="expirationTimeDecorator"/>
-                    </a-col>
-                    <a-col :span="8" :offset="1">
-                        <span>剩余{{2323}}天</span>
-                    </a-col>
+                <a-row style="width:400px" type="flex" align="middle">
+                    <a-date-picker
+                            class="lengthen-select-width"
+                            placeholder="请选择过期日期"
+                            @change="onDateChange"
+                    />
+                    <a-input type="hidden" v-decorator="expirationTimeDecorator"/>
+                    <span>剩余{{2323}}天</span>
                 </a-row>
             </a-form-item>
             <a-form-item label="过期剩余天数">
-                <a-row style="width:calc((100vw - 200px)*.65)">
-                    <a-col :span="7">
-                        <a-input
-                                v-decorator="overdueReminderDaysDecorator"
-                                placeholder="请输入过期剩余天数"
-                        />
-                    </a-col>
-                    <a-col :span="8" :offset="1">
-                        <span>天后过期，提醒平台退货</span>
-                    </a-col>
+                <a-row style="width:400px">
+                    <a-input
+                            class="longer-input-width"
+                            v-decorator="overdueReminderDaysDecorator"
+                            placeholder="请输入过期剩余天数"
+                    />&emsp;
+                    <span>天后过期，提醒平台退货</span>
                 </a-row>
             </a-form-item>
             <a-form-item label="入库数量">

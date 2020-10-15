@@ -8,14 +8,12 @@
         >
             <a-form-item label="采购数量">xxxx</a-form-item>
             <a-form-item label="发货数量">
-                <a-row style="width:calc((100vw - 200px)*.65)">
-                    <a-col :span="7">
-                        <a-input
-                                v-decorator="deliveryNumberDecorator"
-                                placeholder="请输入发货数量"
-                        />
-                    </a-col>
-                    <a-col :span="4">箱</a-col>
+                <a-row>
+                    <a-input
+                            v-decorator="deliveryNumberDecorator"
+                            placeholder="请输入发货数量"
+                            suffix="箱"
+                    />
                 </a-row>
             </a-form-item>
             <a-form-item label="物流公司">

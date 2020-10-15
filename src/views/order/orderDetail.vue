@@ -7,24 +7,9 @@
             </a-col>
         </a-input-group>
         <div id="printContent">
-            <a-input-group class="a-input-group">
-                <a-row type="flex" justify="start" align="middle">
-                    <a-col :span="2">状态：</a-col>
-                    <a-col :span="5">
-                        <a-select style="width:100%;"
-                                  placeholder="请选择状态"
-                                  v-model="formData.status"
-                        >
-                            <a-select-option :value="1">
-                                已领药
-                            </a-select-option>
-                            <a-select-option :value="2">
-                                未领药
-                            </a-select-option>
-                        </a-select>
-                    </a-col>
-                </a-row>
-            </a-input-group>
+            <p class="a-input-group">
+                <b>状态：已领药</b>
+            </p>
             <!--基础表格-->
             <a-row type="flex" justify="start" align="middle" class="table-group-title">
                 <a-col :span="4">
@@ -56,22 +41,8 @@
             <br>
             <!--口服肠内营养补充-->
             <a-row type="flex" justify="space-between" align="middle" class="table-group-title">
-                <a-col :span="4">
-                    口服肠内营养补充
-                </a-col>
-                <a-col :span="4">
-                    <a-select v-model="formData.eatingWay1"
-                              style="width:100%;"
-                              placeholder="请选择食用方法"
-                    >
-                        <a-select-option :value="1">
-                            方法1
-                        </a-select-option>
-                        <a-select-option :value="2">
-                            吃菜
-                        </a-select-option>
-                    </a-select>
-                </a-col>
+                <span>口服肠内营养补充</span>
+                <span>方法1</span>
             </a-row>
             <a-table
                     :columns="oralColumns"
@@ -98,22 +69,8 @@
             <br>
             <!--肠内营养支持-->
             <a-row type="flex" justify="space-between" align="middle" class="table-group-title">
-                <a-col :span="4">
-                    肠内营养支持
-                </a-col>
-                <a-col :span="4">
-                    <a-select v-model="formData.eatingWay2"
-                              style="width:100%;"
-                              placeholder="请选择食用方法"
-                    >
-                        <a-select-option :value="1">
-                            方法1
-                        </a-select-option>
-                        <a-select-option :value="2">
-                            吃菜
-                        </a-select-option>
-                    </a-select>
-                </a-col>
+                <span>肠内营养支持</span>
+                <span>方法1</span>
             </a-row>
             <a-table
                     :columns="oralColumns"
