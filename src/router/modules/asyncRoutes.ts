@@ -1094,15 +1094,6 @@ export const asyncRoutesList = [
 // 	hidden: true,
 // },
 
-// {
-// 	meta: {
-// 		chName: '公司信息',
-// 		selectRouteKey: 'companyInfo',
-// 	},
-// 	path: '/companyInfo',
-// 	name: 'companyInfo',
-// 	component: () => import(/* webpackChunkName: "companyInfo" */ '@/views/companyInfo/companyInfo.vue'),
-// },
 
 // {
 // 	meta: {
