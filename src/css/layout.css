@@ -173,7 +173,7 @@ span.ant-radio + * {
     margin-left: 0;
 }
 
-/*基础选择框*/
-.basic-select-width, .basic-input-width {
-    width: 125px;
+/*时间选择器的bug*/
+.ant-calendar-picker {
+    display: flex;
 }

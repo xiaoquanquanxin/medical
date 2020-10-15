@@ -1,0 +1,25 @@
+/*基础选择框*/
+.basic-select-width,
+.basic-input-width {
+    width: 125px;
+}
+
+/*加长 ，适合 8 个字*/
+.lengthen-input-width {
+    width: 140px;
+}
+
+.lengthen-select-width {
+    width: 150px;
+}
+
+
+/*特殊的过长的行*/
+.lengthen-search-group > .basic-input-width,
+.lengthen-search-group > .basic-select-width,
+.lengthen-search-group > .lengthen-select-width,
+.lengthen-search-group > .lengthen-input-width {
+    float: left;
+    margin-right: 8px;
+    margin-bottom: 10px;
+}
