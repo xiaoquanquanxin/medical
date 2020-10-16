@@ -32,9 +32,7 @@
                     :pagination="false"
             >
                 <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
-                    <a-space>
-                        <router-link :to="{name:'returnPremiumDetail',params:{returnPremiumDetailId:sIndex}}">详情</router-link>
-                    </a-space>
+                    <router-link :to="{name:'auditDetail',params:{auditDetailId:sIndex}}">详情</router-link>
                 </div>
             </a-table>
             <!--分页-->

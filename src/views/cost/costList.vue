@@ -32,7 +32,7 @@
         >
             <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
                 <a-space>
-                    <router-link :to="{name:'costDetail',params:{costDetailId:sIndex}}">详情</router-link>
+                    <router-link :to="{name:'auditDetail',params:{auditDetailId:sIndex}}">详情</router-link>
                     <a @click="payCost(sItem)">缴费</a>
                     <a @click="returnCost(sItem)">退费</a>
                 </a-space>
