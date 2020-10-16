@@ -10,7 +10,7 @@
     </div>
 </template>
 <script>
-    import { modalTableScroll } from '../../utils/tableScroll';
+    import { modalTableScroll } from '@/utils/tableScroll';
 
     const columns = [
         {
