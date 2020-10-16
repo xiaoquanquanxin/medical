@@ -837,6 +837,38 @@ export const asyncRoutesList = [
 
 	{
 		meta: {
+			chName: '营养营养干预详情',
+			selectRouteKey: 'userList',
+		},
+		path: '/userList/interventionDetail/:patientInfoId/:interventionId',
+		name: 'interventionDetail',
+		component: () => import(/* webpackChunkName: "interventionDetail" */ '@/views/userList/intervention/interventionDetail.vue'),
+		hidden: true,
+	},
+	{
+		meta: {
+			chName: '新增营养干预',
+			selectRouteKey: 'userList',
+		},
+		//	病人的id
+		path: '/userList/addIntervention',
+		name: 'addIntervention',
+		component: () => import(/* webpackChunkName: "addIntervention" */ '@/views/userList/intervention/addIntervention.vue'),
+		hidden: true,
+	},
+	{
+		meta: {
+			chName: '营养营养干预详情',
+			selectRouteKey: 'userList',
+		},
+		path: '/userList/editIntervention/:patientInfoId/:interventionId',
+		name: 'editIntervention',
+		component: () => import(/* webpackChunkName: "addIntervention" */ '@/views/userList/intervention/addIntervention.vue'),
+		hidden: true,
+	},
+
+	{
+		meta: {
 			chName: '处方审核列表',
 			selectRouteKey: 'auditList',
 		},

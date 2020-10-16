@@ -1,96 +1,96 @@
 export const routeMap = {
 	//	仓库管理
-	'entrepot': true,
+	'entrepot': false,
 	//	渠道商管理
-	'distributors': true,
+	'distributors': false,
 	//	供应商管理
-	'supplier': true,
+	'supplier': false,
 	//	新增供应商
-	'addSupplier': true,
+	'addSupplier': false,
 	//	编辑供应商
-	'editSupplier': true,
+	'editSupplier': false,
 	//	用户管理【平台用户】
-	'platformUser': true,
+	'platformUser': false,
 	//	普通用户
-	'ordinaryUser': true,
+	'ordinaryUser': false,
 	//	患者用户
-	'patientsUser': true,
+	'patientsUser': false,
 	//  商品管理
-	'commodity': true,
+	'commodity': false,
 	//	商品列表
-	'commodityList': true,
+	'commodityList': false,
 	//  添加商品
-	'addCommodity': true,
+	'addCommodity': false,
 	//  编辑商品
-	'editCommodity': true,
+	'editCommodity': false,
 	//	分类管理
-	'commodityClassification': true,
+	'commodityClassification': false,
 	//	品牌管理
-	'brand': true,
+	'brand': false,
 	//	生产厂家管理
-	'manufacturer': true,
+	'manufacturer': false,
 	//  医院管理
-	'hospital': true,
+	'hospital': false,
 	//  新增医院
-	'addHospital': true,
+	'addHospital': false,
 	//	编辑医院
-	'editHospital': true,
+	'editHospital': false,
 	//  科室管理
-	'department': true,
+	'department': false,
 	//  新增科室
-	'addDepartment': true,
+	'addDepartment': false,
 	//  编辑科室
-	'editDepartment': true,
+	'editDepartment': false,
 	//  疾病管理
-	'disease': true,
+	'disease': false,
 	//  新增疾病
-	'addDisease': true,
+	'addDisease': false,
 	//  编辑疾病
-	'editDisease': true,
+	'editDisease': false,
 
 	//  处方审核管理
-	'scheme': true,
+	'scheme': false,
 	//	口服肠内营养补充
-	'oral': true,
+	'oral': false,
 	//	新增口服肠内营养补充
-	'addOral': true,
+	'addOral': false,
 	//	编辑口服肠内营养补充
-	'editOral': true,
+	'editOral': false,
 	//	肠内营养支持
-	'intestinal': true,
+	'intestinal': false,
 	//	新增肠内营养支持
-	'addIntestinal': true,
+	'addIntestinal': false,
 	//	编辑肠内营养支持
-	'editIntestinal': true,
+	'editIntestinal': false,
 	//	膳食营养计划
-	'dietary': true,
+	'dietary': false,
 	//	新增
-	'addDietary': true,
+	'addDietary': false,
 	//	编辑
-	'editDietary': true,
+	'editDietary': false,
 
 	//	评估调查表管理
-	'questionnaire': true,
+	'questionnaire': false,
 	//	新增评估调查表
-	'addQuestionnaire': true,
+	'addQuestionnaire': false,
 	//	编辑评估调查表
-	'editQuestionnaire': true,
+	'editQuestionnaire': false,
 
 	//	暂停⏸️
 	// //  宣教管理
-	// 'mission': true,
+	// 'mission': false,
 	//	新增宣教
-	'addMission': true,
+	'addMission': false,
 	//	编辑宣教
-	'editMission': true,
+	'editMission': false,
 	//  系统管理
-	'system': true,
+	'system': false,
 	//  修改密码
-	'changePassword': true,
+	'changePassword': false,
 	//  角色管理
-	'role': true,
+	'role': false,
 	//  账号管理
-	'account': true,
+	'account': false,
 
 
 	/**
@@ -100,7 +100,7 @@ export const routeMap = {
 
 	//	重复🐦
 	// //	商品查看
-	// 'viewGoods': true,
+	// 'viewGoods': false,
 
 
 	/**
@@ -109,36 +109,36 @@ export const routeMap = {
 	 * */
 	//	重复🐦
 	// //	商品管理
-	// 'distributorsGoods': true,
+	// 'distributorsGoods': false,
 
 	//  医生管理
-	'doctor': true,
+	'doctor': false,
 	//  新增医生
-	'addDoctor': true,
+	'addDoctor': false,
 	//  编辑医生
-	'editDoctor': true,
+	'editDoctor': false,
 	//	订单管理
-	'order': true,
+	'order': false,
 	//	订单详情
-	'orderDetail': true,
+	'orderDetail': false,
 	//	库房管理
-	'warehouse': true,
+	'warehouse': false,
 	//	商品库存
-	'inventory': true,
+	'inventory': false,
 	//	医院采购订单
-	'purchaseOrder': true,
+	'purchaseOrder': false,
 	//	医院退货订单
-	'salesReturnOrder': true,
+	'salesReturnOrder': false,
 	//	出库
-	'outbound': true,
+	'outbound': false,
 	//	入库
-	'putInStorage': true,
+	'putInStorage': false,
 	//	报损
-	'reportedLoss': true,
+	'reportedLoss': false,
 	//	采购单
-	'purchaseList': true,
+	'purchaseList': false,
 	//	出货退货单
-	'shipmentReturn': true,
+	'shipmentReturn': false,
 
 
 	/**
@@ -146,10 +146,9 @@ export const routeMap = {
 	 * 医院部分
 	 * */
 
-
 	//	🍎🍎🍎🍎🍎营养方案系统
 	// 	用户列表
-	'userList': false,
+	'userList': true,
 	//	病人信息
 	'patientInfo': true,
 	//	筛查
@@ -179,6 +178,13 @@ export const routeMap = {
 	'addAssessment': true,
 	//	营养评估详情
 	'assessmentDetail': true,
+
+	//	营养营养干预详情
+	'interventionDetail': true,
+	//	新增营养干预
+	'addIntervention': true,
+	//	编辑营养干预
+	'editIntervention': true,
 
 	//	处方审核列表
 	'auditList': true,
