@@ -10,22 +10,6 @@
                 :pagination="false"
                 bordered
         >
-            <!--商品名称名称-->
-            <div slot="commodityName" slot-scope="scope,sItem,sIndex,extra">
-                {{scope.commodityName}}
-            </div>
-            <!--购买单位-->
-            <div slot="buyer" slot-scope="scope,sItem,sIndex,extra">
-                {{scope.buyer}}
-            </div>
-            <!--商品单价-->
-            <div slot="unitPrice" slot-scope="scope,sItem,sIndex,extra">
-                {{scope.unitPrice}}
-            </div>
-            <!--数量-->
-            <div slot="quantity" slot-scope="scope,sItem,sIndex,extra">
-                {{scope.quantity}}
-            </div>
         </a-table>
     </div>
 </template>
