@@ -837,10 +837,10 @@ export const asyncRoutesList = [
 
 	{
 		meta: {
-			chName: '营养营养干预详情',
+			chName: '营养干预详情',
 			selectRouteKey: 'userList',
 		},
-		path: '/userList/interventionDetail/:patientInfoId/:interventionId',
+		path: '/userList/interventionDetail/:patientInfoId/:interventionDetailId',
 		name: 'interventionDetail',
 		component: () => import(/* webpackChunkName: "interventionDetail" */ '@/views/userList/intervention/interventionDetail.vue'),
 		hidden: true,
@@ -858,10 +858,10 @@ export const asyncRoutesList = [
 	},
 	{
 		meta: {
-			chName: '营养营养干预详情',
+			chName: '编辑营养干预',
 			selectRouteKey: 'userList',
 		},
-		path: '/userList/editIntervention/:patientInfoId/:interventionId',
+		path: '/userList/editIntervention/:patientInfoId/:interventionDetailId',
 		name: 'editIntervention',
 		component: () => import(/* webpackChunkName: "addIntervention" */ '@/views/userList/intervention/addIntervention.vue'),
 		hidden: true,
