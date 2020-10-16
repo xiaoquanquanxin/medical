@@ -34,7 +34,7 @@
                 :pagination="false"
         >
             <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
-                <router-link :to="{name:'interventionDetail',params:{interventionId:sIndex}}">详情</router-link>
+                <router-link :to="{name:'interventionDetail',params:{interventionDetailId:sIndex}}">详情</router-link>
             </div>
         </a-table>
         <!--分页-->
@@ -116,7 +116,6 @@
             unit: '基本单位',
             specifications: '规格',
             manufacturer: '生产厂家',
-
         });
     }
 
