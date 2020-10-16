@@ -35,6 +35,8 @@ const getters = {
 	//	收计费
 	cost: (state: any) => state.app.cost,
 
+	//	主要是方案详情相关的
+	detailsTable: (state: any) => state.app.detailsTable,
 
 	addOral: (state: any) => state.app.addOral,
 };
