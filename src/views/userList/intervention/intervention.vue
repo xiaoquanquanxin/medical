@@ -1,40 +1,31 @@
 <template>
     <div class="layout-content-inner-main">
         <!--搜索相关-->
-        <a-input-group class="a-input-group">
-            <a-row :gutter="8">
-                <a-space>
-                    <div class="basic-input-width">
-                        <a-input v-model="searchData.commodityName" placeholder="请输入处方条码"/>
-                    </div>
-                    <div class="basic-input-width">
-                        <a-input v-model="searchData.commodityName" placeholder="请输入处方医生"/>
-                    </div>
-                    <div class="basic-input-width">
-                        <a-input v-model="searchData.commodityName" placeholder="请输入患者姓名"/>
-                    </div>
-                    <a-select v-model="searchData.brand" class="basic-select-width" placeholder="请选择科室">
-                        <a-select-option value="">
-                            品牌
-                        </a-select-option>
-                        <a-select-option value="Option2">
-                            Option2
-                        </a-select-option>
-                    </a-select>
-                    <a-select v-model="searchData.status" class="basic-select-width" placeholder="请选择状态">
-                        <a-select-option value="">
-                            状态
-                        </a-select-option>
-                        <a-select-option value="Option2">
-                            Option2
-                        </a-select-option>
-                    </a-select>
-                    <a-button type="primary">
-                        搜索
-                    </a-button>
-                </a-space>
-            </a-row>
-        </a-input-group>
+        <div class="a-input-group lengthen-search-group">
+            <a-select v-model="searchData.brand" class="lengthen-select-width" placeholder="请选择方案类型">
+                <a-select-option value="">品牌</a-select-option>
+                <a-select-option value="Option2">Option2</a-select-option>
+            </a-select>
+            <a-select v-model="searchData.status" class="basic-select-width" placeholder="请选择状态">
+                <a-select-option value="">品牌</a-select-option>
+                <a-select-option value="Option2">Option2</a-select-option>
+            </a-select>
+            <a-select v-model="searchData.status" class="lengthen-select-width" placeholder="请选择付款状态">
+                <a-select-option value="">品牌</a-select-option>
+                <a-select-option value="Option2">Option2</a-select-option>
+            </a-select>
+            <a-range-picker
+                    class="basic-range-picker-width"
+                    :placeholder="['开始日期','结束日期']"
+                    @change="onRangePickerChange"
+            />
+            <a-button type="primary">搜索</a-button>
+        </div>
+        <div class="a-input-group">
+            <router-link :to="{name:'addIntervention'}">
+                <a-button type="primary">新增</a-button>
+            </router-link>
+        </div>
         <!--表格-->
         <a-table
                 :columns="columns"
@@ -43,7 +34,7 @@
                 :pagination="false"
         >
             <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
-                <router-link :to="{name:'auditDetail',params:{auditDetailId:sIndex}}">详情</router-link>
+                <router-link :to="{name:'interventionDetail',params:{interventionId:sIndex}}">详情</router-link>
             </div>
         </a-table>
         <!--分页-->
@@ -153,6 +144,10 @@
             pageChange(current, pageSize){
                 console.log(current);
                 console.log(pageSize);
+            },
+            //  选择日期范围
+            onRangePickerChange(value, selectDateValue){
+                console.log(selectDateValue);
             },
         }
     };
