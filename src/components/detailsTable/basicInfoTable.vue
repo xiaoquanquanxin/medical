@@ -59,7 +59,7 @@
         computed: {
             //  基础表格数据
             basicInfoDetail(){
-                return this.$store.state.detailsForm.basicInfoDetail;
+                return this.$store.state.detailsTable.basicInfoDetail;
             }
         },
         data(){
