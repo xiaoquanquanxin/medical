@@ -62,7 +62,6 @@
     import EnergyTable from '@/components/detailsTable/energyTable.vue';
     //  打印
     import RejectForm from '@/components/auditList/rejectForm.vue';
-    import { mapGetters, mapActions } from 'vuex';
 
     export default {
         components: {
