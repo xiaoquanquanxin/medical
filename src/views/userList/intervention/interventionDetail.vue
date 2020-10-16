@@ -12,11 +12,14 @@
                 <b>状态：{{2323232}}</b>
             </a-row>
             <!--基础表格-->
-            <BasicInfoTable/>
+            <BasicInfoTable
+                    :data-source="basicInfoData"
+            />
             <br>
             <!--口服肠内营养补充-->
             <OralLikeBasicTable
-                    :data-title="oralDataTitle" :data-source="oralData"
+                    :data-title="oralDataTitle"
+                    :data-source="oralData"
             />
             <br>
             <!--复杂-->
@@ -40,7 +43,9 @@
             />
             <br>
             <!--能量表-->
-            <EnergyTable/>
+            <EnergyTable
+                    :data-source="energyData"
+            />
         </div>
     </div>
 </template>
@@ -71,9 +76,19 @@
         data(){
             return {
                 //  详情的id
-                interventionId: this.$route.params.interventionId,
+                interventionDetailId: this.$route.params.interventionDetailId,
                 //  病人的id
                 patientInfoId: this.$route.params.patientInfoId,
+
+                //  基础数据
+                basicInfoData: [{
+                    key: 1,
+                    planName: '许晓飞123',
+                    cycle: '年',
+                    prescriptionType: '吃',
+                    cost: '¥20',
+                }],
+
                 //  口服数据
                 oralDataTitle: {
                     name: '口服肠内营养补充',
@@ -85,13 +100,15 @@
                         commodityName: '许晓飞123',
                         buyer: '年',
                         unitPrice: '吃',
-                        quantity: '¥20'
+                        quantity: '¥20',
+                        subtotal: 43,
                     }, {
                         key: 2,
                         commodityName: '许晓飞123',
                         buyer: '年',
                         unitPrice: '吃',
-                        quantity: '¥20'
+                        quantity: '¥20',
+                        subtotal: 433,
                     }
                 ],
                 oralComplexData: [
@@ -140,13 +157,15 @@
                         commodityName: '许晓飞123',
                         buyer: '年',
                         unitPrice: '吃',
-                        quantity: '¥20'
+                        quantity: '¥20',
+                        subtotal: 433,
                     }, {
                         key: 2,
                         commodityName: '许晓飞123',
                         buyer: '年',
                         unitPrice: '吃',
-                        quantity: '¥20'
+                        quantity: '¥20',
+                        subtotal: 433,
                     }
                 ],
                 intestinalComplexData: [
@@ -198,6 +217,15 @@
                     }
                 ],
 
+                //  能量数据
+                energyData: [{
+                    key: 1,
+                    energy: 123,
+                    protein: 234,
+                    fat: 345,
+                    carbohydrates: 456,
+                }],
+
                 //  打印对象
                 printObj: {
                     id: '#printContent',
@@ -206,31 +234,8 @@
             };
         },
         created(){
-            console.log('参数', this.$route.params);
-            //  设置基础信息数据
-            this.setBasicInfoDetail([{
-                key: 1,
-                planName: '许晓飞123',
-                cycle: '年',
-                prescriptionType: '吃',
-                cost: '¥20',
-            }]);
-            //  设置能量表数据
-            this.setEnergyDetail([{
-                key: 1,
-                energy: 123,
-                protein: 234,
-                fat: 345,
-                carbohydrates: 456,
-            }]);
-        },
-        methods: {
-            ...mapActions('detailsTable', [
-                //  设置基础信息数据
-                'setBasicInfoDetail',
-                //  设置能量表数据
-                'setEnergyDetail',
-            ]),
+            console.log(this.patientInfoId);
+            console.log(this.interventionDetailId);
         }
     };
 </script>
