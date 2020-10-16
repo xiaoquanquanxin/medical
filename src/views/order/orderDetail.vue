@@ -14,6 +14,7 @@
             <BasicInfoTable
                     :data-source="basicInfoData"
             />
+            <br>
             <!--口服肠内营养补充-->
             <OralLikeBasicTable
                     :data-title="oralDataTitle"
