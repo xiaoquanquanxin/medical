@@ -11,131 +11,44 @@
                 <b>状态：已领药</b>
             </p>
             <!--基础表格-->
-            <BasicInfoTable/>
-            <br>
+            <BasicInfoTable
+                    :data-source="basicInfoData"
+            />
             <!--口服肠内营养补充-->
-            <a-row type="flex" justify="space-between" align="middle" class="table-group-title">
-                <span>口服肠内营养补充</span>
-                <span>方法1</span>
-            </a-row>
-            <a-table
-                    :columns="oralColumns"
+            <OralLikeBasicTable
+                    :data-title="oralDataTitle"
                     :data-source="oralData"
-                    :pagination="false"
-            >
-                <!--商品名称名称-->
-                <div slot="commodityName" slot-scope="scope,sItem,sIndex,extra">
-                    {{scope.commodityName}}
-                </div>
-                <!--购买单位-->
-                <div slot="buyer" slot-scope="scope,sItem,sIndex,extra">
-                    {{scope.buyer}}
-                </div>
-                <!--商品单价-->
-                <div slot="unitPrice" slot-scope="scope,sItem,sIndex,extra">
-                    {{scope.unitPrice}}
-                </div>
-                <!--数量-->
-                <div slot="quantity" slot-scope="scope,sItem,sIndex,extra">
-                    {{scope.quantity}}
-                </div>
-            </a-table>
+            />
             <br>
             <!--肠内营养支持-->
-            <a-row type="flex" justify="space-between" align="middle" class="table-group-title">
-                <span>肠内营养支持</span>
-                <span>方法1</span>
-            </a-row>
-            <a-table
-                    :columns="oralColumns"
-                    :data-source="oralData"
-                    :pagination="false"
-            >
-                <!--商品名称名称-->
-                <div slot="commodityName" slot-scope="scope,sItem,sIndex,extra">
-                    {{scope.commodityName}}
-                </div>
-                <!--购买单位-->
-                <div slot="buyer" slot-scope="scope,sItem,sIndex,extra">
-                    {{scope.buyer}}
-                </div>
-                <!--商品单价-->
-                <div slot="unitPrice" slot-scope="scope,sItem,sIndex,extra">
-                    {{scope.unitPrice}}
-                </div>
-                <!--数量-->
-                <div slot="quantity" slot-scope="scope,sItem,sIndex,extra">
-                    {{scope.quantity}}
-                </div>
-            </a-table>
+            <OralLikeBasicTable
+                    :data-title="intestinalDataTitle" :data-source="intestinalData"
+            />
             <br>
             <!--能量表-->
-            <EnergyTable/>
+            <EnergyTable
+                    :data-source="energyData"
+            />
         </div>
     </div>
 </template>
 <script>
+    //  基础数据
     import BasicInfoTable from '@/components/detailsTable/basicInfoTable.vue';
+    //  类似于口服的基础数据table
+    import OralLikeBasicTable from '@/components/detailsTable/oralLikeBasicTable.vue';
+    //  能量
     import EnergyTable from '@/components/detailsTable/energyTable.vue';
-    import { mapGetters, mapActions } from 'vuex';
-    //  口服肠内营养支持 表格 列的意义
-    const oralColumns = [
-        {
-            title: '商品名称',
-            scopedSlots: { customRender: 'commodityName' },
-            width: 100,
-        },
-        {
-            title: '购买单位',
-            width: 100,
-            scopedSlots: { customRender: 'buyer' },
-        },
-        {
-            title: '商品单价',
-            width: 100,
-            scopedSlots: { customRender: 'unitPrice' },
-        },
-        {
-            title: '数量',
-            width: 100,
-            scopedSlots: { customRender: 'quantity' },
-        },
-    ];
-    const oralData = [{
-        key: 1,
-        commodityName: '许晓飞123',
-        buyer: '年',
-        unitPrice: '吃',
-        quantity: '¥20'
-    }, {
-        key: 2,
-        commodityName: '许晓飞123',
-        buyer: '年',
-        unitPrice: '吃',
-        quantity: '¥20'
-    }];
-    //  肠内营养支持 数据
-    const intestinalData = [{
-        key: 1,
-        commodityName: '许晓飞123',
-        buyer: '年',
-        unitPrice: '吃',
-        quantity: '¥20'
-    }, {
-        key: 2,
-        commodityName: '许晓飞123',
-        buyer: '年',
-        unitPrice: '吃',
-        quantity: '¥20'
-    }];
 
     export default {
         components: {
             BasicInfoTable,
+            OralLikeBasicTable,
             EnergyTable,
         },
         data(){
             return {
+                orderDetailId: this.$route.params.orderDetailId,
                 //  表单数据
                 formData: {
                     //  订单状态
@@ -146,12 +59,69 @@
                     eatingWay2: 1,
                 },
 
-                //  口服肠内营养支持 表格
-                oralColumns,
-                oralData,
+                //  基础数据
+                basicInfoData: [{
+                    key: 1,
+                    planName: '许晓飞123',
+                    cycle: '年',
+                    prescriptionType: '吃',
+                    cost: '¥20',
+                }],
 
-                //  肠内营养支持 表格
-                intestinalData,
+                //  口服数据
+                oralDataTitle: {
+                    name: '口服肠内营养补充',
+                    method: '方法1',
+                },
+                oralData: [
+                    {
+                        key: 1,
+                        commodityName: '许晓飞123',
+                        buyer: '年',
+                        unitPrice: '吃',
+                        quantity: '¥20',
+                        subtotal: 43,
+                    }, {
+                        key: 2,
+                        commodityName: '许晓飞123',
+                        buyer: '年',
+                        unitPrice: '吃',
+                        quantity: '¥20',
+                        subtotal: 433,
+                    }
+                ],
+
+                //  肠内数据
+                intestinalDataTitle: {
+                    name: '肠内营养补充',
+                    method: '方法3',
+                },
+                intestinalData: [
+                    {
+                        key: 1,
+                        commodityName: '许晓飞123',
+                        buyer: '年',
+                        unitPrice: '吃',
+                        quantity: '¥20',
+                        subtotal: 433,
+                    }, {
+                        key: 2,
+                        commodityName: '许晓飞123',
+                        buyer: '年',
+                        unitPrice: '吃',
+                        quantity: '¥20',
+                        subtotal: 433,
+                    }
+                ],
+
+                //  能量数据
+                energyData: [{
+                    key: 1,
+                    energy: 123,
+                    protein: 234,
+                    fat: 345,
+                    carbohydrates: 456,
+                }],
 
                 //  打印对象
                 printObj: {
@@ -161,30 +131,8 @@
             };
         },
         created(){
-            //  设置基础信息数据
-            this.setBasicInfoDetail([{
-                key: 1,
-                planName: '许晓飞123',
-                cycle: '年',
-                prescriptionType: '吃',
-                cost: '¥20',
-            }]);
-            //  设置能量表数据
-            this.setEnergyDetail([{
-                key: 1,
-                energy: 123,
-                protein: 234,
-                fat: 345,
-                carbohydrates: 456,
-            }]);
+            console.log(this.orderDetailId);
         },
-        methods: {
-            ...mapActions('detailsTable', [
-                //  设置基础信息数据
-                'setBasicInfoDetail',
-                //  设置能量表数据
-                'setEnergyDetail',
-            ]),
-        }
+        methods: {}
     };
 </script>
