@@ -11,33 +11,7 @@
                 <b>状态：已领药</b>
             </p>
             <!--基础表格-->
-            <a-row type="flex" justify="start" align="middle" class="table-group-title">
-                <a-col :span="4">
-                    基本信息
-                </a-col>
-            </a-row>
-            <a-table
-                    :columns="basicColumns"
-                    :data-source="basicData"
-                    :pagination="false"
-            >
-                <!--方案名称-->
-                <div slot="planName" slot-scope="scope,sItem,sIndex,extra">
-                    {{scope.planName}}
-                </div>
-                <!--周期-->
-                <div slot="cycle" slot-scope="scope,sItem,sIndex,extra">
-                    {{scope.cycle}}
-                </div>
-                <!--处方类型-->
-                <div slot="prescriptionType" slot-scope="scope,sItem,sIndex,extra">
-                    {{scope.prescriptionType}}
-                </div>
-                <!--咨询费/配置费-->
-                <div slot="cost" slot-scope="scope,sItem,sIndex,extra">
-                    {{scope.cost}}
-                </div>
-            </a-table>
+            <BasicInfoDetail/>
             <br>
             <!--口服肠内营养补充-->
             <a-row type="flex" justify="space-between" align="middle" class="table-group-title">
@@ -106,37 +80,8 @@
     </div>
 </template>
 <script>
-    //  基本信息 表格 列的意义
-    const basicColumns = [
-        {
-            title: '方案名称',
-            scopedSlots: { customRender: 'planName' },
-            width: 100,
-        },
-        {
-            title: '周期',
-            width: 100,
-            scopedSlots: { customRender: 'cycle' },
-        },
-        {
-            title: '处方类型',
-            width: 100,
-            scopedSlots: { customRender: 'prescriptionType' },
-        },
-        {
-            title: '咨询费/配置费',
-            width: 100,
-            scopedSlots: { customRender: 'cost' },
-        },
-    ];
-    const basicData = [{
-        key: 1,
-        planName: '许晓飞123',
-        cycle: '年',
-        prescriptionType: '吃',
-        cost: '¥20'
-    }];
-
+    import BasicInfoDetail from '@/components/detailsForm/basicInfoDetail.vue';
+    import { mapGetters, mapActions } from 'vuex';
     //  口服肠内营养支持 表格 列的意义
     const oralColumns = [
         {
@@ -221,6 +166,9 @@
     ];
 
     export default {
+        components: {
+            BasicInfoDetail,
+        },
         data(){
             return {
                 //  表单数据
@@ -232,10 +180,6 @@
                     //  食用方法
                     eatingWay2: 1,
                 },
-
-                //  基础表格
-                basicData,
-                basicColumns,
 
                 //  口服肠内营养支持 表格
                 oralColumns,
@@ -256,5 +200,21 @@
                 }
             };
         },
+        created(){
+            //  设置基础信息数据
+            this.setBasicInfoDetail({
+                key: 1,
+                planName: '许晓飞123',
+                cycle: '年',
+                prescriptionType: '吃',
+                cost: '¥20'
+            });
+        },
+        methods: {
+            ...mapActions('detailsForm', [
+                //  基础信息数据
+                'setBasicInfoDetail',
+            ]),
+        }
     };
 </script>
