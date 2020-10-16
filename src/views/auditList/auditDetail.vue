@@ -33,6 +33,11 @@
                 :data-source="intestinalComplexData"
         />
         <br>
+        <!--膳食营养计划-->
+        <DietaryTable
+                :data-source="dietaryData"
+        />
+        <br>
         <!--能量表-->
         <EnergyTable/>
         <!--驳回莫泰框-->
@@ -57,6 +62,8 @@
     import OralLikeBasicTable from '@/components/detailsTable/oralLikeBasicTable.vue';
     //  口服肠内营养补充，复杂表格
     import OralLikeComplexTable from '@/components/detialsComplexTable/oralLikeComplexTable.vue';
+    //  膳食营养计划
+    import DietaryTable from '@/components/detailsTable/dietaryTable.vue';
     //  能量
     import EnergyTable from '@/components/detailsTable/energyTable.vue';
     //  驳回
@@ -69,6 +76,7 @@
             BasicInfoTable,
             OralLikeBasicTable,
             OralLikeComplexTable,
+            DietaryTable,
             RejectForm,
             EnergyTable,
         },
@@ -184,6 +192,20 @@
                             }
                         ]
                     },
+                ],
+
+                //  膳食营养计划数据
+                dietaryData: [
+                    {
+                        key: 1,
+                        time: '3:10',
+                        content: 'xxx',
+                    },
+                    {
+                        key: 2,
+                        time: '4:10',
+                        content: 'xxx',
+                    }
                 ],
                 //  缴费莫泰框
                 dialogReject: this.initModal(DIALOG_TYPE.REJECT),
