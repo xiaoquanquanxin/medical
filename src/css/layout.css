@@ -1,4 +1,16 @@
 /*主要内容*/
+.layout-content {
+    background: white;
+    overflow: hidden;
+    flex: 1;
+}
+
+.layout-content-inner {
+    height: 100%;
+    position: relative;
+    overflow: auto;
+}
+
 .layout-content-inner-main {
     padding: 24px;
 }
@@ -139,7 +151,7 @@
 
 /*不同的大小，每行的数量*/
 .item-3 .ant-descriptions-row .ant-descriptions-item-content {
-    width: 20%;
+    width: 21%;
 }
 
 /*不同的大小，每行的数量*/
