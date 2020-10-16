@@ -1,40 +1,30 @@
 <template>
     <div class="layout-content-inner-main">
         <!--搜索相关-->
-        <a-input-group class="a-input-group">
-            <a-row :gutter="8">
-                <a-space>
-                    <div class="basic-input-width">
-                        <a-input v-model="searchData.commodityName" placeholder="请输入处方条码"/>
-                    </div>
-                    <div class="basic-input-width">
-                        <a-input v-model="searchData.commodityName" placeholder="请输入处方医生"/>
-                    </div>
-                    <div class="basic-input-width">
-                        <a-input v-model="searchData.commodityName" placeholder="请输入患者姓名"/>
-                    </div>
-                    <a-select v-model="searchData.brand" class="basic-select-width" placeholder="请选择科室">
-                        <a-select-option value="">
-                            品牌
-                        </a-select-option>
-                        <a-select-option value="Option2">
-                            Option2
-                        </a-select-option>
-                    </a-select>
-                    <a-select v-model="searchData.status" class="basic-select-width" placeholder="请选择状态">
-                        <a-select-option value="">
-                            状态
-                        </a-select-option>
-                        <a-select-option value="Option2">
-                            Option2
-                        </a-select-option>
-                    </a-select>
-                    <a-button type="primary">
-                        搜索
-                    </a-button>
-                </a-space>
-            </a-row>
-        </a-input-group>
+        <div class="a-input-group lengthen-search-group">
+            <a-input class="basic-input-width" v-model="searchData.commodityName" placeholder="请输入处方条码"/>
+            <a-input class="basic-input-width" v-model="searchData.commodityName" placeholder="请输入处方医生"/>
+            <a-input class="basic-input-width" v-model="searchData.commodityName" placeholder="请输入患者姓名"/>
+            <a-select v-model="searchData.brand" class="basic-select-width" placeholder="请选择科室">
+                <a-select-option value="">
+                    品牌
+                </a-select-option>
+                <a-select-option value="Option2">
+                    Option2
+                </a-select-option>
+            </a-select>
+            <a-select v-model="searchData.status" class="basic-select-width" placeholder="请选择状态">
+                <a-select-option value="">
+                    状态
+                </a-select-option>
+                <a-select-option value="Option2">
+                    Option2
+                </a-select-option>
+            </a-select>
+            <a-button type="primary">
+                搜索
+            </a-button>
+        </div>
         <!--表格-->
         <a-table
                 :columns="columns"
