@@ -1,7 +1,9 @@
 <template>
     <div class="layout-content-inner-main">
         <a-space>
-            <a-button type="primary" @click="passFn">编辑</a-button>
+            <router-link :to="{name:'editIntervention'}">
+                <a-button type="primary">编辑</a-button>
+            </router-link>
             <a-button type="primary" v-print="printObj">打印</a-button>
         </a-space>
         <div id="printContent">
@@ -229,15 +231,6 @@
                 //  设置能量表数据
                 'setEnergyDetail',
             ]),
-
-            //  编辑
-            passFn(){
-
-            },
-            //  打印
-            rejectFn(){
-                this.showModal(DIALOG_TYPE.REJECT);
-            },
         }
     };
 </script>
