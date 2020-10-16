@@ -11,22 +11,6 @@
                 :pagination="false"
                 bordered
         >
-            <!--商品名称名称-->
-            <div slot="commodityName" slot-scope="scope,sItem,sIndex,extra">
-                {{scope.commodityName}}
-            </div>
-            <!--购买单位-->
-            <div slot="buyer" slot-scope="scope,sItem,sIndex,extra">
-                {{scope.buyer}}
-            </div>
-            <!--商品单价-->
-            <div slot="unitPrice" slot-scope="scope,sItem,sIndex,extra">
-                {{scope.unitPrice}}
-            </div>
-            <!--数量-->
-            <div slot="quantity" slot-scope="scope,sItem,sIndex,extra">
-                {{scope.quantity}}
-            </div>
         </a-table>
     </div>
 </template>
@@ -35,23 +19,28 @@
     const oralColumns = [
         {
             title: '商品名称',
-            scopedSlots: { customRender: 'commodityName' },
+            dataIndex: 'commodityName',
             width: 100,
         },
         {
             title: '购买单位',
             width: 100,
-            scopedSlots: { customRender: 'buyer' },
+            dataIndex: 'buyer',
         },
         {
             title: '商品单价',
             width: 100,
-            scopedSlots: { customRender: 'unitPrice' },
+            dataIndex: 'unitPrice',
         },
         {
             title: '数量',
             width: 100,
-            scopedSlots: { customRender: 'quantity' },
+            dataIndex: 'quantity',
+        },
+        {
+            title: '小计',
+            width: 100,
+            dataIndex: 'subtotal',
         },
     ];
     export default {
