@@ -262,7 +262,3 @@
         },
     };
 </script>
-<style scoped lang="stylus">
-</style>
-
-

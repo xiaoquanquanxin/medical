@@ -1,60 +1,49 @@
 <template>
     <div class="layout-content-inner-main">
-        <p>宣教管理</p>
         <!--搜索相关-->
         <a-input-group class="a-input-group">
             <a-row :gutter="8">
-                <a-col :span="5">
-                    <a-input default-value=""/>
-                </a-col>
-                <a-col :span="5">
-                    <a-select default-value="Option1" style="width:100%;">
-                        <a-select-option value="Option1">
-                            Option1
+                <a-space>
+                    <div class="basic-input-width">
+                        <a-input v-model="searchData.commodityName" placeholder="请输入处方条码"/>
+                    </div>
+                    <div class="basic-input-width">
+                        <a-input v-model="searchData.commodityName" placeholder="请输入处方医生"/>
+                    </div>
+                    <div class="basic-input-width">
+                        <a-input v-model="searchData.commodityName" placeholder="请输入患者姓名"/>
+                    </div>
+                    <a-select v-model="searchData.brand" class="basic-select-width" placeholder="请选择科室">
+                        <a-select-option value="">
+                            品牌
                         </a-select-option>
                         <a-select-option value="Option2">
                             Option2
                         </a-select-option>
                     </a-select>
-                </a-col>
-                <a-col :span="5">
-                    <a-select default-value="Option1" style="width:100%;">
-                        <a-select-option value="Option1">
-                            Option1
+                    <a-select v-model="searchData.status" class="basic-select-width" placeholder="请选择状态">
+                        <a-select-option value="">
+                            状态
                         </a-select-option>
                         <a-select-option value="Option2">
                             Option2
                         </a-select-option>
                     </a-select>
-                </a-col>
-                <a-col :span="5">
                     <a-button type="primary">
                         搜索
                     </a-button>
-                </a-col>
+                </a-space>
             </a-row>
-        </a-input-group>
-        <a-input-group class="a-input-group">
-            <a-col :span="5">
-                <router-link :to="{name:'addMission'}">
-                    <a-button type="primary">
-                        新增宣教
-                    </a-button>
-                </router-link>
-            </a-col>
         </a-input-group>
         <!--表格-->
         <a-table
-                :row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                 :columns="columns"
                 :data-source="data"
                 :scroll="scroll"
                 :pagination="false"
         >
             <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
-                <a-space size="small">
-                    <a @click="editMission(sItem,sIndex,extra)">编辑</a>
-                </a-space>
+                <router-link :to="{name:'auditDetail',params:{auditDetailId:sIndex}}">详情</router-link>
             </div>
         </a-table>
         <!--分页-->
@@ -76,29 +65,45 @@
     </div>
 </template>
 <script>
-    import { towRowSearch } from '@/utils/tableScroll';
     import { pagination } from '@/utils/pagination.ts';
+    import { oneRowSearch } from '@/utils/tableScroll';
 
     const columns = [
         {
-            title: '文章名称',
-            dataIndex: 'hospital',
-            width: 100,
+            title: '序号',
+            dataIndex: 'commodity',
         },
         {
-            title: '阅读量',
-            dataIndex: 'city',
-            width: 100,
+            title: '处方名称',
+            dataIndex: 'aaa',
         },
         {
-            title: '文章类型',
-            dataIndex: 'status',
-            width: 100,
+            title: '处方医生',
+            dataIndex: '通用名',
         },
         {
-            title: '添加时间',
-            dataIndex: 'icon',
-            width: 100,
+            title: '开具时间',
+            dataIndex: '商品分类',
+        },
+        {
+            title: '科室',
+            dataIndex: 'unit',
+        },
+        {
+            title: '姓名',
+            dataIndex: 'specifications',
+        },
+        {
+            title: '性别',
+            dataIndex: 'marketPrice',
+        },
+        {
+            title: '年龄',
+            dataIndex: 'manufacturer',
+        },
+        {
+            title: '状态',
+            dataIndex: 'update',
         },
         {
             title: '操作',
@@ -110,27 +115,34 @@
     for (let i = 0; i < 10; i++) {
         data.push({
             key: i,
-            hospital: `xx医院`,
+            commodity: `xx商品`,
             city: '上海',
             status: String(i % 2),
-            icon: '医院图标',
-            
+            icon: '商品图标',
+            aaa: '商品货号',
+            通用名: '通用名',
+            商品分类: '商品分类',
+            unit: '基本单位',
+            specifications: '规格',
+            manufacturer: '生产厂家',
+
         });
     }
+
     export default {
         data(){
             return {
                 data,
                 columns,
-                
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
-                scroll: towRowSearch,
+                scroll: oneRowSearch,
                 //  分页信息
                 pagination,
+                //  搜索数据
+                searchData: {},
             };
         },
         methods: {
-            
             //  展示的每一页数据变换
             onShowSizeChange(current, pageSize){
                 console.log(current);
@@ -142,11 +154,6 @@
                 console.log(current);
                 console.log(pageSize);
             },
-
-            //  编辑
-            editMission(sItem, sIndex){
-                this.$router.push({ name: 'editMission', params: { missionId: 123 } });
-            }
         }
     };
 </script>
