@@ -44,7 +44,7 @@
                     </a-table>
                 </a-card>
             </a-col>
-            <a-col style="min-width:calc(100% - 300px);">
+            <a-col style="width:calc(100vw - 500px);min-width: 700px;">
                 <a-menu v-if="currentMeta"
                         v-model="transverseSubPaths"
                         mode="horizontal">
@@ -170,11 +170,6 @@
 <style scoped>
     .router-view {
         height: calc(100vh - 180px);
-        width: calc(100vw - 500px);
         overflow: auto;
-    }
-    
-    .router-view > div {
-        min-width: 800px;
     }
 </style>
