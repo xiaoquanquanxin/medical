@@ -195,7 +195,11 @@ span.ant-radio + * {
     margin-top: 0;
 }
 
-/*!*table相关*!*/
+/*table相关*/
+.ant-table table {
+    border-radius: 0;
+}
+
 /*.ant-table td {*/
 /*    white-space: nowrap;*/
 /*}*/
