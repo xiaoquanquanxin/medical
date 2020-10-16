@@ -1,13 +1,12 @@
 <template>
     <div>
-        <!--口服肠内营养补充-->
+        <!--膳食营养计划-->
         <a-row type="flex" justify="space-between" align="middle" class="table-group-title no-border-bottom">
-            <span>肠内营养补充</span>
-            <span>方法1</span>
+            <span>膳食营养计划</span>
         </a-row>
         <a-table
-                :columns="intestinesColumns"
-                :data-source="intestinesDetail"
+                :columns="oralColumns"
+                :data-source="dataSource"
                 :pagination="false"
                 bordered
         >
@@ -32,39 +31,27 @@
 </template>
 <script>
     //  口服肠内营养支持 表格 列的意义
-    const intestinesColumns = [
+    const oralColumns = [
         {
-            title: '商品名称',
-            scopedSlots: { customRender: 'commodityName' },
+            title: '时间',
             width: 100,
+            dataIndex: 'time'
         },
         {
-            title: '购买单位',
+            title: '用餐内容',
             width: 100,
-            scopedSlots: { customRender: 'buyer' },
-        },
-        {
-            title: '商品单价',
-            width: 100,
-            scopedSlots: { customRender: 'unitPrice' },
-        },
-        {
-            title: '数量',
-            width: 100,
-            scopedSlots: { customRender: 'quantity' },
-        },
+            dataIndex: 'content'
+        }
     ];
     export default {
-        computed: {
-            //  口服信息数据
-            intestinesDetail(){
-                return this.$store.state.detailsTable.intestinesDetail;
-            }
-        },
+        props: ['data-source'],
         data(){
             return {
-                intestinesColumns,
+                oralColumns,
             };
+        },
+        created(){
+            //  console.log(this.dataSource);
         }
     };
 </script>

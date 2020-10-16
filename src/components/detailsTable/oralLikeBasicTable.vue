@@ -56,12 +56,6 @@
     ];
     export default {
         props: ['data-source','data-title'],
-        computed: {
-//            //  口服信息数据
-//            oralDetail(){
-//                return this.$store.state.detailsTable.oralDetail;
-//            }
-        },
         data(){
             return {
                 oralColumns,
