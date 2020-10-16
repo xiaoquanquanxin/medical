@@ -80,7 +80,7 @@
 </template>
 <script>
     import { pagination } from '@/utils/pagination.ts';
-    import { towRowSearch } from '../../utils/tableScroll';
+    import { towRowSearch } from '@/utils/tableScroll';
 
     const columns = [
         {

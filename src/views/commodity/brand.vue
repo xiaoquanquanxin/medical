@@ -84,7 +84,7 @@
 </template>
 <script>
     import { pagination } from '@/utils/pagination.ts';
-    import { towRowSearch } from '../../utils/tableScroll';
+    import { towRowSearch } from '@/utils/tableScroll';
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
     import AddBrandBox from '@/components/commodity/addBrandBox.vue';
     import { mapGetters, mapActions } from 'vuex';

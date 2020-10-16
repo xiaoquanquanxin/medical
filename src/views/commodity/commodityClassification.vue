@@ -70,7 +70,7 @@
 </template>
 <script>
     import { pagination } from '@/utils/pagination.ts';
-    import { towRowSearch } from '../../utils/tableScroll';
+    import { towRowSearch } from '@/utils/tableScroll';
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
     import AddClassificationBox from '@/components/commodity/addClassificationBox.vue';
     import { mapGetters, mapActions } from 'vuex';

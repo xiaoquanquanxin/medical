@@ -1,6 +1,269 @@
 <template>
-    <div>fjekwl</div>
+    <div class="layout-content-inner-main">
+        <a-space>
+            <a-button type="primary" v-print="printObj">打印</a-button>
+        </a-space>
+        <div id="printContent">
+            <a-row class="a-input-group" type="flex" justify="space-between" align="middle">
+                <span data-msg="占位"></span>
+                <b>状态：{{2323232}}</b>
+            </a-row>
+            <!--基础表格-->
+            <BasicInfoTable/>
+            <br>
+            <!--口服肠内营养补充-->
+            <OralLikeBasicTable
+                    v-if="false"
+                    :data-title="oralDataTitle"
+                    :data-source="oralData"
+            />
+            <!--复杂-->
+            <OralLikeComplexTable
+                    :data-title="oralDataTitle"
+                    :data-source="oralComplexData"
+            />
+            <br>
+            <!--肠内营养支持-->
+            <OralLikeBasicTable
+                    v-if="false"
+                    :data-title="intestinalDataTitle"
+                    :data-source="intestinalData"
+            />
+            <!--复杂-->
+            <OralLikeComplexTable
+                    :data-title="intestinalDataTitle"
+                    :data-source="intestinalComplexData"
+            />
+            <br>
+            <!--能量表-->
+            <EnergyTable/>
+        </div>
+        <!--驳回莫泰框-->
+        <a-modal v-model="dialogReject.visible"
+                 v-if="dialogReject.visible"
+                 :confirm-loading="dialogReject.confirmLoading"
+                 :maskClosable="false"
+                 centered
+                 :width="800"
+                 title="驳回"
+                 ok-text="确认"
+                 cancel-text="取消"
+                 @ok="rejectModalCheck('refRejectForm')">
+            <RejectForm ref="refRejectForm"/>
+        </a-modal>
+    </div>
 </template>
 <script>
-    export default {};
+    //  基础数据
+    import BasicInfoTable from '@/components/detailsTable/basicInfoTable.vue';
+    //  类似于口服的基础数据
+    import OralLikeBasicTable from '@/components/detailsTable/oralLikeBasicTable.vue';
+    //  口服肠内营养补充，复杂表格
+    import OralLikeComplexTable from '@/components/detialsComplexTable/oralLikeComplexTable.vue';
+    //  能量
+    import EnergyTable from '@/components/detailsTable/energyTable.vue';
+    //  驳回
+    import RejectForm from '@/components/auditList/rejectForm.vue';
+    import { mapGetters, mapActions } from 'vuex';
+    import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
+
+    export default {
+        components: {
+            BasicInfoTable,
+            OralLikeBasicTable,
+            OralLikeComplexTable,
+            RejectForm,
+            EnergyTable,
+        },
+        data(){
+            return {
+                //  详情的id
+                configurationDetailId: this.$route.params.configurationDetailId,
+                //  口服数据
+                oralDataTitle: {
+                    name: '口服肠内营养补充',
+                    method: '方法1',
+                },
+                oralData: [
+                    {
+                        key: 1,
+                        commodityName: '许晓飞123',
+                        buyer: '年',
+                        unitPrice: '吃',
+                        quantity: '¥20'
+                    }, {
+                        key: 2,
+                        commodityName: '许晓飞123',
+                        buyer: '年',
+                        unitPrice: '吃',
+                        quantity: '¥20'
+                    }
+                ],
+                oralComplexData: [
+                    {
+                        key: 1,
+                        time: '4:00',
+                        water: 11,
+                        remark: '备注',
+                        childrenList: [
+                            {
+                                quality: 1,
+                                commodity: 'commodity1',
+                            },
+                            {
+                                quality: 2,
+                                commodity: 'commodity2',
+                            }
+                        ]
+                    },
+                    {
+                        key: 2,
+                        time: '12:00',
+                        water: 23,
+                        remark: '备注',
+                        childrenList: [
+                            {
+                                quality: 3,
+                                commodity: 'commodity3',
+                            },
+                            {
+                                quality: 4,
+                                commodity: 'commodity4',
+                            }
+                        ]
+                    },
+                ],
+
+                //  肠内数据
+                intestinalDataTitle: {
+                    name: '肠内营养补充',
+                    method: '方法3',
+                },
+                intestinalData: [
+                    {
+                        key: 1,
+                        commodityName: '许晓飞123',
+                        buyer: '年',
+                        unitPrice: '吃',
+                        quantity: '¥20'
+                    }, {
+                        key: 2,
+                        commodityName: '许晓飞123',
+                        buyer: '年',
+                        unitPrice: '吃',
+                        quantity: '¥20'
+                    }
+                ],
+                intestinalComplexData: [
+                    {
+                        key: 1,
+                        time: '4:00',
+                        water: 11,
+                        remark: '备注',
+                        childrenList: [
+                            {
+                                quality: 1,
+                                commodity: 'commodity1',
+                            },
+                            {
+                                quality: 2,
+                                commodity: 'commodity2',
+                            }
+                        ]
+                    },
+                    {
+                        key: 2,
+                        time: '12:00',
+                        water: 23,
+                        remark: '备注',
+                        childrenList: [
+                            {
+                                quality: 3,
+                                commodity: 'commodity3',
+                            },
+                            {
+                                quality: 4,
+                                commodity: 'commodity4',
+                            }
+                        ]
+                    },
+                ],
+
+                //  缴费莫泰框
+                dialogReject: this.initModal(DIALOG_TYPE.REJECT),
+
+                //  打印对象
+                printObj: {
+                    id: '#printContent',
+                    popTitle: '领药任务',
+                },
+            };
+        },
+        created(){
+            console.log('编辑id', this.configurationDetailId);
+            //  设置基础信息数据
+            this.setBasicInfoDetail([{
+                key: 1,
+                planName: '许晓飞123',
+                cycle: '年',
+                prescriptionType: '吃',
+                cost: '¥20',
+            }]);
+            //  设置能量表数据
+            this.setEnergyDetail([{
+                key: 1,
+                energy: 123,
+                protein: 234,
+                fat: 345,
+                carbohydrates: 456,
+            }]);
+        },
+        methods: {
+            //  莫泰框方法
+            ...dialogMethods,
+            ...mapActions('detailsTable', [
+                //  设置基础信息数据
+                'setBasicInfoDetail',
+                //  设置能量表数据
+                'setEnergyDetail',
+            ]),
+
+            //  通过
+            passFn(){
+                this.$confirm({
+                    title: `确定领药${11}`,
+                    //  content: 'Bla bla ...',
+                    okText: '确认',
+                    cancelText: '取消',
+                    onOk(){
+                        return new Promise((resolve, reject) => {
+                            console.log('发请求');
+                            setTimeout(Math.random() > 0.5 ? resolve : reject, 1111);
+                        }).catch(() => console.log('Oops errors!'));
+                    },
+                    onCancel(){
+                        console.log('取消');
+                    },
+                });
+            },
+            //  驳回
+            rejectFn(){
+                this.showModal(DIALOG_TYPE.REJECT);
+            },
+            //  确认驳回
+            rejectModalCheck(refRejectForm){
+                //  防止连点
+                this.setConfirmLoading(DIALOG_TYPE.REJECT, true);
+                const promise = this.$refs[refRejectForm].handleSubmit();
+                promise.then(v => {
+                    this.hideModal(DIALOG_TYPE.REJECT);
+                }).catch(error => {
+                    console.log('有错');
+                }).then(v => {
+                    //  最后设置可以再次点击
+                    this.setConfirmLoading(DIALOG_TYPE.REJECT, false);
+                });
+            }
+        }
+    };
 </script>

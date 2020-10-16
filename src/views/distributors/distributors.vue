@@ -82,7 +82,7 @@
     import AddOrEditDistributors from '@/components/addOrEditDistributors.vue';
     import { pagination } from '@/utils/pagination.ts';
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
-    import { towRowSearch } from '../../utils/tableScroll';
+    import { towRowSearch } from '@/utils/tableScroll';
 
     const columns = [
         {

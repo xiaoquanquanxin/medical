@@ -13,9 +13,9 @@
         <br>
         <!--口服肠内营养补充-->
         <OralLikeBasicTable
-                :data-source="oralData"
-                :data-title="oralDataTitle"
-        />
+                    :data-title="oralDataTitle":data-source="oralData"
+                    
+            />
         <br>
         <!--复杂-->
         <OralLikeComplexTable
@@ -24,9 +24,9 @@
         <br>
         <!--肠内营养支持-->
         <OralLikeBasicTable
-                :data-source="intestinalData"
-                :data-title="intestinalDataTitle"
-        />
+                    
+                    :data-title="intestinalDataTitle" :data-source="intestinalData"
+            />
         <br>
         <!--复杂-->
         <OralLikeComplexTable
