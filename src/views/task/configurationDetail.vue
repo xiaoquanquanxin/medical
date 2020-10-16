@@ -59,7 +59,7 @@
     //  类似于口服的基础数据
     import OralLikeBasicTable from '@/components/detailsTable/oralLikeBasicTable.vue';
     //  口服肠内营养补充，复杂表格
-    import OralLikeComplexTable from '@/components/detialsComplexTable/oralLikeComplexTable.vue';
+    import OralLikeComplexTable from '@/components/detailsTable/oralLikeComplexTable.vue';
     //  能量
     import EnergyTable from '@/components/detailsTable/energyTable.vue';
     //  驳回
