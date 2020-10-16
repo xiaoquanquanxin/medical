@@ -3,6 +3,7 @@
             :columns="energyColumns"
             :data-source="energyDetail"
             :pagination="false"
+            bordered
     >
     </a-table>
 </template>
