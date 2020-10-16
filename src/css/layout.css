@@ -194,3 +194,8 @@ span.ant-radio + * {
 .login-form .ant-tabs-bottom .ant-tabs-bottom-bar {
     margin-top: 0;
 }
+
+/*!*table相关*!*/
+/*.ant-table td {*/
+/*    white-space: nowrap;*/
+/*}*/
