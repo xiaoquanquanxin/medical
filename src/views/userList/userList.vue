@@ -5,28 +5,31 @@
                 <a-card title="就诊信息">
                     <a-form class="form"
                             v-bind="{
-                                 labelCol: { span: 7 },
-                                 wrapperCol: { offset: 1, span: 16 },
+                                 labelCol: { span: 6 },
+                                 wrapperCol: { offset: 1, span: 17 },
                             }"
                             autocomplete="off"
                     >
                         <a-form-item label="姓名">
-                            <a-input placeholder="请输入姓名"/>
+                            <a-input-search placeholder="请输入姓名"
+                                            v-model="searchData.name"
+                                            enter-button="搜索"
+                                            @search="searchFn"/>
                         </a-form-item>
                         <a-form-item label="身份证号">
-                            <a-input placeholder="请输入身份证号"/>
+                            <a-input-search placeholder="请输入身份证号"
+                                            v-model="searchData.idCard"
+                                            enter-button="搜索"
+                                            @search="searchFn"/>
                         </a-form-item>
-                        <a-button type="primary">
-                            搜索
-                        </a-button>
                     </a-form>
                 </a-card>
                 <a-card title="病人列表">
-                    <router-link :to="{name:'addAdmittedHospital'}">
-                        <a-button type="primary">
-                            新增用户
-                        </a-button>
-                    </router-link>
+                    <div class="a-input-group">
+                        <router-link :to="{name:'addAdmittedHospital'}">
+                            <a-button type="primary">新增用户</a-button>
+                        </router-link>
+                    </div>
                     <a-table
                             :columns="columns"
                             :data-source="data"
@@ -54,7 +57,7 @@
                     </a-menu-item>
                 </a-menu>
                 <div class="router-view">
-                    <div>
+                    <div class="layout-content-inner">
                         <router-view/>
                     </div>
                 </div>
@@ -96,7 +99,6 @@
 
     //  处方模板管理
     export default {
-
         computed: {
             userRouteList(){
                 const { userRouteList } = this.$store.state.routeList;
@@ -116,10 +118,17 @@
 
                 columns,
                 data,
+
+                //  搜索数据
+                searchData: {},
             };
         },
         methods: {
             jumpTo,
+            //  搜索方法
+            searchFn(){
+                console.log(this.searchData);
+            },
             //  自定义表格事件
             customRow(scope){
                 return {

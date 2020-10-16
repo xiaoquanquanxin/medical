@@ -3,7 +3,7 @@
         <!--头部信息-->
         <a-row type="flex" justify="space-between" align="middle">
             <a-col>
-                <!--                <a-button type="primary" @click="confirmOutHospital">确认出院</a-button>-->
+                <a-button type="primary" @click="confirmOutHospital">确认出院</a-button>
                 <router-link :to="{name:'admittedHospital',params:{patientInfoId}}">
                     <a-button type="primary">
                         确认入院

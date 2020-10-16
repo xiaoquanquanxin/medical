@@ -7,7 +7,9 @@
                 size="small"
         >
             <a-descriptions-item label="筛查人">
-                <a-input placeholder="请输入筛查人"/>
+                <a-input placeholder="请输入筛查人"
+                         class="basic-input-width"
+                />
             </a-descriptions-item>
             <!--选择日期-->
             <a-descriptions-item label="选择日期">
@@ -15,6 +17,7 @@
                         placeholder="请选择日期"
                         v-model="selectDateMoment"
                         @change="onDateChange"
+                        class="basic-select-width"
                 />
             </a-descriptions-item>
             <a-descriptions-item label="选择时间">
@@ -22,7 +25,9 @@
                         placeholder="请选择时间"
                         v-model="selectTimeMoment"
                         @change="selectTimeChange"
-                        format="HH:mm"/>
+                        class="basic-select-width"
+                        format="HH:mm"
+                />
             </a-descriptions-item>
         </a-descriptions>
     </div>

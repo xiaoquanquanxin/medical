@@ -7,41 +7,48 @@
                 autocomplete="off"
         >
             <a-form-item label="是否能够按照方案执行">
-                <a-radio-group name="radioGroup">
+                <a-radio-group v-decorator="performDecorator">
                     <a-radio :value="1">是</a-radio>
                     <a-radio :value="2">否</a-radio>
                 </a-radio-group>
             </a-form-item>
             <a-form-item label="具体原因">
                 <a-input
+                        v-decorator="performCauseDecorator"
                         placeholder="请输入具体原因"/>
             </a-form-item>
             <a-form-item label="是否能够耐受">
-                <a-radio-group name="radioGroup">
+                <a-radio-group v-decorator="toleranceDecorator">
                     <a-radio :value="1">是</a-radio>
                     <a-radio :value="2">否</a-radio>
                 </a-radio-group>
             </a-form-item>
             <a-form-item label="具体原因">
-                <a-input placeholder="请输入具体原因"/>
+                <a-input
+                        v-decorator="toleranceCauseDecorator"
+                        placeholder="请输入具体原因"/>
             </a-form-item>
             <a-form-item label="有无大便">
-                <a-radio-group name="radioGroup">
+                <a-radio-group v-decorator="shitDecorator">
                     <a-radio :value="1">是</a-radio>
                     <a-radio :value="2">否</a-radio>
                 </a-radio-group>
             </a-form-item>
             <a-form-item label="具体原因">
-                <a-input placeholder="请输入具体原因"/>
+                <a-input
+                        v-decorator="shitCauseDecorator"
+                        placeholder="请输入具体原因"/>
             </a-form-item>
             <a-form-item label="有无饥饿感">
-                <a-radio-group name="radioGroup">
+                <a-radio-group v-decorator="hungerDecorator">
                     <a-radio :value="1">是</a-radio>
                     <a-radio :value="2">否</a-radio>
                 </a-radio-group>
             </a-form-item>
             <a-form-item label="具体原因">
-                <a-input placeholder="请输入具体原因"/>
+                <a-input
+                        v-decorator="hungerCauseDecorator"
+                        placeholder="请输入具体原因"/>
             </a-form-item>
         </a-form>
     </div>
@@ -61,27 +68,49 @@
         data(){
             return {
                 formItemLayout,
-//                //  病程记录商品
-//                reportedLossGoodsDecorator: ['reportedLossGoods', {
-//                    rules: [{
-//                        required: true,
-//                        message: '请选择病程记录商品'
-//                    },]
-//                }],
-//                //  病程记录数量
-//                reportedLossQuantityDecorator: ['reportedLossQuantity', {
-//                    rules: [{
-//                        required: true,
-//                        message: '请输入采购数量'
-//                    },]
-//                }],
-//                //  病程记录原因
-//                reportedLossReasonDecorator: ['reportedLossReason', {
-//                    rules: [{
-//                        required: true,
-//                        message: '请输入病程记录原因'
-//                    },]
-//                }],
+                //  是否能够按照方案执行
+                performDecorator: ['perform', {
+                    initialValue: 1,
+                }],
+                performCauseDecorator: ['performCause', {
+                    rules: [{
+                        required: true,
+                        message: '请输入具体原因'
+                    },]
+                }],
+
+                //  是否能够耐受
+                toleranceDecorator: ['tolerance', {
+                    initialValue: 1,
+                }],
+                toleranceCauseDecorator: ['toleranceCause', {
+                    rules: [{
+                        required: true,
+                        message: '请输入具体原因'
+                    },]
+                }],
+
+                //  有无大便
+                shitDecorator: ['shit', {
+                    initialValue: 1,
+                }],
+                shitCauseDecorator: ['shitCause', {
+                    rules: [{
+                        required: true,
+                        message: '请输入具体原因'
+                    },]
+                }],
+
+                //  有无饥饿感
+                hungerDecorator: ['hunger', {
+                    initialValue: 1,
+                }],
+                hungerCauseDecorator: ['hungerCause', {
+                    rules: [{
+                        required: true,
+                        message: '请输入具体原因'
+                    },]
+                }],
             };
         },
         created(){

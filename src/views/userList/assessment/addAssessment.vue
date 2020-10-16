@@ -592,29 +592,25 @@
                             <li class="radio-group-item">
                                 <a-space>
                                     <span>目前患者的体重约为</span>
-                                    <a-input placeholder="目前患者的体重约为"/>
-                                    <span>kg</span>
+                                    <a-input class="basic-input-width" placeholder="请输入体重" suffix="kg" size="small"/>
                                 </a-space>
                             </li>
                             <li class="radio-group-item">
                                 <a-space>
                                     <span>目前患者的身高约为</span>
-                                    <a-input placeholder="目前患者的身高约为"/>
-                                    <span>cm</span>
+                                    <a-input class="basic-input-width" placeholder="请输入身高" suffix="cm" size="small"/>
                                 </a-space>
                             </li>
                             <li class="radio-group-item">
                                 <a-space>
                                     <span>一个月前患者的体重约为</span>
-                                    <a-input placeholder="一个月前患者的体重约为"/>
-                                    <span>kg</span>
+                                    <a-input class="basic-input-width" placeholder="请输入体重" suffix="kg" size="small"/>
                                 </a-space>
                             </li>
                             <li class="radio-group-item">
                                 <a-space>
                                     <span>六个月前患者的体重约为</span>
-                                    <a-input placeholder="六个月前患者的体重约为"/>
-                                    <span>cm</span>
+                                    <a-input class="basic-input-width" placeholder="请输入身高" suffix="cm" size="small"/>
                                 </a-space>
                             </li>
                             <li class="radio-group-item">
