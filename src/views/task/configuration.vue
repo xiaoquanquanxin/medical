@@ -1,82 +1,80 @@
 <template>
     <div class="layout-content-inner-main">
-        <div v-if="true">
-            <!--搜索相关-->
-            <div class="a-input-group lengthen-search-group">
-                <div class="basic-input-width">
-                    <a-input v-model="searchData.commodityName" placeholder="请输入处方号"/>
-                </div>
-                <div class="basic-input-width">
-                    <a-input v-model="searchData.commodityName" placeholder="请输入处方名称"/>
-                </div>
-                <div class="basic-input-width">
-                    <a-input v-model="searchData.commodityName" placeholder="请输入患者姓名"/>
-                </div>
-                <a-date-picker
-                        class="lengthen-select-width"
-                        placeholder="请选择配置日期"
-                        v-model="selectDateMoment"
-                        @change="onDateChange"
-                />
-                <a-select v-model="searchData.brand" class="basic-select-width" placeholder="请选择科室">
-                    <a-select-option value="">
-                        品牌
-                    </a-select-option>
-                    <a-select-option value="Option2">
-                        Option2
-                    </a-select-option>
-                </a-select>
-                <a-select v-model="searchData.status" class="basic-select-width" placeholder="请选择状态">
-                    <a-select-option value="">
-                        状态
-                    </a-select-option>
-                    <a-select-option value="Option2">
-                        Option2
-                    </a-select-option>
-                </a-select>
-                <a-button type="primary">
-                    搜索
-                </a-button>
+        <!--搜索相关-->
+        <div class="a-input-group lengthen-search-group">
+            <div class="basic-input-width">
+                <a-input v-model="searchData.commodityName" placeholder="请输入处方号"/>
             </div>
-            <a-input-group class="a-input-group">
-                <a-space>
-                    <a-button type="primary" v-print="printBottle">打印瓶贴</a-button>
-                    <a-button type="primary" v-print="printMenu">打印配置单</a-button>
-                </a-space>
-            </a-input-group>
-            <!--表格-->
-            <a-table
-                    :columns="columns"
-                    :data-source="data"
-                    :scroll="scroll"
-                    :pagination="false"
-            >
-                <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
-                    <a-space>
-                        <router-link :to="{name:'configurationDetail',params:{configurationDetailId:sIndex}}">详情
-                        </router-link>
-                        <a @click="confirmReceiving(sItem)">确定签收</a>
-                        <a @click="confirmConfig(sItem)">确定配置</a>
-                    </a-space>
-                </div>
-            </a-table>
-            <!--分页-->
-            <a-row type="flex" justify="end" class="a-pagination">
-                <a-pagination
-                        v-model="pagination.current"
-                        :page-size-options="pagination.pageSizeOptions"
-                        :total="pagination.total"
-                        show-size-changer
-                        :page-size="pagination.pageSize"
-                        @showSizeChange="onShowSizeChange"
-                        @change="pageChange"
-                >
-                    <template slot="buildOptionText" slot-scope="props">
-                        <span>{{ props.value }}条/页</span>
-                    </template>
-                </a-pagination>
-            </a-row>
+            <div class="basic-input-width">
+                <a-input v-model="searchData.commodityName" placeholder="请输入处方名称"/>
+            </div>
+            <div class="basic-input-width">
+                <a-input v-model="searchData.commodityName" placeholder="请输入患者姓名"/>
+            </div>
+            <a-date-picker
+                    class="lengthen-select-width"
+                    placeholder="请选择配置日期"
+                    v-model="selectDateMoment"
+                    @change="onDateChange"
+            />
+            <a-select v-model="searchData.brand" class="basic-select-width" placeholder="请选择科室">
+                <a-select-option value="">
+                    品牌
+                </a-select-option>
+                <a-select-option value="Option2">
+                    Option2
+                </a-select-option>
+            </a-select>
+            <a-select v-model="searchData.status" class="basic-select-width" placeholder="请选择状态">
+                <a-select-option value="">
+                    状态
+                </a-select-option>
+                <a-select-option value="Option2">
+                    Option2
+                </a-select-option>
+            </a-select>
+            <a-button type="primary">
+                搜索
+            </a-button>
         </div>
+        <a-input-group class="a-input-group">
+            <a-space>
+                <a-button type="primary" v-print="printBottle">打印瓶贴</a-button>
+                <a-button type="primary" v-print="printMenu">打印配置单</a-button>
+            </a-space>
+        </a-input-group>
+        <!--表格-->
+        <a-table
+                :columns="columns"
+                :data-source="data"
+                :scroll="scroll"
+                :pagination="false"
+        >
+            <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
+                <a-space>
+                    <router-link :to="{name:'configurationDetail',params:{configurationDetailId:sIndex}}">详情
+                    </router-link>
+                    <a @click="confirmReceiving(sItem)">确定签收</a>
+                    <a @click="confirmConfig(sItem)">确定配置</a>
+                </a-space>
+            </div>
+        </a-table>
+        <!--分页-->
+        <a-row type="flex" justify="end" class="a-pagination">
+            <a-pagination
+                    v-model="pagination.current"
+                    :page-size-options="pagination.pageSizeOptions"
+                    :total="pagination.total"
+                    show-size-changer
+                    :page-size="pagination.pageSize"
+                    @showSizeChange="onShowSizeChange"
+                    @change="pageChange"
+            >
+                <template slot="buildOptionText" slot-scope="props">
+                    <span>{{ props.value }}条/页</span>
+                </template>
+            </a-pagination>
+        </a-row>
         <!--打印-->
         <div v-show="false">
             <div id="printBottle" data-msg="打印瓶贴">

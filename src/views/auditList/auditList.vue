@@ -66,53 +66,44 @@
 </template>
 <script>
     import { pagination } from '@/utils/pagination.ts';
-    import { towRowSearch } from '../../utils/tableScroll';
+    import { oneRowSearch } from '../../utils/tableScroll';
 
     const columns = [
         {
             title: '序号',
             dataIndex: 'commodity',
-            width: 100,
         },
         {
             title: '处方名称',
             dataIndex: 'aaa',
-            width: 100,
         },
         {
             title: '处方医生',
             dataIndex: '通用名',
-            width: 100,
         },
         {
             title: '开具时间',
             dataIndex: '商品分类',
-            width: 100,
         },
         {
             title: '科室',
             dataIndex: 'unit',
-            width: 100,
         },
         {
             title: '姓名',
             dataIndex: 'specifications',
-            width: 100,
         },
         {
             title: '性别',
             dataIndex: 'marketPrice',
-            width: 100,
         },
         {
             title: '年龄',
             dataIndex: 'manufacturer',
-            width: 100,
         },
         {
             title: '状态',
             dataIndex: 'update',
-            width: 100,
         },
         {
             title: '操作',
@@ -144,7 +135,7 @@
                 data,
                 columns,
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
-                scroll: towRowSearch,
+                scroll: oneRowSearch,
                 //  分页信息
                 pagination,
                 //  搜索数据

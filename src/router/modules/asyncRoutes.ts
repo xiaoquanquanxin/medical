@@ -877,7 +877,7 @@ export const asyncRoutesList = [
 			{
 				meta: {
 					chName: '配置任务详情',
-					selectRouteKey: 'configurationDetail',
+					selectRouteKey: 'configuration',
 					openRouteKey: 'task',
 				},
 				name: 'configurationDetail',
@@ -898,7 +898,7 @@ export const asyncRoutesList = [
 			{
 				meta: {
 					chName: '领药任务详情',
-					selectRouteKey: 'getDrugDetail',
+					selectRouteKey: 'getDrug',
 					openRouteKey: 'task',
 				},
 				name: 'getDrugDetail',
@@ -909,11 +909,11 @@ export const asyncRoutesList = [
 			{
 				meta: {
 					chName: '报损',
-					selectRouteKey: 'reportedLoss',
+					selectRouteKey: 'taskReportedLoss',
 					openRouteKey: 'task',
 				},
 				path: '/task/reportedLoss',
-				name: 'reportedLoss',
+				name: 'taskReportedLoss',
 				component: () => import(/* webpackChunkName: "reportedLoss" */ '@/views/warehouse/reportedLoss.vue'),
 			},
 		],
