@@ -207,7 +207,7 @@
                         content: 'xxx',
                     }
                 ],
-                //  缴费莫泰框
+                //  拒绝的莫泰框
                 dialogReject: this.initModal(DIALOG_TYPE.REJECT),
             };
         },
