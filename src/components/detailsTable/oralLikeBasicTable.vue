@@ -2,12 +2,12 @@
     <div>
         <!--口服肠内营养补充-->
         <a-row type="flex" justify="space-between" align="middle" class="table-group-title no-border-bottom">
-            <span>口服肠内营养补充</span>
-            <span>方法1</span>
+            <span>{{dataTitle.name}}</span>
+            <span>{{dataTitle.method}}</span>
         </a-row>
         <a-table
                 :columns="oralColumns"
-                :data-source="oralDetail"
+                :data-source="dataSource"
                 :pagination="false"
                 bordered
         >
@@ -55,16 +55,20 @@
         },
     ];
     export default {
+        props: ['data-source','data-title'],
         computed: {
-            //  口服信息数据
-            oralDetail(){
-                return this.$store.state.detailsTable.oralDetail;
-            }
+//            //  口服信息数据
+//            oralDetail(){
+//                return this.$store.state.detailsTable.oralDetail;
+//            }
         },
         data(){
             return {
                 oralColumns,
             };
+        },
+        created(){
+            console.log(this.dataSource);
         }
     };
 </script>
