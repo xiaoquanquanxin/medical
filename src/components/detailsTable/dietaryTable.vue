@@ -14,7 +14,6 @@
     </div>
 </template>
 <script>
-    //  口服肠内营养支持 表格 列的意义
     const oralColumns = [
         {
             title: '时间',
@@ -27,6 +26,7 @@
             dataIndex: 'content'
         }
     ];
+    //  膳食
     export default {
         props: ['data-source'],
         data(){
