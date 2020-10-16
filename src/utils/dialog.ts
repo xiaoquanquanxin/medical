@@ -98,6 +98,10 @@ export const DIALOG_TYPE: DialogType = {
 	ROLE: 'ROLE',
 	//	新增、编辑
 	ACCOUNT: 'ACCOUNT',
+
+	//	驳回
+	REJECT: 'REJECT',
+
 }
 
 
