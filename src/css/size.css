@@ -26,6 +26,12 @@
 
 
 /*特殊的过长的行*/
+.lengthen-search-group::after {
+    clear: both;
+    display: block;
+    content: '';
+}
+
 .lengthen-search-group > .basic-input-width,
 .lengthen-search-group > .basic-select-width,
 .lengthen-search-group > .lengthen-select-width,
