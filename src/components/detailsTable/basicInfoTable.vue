@@ -11,22 +11,6 @@
                 :pagination="false"
                 bordered
         >
-            <!--方案名称-->
-            <div slot="planName" slot-scope="scope,sItem,sIndex,extra">
-                {{scope.planName}}
-            </div>
-            <!--周期-->
-            <div slot="cycle" slot-scope="scope,sItem,sIndex,extra">
-                {{scope.cycle}}
-            </div>
-            <!--处方类型-->
-            <div slot="prescriptionType" slot-scope="scope,sItem,sIndex,extra">
-                {{scope.prescriptionType}}
-            </div>
-            <!--咨询费/配置费-->
-            <div slot="cost" slot-scope="scope,sItem,sIndex,extra">
-                {{scope.cost}}
-            </div>
         </a-table>
     </div>
 </template>
@@ -35,23 +19,23 @@
     const basicInfoColumns = [
         {
             title: '方案名称',
-            scopedSlots: { customRender: 'planName' },
+            dataIndex: 'planName',
             width: 100,
         },
         {
             title: '周期',
             width: 100,
-            scopedSlots: { customRender: 'cycle' },
+            dataIndex: 'cycle',
         },
         {
             title: '处方类型',
             width: 100,
-            scopedSlots: { customRender: 'prescriptionType' },
+            dataIndex: 'prescriptionType',
         },
         {
             title: '咨询费/配置费',
             width: 100,
-            scopedSlots: { customRender: 'cost' },
+            dataIndex: 'cost',
         },
     ];
 
