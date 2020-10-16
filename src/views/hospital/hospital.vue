@@ -119,7 +119,7 @@
     import { mapGetters, mapActions } from 'vuex';
     import { pagination } from '@/utils/pagination.ts';
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
-    import { towRowSearch } from '../../utils/tableScroll';
+    import { towRowSearch } from '@/utils/tableScroll';
     import { SHUTTLE_BOX } from '../../store/modules/shuttleBox';
 
     const columns = [
