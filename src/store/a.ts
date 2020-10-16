@@ -151,78 +151,76 @@ export const routeMap = {
 	// 	用户列表
 	'userList': false,
 	//	病人信息
-	'patientInfo': false,
+	'patientInfo': true,
 	//	筛查
-	'screening': false,
+	'screening': true,
 	//	营养评估
-	'assessment': false,
+	'assessment': true,
 	//	营养干预
-	'intervention': false,
+	'intervention': true,
 	//	病程记录
-	'progressNote': false,
+	'progressNote': true,
 	//	患者反馈
-	'patientReply': false,
+	'patientReply': true,
 	//	活动小结
-	'activityBrief': false,
+	'activityBrief': true,
 
 	//	确认入院
-	'admittedHospital': false,
+	'admittedHospital': true,
 	//	新增入院
-	'addAdmittedHospital': false,
+	'addAdmittedHospital': true,
 
 	//	新增筛查
-	'addScreening': false,
+	'addScreening': true,
 	//	筛查详情
-	'screeningDetail': false,
+	'screeningDetail': true,
 
 	//	新增营养评估
-	'addAssessment': false,
+	'addAssessment': true,
 	//	营养评估详情
-	'assessmentDetail': false,
+	'assessmentDetail': true,
 
 	//	处方审核列表
-	'auditList': false,
+	'auditList': true,
 	//	处方审核详情
-	'auditDetail': false,
+	'auditDetail': true,
 
 	//	配置任务
-	'task': false,
+	'task': true,
 	//	配置任务
-	'configuration': false,
+	'configuration': true,
 	//	配置任务详情
-	'configurationDetail': false,
+	'configurationDetail': true,
 	//	领药任务
-	'getDrug': false,
+	'getDrug': true,
 	//	领药详情
-	'getDrugDetail': false,
+	'getDrugDetail': true,
+	//	报损
+	'taskReportedLoss': true,
 
 	//	收计费
-	'cost': false,
+	'cost': true,
 	//	收计费
-	'costList': false,
+	'costList': true,
 	//	退费记录
-	'returnPremium': false,
+	'returnPremium': true,
 	//	缴费记录
-	'paymentRecords': false,
-	//	退费详情
-	'returnPremiumDetail': false,
-	//	缴费详情
-	'paymentRecordsDetail': false,
+	'paymentRecords': true,
 
 	//	日结、月结
-	'statement': false,
+	'statement': true,
 	//	月结
-	'monthly': false,
+	'monthly': true,
 	//	日结
-	'daily': false,
+	'daily': true,
 	//	月结详情
-	'monthlyDetail': false,
+	'monthlyDetail': true,
 	//	日结详情
-	'dailyDetail': false,
+	'dailyDetail': true,
 	//	执行月结
-	'monthlyExecute': false,
+	'monthlyExecute': true,
 	//	执行日结
-	'dailyExecute': false,
+	'dailyExecute': true,
 };
 
 
