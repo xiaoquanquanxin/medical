@@ -9,13 +9,14 @@
             <b>状态：{{2323232}}</b>
         </a-row>
         <!--基础表格-->
-        <BasicInfoTable/>
+        <BasicInfoTable
+                :data-source="basicInfoData"
+        />
         <br>
         <!--口服肠内营养补充-->
         <OralLikeBasicTable
-                    :data-title="oralDataTitle":data-source="oralData"
-                    
-            />
+                :data-title="oralDataTitle" :data-source="oralData"
+        />
         <br>
         <!--复杂-->
         <OralLikeComplexTable
@@ -24,9 +25,8 @@
         <br>
         <!--肠内营养支持-->
         <OralLikeBasicTable
-                    
-                    :data-title="intestinalDataTitle" :data-source="intestinalData"
-            />
+                :data-title="intestinalDataTitle" :data-source="intestinalData"
+        />
         <br>
         <!--复杂-->
         <OralLikeComplexTable
@@ -39,7 +39,9 @@
         />
         <br>
         <!--能量表-->
-        <EnergyTable/>
+        <EnergyTable
+                :data-source="energyData"
+        />
         <!--驳回莫泰框-->
         <a-modal v-model="dialogReject.visible"
                  v-if="dialogReject.visible"
@@ -68,7 +70,6 @@
     import EnergyTable from '@/components/detailsTable/energyTable.vue';
     //  驳回
     import RejectForm from '@/components/auditList/rejectForm.vue';
-    import { mapGetters, mapActions } from 'vuex';
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
 
     export default {
@@ -84,24 +85,36 @@
             return {
                 //  详情的id
                 auditDetailId: this.$route.params.auditDetailId,
+
+                //  基础数据
+                basicInfoData: [{
+                    key: 1,
+                    planName: '许晓飞123',
+                    cycle: '年',
+                    prescriptionType: '吃',
+                    cost: '¥20',
+                }],
+
                 //  口服数据
                 oralDataTitle: {
                     name: '口服肠内营养补充',
                     method: '方法1',
                 },
-                oralData: [
+                 oralData: [
                     {
                         key: 1,
                         commodityName: '许晓飞123',
                         buyer: '年',
                         unitPrice: '吃',
-                        quantity: '¥20'
+                        quantity: '¥20',
+                        subtotal: 43,
                     }, {
                         key: 2,
                         commodityName: '许晓飞123',
                         buyer: '年',
                         unitPrice: '吃',
-                        quantity: '¥20'
+                        quantity: '¥20',
+                        subtotal: 433,
                     }
                 ],
                 oralComplexData: [
@@ -150,13 +163,15 @@
                         commodityName: '许晓飞123',
                         buyer: '年',
                         unitPrice: '吃',
-                        quantity: '¥20'
+                        quantity: '¥20',
+                        subtotal: 433,
                     }, {
                         key: 2,
                         commodityName: '许晓飞123',
                         buyer: '年',
                         unitPrice: '吃',
-                        quantity: '¥20'
+                        quantity: '¥20',
+                        subtotal: 433,
                     }
                 ],
                 intestinalComplexData: [
@@ -207,46 +222,25 @@
                         content: 'xxx',
                     }
                 ],
+
+                //  能量数据
+                energyData: [{
+                    key: 1,
+                    energy: 123,
+                    protein: 234,
+                    fat: 345,
+                    carbohydrates: 456,
+                }],
                 //  拒绝的莫泰框
                 dialogReject: this.initModal(DIALOG_TYPE.REJECT),
             };
         },
         created(){
             console.log('编辑id', this.auditDetailId);
-            //  设置基础信息数据
-            this.setBasicInfoDetail([{
-                key: 1,
-                planName: '许晓飞123',
-                cycle: '年',
-                prescriptionType: '吃',
-                cost: '¥20',
-            }]);
-            //  设置能量表数据
-            this.setEnergyDetail([{
-                key: 1,
-                energy: 123,
-                protein: 234,
-                fat: 345,
-                carbohydrates: 456,
-            }]);
-//            //  设置口服信息数据
-//            this.setOralDetail();
-//            //  设置肠内信息数据
-//            this.setIntestinesDetail();
         },
         methods: {
             //  莫泰框方法
             ...dialogMethods,
-            ...mapActions('detailsTable', [
-                //  设置基础信息数据
-                'setBasicInfoDetail',
-                //  设置能量表数据
-                'setEnergyDetail',
-//                //  设置口服信息数据
-//                'setOralDetail',
-//                //  设置肠内信息数据
-//                'setIntestinesDetail',
-            ]),
 
             //  通过
             passFn(){
