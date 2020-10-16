@@ -1,7 +1,7 @@
 <template>
     <a-table
             :columns="energyColumns"
-            :data-source="energyDetail"
+            :data-source="dataSource"
             :pagination="false"
             bordered
     >
@@ -33,12 +33,7 @@
     ];
 
     export default {
-        computed: {
-            //  能量表数据
-            energyDetail(){
-                return this.$store.state.detailsTable.energyDetail;
-            }
-        },
+        props: ['dataSource'],
         data(){
             return {
                 energyColumns,

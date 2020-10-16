@@ -7,7 +7,7 @@
         </a-row>
         <a-table
                 :columns="basicInfoColumns"
-                :data-source="basicInfoDetail"
+                :data-source="dataSource"
                 :pagination="false"
                 bordered
         >
@@ -56,17 +56,14 @@
     ];
 
     export default {
-        computed: {
-            //  基础表格数据
-            basicInfoDetail(){
-                return this.$store.state.detailsTable.basicInfoDetail;
-            }
-        },
+        props: ['dataSource'],
         data(){
             return {
-
                 basicInfoColumns,
             };
+        },
+        created(){
+            console.log(this.dataSource);
         }
     };
 </script>
