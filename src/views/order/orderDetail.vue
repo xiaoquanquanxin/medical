@@ -11,7 +11,7 @@
                 <b>状态：已领药</b>
             </p>
             <!--基础表格-->
-            <BasicInfoDetail/>
+            <BasicInfoTable/>
             <br>
             <!--口服肠内营养补充-->
             <a-row type="flex" justify="space-between" align="middle" class="table-group-title">
@@ -70,17 +70,13 @@
             </a-table>
             <br>
             <!--能量表-->
-            <a-table
-                    :columns="energyMeterColumns"
-                    :data-source="energyMeterData"
-                    :pagination="false"
-            >
-            </a-table>
+            <EnergyTable/>
         </div>
     </div>
 </template>
 <script>
-    import BasicInfoDetail from '@/components/detailsForm/basicInfoDetail.vue';
+    import BasicInfoTable from '@/components/detailsTable/basicInfoTable.vue';
+    import EnergyTable from '@/components/detailsTable/energyTable.vue';
     import { mapGetters, mapActions } from 'vuex';
     //  口服肠内营养支持 表格 列的意义
     const oralColumns = [
@@ -132,42 +128,11 @@
         unitPrice: '吃',
         quantity: '¥20'
     }];
-    //  能量表 列的意义
-    const energyMeterColumns = [
-        {
-            title: '能量',
-            dataIndex: 'energy',
-            width: 100,
-        },
-        {
-            title: '蛋白质',
-            width: 100,
-            dataIndex: 'protein',
-        },
-        {
-            title: '脂肪',
-            width: 100,
-            dataIndex: 'fat',
-        },
-        {
-            title: '碳水化合物',
-            width: 100,
-            dataIndex: 'carbohydrates',
-        },
-    ];
-    const energyMeterData = [
-        {
-            key: 1,
-            energy: 123,
-            protein: 234,
-            fat: 345,
-            carbohydrates: 456,
-        },
-    ];
 
     export default {
         components: {
-            BasicInfoDetail,
+            BasicInfoTable,
+            EnergyTable,
         },
         data(){
             return {
@@ -188,32 +153,37 @@
                 //  肠内营养支持 表格
                 intestinalData,
 
-                //  能量表
-                energyMeterColumns,
-                energyMeterData,
-
                 //  打印对象
                 printObj: {
                     id: '#printContent',
                     popTitle: '订单详情',
-
                 }
             };
         },
         created(){
             //  设置基础信息数据
-            this.setBasicInfoDetail({
+            this.setBasicInfoDetail([{
                 key: 1,
                 planName: '许晓飞123',
                 cycle: '年',
                 prescriptionType: '吃',
-                cost: '¥20'
-            });
+                cost: '¥20',
+            }]);
+            //  设置能量表数据
+            this.setEnergyDetail([{
+                key: 1,
+                energy: 123,
+                protein: 234,
+                fat: 345,
+                carbohydrates: 456,
+            }]);
         },
         methods: {
-            ...mapActions('detailsForm', [
-                //  基础信息数据
+            ...mapActions('detailsTable', [
+                //  设置基础信息数据
                 'setBasicInfoDetail',
+                //  设置能量表数据
+                'setEnergyDetail',
             ]),
         }
     };
