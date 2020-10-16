@@ -102,7 +102,7 @@
 </template>
 <script>
     import { pagination } from '@/utils/pagination.ts';
-    import { oneRowSearch } from '../../utils/tableScroll';
+    import { oneRowSearch } from '@/utils/tableScroll';
     import ViewTotalInventory from '@/components/warehouse/viewTotalInventory';
     import ProcurementForm from '@/components/warehouse/procurementForm';
     import SalesReturnForm from '@/components/warehouse/salesReturnForm';

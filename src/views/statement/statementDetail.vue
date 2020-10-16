@@ -69,7 +69,7 @@
     </div>
 </template>
 <script>
-    import { oneRowSearch } from '../../utils/tableScroll';
+    import { oneRowSearch } from '@/utils/tableScroll';
 
     const columns = [
         {

@@ -55,7 +55,7 @@
         },
     ];
     export default {
-        props: ['data-source','data-title'],
+        props: ['dataSource', 'dataTitle'],
         data(){
             return {
                 oralColumns,

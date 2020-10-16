@@ -29,7 +29,7 @@
     </div>
 </template>
 <script>
-    import { preventDefault } from '../../utils/common';
+    import { preventDefault } from '@/utils/common';
 
     import { formItemLayout } from '@/utils/layout.ts';
 

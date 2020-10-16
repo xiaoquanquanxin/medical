@@ -70,7 +70,7 @@
     import RoleBox from '@/components/system/roleBox.vue';
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
     import { pagination } from '@/utils/pagination.ts';
-    import { towRowSearch } from '../../utils/tableScroll';
+    import { towRowSearch } from '@/utils/tableScroll';
     import { mapGetters, mapActions } from 'vuex';
 
     const columns = [

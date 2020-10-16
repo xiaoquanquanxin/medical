@@ -73,7 +73,7 @@
 </template>
 <script>
     import { pagination } from '@/utils/pagination.ts';
-    import { oneRowSearch } from '../../utils/tableScroll';
+    import { oneRowSearch } from '@/utils/tableScroll';
     import OutboundForm from '@/components/warehouse/outboundForm';
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
     import { mapGetters, mapActions } from 'vuex';

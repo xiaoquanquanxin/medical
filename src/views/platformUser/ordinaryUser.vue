@@ -61,7 +61,7 @@
 </template>
 <script>
     import { pagination } from '@/utils/pagination.ts';
-    import { oneRowSearch } from '../../utils/tableScroll';
+    import { oneRowSearch } from '@/utils/tableScroll';
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
     import FamilyGroup from '@/components/familyGroup.vue';
     import { mapGetters, mapActions } from 'vuex';

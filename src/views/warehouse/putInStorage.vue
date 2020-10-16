@@ -73,7 +73,7 @@
 </template>
 <script>
     import { pagination } from '@/utils/pagination.ts';
-    import { oneRowSearch } from '../../utils/tableScroll';
+    import { oneRowSearch } from '@/utils/tableScroll';
     import PutInStorageForm from '@/components/warehouse/putInStorageForm';
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
 

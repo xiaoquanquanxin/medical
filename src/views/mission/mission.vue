@@ -76,7 +76,7 @@
     </div>
 </template>
 <script>
-    import { towRowSearch } from '../../utils/tableScroll';
+    import { towRowSearch } from '@/utils/tableScroll';
     import { pagination } from '@/utils/pagination.ts';
 
     const columns = [

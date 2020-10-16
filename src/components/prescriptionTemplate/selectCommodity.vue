@@ -34,7 +34,7 @@
     </div>
 </template>
 <script>
-    import { modalTableScroll } from '../../utils/tableScroll';
+    import { modalTableScroll } from '@/utils/tableScroll';
     import { mapGetters, mapActions } from 'vuex';
 
     const countTableColumns = [

@@ -1,33 +1,43 @@
 <template>
-    <a-table
-            :columns="columns"
-            :data-source="dataSource"
-            :pagination="false"
-            bordered
-    >
-        <!--商品名称-->
-        <div slot="commodityName" slot-scope="scope,sItem,sIndex,extra">
-            <div class="negative-margin-16">
-                <div v-for="item in scope.childrenList"
-                     class="negative-margin-item">
-                    {{item.commodity}}
+    <div>
+        <a-row type="flex" justify="space-between" align="middle"
+               class="table-group-title no-border-bottom"
+               v-if="dataTitle"
+        >
+            <span>{{dataTitle.name}}</span>
+            <span>{{dataTitle.method}}</span>
+        </a-row>
+        <a-table
+                :columns="columns"
+                :data-source="dataSource"
+                :pagination="false"
+                bordered
+                :hover="false"
+        >
+            <!--商品名称-->
+            <div slot="commodityName" slot-scope="scope,sItem,sIndex,extra">
+                <div class="negative-margin-16">
+                    <div v-for="item in scope.childrenList"
+                         class="negative-margin-item">
+                        {{item.commodity}}
+                    </div>
                 </div>
             </div>
-        </div>
-        <!--配置量-->
-        <div slot="quality" slot-scope="scope,sItem,sIndex,extra">
-            <div class="negative-margin-16">
-                <div v-for="item in scope.childrenList"
-                     class="negative-margin-item">
-                    {{item.quality}}
+            <!--配置量-->
+            <div slot="quality" slot-scope="scope,sItem,sIndex,extra">
+                <div class="negative-margin-16">
+                    <div v-for="item in scope.childrenList"
+                         class="negative-margin-item">
+                        {{item.quality}}
+                    </div>
                 </div>
             </div>
-        </div>
-    </a-table>
+        </a-table>
+    </div>
 </template>
 <script>
     export default {
-        props: ['data-source',],
+        props: ['dataSource','dataTitle'],
         data(){
             const columns = [
                 {
