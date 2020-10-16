@@ -38,7 +38,7 @@
                     搜索
                 </a-button>
             </div>
-            <a-input-group class="a-input-group">
+            <a-input-group class="a-input-group" v-if="false" data-msg="暂时不做">
                 <a-space>
                     <!--<a-button type="primary" v-print="printBottle">打印处方</a-button>-->
                     <a-button type="primary" v-print="printMenu">打印配置单</a-button>
@@ -151,7 +151,7 @@
 </template>
 <script>
     import { pagination } from '@/utils/pagination.ts';
-    import { towRowSearch } from '../../utils/tableScroll';
+    import { oneRowSearch, towRowSearch } from '../../utils/tableScroll';
 
     const columns = [
         {
@@ -229,7 +229,7 @@
                 data,
                 columns,
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
-                scroll: towRowSearch,
+                scroll: oneRowSearch,
                 //  分页信息
                 pagination,
                 //  搜索数据
