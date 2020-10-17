@@ -1,7 +1,7 @@
 <template>
     <a-layout>
         <LayoutHeader/>
-        <LayoutBreadcrumb/>
+        <LayoutHistoryList/>
         <a-layout-content class="layout-content">
             <div class="layout-content-inner">
                 <router-view/>
@@ -12,12 +12,12 @@
 <script lang='ts'>
 	import {Vue, Component} from 'vue-property-decorator';
 	import LayoutHeader from '@/layout/layoutHeader/layoutHeader.vue';
-	import LayoutBreadcrumb from '@/layout/layoutBreadcrumb/layoutBreadcrumb.vue';
+	import LayoutHistoryList from '@/layout/layoutHistoryList/layoutHistoryList.vue';
 
 	@Component({
 		components: {
 			LayoutHeader,
-			LayoutBreadcrumb,
+			LayoutHistoryList,
 		}
 	})
 	export default class LayoutMain extends Vue {
