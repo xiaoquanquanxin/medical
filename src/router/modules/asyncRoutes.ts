@@ -5,7 +5,6 @@ import UserList from '@/views/userList/userList.vue';
 /**
  * name					:	路由名称
  * path					:	路由地址
- * hidden				:	隐藏
  *
  * 🍌🍌meta中的:
  * chName				:	中文名
@@ -13,6 +12,7 @@ import UserList from '@/views/userList/userList.vue';
  * openRouteKey			:	展开的菜单的key
  * hasTransverseSubPaths:	有页面内的横向子路由
  * isMenuItem			:	虽然有子项，但作为一个项存在，而不是一个菜单
+ * hidden				:	隐藏
  *
  * 🍌🍌children中的:
  * transverseSubPaths	:	横向子路由的name，不在左侧菜单展示。e.g.处方模板列表、用户列表【很多的那个】
@@ -55,21 +55,21 @@ export const asyncRoutesList = [
 		meta: {
 			chName: '新增供应商',
 			selectRouteKey: 'supplier',
+			hidden: true,
 		},
 		name: 'addSupplier',
 		path: '/addSupplier',
 		component: () => import(/* webpackChunkName: "addSupplier" */ '@/views/supplier/addSupplier.vue'),
-		hidden: true,
 	},
 	{
 		meta: {
 			chName: '编辑供应商',
 			selectRouteKey: 'supplier',
+			hidden: true,
 		},
 		name: 'editSupplier',
 		path: '/editSupplier/:supplierId',
 		component: () => import(/* webpackChunkName: "addSupplier" */ '@/views/supplier/addSupplier.vue'),
-		hidden: true,
 	},
 	//	用户管理【平台用户】
 	{
@@ -101,7 +101,6 @@ export const asyncRoutesList = [
 			// 	path: '/platformUser/familyGroup',
 			// 	name: 'familyGroup',
 			// 	component: () => import(/* webpackChunkName: "familyGroup" */ '@/views/familyGroup/familyGroup.vue'),
-			// 	hidden: true,
 			// },
 			{
 				meta: {
@@ -136,25 +135,25 @@ export const asyncRoutesList = [
 			},
 			{
 				meta: {
-					chName: '添加商品',
+					chName: '新增商品',
 					selectRouteKey: 'commodityList',
 					openRouteKey: 'commodity',
+					hidden: true,
 				},
 				path: '/commodity/addCommodity',
 				name: 'addCommodity',
 				component: () => import(/* webpackChunkName: "addCommodity" */ '@/views/commodity/addCommodity.vue'),
-				hidden: true,
 			},
 			{
 				meta: {
 					chName: '编辑商品',
 					selectRouteKey: 'commodityList',
 					openRouteKey: 'commodity',
+					hidden: true,
 				},
 				path: '/commodity/editCommodity/:commodityId',
 				name: 'editCommodity',
 				component: () => import(/* webpackChunkName: "addCommodity" */ '@/views/commodity/addCommodity.vue'),
-				hidden: true,
 			},
 			{
 				meta: {
@@ -201,21 +200,21 @@ export const asyncRoutesList = [
 		meta: {
 			chName: '新增医院',
 			selectRouteKey: 'hospital',
+			hidden: true,
 		},
 		path: '/hospital/addHospital',
 		name: 'addHospital',
 		component: () => import(/* webpackChunkName: "addHospital" */ '@/views/hospital/addHospital.vue'),
-		hidden: true
 	},
 	{
 		meta: {
 			chName: '编辑医院',
 			selectRouteKey: 'hospital',
+			hidden: true,
 		},
 		path: '/hospital/editHospital/:hospitalId',
 		name: 'editHospital',
 		component: () => import(/* webpackChunkName: "addHospital" */ '@/views/hospital/addHospital.vue'),
-		hidden: true
 	},
 	{
 		meta: {
@@ -230,21 +229,21 @@ export const asyncRoutesList = [
 		meta: {
 			chName: '新增科室',
 			selectRouteKey: 'department',
+			hidden: true,
 		},
 		path: '/department/addDepartment',
 		name: 'addDepartment',
 		component: () => import(/* webpackChunkName: "addDepartment" */ '@/views/department/addDepartment.vue'),
-		hidden: true,
 	},
 	{
 		meta: {
 			chName: '编辑科室',
 			selectRouteKey: 'department',
+			hidden: true,
 		},
 		path: '/department/editDepartment/:departmentId',
 		name: 'editDepartment',
 		component: () => import(/* webpackChunkName: "addDepartment" */ '@/views/department/addDepartment.vue'),
-		hidden: true,
 	},
 
 	{
@@ -260,21 +259,21 @@ export const asyncRoutesList = [
 		meta: {
 			chName: '新增疾病',
 			selectRouteKey: 'disease',
+			hidden: true,
 		},
 		path: '/disease/addDisease',
 		name: 'addDisease',
 		component: () => import(/* webpackChunkName: "addDisease" */ '@/views/disease/addDisease.vue'),
-		hidden: true
 	},
 	{
 		meta: {
 			chName: '编辑疾病',
 			selectRouteKey: 'disease',
+			hidden: true,
 		},
 		path: '/disease/editDisease/:diseaseId',
 		name: 'editDisease',
 		component: () => import(/* webpackChunkName: "addDisease" */ '@/views/disease/addDisease.vue'),
-		hidden: true
 	},
 
 	{
@@ -296,11 +295,11 @@ export const asyncRoutesList = [
 					selectRouteKey: 'scheme',
 					//	是scheme路由的某一项子路由
 					transverseSubPaths: 'oral',
+					hidden: true,
 				},
 				name: 'oral',
 				path: '/scheme/oral',
 				component: () => import(/* webpackChunkName: "oral" */ '@/views/scheme/oral/oral.vue'),
-				hidden: true
 			},
 			{
 				meta: {
@@ -308,11 +307,11 @@ export const asyncRoutesList = [
 					selectRouteKey: 'scheme',
 					//	是scheme路由的某一项子路由
 					transverseSubPaths: 'intestinal',
+					hidden: true,
 				},
 				name: 'intestinal',
 				path: '/scheme/intestinal',
 				component: () => import(/* webpackChunkName: "intestinal" */ '@/views/scheme/intestinal/intestinal.vue'),
-				hidden: true
 			},
 			{
 				meta: {
@@ -320,11 +319,11 @@ export const asyncRoutesList = [
 					selectRouteKey: 'scheme',
 					//	是scheme路由的某一项子路由
 					transverseSubPaths: 'dietary',
+					hidden: true,
 				},
 				name: 'dietary',
 				path: '/scheme/dietary',
 				component: () => import(/* webpackChunkName: "dietary" */ '@/views/scheme/dietary/dietary.vue'),
-				hidden: true
 			}
 		],
 		redirect: '/scheme/oral',
@@ -333,61 +332,61 @@ export const asyncRoutesList = [
 		meta: {
 			chName: '新增口服肠内补充方案',
 			selectRouteKey: 'scheme',
+			hidden: true,
 		},
 		path: '/scheme/addOral',
 		name: 'addOral',
 		component: () => import(/* webpackChunkName: "addOral" */ '@/views/scheme/oral/addOral.vue'),
-		hidden: true
 	},
 	{
 		meta: {
 			chName: '编辑口服肠内补充方案',
 			selectRouteKey: 'scheme',
+			hidden: true,
 		},
 		path: '/scheme/editOral/:oralId',
 		name: 'editOral',
 		component: () => import(/* webpackChunkName: "addOral" */ '@/views/scheme/oral/addOral.vue'),
-		hidden: true
 	},
 	{
 		meta: {
 			chName: '新增肠内营养支持',
 			selectRouteKey: 'scheme',
+			hidden: true,
 		},
 		path: '/scheme/addIntestinal',
 		name: 'addIntestinal',
 		component: () => import(/* webpackChunkName: "addIntestinal" */ '@/views/scheme/intestinal/addIntestinal.vue'),
-		hidden: true
 	},
 	{
 		meta: {
 			chName: '编辑肠内营养支持',
 			selectRouteKey: 'scheme',
+			hidden: true,
 		},
 		path: '/scheme/editIntestinal/:intestinalId',
 		name: 'editIntestinal',
 		component: () => import(/* webpackChunkName: "addIntestinal" */ '@/views/scheme/intestinal/addIntestinal.vue'),
-		hidden: true
 	},
 	{
 		meta: {
 			chName: '新增膳食营养计划',
 			selectRouteKey: 'scheme',
+			hidden: true,
 		},
 		path: '/scheme/addDietary',
 		name: 'addDietary',
 		component: () => import(/* webpackChunkName: "addDietary" */ '@/views/scheme/dietary/addDietary.vue'),
-		hidden: true
 	},
 	{
 		meta: {
 			chName: '编辑膳食营养计划',
 			selectRouteKey: 'scheme',
+			hidden: true,
 		},
 		path: '/scheme/editDietary/:dietaryId',
 		name: 'editDietary',
 		component: () => import(/* webpackChunkName: "addDietary" */ '@/views/scheme/dietary/addDietary.vue'),
-		hidden: true
 	},
 
 
@@ -404,21 +403,21 @@ export const asyncRoutesList = [
 		meta: {
 			chName: '新增评估调查表',
 			selectRouteKey: 'questionnaire',
+			hidden: true,
 		},
 		path: '/questionnaire/addQuestionnaire',
 		name: 'addQuestionnaire',
 		component: () => import(/* webpackChunkName: "addQuestionnaire" */ '@/views/questionnaire/addQuestionnaire.vue'),
-		hidden: true,
 	},
 	{
 		meta: {
 			chName: '新增评估调查表',
 			selectRouteKey: 'questionnaire',
+			hidden: true,
 		},
 		path: '/questionnaire/editQuestionnaire/:questionnaireId',
 		name: 'editQuestionnaire',
 		component: () => import(/* webpackChunkName: "addQuestionnaire" */ '@/views/questionnaire/addQuestionnaire.vue'),
-		hidden: true,
 	},
 
 
@@ -441,7 +440,6 @@ export const asyncRoutesList = [
 	// 	path: '/mission/addMission',
 	// 	name: 'addMission',
 	// 	component: () => import(/* webpackChunkName: "addMission" */ '@/views/mission/addMission.vue'),
-	// 	hidden: true,
 	// },
 	// {
 	// 	meta: {
@@ -451,7 +449,6 @@ export const asyncRoutesList = [
 	// 	path: '/mission/editMission/:missionId',
 	// 	name: 'editMission',
 	// 	component: () => import(/* webpackChunkName: "addMission" */ '@/views/mission/addMission.vue'),
-	// 	hidden: true,
 	// },
 
 	{
@@ -531,21 +528,21 @@ export const asyncRoutesList = [
 		meta: {
 			chName: '新增医生',
 			selectRouteKey: 'doctor',
+			hidden: true,
 		},
 		path: '/doctor/addDoctor',
 		name: 'addDoctor',
 		component: () => import(/* webpackChunkName: "addDoctor" */ '@/views/doctor/addDoctor.vue'),
-		hidden: true
 	},
 	{
 		meta: {
 			chName: '编辑医生',
 			selectRouteKey: 'doctor',
+			hidden: true,
 		},
 		path: '/doctor/editDoctor/:doctorId',
 		name: 'editDoctor',
 		component: () => import(/* webpackChunkName: "addDoctor" */ '@/views/doctor/addDoctor.vue'),
-		hidden: true
 	},
 
 	// {
@@ -573,11 +570,11 @@ export const asyncRoutesList = [
 		meta: {
 			chName: '订单管理',
 			selectRouteKey: 'order',
+			hidden: true,
 		},
 		path: '/orderDetail/:orderDetailId',
 		name: 'orderDetail',
 		component: () => import(/* webpackChunkName: "orderDetail" */ '@/views/order/orderDetail.vue'),
-		hidden: true,
 	},
 	//	库房管理
 	{
@@ -774,97 +771,97 @@ export const asyncRoutesList = [
 		meta: {
 			chName: '新增入院',
 			selectRouteKey: 'userList',
+			hidden: true,
 		},
 		path: '/userList/addAdmittedHospital',
 		name: 'addAdmittedHospital',
 		component: () => import(/* webpackChunkName: "admittedHospital" */ '@/views/userList/patientInfo/admittedHospital.vue'),
-		hidden: true,
 	},
 	{
 		meta: {
 			chName: '确认入院',
 			selectRouteKey: 'userList',
+			hidden: true,
 		},
 		path: '/userList/admittedHospital/:patientInfoId',
 		name: 'admittedHospital',
 		component: () => import(/* webpackChunkName: "admittedHospital" */ '@/views/userList/patientInfo/admittedHospital.vue'),
-		hidden: true,
 	},
 
 	{
 		meta: {
 			chName: '新增筛查',
 			selectRouteKey: 'userList',
+			hidden: true,
 		},
 		//	病人的id
 		path: '/userList/addScreening/:patientInfoId',
 		name: 'addScreening',
 		component: () => import(/* webpackChunkName: "addScreening" */ '@/views/userList/screening/addScreening.vue'),
-		hidden: true,
 	},
 	{
 		meta: {
 			chName: '筛查详情',
 			selectRouteKey: 'userList',
+			hidden: true,
 		},
 		path: '/userList/screeningDetail/:patientInfoId/:screeningDetailId',
 		name: 'screeningDetail',
 		component: () => import(/* webpackChunkName: "addScreening" */ '@/views/userList/screening/addScreening.vue'),
-		hidden: true,
 	},
 
 	{
 		meta: {
 			chName: '新增营养评估',
 			selectRouteKey: 'userList',
+			hidden: true,
 		},
 		//	病人的id
 		path: '/userList/addAssessment/:patientInfoId',
 		name: 'addAssessment',
 		component: () => import(/* webpackChunkName: "assessment" */ '@/views/userList/assessment/addAssessment.vue'),
-		hidden: true,
 	},
 	{
 		meta: {
 			chName: '营养评估详情',
 			selectRouteKey: 'userList',
+			hidden: true,
 		},
 		path: '/userList/assessmentDetail/:patientInfoId/:assessmentDetailId',
 		name: 'assessmentDetail',
 		component: () => import(/* webpackChunkName: "assessment" */ '@/views/userList/assessment/addAssessment.vue'),
-		hidden: true,
 	},
 
 	{
 		meta: {
 			chName: '营养干预详情',
 			selectRouteKey: 'userList',
+			hidden: true,
 		},
 		path: '/userList/interventionDetail/:patientInfoId/:interventionDetailId',
 		name: 'interventionDetail',
 		component: () => import(/* webpackChunkName: "interventionDetail" */ '@/views/userList/intervention/interventionDetail.vue'),
-		hidden: true,
 	},
 	{
 		meta: {
 			chName: '新增营养干预',
 			selectRouteKey: 'userList',
+			hidden: true,
 		},
 		//	病人的id
 		path: '/userList/addIntervention',
 		name: 'addIntervention',
 		component: () => import(/* webpackChunkName: "addIntervention" */ '@/views/userList/intervention/addIntervention.vue'),
-		hidden: true,
 	},
 	{
 		meta: {
 			chName: '编辑营养干预',
 			selectRouteKey: 'userList',
+			hidden: true,
 		},
 		path: '/userList/editIntervention/:patientInfoId/:interventionDetailId',
 		name: 'editIntervention',
 		component: () => import(/* webpackChunkName: "addIntervention" */ '@/views/userList/intervention/addIntervention.vue'),
-		hidden: true,
 	},
 
 	{
@@ -880,11 +877,11 @@ export const asyncRoutesList = [
 		meta: {
 			chName: '处方审核详情',
 			selectRouteKey: 'auditList',
+			hidden: true,
 		},
 		path: '/auditList/auditDetail/:auditDetailId',
 		name: 'auditDetail',
 		component: () => import(/* webpackChunkName: "auditDetail" */ '@/views/auditList/auditDetail.vue'),
-		hidden: true
 	},
 
 	{
@@ -911,11 +908,11 @@ export const asyncRoutesList = [
 					chName: '配置任务详情',
 					selectRouteKey: 'configuration',
 					openRouteKey: 'task',
+					hidden: true,
 				},
 				name: 'configurationDetail',
 				path: '/task/configurationDetail/:configurationDetailId',
 				component: () => import(/* webpackChunkName: "configurationDetail" */ '@/views/task/configurationDetail.vue'),
-				hidden: true,
 			},
 			{
 				meta: {
@@ -932,11 +929,11 @@ export const asyncRoutesList = [
 					chName: '领药任务详情',
 					selectRouteKey: 'getDrug',
 					openRouteKey: 'task',
+					hidden: true,
 				},
 				name: 'getDrugDetail',
 				path: '/task/getDrugDetail/:getDrugDetailId',
 				component: () => import(/* webpackChunkName: "getDrugDetail" */ '@/views/task/getDrugDetail.vue'),
-				hidden: true,
 			},
 			{
 				meta: {
@@ -1026,44 +1023,44 @@ export const asyncRoutesList = [
 					chName: '月结详情',
 					selectRouteKey: 'monthly',
 					openRouteKey: 'statement',
+					hidden: true,
 				},
 				name: 'monthlyDetail',
 				path: '/statement/monthlyDetail/:monthlyDetailId',
 				component: () => import(/* webpackChunkName: "statementDetail" */ '@/views/statement/statementDetail.vue'),
-				hidden: true,
 			},
 			{
 				meta: {
 					chName: '日结详情',
 					selectRouteKey: 'daily',
 					openRouteKey: 'statement',
+					hidden: true,
 				},
 				name: 'dailyDetail',
 				path: '/statement/dailyDetail/:dailyDetailId',
 				component: () => import(/* webpackChunkName: "statementDetail" */ '@/views/statement/statementDetail.vue'),
-				hidden: true,
 			},
 			{
 				meta: {
 					chName: '执行月结',
 					selectRouteKey: 'monthly',
 					openRouteKey: 'statement',
+					hidden: true,
 				},
 				name: 'monthlyExecute',
 				path: '/statement/execute/:monthlyExecuteId',
 				component: () => import(/* webpackChunkName: "execute" */ '@/views/statement/execute.vue'),
-				hidden: true,
 			},
 			{
 				meta: {
 					chName: '执行日结',
 					selectRouteKey: 'daily',
 					openRouteKey: 'statement',
+					hidden: true,
 				},
 				name: 'dailyExecute',
 				path: '/statement/execute/:dailyExecuteId',
 				component: () => import(/* webpackChunkName: "execute" */ '@/views/statement/execute.vue'),
-				hidden: true,
 			},
 
 		]
@@ -1080,7 +1077,6 @@ export const asyncRoutesList = [
 // 	path: '/platformUser/newUser',
 // 	name: 'newUser',
 // 	component: () => import(/* webpackChunkName: "newUser" */ '@/views/platformUser/newUser.vue'),
-// 	hidden: true,
 // },
 
 
@@ -1102,7 +1098,6 @@ export const asyncRoutesList = [
 // 	path: '/familyGroup/newFamilyGroup',
 // 	name: 'newFamilyGroup',
 // 	component: () => import(/* webpackChunkName: "newFamilyGroup" */ '@/views/familyGroup/newFamilyGroup.vue'),
-// 	hidden: true,
 // },
 
 
@@ -1114,5 +1109,4 @@ export const asyncRoutesList = [
 // 	path: '/platformUser/editUser/:platformUserId',
 // 	name: 'editUser',
 // 	component: () => import(/* webpackChunkName: "newUser" */ '@/views/platformUser/editUser.vue'),
-// 	hidden: true,
 // },
