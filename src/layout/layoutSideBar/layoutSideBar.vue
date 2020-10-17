@@ -12,7 +12,7 @@
             >
                 <template
                         v-for="item in routes"
-                        v-if="!item.hidden"
+                        v-if="!item.meta.hidden"
                 >
                     <a-menu-item
                             v-if="item.meta.isMenuItem || !item.children"
@@ -30,7 +30,7 @@
                         <span>{{item.meta.chName}}</span>
                     </span>
                         <template v-for="_item in item.children"
-                                  v-if="!_item.hidden"
+                                  v-if="!_item.meta.hidden"
                         >
                             <a-menu-item :key="_item.name"
                                          v-if="!_item.children"
