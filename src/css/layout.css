@@ -75,6 +75,11 @@
     border-bottom: none;
 }
 
+/*全部的border*/
+.table-group-title.all-border {
+    border: 1px solid #e8e8e8;
+}
+
 /*上传图片*/
 /*上传图片后的默认图*/
 .upload-default-img {
@@ -203,3 +208,7 @@ span.ant-radio + * {
 /*.ant-table td {*/
 /*    white-space: nowrap;*/
 /*}*/
+
+
+
+

@@ -102,6 +102,10 @@ export const DIALOG_TYPE: DialogType = {
 	//	驳回
 	REJECT: 'REJECT',
 
+
+	//	选择计划
+	CHOOSE_PLAN: 'CHOOSE_PLAN',
+
 }
 
 
