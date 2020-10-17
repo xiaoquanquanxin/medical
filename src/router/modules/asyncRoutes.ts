@@ -279,7 +279,7 @@ export const asyncRoutesList = [
 
 	{
 		meta: {
-			chName: '处方审核管理',
+			chName: '处方模板管理',
 			selectRouteKey: 'scheme',
 			//	有页面内的横向子路由
 			hasTransverseSubPaths: true,
