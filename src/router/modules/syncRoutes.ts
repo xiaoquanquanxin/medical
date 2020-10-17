@@ -25,9 +25,11 @@ export const syncRoutesList: Array<any> = [
 
 //	路由未找到
 export const NotFoundRoutes = {
+	meta: {
+		hidden: true,
+	},
 	path: '*',
 	redirect: '/404',
-	hidden: true,
 };
 
 // syncRoutesList.push(NotFoundRoutes);
