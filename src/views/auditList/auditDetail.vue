@@ -60,7 +60,7 @@
 <script>
     //  基础数据
     import BasicInfoTable from '@/components/detailsTable/basicInfoTable.vue';
-    //  类似于口服的基础数据
+    //  类似于口服的基础数据table
     import OralLikeBasicTable from '@/components/detailsTable/oralLikeBasicTable.vue';
     //  口服肠内营养补充，复杂表格
     import OralLikeComplexTable from '@/components/detailsTable/oralLikeComplexTable.vue';
