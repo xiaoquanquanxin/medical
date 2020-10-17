@@ -1,5 +1,5 @@
 <template>
-    <p>404</p>
+    <a-empty description="404 not found" style="padding-top: 200px;"/>
 </template>
 <script>
     export default {
