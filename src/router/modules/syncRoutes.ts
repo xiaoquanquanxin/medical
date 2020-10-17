@@ -5,6 +5,7 @@ import Login from "@/views/Login.vue";
 export const syncRoutesList: Array<any> = [
 	{
 		meta: {
+			hiddenHistory: true,
 			hidden: true,
 		},
 		path: '/404',
@@ -13,8 +14,9 @@ export const syncRoutesList: Array<any> = [
 	},
 	{
 		meta: {
-			hidden: true,
 			chName: '登录',
+			hiddenHistory: true,
+			hidden: true,
 		},
 		path: '/login',
 		name: 'login',
@@ -27,6 +29,7 @@ export const syncRoutesList: Array<any> = [
 export const NotFoundRoutes = {
 	meta: {
 		hidden: true,
+		hiddenHistory: true,
 	},
 	path: '*',
 	redirect: '/404',
