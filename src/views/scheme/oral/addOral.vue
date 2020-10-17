@@ -472,7 +472,7 @@
             chooseTime(){
                 //  如果没有选择商品数据，先添加选择商品数据
                 if (!this.commodityTableData.length) {
-                    this.$message.error({ title: '请先选择商品' });
+                    this.$message.error('请先选择商品');
                     return;
                 }
                 console.log('实际是新增一条时间');
