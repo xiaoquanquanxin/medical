@@ -12,6 +12,8 @@ import UserList from '@/views/userList/userList.vue';
  * openRouteKey			:	展开的菜单的key
  * hasTransverseSubPaths:	有页面内的横向子路由
  * isMenuItem			:	虽然有子项，但作为一个项存在，而不是一个菜单
+ * historyRouteName		:	用于历史记录的激活，由于historyList拿参数麻烦，所以只保留不需要参数的name
+ * hiddenHistory		:	隐藏历史记录，仅保留返回按钮
  * hidden				:	隐藏
  *
  * 🍌🍌children中的:
@@ -28,6 +30,7 @@ export const asyncRoutesList = [
 		meta: {
 			chName: '仓库管理',
 			selectRouteKey: 'entrepot',
+			historyRouteName: 'entrepot',
 		},
 		name: 'entrepot',
 		path: '/entrepot',
@@ -37,6 +40,7 @@ export const asyncRoutesList = [
 		meta: {
 			chName: '渠道商管理',
 			selectRouteKey: 'distributors',
+			historyRouteName: 'distributors',
 		},
 		name: 'distributors',
 		path: '/distributors',
@@ -46,6 +50,7 @@ export const asyncRoutesList = [
 		meta: {
 			chName: '供应商管理',
 			selectRouteKey: 'supplier',
+			historyRouteName: 'supplier',
 		},
 		name: 'supplier',
 		path: '/supplier',
@@ -55,6 +60,7 @@ export const asyncRoutesList = [
 		meta: {
 			chName: '新增供应商',
 			selectRouteKey: 'supplier',
+			hiddenHistory: true,
 			hidden: true,
 		},
 		name: 'addSupplier',
@@ -65,6 +71,7 @@ export const asyncRoutesList = [
 		meta: {
 			chName: '编辑供应商',
 			selectRouteKey: 'supplier',
+			hiddenHistory: true,
 			hidden: true,
 		},
 		name: 'editSupplier',
@@ -138,6 +145,7 @@ export const asyncRoutesList = [
 					chName: '新增商品',
 					selectRouteKey: 'commodityList',
 					openRouteKey: 'commodity',
+					hiddenHistory: true,
 					hidden: true,
 				},
 				path: '/commodity/addCommodity',
@@ -149,6 +157,7 @@ export const asyncRoutesList = [
 					chName: '编辑商品',
 					selectRouteKey: 'commodityList',
 					openRouteKey: 'commodity',
+					hiddenHistory: true,
 					hidden: true,
 				},
 				path: '/commodity/editCommodity/:commodityId',
@@ -200,6 +209,7 @@ export const asyncRoutesList = [
 		meta: {
 			chName: '新增医院',
 			selectRouteKey: 'hospital',
+			hiddenHistory: true,
 			hidden: true,
 		},
 		path: '/hospital/addHospital',
@@ -210,6 +220,7 @@ export const asyncRoutesList = [
 		meta: {
 			chName: '编辑医院',
 			selectRouteKey: 'hospital',
+			hiddenHistory: true,
 			hidden: true,
 		},
 		path: '/hospital/editHospital/:hospitalId',
@@ -229,6 +240,7 @@ export const asyncRoutesList = [
 		meta: {
 			chName: '新增科室',
 			selectRouteKey: 'department',
+			hiddenHistory: true,
 			hidden: true,
 		},
 		path: '/department/addDepartment',
@@ -239,6 +251,7 @@ export const asyncRoutesList = [
 		meta: {
 			chName: '编辑科室',
 			selectRouteKey: 'department',
+			hiddenHistory: true,
 			hidden: true,
 		},
 		path: '/department/editDepartment/:departmentId',
@@ -259,6 +272,7 @@ export const asyncRoutesList = [
 		meta: {
 			chName: '新增疾病',
 			selectRouteKey: 'disease',
+			hiddenHistory: true,
 			hidden: true,
 		},
 		path: '/disease/addDisease',
@@ -269,6 +283,7 @@ export const asyncRoutesList = [
 		meta: {
 			chName: '编辑疾病',
 			selectRouteKey: 'disease',
+			hiddenHistory: true,
 			hidden: true,
 		},
 		path: '/disease/editDisease/:diseaseId',
@@ -332,6 +347,7 @@ export const asyncRoutesList = [
 		meta: {
 			chName: '新增口服肠内补充方案',
 			selectRouteKey: 'scheme',
+			hiddenHistory: true,
 			hidden: true,
 		},
 		path: '/scheme/addOral',
@@ -342,6 +358,7 @@ export const asyncRoutesList = [
 		meta: {
 			chName: '编辑口服肠内补充方案',
 			selectRouteKey: 'scheme',
+			hiddenHistory: true,
 			hidden: true,
 		},
 		path: '/scheme/editOral/:oralId',
@@ -352,6 +369,7 @@ export const asyncRoutesList = [
 		meta: {
 			chName: '新增肠内营养支持',
 			selectRouteKey: 'scheme',
+			hiddenHistory: true,
 			hidden: true,
 		},
 		path: '/scheme/addIntestinal',
@@ -362,6 +380,7 @@ export const asyncRoutesList = [
 		meta: {
 			chName: '编辑肠内营养支持',
 			selectRouteKey: 'scheme',
+			hiddenHistory: true,
 			hidden: true,
 		},
 		path: '/scheme/editIntestinal/:intestinalId',
@@ -372,6 +391,7 @@ export const asyncRoutesList = [
 		meta: {
 			chName: '新增膳食营养计划',
 			selectRouteKey: 'scheme',
+			hiddenHistory: true,
 			hidden: true,
 		},
 		path: '/scheme/addDietary',
@@ -382,6 +402,7 @@ export const asyncRoutesList = [
 		meta: {
 			chName: '编辑膳食营养计划',
 			selectRouteKey: 'scheme',
+			hiddenHistory: true,
 			hidden: true,
 		},
 		path: '/scheme/editDietary/:dietaryId',
@@ -403,6 +424,7 @@ export const asyncRoutesList = [
 		meta: {
 			chName: '新增评估调查表',
 			selectRouteKey: 'questionnaire',
+			hiddenHistory: true,
 			hidden: true,
 		},
 		path: '/questionnaire/addQuestionnaire',
@@ -413,6 +435,7 @@ export const asyncRoutesList = [
 		meta: {
 			chName: '新增评估调查表',
 			selectRouteKey: 'questionnaire',
+			hiddenHistory: true,
 			hidden: true,
 		},
 		path: '/questionnaire/editQuestionnaire/:questionnaireId',
@@ -528,6 +551,7 @@ export const asyncRoutesList = [
 		meta: {
 			chName: '新增医生',
 			selectRouteKey: 'doctor',
+			hiddenHistory: true,
 			hidden: true,
 		},
 		path: '/doctor/addDoctor',
@@ -538,6 +562,7 @@ export const asyncRoutesList = [
 		meta: {
 			chName: '编辑医生',
 			selectRouteKey: 'doctor',
+			hiddenHistory: true,
 			hidden: true,
 		},
 		path: '/doctor/editDoctor/:doctorId',
@@ -570,6 +595,7 @@ export const asyncRoutesList = [
 		meta: {
 			chName: '订单管理',
 			selectRouteKey: 'order',
+			hiddenHistory: true,
 			hidden: true,
 		},
 		path: '/orderDetail/:orderDetailId',
@@ -694,6 +720,7 @@ export const asyncRoutesList = [
 					selectRouteKey: 'userList',
 					transverseSubPaths: 'patientInfo',
 					routerParamsKey: 'patientInfoId',
+					hiddenHistory: true,
 				},
 				path: '/userList/patientInfo/:patientInfoId',
 				name: 'patientInfo',
@@ -705,6 +732,7 @@ export const asyncRoutesList = [
 					selectRouteKey: 'userList',
 					transverseSubPaths: 'screening',
 					routerParamsKey: 'patientInfoId',
+					hiddenHistory: true,
 				},
 				path: '/userList/screening/:patientInfoId',
 				name: 'screening',
@@ -716,6 +744,7 @@ export const asyncRoutesList = [
 					selectRouteKey: 'userList',
 					transverseSubPaths: 'assessment',
 					routerParamsKey: 'patientInfoId',
+					hiddenHistory: true,
 				},
 				path: '/userList/assessment/:patientInfoId',
 				name: 'assessment',
@@ -727,6 +756,7 @@ export const asyncRoutesList = [
 					selectRouteKey: 'userList',
 					transverseSubPaths: 'intervention',
 					routerParamsKey: 'patientInfoId',
+					hiddenHistory: true,
 				},
 				path: '/userList/intervention/:patientInfoId',
 				name: 'intervention',
@@ -738,6 +768,7 @@ export const asyncRoutesList = [
 					selectRouteKey: 'userList',
 					transverseSubPaths: 'progressNote',
 					routerParamsKey: 'patientInfoId',
+					hiddenHistory: true,
 				},
 				path: '/userList/progressNote/:patientInfoId',
 				name: 'progressNote',
@@ -749,6 +780,7 @@ export const asyncRoutesList = [
 					selectRouteKey: 'userList',
 					transverseSubPaths: 'patientReply',
 					routerParamsKey: 'patientInfoId',
+					hiddenHistory: true,
 				},
 				path: '/userList/patientReply/:patientInfoId',
 				name: 'patientReply',
@@ -760,6 +792,7 @@ export const asyncRoutesList = [
 					selectRouteKey: 'userList',
 					transverseSubPaths: 'activityBrief',
 					routerParamsKey: 'patientInfoId',
+					hiddenHistory: true,
 				},
 				path: '/userList/activityBrief/:patientInfoId',
 				name: 'activityBrief',
@@ -771,6 +804,7 @@ export const asyncRoutesList = [
 		meta: {
 			chName: '新增入院',
 			selectRouteKey: 'userList',
+			hiddenHistory: true,
 			hidden: true,
 		},
 		path: '/userList/addAdmittedHospital',
@@ -781,6 +815,7 @@ export const asyncRoutesList = [
 		meta: {
 			chName: '确认入院',
 			selectRouteKey: 'userList',
+			hiddenHistory: true,
 			hidden: true,
 		},
 		path: '/userList/admittedHospital/:patientInfoId',
@@ -792,6 +827,7 @@ export const asyncRoutesList = [
 		meta: {
 			chName: '新增筛查',
 			selectRouteKey: 'userList',
+			hiddenHistory: true,
 			hidden: true,
 		},
 		//	病人的id
@@ -803,6 +839,7 @@ export const asyncRoutesList = [
 		meta: {
 			chName: '筛查详情',
 			selectRouteKey: 'userList',
+			hiddenHistory: true,
 			hidden: true,
 		},
 		path: '/userList/screeningDetail/:patientInfoId/:screeningDetailId',
@@ -814,6 +851,7 @@ export const asyncRoutesList = [
 		meta: {
 			chName: '新增营养评估',
 			selectRouteKey: 'userList',
+			hiddenHistory: true,
 			hidden: true,
 		},
 		//	病人的id
@@ -825,6 +863,7 @@ export const asyncRoutesList = [
 		meta: {
 			chName: '营养评估详情',
 			selectRouteKey: 'userList',
+			hiddenHistory: true,
 			hidden: true,
 		},
 		path: '/userList/assessmentDetail/:patientInfoId/:assessmentDetailId',
@@ -836,6 +875,7 @@ export const asyncRoutesList = [
 		meta: {
 			chName: '营养干预详情',
 			selectRouteKey: 'userList',
+			hiddenHistory: true,
 			hidden: true,
 		},
 		path: '/userList/interventionDetail/:patientInfoId/:interventionDetailId',
@@ -846,6 +886,7 @@ export const asyncRoutesList = [
 		meta: {
 			chName: '新增营养干预',
 			selectRouteKey: 'userList',
+			hiddenHistory: true,
 			hidden: true,
 		},
 		//	病人的id
@@ -857,6 +898,7 @@ export const asyncRoutesList = [
 		meta: {
 			chName: '编辑营养干预',
 			selectRouteKey: 'userList',
+			hiddenHistory: true,
 			hidden: true,
 		},
 		path: '/userList/editIntervention/:patientInfoId/:interventionDetailId',
@@ -877,6 +919,7 @@ export const asyncRoutesList = [
 		meta: {
 			chName: '处方审核详情',
 			selectRouteKey: 'auditList',
+			hiddenHistory: true,
 			hidden: true,
 		},
 		path: '/auditList/auditDetail/:auditDetailId',
@@ -908,6 +951,7 @@ export const asyncRoutesList = [
 					chName: '配置任务详情',
 					selectRouteKey: 'configuration',
 					openRouteKey: 'task',
+					hiddenHistory: true,
 					hidden: true,
 				},
 				name: 'configurationDetail',
@@ -929,6 +973,7 @@ export const asyncRoutesList = [
 					chName: '领药任务详情',
 					selectRouteKey: 'getDrug',
 					openRouteKey: 'task',
+					hiddenHistory: true,
 					hidden: true,
 				},
 				name: 'getDrugDetail',
@@ -1023,6 +1068,7 @@ export const asyncRoutesList = [
 					chName: '月结详情',
 					selectRouteKey: 'monthly',
 					openRouteKey: 'statement',
+					hiddenHistory: true,
 					hidden: true,
 				},
 				name: 'monthlyDetail',
@@ -1034,6 +1080,7 @@ export const asyncRoutesList = [
 					chName: '日结详情',
 					selectRouteKey: 'daily',
 					openRouteKey: 'statement',
+					hiddenHistory: true,
 					hidden: true,
 				},
 				name: 'dailyDetail',
@@ -1045,6 +1092,7 @@ export const asyncRoutesList = [
 					chName: '执行月结',
 					selectRouteKey: 'monthly',
 					openRouteKey: 'statement',
+					hiddenHistory: true,
 					hidden: true,
 				},
 				name: 'monthlyExecute',
@@ -1056,13 +1104,13 @@ export const asyncRoutesList = [
 					chName: '执行日结',
 					selectRouteKey: 'daily',
 					openRouteKey: 'statement',
+					hiddenHistory: true,
 					hidden: true,
 				},
 				name: 'dailyExecute',
 				path: '/statement/execute/:dailyExecuteId',
 				component: () => import(/* webpackChunkName: "execute" */ '@/views/statement/execute.vue'),
 			},
-
 		]
 	}
 ]
