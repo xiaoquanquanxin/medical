@@ -1,35 +1,22 @@
 <template>
     <div class="layout-content-inner-main">
         <!--搜索相关-->
-        <!--搜索相关-->
-        <a-input-group class="a-input-group">
-            <a-row :gutter="8">
-                <a-col :span="4">
-                    <a-input v-model="searchData.orderNumber" placeholder="请输入订单号"/>
-                </a-col>
-                <a-col :span="4">
-                    <a-input v-model="searchData.prescriptionsNumber" placeholder="请输入处方单号"/>
-                </a-col>
-                <a-col :span="4">
-                    <a-input v-model="searchData.patientName" placeholder="请输入患者姓名"/>
-                </a-col>
-                <a-col :span="4">
-                    <a-select
-                            v-model="searchData.status"
-                            style="width:100%;"
-                            placeholder="请选择支付状态"
-                    >
-                        <a-select-option value="1600">1600</a-select-option>
-                        <a-select-option value="160">160</a-select-option>
-                    </a-select>
-                </a-col>
-                <a-col :span="4">
-                    <a-button type="primary">
-                        搜索
-                    </a-button>
-                </a-col>
-            </a-row>
-        </a-input-group>
+        <div class="a-input-group lengthen-search-group">
+            <a-input class="basic-input-width" v-model="searchData.orderNumber" placeholder="请输入订单号"/>
+            <a-input class="basic-input-width" v-model="searchData.prescriptionsNumber" placeholder="请输入处方单号"/>
+            <a-input class="basic-input-width" v-model="searchData.patientName" placeholder="请输入患者姓名"/>
+            <a-select
+                    class="lengthen-select-width"
+                    v-model="searchData.status"
+                    placeholder="请选择支付状态"
+            >
+                <a-select-option value="1600">1600</a-select-option>
+                <a-select-option value="160">160</a-select-option>
+            </a-select>
+            <a-button type="primary">
+                搜索
+            </a-button>
+        </div>
         <!--表格-->
         <a-table
                 :columns="columns"
@@ -114,7 +101,7 @@
             ccc: '处方医生',
             coun: '缴费金额',
             dddd: '支付状态',
-            
+
         });
     }
     //  订单管理
