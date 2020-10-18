@@ -4,13 +4,19 @@
     width: 125px;
 }
 
-/*加长 ，适合 8 个字*/
+/*加长 ，适合 7 个字*/
 .lengthen-input-width {
     width: 140px;
 }
 
 .lengthen-select-width {
     width: 150px;
+}
+
+
+/*加长 ，适合 7 个字*/
+.longer-select-width {
+    width: 160px;
 }
 
 /*十个字*/
@@ -26,19 +32,32 @@
 
 
 /*特殊的过长的行*/
-.lengthen-search-group::after {
+.lengthen-search-group::after, .a-input-group::after {
     clear: both;
     display: block;
     content: '';
 }
 
+.a-input-group > .basic-input-width,
+.a-input-group > .basic-select-width,
+.a-input-group > .lengthen-select-width,
+.a-input-group > .longer-select-width,
+.a-input-group > .basic-range-picker-width,
+.a-input-group > .lengthen-input-width,
+    /*分割*/
 .lengthen-search-group > .basic-input-width,
 .lengthen-search-group > .basic-select-width,
 .lengthen-search-group > .lengthen-select-width,
 .lengthen-search-group > .basic-range-picker-width,
+.lengthen-search-group > .longer-select-width,
 .lengthen-search-group > .lengthen-input-width {
     float: left;
     margin-right: 8px;
     margin-bottom: 10px;
 }
 
+
+/*按钮组的基础间距*/
+.a-input-group + .a-input-group {
+    margin-bottom: 10px;
+}
