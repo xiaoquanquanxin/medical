@@ -103,8 +103,13 @@ export const DIALOG_TYPE: DialogType = {
 	REJECT: 'REJECT',
 
 
+	//	院内院外
 	//	选择计划
 	CHOOSE_PLAN: 'CHOOSE_PLAN',
+	//	选择商品
+	CHOOSE_COMMODITY: 'CHOOSE_COMMODITY',
+	//	新增时间
+	ADD_TIME: 'ADD_TIME',
 
 }
 
