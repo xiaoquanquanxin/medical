@@ -125,7 +125,6 @@
         },
         {
             title: '收费员',
-            dataIndex: 'operation',
             width: 100,
         },
     ];

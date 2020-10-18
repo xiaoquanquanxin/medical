@@ -57,7 +57,7 @@
 </template>
 <script>
     import { pagination } from '@/utils/pagination.ts';
-    import { oneRowSearch } from '@/utils/tableScroll';
+    import { twoRowSearch } from '@/utils/tableScroll';
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
     import { mapGetters, mapActions } from 'vuex';
     import AddOrEditEntrepot from '@/components/entrepot/addOrEditEntrepot.vue';
@@ -91,7 +91,6 @@
 
         {
             title: '操作',
-            dataIndex: 'operation',
             width: 100,
             scopedSlots: { customRender: 'operation' }
         },
@@ -118,7 +117,7 @@
                 searchData: {},
 
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
-                scroll: oneRowSearch,
+                scroll: twoRowSearch,
 
                 //  分页信息
                 pagination,

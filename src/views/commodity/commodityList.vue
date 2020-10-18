@@ -141,12 +141,10 @@
             dataIndex: 'specifications',
             width: 100,
         },
-
         {
             title: '市场价',
-            dataIndex: 'marketPrice',
-            width: 100,
             scopedSlots: { customRender: 'marketPrice' },
+            width: 100,
         },
         {
             title: '生产厂家',
@@ -163,7 +161,6 @@
             dataIndex: 'supplier',
             width: 100,
         },
-
         {
             title: '更新时间',
             dataIndex: 'update',
@@ -171,9 +168,8 @@
         },
         {
             title: '操作',
-            dataIndex: 'operation',
-
             scopedSlots: { customRender: 'operation' },
+            width: 200,
         },
     ];
     const data = [];
@@ -190,7 +186,6 @@
             unit: '基本单位',
             specifications: '规格',
             manufacturer: '生产厂家',
-
         });
     }
 
@@ -282,7 +277,9 @@
                 columns,
 
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
-                scroll: twoRowSearch,
+                scroll: Object.assign(twoRowSearch, {
+                    x: columns.reduce((a, b) => {return a + b.width;}, 0)
+                }),
 
                 //  分页信息
                 pagination,

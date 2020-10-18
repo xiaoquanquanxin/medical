@@ -99,7 +99,6 @@
         },
         {
             title: '操作',
-            dataIndex: 'operation',
             width: 150,
             scopedSlots: { customRender: 'operation' },
         },

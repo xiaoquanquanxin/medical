@@ -253,7 +253,6 @@
         },
         {
             title: '操作',
-            dataIndex: 'operation',
             width: 100,
             scopedSlots: { customRender: 'operation' },
         },
