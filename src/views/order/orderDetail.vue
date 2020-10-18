@@ -132,6 +132,10 @@
         created(){
             console.log(this.orderDetailId);
         },
-        methods: {}
+        methods: {
+            //  主要请求
+            searchFn(){
+
+            },}
     };
 </script>

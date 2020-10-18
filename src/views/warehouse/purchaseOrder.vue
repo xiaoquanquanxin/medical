@@ -3,7 +3,7 @@
         <!--搜索相关-->
         <div class="a-input-group">
             <a-input class="lengthen-input-width" v-model="searchData.purchaseOrderNumber" placeholder="请输入采购单号"/>
-            <a-button class="basic-button-width" type="primary">搜索</a-button>
+            <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
         </div>
         <!--表格-->
         <a-table
@@ -158,6 +158,10 @@
             };
         },
         methods: {
+            //  主要请求
+            searchFn(){
+
+            },
             //  莫泰框方法
             ...dialogMethods,
 

@@ -9,7 +9,7 @@
                 <a-select-option value="待签收">待签收</a-select-option>
                 <a-select-option value="已签收">已签收</a-select-option>
             </a-select>
-            <a-button class="basic-button-width" type="primary">搜索</a-button>
+            <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
         </div>
         <!--表格-->
         <a-table
@@ -157,6 +157,10 @@
             };
         },
         methods: {
+            //  主要请求
+            searchFn(){
+
+            },
             //  莫泰框方法
             ...dialogMethods,
 

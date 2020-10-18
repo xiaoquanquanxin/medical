@@ -109,6 +109,10 @@
             };
         },
         methods: {
+            //  主要请求
+            searchFn(){
+
+            },
             //  展示的每一页数据变换
             onShowSizeChange(current, pageSize){
                 console.log(current);

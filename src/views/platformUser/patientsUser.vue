@@ -43,7 +43,7 @@
                     否
                 </a-select-option>
             </a-select>
-            <a-button class="basic-button-width" type="primary" @click="searchBtn()">搜索</a-button>
+            <a-button class="basic-button-width" type="primary" @click="searchFn()">搜索</a-button>
         </div>
         <!--表格-->
         <a-table
@@ -171,6 +171,10 @@
             };
         },
         methods: {
+            //  主要请求
+            searchFn(){
+
+            },
             //  莫泰框方法
             ...dialogMethods,
             //  编辑用userId
@@ -178,7 +182,7 @@
                 'setPatientsUserId',
             ]),
             //  搜索
-            searchBtn(){
+            searchFn(){
                 console.log(this.name);
                 console.log(this.doctor);
                 console.log(this.hospital);
