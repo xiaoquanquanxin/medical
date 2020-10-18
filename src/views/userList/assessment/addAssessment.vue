@@ -6,7 +6,7 @@
             <a-button class="basic-button-width" type="primary" v-print="printObj">打印</a-button>
             <a-button class="basic-button-width" type="primary" @click="saveScreening">保存</a-button>
             <a-select
-                    class="lengthen-select-width"
+                    class="basic-range-picker-width"
                     placeholder="请选择主管医生"
                     v-model="tableTypeSelect"
             >

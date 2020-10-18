@@ -79,7 +79,7 @@
                 columns,
 
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
-                scroll: oneRowSearch,
+                scroll: oneRowSearch(columns),
 
                 //  活动小结操作
                 dialogDataActivityBrief: this.initModal(DIALOG_TYPE.ACTIVITY_BRIEF),
