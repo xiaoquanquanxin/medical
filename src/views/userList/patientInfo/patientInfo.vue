@@ -1,20 +1,22 @@
 <template>
     <div class="layout-content-inner-main">
         <!--头部信息-->
-        <a-row type="flex" justify="space-between" align="middle">
-            <a-col>
-                <a-button type="primary" @click="confirmOutHospital">确认出院</a-button>
-                <router-link :to="{name:'admittedHospital',params:{patientInfoId}}">
-                    <a-button type="primary">
-                        确认入院
-                    </a-button>
-                </router-link>
-            </a-col>
-            <a-col>
-                <a-button type="primary" @click="handleCheck">保存</a-button>
-            </a-col>
-        </a-row>
-        <br>
+        <div class="a-input-group" data-msg="空"></div>
+        <div class="a-input-group">
+            <a-row type="flex" justify="space-between" align="middle">
+                <a-col>
+                    <a-button type="primary" @click="confirmOutHospital">确认出院</a-button>
+                    <router-link :to="{name:'admittedHospital',params:{patientInfoId}}">
+                        <a-button type="primary">
+                            确认入院
+                        </a-button>
+                    </router-link>
+                </a-col>
+                <a-col>
+                    <a-button type="primary" @click="handleCheck">保存</a-button>
+                </a-col>
+            </a-row>
+        </div>
         <PatientBasicInfo ref="refPatientBasicInfo"/>
         <br>
         <!--群聊-->

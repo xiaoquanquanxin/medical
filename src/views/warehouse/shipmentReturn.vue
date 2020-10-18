@@ -12,9 +12,9 @@
                 搜索
             </a-button>
         </div>
-        <a-input-group class="a-input-group">
+        <div class="a-input-group">
             <a-button type="primary" @click="shipmentReturnClick">出货退货</a-button>
-        </a-input-group>
+        </div>
         <!--表格-->
         <a-table
                 :columns="columns"

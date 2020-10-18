@@ -1,9 +1,10 @@
 <template>
     <div class="layout-content-inner-main">
         <!--搜索相关-->
-        <a-input-group class="a-input-group">
+        <div class="a-input-group" data-msg="空"></div>
+        <div class="a-input-group">
             <a-button type="primary" @click="addPatientReply">新增</a-button>
-        </a-input-group>
+        </div>
         <!--表格-->
         <a-table
                 :columns="columns"

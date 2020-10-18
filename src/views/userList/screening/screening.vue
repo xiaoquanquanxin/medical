@@ -1,11 +1,12 @@
 <template>
     <div class="layout-content-inner-main">
         <!--搜索相关-->
-        <a-input-group class="a-input-group">
+        <div class="a-input-group" data-msg="空"></div>
+        <div class="a-input-group">
             <router-link :to="{name:'addScreening',params:{patientInfoId}}">
                 <a-button type="primary">新增</a-button>
             </router-link>
-        </a-input-group>
+        </div>
         <!--表格-->
         <a-table
                 :columns="columns"
@@ -66,11 +67,11 @@
         data.push({
             key: i,
             commodityName: `xx供应商`,
-            筛查项目:'筛查项目',
-            是否有风险:'是否有风险',
-            评分时间:'评分时间',
-            评分人:'评分人',
-            得分:'得分',
+            筛查项目: '筛查项目',
+            是否有风险: '是否有风险',
+            评分时间: '评分时间',
+            评分人: '评分人',
+            得分: '得分',
         });
     }
     //  筛查
