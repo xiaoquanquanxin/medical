@@ -71,6 +71,10 @@
             };
         },
         methods: {
+            //  主要请求
+            searchFn(){
+
+            },
             //	病人信息、直接编辑用的 描述框的方法
             ...descriptionsMethods,
 

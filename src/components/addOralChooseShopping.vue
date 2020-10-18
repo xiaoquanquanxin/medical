@@ -72,6 +72,10 @@
             //  this.dialogData.visible = true;
         },
         methods: {
+            //  主要请求
+            searchFn(){
+
+            },
             ...mapActions('addOral', [
                 //  设置被选中的商品列表
                 'setChooseShoppingList',

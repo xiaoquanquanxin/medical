@@ -57,6 +57,10 @@
             console.log('是编辑？', !!this.questionnaireId);
         },
         methods: {
+            //  主要请求
+            searchFn(){
+
+            },
             //  表单提交 保存
             handleSubmit(e){
                 e.preventDefault();

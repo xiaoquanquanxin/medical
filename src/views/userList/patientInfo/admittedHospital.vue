@@ -43,6 +43,10 @@
             }
         },
         methods: {
+            //  主要请求
+            searchFn(){
+
+            },
             ...mapActions('userList', [
                 //  保存病人信息
                 'setPatientBasicInfo',

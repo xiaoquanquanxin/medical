@@ -3,7 +3,7 @@
         <!--搜索相关-->
         <div class="a-input-group">
             <a-input class="basic-input-width" v-model="searchData.classificationName" placeholder="请输入分类名称"/>
-            <a-button class="basic-button-width" type="primary">搜索</a-button>
+            <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
         </div>
         <div class="a-input-group">
             <a-col :span="5">
@@ -124,6 +124,10 @@
             //  this.dialogData.visible = true;
         },
         methods: {
+            //  主要请求
+            searchFn(){
+
+            },
             //  莫泰框方法
             ...dialogMethods,
             ...mapActions('commodity', [

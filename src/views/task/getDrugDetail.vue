@@ -225,6 +225,10 @@
             console.log('编辑id', this.configurationDetailId);
         },
         methods: {
+            //  主要请求
+            searchFn(){
+
+            },
             //  莫泰框方法
             ...dialogMethods,
 

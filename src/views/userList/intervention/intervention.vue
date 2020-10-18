@@ -19,7 +19,7 @@
                     :placeholder="['开始日期','结束日期']"
                     @change="onRangePickerChange"
             />
-            <a-button class="basic-button-width" type="primary">搜索</a-button>
+            <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
         </div>
         <div class="a-input-group">
             <router-link :to="{name:'addIntervention'}">
@@ -133,6 +133,10 @@
             };
         },
         methods: {
+            //  主要请求
+            searchFn(){
+
+            },
             //  展示的每一页数据变换
             onShowSizeChange(current, pageSize){
                 console.log(current);

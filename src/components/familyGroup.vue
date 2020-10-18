@@ -92,6 +92,10 @@
 
         },
         methods: {
+            //  主要请求
+            searchFn(){
+
+            },
             //  退出家庭组
             exitFamilyGroup(sItem){
                 this.$confirm({

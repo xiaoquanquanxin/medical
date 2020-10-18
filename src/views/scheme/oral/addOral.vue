@@ -381,6 +381,10 @@
 //            this.setShoppingList(shoppingList);
         },
         methods: {
+            //  主要请求
+            searchFn(){
+
+            },
             //  时间选择器的方法
             moment,
             //  莫泰框方法

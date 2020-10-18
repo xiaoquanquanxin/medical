@@ -3,7 +3,7 @@
         <!--搜索相关-->
         <div class="a-input-group">
             <a-input class="basic-input-width" v-model="searchData.commodityName" placeholder="请输入评估表名"/>
-            <a-button class="basic-button-width" type="primary">搜索</a-button>
+            <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
         </div>
         <div class="a-input-group">
             <router-link :to="{name:'addAssessment',params:{patientInfoId}}">
@@ -100,6 +100,10 @@
             console.log('请求数据，拿列表数据', this.patientInfoId);
         },
         methods: {
+            //  主要请求
+            searchFn(){
+
+            },
             //  删除营养评估
             deleteAssessment(sItem){
                 this.$confirm({

@@ -11,7 +11,7 @@
                     Option2
                 </a-select-option>
             </a-select>
-            <a-button class="basic-button-width" type="primary">搜索</a-button>
+            <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
         </div>
         <div class="a-input-group">
             <a-col :span="5">
@@ -113,6 +113,10 @@
         },
 
         methods: {
+            //  主要请求
+            searchFn(){
+
+            },
             //  展示的每一页数据变换
             onShowSizeChange(current, pageSize){
                 console.log(current);

@@ -27,6 +27,10 @@
             };
         },
         methods: {
+            //  主要请求
+            searchFn(){
+
+            },
             //  当路由改变
             routeChange(){
                 let { name, meta } = this.$route;

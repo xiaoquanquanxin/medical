@@ -26,7 +26,7 @@
                     @change="onRangePickerChange"
             />
             <a-space>
-                <a-button class="basic-button-width" type="primary">搜索</a-button>
+                <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
                 <a-button type="primary" @click="confirmExecute">确认结算</a-button>
             </a-space>
         </div>
@@ -170,6 +170,10 @@
             console.log('月结id', this.monthlyExecuteId);
         },
         methods: {
+            //  主要请求
+            searchFn(){
+
+            },
             //  展示的每一页数据变换
             onShowSizeChange(current, pageSize){
                 console.log(current);

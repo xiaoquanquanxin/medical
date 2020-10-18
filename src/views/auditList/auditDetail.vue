@@ -239,6 +239,10 @@
             console.log('编辑id', this.auditDetailId);
         },
         methods: {
+            //  主要请求
+            searchFn(){
+
+            },
             //  莫泰框方法
             ...dialogMethods,
 

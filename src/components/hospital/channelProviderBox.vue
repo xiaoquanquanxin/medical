@@ -63,6 +63,10 @@
             console.log(this.distributorsId);
         },
         methods: {
+            //  主要请求
+            searchFn(){
+
+            },
             //  单选
             onSelectChange(e){
                 this.selectedRowKeys = e;

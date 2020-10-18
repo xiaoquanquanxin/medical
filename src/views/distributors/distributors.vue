@@ -4,7 +4,7 @@
         <div class="a-input-group">
             <a-input class="lengthen-input-width" v-model="searchData.entrepotName" placeholder="请输入渠道商名称"/>
             <a-input class="lengthen-input-width" v-model="searchData.entrepotCode" placeholder="请输入渠道商代码"/>
-            <a-button class="basic-button-width" type="primary">搜索</a-button>
+            <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
         </div>
         <div class="a-input-group">
             <a-button type="primary" @click="addDistributors">
@@ -145,6 +145,10 @@
         },
 
         methods: {
+            //  主要请求
+            searchFn(){
+
+            },
             //  莫泰框方法
             ...dialogMethods,
             //  渠道商store

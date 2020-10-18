@@ -17,7 +17,7 @@
                     陕西
                 </a-select-option>
             </a-select>
-            <a-button class="basic-button-width" type="primary">搜索</a-button>
+            <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
         </div>
         <div class="a-input-group">
             <a-button type="primary" @click="addManufacturer">
@@ -143,6 +143,10 @@
             //  this.dialogData.visible = true;
         },
         methods: {
+            //  主要请求
+            searchFn(){
+
+            },
             //  莫泰框方法
             ...dialogMethods,
             ...mapActions('commodity', [
