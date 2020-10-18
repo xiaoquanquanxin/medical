@@ -70,7 +70,7 @@
 </template>
 <script>
     import { pagination } from '@/utils/pagination.ts';
-    import { oneRowSearch } from '../../../utils/tableScroll';
+    import { threeRowSearch } from '@/utils/tableScroll';
 
     const columns = [
         {
@@ -117,7 +117,7 @@
                 columns,
 
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
-                scroll: oneRowSearch,
+                scroll: threeRowSearch,
                 //  分页信息
                 pagination,
                 //  搜索数据
