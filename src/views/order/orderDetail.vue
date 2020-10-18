@@ -2,7 +2,7 @@
     <div class="layout-content-inner-main">
         <!--表单头-->
         <div class="a-input-group">
-            <a-button type="primary" v-print="printObj">打印</a-button>
+            <a-button class="basic-button-width" type="primary" v-print="printObj">打印</a-button>
         </div>
         <div id="printContent">
             <p class="a-input-group">

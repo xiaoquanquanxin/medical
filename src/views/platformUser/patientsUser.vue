@@ -43,7 +43,7 @@
                     否
                 </a-select-option>
             </a-select>
-            <a-button type="primary" @click="searchBtn()">搜索</a-button>
+            <a-button class="basic-button-width" type="primary" @click="searchBtn()">搜索</a-button>
         </div>
         <!--表格-->
         <a-table

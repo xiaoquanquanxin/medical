@@ -43,9 +43,10 @@
 }
 
 
-/*按钮*/
-.basic-button-width {
-    /*其实没有*/
+/*按钮，不浮动*/
+.a-input-group > .basic-button-width {
+    margin-right: 8px;
+    margin-bottom: 10px;
 }
 
 .a-input-group > .basic-input-width,
@@ -54,8 +55,7 @@
 .a-input-group > .longer-select-width,
 .a-input-group > .basic-range-picker-width,
 .a-input-group > .lengthen-input-width,
-.a-input-group > .longer-input-width,
-.a-input-group > .basic-button-width {
+.a-input-group > .longer-input-width {
     float: left;
     margin-right: 8px;
     margin-bottom: 10px;
