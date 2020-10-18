@@ -1,8 +1,10 @@
 <template>
     <div class="layout-content-inner-main">
-        <a-button type="primary" @click="handleCheck">保存</a-button>
-        <br>
-        <br>
+        <div class="a-input-group">
+            <!--返回按钮-->
+            <GoBackButton/>
+            <a-button type="primary" @click="handleCheck">保存</a-button>
+        </div>
         <PatientBasicInfo ref="refPatientBasicInfo"/>
         <br>
         <!--群聊-->
@@ -13,9 +15,11 @@
     import MDTInformation from '@/components/userList/patientInfo/MDTInformation.vue';
     import PatientBasicInfo from '@/components/userList/patientInfo/patientBasicInfo.vue';
     import { mapGetters, mapActions } from 'vuex';
+    import GoBackButton from '@/components/goBackButton.vue';
 
     export default {
         components: {
+            GoBackButton,
             MDTInformation,
             PatientBasicInfo,
         },
@@ -114,7 +118,7 @@
                     });
 
             },
-            
+
         }
     };
 </script>

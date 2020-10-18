@@ -1,11 +1,13 @@
 <template>
     <div class="layout-content-inner-main">
-        <a-space>
+        <div class="a-input-group">
+            <!--返回按钮-->
+            <GoBackButton/>
             <router-link :to="{name:'editIntervention'}">
-                <a-button type="primary">编辑</a-button>
+                <a-button class="basic-button-width" type="primary">编辑</a-button>
             </router-link>
             <a-button class="basic-button-width" type="primary" v-print="printObj">打印</a-button>
-        </a-space>
+        </div>
         <div id="printContent">
             <a-row class="a-input-group" type="flex" justify="space-between" align="middle">
                 <span data-msg="占位"></span>
@@ -62,9 +64,11 @@
     import EnergyTable from '@/components/detailsTable/energyTable.vue';
     //  打印
     import RejectForm from '@/components/auditList/rejectForm.vue';
+    import GoBackButton from '@/components/goBackButton.vue';
 
     export default {
         components: {
+            GoBackButton,
             BasicInfoTable,
             OralLikeBasicTable,
             OralLikeComplexTable,

@@ -1,8 +1,10 @@
 <template>
     <div class="layout-content-inner-main">
         <div class="a-input-group">
+            <!--返回按钮-->
+            <GoBackButton/>
             <a-button class="basic-button-width" type="primary" v-print="printObj">打印</a-button>
-            <a-button type="primary" @click="saveScreening">保存</a-button>
+            <a-button class="basic-button-width" type="primary" @click="saveScreening">保存</a-button>
         </div>
         <div id="printContent">
             <ScreeningBasicInfo/>
@@ -141,7 +143,7 @@
 <script>
     import ScreeningBasicInfo from '@/components/userList/screening/screeningBasicInfo.vue';
     import ScreeningBottomInfo from '@/components/userList/screening/screeningBottomInfo.vue';
-    import { mapGetters, mapActions } from 'vuex';
+    import { mapGetters, mapActions } from 'vuex';    import GoBackButton from '@/components/goBackButton.vue';
 
     //  风险筛查列
     const riskColumns = [
@@ -174,6 +176,7 @@
 
     export default {
         components: {
+            GoBackButton,
             ScreeningBasicInfo,
             ScreeningBottomInfo,
         },
