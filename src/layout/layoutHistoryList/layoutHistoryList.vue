@@ -35,8 +35,11 @@
             //  当路由改变
             routeChange(){
                 let { name, meta } = this.$route;
-                let { chName, hiddenHistory, historyRouteName } = meta;
-                name = historyRouteName || name;
+                let { chName, hiddenHistory, infoForHistory } = meta;
+                if (infoForHistory) {
+                    chName = infoForHistory[0];
+                    name = infoForHistory[1];
+                }
                 //  console.log(name, chName, hiddenHistory);
                 this.hiddenHistory = hiddenHistory;
                 //  如果隐藏历史记录，就不应该被记录
