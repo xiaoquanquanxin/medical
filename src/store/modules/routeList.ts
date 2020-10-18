@@ -4,7 +4,7 @@ import {
 	syncRoutesList,
 	syncRoutesListLength
 } from "@/router/modules/syncRoutes"
-import {getRoutes} from "@/api/role"
+import {getRoutes} from "@/api/basic"
 import {RouteConfig} from "vue-router"
 import {setRouteListByMap} from "@/utils/routerBasicMap"
 import {asyncRoutesList} from "@/router/modules/asyncRoutes"
@@ -57,7 +57,7 @@ const actions = {
 				commit('SET_ROUTE_LENGTH', routesList);
 				return routesList;
 			}));
-		return getRoutes()
+		return getRoutes({})
 			.then((accessedRoutes) => {
 				//  todo    处理服务端路由，转为前端路由
 

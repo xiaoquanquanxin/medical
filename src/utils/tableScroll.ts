@@ -3,7 +3,7 @@
 //	只有一排搜索
 export const oneRowSearch = {x: 820, y: 'calc(100vh - 300px)'};
 //	有2排搜索按钮
-export const towRowSearch = {x: 820, y: 'calc(100vh - 340px)'};
+export const twoRowSearch = {x: 820, y: 'calc(100vh - 340px)'};
 
 
 //	弹框table的scroll
@@ -18,7 +18,7 @@ export const modalTableScroll = {x: 750, y: 400};
 // }
 //
 // //	有2排搜索按钮
-// export const towRowSearch = (columns: [{ width: number }]) => {
+// export const twoRowSearch = (columns: [{ width: number }]) => {
 // 	return fn(columns, 'calc(100vh - 340px)')
 // }
 
