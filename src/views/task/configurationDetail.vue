@@ -1,13 +1,16 @@
 <template>
     <div class="layout-content-inner-main">
-        <a-space>
+        <!--表单头-->
+        <div class="a-input-group">
+            <!--返回按钮-->
+            <GoBackButton/>
             <a-button class="basic-button-width" type="primary" v-print="printObj">打印</a-button>
-        </a-space>
+        </div>
         <div id="printContent">
-            <a-row class="a-input-group" type="flex" justify="space-between" align="middle">
-                <span data-msg="占位"></span>
+            <a-row type="flex" justify="end" align="middle">
                 <b>状态：{{2323232}}</b>
             </a-row>
+            <br>
             <!--基础表格-->
             <BasicInfoTable
                     :data-source="basicInfoData"
@@ -70,9 +73,11 @@
     import RejectForm from '@/components/auditList/rejectForm.vue';
     import { mapGetters, mapActions } from 'vuex';
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
+    import GoBackButton from '@/components/goBackButton.vue';
 
     export default {
         components: {
+            GoBackButton,
             BasicInfoTable,
             OralLikeBasicTable,
             OralLikeComplexTable,

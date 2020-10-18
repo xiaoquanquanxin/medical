@@ -1,5 +1,6 @@
 <template>
     <div class="layout-content-inner-main">
+        <!--返回按钮-->
         <GoBackButton/>
         <a-form class="form"
                 :form="form"
@@ -7,9 +8,7 @@
                 @submit="handleSubmit"
                 autocomplete="off"
         >
-            <p>基础信息</p>
-            <hr>
-            <br>
+            <a-divider orientation="left">基础信息</a-divider>
             <a-form-item label="供应商名称">
                 <a-input
                         v-decorator="supplierNameDecorator"
@@ -61,9 +60,7 @@
                         placeholder="请输入邮箱"
                 />
             </a-form-item>
-            <p>上传证件</p>
-            <hr>
-            <br>
+            <a-divider orientation="left">上传证件</a-divider>
             <a-form-item label="营业执照">
                 <div class="dropbox">
                     <a-upload-dragger
@@ -136,7 +133,7 @@
 
     export default {
         components: {
-            GoBackButton
+            GoBackButton,
         },
         beforeCreate(){
             this.form = this.$form.createForm(this);

@@ -1,10 +1,12 @@
 <template>
     <div class="layout-content-inner-main">
-        <a-row class="a-input-group" type="flex" justify="space-between" align="middle">
-            <a-space>
-                <a-button type="primary" @click="passFn">通过</a-button>
-                <a-button type="primary" @click="rejectFn">驳回</a-button>
-            </a-space>
+        <a-row type="flex" justify="space-between" align="middle">
+            <div class="a-input-group">
+                <!--返回按钮-->
+                <GoBackButton/>
+                <a-button class="basic-button-width" type="primary" @click="passFn">通过</a-button>
+                <a-button class="basic-button-width" type="primary" @click="rejectFn">驳回</a-button>
+            </div>
             <span data-msg="占位"></span>
             <b>状态：{{2323232}}</b>
         </a-row>
@@ -71,9 +73,11 @@
     //  驳回
     import RejectForm from '@/components/auditList/rejectForm.vue';
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
+    import GoBackButton from '@/components/goBackButton.vue';
 
     export default {
         components: {
+            GoBackButton,
             BasicInfoTable,
             OralLikeBasicTable,
             OralLikeComplexTable,
@@ -100,7 +104,7 @@
                     name: '口服肠内营养补充',
                     method: '方法1',
                 },
-                 oralData: [
+                oralData: [
                     {
                         key: 1,
                         commodityName: '许晓飞123',

@@ -1,5 +1,8 @@
 <template>
     <div class="layout-content-inner-main">
+        <!--返回按钮-->
+        <GoBackButton/>
+        <a-divider orientation="left">基础信息</a-divider>
         <a-form class="form"
                 :form="form"
                 v-bind="formItemLayout"
@@ -223,7 +226,7 @@
     import { mapGetters, mapActions } from 'vuex';
     import SelectCommodity from '@/components/prescriptionTemplate/selectCommodity.vue';
     import { formItemLayout } from '@/utils/layout.ts';
-
+    import GoBackButton from '@/components/goBackButton.vue';
     import TemplateRemarkInput from '@/components/prescriptionTemplate/templateRemarkInput';
 
     //  选择商品表格列的意义
@@ -263,6 +266,7 @@
             this.form = this.$form.createForm(this);
         },
         components: {
+            GoBackButton,
             SelectCommodity,
         },
         computed: {
