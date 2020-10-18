@@ -129,10 +129,6 @@
 
             },
             jumpTo,
-            //  搜索方法
-            searchFn(){
-                console.log(this.searchData);
-            },
             //  自定义表格事件
             customRow(scope){
                 return {
