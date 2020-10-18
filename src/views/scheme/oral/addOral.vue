@@ -11,6 +11,7 @@
         >
             <a-form-item label="医院">
                 <a-select
+                        class="basic-range-picker-width"
                         placeholder="请选择医院"
                         v-decorator="hospitalDecorator"
                 >
@@ -24,6 +25,7 @@
             </a-form-item>
             <a-form-item label="膳选择处方类型">
                 <a-select
+                        class="basic-range-picker-width"
                         placeholder="请选择膳选择处方类型"
                         v-decorator="prescriptionTypeDecorator"
                 >
@@ -36,16 +38,14 @@
                 </a-select>
             </a-form-item>
             <a-form-item label="肠内营养支持">
-                <div class="table-group" style="width:calc((100vw - 200px)*.65)">
+                <div class="table-group">
                     <!--表头-->
-                    <a-row type="flex" justify="start" align="middle" class="table-group-title">
-                        <a-col :span="4">
-                            肠内营养支持
-                        </a-col>
-                        <a-col :span="5">
+                    <a-row type="flex" justify="space-between" align="middle" class="table-group-title">
+                        <a-space>
+                            <span>肠内营养支持</span>
                             <a-select
+                                    class="basic-select-width"
                                     v-model="tableForm.energyId"
-                                    style="width:100%;"
                                     placeholder="请选择能量"
                                     @change="selectEnergyChange"
                             >
@@ -58,21 +58,19 @@
                                 <a-select-option value="400">400</a-select-option>
                                 <a-select-option value="200">200</a-select-option>
                             </a-select>
-                        </a-col>
-                        <a-col :span="5" :offset="10">
-                            <a-select
-                                    v-model="tableForm.eatingMethod"
-                                    style="width:100%;"
-                                    placeholder="请选择食用方法"
-                            >
-                                <a-select-option value="Option1">
-                                    Option1
-                                </a-select-option>
-                                <a-select-option value="Option2">
-                                    Option2
-                                </a-select-option>
-                            </a-select>
-                        </a-col>
+                        </a-space>
+                        <a-select
+                                class="lengthen-select-width"
+                                v-model="tableForm.eatingMethod"
+                                placeholder="请选择食用方法"
+                        >
+                            <a-select-option value="Option1">
+                                Option1
+                            </a-select-option>
+                            <a-select-option value="Option2">
+                                Option2
+                            </a-select-option>
+                        </a-select>
                     </a-row>
                     <!--选择商品表格-->
                     <a-row type="flex" justify="space-between" align="middle" class="table-group-row">
