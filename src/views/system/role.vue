@@ -4,9 +4,7 @@
         <div class="a-input-group">
             <a-input class="basic-input-width" v-model="searchData.commodityName"
                      placeholder="请输入角色名称"/>
-            <a-button type="primary">
-                搜索
-            </a-button>
+            <a-button type="primary" class="basic-button-width">搜索</a-button>
         </div>
         <div class="a-input-group">
             <a-button type="primary" @click="addRoleFn()">

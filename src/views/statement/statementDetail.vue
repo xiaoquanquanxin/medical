@@ -1,7 +1,7 @@
 <template>
     <div class="layout-content-inner-main">
         <!--搜索相关-->
-        <div class="a-input-group lengthen-search-group">
+        <div class="a-input-group">
             <a-input class="basic-input-width" v-model="searchData.commodityName" placeholder="请输入订单号"/>
             <a-input class="basic-input-width" v-model="searchData.commodityName" placeholder="请输入住院号"/>
             <a-select v-model="searchData.status" class="lengthen-select-width" placeholder="请选择缴费类型">
@@ -26,9 +26,7 @@
                     @change="onRangePickerChange"
             />
             <a-space>
-                <a-button type="primary">
-                    搜索
-                </a-button>
+                <a-button type="primary" class="basic-button-width">搜索</a-button>
                 <a-button type="primary" v-print="printObj">打印</a-button>
             </a-space>
         </div>
