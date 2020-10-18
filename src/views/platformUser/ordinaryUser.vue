@@ -1,18 +1,12 @@
 <template>
     <div class="layout-content-inner-main">
         <!--搜索相关-->
-        <a-input-group class="a-input-group">
-            <a-row :gutter="8">
-                <a-col :span="5">
-                    <a-input v-model="name" placeholder="请输入姓名"/>
-                </a-col>
-                <a-col :span="5">
-                    <a-button type="primary">
-                        搜索
-                    </a-button>
-                </a-col>
-            </a-row>
-        </a-input-group>
+        <div class="a-input-group">
+            <a-input class="basic-input-width" v-model="searchData.name" placeholder="请输入姓名"/>
+            <a-button type="primary">
+                搜索
+            </a-button>
+        </div>
         <!--表格-->
         <a-table
                 :columns="columns"
@@ -100,7 +94,9 @@
         },
         data(){
             return {
-
+                //  搜索相关
+                searchData: {},
+                
                 data,
                 columns,
 

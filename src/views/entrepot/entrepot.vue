@@ -1,28 +1,15 @@
 <template>
     <div class="layout-content-inner-main">
         <!--搜索相关-->
-        <a-input-group class="a-input-group">
-            <a-row :gutter="8">
-                <a-col :span="5">
-                    <a-input v-model="searchData.entrepotName" placeholder="请输入仓库名称"/>
-                </a-col>
-                <a-col :span="5">
-                    <a-input v-model="searchData.entrepotCode" placeholder="请输入仓库代码"/>
-                </a-col>
-                <a-col :span="5">
-                    <a-button type="primary">
-                        搜索
-                    </a-button>
-                </a-col>
-            </a-row>
-        </a-input-group>
-        <a-input-group class="a-input-group">
-            <a-col :span="5">
-                <a-button type="primary" @click="addEntrepot()">
-                    新增仓库
-                </a-button>
-            </a-col>
-        </a-input-group>
+        <div class="a-input-group">
+            <a-input class="basic-input-width" v-model="searchData.entrepotName" placeholder="请输入仓库名称"/>
+            <a-input class="basic-input-width" v-model="searchData.entrepotCode" placeholder="请输入仓库代码"/>
+        </div>
+        <div class="a-input-group">
+            <a-button type="primary" @click="addEntrepot()">
+                新增仓库
+            </a-button>
+        </div>
         <!--表格-->
         <a-table
                 :columns="columns"
@@ -126,12 +113,8 @@
             return {
                 data,
                 columns,
-                searchData: {
-                    //  仓库名称
-                    //  entrepotName: null,
-                    //  仓库代码
-                    //  entrepotCode: null,
-                },
+                //  搜索相关
+                searchData: {},
 
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
                 scroll: oneRowSearch,

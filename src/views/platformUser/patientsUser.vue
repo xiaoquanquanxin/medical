@@ -1,66 +1,50 @@
 <template>
     <div class="layout-content-inner-main">
         <!--搜索相关-->
-        <a-input-group class="a-input-group">
-            <a-row :gutter="8">
-                <a-col :span="5">
-                    <a-input v-model="searchData.name" placeholder="请输入姓名"/>
-                </a-col>
-                <a-col :span="5">
-                    <a-select v-model="searchData.hospital" style="width:100%;">
-                        <a-select-option value="Option2">
-                            Option2
-                        </a-select-option>
-                         <a-select-option value="323">
-                            122112
-                        </a-select-option>
-                    </a-select>
-                </a-col>
-                <a-col :span="5">
-                    <a-select v-model="searchData.department" style="width:100%;">
-                        <a-select-option value="Option2">
-                            Option2
-                        </a-select-option>
-                         <a-select-option value="323">
-                            122112
-                        </a-select-option>
-                    </a-select>
-                </a-col>
-                <a-col :span="5">
-                    <a-select v-model="searchData.doctor" style="width:100%;">
-                        <a-select-option value="Option2">
-                            Option2
-                        </a-select-option>
-                         <a-select-option value="323">
-                            122112
-                        </a-select-option>
-                    </a-select>
-                </a-col>
-                <a-col :span="5">
-                    <a-select v-model="searchData.isPatient" style="width:100%;">
-                        <a-select-option value="3223">
-                            是
-                        </a-select-option>
-                        <a-select-option value="43">
-                            否
-                        </a-select-option>
-                    </a-select>
-                </a-col>
-                <a-col :span="5">
-                    <a-select v-model="searchData.status" style="width:100%;">
-                        <a-select-option value="4">
-                            是
-                        </a-select-option>
-                        <a-select-option value="1">
-                            否
-                        </a-select-option>
-                    </a-select>
-                </a-col>
-                <a-col :span="4">
-                    <a-button type="primary" @click="searchBtn()">搜索</a-button>
-                </a-col>
-            </a-row>
-        </a-input-group>
+        <div class="a-input-group">
+            <a-input class="basic-input-width" v-model="searchData.name" placeholder="请输入姓名"/>
+            <a-select class="basic-select-width" v-model="searchData.hospital" placeholder="请选择医院">
+                <a-select-option value="Option2">
+                    Option2
+                </a-select-option>
+                <a-select-option value="323">
+                    122112
+                </a-select-option>
+            </a-select>
+            <a-select class="basic-select-width" v-model="searchData.department" placeholder="请选择科室">
+                <a-select-option value="Option2">
+                    Option2
+                </a-select-option>
+                <a-select-option value="323">
+                    122112
+                </a-select-option>
+            </a-select>
+            <a-select class="basic-select-width" v-model="searchData.doctor" placeholder="请选择医生">
+                <a-select-option value="Option2">
+                    Option2
+                </a-select-option>
+                <a-select-option value="323">
+                    122112
+                </a-select-option>
+            </a-select>
+            <a-select class="longer-select-width" v-model="searchData.isPatient" placeholder="请选择是否为病患">
+                <a-select-option value="3223">
+                    是
+                </a-select-option>
+                <a-select-option value="43">
+                    否
+                </a-select-option>
+            </a-select>
+            <a-select class="basic-select-width" v-model="searchData.status" placeholder="请选择状态">
+                <a-select-option value="4">
+                    是
+                </a-select-option>
+                <a-select-option value="1">
+                    否
+                </a-select-option>
+            </a-select>
+            <a-button type="primary" @click="searchBtn()">搜索</a-button>
+        </div>
         <!--表格-->
         <a-table
                 :columns="columns"

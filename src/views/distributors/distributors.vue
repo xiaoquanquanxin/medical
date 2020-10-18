@@ -1,28 +1,15 @@
 <template>
     <div class="layout-content-inner-main">
         <!--搜索相关-->
-        <a-input-group class="a-input-group">
-            <a-row :gutter="8">
-                <a-col :span="5">
-                    <a-input default-value="" placeholder="请输入渠道商名称"/>
-                </a-col>
-                <a-col :span="5">
-                    <a-input default-value="" placeholder="请输入渠道商代码"/>
-                </a-col>
-                <a-col :span="5">
-                    <a-button type="primary">
-                        搜索
-                    </a-button>
-                </a-col>
-            </a-row>
-        </a-input-group>
-        <a-input-group class="a-input-group">
-            <a-col :span="5">
-                <a-button type="primary" @click="addDistributors">
-                    新增渠道商
-                </a-button>
-            </a-col>
-        </a-input-group>
+        <div class="a-input-group">
+            <a-input class="lengthen-input-width" v-model="searchData.entrepotName" placeholder="请输入渠道商名称"/>
+            <a-input class="lengthen-input-width" v-model="searchData.entrepotCode" placeholder="请输入渠道商代码"/>
+        </div>
+        <div class="a-input-group">
+            <a-button type="primary" @click="addDistributors">
+                新增渠道商
+            </a-button>
+        </div>
         <!--表格-->
         <a-table
                 :columns="columns"
@@ -142,6 +129,9 @@
         },
         data(){
             return {
+                //  搜索相关
+                searchData: {},
+                
                 data,
                 columns,
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
