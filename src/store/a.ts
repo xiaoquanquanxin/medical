@@ -48,7 +48,7 @@ export const routeMap = {
 	//  编辑疾病
 	'editDisease': false,
 
-	//  处方审核管理
+	//  处方模板管理
 	'scheme': false,
 	//	口服肠内营养补充
 	'oral': false,
