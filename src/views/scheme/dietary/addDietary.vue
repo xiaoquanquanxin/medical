@@ -1,5 +1,8 @@
 <template>
     <div class="layout-content-inner-main">
+        <!--返回按钮-->
+        <GoBackButton/>
+        <a-divider orientation="left">基础信息</a-divider>
         <a-form class="form"
                 :form="form"
                 v-bind="formItemLayout"
@@ -86,6 +89,7 @@
 <script>
     import { twoRowSearch } from '@/utils/tableScroll';
     import { formItemLayout } from '@/utils/layout.ts';
+    import GoBackButton from '@/components/goBackButton.vue';
 
     const columns = [
         {
@@ -101,6 +105,9 @@
 
     //  新增、编辑营养计划
     export default {
+        components: {
+            GoBackButton,
+        },
         beforeCreate(){
             this.form = this.$form.createForm(this);
         },

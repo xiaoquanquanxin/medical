@@ -1,5 +1,8 @@
 <template>
     <div class="layout-content-inner-main">
+        <!--返回按钮-->
+        <GoBackButton/>
+        <a-divider orientation="left">基础信息</a-divider>
         <a-form class="form"
                 :form="form"
                 v-bind="formItemLayout"
@@ -215,10 +218,9 @@
     </div>
 </template>
 <script>
-    import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
     import { formItemLayout } from '@/utils/layout.ts';
     import VueQuillEditor from 'vue-quill-editor/src/editor';
-
+    import GoBackButton from '@/components/goBackButton.vue';
     //  基本单位表格
     const basicTableData = [
         {
@@ -317,6 +319,7 @@
     ];
     export default {
         components: {
+            GoBackButton,
             VueQuillEditor,
         },
         beforeCreate(){

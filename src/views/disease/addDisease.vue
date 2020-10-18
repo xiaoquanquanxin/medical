@@ -1,5 +1,8 @@
 <template>
     <div class="layout-content-inner-main">
+        <!--返回按钮-->
+        <GoBackButton/>
+        <a-divider orientation="left">基础信息</a-divider>
         <a-form class="form"
                 :form="form"
                 v-bind="formItemLayout"
@@ -21,8 +24,12 @@
 </template>
 <script>
     import { formItemLayout } from '@/utils/layout.ts';
+    import GoBackButton from '@/components/goBackButton.vue';
 
     export default {
+        components: {
+            GoBackButton,
+        },
         beforeCreate(){
             this.form = this.$form.createForm(this);
         },

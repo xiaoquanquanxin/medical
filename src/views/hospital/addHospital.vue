@@ -1,5 +1,8 @@
 <template>
     <div class="layout-content-inner-main">
+        <!--返回按钮-->
+        <GoBackButton/>
+        <a-divider orientation="left">基础信息</a-divider>
         <a-form class="form"
                 :form="form"
                 v-bind="formItemLayout"
@@ -33,7 +36,7 @@
                     </a-upload-dragger>
                 </div>
             </a-form-item>
-            <hr>
+            <a-divider orientation="left"></a-divider>
             <a-form-item label="状态">
                 <a-switch v-decorator="['switch', { valuePropName: 'checked' }]"/>
             </a-form-item>
@@ -100,7 +103,7 @@
                     </a-radio>
                 </a-radio-group>
             </a-form-item>
-            <hr>
+            <a-divider orientation="left"></a-divider>
             <a-form-item label="微信商户号">
                 <a-input
                         v-decorator="['note1', {
@@ -112,8 +115,7 @@
                     {
                     required: true,
                     message: '请输入微信商户号'
-                    },
-] }]"
+                    },] }]"
                 />
             </a-form-item>
             <a-form-item label="商户API">
@@ -181,8 +183,12 @@
 </template>
 <script>
     import { formItemLayout } from '@/utils/layout.ts';
+    import GoBackButton from '@/components/goBackButton.vue';
     
     export default {
+        components: {
+            GoBackButton,
+        },
         beforeCreate(){
             this.form = this.$form.createForm(this, {
                 //  设置表单域内字段 id 的前缀
