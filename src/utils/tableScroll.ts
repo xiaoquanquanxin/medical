@@ -1,9 +1,23 @@
 //  表格 设置横向或纵向滚动，也可用于指定滚动区域的宽和高
 
 //	只有一排搜索
-export const oneRowSearch = {x: 820, y: 'calc(100vh - 315px)'};
+export const oneRowSearch = (columns: [{ width: number }], y: string) => {
+	return {
+		y: 'calc(100vh - 315px)',
+		x: columns.reduce((a, b) => {
+			return a + b.width;
+		}, 0),
+	}
+}
 //	有2排搜索按钮
-export const twoRowSearch = {x: 820, y: 'calc(100vh - 357px)'};
+export const twoRowSearch = (columns: [{ width: number }], y: string) => {
+	return {
+		y: 'calc(100vh - 357px)',
+		x: columns.reduce((a, b) => {
+			return a + b.width;
+		}, 0),
+	}
+}
 //	有3排搜索按钮
 export const threeRowSearch = {x: 820, y: 'calc(100vh - 405px)'};
 
