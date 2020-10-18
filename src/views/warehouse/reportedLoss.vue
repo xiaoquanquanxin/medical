@@ -62,7 +62,7 @@
         {
             title: '报损单号',
             dataIndex: 'commodityName',
-            width: 150,
+            width: 100,
         },
         {
             title: '报损商品名称',
