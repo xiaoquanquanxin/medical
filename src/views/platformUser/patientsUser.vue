@@ -123,7 +123,6 @@
             dataIndex: '',
             width: 100,
         },
-
         {
             title: '是否为患者',
             dataIndex: 'applets',
@@ -137,6 +136,7 @@
         {
             title: '操作',
             scopedSlots: { customRender: 'operation' },
+            width: 100,
         },
     ];
     const data = [];

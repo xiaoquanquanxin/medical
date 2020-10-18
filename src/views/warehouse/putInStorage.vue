@@ -83,7 +83,7 @@
         {
             title: '入库数量',
             dataIndex: '入库数量',
-            width: 100,
+            width: 150,
         },
     ];
     const data = [];

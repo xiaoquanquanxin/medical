@@ -58,7 +58,6 @@
     import { twoRowSearch } from '@/utils/tableScroll';
     import OutboundForm from '@/components/warehouse/outboundForm';
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
-    import { mapGetters, mapActions } from 'vuex';
 
     const columns = [
         {

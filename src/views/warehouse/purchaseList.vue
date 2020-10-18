@@ -81,32 +81,32 @@
         {
             title: '采购单号',
             dataIndex: 'commodityName',
-            width: 150,
+            width: 100,
         },
         {
             title: '采购人',
             dataIndex: '11',
-            width: 150,
+            width: 100,
         },
         {
             title: '采购时间',
             dataIndex: 'unit',
-            width: 150,
+            width: 100,
         },
         {
             title: '商品名称',
             dataIndex: 'fea',
-            width: 150,
+            width: 100,
         },
         {
             title: '商品供应商',
             dataIndex: 'barCode',
-            width: 150,
+            width: 100,
         },
         {
             title: '商品品牌',
             dataIndex: 'fefewawa',
-            width: 150,
+            width: 100,
         },
         {
             title: '采购数量（箱）',
@@ -116,11 +116,11 @@
         {
             title: '状态',
             dataIndex: 'supplier',
-            width: 150,
+            width: 100,
         },
         {
             title: '操作',
-            width: 200,
+            width: 150,
             scopedSlots: { customRender: 'operation' },
         },
     ];

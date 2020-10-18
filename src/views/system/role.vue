@@ -92,13 +92,13 @@
         },
         {
             title: '角色',
-            dataIndex: 'icon1',
             width: 100,
             scopedSlots: { customRender: 'permissions' },
         },
         {
             title: '操作',
             scopedSlots: { customRender: 'operation' },
+            width: 100,
         },
     ];
     const data = [];

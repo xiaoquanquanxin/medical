@@ -118,8 +118,8 @@
         },
         {
             title: '操作',
-            width: 100,
             scopedSlots: { customRender: 'operation' },
+            width: 100,
         },
     ];
     const data = [];

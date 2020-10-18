@@ -45,52 +45,52 @@
         {
             title: '退货单号',
             dataIndex: 'commodityName1',
-            width: 120,
+            width: 100,
         },
         {
             title: '商品名称',
             dataIndex: 'commodityName',
-            width: 120,
+            width: 100,
         },
         {
             title: '退货医院',
             dataIndex: '11',
-            width: 120,
+            width: 100,
         },
         {
             title: '商品条码',
             dataIndex: 'barCode',
-            width: 120,
+            width: 100,
         },
         {
             title: '单位',
             dataIndex: 'unit',
-            width: 120,
+            width: 100,
         },
         {
             title: '数量',
             dataIndex: 'count',
-            width: 120,
+            width: 100,
         },
         {
             title: '单价',
             dataIndex: 'supplier',
-            width: 120,
+            width: 100,
         },
         {
             title: '总金额',
             dataIndex: 'brand',
-            width: 120,
+            width: 100,
         },
         {
             title: '备注',
             dataIndex: 'manufacturer',
-            width: 120,
+            width: 100,
         },
         {
             title: '操作',
-            width: 120,
             scopedSlots: { customRender: 'operation' },
+            width: 100,
         },
     ];
     const data = [];
