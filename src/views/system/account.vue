@@ -7,9 +7,7 @@
             <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
         </div>
         <div class="a-input-group">
-            <a-button type="primary" @click="addAccountFn()">
-                新建账号
-            </a-button>
+            <a-button type="primary" @click="addAccountFn()">新建账号</a-button>
         </div>
         <!--表格-->
         <a-table
@@ -60,7 +58,7 @@
     import AccountBox from '@/components/system/accountBox.vue';
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
     import { pagination } from '@/utils/pagination.ts';
-    import { towRowSearch } from '@/utils/tableScroll';
+    import { twoRowSearch } from '@/utils/tableScroll';
     import { mapGetters, mapActions } from 'vuex';
 
     const columns = [
@@ -111,7 +109,7 @@
                 data,
                 columns,
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
-                scroll: towRowSearch,
+                scroll: twoRowSearch,
                 //  分页信息
                 pagination,
                 //  搜索数据
@@ -122,6 +120,10 @@
             };
         },
         methods: {
+            //  主要请求
+            searchFn(){
+
+            },
             //  莫泰框方法
             ...dialogMethods,
             //  渠道商store
