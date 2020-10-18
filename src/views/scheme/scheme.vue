@@ -28,6 +28,7 @@
             //  当前激活路由的元信息
             currentMeta(){
                 const { currentMeta } = this.$store.state.routeList;
+                this.transverseSubPaths = [currentMeta.transverseSubPaths || ''];
                 return currentMeta;
             }
         },
@@ -36,10 +37,6 @@
                 //  横向二级路由
                 transverseSubPaths: [],
             };
-        },
-        created(){
-            //	是scheme路由的某一项子路由
-            this.transverseSubPaths = [this.currentMeta.transverseSubPaths];
         },
         methods: {
             //  主要请求
