@@ -1,7 +1,7 @@
 <template>
     <div class="layout-content-inner-main">
         <!--搜索相关-->
-        <div class="a-input-group lengthen-search-group">
+        <div class="a-input-group">
             <a-input class="basic-input-width" v-model="searchData.commodityName" placeholder="请输入处方条码"/>
             <a-input class="basic-input-width" v-model="searchData.commodityName" placeholder="请输入处方医生"/>
             <a-input class="basic-input-width" v-model="searchData.commodityName" placeholder="请输入患者姓名"/>

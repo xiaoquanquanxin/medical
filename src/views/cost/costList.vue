@@ -1,17 +1,11 @@
 <template>
     <div class="layout-content-inner-main">
         <!--搜索相关-->
-        <div class="a-input-group lengthen-search-group">
-            <div class="basic-input-width">
-                <a-input v-model="searchData.commodityName" placeholder="请输入订单编号"/>
-            </div>
-            <div class="basic-input-width">
-                <a-input v-model="searchData.commodityName" placeholder="请输入处方号"/>
-            </div>
-            <div class="basic-input-width">
-                <a-input v-model="searchData.commodityName" placeholder="请输入患者姓名"/>
-            </div>
-            <a-select v-model="searchData.status" class="lengthen-select-width" placeholder="请选择支付状态">
+        <div class="a-input-group">
+            <a-input class="basic-input-width" v-model="searchData.commodityName" placeholder="请输入订单编号"/>
+            <a-input class="basic-input-width" v-model="searchData.commodityName" placeholder="请输入处方号"/>
+            <a-input class="basic-input-width" v-model="searchData.commodityName" placeholder="请输入患者姓名"/>
+            <a-select class="lengthen-select-width" v-model="searchData.status" placeholder="请选择支付状态">
                 <a-select-option value="">
                     状态
                 </a-select-option>

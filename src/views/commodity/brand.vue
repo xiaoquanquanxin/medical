@@ -22,11 +22,9 @@
             </a-button>
         </div>
         <a-input-group class="a-input-group">
-            <a-col :span="5">
-                <a-button type="primary" @click="addBrand">
-                    新增品牌
-                </a-button>
-            </a-col>
+            <a-button type="primary" @click="addBrand">
+                新增品牌
+            </a-button>
         </a-input-group>
         <!--表格-->
         <a-table
