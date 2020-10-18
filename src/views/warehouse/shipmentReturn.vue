@@ -1,36 +1,19 @@
 <template>
     <div class="layout-content-inner-main">
         <!--搜索相关-->
-        <a-input-group class="a-input-group">
-            <a-row :gutter="8">
-                <a-col :span="6">
-                    <a-input v-model="searchData.commodityName" placeholder="请输入出货退货单号"/>
-                </a-col>
-                <a-col :span="5">
-                    <a-input v-model="searchData.itemNo" placeholder="请输入商品货号"/>
-                </a-col>
-                <a-col :span="5">
-                    <a-select
-                            v-model="searchData.hospital"
-                            style="width:100%;"
-                            placeholder="请选择医院"
-                    >
-                        <a-select-option value="1600">1600</a-select-option>
-                        <a-select-option value="160">160</a-select-option>
-                    </a-select>
-                </a-col>
-                <a-col :span="5">
-                    <a-button type="primary">
-                        搜索
-                    </a-button>
-                </a-col>
-            </a-row>
-        </a-input-group>
-        <a-input-group class="a-input-group">
-            <a-button type="primary"
-                      @click="shipmentReturnClick"
-            >出货退货
+        <div class="a-input-group">
+            <a-input class="longer-input-width" v-model="searchData.commodityName" placeholder="请输入出货退货单号"/>
+            <a-input class="lengthen-input-width" v-model="searchData.itemNo" placeholder="请输入商品货号"/>
+            <a-select class="basic-select-width" v-model="searchData.hospital" placeholder="请选择医院">
+                <a-select-option value="1600">1600</a-select-option>
+                <a-select-option value="160">160</a-select-option>
+            </a-select>
+            <a-button type="primary">
+                搜索
             </a-button>
+        </div>
+        <a-input-group class="a-input-group">
+            <a-button type="primary" @click="shipmentReturnClick">出货退货</a-button>
         </a-input-group>
         <!--表格-->
         <a-table

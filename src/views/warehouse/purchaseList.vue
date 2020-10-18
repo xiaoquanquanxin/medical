@@ -1,30 +1,18 @@
 <template>
     <div class="layout-content-inner-main">
         <!--搜索相关-->
-        <a-input-group class="a-input-group">
-            <a-row :gutter="8">
-                <a-col :span="6">
-                    <a-input v-model="searchData.purchaseOrderNumber" placeholder="请输入采购单号"/>
-                </a-col>
-                <a-col :span="5">
-                    <a-select
-                            v-model="searchData.status"
-                            style="width:100%;"
-                            placeholder="请选择状态"
-                    >
-                        <a-select-option value="全部">全部</a-select-option>
-                        <a-select-option value="待发货">待发货</a-select-option>
-                        <a-select-option value="待签收">待签收</a-select-option>
-                        <a-select-option value="已签收">已签收</a-select-option>
-                    </a-select>
-                </a-col>
-                <a-col :span="5">
-                    <a-button type="primary">
-                        搜索
-                    </a-button>
-                </a-col>
-            </a-row>
-        </a-input-group>
+        <div class="a-input-group">
+            <a-input class="lengthen-input-width" v-model="searchData.purchaseOrderNumber" placeholder="请输入采购单号"/>
+            <a-select class="basic-select-width" v-model="searchData.status" placeholder="请选择状态">
+                <a-select-option value="全部">全部</a-select-option>
+                <a-select-option value="待发货">待发货</a-select-option>
+                <a-select-option value="待签收">待签收</a-select-option>
+                <a-select-option value="已签收">已签收</a-select-option>
+            </a-select>
+            <a-button type="primary">
+                搜索
+            </a-button>
+        </div>
         <!--表格-->
         <a-table
                 :columns="columns"
