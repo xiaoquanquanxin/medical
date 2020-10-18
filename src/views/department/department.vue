@@ -108,14 +108,13 @@
         },
         {
             title: '状态',
-            dataIndex: 'status',
-            width: 150,
             scopedSlots: { customRender: 'a-switch' },
+            width: 150,
         },
         {
             title: '操作',
-
             scopedSlots: { customRender: 'operation' },
+            width: 150,
         },
     ];
     const data = [];

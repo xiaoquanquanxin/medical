@@ -96,6 +96,7 @@
         {
             title: '操作',
             scopedSlots: { customRender: 'operation' },
+            width: 100,
         },
     ];
     const data = [];
@@ -117,7 +118,7 @@
                 columns,
 
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
-                scroll: threeRowSearch,
+                scroll: threeRowSearch(columns),
                 //  分页信息
                 pagination,
                 //  搜索数据

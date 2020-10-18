@@ -118,7 +118,6 @@
         },
         {
             title: '状态',
-            dataIndex: 'status',
             width: 100,
             scopedSlots: { customRender: 'a-switch' },
         },
@@ -130,6 +129,7 @@
         {
             title: '操作',
             scopedSlots: { customRender: 'operation' },
+            width: 100,
         },
     ];
     const data = [];

@@ -277,9 +277,7 @@
                 columns,
 
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
-                scroll: Object.assign(twoRowSearch, {
-                    x: columns.reduce((a, b) => {return a + b.width;}, 0)
-                }),
+                scroll: twoRowSearch(columns),
 
                 //  分页信息
                 pagination,
