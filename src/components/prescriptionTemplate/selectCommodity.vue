@@ -131,7 +131,7 @@
             //  完成选择
             handleSubmit(){
                 if (!this.selectedRowKeys.length) {
-                    this.$message.error({ title: '请先选择商品' });
+                    this.$message.error('请先选择商品');
                 }
                 //  console.log('源数据', this.originCommodityList);
                 //  console.log('别选择的多选', this.selectedRowKeys);
