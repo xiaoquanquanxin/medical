@@ -16,7 +16,8 @@
                                v-model="sItem.buyUnitCheckId"
                                @change="radioGroupChange(sItem)"
                 >
-                    <a-radio v-for="item in scope.buyUnitList"
+                    <a-radio :key="item"
+                             v-for="item in scope.buyUnitList"
                              :value="item.buyUnitId"
                              class="negative-margin-item"
                     >
@@ -78,6 +79,10 @@
             console.log(this.selectedRowKeys);
         },
         methods: {
+            //  主要请求
+            searchFn(){
+
+            },
             ...mapActions('prescriptionTemplate', [
                 //  商品源的数据
                 'setOriginCommodityList',
@@ -140,3 +145,4 @@
         }
     };
 </script>
+

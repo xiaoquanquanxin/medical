@@ -65,6 +65,10 @@
 //            }, 332);
         },
         methods: {
+            //  主要请求
+            searchFn(){
+
+            },
             //  选择过期日期
             onDateChange(value, selectDateValue){
                 console.log(selectDateValue);

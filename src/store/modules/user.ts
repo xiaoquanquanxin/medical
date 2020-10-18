@@ -1,5 +1,5 @@
 //	用户信息
-import {login, getInfo} from '@/api/user';
+import {login} from '@/api/login';
 import {getToken, setToken} from '@/utils/auth';
 import {COMMIT_INTERFACE} from "@/store"
 
@@ -47,36 +47,7 @@ const actions = {
 				commit('SET_TOKEN', data.token);
 				setToken(data.token);
 				resolve();
-			}).catch(error => {
-				reject(error);
-			});
-		});
-	},
-
-	//	获取用户信息
-	getInfo({commit, state}: COMMIT_INTERFACE<STATE>) {
-		return new Promise((resolve, reject) => {
-			resolve(123);
-
-			getInfo(state.token).then(response => {
-				const {data} = response;
-
-				if (!data) {
-					reject('验证失败，重新登录');
-				}
-
-				const {roles, name, avatar, introduction} = data;
-				// roles must be a non-empty array
-				if (!roles || roles.length <= 0) {
-					reject('getInfo: roles must be a non-null array!');
-				}
-
-				commit('SET_ROLES', roles);
-				commit('SET_NAME', name);
-				commit('SET_AVATAR', avatar);
-				commit('SET_INTRODUCTION', introduction);
-				resolve(data);
-			}).catch(error => {
+			}).catch((error: Error) => {
 				reject(error);
 			});
 		});

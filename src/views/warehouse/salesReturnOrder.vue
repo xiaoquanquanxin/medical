@@ -3,7 +3,7 @@
         <!--搜索相关-->
         <div class="a-input-group">
             <a-input class="lengthen-input-width" v-model="searchData.passOrderNumber" placeholder="请输入退货单号"/>
-            <a-button class="basic-button-width" type="primary">搜索</a-button>
+            <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
         </div>
         <!--表格-->
         <a-table
@@ -120,6 +120,10 @@
             };
         },
         methods: {
+            //  主要请求
+            searchFn(){
+
+            },
 
             //  展示的每一页数据变换
             onShowSizeChange(current, pageSize){

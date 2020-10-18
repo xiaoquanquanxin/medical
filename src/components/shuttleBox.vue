@@ -98,6 +98,10 @@
             console.log('mounted🍉，发请求', '类型是', this.shuttleBoxType);
         },
         methods: {
+            //  主要请求
+            searchFn(){
+
+            },
             getMock(props){
                 //  console.log(props);
                 const targetKeys = [];

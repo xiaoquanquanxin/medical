@@ -4,7 +4,7 @@
         <div class="a-input-group">
             <a-input class="lengthen-input-width" v-model="searchData.entrepotName" placeholder="请输入供应商名称"/>
             <a-input class="lengthen-input-width" v-model="searchData.entrepotCode" placeholder="请输入供应商代码"/>
-            <a-button class="basic-button-width" type="primary">搜索</a-button>
+            <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
         </div>
         <div class="a-input-group">
             <router-link :to="{name:'addSupplier'}">
@@ -126,6 +126,10 @@
         },
 
         methods: {
+            //  主要请求
+            searchFn(){
+
+            },
             //  展示的每一页数据变换
             onShowSizeChange(current, pageSize){
                 console.log(current);

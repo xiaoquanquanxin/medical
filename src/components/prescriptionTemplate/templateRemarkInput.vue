@@ -22,6 +22,10 @@
             };
         },
         methods: {
+            //  主要请求
+            searchFn(){
+
+            },
             ...mapActions('prescriptionTemplate', [
                 //  设置商品列表数据
                 'setRemark',
