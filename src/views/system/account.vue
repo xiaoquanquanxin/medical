@@ -67,7 +67,6 @@
             dataIndex: 'hospital',
             width: 100,
         },
-
         {
             title: '创建时间',
             dataIndex: 'status',
@@ -86,6 +85,7 @@
         {
             title: '操作',
             scopedSlots: { customRender: 'operation' },
+            width: 100,
         },
     ];
     const data = [];
