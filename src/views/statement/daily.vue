@@ -22,9 +22,7 @@
             <!--                    @change="onEndDateChange"-->
             <!--            />-->
             <a-space>
-                <a-button type="primary">
-                    搜索
-                </a-button>
+                <a-button type="primary" class="basic-button-width">搜索</a-button>
                 <a-button type="primary" @click="executeFn">执行日结</a-button>
             </a-space>
         </div>

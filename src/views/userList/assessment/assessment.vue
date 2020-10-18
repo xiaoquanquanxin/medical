@@ -3,9 +3,7 @@
         <!--搜索相关-->
         <div class="a-input-group">
             <a-input class="basic-input-width" v-model="searchData.commodityName" placeholder="请输入评估表名"/>
-            <a-button type="primary">
-                搜索
-            </a-button>
+            <a-button type="primary" class="basic-button-width">搜索</a-button>
         </div>
         <div class="a-input-group">
             <router-link :to="{name:'addAssessment',params:{patientInfoId}}">
