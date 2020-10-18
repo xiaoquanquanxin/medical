@@ -1,33 +1,20 @@
 <template>
     <div class="layout-content-inner-main">
         <!--搜索相关-->
-        <a-input-group class="a-input-group">
-            <a-row :gutter="8">
-                <a-col :span="5">
-                    <a-input v-model="searchData.diseaseName"
-                             placeholder="请输入疾病名称"
-                    />
-                </a-col>
-                <a-col :span="5">
-                    <a-select v-model="searchData.status"
-                              style="width:100%;"
-                              placeholder="请选择状态"
-                    >
-                        <a-select-option value="Option1">
-                            Option1
-                        </a-select-option>
-                        <a-select-option value="Option2">
-                            Option2
-                        </a-select-option>
-                    </a-select>
-                </a-col>
-                <a-col :span="5">
-                    <a-button type="primary">
-                        搜索
-                    </a-button>
-                </a-col>
-            </a-row>
-        </a-input-group>
+        <div class="a-input-group">
+            <a-input class="lengthen-input-width" v-model="searchData.diseaseName" placeholder="请输入疾病名称"/>
+            <a-select class="basic-select-width" v-model="searchData.status" placeholder="请选择状态">
+                <a-select-option value="Option1">
+                    Option1
+                </a-select-option>
+                <a-select-option value="Option2">
+                    Option2
+                </a-select-option>
+            </a-select>
+            <a-button type="primary">
+                搜索
+            </a-button>
+        </div>
         <a-input-group class="a-input-group">
             <a-col :span="5">
                 <router-link :to="{name:'addDisease'}">
@@ -97,7 +84,7 @@
         {
             title: '操作',
             dataIndex: 'operation',
-            
+
             scopedSlots: { customRender: 'operation' },
         },
     ];

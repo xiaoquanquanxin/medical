@@ -2,16 +2,10 @@
     <div class="layout-content-inner-main">
         <div v-if="true">
             <!--搜索相关-->
-            <div class="a-input-group lengthen-search-group">
-                <div class="basic-input-width">
-                    <a-input v-model="searchData.commodityName" placeholder="请输入处方号"/>
-                </div>
-                <div class="basic-input-width">
-                    <a-input v-model="searchData.commodityName" placeholder="请输入处方名称"/>
-                </div>
-                <div class="basic-input-width">
-                    <a-input v-model="searchData.commodityName" placeholder="请输入患者姓名"/>
-                </div>
+            <div class="a-input-group">
+                <a-input class="basic-input-width" v-model="searchData.commodityName" placeholder="请输入处方号"/>
+                <a-input class="basic-input-width" v-model="searchData.commodityName" placeholder="请输入处方名称"/>
+                <a-input class="basic-input-width" v-model="searchData.commodityName" placeholder="请输入患者姓名"/>
                 <a-date-picker
                         class="lengthen-select-width"
                         placeholder="请选择配置日期"
@@ -38,12 +32,12 @@
                     搜索
                 </a-button>
             </div>
-            <a-input-group class="a-input-group" v-if="false" data-msg="暂时不做">
+            <div class="a-input-group" v-if="false" data-msg="暂时不做">
                 <a-space>
                     <!--<a-button type="primary" v-print="printBottle">打印处方</a-button>-->
                     <a-button type="primary" v-print="printMenu">打印配置单</a-button>
                 </a-space>
-            </a-input-group>
+            </div>
             <!--表格-->
             <a-table
                     :columns="columns"

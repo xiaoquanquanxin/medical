@@ -1,47 +1,29 @@
 <template>
     <div class="layout-content-inner-main">
         <!--搜索相关-->
-        <a-input-group class="a-input-group">
-            <a-row :gutter="8">
-                <a-col :span="4">
-                    <a-input placeholder="请输入姓名" v-model="searchData.doctorName"/>
-                </a-col>
-                <a-col :span="4">
-                    <a-input placeholder="请输入手机号" v-model="searchData.phoneNumber"/>
-                </a-col>
-                <a-col :span="4">
-                    <a-select style="width:100%;"
-                              placeholder="请选择医院"
-                              v-model="searchData.hospital"
-                    >
-                        <a-select-option value="Option1">
-                            Option1
-                        </a-select-option>
-                        <a-select-option value="Option2">
-                            Option2
-                        </a-select-option>
-                    </a-select>
-                </a-col>
-                <a-col :span="4">
-                    <a-select style="width:100%;"
-                              placeholder="请选择科室"
-                              v-model="searchData.department"
-                    >
-                        <a-select-option value="Option1">
-                            Option1
-                        </a-select-option>
-                        <a-select-option value="Option2">
-                            Option2
-                        </a-select-option>
-                    </a-select>
-                </a-col>
-                <a-col :span="4">
-                    <a-button type="primary">
-                        搜索
-                    </a-button>
-                </a-col>
-            </a-row>
-        </a-input-group>
+        <div class="a-input-group">
+            <a-input class="basic-input-width" placeholder="请输入姓名" v-model="searchData.doctorName"/>
+            <a-input class="basic-input-width" placeholder="请输入手机号" v-model="searchData.phoneNumber"/>
+            <a-select class="basic-select-width" placeholder="请选择医院" v-model="searchData.hospital">
+                <a-select-option value="Option1">
+                    Option1
+                </a-select-option>
+                <a-select-option value="Option2">
+                    Option2
+                </a-select-option>
+            </a-select>
+            <a-select class="basic-select-width" placeholder="请选择科室" v-model="searchData.department">
+                <a-select-option value="Option1">
+                    Option1
+                </a-select-option>
+                <a-select-option value="Option2">
+                    Option2
+                </a-select-option>
+            </a-select>
+            <a-button type="primary">
+                搜索
+            </a-button>
+        </div>
         <a-input-group class="a-input-group">
             <a-col :span="4">
                 <router-link :to="{name:'addDoctor'}">

@@ -1,67 +1,42 @@
 <template>
     <div class="layout-content-inner-main">
         <!--搜索相关-->
+        <div class="a-input-group">
+            <a-input class="lengthen-input-width" v-model="searchData.schemeName" placeholder="请输入方案名称"/>
+            <a-select class="basic-select-width" v-model="searchData.energy" placeholder="请选择能量">
+                <a-select-option value="">
+                    分类
+                </a-select-option>
+                <a-select-option value="Option2">
+                    Option2
+                </a-select-option>
+            </a-select>
+            <a-select class="lengthen-select-width" v-model="searchData.method" placeholder="请选择食物类型">
+                <a-select-option value="">
+                    分类
+                </a-select-option>
+                <a-select-option value="Option2">
+                    Option2
+                </a-select-option>
+            </a-select>
+            <a-select class="basic-select-width" v-model="searchData.department" placeholder="请选择科室">
+                <a-select-option value="">
+                    分类
+                </a-select-option>
+                <a-select-option value="Option2">
+                    Option2
+                </a-select-option>
+            </a-select>
+            <a-button type="primary">
+                搜索
+            </a-button>
+        </div>
         <a-input-group class="a-input-group">
-            <a-row :gutter="8">
-                <a-col :span="5">
-                    <a-input v-model="searchData.schemeName"
-                             placeholder="请输入方案名称"
-                    />
-                </a-col>
-                <a-col :span="5">
-                    <a-select v-model="searchData.energy"
-                              style="width:100%;"
-                              placeholder="请选择能量"
-                    >
-                        <a-select-option value="">
-                            分类
-                        </a-select-option>
-                        <a-select-option value="Option2">
-                            Option2
-                        </a-select-option>
-                    </a-select>
-                </a-col>
-                <a-col :span="5">
-                    <a-select v-model="searchData.foodType"
-                              style="width:100%;"
-                              placeholder="请选择食物类型"
-                    >
-                        <a-select-option value="">
-                            分类
-                        </a-select-option>
-                        <a-select-option value="Option2">
-                            Option2
-                        </a-select-option>
-                    </a-select>
-                </a-col>
-                <a-col :span="5">
-                    <a-select v-model="searchData.department"
-                              style="width:100%;"
-                              placeholder="请选择科室"
-                    >
-                        <a-select-option value="">
-                            分类
-                        </a-select-option>
-                        <a-select-option value="Option2">
-                            Option2
-                        </a-select-option>
-                    </a-select>
-                </a-col>
-                <a-col :span="3">
-                    <a-button type="primary">
-                        搜索
-                    </a-button>
-                </a-col>
-            </a-row>
-        </a-input-group>
-        <a-input-group class="a-input-group">
-            <a-col :span="5">
-                <router-link :to="{name:'addDietary'}">
-                    <a-button type="primary">
-                        新增方案
-                    </a-button>
-                </router-link>
-            </a-col>
+            <router-link :to="{name:'addDietary'}">
+                <a-button type="primary">
+                    新增方案
+                </a-button>
+            </router-link>
         </a-input-group>
         <!--表格-->
         <a-table
@@ -123,7 +98,7 @@
         {
             title: '操作',
             dataIndex: 'operation',
-            
+
             scopedSlots: { customRender: 'operation' },
         },
     ];
@@ -135,7 +110,7 @@
             city: '上海',
             status: String(i % 2),
             icon: '医院图标',
-            
+
         });
     }
 
