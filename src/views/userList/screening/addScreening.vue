@@ -160,17 +160,17 @@
         {
             key: 1,
             label: '过去一周摄食是否有减少：',
-            value: null,
+            value: 1,
         },
         {
             key: 2,
             label: '过去三个月体重是否下降：',
-            value: null,
+            value: 1,
         },
         {
             key: 3,
             label: '有严重疾病吗？（如ICU治疗）：',
-            value: null,
+            value: 1,
         }
     ];
 

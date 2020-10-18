@@ -32,11 +32,6 @@
             width: 100,
             dataIndex: 'prescriptionType',
         },
-        {
-            title: '咨询费/配置费',
-            width: 100,
-            dataIndex: 'cost',
-        },
     ];
 
     export default {
