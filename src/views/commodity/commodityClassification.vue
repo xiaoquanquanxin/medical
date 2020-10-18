@@ -1,18 +1,12 @@
 <template>
     <div class="layout-content-inner-main">
         <!--搜索相关-->
-        <a-input-group class="a-input-group">
-            <a-row :gutter="8">
-                <a-col :span="5">
-                    <a-input v-model="searchData.classificationName" placeholder="请输入分类名称"/>
-                </a-col>
-                <a-col :span="5">
-                    <a-button type="primary">
-                        搜索
-                    </a-button>
-                </a-col>
-            </a-row>
-        </a-input-group>
+        <div class="a-input-group">
+            <a-input class="basic-input-width" v-model="searchData.classificationName" placeholder="请输入分类名称"/>
+            <a-button type="primary">
+                搜索
+            </a-button>
+        </div>
         <a-input-group class="a-input-group">
             <a-col :span="5">
                 <a-button type="primary" @click="addClassification">

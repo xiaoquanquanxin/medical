@@ -1,54 +1,44 @@
 <template>
     <div class="layout-content-inner-main">
         <!--搜索相关-->
-        <a-input-group class="a-input-group">
-            <a-row :gutter="8">
-                <a-space>
-                    <div class="basic-input-width">
-                        <a-input v-model="searchData.commodityName" placeholder="请输入商品名称"/>
-                    </div>
-                    <div class="basic-input-width">
-                        <a-input v-model="searchData.itemNo" class="basic-input-width" placeholder="请输入商品货号"/>
-                    </div>
-                    <a-select v-model="searchData.brand" class="basic-select-width" placeholder="请选择品牌">
-                        <a-select-option value="">
-                            品牌
-                        </a-select-option>
-                        <a-select-option value="Option2">
-                            Option2
-                        </a-select-option>
-                    </a-select>
-                    <a-select v-model="searchData.classification" class="basic-select-width" placeholder="请选择分类">
-                        <a-select-option value="">
-                            分类
-                        </a-select-option>
-                        <a-select-option value="Option2">
-                            Option2
-                        </a-select-option>
-                    </a-select>
-                    <a-select v-model="searchData.status" class="basic-select-width" placeholder="请选择状态">
-                        <a-select-option value="">
-                            状态
-                        </a-select-option>
-                        <a-select-option value="Option2">
-                            Option2
-                        </a-select-option>
-                    </a-select>
-                    <a-button type="primary">
-                        搜索
-                    </a-button>
-                </a-space>
-            </a-row>
-        </a-input-group>
-        <a-input-group class="a-input-group">
-            <a-col :span="5">
-                <router-link :to="{name:'addCommodity'}">
-                    <a-button type="primary">
-                        新增商品
-                    </a-button>
-                </router-link>
-            </a-col>
-        </a-input-group>
+        <div class="a-input-group">
+            <a-input class="basic-input-width" v-model="searchData.commodityName" placeholder="请输入商品名称"/>
+            <a-input class="basic-input-width" v-model="searchData.itemNo" placeholder="请输入商品货号"/>
+            <a-select class="basic-select-width" v-model="searchData.brand" placeholder="请选择品牌">
+                <a-select-option value="">
+                    品牌
+                </a-select-option>
+                <a-select-option value="Option2">
+                    Option2
+                </a-select-option>
+            </a-select>
+            <a-select class="basic-select-width" v-model="searchData.classification" placeholder="请选择分类">
+                <a-select-option value="">
+                    分类
+                </a-select-option>
+                <a-select-option value="Option2">
+                    Option2
+                </a-select-option>
+            </a-select>
+            <a-select class="basic-select-width" v-model="searchData.status" placeholder="请选择状态">
+                <a-select-option value="">
+                    状态
+                </a-select-option>
+                <a-select-option value="Option2">
+                    Option2
+                </a-select-option>
+            </a-select>
+            <a-button type="primary">
+                搜索
+            </a-button>
+        </div>
+        <div class="a-input-group">
+            <router-link :to="{name:'addCommodity'}">
+                <a-button type="primary">
+                    新增商品
+                </a-button>
+            </router-link>
+        </div>
         <!--表格-->
         <a-table
                 :columns="columns"
@@ -202,7 +192,7 @@
             unit: '基本单位',
             specifications: '规格',
             manufacturer: '生产厂家',
-            
+
         });
     }
 

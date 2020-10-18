@@ -1,35 +1,26 @@
 <template>
     <div class="layout-content-inner-main">
         <!--搜索相关-->
-        <a-input-group class="a-input-group">
-            <a-row :gutter="8">
-                <a-col :span="5">
-                    <a-input v-model="searchData.brandName" placeholder="请输入品牌名称"/>
-                </a-col>
-                <a-col :span="5">
-                    <a-select
-                            v-model="searchData.status"
-                            placeholder="请选择商品状态"
-                            style="width:100%;"
-                    >
-                        <a-select-option value="">
-                            商品状态
-                        </a-select-option>
-                        <a-select-option value="1">
-                            山西
-                        </a-select-option>
-                        <a-select-option value="2">
-                            陕西
-                        </a-select-option>
-                    </a-select>
-                </a-col>
-                <a-col :span="5">
-                    <a-button type="primary">
-                        搜索
-                    </a-button>
-                </a-col>
-            </a-row>
-        </a-input-group>
+        <div class="a-input-group">
+            <a-input class="basic-input-width" v-model="searchData.brandName" placeholder="请输入品牌名称"/>
+            <a-select class="lengthen-select-width"
+                      v-model="searchData.status"
+                      placeholder="请选择商品状态"
+            >
+                <a-select-option value="">
+                    商品状态
+                </a-select-option>
+                <a-select-option value="1">
+                    山西
+                </a-select-option>
+                <a-select-option value="2">
+                    陕西
+                </a-select-option>
+            </a-select>
+            <a-button type="primary">
+                搜索
+            </a-button>
+        </div>
         <a-input-group class="a-input-group">
             <a-col :span="5">
                 <a-button type="primary" @click="addBrand">
