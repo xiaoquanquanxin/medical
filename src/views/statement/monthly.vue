@@ -15,7 +15,7 @@
                             @change="onRangePickerChange"
             />
             <a-space>
-                <a-button type="primary" class="basic-button-width">搜索</a-button>
+                <a-button class="basic-button-width" type="primary">搜索</a-button>
                 <a-button type="primary" @click="executeFn">
                     执行月结
                 </a-button>

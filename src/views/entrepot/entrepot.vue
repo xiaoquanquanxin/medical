@@ -4,7 +4,7 @@
         <div class="a-input-group">
             <a-input class="basic-input-width" v-model="searchData.entrepotName" placeholder="请输入仓库名称"/>
             <a-input class="basic-input-width" v-model="searchData.entrepotCode" placeholder="请输入仓库代码"/>
-            <a-button type="primary" class="basic-button-width">搜索</a-button>
+            <a-button class="basic-button-width" type="primary">搜索</a-button>
         </div>
         <div class="a-input-group">
             <a-button type="primary" @click="addEntrepot()">

@@ -7,7 +7,7 @@
                 <a-select-option value="1600">1600</a-select-option>
                 <a-select-option value="160">160</a-select-option>
             </a-select>
-            <a-button type="primary" class="basic-button-width">搜索</a-button>
+            <a-button class="basic-button-width" type="primary">搜索</a-button>
         </div>
         <!--表格-->
         <a-table

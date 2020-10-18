@@ -2,7 +2,7 @@
     <div class="layout-content-inner-main">
         <div class="a-input-group">
             <a-space>
-                <a-button type="primary" v-print="printObj">打印</a-button>
+                <a-button class="basic-button-width" type="primary" v-print="printObj">打印</a-button>
                 <a-button type="primary" @click="saveScreening">保存</a-button>
             </a-space>
         </div>

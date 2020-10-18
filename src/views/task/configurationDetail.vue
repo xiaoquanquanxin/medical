@@ -1,7 +1,7 @@
 <template>
     <div class="layout-content-inner-main">
         <a-space>
-            <a-button type="primary" v-print="printObj">打印</a-button>
+            <a-button class="basic-button-width" type="primary" v-print="printObj">打印</a-button>
         </a-space>
         <div id="printContent">
             <a-row class="a-input-group" type="flex" justify="space-between" align="middle">

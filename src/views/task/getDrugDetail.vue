@@ -1,8 +1,8 @@
 <template>
     <div class="layout-content-inner-main">
-        <a-space>
-            <a-button type="primary" v-print="printObj">打印</a-button>
-        </a-space>
+        <div class="a-input-group">
+            <a-button class="basic-button-width" type="primary" v-print="printObj">打印</a-button>
+        </div>
         <div id="printContent">
             <a-row class="a-input-group" type="flex" justify="space-between" align="middle">
                 <span data-msg="占位"></span>

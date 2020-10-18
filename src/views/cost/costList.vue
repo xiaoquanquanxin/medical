@@ -13,7 +13,7 @@
                     Option2
                 </a-select-option>
             </a-select>
-            <a-button type="primary" class="basic-button-width">搜索</a-button>
+            <a-button class="basic-button-width" type="primary">搜索</a-button>
         </div>
         <!--表格-->
         <a-table
@@ -73,7 +73,7 @@
         <!--            <PayCostForm ref="refReturnCostForm"/>-->
         <!--        </a-modal>-->
         <div v-show="false">
-            <a-button type="primary" v-print="printObj" id='printButton'>打印</a-button>
+            <a-button class="basic-button-width" type="primary" v-print="printObj" id="printButton">打印</a-button>
             <div id="paper">
                 <ul class="paper-list">
                     <li>

@@ -4,7 +4,7 @@
             <router-link :to="{name:'editIntervention'}">
                 <a-button type="primary">编辑</a-button>
             </router-link>
-            <a-button type="primary" v-print="printObj">打印</a-button>
+            <a-button class="basic-button-width" type="primary" v-print="printObj">打印</a-button>
         </a-space>
         <div id="printContent">
             <a-row class="a-input-group" type="flex" justify="space-between" align="middle">

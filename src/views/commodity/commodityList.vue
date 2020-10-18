@@ -28,7 +28,7 @@
                     Option2
                 </a-select-option>
             </a-select>
-            <a-button type="primary" class="basic-button-width">搜索</a-button>
+            <a-button class="basic-button-width" type="primary">搜索</a-button>
         </div>
         <div class="a-input-group">
             <router-link :to="{name:'addCommodity'}">

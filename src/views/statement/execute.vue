@@ -26,7 +26,7 @@
                     @change="onRangePickerChange"
             />
             <a-space>
-                <a-button type="primary" class="basic-button-width">搜索</a-button>
+                <a-button class="basic-button-width" type="primary">搜索</a-button>
                 <a-button type="primary" @click="confirmExecute">确认结算</a-button>
             </a-space>
         </div>
