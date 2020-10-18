@@ -1039,6 +1039,10 @@
             }, 20);
         },
         methods: {
+            //  主要请求
+            searchFn(){
+
+            },
             ...mapActions('userList', [
                 //  保存病人信息，这是为了给组件用，而不是页面，所以要store
                 'setScreeningInfo',

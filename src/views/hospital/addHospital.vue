@@ -233,6 +233,10 @@
             }, 1000);
         },
         methods: {
+            //  主要请求
+            searchFn(){
+
+            },
             //    表单提交
             handleSubmit(e){
                 e.preventDefault();

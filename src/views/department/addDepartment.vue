@@ -51,6 +51,10 @@
             console.log('是编辑？', !!this.departmentId);
         },
         methods: {
+            //  主要请求
+            searchFn(){
+
+            },
             //    表单提交
             handleSubmit(e){
                 e.preventDefault();

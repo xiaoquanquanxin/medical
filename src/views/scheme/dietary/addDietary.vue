@@ -140,6 +140,10 @@
             console.log('是编辑？', !!this.dietaryId);
         },
         methods: {
+            //  主要请求
+            searchFn(){
+
+            },
             //  切换营养计划
             selectMealPlanChange(value){
                 console.log(value);

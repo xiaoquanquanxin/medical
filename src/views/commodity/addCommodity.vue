@@ -460,6 +460,10 @@
 
         },
         methods: {
+            //  主要请求
+            searchFn(){
+
+            },
             //  添加辅助单位
             addAuxiliaryUnits(){
                 this.basicTableData.push(auxiliaryUnitsData);

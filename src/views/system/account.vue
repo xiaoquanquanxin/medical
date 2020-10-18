@@ -4,7 +4,7 @@
         <div class="a-input-group">
             <a-input class="basic-input-width" v-model="searchData.commodityName"
                      placeholder="请输入账号名称"/>
-            <a-button class="basic-button-width" type="primary">搜索</a-button>
+            <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
         </div>
         <div class="a-input-group">
             <a-button type="primary" @click="addAccountFn()">
