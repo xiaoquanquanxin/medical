@@ -1,5 +1,5 @@
 <template>
-    <div class="history-list" v-show="!hiddenHistory">
+    <div class="history-list" v-show="!hiddenHistory" id="layoutHistory">
         <template v-for="item in historyRouteList">
             <a-divider type="vertical"/>
             <router-link :to="{name:item.name}"
@@ -7,6 +7,7 @@
             >{{item.chName}}
             </router-link>
         </template>
+        <a-divider type="vertical"/>
     </div>
 </template>
 <script>

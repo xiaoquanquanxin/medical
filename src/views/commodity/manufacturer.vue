@@ -71,7 +71,7 @@
 </template>
 <script>
     import { pagination } from '@/utils/pagination.ts';
-    import { towRowSearch } from '@/utils/tableScroll';
+    import { twoRowSearch } from '@/utils/tableScroll';
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
     import AddManufacturerBox from '@/components/commodity/addManufacturerBox.vue';
     import { mapGetters, mapActions } from 'vuex';
@@ -127,7 +127,7 @@
                 columns,
 
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
-                scroll: towRowSearch,
+                scroll: twoRowSearch,
 
                 //  分页信息
                 pagination,

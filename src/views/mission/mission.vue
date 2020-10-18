@@ -62,7 +62,7 @@
     </div>
 </template>
 <script>
-    import { towRowSearch } from '@/utils/tableScroll';
+    import { twoRowSearch } from '@/utils/tableScroll';
     import { pagination } from '@/utils/pagination.ts';
 
     const columns = [
@@ -110,7 +110,7 @@
                 columns,
 
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
-                scroll: towRowSearch,
+                scroll: twoRowSearch,
                 //  分页信息
                 pagination,
             };

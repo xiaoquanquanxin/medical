@@ -70,7 +70,7 @@
     import AddOrEditDistributors from '@/components/addOrEditDistributors.vue';
     import { pagination } from '@/utils/pagination.ts';
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
-    import { towRowSearch } from '@/utils/tableScroll';
+    import { twoRowSearch } from '@/utils/tableScroll';
 
     const columns = [
         {
@@ -136,7 +136,7 @@
                 data,
                 columns,
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
-                scroll: towRowSearch,
+                scroll: twoRowSearch,
                 //  分页信息
                 pagination,
                 //  新增、编辑渠道商
