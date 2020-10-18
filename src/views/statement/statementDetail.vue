@@ -25,10 +25,10 @@
                     :placeholder="['开始日期','结束日期']"
                     @change="onRangePickerChange"
             />
-            <a-space>
-                <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
-                <a-button class="basic-button-width" type="primary" v-print="printObj">打印</a-button>
-            </a-space>
+        </div>
+        <div class="a-input-group">
+            <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
+            <a-button class="basic-button-width" type="primary" v-print="printObj">打印</a-button>
         </div>
         <div id="printContent">
             <!--表格-->

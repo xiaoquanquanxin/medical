@@ -1,9 +1,11 @@
 //  表格 设置横向或纵向滚动，也可用于指定滚动区域的宽和高
 
 //	只有一排搜索
-export const oneRowSearch = {x: 820, y: 'calc(100vh - 300px)'};
+export const oneRowSearch = {x: 820, y: 'calc(100vh - 315px)'};
 //	有2排搜索按钮
-export const twoRowSearch = {x: 820, y: 'calc(100vh - 340px)'};
+export const twoRowSearch = {x: 820, y: 'calc(100vh - 357px)'};
+//	有3排搜索按钮
+export const threeRowSearch = {x: 820, y: 'calc(100vh - 405px)'};
 
 
 //	弹框table的scroll
