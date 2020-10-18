@@ -1,19 +1,19 @@
 <template>
     <div class="layout-content-inner-main">
         <div class="a-input-group">
-            <a-space>
-                <a-button class="basic-button-width" type="primary" v-print="printObj">打印</a-button>
-                <a-button type="primary" @click="saveScreening">保存</a-button>
-                <a-select
-                        style="width: 200px;"
-                        placeholder="请选择主管医生"
-                        v-model="tableTypeSelect"
-                >
-                    <a-select-option :value="1">微型营养评价表</a-select-option>
-                    <a-select-option :value="2">一般评估表</a-select-option>
-                    <a-select-option :value="3">PG - SGA主观营养状况评估</a-select-option>
-                </a-select>
-            </a-space>
+            <!--返回按钮-->
+            <GoBackButton/>
+            <a-button class="basic-button-width" type="primary" v-print="printObj">打印</a-button>
+            <a-button class="basic-button-width" type="primary" @click="saveScreening">保存</a-button>
+            <a-select
+                    class="lengthen-select-width"
+                    placeholder="请选择主管医生"
+                    v-model="tableTypeSelect"
+            >
+                <a-select-option :value="1">微型营养评价表</a-select-option>
+                <a-select-option :value="2">一般评估表</a-select-option>
+                <a-select-option :value="3">PG - SGA主观营养状况评估</a-select-option>
+            </a-select>
         </div>
         <div id="printContent">
             <ScreeningBasicInfo/>
@@ -1002,9 +1002,11 @@
     import ScreeningBasicInfo from '@/components/userList/screening/screeningBasicInfo.vue';
     import ScreeningBottomInfo from '@/components/userList/screening/screeningBottomInfo.vue';
     import { mapGetters, mapActions } from 'vuex';
+    import GoBackButton from '@/components/goBackButton.vue';
     //  新增评估
     export default {
         components: {
+            GoBackButton,
             ScreeningBasicInfo,
             ScreeningBottomInfo,
         },

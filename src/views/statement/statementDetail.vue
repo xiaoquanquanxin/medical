@@ -1,33 +1,35 @@
 <template>
     <div class="layout-content-inner-main">
         <!--搜索相关-->
-        <div class="a-input-group">
-            <a-input class="basic-input-width" v-model="searchData.commodityName" placeholder="请输入订单号"/>
-            <a-input class="basic-input-width" v-model="searchData.commodityName" placeholder="请输入住院号"/>
-            <a-select v-model="searchData.status" class="lengthen-select-width" placeholder="请选择缴费类型">
-                <a-select-option value="">
-                    状态
-                </a-select-option>
-                <a-select-option value="Option2">
-                    Option2
-                </a-select-option>
-            </a-select>
-            <a-select v-model="searchData.status" class="lengthen-select-width" placeholder="请选择会计部门">
-                <a-select-option value="">
-                    状态
-                </a-select-option>
-                <a-select-option value="Option2">
-                    Option2
-                </a-select-option>
-            </a-select>
-            <a-range-picker
-                    class="basic-range-picker-width"
-                    :placeholder="['开始日期','结束日期']"
-                    @change="onRangePickerChange"
-            />
+        <div class="a-input-group" v-if="false">
+            <!--            <a-input class="basic-input-width" v-model="searchData.commodityName" placeholder="请输入订单号"/>-->
+            <!--            <a-input class="basic-input-width" v-model="searchData.commodityName" placeholder="请输入住院号"/>-->
+            <!--            <a-select v-model="searchData.status" class="lengthen-select-width" placeholder="请选择缴费类型">-->
+            <!--                <a-select-option value="">-->
+            <!--                    状态-->
+            <!--                </a-select-option>-->
+            <!--                <a-select-option value="Option2">-->
+            <!--                    Option2-->
+            <!--                </a-select-option>-->
+            <!--            </a-select>-->
+            <!--            <a-select v-model="searchData.status" class="lengthen-select-width" placeholder="请选择会计部门">-->
+            <!--                <a-select-option value="">-->
+            <!--                    状态-->
+            <!--                </a-select-option>-->
+            <!--                <a-select-option value="Option2">-->
+            <!--                    Option2-->
+            <!--                </a-select-option>-->
+            <!--            </a-select>-->
+            <!--            <a-range-picker-->
+            <!--                    class="basic-range-picker-width"-->
+            <!--                    :placeholder="['开始日期','结束日期']"-->
+            <!--                    @change="onRangePickerChange"-->
+            <!--            />-->
         </div>
         <div class="a-input-group">
-            <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
+            <!--<a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>-->
+            <!--返回按钮-->
+            <GoBackButton/>
             <a-button class="basic-button-width" type="primary" v-print="printObj">打印</a-button>
         </div>
         <div id="printContent">
@@ -68,6 +70,7 @@
 </template>
 <script>
     import { oneRowSearch } from '@/utils/tableScroll';
+    import GoBackButton from '@/components/goBackButton.vue';
 
     const columns = [
         {
@@ -148,7 +151,9 @@
     }
 
     export default {
-
+        components: {
+            GoBackButton,
+        },
         data(){
             return {
                 data,

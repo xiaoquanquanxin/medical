@@ -2,6 +2,8 @@
     <div class="layout-content-inner-main">
         <!--表单头-->
         <div class="a-input-group">
+            <!--返回按钮-->
+            <GoBackButton/>
             <a-button class="basic-button-width" type="primary" v-print="printObj">打印</a-button>
         </div>
         <div id="printContent">
@@ -38,9 +40,11 @@
     import OralLikeBasicTable from '@/components/detailsTable/oralLikeBasicTable.vue';
     //  能量
     import EnergyTable from '@/components/detailsTable/energyTable.vue';
+    import GoBackButton from '@/components/goBackButton.vue';
 
     export default {
         components: {
+            GoBackButton,
             BasicInfoTable,
             OralLikeBasicTable,
             EnergyTable,
@@ -136,6 +140,7 @@
             //  主要请求
             searchFn(){
 
-            },}
+            },
+        }
     };
 </script>
