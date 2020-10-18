@@ -44,13 +44,15 @@
 .a-input-group > .longer-select-width,
 .a-input-group > .basic-range-picker-width,
 .a-input-group > .lengthen-input-width,
+.a-input-group > .longer-input-width,
     /*分割*/
 .lengthen-search-group > .basic-input-width,
 .lengthen-search-group > .basic-select-width,
 .lengthen-search-group > .lengthen-select-width,
 .lengthen-search-group > .basic-range-picker-width,
 .lengthen-search-group > .longer-select-width,
-.lengthen-search-group > .lengthen-input-width {
+.lengthen-search-group > .lengthen-input-width,
+.lengthen-search-group > .longer-input-width {
     float: left;
     margin-right: 8px;
     margin-bottom: 10px;

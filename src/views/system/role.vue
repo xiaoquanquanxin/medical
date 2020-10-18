@@ -1,7 +1,7 @@
 <template>
     <div class="layout-content-inner-main">
         <!--搜索相关-->
-        <div class="a-input-group lengthen-search-group">
+        <div class="a-input-group">
             <a-input class="basic-input-width" v-model="searchData.commodityName"
                      placeholder="请输入角色名称"/>
             <a-button type="primary">
@@ -9,11 +9,9 @@
             </a-button>
         </div>
         <a-input-group class="a-input-group">
-            <a-col :span="5">
-                <a-button type="primary" @click="addRoleFn()">
-                    新建角色
-                </a-button>
-            </a-col>
+            <a-button type="primary" @click="addRoleFn()">
+                新建角色
+            </a-button>
         </a-input-group>
         <!--表格-->
         <a-table

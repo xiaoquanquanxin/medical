@@ -5,11 +5,7 @@
             <a-input class="basic-input-width" v-model="searchData.orderNumber" placeholder="请输入订单号"/>
             <a-input class="basic-input-width" v-model="searchData.prescriptionsNumber" placeholder="请输入处方单号"/>
             <a-input class="basic-input-width" v-model="searchData.patientName" placeholder="请输入患者姓名"/>
-            <a-select
-                    class="lengthen-select-width"
-                    v-model="searchData.status"
-                    placeholder="请选择支付状态"
-            >
+            <a-select class="lengthen-select-width" v-model="searchData.status" placeholder="请选择支付状态">
                 <a-select-option value="1600">1600</a-select-option>
                 <a-select-option value="160">160</a-select-option>
             </a-select>
