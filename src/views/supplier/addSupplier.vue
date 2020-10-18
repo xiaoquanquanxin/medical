@@ -1,5 +1,6 @@
 <template>
     <div class="layout-content-inner-main">
+        <GoBackButton/>
         <a-form class="form"
                 :form="form"
                 v-bind="formItemLayout"
@@ -131,8 +132,12 @@
 <script>
     import { formItemLayout } from '@/utils/layout.ts';
     import { isPhoneNumber } from '@/utils/validate';
-    
+    import GoBackButton from '@/components/goBackButton.vue';
+
     export default {
+        components: {
+            GoBackButton
+        },
         beforeCreate(){
             this.form = this.$form.createForm(this);
         },

@@ -69,7 +69,7 @@
         height: 50px;
         line-height: 50px;
         background-color: white;
-        border-top: 1px solid #e8e8e8;
+        border-top: none;
         border-bottom: 1px solid #e8e8e8;
         overflow-x: auto;
         width: 100%;

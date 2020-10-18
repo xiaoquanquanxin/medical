@@ -1,5 +1,5 @@
 <template>
-    <a-layout-header style="background: #fff; padding: 0">
+    <a-layout-header class="a-layout-header">
         <a-row type="flex" justify="space-around" align="middle">
             <a-col :sm="4" :md="2">
                 <a-icon
@@ -60,3 +60,10 @@
 		}
 	}
 </script>
+<style scoped>
+    .a-layout-header {
+        background: #fff;
+        padding: 0;
+        border-bottom: 1px solid #e8e8e8;
+    }
+</style>
