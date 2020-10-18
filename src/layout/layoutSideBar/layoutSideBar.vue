@@ -11,7 +11,7 @@
                     class="menu-list"
             >
                 <template
-                        v-for="item in routes"
+                        v-for="(item , index) in routes"
                         v-if="!item.meta.hidden"
                 >
                     <a-menu-item

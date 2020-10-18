@@ -91,13 +91,15 @@
                                      class="custom-select-title-table">
                                 <!--购买单位-->
                                 <div slot="buyUnitList" slot-scope="scope,sItem,sIndex,extra">
-                                    <p v-for="item in sItem.buyUnitList"
+                                    <p v-for="(item,index) in sItem.buyUnitList"
+                                       :key="index"
                                        v-if="item.buyUnitId === sItem.buyUnitCheckId"
                                     >{{item.buyUnit}}</p>
                                 </div>
                                 <!--单价-->
                                 <div slot="price" slot-scope="scope,sItem,sIndex,extra">
-                                    <p v-for="item in sItem.buyUnitList"
+                                    <p v-for="(item , index) in sItem.buyUnitList"
+                                       :key="index"
                                        v-if="item.buyUnitId === sItem.buyUnitCheckId"
                                     >{{item.price}}</p>
                                 </div>
@@ -135,7 +137,8 @@
                                      slot-scope="scope,sItem,sIndex,extra"
                                      class="negative-margin-16"
                                 >
-                                    <div v-for="item in scope.list"
+                                    <div v-for="(item , index) in scope.list"
+                                         :key="index"
                                          class="negative-margin-item"
                                     >
                                         {{item.commodityName}}
@@ -146,7 +149,8 @@
                                      slot-scope="scope,sItem,sIndex,extra"
                                      class="negative-margin-16"
                                 >
-                                    <div v-for="item in scope.list"
+                                    <div v-for="(item , index) in scope.list"
+                                         :key="index"
                                          class="negative-margin-item is-input"
                                     >
                                         <a-space size="small">
@@ -171,6 +175,7 @@
                                      class="negative-margin-16"
                                 >
                                     <div v-for="(item,index) in scope.list"
+                                         :key="index"
                                          class="negative-margin-item"
                                     >
                                         <a-space size="small">
@@ -456,7 +461,7 @@
             selectCommodity(){
                 //  必须选择能量方案
                 if (!this.tableForm.energyId) {
-                    this.$message.error({ title: '请先选择能量' });
+                    this.$message.error('请先选择能量');
                     return;
                 }
                 this.showModal(DIALOG_TYPE.TEMPLATE_SELECT_COMMODITY);

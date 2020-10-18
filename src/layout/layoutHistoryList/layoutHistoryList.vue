@@ -1,6 +1,6 @@
 <template>
     <div class="history-list" v-show="!hiddenHistory" id="layoutHistory">
-        <template v-for="item in historyRouteList">
+        <template v-for="(item , index) in historyRouteList">
             <a-divider type="vertical"/>
             <router-link :to="{name:item.name}"
                          :class="item.highlight?'highlight':'nonactivated'"
