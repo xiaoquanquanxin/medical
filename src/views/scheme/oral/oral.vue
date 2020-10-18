@@ -31,13 +31,13 @@
                 搜索
             </a-button>
         </div>
-        <a-input-group class="a-input-group">
+        <div class="a-input-group">
             <router-link :to="{name:'addOral'}">
                 <a-button type="primary">
                     新增方案
                 </a-button>
             </router-link>
-        </a-input-group>
+        </div>
         <!--表格-->
         <a-table
                 :columns="columns"

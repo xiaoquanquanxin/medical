@@ -2,47 +2,35 @@
     <div class="layout-content-inner-main">
         <p>宣教管理</p>
         <!--搜索相关-->
-        <a-input-group class="a-input-group">
-            <a-row :gutter="8">
-                <a-col :span="5">
-                    <a-input default-value=""/>
-                </a-col>
-                <a-col :span="5">
-                    <a-select default-value="Option1" style="width:100%;">
-                        <a-select-option value="Option1">
-                            Option1
-                        </a-select-option>
-                        <a-select-option value="Option2">
-                            Option2
-                        </a-select-option>
-                    </a-select>
-                </a-col>
-                <a-col :span="5">
-                    <a-select default-value="Option1" style="width:100%;">
-                        <a-select-option value="Option1">
-                            Option1
-                        </a-select-option>
-                        <a-select-option value="Option2">
-                            Option2
-                        </a-select-option>
-                    </a-select>
-                </a-col>
-                <a-col :span="5">
-                    <a-button type="primary">
-                        搜索
-                    </a-button>
-                </a-col>
-            </a-row>
-        </a-input-group>
-        <a-input-group class="a-input-group">
-            <a-col :span="5">
-                <router-link :to="{name:'addMission'}">
-                    <a-button type="primary">
-                        新增宣教
-                    </a-button>
-                </router-link>
-            </a-col>
-        </a-input-group>
+        <div class="a-input-group">
+            <a-input/>
+            <a-select>
+                <a-select-option value="Option1">
+                    Option1
+                </a-select-option>
+                <a-select-option value="Option2">
+                    Option2
+                </a-select-option>
+            </a-select>
+            <a-select>
+                <a-select-option value="Option1">
+                    Option1
+                </a-select-option>
+                <a-select-option value="Option2">
+                    Option2
+                </a-select-option>
+            </a-select>
+            <a-button type="primary">
+                搜索
+            </a-button>
+        </div>
+        <div class="a-input-group">
+            <router-link :to="{name:'addMission'}">
+                <a-button type="primary">
+                    新增宣教
+                </a-button>
+            </router-link>
+        </div>
         <!--表格-->
         <a-table
                 :row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
@@ -114,7 +102,7 @@
             city: '上海',
             status: String(i % 2),
             icon: '医院图标',
-            
+
         });
     }
     export default {
@@ -122,7 +110,7 @@
             return {
                 data,
                 columns,
-                
+
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
                 scroll: towRowSearch,
                 //  分页信息
@@ -130,7 +118,7 @@
             };
         },
         methods: {
-            
+
             //  展示的每一页数据变换
             onShowSizeChange(current, pageSize){
                 console.log(current);

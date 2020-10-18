@@ -7,13 +7,13 @@
                 搜索
             </a-button>
         </div>
-        <a-input-group class="a-input-group">
+        <div class="a-input-group">
             <a-col :span="5">
                 <a-button type="primary" @click="addClassification">
                     新增分类
                 </a-button>
             </a-col>
-        </a-input-group>
+        </div>
         <!--表格-->
         <a-table
                 :columns="columns"

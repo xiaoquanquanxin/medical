@@ -24,7 +24,7 @@
                 搜索
             </a-button>
         </div>
-        <a-input-group class="a-input-group">
+        <div class="a-input-group">
             <a-col :span="4">
                 <router-link :to="{name:'addDoctor'}">
                     <a-button type="primary">
@@ -32,7 +32,7 @@
                     </a-button>
                 </router-link>
             </a-col>
-        </a-input-group>
+        </div>
         <!--表格-->
         <a-table
                 :columns="columns"

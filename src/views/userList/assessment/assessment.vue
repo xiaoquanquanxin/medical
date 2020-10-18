@@ -1,21 +1,17 @@
 <template>
     <div class="layout-content-inner-main">
         <!--搜索相关-->
-        <a-input-group class="a-input-group">
-            <a-space>
-                <div class="basic-input-width">
-                    <a-input v-model="searchData.commodityName" placeholder="请输入评估表名"/>
-                </div>
-                <a-button type="primary">
-                    搜索
-                </a-button>
-            </a-space>
-        </a-input-group>
-        <a-input-group class="a-input-group">
+        <div class="a-input-group">
+            <a-input class="basic-input-width" v-model="searchData.commodityName" placeholder="请输入评估表名"/>
+            <a-button type="primary">
+                搜索
+            </a-button>
+        </div>
+        <div class="a-input-group">
             <router-link :to="{name:'addAssessment',params:{patientInfoId}}">
                 <a-button type="primary">新增</a-button>
             </router-link>
-        </a-input-group>
+        </div>
         <!--表格-->
         <a-table
                 :columns="columns"

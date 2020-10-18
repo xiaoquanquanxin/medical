@@ -1,7 +1,7 @@
 <template>
     <div class="layout-content-inner-main">
         <!--搜索相关-->
-        <div class="a-input-group lengthen-search-group">
+        <div class="a-input-group">
             <a-select v-model="searchData.brand" class="lengthen-select-width" placeholder="请选择方案类型">
                 <a-select-option value="">品牌</a-select-option>
                 <a-select-option value="Option2">Option2</a-select-option>
