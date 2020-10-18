@@ -1,32 +1,31 @@
 /*基础选择框*/
 .basic-select-width,
 .basic-input-width {
-    width: 125px;
+    width: 125px!important;
 }
 
 /*加长 ，适合 7 个字*/
 .lengthen-input-width {
-    width: 140px;
+    width: 140px!important;
 }
 
 /*十个字*/
 .longer-input-width {
-    width: 160px;
+    width: 160px!important;
 }
 
 .lengthen-select-width {
-    width: 150px;
+    width: 150px!important;
 }
 
 /*加长 ，适合 7 个字*/
 .longer-select-width {
-    width: 160px;
+    width: 160px!important;
 }
-
 
 /*日期选择范围*/
 .basic-range-picker-width {
-    width: 240px;
+    width: 240px!important;
 }
 
 /*特殊的过长的行*/
@@ -35,7 +34,6 @@
     display: block;
     content: '';
 }
-
 
 /*按钮组的基础间距*/
 .a-input-group + .a-input-group {
