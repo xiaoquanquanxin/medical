@@ -16,8 +16,8 @@
                                v-model="sItem.buyUnitCheckId"
                                @change="radioGroupChange(sItem)"
                 >
-                    <a-radio :key="item"
-                             v-for="item in scope.buyUnitList"
+                    <a-radio :key="index"
+                             v-for="(item,index) in scope.buyUnitList"
                              :value="item.buyUnitId"
                              class="negative-margin-item"
                     >
@@ -27,7 +27,8 @@
             </div>
             <!--价格-->
             <div slot="price" slot-scope="scope,sItem,sIndex,extra" class="negative-margin-16">
-                <p v-for="item in scope.buyUnitList"
+                <p v-for="(item,index) in scope.buyUnitList"
+                   :key="index"
                    class="negative-margin-item"
                 >{{item.price}}</p>
             </div>

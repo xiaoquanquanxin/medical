@@ -4,7 +4,7 @@
                 v-model="transverseSubPaths"
                 mode="horizontal">
             <a-menu-item
-                    v-for="item in userRouteList"
+                    v-for="(item , index) in userRouteList"
                     :key="item.name"
                     @click="jumpTo(item)"
             >

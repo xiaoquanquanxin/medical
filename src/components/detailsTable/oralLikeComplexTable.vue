@@ -17,7 +17,7 @@
             <!--商品名称-->
             <div slot="commodityName" slot-scope="scope,sItem,sIndex,extra">
                 <div class="negative-margin-16">
-                    <div v-for="item in scope.childrenList"
+                    <div v-for="(item , index) in scope.childrenList"
                          class="negative-margin-item">
                         {{item.commodity}}
                     </div>
@@ -26,7 +26,7 @@
             <!--配置量-->
             <div slot="quality" slot-scope="scope,sItem,sIndex,extra">
                 <div class="negative-margin-16">
-                    <div v-for="item in scope.childrenList"
+                    <div v-for="(item , index) in scope.childrenList"
                          class="negative-margin-item">
                         {{item.quality}}
                     </div>
