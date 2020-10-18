@@ -12,7 +12,7 @@ import UserList from '@/views/userList/userList.vue';
  * openRouteKey			:	展开的菜单的key
  * hasTransverseSubPaths:	有页面内的横向子路由
  * isMenuItem			:	虽然有子项，但作为一个项存在，而不是一个菜单
- * historyRouteName		:	用于历史记录的激活，由于historyList拿参数麻烦，所以只保留不需要参数的name，用的少
+ * infoForHistory		:	用于历史记录的激活，[chName,name]
  * hiddenHistory		:	隐藏历史记录，仅保留返回按钮
  * hidden				:	隐藏
  *
@@ -307,6 +307,7 @@ export const asyncRoutesList = [
 					selectRouteKey: 'scheme',
 					//	是scheme路由的某一项子路由
 					transverseSubPaths: 'oral',
+					infoForHistory: ['处方模板管理', 'scheme'],
 					hidden: true,
 				},
 				name: 'oral',
@@ -319,6 +320,7 @@ export const asyncRoutesList = [
 					selectRouteKey: 'scheme',
 					//	是scheme路由的某一项子路由
 					transverseSubPaths: 'intestinal',
+					infoForHistory: ['处方模板管理', 'scheme'],
 					hidden: true,
 				},
 				name: 'intestinal',
@@ -331,6 +333,7 @@ export const asyncRoutesList = [
 					selectRouteKey: 'scheme',
 					//	是scheme路由的某一项子路由
 					transverseSubPaths: 'dietary',
+					infoForHistory: ['处方模板管理', 'scheme'],
 					hidden: true,
 				},
 				name: 'dietary',
@@ -717,7 +720,7 @@ export const asyncRoutesList = [
 					selectRouteKey: 'userList',
 					transverseSubPaths: 'patientInfo',
 					routerParamsKey: 'patientInfoId',
-					historyRouteName: 'userList',
+					infoForHistory: ['用户列表', 'userList'],
 				},
 				path: '/userList/patientInfo/:patientInfoId',
 				name: 'patientInfo',
@@ -729,7 +732,7 @@ export const asyncRoutesList = [
 					selectRouteKey: 'userList',
 					transverseSubPaths: 'screening',
 					routerParamsKey: 'patientInfoId',
-					historyRouteName: 'userList',
+					infoForHistory: ['用户列表', 'userList'],
 				},
 				path: '/userList/screening/:patientInfoId',
 				name: 'screening',
@@ -741,7 +744,7 @@ export const asyncRoutesList = [
 					selectRouteKey: 'userList',
 					transverseSubPaths: 'assessment',
 					routerParamsKey: 'patientInfoId',
-					historyRouteName: 'userList',
+					infoForHistory: ['用户列表', 'userList'],
 				},
 				path: '/userList/assessment/:patientInfoId',
 				name: 'assessment',
@@ -753,7 +756,7 @@ export const asyncRoutesList = [
 					selectRouteKey: 'userList',
 					transverseSubPaths: 'intervention',
 					routerParamsKey: 'patientInfoId',
-					historyRouteName: 'userList',
+					infoForHistory: ['用户列表', 'userList'],
 				},
 				path: '/userList/intervention/:patientInfoId',
 				name: 'intervention',
@@ -765,7 +768,7 @@ export const asyncRoutesList = [
 					selectRouteKey: 'userList',
 					transverseSubPaths: 'progressNote',
 					routerParamsKey: 'patientInfoId',
-					historyRouteName: 'userList',
+					infoForHistory: ['用户列表', 'userList'],
 				},
 				path: '/userList/progressNote/:patientInfoId',
 				name: 'progressNote',
@@ -777,7 +780,7 @@ export const asyncRoutesList = [
 					selectRouteKey: 'userList',
 					transverseSubPaths: 'patientReply',
 					routerParamsKey: 'patientInfoId',
-					historyRouteName: 'userList',
+					infoForHistory: ['用户列表', 'userList'],
 				},
 				path: '/userList/patientReply/:patientInfoId',
 				name: 'patientReply',
@@ -789,7 +792,7 @@ export const asyncRoutesList = [
 					selectRouteKey: 'userList',
 					transverseSubPaths: 'activityBrief',
 					routerParamsKey: 'patientInfoId',
-					historyRouteName: 'userList',
+					infoForHistory: ['用户列表', 'userList'],
 				},
 				path: '/userList/activityBrief/:patientInfoId',
 				name: 'activityBrief',
