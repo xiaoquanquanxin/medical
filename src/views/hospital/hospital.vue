@@ -1,50 +1,35 @@
 <template>
     <div class="layout-content-inner-main">
         <!--搜索相关-->
-        <a-input-group class="a-input-group">
-            <a-row :gutter="8">
-                <a-col :span="5">
-                    <a-input default-value="" placeholder="请输入医院名称"/>
-                </a-col>
-                <a-col :span="5">
-                    <a-select default-value="''" style="width:100%;">
-                        <a-select-option value="''">
-                            省市
-                        </a-select-option>
-                        <a-select-option value="Option1">
-                            Option1
-                        </a-select-option>
-                        <a-select-option value="Option2">
-                            Option2
-                        </a-select-option>
-                    </a-select>
-                </a-col>
-                <a-col :span="5">
-                    <a-select default-value="1" style="width:100%;">
-                        <a-select-option value="1">
-                            正常
-                        </a-select-option>
-                        <a-select-option value="0">
-                            关闭
-                        </a-select-option>
-                    </a-select>
-                </a-col>
-                <a-col :span="5">
-                    <a-button type="primary">
-                        搜索
-                    </a-button>
-                </a-col>
-            </a-row>
-        </a-input-group>
-        <a-input-group class="a-input-group">
-            <a-col :span="5">
-                <router-link :to="{name:'addHospital'}">
-                    <a-button type="primary">
-                        新增医院
-                    </a-button>
-                </router-link>
-            </a-col>
-        </a-input-group>
+        <div class="a-input-group">
+            <a-input class="lengthen-input-width" v-model="searchData.hospital" placeholder="请输入医院名称"/>
+            <a-select class="basic-select-width" v-model="searchData.province" placeholder="请选择省份">
+                <a-select-option value="Option1">
+                    Option1
+                </a-select-option>
+                <a-select-option value="Option2">
+                    Option2
+                </a-select-option>
+            </a-select>
+            <a-select class="basic-select-width" v-model="searchData.status" placeholder="请选择状态">
+                <a-select-option value="Option2">
+                    Option2
+                </a-select-option>
+                <a-select-option value="323">
+                    122112
+                </a-select-option>
+            </a-select>
+            <a-button type="primary">
+                搜索
+            </a-button>
+        </div>
+        <div class="a-input-group">
+            <router-link :to="{name:'addHospital'}">
+                <a-button type="primary">
+                    新增医院
+                </a-button>
+            </router-link>
+        </div>
         <!--表格-->
         <a-table
                 :columns="columns"
@@ -174,6 +159,9 @@
         },
         data(){
             return {
+                //  搜索相关
+                searchData: {},
+
                 data,
                 columns,
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高

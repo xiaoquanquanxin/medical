@@ -32,7 +32,7 @@
                 let { name, meta } = this.$route;
                 let { chName, hiddenHistory, historyRouteName } = meta;
                 name = historyRouteName || name;
-                console.log(name, chName, hiddenHistory);
+                //  console.log(name, chName, hiddenHistory);
                 this.hiddenHistory = hiddenHistory;
                 //  如果隐藏历史记录，就不应该被记录
                 if (hiddenHistory) {
