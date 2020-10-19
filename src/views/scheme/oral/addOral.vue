@@ -15,7 +15,7 @@
                             女
                         </a-select-option>
                     </a-select>
-                    <a-select class="basic-range-picker-width" placeholder="请选择膳选择处方类型">
+                    <a-select class="lengthen-select-width" placeholder="请选择处方类型">
                         <a-select-option value="1">
                             男
                         </a-select-option>
@@ -252,7 +252,7 @@
         computed: {
             //  商品源的数据
             originCommodityList(){
-                return JSON.parse(JSON.stringify(this.$store.state.prescriptionTemplate.originCommodityList));
+                return this.$store.state.prescriptionTemplate.originCommodityList;
             },
             //  备注
             remark(){
@@ -362,6 +362,8 @@
             ...mapActions('prescriptionTemplate', [
                 //  处方模板，选择的能量，请求选择商品的源数据
                 'setOriginCommodityList',
+                //  设置remark的行数
+                'setRowForRemark',
             ]),
 
             //  切换能量
@@ -386,61 +388,57 @@
                                     buyUnitId: 2,
                                 }
                             ],
-                            //  被选中的购买单位的id
-                            //  buyUnitCheckId: null,
                         },
+                        //  ⚠️别删
+//                        {
+//                            commodityName: '小斯',
+//                            key: 2,
+//                            buyUnitList: [
+//                                {
+//                                    buyUnit: '333克',
+//                                    price: 333,
+//                                    buyUnitId: 3,
+//                                    //  用于组织 buyUnitCheckId
+//                                    isRadioChecked: true,
+//                                },
+//                                {
+//                                    buyUnit: '55克',
+//                                    price: 55,
+//                                    buyUnitId: 4,
+//                                }
+//                            ],
+//                            //  被选中的购买单位的id
+//                            buyUnitCheckId: 1,
+//                            //  多选的勾选状态
+//                            isCheckboxChecked: true,
+//                        },
                         {
-                            commodityName: '小斯',
-                            key: 2,
-                            buyUnitList: [
-                                {
-                                    buyUnit: '333克',
-                                    price: 333,
-                                    buyUnitId: 1,
-                                    //  用于组织 buyUnitCheckId
-                                    isRadioChecked: true,
-                                },
-                                {
-                                    buyUnit: '55克',
-                                    price: 55,
-                                    buyUnitId: 2,
-                                }
-                            ],
-                            //  被选中的购买单位的id
-                            buyUnitCheckId: 1,
-                            //  多选的勾选状态
-                            isCheckboxChecked: true,
-                        },
-                        {
-                            commodityName: '小斯',
+                            commodityName: '大斯',
                             key: 3,
                             buyUnitList: [
                                 {
                                     buyUnit: '666克',
                                     price: 66,
-                                    buyUnitId: 1,
-                                    //  用于组织 buyUnitCheckId
-                                    isRadioChecked: true,
+                                    buyUnitId: 6,
                                 },
                                 {
                                     buyUnit: '777克',
                                     price: 77,
-                                    buyUnitId: 2,
+                                    buyUnitId: 7,
                                 },
                                 {
                                     buyUnit: '88克',
                                     price: 8,
-                                    buyUnitId: 3,
+                                    buyUnitId: 8,
                                 }
                             ],
-                            //  被选中的购买单位的id
-                            buyUnitCheckId: null,
-                            //  多选的勾选状态
-                            isCheckboxChecked: false,
                         },
                     ];
                     this.setOriginCommodityList(originCommodityList);
                 });
+                //  重置数据
+                this.commodityTableData = [];
+                this.timeTableData = [];
             },
 
             //  选择商品
@@ -460,6 +458,8 @@
                     console.log('源数据', JSON.stringify(this.originCommodityList));
                     //  只展示被选中的
                     this.commodityTableData = this.originCommodityList.filter(item => item.isCheckboxChecked);
+                    //  重置时间表格数据
+                    this.timeTableData = [];
                 }).catch(error => {
                     console.log(error);
                     console.log('有错');
@@ -494,7 +494,6 @@
                 const list = commodityTableData.map(item => {
                     const child = item.buyUnitList.filter((_item) => {
                         //  console.log(_item.isRadioChecked);
-                        //  todo    有bug，是直接选择多选导致的
                         return _item.isRadioChecked;
                     });
                     //  console.log(child);
@@ -516,24 +515,74 @@
                 this.timeTableData.push(data);
                 //  关闭时间选择
                 this.hideModal(DIALOG_TYPE.TEMPLATE_SELECT_TIME);
+                this.rowCount();
             },
 
-            //  删除类型表格的一行
+            //  删除选择商品表格的一行
             deleteTypeTable(sItem, sIndex){
+                //  console.log(JSON.parse(JSON.stringify(sItem)));
+                //  内部的id，单选id
+                const { buyUnitCheckId } = sItem;
+                //  洗主数据
+                delete sItem.buyUnitCheckId;
+                delete sItem.isCheckboxChecked;
+                sItem.buyUnitList.forEach((item => {
+                    if (item.isRadioChecked) {
+                        delete item.isRadioChecked;
+                    }
+                }));
+                //  清洗时间表格数据，只删除一行
+                this.timeTableData.forEach(item => {
+                    //  console.log(JSON.parse(JSON.stringify(item.list)));
+                    for (let i = 0; i < item.list.length; i++) {
+                        //  要被删除的商品类型
+                        if (item.list[i].buyUnitId === buyUnitCheckId) {
+                            item.list.splice(i, 1);
+                            break;
+                        }
+                    }
+                });
+                this.clearTimeTableData();
+                //  清除选择商品表格的该行，只删除一行
                 this.commodityTableData.splice(sIndex, 1);
+                //  这里要存store
+                this.setOriginCommodityList(this.originCommodityList);
+                //  console.table(JSON.parse(JSON.stringify(this.originCommodityList)));
             },
-            //  删除数据表格的一行
-            deleteTimeTable(scope, index, sItem, sIndex){
-                //  console.log(scope, index, sItem, sIndex);
-
-                //  操作的是 timeTableData
+            //  删除时间表格的一行
+            deleteTimeTable(scope, index){
+                //  操作的是 timeTableData，只删除一行
                 scope.list.splice(index, 1);
                 //  如果删除了某个时间下的所有数据，需要删除这一行
-                console.log(scope);
-                console.log(this.timeTableData);
-                console.log(JSON.parse(JSON.stringify(this.timeTableData)));
+                if (!scope.list.length) {
+                    this.clearTimeTableData();
+                }
             },
-
+            //  清洗时间表格数据
+            clearTimeTableData(){
+                for (let i = 0; i < this.timeTableData.length; i++) {
+                    const item = this.timeTableData[i];
+                    //  在时间列表里删除这个项，这是被删除完了
+                    if (!item.list.length) {
+                        this.timeTableData.splice(i, 1);
+                        //  ⚠️可能删除多行
+                        i--;
+                    }
+                }
+                console.table(JSON.parse(JSON.stringify(this.timeTableData)));
+                //  计算时间框的总行数
+                this.rowCount();
+            },
+            //  计算时间框的总行数
+            rowCount(){
+                if (!this.timeTableData || !this.timeTableData.length) {
+                    return 0;
+                }
+                const rowCount = this.timeTableData.reduce((a, b) => {
+                    return a + b.list.length;
+                }, 0);
+                this.setRowForRemark(rowCount);
+            },
             //  表单提交 保存
             handleSubmit(e){
                 e.preventDefault();
@@ -543,14 +592,22 @@
             },
         }
     };
-
-    //  todo    删除时间的某一类之后，删除全部的这个类型的数据，前端有风险
-    //  todo    同理，删除商品的某一类后，要删除全部这个时间的数据
 </script>
 <style scoped>
+    .layout-content-inner-main {
+        min-width: 900px;
+    }
+    
     .col-right {
         border-left: 1px solid #e8e8e8;
     }
+    
+    /*表组*/
+    .table-group {
+        border: 1px solid #e8e8e8;
+        border-bottom: none;
+    }
+    
     
     .table-group-row {
         border-bottom: 1px solid #e8e8e8;
