@@ -1,0 +1,20 @@
+/*自定义flex，ui太垃圾*/
+.custom-flex {
+    display: flex;
+    justify-content: space-between;
+}
+
+/*左侧一般是200px*/
+.custom-flex-left {
+    width: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #e8e8e8;
+    border-right: none;
+}
+
+/*右侧flex*/
+.custom-flex-right {
+    flex: 1;
+}
