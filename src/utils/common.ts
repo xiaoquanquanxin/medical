@@ -3,6 +3,7 @@ export function preventDefault(e: Event) {
 	e.preventDefault();
 }
 
+// 设置storage
 export function getStorage(key: string) {
 	return localStorage.getItem(key);
 }
