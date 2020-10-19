@@ -1,14 +1,20 @@
-const TokenKey = 'Admin-Token';
+import {getStorage, setStorage} from "@/utils/common"
+
+const TOKEN = 'TOKEN'
+const USER_INFO = 'USER_INFO'
 
 export function getToken() {
-	return sessionStorage.getItem(TokenKey);
+	getStorage('TOKEN')
 }
 
-export function setToken(token: string) {
-	console.log('设置token：', TokenKey, token);
-	return sessionStorage.setItem(TokenKey, token);
+export function setToken(token: any) {
+	setStorage(TOKEN, token)
 }
 
-export function removeToken() {
-	sessionStorage.removeItem(TokenKey);
+export function getUserInfo() {
+	getStorage(USER_INFO)
+}
+
+export function setUserInfo(userInfo: any) {
+	setStorage(USER_INFO, userInfo)
 }
