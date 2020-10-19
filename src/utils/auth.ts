@@ -12,7 +12,7 @@ export function setJwt(token: string) {
 }
 
 export function getLoginInfo(): string {
-	return getStorage(USER_INFO) || '';
+	return getStorage(USER_INFO) || '{}';
 }
 
 export function setLoginInfo(loginInfo: string) {
