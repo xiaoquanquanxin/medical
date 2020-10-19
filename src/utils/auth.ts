@@ -3,18 +3,18 @@ import {getStorage, setStorage} from "@/utils/common"
 const TOKEN = 'TOKEN'
 const USER_INFO = 'USER_INFO'
 
-export function getToken() {
-	getStorage('TOKEN')
+export function getJwt(): string {
+	return getStorage('TOKEN') || '';
 }
 
-export function setToken(token: any) {
+export function setJwt(token: string) {
 	setStorage(TOKEN, token)
 }
 
-export function getUserInfo() {
-	getStorage(USER_INFO)
+export function getLoginInfo(): string {
+	return getStorage(USER_INFO) || '';
 }
 
-export function setUserInfo(userInfo: any) {
-	setStorage(USER_INFO, userInfo)
+export function setLoginInfo(loginInfo: string) {
+	setStorage(USER_INFO, JSON.stringify(loginInfo))
 }

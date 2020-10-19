@@ -1,6 +1,6 @@
 import axios from 'axios';
-import store from '@/store';
-import {getToken} from '@/utils/auth';
+import {getJwt} from '@/utils/auth';
+
 
 // create an axios instance
 const service = axios.create({
@@ -14,7 +14,7 @@ const service = axios.create({
 //	拦截器
 service.interceptors.request.use(
 	config => {
-		//	config.headers['X-Token'] = getToken();
+		//	config.headers['X-Token'] = getJwt();
 		config.headers['X-Channel-Key'] = '941b0f2142efe18c';
 		return config;
 	},

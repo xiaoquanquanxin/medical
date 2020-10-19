@@ -8,7 +8,7 @@ export function getStorage(key: string) {
 }
 
 export function setStorage(key: string, value: any) {
-	console.log('设置token：', key, value);
+	//	console.log('设置token：', key, value);
 	return localStorage.setItem(key, value);
 }
 
