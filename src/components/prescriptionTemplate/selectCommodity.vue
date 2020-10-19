@@ -132,13 +132,13 @@
             },
             //  完成选择
             handleSubmit(){
-                if (!this.selectedRowKeys.length) {
-                    this.$message.error('请先选择商品');
-                    return;
-                }
                 //  console.log('源数据', this.originCommodityList);
                 //  console.log('别选择的多选', this.selectedRowKeys);
                 return new Promise(((resolve, reject) => {
+                    if (!this.selectedRowKeys.length) {
+                        this.$message.error('请先选择商品');
+                        reject();
+                    }
                     //  ⚠️这时候我能不能直接改源数据？能，因为在外面的操作可以直接修改源数据
                     //  删除是操作的selectList，【删除】按钮删除的是选中的状态
                     this.setOriginCommodityList(this.originCommodityList);
