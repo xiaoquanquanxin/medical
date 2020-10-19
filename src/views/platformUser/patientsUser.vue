@@ -140,7 +140,7 @@
         },
     ];
     const data = [];
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 20; i++) {
         data.push({
             key: i,
             department: `xx科室`,
@@ -170,22 +170,15 @@
             };
         },
         methods: {
-            //  主要请求
-            searchFn(){
-
-            },
             //  莫泰框方法
             ...dialogMethods,
             //  编辑用userId
             ...mapActions('patientsUser', [
                 'setPatientsUserId',
             ]),
-            //  搜索
+            //  主要请求
             searchFn(){
-                console.log(this.name);
-                console.log(this.doctor);
-                console.log(this.hospital);
-                console.log(this.department);
+
             },
             //  展示的每一页数据变换
             onShowSizeChange(current, pageSize){
