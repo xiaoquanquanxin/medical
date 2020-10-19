@@ -16,6 +16,6 @@ export function removeStorage(key: string) {
 	localStorage.removeItem(key);
 }
 
-export function clearStorage(key: string) {
+export function clearStorage() {
 	localStorage.clear();
 }
