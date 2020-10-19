@@ -1,198 +1,181 @@
 <template>
     <div class="layout-content-inner-main">
         <!--返回按钮-->
-        <GoBackButton/>
-        <a-divider orientation="left">基础信息</a-divider>
-        <a-form class="form"
-                :form="form"
-                v-bind="formItemLayout"
-                @submit="handleSubmit"
-                autocomplete="off"
-        >
-            <a-form-item label="医院">
+        <div class="a-input-group">
+            <GoBackButton/>
+        </div>
+        <div class="a-input-group">
+            <a-row type="flex" justify="space-between" align="middle">
+                <a-space>
+                    <a-select class="basic-select-width" placeholder="请选择医院">
+                        <a-select-option value="1">
+                            男
+                        </a-select-option>
+                        <a-select-option value="2">
+                            女
+                        </a-select-option>
+                    </a-select>
+                    <a-select class="basic-range-picker-width" placeholder="请选择膳选择处方类型">
+                        <a-select-option value="1">
+                            男
+                        </a-select-option>
+                        <a-select-option value="2">
+                            女
+                        </a-select-option>
+                    </a-select>
+                </a-space>
+                <a-button type="primary" @click>保存</a-button>
+            </a-row>
+        </div>
+        <div class="a-input-group" data-msg="空"></div>
+        <div class="table-group">
+            <!--表头-->
+            <a-row type="flex" justify="space-between" align="middle" class="table-group-title">
+                <a-space>
+                    <span>肠内营养支持</span>
+                    <a-select
+                            class="basic-select-width"
+                            v-model="tableForm.energyId"
+                            placeholder="请选择能量"
+                            @change="selectEnergyChange"
+                    >
+                        <a-select-option value="1600">1600</a-select-option>
+                        <a-select-option value="1400">1400</a-select-option>
+                        <a-select-option value="1200">1200</a-select-option>
+                        <a-select-option value="1000">1000</a-select-option>
+                        <a-select-option value="800">800</a-select-option>
+                        <a-select-option value="600">600</a-select-option>
+                        <a-select-option value="400">400</a-select-option>
+                        <a-select-option value="200">200</a-select-option>
+                    </a-select>
+                </a-space>
                 <a-select
-                        class="basic-range-picker-width"
-                        placeholder="请选择医院"
-                        v-decorator="hospitalDecorator"
+                        class="lengthen-select-width"
+                        v-model="tableForm.eatingMethod"
+                        placeholder="请选择食用方法"
                 >
-                    <a-select-option value="1">
-                        男
+                    <a-select-option value="Option1">
+                        Option1
                     </a-select-option>
-                    <a-select-option value="2">
-                        女
+                    <a-select-option value="Option2">
+                        Option2
                     </a-select-option>
                 </a-select>
-            </a-form-item>
-            <a-form-item label="膳选择处方类型">
-                <a-select
-                        class="basic-range-picker-width"
-                        placeholder="请选择膳选择处方类型"
-                        v-decorator="prescriptionTypeDecorator"
-                >
-                    <a-select-option value="1">
-                        男
-                    </a-select-option>
-                    <a-select-option value="2">
-                        女
-                    </a-select-option>
-                </a-select>
-            </a-form-item>
-            <a-form-item label="肠内营养支持">
-                <div class="table-group">
-                    <!--表头-->
-                    <a-row type="flex" justify="space-between" align="middle" class="table-group-title">
-                        <a-space>
-                            <span>肠内营养支持</span>
-                            <a-select
-                                    class="basic-select-width"
-                                    v-model="tableForm.energyId"
-                                    placeholder="请选择能量"
-                                    @change="selectEnergyChange"
-                            >
-                                <a-select-option value="1600">1600</a-select-option>
-                                <a-select-option value="1400">1400</a-select-option>
-                                <a-select-option value="1200">1200</a-select-option>
-                                <a-select-option value="1000">1000</a-select-option>
-                                <a-select-option value="800">800</a-select-option>
-                                <a-select-option value="600">600</a-select-option>
-                                <a-select-option value="400">400</a-select-option>
-                                <a-select-option value="200">200</a-select-option>
-                            </a-select>
+            </a-row>
+            <!--选择商品表格-->
+            <a-row type="flex" justify="space-between" align="middle" class="table-group-row">
+                <a-col :span="3">
+                    <a-row type="flex" justify="center" align="middle">
+                        <a-space size="small">
+                            <a @click="selectCommodity()">选择商品</a>
                         </a-space>
-                        <a-select
-                                class="lengthen-select-width"
-                                v-model="tableForm.eatingMethod"
-                                placeholder="请选择食用方法"
+                    </a-row>
+                </a-col>
+                <a-col :span="21" class="col-right">
+                    <a-table :columns="commodityTableColumns"
+                             :data-source="commodityTableData"
+                             :pagination="false"
+                             bordered
+                             class="custom-select-title-table">
+                        <!--购买单位-->
+                        <div slot="buyUnitList" slot-scope="scope,sItem,sIndex,extra">
+                            <p v-for="(item,index) in sItem.buyUnitList"
+                               :key="index"
+                               v-if="item.buyUnitId === sItem.buyUnitCheckId"
+                            >{{item.buyUnit}}</p>
+                        </div>
+                        <!--单价-->
+                        <div slot="price" slot-scope="scope,sItem,sIndex,extra">
+                            <p v-for="(item , index) in sItem.buyUnitList"
+                               :key="index"
+                               v-if="item.buyUnitId === sItem.buyUnitCheckId"
+                            >{{item.price}}</p>
+                        </div>
+                        <!--数量-->
+                        <div slot="number" slot-scope="scope,sItem,sIndex,extra">
+                            <a-input v-model="sItem.number" placeholder="请输入数量"/>
+                        </div>
+                        <!--操作-->
+                        <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
+                            <a-space size="small">
+                                <a @click="deleteTypeTable(sItem,sIndex)">删除</a>
+                            </a-space>
+                        </div>
+                    </a-table>
+                </a-col>
+            </a-row>
+            <!--选择时间表格-->
+            <a-row type="flex" justify="space-between" align="middle" class="table-group-row">
+                <a-col :span="3">
+                    <a-row type="flex" justify="center" align="middle">
+                        <a-space size="small">
+                            <a @click="chooseTime()">选择时间</a>
+                        </a-space>
+                    </a-row>
+                </a-col>
+                <a-col :span="21" class="col-right">
+                    <a-table
+                            :columns="timeTableColumns"
+                            :data-source="timeTableData"
+                            :pagination="false"
+                            bordered
+                            class="custom-select-title-table">
+                        <!--商品名称-->
+                        <div slot="commodityName"
+                             slot-scope="scope,sItem,sIndex,extra"
+                             class="negative-margin-16"
                         >
-                            <a-select-option value="Option1">
-                                Option1
-                            </a-select-option>
-                            <a-select-option value="Option2">
-                                Option2
-                            </a-select-option>
-                        </a-select>
-                    </a-row>
-                    <!--选择商品表格-->
-                    <a-row type="flex" justify="space-between" align="middle" class="table-group-row">
-                        <a-col :span="3">
-                            <a-row type="flex" justify="center" align="middle">
+                            {{scope}}
+                            <div v-for="(item , index) in scope.list"
+                                 :key="index"
+                                 class="negative-margin-item"
+                            >
+                                {{item.commodityName}}
+                            </div>
+                        </div>
+                        <!--使用量-->
+                        <div slot="dosage"
+                             slot-scope="scope,sItem,sIndex,extra"
+                             class="negative-margin-16"
+                        >
+                            <div v-for="(item , index) in scope.list"
+                                 :key="index"
+                                 class="negative-margin-item is-input"
+                            >
                                 <a-space size="small">
-                                    <a @click="selectCommodity()">选择商品</a>
+                                    <a-input placeholder="请输入使用量" v-model="item.dosage"/>
+                                    {{item.unit}}
                                 </a-space>
-                            </a-row>
-                        </a-col>
-                        <a-col :span="21" class="col-right">
-                            <a-table :columns="commodityTableColumns"
-                                     :data-source="commodityTableData"
-                                     :pagination="false"
-                                     bordered
-                                     class="custom-select-title-table">
-                                <!--购买单位-->
-                                <div slot="buyUnitList" slot-scope="scope,sItem,sIndex,extra">
-                                    <p v-for="(item,index) in sItem.buyUnitList"
-                                       :key="index"
-                                       v-if="item.buyUnitId === sItem.buyUnitCheckId"
-                                    >{{item.buyUnit}}</p>
-                                </div>
-                                <!--单价-->
-                                <div slot="price" slot-scope="scope,sItem,sIndex,extra">
-                                    <p v-for="(item , index) in sItem.buyUnitList"
-                                       :key="index"
-                                       v-if="item.buyUnitId === sItem.buyUnitCheckId"
-                                    >{{item.price}}</p>
-                                </div>
-                                <!--数量-->
-                                <div slot="number" slot-scope="scope,sItem,sIndex,extra">
-                                    <a-input v-model="sItem.number" placeholder="请输入数量"/>
-                                </div>
-                                <!--操作-->
-                                <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
-                                    <a-space size="small">
-                                        <a @click="deleteTypeTable(sItem,sIndex)">删除</a>
-                                    </a-space>
-                                </div>
-                            </a-table>
-                        </a-col>
-                    </a-row>
-                    <!--选择时间表格-->
-                    <a-row type="flex" justify="space-between" align="middle" class="table-group-row">
-                        <a-col :span="3">
-                            <a-row type="flex" justify="center" align="middle">
+                            </div>
+                        </div>
+                        <!--温水-->
+                        <div slot="warmWater"
+                             slot-scope="scope,sItem,sIndex,extra"
+                             class="negative-margin-16"
+                        >
+                            <div class="negative-margin-item is-input">
                                 <a-space size="small">
-                                    <a @click="chooseTime()">选择时间</a>
+                                    <a-input placeholder="请输入温水" v-model="scope.warmWater"/>
                                 </a-space>
-                            </a-row>
-                        </a-col>
-                        <a-col :span="21" class="col-right">
-                            <a-table
-                                    :columns="timeTableColumns"
-                                    :data-source="timeTableData"
-                                    :pagination="false"
-                                    bordered
-                                    class="custom-select-title-table">
-                                <!--商品名称-->
-                                <div slot="commodityName"
-                                     slot-scope="scope,sItem,sIndex,extra"
-                                     class="negative-margin-16"
-                                >
-                                    <div v-for="(item , index) in scope.list"
-                                         :key="index"
-                                         class="negative-margin-item"
-                                    >
-                                        {{item.commodityName}}
-                                    </div>
-                                </div>
-                                <!--使用量-->
-                                <div slot="dosage"
-                                     slot-scope="scope,sItem,sIndex,extra"
-                                     class="negative-margin-16"
-                                >
-                                    <div v-for="(item , index) in scope.list"
-                                         :key="index"
-                                         class="negative-margin-item is-input"
-                                    >
-                                        <a-space size="small">
-                                            <a-input placeholder="请输入使用量" v-model="item.dosage"/>
-                                            {{item.unit}}
-                                        </a-space>
-                                    </div>
-                                </div>
-                                <!--温水-->
-                                <div slot="warmWater"
-                                     slot-scope="scope,sItem,sIndex,extra"
-                                     class="negative-margin-16"
-                                >
-                                    <div class="negative-margin-item is-input">
-                                        <a-space size="small">
-                                            <a-input placeholder="请输入温水" v-model="scope.warmWater"/>
-                                        </a-space>
-                                    </div>
-                                </div>
-                                <!--操作-->
-                                <div slot="operation" slot-scope="scope,sItem,sIndex,extra"
-                                     class="negative-margin-16"
-                                >
-                                    <div v-for="(item,index) in scope.list"
-                                         :key="index"
-                                         class="negative-margin-item"
-                                    >
-                                        <a-space size="small">
-                                            <a @click="deleteTimeTable(scope,index,sItem,sIndex)">删除</a>
-                                        </a-space>
-                                    </div>
-                                </div>
-                            </a-table>
-                        </a-col>
-                    </a-row>
-                </div>
-            </a-form-item>
-            <!--保存-->
-            <a-form-item :wrapper-col="{ span: 4, offset: 5 }">
-                <a-button type="primary" html-type="submit">
-                    保存
-                </a-button>
-            </a-form-item>
-        </a-form>
+                            </div>
+                        </div>
+                        <!--操作-->
+                        <div slot="operation" slot-scope="scope,sItem,sIndex,extra"
+                             class="negative-margin-16"
+                        >
+                            <div v-for="(item,index) in scope.list"
+                                 :key="index"
+                                 class="negative-margin-item"
+                            >
+                                <a-space size="small">
+                                    <a @click="deleteTimeTable(scope,index,sItem,sIndex)">删除</a>
+                                </a-space>
+                            </div>
+                        </div>
+                    </a-table>
+                </a-col>
+            </a-row>
+        </div>
         <!--查看价格莫泰框-->
         <a-modal v-model="dialogDataSelectCommodity.visible"
                  v-if="dialogDataSelectCommodity.visible"
@@ -228,7 +211,6 @@
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
     import { mapGetters, mapActions } from 'vuex';
     import SelectCommodity from '@/components/prescriptionTemplate/selectCommodity.vue';
-    import { formItemLayout } from '@/utils/layout.ts';
     import GoBackButton from '@/components/goBackButton.vue';
     import TemplateRemarkInput from '@/components/prescriptionTemplate/templateRemarkInput';
 
@@ -265,9 +247,6 @@
     ];
 
     export default {
-        beforeCreate(){
-            this.form = this.$form.createForm(this);
-        },
         components: {
             GoBackButton,
             SelectCommodity,
@@ -341,8 +320,6 @@
                 dialogDataSelectCommodity: this.initModal(DIALOG_TYPE.TEMPLATE_SELECT_COMMODITY),
                 //  处方模板管理 - 增加口服肠内补充方案 - 选择时间
                 dialogDataSelectTime: this.initModal(DIALOG_TYPE.TEMPLATE_SELECT_TIME),
-
-                formItemLayout,
 
                 //  请选择医院
                 hospitalDecorator: ['hospital', {
@@ -500,15 +477,19 @@
 
             //  确定选择的时间
             selectTimeModalCheck(){
-                console.log(this.selectTimeValue);
-                console.log(this.commodityTableData);
+                console.clear();
+                const commodityTableData = JSON.parse(JSON.stringify(this.commodityTableData));
                 //  子列表数据
-                const list = this.commodityTableData.map(item => {
+                const list = commodityTableData.map(item => {
+                    console.log(item);
+                    debugger
                     const child = item.buyUnitList.filter((_item) => {
+                        debugger
                         console.log(_item.isRadioChecked);
                         //  todo    有bug，是直接选择多选导致的
                         return _item.isRadioChecked;
                     });
+                    console.log(child);
                     return JSON.parse(JSON.stringify(child[0]));
                 });
                 console.log(JSON.parse(JSON.stringify(list)));
@@ -550,10 +531,6 @@
                 console.log(this.commodityTableData);
                 console.log('备注🍌', this.remark);
                 console.log(this.timeTableData);
-                this.form.validateFields((err, values) => {
-                    console.table(values);
-                    console.log(!err);
-                });
             },
         }
     };
