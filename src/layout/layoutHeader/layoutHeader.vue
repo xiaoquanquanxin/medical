@@ -17,7 +17,7 @@
                                 许晓飞
                                 <a-icon type="down"/>
                             </a>
-                            <a-menu slot="overlay" @click="onClick">
+                            <a-menu slot="overlay" @click="logoutFn">
                                 <a-menu-item key="1">
                                     退出登录
                                 </a-menu-item>
@@ -38,6 +38,7 @@
 </template>
 <script lang="ts">
 	import {Vue, Component} from 'vue-property-decorator';
+	import {clearStorage} from '@/utils/common';
 
 	@Component({})
 	export default class LayoutHeader extends Vue {
@@ -50,13 +51,9 @@
 			this.$store.dispatch('sidebar/setCollapsed', collapsed);
 		}
 
-		constructor() {
-			super();
-		}
-
-
-		onClick({key}: { key: string }) {
-			this.$router.push({name: 'login'})
+		logoutFn() {
+			clearStorage();
+			window.location.reload();
 		}
 	}
 </script>
