@@ -14,9 +14,8 @@ const service = axios.create({
 //	拦截器
 service.interceptors.request.use(
 	config => {
-		if (store.getters.token) {
-			config.headers['X-Token'] = getToken();
-		}
+		//	config.headers['X-Token'] = getToken();
+		config.headers['X-Channel-Key'] = '941b0f2142efe18c';
 		return config;
 	},
 	error => {
@@ -31,16 +30,10 @@ service.interceptors.response.use(
 	(response: any) => {
 		const res = response.data;
 		// if the custom code is not 20000, it is judged as an error.
-		if (res.code !== 20000) {
-			// 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
-			if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
-				// to re-login
-				//	弹框
-			}
-			return Promise.reject(new Error(res.message || 'Error'));
-		} else {
+		if (res.code === 1000) {
 			return res;
 		}
+		return Promise.reject(new Error(res.message || 'Error'));
 	},
 	(error: Error) => {
 		console.log('err' + error); // for debug
