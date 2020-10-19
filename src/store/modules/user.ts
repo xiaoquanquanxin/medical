@@ -40,13 +40,14 @@ const mutations = {
 const actions = {
 	// 用户登录
 	login({commit, state}: COMMIT_INTERFACE<STATE>, userInfo: any) {
-		const {username, password} = userInfo;
+		//	const {username, password} = userInfo;
 		return new Promise((resolve, reject) => {
-			login({username: username.trim(), password: password}).then(response => {
+			login({
+				username: "sysadmin@hachismart.org",
+				password: "sysadmin",
+			}).then(response => {
 				const {data} = response;
-				commit('SET_TOKEN', data.token);
-				setToken(data.token);
-				resolve();
+				resolve(data);
 			}).catch((error: Error) => {
 				reject(error);
 			});
