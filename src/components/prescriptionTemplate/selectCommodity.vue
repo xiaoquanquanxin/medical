@@ -12,7 +12,7 @@
             <div slot="buyUnit"
                  slot-scope="scope,sItem,sIndex,extra"
                  class="negative-margin-16">
-                <a-radio-group block
+                <a-radio-group style="width: 100%;"
                                v-model="sItem.buyUnitCheckId"
                                @change="radioGroupChange(sItem)"
                 >
@@ -88,9 +88,9 @@
                 //  商品源的数据
                 'setOriginCommodityList',
             ]),
-            //  选中表格数据
+            //  多选
             onSelectChange(selectedRowKeys){
-                //  console.log('selectedRowKeys changed: ', selectedRowKeys);
+                console.log('执行多选');
                 this.selectedRowKeys = selectedRowKeys;
                 const map = {};
                 selectedRowKeys.forEach(item => {
@@ -109,6 +109,7 @@
                         //  得设置默认值，如果没有的话
                         if (!item.buyUnitCheckId) {
                             item.buyUnitCheckId = item.buyUnitList[0].buyUnitId;
+                            item.buyUnitList[0].isRadioChecked = true;
                         }
                         //  补充多选的勾选状态
                         item.isCheckboxChecked = true;
@@ -133,6 +134,7 @@
             handleSubmit(){
                 if (!this.selectedRowKeys.length) {
                     this.$message.error('请先选择商品');
+                    return;
                 }
                 //  console.log('源数据', this.originCommodityList);
                 //  console.log('别选择的多选', this.selectedRowKeys);
