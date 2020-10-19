@@ -1,5 +1,5 @@
 <template>
-    <a-layout-sider v-model="collapsed" :trigger="null" collapsible="" class="slider">
+    <a-layout-sider v-model="collapsed" :trigger="null" class="slider">
         <div class="logo"></div>
         <div class="menu-wrapper">
             <a-menu v-if="(currentMeta)"
@@ -44,7 +44,6 @@
         </div>
     </a-layout-sider>
 </template>
-<!--:default-selected-keys="[currentMeta.selectRouteKey||'']"-->
 <script>
     import { mapGetters } from 'vuex';
     import { jumpTo } from '@/utils/routerMeta';
@@ -78,22 +77,3 @@
         }
     };
 </script>
-<style scoped>
-    .slider {
-        overflow: hidden;
-    }
-    
-    .menu-wrapper {
-        position: relative;
-        padding-bottom: 20px;
-        height: calc(100vh - 52px);
-        width: calc(100% + 20px);
-        overflow: scroll;
-    }
-    
-    .menu-list {
-        width: calc(100% - 20px);
-        position: relative;
-        box-sizing: border-box;
-    }
-</style>
