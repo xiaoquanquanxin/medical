@@ -27,6 +27,7 @@
         <!--分页-->
         <a-row type="flex" justify="end" class="a-pagination">
             <a-pagination
+                    v-if="pagination.total"
                     v-model="pagination.current"
                     :page-size-options="pagination.pageSizeOptions"
                     :total="pagination.total"
@@ -56,11 +57,13 @@
     </div>
 </template>
 <script>
-    import { pagination } from '@/utils/pagination.ts';
+    import { paginationInit } from '@/utils/pagination.ts';
     import { twoRowSearch } from '@/utils/tableScroll';
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
     import { mapGetters, mapActions } from 'vuex';
     import AddOrEditEntrepot from '@/components/entrepot/addOrEditEntrepot.vue';
+    import { requestWarehousePage } from '../../api/entrepot';
+    import { paginationEncode, paginationDecode } from '../../utils/pagination';
 
     const columns = [
         {
@@ -120,16 +123,27 @@
                 scroll: twoRowSearch(columns),
 
                 //  分页信息
-                pagination,
+                pagination: paginationInit(),
 
                 //	处方模板管理 - 增加口服肠内补充方案 - 选择商品
                 dialogDataEntrepot: this.initModal(DIALOG_TYPE.ENTREPOT),
             };
         },
+        created(){
+            this.searchFn();
+        },
         methods: {
             //  主要请求
             searchFn(){
-
+                requestWarehousePage(paginationEncode(this.pagination))
+                    .then(v => {
+                        const { data } = v;
+                        console.log(data);
+                        this.data = data.order;
+                        this.pagination = paginationDecode(this.pagination, data);
+                        
+                        console.log(JSON.parse(JSON.stringify(this.pagination)));
+                    });
             },
             //  莫泰框方法
             ...dialogMethods,
@@ -139,14 +153,14 @@
             ]),
             //  展示的每一页数据变换
             onShowSizeChange(current, pageSize){
-                console.log(current);
-                console.log(pageSize);
                 this.pagination.pageSize = pageSize;
+                this.pagination.current = 1;
+                this.searchFn();
             },
             //  切换分页页码
-            pageChange(current, pageSize){
-                console.log(current);
-                console.log(pageSize);
+            pageChange(current){
+                this.pagination.current = current;
+                this.searchFn();
             },
             //  新增仓库
             addEntrepot(){

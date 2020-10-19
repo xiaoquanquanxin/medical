@@ -41,6 +41,7 @@
         <!--分页-->
         <a-row type="flex" justify="end" class="a-pagination">
             <a-pagination
+                    v-if="pagination.total"
                     v-model="pagination.current"
                     :page-size-options="pagination.pageSizeOptions"
                     :total="pagination.total"
@@ -70,7 +71,7 @@
     </div>
 </template>
 <script>
-    import { pagination } from '@/utils/pagination.ts';
+    import { paginationInit } from '@/utils/pagination.ts';
     import { twoRowSearch } from '@/utils/tableScroll';
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
     import AddBrandBox from '@/components/commodity/addBrandBox.vue';
@@ -122,7 +123,7 @@
                 scroll: twoRowSearch(columns),
 
                 //  分页信息
-                pagination,
+                pagination: paginationInit(),
 
                 //  新增、编辑品牌管理莫泰框
                 dialogDataAddBrand: this.initModal(DIALOG_TYPE.ADD_BRAND),
@@ -147,14 +148,14 @@
             ]),
             //  展示的每一页数据变换
             onShowSizeChange(current, pageSize){
-                console.log(current);
-                console.log(pageSize);
                 this.pagination.pageSize = pageSize;
+                this.pagination.current = 1;
+                this.searchFn();
             },
             //  切换分页页码
-            pageChange(current, pageSize){
-                console.log(current);
-                console.log(pageSize);
+            pageChange(current){
+                this.pagination.current = current;
+                this.searchFn();
             },
 
             //  新增品牌

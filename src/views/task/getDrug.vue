@@ -54,7 +54,8 @@
             <!--分页-->
             <a-row type="flex" justify="end" class="a-pagination">
                 <a-pagination
-                        v-model="pagination.current"
+                    v-if="pagination.total"
+                    v-model="pagination.current"
                         :page-size-options="pagination.pageSizeOptions"
                         :total="pagination.total"
                         show-size-changer
@@ -142,7 +143,7 @@
     </div>
 </template>
 <script>
-    import { pagination } from '@/utils/pagination.ts';
+    import { paginationInit } from '@/utils/pagination.ts';
     import { oneRowSearch } from '@/utils/tableScroll';
 
     const columns = [
@@ -222,7 +223,7 @@
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
                 scroll: oneRowSearch(columns),
                 //  分页信息
-                pagination,
+                pagination: paginationInit(),
                 //  搜索数据
                 searchData: {},
 
@@ -248,14 +249,14 @@
             },
             //  展示的每一页数据变换
             onShowSizeChange(current, pageSize){
-                console.log(current);
-                console.log(pageSize);
                 this.pagination.pageSize = pageSize;
+                this.pagination.current = 1;
+                this.searchFn();
             },
             //  切换分页页码
-            pageChange(current, pageSize){
-                console.log(current);
-                console.log(pageSize);
+            pageChange(current){
+                this.pagination.current = current;
+                this.searchFn();
             },
             //  选择过期日期
             onDateChange(value, selectDateValue){

@@ -25,7 +25,7 @@
     export default {
         watch: {
             $route(value){
-                console.log(this.currentMeta);
+                //  console.log(this.currentMeta);
                 this.routeChange();
             }
         },
