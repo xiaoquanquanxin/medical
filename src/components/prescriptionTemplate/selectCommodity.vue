@@ -12,7 +12,7 @@
             <div slot="buyUnit"
                  slot-scope="scope,sItem,sIndex,extra"
                  class="negative-margin-16">
-                <a-radio-group style="display: block;"
+                <a-radio-group block
                                v-model="sItem.buyUnitCheckId"
                                @change="radioGroupChange(sItem)"
                 >
