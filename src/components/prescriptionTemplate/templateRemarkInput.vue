@@ -3,8 +3,7 @@
             placeholder="请输入备注"
             v-model="value"
             @change="setRemark($event.target.value)"
-            style="min-height: 60px"
-            :auto-size="{ minRows: 5, maxRows: 5 }"
+            :style="style"
     />
 </template>
 <script>
@@ -15,7 +14,12 @@
         computed: {
             remark(){
                 return this.$store.state.prescriptionTemplate.remark;
-            }
+            },
+            style(){
+                return {
+                    minHeight: `${this.$store.state.prescriptionTemplate.rowForRemark * 54 - 16 * 2}px`
+                };
+            },
         },
         data(){
             return {
@@ -23,10 +27,6 @@
             };
         },
         methods: {
-            //  主要请求
-            searchFn(){
-
-            },
             ...mapActions('prescriptionTemplate', [
                 //  设置商品列表数据
                 'setRemark',
