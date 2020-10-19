@@ -102,6 +102,7 @@
     </div>
 </template>
 <script>
+    import { mapGetters, mapActions } from 'vuex';
     import { isPhoneNumber } from '@/utils/validate';
 
     export default {
@@ -147,6 +148,10 @@
             };
         },
         methods: {
+            //  登录方法
+            ...mapActions('login', [
+                'login',
+            ]),
             //  选择登录变化
             selectChange(e){
                 this.basicForm = e > 0;
@@ -165,27 +170,16 @@
             },
             //    登录
             handleSubmit(){
-                new Promise(((resolve, reject) => {
-                        console.log(this.form);
-                        this.form.validateFields((err, values) => {
-                            console.table(values);
-                            if (!err) {
-                                console.log('发请求吧');
-                                setTimeout(() => {
-                                    resolve();
-                                }, 1000);
-                            } else {
-                                reject('验证错误');
-                            }
-                        });
-                    })
-                )
-                    .then(v => {
-                        console.log(v);
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                    });
+                this.form.validateFields((err, values) => {
+                    if (!err) {
+                        console.log('发请求吧');
+                        this.login()
+                            .then(v => {
+                                console.log('登录成功');
+                                this.$router.push('/');
+                            });
+                    }
+                });
             },
         }
     };

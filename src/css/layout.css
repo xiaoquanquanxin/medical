@@ -44,13 +44,6 @@
     border-bottom: none;
 }
 
-/*表组*/
-.table-group {
-    min-width: 700px;
-    border: 1px solid #e8e8e8;
-    border-bottom: none;
-}
-
 /*表组的头*/
 .table-group-title {
     height: 54px;

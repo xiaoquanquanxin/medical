@@ -14,13 +14,11 @@
                         <a-avatar :size="36" icon="user"/>
                         <a-dropdown>
                             <a class="ant-dropdown-link" @click="e => e.preventDefault()">
-                                许晓飞
+                                {{ loginInfo.sub }}
                                 <a-icon type="down"/>
                             </a>
                             <a-menu slot="overlay" @click="logoutFn">
-                                <a-menu-item key="1">
-                                    退出登录
-                                </a-menu-item>
+                                <a-menu-item key="1">退出登录</a-menu-item>
                             </a-menu>
                         </a-dropdown>
                         <!--                        <a-button>-->
@@ -40,6 +38,7 @@
 	import {Vue, Component} from 'vue-property-decorator';
 	import {clearStorage} from '@/utils/common';
 
+
 	@Component({})
 	export default class LayoutHeader extends Vue {
 		//  折叠左侧菜单？
@@ -49,6 +48,11 @@
 
 		set collapsed(collapsed) {
 			this.$store.dispatch('sidebar/setCollapsed', collapsed);
+		}
+
+		get loginInfo() {
+			console.log(this.$store.state.login.loginInfo);
+			return this.$store.state.login.loginInfo;
 		}
 
 		logoutFn() {
