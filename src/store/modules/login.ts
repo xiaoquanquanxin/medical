@@ -16,7 +16,7 @@ interface STATE {
 
 const state: STATE = {
 	jwt: getJwt(),
-	loginInfo: getLoginInfo(),
+	loginInfo: JSON.parse(getLoginInfo()),
 	isLocalAreaNetwork: true,
 };
 
