@@ -6,7 +6,6 @@
 </template>
 <script lang="ts">
 	import {Vue, Component} from 'vue-property-decorator';
-	
 	import LayoutMain from '@/layout/layoutMain/layoutMain.vue';
 	import LayoutSideBar from '@/layout/layoutSideBar/layoutSideBar.vue';
 

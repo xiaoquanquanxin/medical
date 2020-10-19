@@ -8,7 +8,7 @@
                     mode="inline"
                     theme="dark"
                     :inline-collapsed="collapsed"
-                    class="menu-list"
+                    :class="platform.mac?'menu-list':''"
             >
                 <template
                         v-for="(item , index) in routes"
@@ -47,9 +47,9 @@
 <script>
     import { mapGetters } from 'vuex';
     import { jumpTo } from '@/utils/routerMeta';
+    import { platform } from '@/utils/common';
 
     export default {
-        name: 'layoutSideBar',
         computed: {
             ...mapGetters([
                 'routeList',
@@ -68,6 +68,11 @@
                 return currentMeta;
             }
         },
+        data(){
+            return {
+                platform,
+            };
+        },
         methods: {
             //  主要请求
             searchFn(){
@@ -77,3 +82,20 @@
         }
     };
 </script>
+<style scoped>
+    .slider {
+        overflow: hidden;
+    }
+    
+    .menu-wrapper {
+        position: relative;
+        padding-bottom: 20px;
+        height: calc(100vh - 52px);
+        width: calc(100% + 20px);
+        overflow: scroll;
+    }
+    
+    .menu-list {
+        width: calc(100% - 20px);
+    }
+</style>
