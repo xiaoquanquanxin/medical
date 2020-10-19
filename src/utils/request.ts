@@ -3,16 +3,16 @@ import {getJwt} from '@/utils/auth';
 
 
 // create an axios instance
-const service = axios.create({
+const request = axios.create({
 	// url = base url + request url
-	baseURL: process.env.VUE_APP_BASE_API,
+	//	baseURL: process.env.VUE_APP_BASE_API,
 	//	当跨域请求时发送cookie
 	// withCredentials: true,
 	timeout: 5000
 });
 
 //	拦截器
-service.interceptors.request.use(
+request.interceptors.request.use(
 	config => {
 		//	config.headers['X-Token'] = getJwt();
 		config.headers['X-Channel-Key'] = '941b0f2142efe18c';
@@ -26,12 +26,11 @@ service.interceptors.request.use(
 );
 
 // response interceptor
-service.interceptors.response.use(
+request.interceptors.response.use(
 	(response: any) => {
 		const res = response.data;
-		// if the custom code is not 20000, it is judged as an error.
-		if (res.code === 1000) {
-			return res;
+		if (res.status === 200 || res.status === 1000) {
+			return Promise.resolve(res);
 		}
 		return Promise.reject(new Error(res.message || 'Error'));
 	},
@@ -42,4 +41,4 @@ service.interceptors.response.use(
 	}
 );
 
-export default service;
+export default request;
