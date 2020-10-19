@@ -3,7 +3,8 @@
             placeholder="请输入备注"
             v-model="value"
             @change="setRemark($event.target.value)"
-            style="min-height: 200px"
+            style="min-height: 60px"
+            :auto-size="{ minRows: 5, maxRows: 5 }"
     />
 </template>
 <script>

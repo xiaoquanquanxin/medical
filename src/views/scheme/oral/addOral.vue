@@ -125,7 +125,6 @@
                              slot-scope="scope,sItem,sIndex,extra"
                              class="negative-margin-16"
                         >
-                            {{scope}}
                             <div v-for="(item , index) in scope.list"
                                  :key="index"
                                  class="negative-margin-item"
@@ -207,7 +206,6 @@
 </template>
 <script>
     import moment from 'moment';
-
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
     import { mapGetters, mapActions } from 'vuex';
     import SelectCommodity from '@/components/prescriptionTemplate/selectCommodity.vue';
@@ -230,13 +228,13 @@
         {
             title: '商品单价',
             dataIndex: 'price',
-            width: 200,
+            width: 100,
             scopedSlots: { customRender: 'price' },
         },
         {
             title: '数量',
             dataIndex: 'number',
-            width: 200,
+            width: 100,
             scopedSlots: { customRender: 'number' },
         },
         {
@@ -320,21 +318,6 @@
                 dialogDataSelectCommodity: this.initModal(DIALOG_TYPE.TEMPLATE_SELECT_COMMODITY),
                 //  处方模板管理 - 增加口服肠内补充方案 - 选择时间
                 dialogDataSelectTime: this.initModal(DIALOG_TYPE.TEMPLATE_SELECT_TIME),
-
-                //  请选择医院
-                hospitalDecorator: ['hospital', {
-                    rules: [{
-                        required: true,
-                        message: '请选择医院'
-                    },]
-                }],
-                //  请选择膳选择处方类型
-                prescriptionTypeDecorator: ['prescriptionType', {
-                    rules: [{
-                        required: true,
-                        message: '请选择膳选择处方类型'
-                    },]
-                }],
 
                 //  表单中表格的数据 ：能量、 食用方法
                 tableForm: {
@@ -427,7 +410,35 @@
                             buyUnitCheckId: 1,
                             //  多选的勾选状态
                             isCheckboxChecked: true,
-                        },];
+                        },
+                        {
+                            commodityName: '小斯',
+                            key: 3,
+                            buyUnitList: [
+                                {
+                                    buyUnit: '666克',
+                                    price: 66,
+                                    buyUnitId: 1,
+                                    //  用于组织 buyUnitCheckId
+                                    isRadioChecked: true,
+                                },
+                                {
+                                    buyUnit: '777克',
+                                    price: 77,
+                                    buyUnitId: 2,
+                                },
+                                {
+                                    buyUnit: '88克',
+                                    price: 8,
+                                    buyUnitId: 3,
+                                }
+                            ],
+                            //  被选中的购买单位的id
+                            buyUnitCheckId: null,
+                            //  多选的勾选状态
+                            isCheckboxChecked: false,
+                        },
+                    ];
                     this.setOriginCommodityList(originCommodityList);
                 });
             },
@@ -477,22 +488,19 @@
 
             //  确定选择的时间
             selectTimeModalCheck(){
-                console.clear();
+                //  console.clear();
                 const commodityTableData = JSON.parse(JSON.stringify(this.commodityTableData));
                 //  子列表数据
                 const list = commodityTableData.map(item => {
-                    console.log(item);
-                    debugger
                     const child = item.buyUnitList.filter((_item) => {
-                        debugger
-                        console.log(_item.isRadioChecked);
+                        //  console.log(_item.isRadioChecked);
                         //  todo    有bug，是直接选择多选导致的
                         return _item.isRadioChecked;
                     });
-                    console.log(child);
-                    return JSON.parse(JSON.stringify(child[0]));
+                    //  console.log(child);
+                    return Object.assign(child[0], { commodityName: item.commodityName });
                 });
-                console.log(JSON.parse(JSON.stringify(list)));
+                //  console.log(list);
                 //  一条数据
                 const data = {
                     //  key
@@ -517,11 +525,12 @@
             //  删除数据表格的一行
             deleteTimeTable(scope, index, sItem, sIndex){
                 //  console.log(scope, index, sItem, sIndex);
+
+                //  操作的是 timeTableData
                 scope.list.splice(index, 1);
-                //  如果删除完了这一列，需要删时间的主数据
-                if (scope.list.length === 0) {
-                    this.timeTableData.splice(sIndex, 1);
-                }
+                //  如果删除了某个时间下的所有数据，需要删除这一行
+                console.log(scope);
+                console.log(this.timeTableData);
                 console.log(JSON.parse(JSON.stringify(this.timeTableData)));
             },
 
