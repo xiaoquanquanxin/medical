@@ -1,20 +1,39 @@
 <template>
-    <div class="history-list" v-show="!hiddenHistory" id="layoutHistory">
-        <template v-for="(item , index) in historyRouteList">
+    <div class="history-list" v-show="!hiddenHistory" id="layoutHistory" v-if="currentMeta">
+        <!--<template v-for="(item , index) in historyRouteList">
             <a-divider type="vertical"/>
             <router-link :to="{name:item.name}"
                          :class="item.highlight?'highlight':'nonactivated'"
             >{{item.chName}}
             </router-link>
-        </template>
-        <a-divider type="vertical"/>
+        </template>-->
+        <!--        <a-divider type="vertical"/>-->
+        <a-menu
+                :selectedKeys="[currentMeta.selectRouteKey||'']"
+                mode="horizontal"
+        >
+            <a-menu-item
+                    :key="item.name"
+                    v-for="(item , index) in historyRouteList"
+            >
+                <router-link :to="{name:item.name}">{{item.chName}}</router-link>
+            </a-menu-item>
+        </a-menu>
     </div>
 </template>
 <script>
     export default {
         watch: {
-            $route(){
+            $route(value){
+                console.log(this.currentMeta);
                 this.routeChange();
+            }
+        },
+        computed: {
+            //  当前激活路由的元信息
+            currentMeta(){
+                const { currentMeta } = this.$store.state.routeList;
+                return currentMeta;
             }
         },
         data(){
@@ -28,10 +47,6 @@
             };
         },
         methods: {
-            //  主要请求
-            searchFn(){
-
-            },
             //  当路由改变
             routeChange(){
                 let { name, meta } = this.$route;
@@ -62,7 +77,7 @@
                 this.historyRouteMap[name] = routeItem;
                 //  新增list的item
                 this.historyRouteList.push(routeItem);
-            }
+            },
         }
     };
 </script>
@@ -72,8 +87,8 @@
         height: 50px;
         line-height: 50px;
         background-color: white;
-        border-top: none;
-        border-bottom: 1px solid #e8e8e8;
+        /*border-top: none;*/
+        /*border-bottom: 1px solid #e8e8e8;*/
         overflow-x: auto;
         overflow-y: hidden;
         width: 100%;

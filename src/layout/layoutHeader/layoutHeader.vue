@@ -51,7 +51,7 @@
 		}
 
 		get loginInfo() {
-			console.log(this.$store.state.login.loginInfo);
+			//  console.log(this.$store.state.login.loginInfo);
 			return this.$store.state.login.loginInfo;
 		}
 

@@ -38,7 +38,7 @@ const browser = {
 		};
 	}(),
 };
-console.log(browser.versions);
+//	console.log(browser.versions);
 //  是移动端
 //	export const isMobile = (browser.versions.mobile || browser.versions.ios || browser.versions.android || browser.versions.iPhone || browser.versions.iPad);
 

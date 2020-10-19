@@ -193,5 +193,6 @@ span.ant-radio + * {
 /*}*/
 
 
-
-
+.history-list .ant-tabs-nav .ant-tabs-tab{
+    margin-right: 0;
+}
