@@ -40,7 +40,7 @@
                 </template>
             </a-pagination>
         </a-row>
-        <!--莫泰框-->
+        <!--新增账号莫泰框-->
         <a-modal v-model="dialogAccount.visible"
                  v-if="dialogAccount.visible"
                  :confirm-loading="dialogAccount.confirmLoading"

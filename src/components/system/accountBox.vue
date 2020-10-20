@@ -17,7 +17,7 @@
             </a-select>
         </a-form-item>
         <a-form-item label="账号名称">
-            <a-input v-decorator="accountNameDecorator" placeholder="请输入账号名称"/>
+            <a-input v-decorator="usernameDecorator" placeholder="请输入账号名称"/>
         </a-form-item>
         <a-form-item label="账号密码">
             <a-input v-decorator="accountPasswordDecorator" placeholder="请输入账号密码"/>
@@ -30,6 +30,7 @@
 <script>
     import { formItemLayout } from '@/utils/layout.ts';
     import { compareToFirstPassword } from '@/utils/validate';
+    import { requestUserInsert, requestUserUpdate } from '../../api/system';
 
     export default {
         beforeCreate(){
@@ -55,7 +56,7 @@
                     },]
                 }],
                 //  账号名称
-                accountNameDecorator: ['accountName', {
+                usernameDecorator: ['username', {
                     rules: [{
                         required: true,
                         message: '请输入账号名称'
@@ -87,9 +88,6 @@
             console.log('是编辑？', this.selectAccountId);
             console.log('类型', this.accountOperationType);
         },
-        created(){
-            this.searchFn();
-        },
         methods: {
             //  主要请求
             searchFn(){
@@ -110,24 +108,32 @@
             //    表单提交
             handleSubmit(){
                 return new Promise(((resolve, reject) => {
-                    console.log(this.value);
                     this.form.validateFields((err, values) => {
                         console.table(values);
                         if (!err) {
-                            resolve();
+                            const { username, password } = values;
+                            const data = { username, password };
+                            (() => {
+                                //  如果是新增账号
+                                if (!this.selectAccountId) {
+                                    return requestUserInsert(data);
+                                } else {
+                                    //  编辑账号
+                                    return requestUserUpdate(data);
+                                }
+                            })()
+                                .then(v => {
+                                    resolve(v);
+                                })
+                                .error(err => {
+                                    reject(err);
+                                });
+
                         } else {
                             reject();
                         }
                     });
-                }))
-                    .then(v => {
-                        return new Promise(((resolve, reject) => {
-                            console.log('发请求吧');
-                            setTimeout(() => {
-                                resolve();
-                            }, 1000);
-                        }));
-                    });
+                }));
             },
         }
     };

@@ -11,8 +11,26 @@
         >
             <a-form-item label="科室名称">
                 <a-input
-                        v-decorator="departmentNameDecorator"
+                        class="add-form-input"
+                        v-decorator="deptNameDecorator"
+                        placeholder="请输入科室名称"
                 />
+            </a-form-item>
+            <a-form-item label="科室类型">
+                <a-select v-decorator="deptTypeDecorator"
+                          class="add-form-input"
+                          placeholder="请选择科室类型">
+                    <a-select-option :value="0">默认</a-select-option>
+                    <a-select-option :value="1">公共</a-select-option>
+                </a-select>
+            </a-form-item>
+            <a-form-item label="状态">
+                <a-select v-decorator="statusDecorator"
+                          class="add-form-input"
+                          placeholder="请选择状态">
+                    <a-select-option :value="0">停用</a-select-option>
+                    <a-select-option :value="1">启用</a-select-option>
+                </a-select>
             </a-form-item>
             <a-form-item :wrapper-col="{ span: 4, offset: 5 }">
                 <a-button type="primary" html-type="submit">
@@ -25,6 +43,7 @@
 <script>
     import { formItemLayout } from '@/utils/layout.ts';
     import GoBackButton from '@/components/goBackButton.vue';
+    import { requestDeptSave } from '../../api/department';
 
     export default {
         components: {
@@ -40,15 +59,25 @@
                 //  表单大小
                 formItemLayout,
                 //  科室名称
-                departmentNameDecorator: ['departmentName', {
-                    initialValue: '普通科室',
+                deptNameDecorator: ['deptName', {
                     rules: [{
-                        max: 11,
-                        message: '最多11位',
-                    }, {
                         required: true,
                         message: '请输入科室名称'
-                    },]
+                    }]
+                }],
+                //  科室类型 0 默认 1 公共
+                deptTypeDecorator: ['deptType', {
+                    rules: [{
+                        required: true,
+                        message: '请选择科室类型'
+                    }]
+                }],
+                //  状态 0 启动 1 停用
+                statusDecorator: ['status', {
+                    rules: [{
+                        required: true,
+                        message: '请选择状态'
+                    }]
                 }],
             };
         },
@@ -78,10 +107,12 @@
             handleSubmit(e){
                 e.preventDefault();
                 this.form.validateFields((err, values) => {
-                    console.log(err);
                     console.table(values);
                     if (!err) {
-                        console.log('Received values of form: ', values);
+                        requestDeptSave(values)
+                            .then(v => {
+                                console.log(v);
+                            });
                     }
                 });
             },
