@@ -1,5 +1,5 @@
 //	用户信息
-import {login} from '@/api/login';
+import {autoLogin} from '@/api/login';
 import {getJwt, getLoginInfo, setJwt, setLoginInfo} from '@/utils/auth';
 import {COMMIT_INTERFACE} from "@/store"
 //	@ts-ignore
@@ -37,7 +37,7 @@ const actions = {
 	login({commit, state}: COMMIT_INTERFACE<STATE>, loginInfo: any) {
 		//	const {username, password} = loginInfo;
 		return new Promise((resolve, reject) => {
-			login({
+			autoLogin({
 				username: "sysadmin@hachismart.org",
 				password: "sysadmin",
 			}).then(response => {

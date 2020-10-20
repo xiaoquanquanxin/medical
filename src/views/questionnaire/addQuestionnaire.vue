@@ -1,7 +1,12 @@
 <template>
     <div class="layout-content-inner-main">
-        <!--返回按钮-->
-        <GoBackButton/>
+        <div class="a-input-group">
+            <a-row type="flex" justify="space-between" align="middle">
+                <!--返回按钮-->
+                <GoBackButton/>
+                <a-button type="primary" @click="handleSubmit">保存</a-button>
+            </a-row>
+        </div>
         <a-divider orientation="left">基础信息</a-divider>
         <a-form class="form"
                 :form="form"
@@ -11,14 +16,13 @@
         >
             <a-form-item label="评估表名称">
                 <a-input
-                        v-decorator="questionnaireNameDecorator"
+                        v-decorator="assessNameDecorator"
                         placeholder="请输入评估表名称"
                 />
             </a-form-item>
             <a-form-item label="评估表内容">
-                <div style="width:calc((100vw - 200px)*.65)">
+                <div>
                     <a-textarea
-                            :auto-size="{ minRows: 3, maxRows: 5 }"
                             v-decorator="questionnaireContentDecorator"
                             placeholder="请输入评估表内容"
                     />
@@ -30,6 +34,7 @@
 <script>
     import { formItemLayout } from '@/utils/layout.ts';
     import GoBackButton from '@/components/goBackButton.vue';
+    import { requestAssessGet, requestAssessInsert, requestAssessUpdate } from '../../api/questionnaire';
 
     export default {
         components: {
@@ -45,7 +50,7 @@
                 formItemLayout,
 
                 //  评估表名称
-                questionnaireNameDecorator: ['questionnaireName', {
+                assessNameDecorator: ['assessName', {
                     rules: [{
                         required: true,
                         message: '请输入评估表名称'
@@ -60,34 +65,46 @@
                 }],
             };
         },
-        created(){
-            console.log('是编辑？', !!this.questionnaireId);
-        },
+
         created(){
             this.searchFn();
         },
         methods: {
             //  主要请求
             searchFn(){
-//                requestChannelBusinessPage(paginationEncode(this.pagination))
-//                    .then(v => {
-//                        const { data } = v;
-//                        console.log(data);
-//                data.records.forEach((item, index) => {
-//                    item.key = index;
-//                    item.createTime = item.createTime.substr(0, 10);
-//                });
-//                        this.data = data.records;
-//                        this.pagination = paginationDecode(this.pagination, data);
-//                    });
+                if (!this.questionnaireId) {
+                    return;
+                }
+                requestAssessGet(this.questionnaireId)
+                    .then(v => {
+                        const { data } = v;
+                        console.log(data);
+                        this.form.setFieldsValue({
+                            assessName: data.assessName,
+                        });
+                    });
             },
             //  表单提交 保存
             handleSubmit(e){
                 e.preventDefault();
-                this.mealPlanCheck();
                 this.form.validateFields((err, values) => {
                     console.table(values);
                     console.log(!err);
+                    const data = { assessName: values.assessName };
+                    if (!err) {
+                        if (this.questionnaireId) {
+                            data.id = this.questionnaireId;
+                            requestAssessUpdate(data)
+                                .then(v => {
+                                    console.log(v);
+                                });
+                        } else {
+                            requestAssessInsert(data)
+                                .then(v => {
+                                    console.log(v);
+                                });
+                        }
+                    }
                 });
             },
         }

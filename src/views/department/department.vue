@@ -168,7 +168,7 @@
                         });
                         this.data = data.records;
                         this.pagination = paginationDecode(this.pagination, data);
-                        
+                        console.log(data);
                     });
             },
             //  莫泰框方法
