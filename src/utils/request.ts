@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {getJwt} from '@/utils/auth';
+import {clearStorage} from "@/utils/common"
 
 
 // create an axios instance
@@ -29,8 +30,15 @@ request.interceptors.request.use(
 request.interceptors.response.use(
 	(response: any) => {
 		const res = response.data;
-		if (res.status === 200 || res.status === 1000) {
+		const {status} = res;
+		//	正常接口
+		if (status === 200 || status === 1000) {
 			return Promise.resolve(res);
+		}
+		//	权限问题
+		if (status === 401 || status === 403) {
+			clearStorage();
+			window.location.href = '/login';
 		}
 		return Promise.reject(new Error(res.message || 'Error'));
 	},

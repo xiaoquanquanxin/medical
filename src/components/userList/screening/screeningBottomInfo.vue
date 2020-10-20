@@ -67,7 +67,14 @@
         methods: {
             //  主要请求
             searchFn(){
-
+//                requestChannelBusinessPage(paginationEncode(this.pagination))
+//                    .then(v => {
+//                        const { data } = v;
+//                        console.log(data);
+//                        this.data = data.order;
+//                        this.pagination = paginationDecode(this.pagination, data);
+//                        console.log(JSON.parse(JSON.stringify(this.pagination)));
+//                    });
             },
             //  选择过期日期
             onDateChange(value, selectDateValue){

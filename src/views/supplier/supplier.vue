@@ -55,8 +55,9 @@
     </div>
 </template>
 <script>
-    import { paginationInit } from '@/utils/pagination.ts';
+    import { paginationInit, paginationDecode, paginationEncode } from '@/utils/pagination.ts';
     import { twoRowSearch } from '@/utils/tableScroll';
+    import { requestSupplierPage } from '../../api/supplier';
 
     const columns = [
         {
@@ -124,12 +125,22 @@
                 pagination: paginationInit(),
             };
         },
-
+        created(){
+            this.searchFn();
+        },
         methods: {
             //  主要请求
             searchFn(){
-
+                requestSupplierPage(paginationEncode(this.pagination))
+                    .then(v => {
+                        const { data } = v;
+                        console.log(data);
+                        this.data = data.order;
+                        this.pagination = paginationDecode(this.pagination, data);
+                        console.log(JSON.parse(JSON.stringify(this.pagination)));
+                    });
             },
+            
             //  展示的每一页数据变换
             onShowSizeChange(current, pageSize){
                 this.pagination.pageSize = pageSize;
