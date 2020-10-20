@@ -17,6 +17,7 @@ request.interceptors.request.use(
 	config => {
 		//	config.headers['X-Token'] = getJwt();
 		config.headers['X-Channel-Key'] = '941b0f2142efe18c';
+		config.headers['Authorization'] = getJwt();
 		return config;
 	},
 	error => {

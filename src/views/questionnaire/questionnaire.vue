@@ -18,7 +18,7 @@
         >
             <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
                 <a-space size="small">
-                    <router-link :to="{name:'editQuestionnaire',params:{questionnaireId:'2332'}}">编辑</router-link>
+                    <router-link :to="{name:'editQuestionnaire',params:{questionnaireId:sItem.id}}">编辑</router-link>
                 </a-space>
             </div>
         </a-table>

@@ -1,31 +1,31 @@
 /*基础选择框*/
 .basic-select-width,
 .basic-input-width {
-    width: 125px!important;
+    width: 125px !important;
 }
 
 /*加长 ，适合 7 个字*/
 .lengthen-input-width {
-    width: 140px!important;
+    width: 140px !important;
 }
 
 /*十个字*/
 .longer-input-width {
-    width: 160px!important;
+    width: 160px !important;
 }
 
 .lengthen-select-width {
-    width: 150px!important;
+    width: 150px !important;
 }
 
 /*加长 ，适合 7 个字*/
 .longer-select-width {
-    width: 160px!important;
+    width: 160px !important;
 }
 
 /*日期选择范围*/
 .basic-range-picker-width {
-    width: 240px!important;
+    width: 240px !important;
 }
 
 /*特殊的过长的行*/
@@ -51,4 +51,9 @@
     float: left;
     margin-right: 8px;
     margin-bottom: 10px;
+}
+
+/*在新增、编辑页面的form表单中的普通输入框*/
+.form .add-form-input {
+    width: 200px;
 }
