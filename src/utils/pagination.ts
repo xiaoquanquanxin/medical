@@ -10,11 +10,11 @@ interface Pagination {
 }
 
 //	创建分页对象
-export const paginationInit = (): Pagination => {
+export const paginationInit = (pageSize?: number): Pagination => {
 	return {
 		pageSizeOptions: ['10', '20', '30', '40', '50'],
 		current: 1,
-		pageSize: 20,
+		pageSize: pageSize || 20,
 		total: 0,
 	};
 }
@@ -28,7 +28,7 @@ export const pagination: Pagination = {
 
 interface Params {
 	//	当前第几页
-	page: number;
+	current: number;
 	//	每页多少个
 	size: number;
 }
@@ -37,7 +37,7 @@ interface Params {
 export const paginationEncode = (pagination: Pagination): Params => {
 	return {
 		size: pagination.pageSize,
-		page: pagination.current,
+		current: pagination.current,
 	}
 }
 

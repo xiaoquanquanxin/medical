@@ -44,12 +44,13 @@
 <script>
     import { paginationInit, paginationDecode, paginationEncode } from '@/utils/pagination.ts';
     import { oneRowSearch } from '@/utils/tableScroll';
+    import { requestAssessPage } from '../../api/questionnaire';
 
     const columns = [
         {
             title: '评估表名称',
             width: 100,
-            dataIndex: 'evaluationSheet',
+            dataIndex: 'assessName',
         },
         {
             title: '操作',
@@ -57,49 +58,10 @@
             scopedSlots: { customRender: 'operation' }
         },
     ];
-    const data = [
-        {
-            key: 1,
-            evaluationSheet: `xx调查表`,
-        },
-        {
-            key: 2,
-            evaluationSheet: `xx调查表`,
-        },
-        {
-            key: Math.random(),
-            evaluationSheet: `xx调查表`,
-        },
-        {
-            key: Math.random(),
-            evaluationSheet: `xx调查表`,
-        },
-        {
-            key: Math.random(),
-            evaluationSheet: `xx调查表`,
-        },
-        {
-            key: Math.random(),
-            evaluationSheet: `xx调查表`,
-        },
-        {
-            key: Math.random(),
-            evaluationSheet: `xx调查表`,
-        },
-        {
-            key: Math.random(),
-            evaluationSheet: `xx调查表`,
-        },
-
-        {
-            key: Math.random(),
-            evaluationSheet: `xx调查表`,
-        },
-    ];
     export default {
         data(){
             return {
-                data,
+                data: [],
                 columns,
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
                 scroll: oneRowSearch(columns),
@@ -109,17 +71,22 @@
 
             };
         },
+        created(){
+            this.searchFn();
+        },
         methods: {
             //  主要请求
             searchFn(){
-//                requestChannelBusinessPage(paginationEncode(this.pagination))
-//                    .then(v => {
-//                        const { data } = v;
-//                        console.log(data);
-//                        this.data = data.order;
-//                        this.pagination = paginationDecode(this.pagination, data);
-//                        console.log(JSON.parse(JSON.stringify(this.pagination)));
-//                    });
+                requestAssessPage(paginationEncode(this.pagination))
+                    .then(v => {
+                        const { data } = v;
+                        data.records.forEach((item, index) => {
+                            item.key = index;
+                            console.log(JSON.parse(JSON.stringify(item)));
+                        });
+                        this.data = data.records;
+                        this.pagination = paginationDecode(this.pagination, data);
+                    });
             },
             //  展示的每一页数据变换
             onShowSizeChange(current, pageSize){
