@@ -8,7 +8,7 @@ export function getJwt(): string {
 }
 
 export function setJwt(token: string) {
-	setStorage(TOKEN, token)
+	setStorage(TOKEN, token);
 }
 
 export function getLoginInfo(): string {

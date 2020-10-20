@@ -37,6 +37,7 @@
 <script lang="ts">
 	import {Vue, Component} from 'vue-property-decorator';
 	import {clearStorage} from '@/utils/common';
+	import {authLogout} from '@/api/login';
 
 
 	@Component({})
@@ -55,9 +56,13 @@
 			return this.$store.state.login.loginInfo;
 		}
 
+		//  登出
 		logoutFn() {
-			clearStorage();
-			window.location.reload();
+			authLogout()
+				.then(v => {
+					clearStorage();
+					window.location.reload();
+				});
 		}
 	}
 </script>

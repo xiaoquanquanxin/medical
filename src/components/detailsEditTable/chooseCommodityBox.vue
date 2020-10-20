@@ -80,6 +80,9 @@
             });
             //  console.log(this.selectedRowKeys);
         },
+        created(){
+            this.searchFn();
+        },
         methods: {
             //  主要请求
             searchFn(){
@@ -87,9 +90,12 @@
 //                    .then(v => {
 //                        const { data } = v;
 //                        console.log(data);
-//                        this.data = data.order;
+//                data.records.forEach((item, index) => {
+//                    item.key = index;
+//                    item.createTime = item.createTime.substr(0, 10);
+//                });
+//                        this.data = data.records;
 //                        this.pagination = paginationDecode(this.pagination, data);
-//                        console.log(JSON.parse(JSON.stringify(this.pagination)));
 //                    });
             },
             //  多选
@@ -138,7 +144,7 @@
                         this.$message.error('请先选择商品');
                         reject();
                     }
-                    //  console.log(JSON.parse(JSON.stringify(this.commodityList)));
+                    
                     //  在这里组织
                     resolve(this.commodityList);
                 });

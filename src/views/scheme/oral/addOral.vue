@@ -346,6 +346,9 @@
             }
 //            this.setShoppingList(shoppingList);
         },
+        created(){
+            this.searchFn();
+        },
         methods: {
             //  主要请求
             searchFn(){
@@ -353,9 +356,12 @@
 //                    .then(v => {
 //                        const { data } = v;
 //                        console.log(data);
-//                        this.data = data.order;
+//                data.records.forEach((item, index) => {
+//                    item.key = index;
+//                    item.createTime = item.createTime.substr(0, 10);
+//                });
+//                        this.data = data.records;
 //                        this.pagination = paginationDecode(this.pagination, data);
-//                        console.log(JSON.parse(JSON.stringify(this.pagination)));
 //                    });
             },
             //  时间选择器的方法
@@ -527,7 +533,6 @@
 
             //  删除选择商品表格的一行
             deleteTypeTable(sItem, sIndex){
-                //  console.log(JSON.parse(JSON.stringify(sItem)));
                 //  内部的id，单选id
                 const { buyUnitCheckId } = sItem;
                 //  洗主数据
@@ -540,7 +545,6 @@
                 }));
                 //  清洗时间表格数据，只删除一行
                 this.timeTableData.forEach(item => {
-                    //  console.log(JSON.parse(JSON.stringify(item.list)));
                     for (let i = 0; i < item.list.length; i++) {
                         //  要被删除的商品类型
                         if (item.list[i].buyUnitId === buyUnitCheckId) {

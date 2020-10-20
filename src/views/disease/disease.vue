@@ -67,6 +67,7 @@
 <script>
     import { paginationInit, paginationDecode, paginationEncode } from '@/utils/pagination.ts';
     import { twoRowSearch } from '@/utils/tableScroll';
+    import { requestDiseasePage } from '../../api/disease';
 
     const columns = [
         {
@@ -106,23 +107,28 @@
                 scroll: twoRowSearch(columns),
 
                 //    分页信息
-                pagination,
+                pagination: paginationInit(),
                 //  搜索数据
                 searchData: {},
             };
         },
-
+        created(){
+            this.searchFn();
+        },
         methods: {
             //  主要请求
             searchFn(){
-//                requestChannelBusinessPage(paginationEncode(this.pagination))
-//                    .then(v => {
-//                        const { data } = v;
-//                        console.log(data);
-//                        this.data = data.order;
-//                        this.pagination = paginationDecode(this.pagination, data);
-//                        console.log(JSON.parse(JSON.stringify(this.pagination)));
-//                    });
+                requestDiseasePage(paginationEncode(this.pagination))
+                    .then(v => {
+                        const { data } = v;
+                        data.records.forEach((item, index) => {
+                            item.key = index;
+                            item.createTime = item.createTime.substr(0, 10);
+                        });
+                        this.data = data.records;
+                        this.pagination = paginationDecode(this.pagination, data);
+                        
+                    });
             },
             //  展示的每一页数据变换
             onShowSizeChange(current, pageSize){

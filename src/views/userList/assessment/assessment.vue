@@ -99,6 +99,9 @@
             //  请求数据
             console.log('请求数据，拿列表数据', this.patientInfoId);
         },
+        created(){
+            this.searchFn();
+        },
         methods: {
             //  主要请求
             searchFn(){
@@ -106,9 +109,12 @@
 //                    .then(v => {
 //                        const { data } = v;
 //                        console.log(data);
-//                        this.data = data.order;
+//                data.records.forEach((item, index) => {
+//                    item.key = index;
+//                    item.createTime = item.createTime.substr(0, 10);
+//                });
+//                        this.data = data.records;
 //                        this.pagination = paginationDecode(this.pagination, data);
-//                        console.log(JSON.parse(JSON.stringify(this.pagination)));
 //                    });
             },
             //  删除营养评估

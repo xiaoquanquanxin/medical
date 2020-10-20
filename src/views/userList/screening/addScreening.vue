@@ -234,6 +234,9 @@
                 this.getScreeningInfo();
             }, 20);
         },
+        created(){
+            this.searchFn();
+        },
         methods: {
             //  主要请求
             searchFn(){
@@ -241,9 +244,12 @@
 //                    .then(v => {
 //                        const { data } = v;
 //                        console.log(data);
-//                        this.data = data.order;
+//                data.records.forEach((item, index) => {
+//                    item.key = index;
+//                    item.createTime = item.createTime.substr(0, 10);
+//                });
+//                        this.data = data.records;
 //                        this.pagination = paginationDecode(this.pagination, data);
-//                        console.log(JSON.parse(JSON.stringify(this.pagination)));
 //                    });
             },
             ...mapActions('userList', [

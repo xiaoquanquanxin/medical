@@ -54,6 +54,9 @@
                 }],
             };
         },
+        created(){
+            this.searchFn();
+        },
         methods: {
             //  主要请求
             searchFn(){
@@ -63,7 +66,7 @@
 //                        console.log(data);
 //                        this.data = data.order;
 //                        this.pagination = paginationDecode(this.pagination, data);
-//                        console.log(JSON.parse(JSON.stringify(this.pagination)));
+
 //                    });
             },
             //  与第一密码比较，用于确认密码
