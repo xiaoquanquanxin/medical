@@ -76,6 +76,7 @@
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
     import AddManufacturerBox from '@/components/commodity/addManufacturerBox.vue';
     import { mapGetters, mapActions } from 'vuex';
+    import { requestManufactorPage } from '../../api/commodity';
 
     const columns = [
         {
@@ -140,19 +141,22 @@
             };
         },
         created(){
-            //  this.dialogData.visible = true;
+            this.searchFn();
         },
         methods: {
             //  主要请求
             searchFn(){
-//                requestChannelBusinessPage(paginationEncode(this.pagination))
-//                    .then(v => {
-//                        const { data } = v;
-//                        console.log(data);
-//                        this.data = data.order;
-//                        this.pagination = paginationDecode(this.pagination, data);
-//                        console.log(JSON.parse(JSON.stringify(this.pagination)));
-//                    });
+                requestManufactorPage(paginationEncode(this.pagination))
+                    .then(v => {
+                        const { data } = v;
+                        data.records.forEach((item, index) => {
+                            item.key = index;
+                            item.createTime = item.createTime.substr(0, 10);
+                        });
+                        this.data = data.records;
+                        this.pagination = paginationDecode(this.pagination, data);
+                        
+                    });
             },
             //  莫泰框方法
             ...dialogMethods,

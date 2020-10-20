@@ -70,6 +70,9 @@
                 activeElementId: null,
             };
         },
+        created(){
+            this.searchFn();
+        },
         methods: {
             //  主要请求
             searchFn(){
@@ -77,9 +80,12 @@
 //                    .then(v => {
 //                        const { data } = v;
 //                        console.log(data);
-//                        this.data = data.order;
+//                data.records.forEach((item, index) => {
+//                    item.key = index;
+//                    item.createTime = item.createTime.substr(0, 10);
+//                });
+//                        this.data = data.records;
 //                        this.pagination = paginationDecode(this.pagination, data);
-//                        console.log(JSON.parse(JSON.stringify(this.pagination)));
 //                    });
             },
             //	病人信息、直接编辑用的 描述框的方法
