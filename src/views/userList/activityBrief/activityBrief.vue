@@ -35,7 +35,9 @@
     import ActivityBriefForm from '@/components/userList/activityBrief/activityBriefForm.vue';
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
     import { mapGetters, mapActions } from 'vuex';
-
+    import { paginationInit, paginationDecode, paginationEncode } from '@/utils/pagination.ts';
+    import { requestBriefPage } from '../../../api/userList';
+    
     const columns = [
         {
             title: '序号',
@@ -75,9 +77,12 @@
         },
         data(){
             return {
+                //  病人的id
+                patientInfoId: this.$route.params.patientInfoId,
                 data,
                 columns,
-
+                //  分页信息
+                pagination: paginationInit(1000),
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
                 scroll: oneRowSearch(columns),
 
@@ -85,17 +90,25 @@
                 dialogDataActivityBrief: this.initModal(DIALOG_TYPE.ACTIVITY_BRIEF),
             };
         },
+        created(){
+            this.searchFn();
+        },
         methods: {
             //  主要请求
             searchFn(){
-//                requestChannelBusinessPage(paginationEncode(this.pagination))
-//                    .then(v => {
-//                        const { data } = v;
-//                        console.log(data);
-//                        this.data = data.order;
-//                        this.pagination = paginationDecode(this.pagination, data);
-//                        console.log(JSON.parse(JSON.stringify(this.pagination)));
-//                    });
+                requestBriefPage(Object.assign({},
+                    paginationEncode(this.pagination),
+                    { patientId: this.patientInfoId }))
+                    .then(v => {
+                        const { data } = v;
+                        data.records.forEach((item, index) => {
+                            item.key = index;
+                            item.createTime = item.createTime.substr(0, 10);
+                        });
+                        this.data = data.records;
+                        this.pagination = paginationDecode(this.pagination, data);
+                        
+                    });
             },
             //  莫泰框方法
             ...dialogMethods,
