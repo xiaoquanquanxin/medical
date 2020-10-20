@@ -142,7 +142,7 @@
     </div>
 </template>
 <script>
-    import { paginationInit } from '@/utils/pagination.ts';
+    import { paginationInit, paginationDecode, paginationEncode } from '@/utils/pagination.ts';
     import { oneRowSearch } from '@/utils/tableScroll';
 
     const columns = [
@@ -244,7 +244,14 @@
         methods: {
             //  主要请求
             searchFn(){
-
+//                requestChannelBusinessPage(paginationEncode(this.pagination))
+//                    .then(v => {
+//                        const { data } = v;
+//                        console.log(data);
+//                        this.data = data.order;
+//                        this.pagination = paginationDecode(this.pagination, data);
+//                        console.log(JSON.parse(JSON.stringify(this.pagination)));
+//                    });
             },
             //  展示的每一页数据变换
             onShowSizeChange(current, pageSize){

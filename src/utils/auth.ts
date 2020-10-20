@@ -1,10 +1,10 @@
 import {getStorage, setStorage} from "@/utils/common"
 
-const TOKEN = 'TOKEN'
+const TOKEN = 'Authorization'
 const USER_INFO = 'USER_INFO'
 
 export function getJwt(): string {
-	return getStorage('TOKEN') || '';
+	return getStorage(TOKEN) || '';
 }
 
 export function setJwt(token: string) {

@@ -73,7 +73,14 @@
         methods: {
             //  主要请求
             searchFn(){
-
+//                requestChannelBusinessPage(paginationEncode(this.pagination))
+//                    .then(v => {
+//                        const { data } = v;
+//                        console.log(data);
+//                        this.data = data.order;
+//                        this.pagination = paginationDecode(this.pagination, data);
+//                        console.log(JSON.parse(JSON.stringify(this.pagination)));
+//                    });
             },
             //	病人信息、直接编辑用的 描述框的方法
             ...descriptionsMethods,

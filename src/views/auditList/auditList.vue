@@ -37,6 +37,7 @@
         <!--分页-->
         <a-row type="flex" justify="end" class="a-pagination">
             <a-pagination
+                    v-if="pagination.total"
                     v-model="pagination.current"
                     :page-size-options="pagination.pageSizeOptions"
                     :total="pagination.total"
@@ -53,7 +54,7 @@
     </div>
 </template>
 <script>
-    import { pagination } from '@/utils/pagination.ts';
+    import { paginationInit, paginationDecode, paginationEncode } from '@/utils/pagination.ts';
     import { oneRowSearch } from '@/utils/tableScroll';
 
     const columns = [
@@ -134,7 +135,7 @@
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
                 scroll: oneRowSearch(columns),
                 //  分页信息
-                pagination,
+                pagination: paginationInit(),
                 //  搜索数据
                 searchData: {},
             };
@@ -142,18 +143,25 @@
         methods: {
             //  主要请求
             searchFn(){
-
+//                requestChannelBusinessPage(paginationEncode(this.pagination))
+//                    .then(v => {
+//                        const { data } = v;
+//                        console.log(data);
+//                        this.data = data.order;
+//                        this.pagination = paginationDecode(this.pagination, data);
+//                        console.log(JSON.parse(JSON.stringify(this.pagination)));
+//                    });
             },
             //  展示的每一页数据变换
             onShowSizeChange(current, pageSize){
-                console.log(current);
-                console.log(pageSize);
                 this.pagination.pageSize = pageSize;
+                this.pagination.current = 1;
+                this.searchFn();
             },
             //  切换分页页码
-            pageChange(current, pageSize){
-                console.log(current);
-                console.log(pageSize);
+            pageChange(current){
+                this.pagination.current = current;
+                this.searchFn();
             },
         }
     };

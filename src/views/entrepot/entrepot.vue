@@ -57,13 +57,12 @@
     </div>
 </template>
 <script>
-    import { paginationInit } from '@/utils/pagination.ts';
+    import { paginationInit, paginationDecode, paginationEncode } from '@/utils/pagination.ts';
     import { twoRowSearch } from '@/utils/tableScroll';
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
     import { mapGetters, mapActions } from 'vuex';
     import AddOrEditEntrepot from '@/components/entrepot/addOrEditEntrepot.vue';
     import { requestWarehousePage } from '../../api/entrepot';
-    import { paginationEncode, paginationDecode } from '../../utils/pagination';
 
     const columns = [
         {

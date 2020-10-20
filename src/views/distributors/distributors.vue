@@ -69,11 +69,10 @@
     import { mapGetters, mapActions } from 'vuex';
     //  新增或编辑渠道商
     import AddOrEditDistributors from '@/components/addOrEditDistributors.vue';
-    import { paginationInit } from '@/utils/pagination.ts';
+    import { paginationInit, paginationDecode, paginationEncode } from '@/utils/pagination.ts';
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
     import { twoRowSearch } from '@/utils/tableScroll';
     import { requestChannelBusinessPage } from '../../api/distributors';
-    import { paginationDecode, paginationEncode } from '../../utils/pagination';
 
     const columns = [
         {

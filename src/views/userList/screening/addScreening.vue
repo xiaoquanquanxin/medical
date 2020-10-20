@@ -237,7 +237,14 @@
         methods: {
             //  主要请求
             searchFn(){
-
+//                requestChannelBusinessPage(paginationEncode(this.pagination))
+//                    .then(v => {
+//                        const { data } = v;
+//                        console.log(data);
+//                        this.data = data.order;
+//                        this.pagination = paginationDecode(this.pagination, data);
+//                        console.log(JSON.parse(JSON.stringify(this.pagination)));
+//                    });
             },
             ...mapActions('userList', [
                 //  保存病人信息，这是为了给组件用，而不是页面，所以要store

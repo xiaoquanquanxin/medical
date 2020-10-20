@@ -101,7 +101,7 @@
     import ShuttleBox from '@/components/shuttleBox.vue';
     import ChannelProviderBox from '@/components/hospital/channelProviderBox.vue';
     import { mapGetters, mapActions } from 'vuex';
-    import { paginationInit } from '@/utils/pagination.ts';
+    import { paginationInit, paginationDecode, paginationEncode } from '@/utils/pagination.ts';
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
     import { twoRowSearch } from '@/utils/tableScroll';
     import { SHUTTLE_BOX } from '../../store/modules/shuttleBox';
@@ -176,7 +176,14 @@
         methods: {
             //  主要请求
             searchFn(){
-
+//                requestChannelBusinessPage(paginationEncode(this.pagination))
+//                    .then(v => {
+//                        const { data } = v;
+//                        console.log(data);
+//                        this.data = data.order;
+//                        this.pagination = paginationDecode(this.pagination, data);
+//                        console.log(JSON.parse(JSON.stringify(this.pagination)));
+//                    });
             },
             //  莫泰框方法
             ...dialogMethods,
