@@ -69,21 +69,22 @@
     import { paginationInit, paginationDecode, paginationEncode } from '@/utils/pagination.ts';
     import { twoRowSearch } from '@/utils/tableScroll';
     import { mapGetters, mapActions } from 'vuex';
+    import { requestRolePage, requestRoleRoleAll } from '../../api/system';
 
     const columns = [
         {
             title: '角色名称',
-            dataIndex: 'hospital',
+            dataIndex: 'roleName',
             width: 100,
         },
         {
             title: '角色描述',
-            dataIndex: 'city',
+            dataIndex: 'roleDesc',
             width: 100,
         },
         {
             title: '创建时间',
-            dataIndex: 'status',
+            dataIndex: 'createTime',
             width: 100,
         },
         {
@@ -110,7 +111,6 @@
             city: '上海',
             status: String(i % 2),
             icon: '医院图标',
-
         });
     }
     export default {
@@ -132,17 +132,23 @@
                 dialogDataRole: this.initModal(DIALOG_TYPE.ROLE),
             };
         },
+        created(){
+            this.searchFn();
+        },
         methods: {
             //  主要请求
             searchFn(){
-//                requestChannelBusinessPage(paginationEncode(this.pagination))
-//                    .then(v => {
-//                        const { data } = v;
-//                        console.log(data);
-//                        this.data = data.order;
-//                        this.pagination = paginationDecode(this.pagination, data);
-//                        console.log(JSON.parse(JSON.stringify(this.pagination)));
-//                    });
+                requestRolePage(paginationEncode(this.pagination))
+                    .then(v => {
+                        const { data } = v;
+                        data.records.forEach((item, index) => {
+                            item.key = index;
+                            item.createTime = item.createTime.substr(0, 10);
+                        });
+                        this.data = data.records;
+                        console.table(JSON.parse(JSON.stringify(data.records)));
+                        this.pagination = paginationDecode(this.pagination, data);
+                    });
             },
             //  莫泰框方法
             ...dialogMethods,
