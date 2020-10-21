@@ -143,8 +143,6 @@
                         });
                         this.data = data.records;
                         this.pagination = paginationDecode(this.pagination, data);
-                        
-                        
                     });
             },
             //  莫泰框方法
@@ -175,7 +173,6 @@
                 this.setEntrepotId(1234452321);
                 this.setDialogTitle(DIALOG_TYPE.ENTREPOT, '编辑仓库');
                 this.showModal(DIALOG_TYPE.ENTREPOT);
-                console.log(sItem);
             },
             //  确定
             modalCheck(){
