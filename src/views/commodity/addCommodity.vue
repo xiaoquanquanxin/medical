@@ -11,39 +11,34 @@
         >
             <!--            <div style="display: none">-->
             <a-form-item label="商品名称">
-                <a-input
-                        v-decorator="commodityNameDecorator"
-                        placeholder="请输入商品名称"/>
+                <a-input class="add-form-input"
+                         v-decorator="goodsNameDecorator"
+                         placeholder="请输入商品名称"/>
             </a-form-item>
             <a-form-item label="商品货号">
-                <a-input
-                        v-decorator="itemNoDecorator"
-                        placeholder="请输入商品货号"/>
+                <a-input class="add-form-input"
+                         v-decorator="goodsProductCodeDecorator"
+                         placeholder="请输入商品货号"/>
             </a-form-item>
-            <a-form-item label="商品条码" has-feedback>
-                <a-select placeholder="请选择商品条码"
-                          v-decorator="barcodeDecorator"
-                >
-                    <a-select-option value="1">
-                        xxx
-                    </a-select-option>
-                    <a-select-option value="2">
-                        xxx
-                    </a-select-option>
-                </a-select>
+            <a-form-item label="商品条码">
+                <a-input class="add-form-input"
+                         placeholder="请输入商品条码"
+                         v-decorator="goodsBarCodeDecorator"
+                />
             </a-form-item>
             <a-form-item label="商品关键字">
-                <a-select mode="tags"
+                <a-select class="add-form-input"
+                          mode="tags"
                           placeholder="请输入商品关键字"
-                          style="width: 100%"
                           :token-separators="[',']"
-                          v-decorator="keywordsDecorator"
+                          v-decorator="goodsKeyWordDecorator"
                           @change="autoSplitChange"
                 />
             </a-form-item>
-            <a-form-item label="商品分类" has-feedback>
-                <a-select placeholder="请选择商品分类"
-                          v-decorator="classificationDecorator"
+            <a-form-item label="商品分类">
+                <a-select class="add-form-input"
+                          placeholder="请选择商品分类"
+                          v-decorator="goodsCategoryIdDecorator"
                 >
                     <a-select-option value="1">
                         xxx
@@ -53,9 +48,10 @@
                     </a-select-option>
                 </a-select>
             </a-form-item>
-            <a-form-item label="商品品牌" has-feedback>
-                <a-select placeholder="请选择商品品牌"
-                          v-decorator="brandDecorator"
+            <a-form-item label="商品品牌">
+                <a-select class="add-form-input"
+                          placeholder="请选择商品品牌"
+                          v-decorator="goodsBrandIdDecorator"
                 >
                     <a-select-option value="1">
                         xxx
@@ -65,9 +61,10 @@
                     </a-select-option>
                 </a-select>
             </a-form-item>
-            <a-form-item label="供应商" has-feedback>
-                <a-select placeholder="请选择供应商"
-                          v-decorator="supplierDecorator"
+            <a-form-item label="供应商">
+                <a-select class="add-form-input"
+                          placeholder="请选择供应商"
+                          v-decorator="supplierIdDecorator"
                 >
                     <a-select-option value="1">
                         xxx
@@ -78,37 +75,44 @@
                 </a-select>
             </a-form-item>
             <a-form-item label="厂家">
-                <a-input
-                        v-decorator="manufacturerDecorator"
-                        placeholder="请输入厂家"/>
+                <a-input class="add-form-input"
+                         v-decorator="manufactorIdDecorator"
+                         placeholder="请输入厂家"/>
             </a-form-item>
             <a-form-item label="通用名">
-                <a-input
-                        v-decorator="commonNameDecorator"
-                        placeholder="请输入请输入通用名"/>
+                <a-input class="add-form-input"
+                         v-decorator="goodsTradeNameDecorator"
+                         placeholder="请输入请输入通用名"/>
             </a-form-item>
-            <a-form-item label="保存方式" has-feedback>
-                <a-select placeholder="请选择保存方式"
-                          v-decorator="saveTypeDecorator"
+            <a-form-item label="保存方式">
+                <a-select class="add-form-input"
+                          placeholder="请选择保存方式"
+                          v-decorator="preservationMethodDecorator"
                 >
-                    <a-select-option value="1">
-                        xxx
-                    </a-select-option>
-                    <a-select-option value="2">
-                        xxx
-                    </a-select-option>
+                    <a-select-option value="1">冷藏</a-select-option>
+                    <a-select-option value="2">常温</a-select-option>
+                    <a-select-option value="3">冷冻</a-select-option>
+                </a-select>
+            </a-form-item>
+            <a-form-item label="状态">
+                <a-select class="add-form-input"
+                          placeholder="请选择状态"
+                          v-decorator="statusDecorator"
+                >
+                    <a-select-option value="0">启用</a-select-option>
+                    <a-select-option value="1">停用</a-select-option>
                 </a-select>
             </a-form-item>
             <a-form-item label="规格">
-                <a-input
-                        v-decorator="specificationsDecorator"
-                        placeholder="请输入规格"/>
+                <a-input class="add-form-input"
+                         v-decorator="goodsSpecificationsDecorator"
+                         placeholder="请输入规格"/>
             </a-form-item>
             <a-form-item label="基本单位">
                 <div style="overflow: auto;width:1230px;">
                     <a-table
                             :columns="basicTableColumns"
-                            :data-source="basicTableData"
+                            :data-source="uintParams"
                             :pagination="false"
                     >
                         <div slot="unit" slot-scope="scope,sItem,sIndex,extra">
@@ -139,21 +143,18 @@
                             />
                         </div>
                         <div slot="protein" slot-scope="scope,sItem,sIndex,extra">
-                            <a-input
-                                    placeholder="请输入蛋白质"
-                                    v-model="sItem.protein"
+                            <a-input placeholder="请输入蛋白质"
+                                     v-model="sItem.protein"
                             />
                         </div>
                         <div slot="fat" slot-scope="scope,sItem,sIndex,extra">
-                            <a-input
-                                    placeholder="请输入脂肪"
-                                    v-model="sItem.fat"
+                            <a-input placeholder="请输入脂肪"
+                                     v-model="sItem.fat"
                             />
                         </div>
                         <div slot="carbohydrate" slot-scope="scope,sItem,sIndex,extra">
-                            <a-input
-                                    placeholder="请输入碳水化合物"
-                                    v-model="sItem.carbohydrate"
+                            <a-input placeholder="请输入碳水化合物"
+                                     v-model="sItem.carbohydrate"
                             />
                         </div>
                     </a-table>
@@ -162,7 +163,8 @@
             <a-row style="margin-top: -20px;margin-bottom:20px;">
                 <a-col :offset="4">
                     <a-form-item label="">
-                        <a-input type="hidden"
+                        <a-input class="add-form-input"
+                                 type="hidden"
                                  v-decorator="basicUnitDecorator"
                         />
                     </a-form-item>
@@ -174,15 +176,15 @@
                 </a-col>
             </a-row>
             <a-form-item label="商品图片">
-                <div class="dropbox">
+                <div class="add-form-input">
                     <a-upload-dragger
                             action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                             list-type="picture-card"
-                            @change="uploadHandleChange"
+                            @change="uploadHandleChange($event,'goodsImg','goodsImgThumbUrl')"
                             :show-upload-list="false"
                     >
-                        <img v-if="commodityImageThumbUrl"
-                             :src="commodityImageThumbUrl"
+                        <img v-if="goodsImgThumbUrl"
+                             :src="goodsImgThumbUrl"
                              class="upload-default-img"
                              alt=""/>
                         <p v-else class="ant-upload-drag-icon">
@@ -190,24 +192,24 @@
                         </p>
                         <p>点击上传证件</p>
                     </a-upload-dragger>
-                    <p style="width:calc((100vw - 200px) * .65)">
+                    <p class="nowrap">
                         大小：500K，格式:jpeg、png，建议700*700，最多可上传7张图片，*图片按照顺序显示，第一张图片默认为主图</p>
-                    <a-input
-                            type="hidden"
-                            v-decorator="businessLicenseDecorator"
+                    <a-input class="add-form-input"
+                             type="hidden"
+                             v-decorator="goodsImgDecorator"
                     />
                 </div>
             </a-form-item>
-            <!--            </div>-->
             <a-form-item label="商品介绍️">
                 <VueQuillEditor ref="myTextEditor"
                                 style="width:calc((100vw - 200px) * .65);min-width: 800px"
                                 class="editor"
-                                v-model="productDescription"
+                                v-model="goodsDetails"
                                 :options="quillOption"
                                 @change="onEditorChange"
                 ></VueQuillEditor>
-                <a-input type="hidden"/>
+                <a-input class="add-form-input"
+                         type="hidden"/>
             </a-form-item>
             <a-form-item :wrapper-col="{ span: 4, offset: 5 }">
                 <a-button type="primary" html-type="submit">
@@ -221,8 +223,10 @@
     import { formItemLayout } from '@/utils/layout.ts';
     import VueQuillEditor from 'vue-quill-editor/src/editor';
     import GoBackButton from '@/components/goBackButton.vue';
+    import { uploadHandleChange } from '../../utils/upload';
+
     //  基本单位表格
-    const basicTableData = [
+    const uintParams = [
         {
             key: Math.random(),
             name: '基本单位',
@@ -328,11 +332,11 @@
         computed: {
             //  网络环境
             isLocalAreaNetwork(){
-                return this.$store.state.userInfo.isLocalAreaNetwork;
+                return this.$store.state.login.isLocalAreaNetwork;
             },
             //  是否展示添加按钮
             isAddBtn(){
-                return this.basicTableData.length === 2;
+                return this.uintParams.length === 2;
             }
         },
         data(){
@@ -342,77 +346,84 @@
                 //  表单大小
                 formItemLayout,
                 //  商品名称
-                commodityNameDecorator: ['commodityName', {
+                goodsNameDecorator: ['goodsName', {
                     rules: [{
                         required: true,
                         message: '请输入商品名称'
                     },]
                 }],
                 //  商品货号
-                itemNoDecorator: ['itemNo', {
+                goodsProductCodeDecorator: ['goodsProductCode', {
                     rules: [{
                         required: true,
                         message: '请输入商品货号'
                     },]
                 }],
                 //  商品条码
-                barcodeDecorator: ['barcode', {
+                goodsBarCodeDecorator: ['goodsBarCode', {
                     rules: [{
                         required: true,
-                        message: '请选择商品条码'
+                        message: '请输入商品条码'
                     },]
                 }],
                 //  商品关键字
-                keywordsDecorator: ['keywords', {
+                goodsKeyWordDecorator: ['goodsKeyWord', {
                     rules: [{
                         required: true,
                         message: '请输入商品关键字'
                     },]
                 }],
                 //  商品分类
-                classificationDecorator: ['classification', {
+                goodsCategoryIdDecorator: ['goodsCategoryId', {
                     rules: [{
                         required: true,
                         message: '请选择商品分类'
                     },]
                 }],
                 //  商品品牌
-                brandDecorator: ['brand', {
+                goodsBrandIdDecorator: ['goodsBrandId', {
                     rules: [{
                         required: true,
                         message: '请选择商品品牌'
                     },]
                 }],
                 //  供应商
-                supplierDecorator: ['supplier', {
+                supplierIdDecorator: ['supplierId', {
                     rules: [{
                         required: true,
                         message: '请选择供应商'
                     },]
                 }],
-                //  供应商
-                manufacturerDecorator: ['manufacturer', {
+                //  厂家
+                manufactorIdDecorator: ['manufactorId', {
                     rules: [{
                         required: true,
-                        message: '请输入供应商'
+                        message: '请输入厂家'
                     },]
                 }],
                 //  通用名
-                commonNameDecorator: ['commonName', {
+                goodsTradeNameDecorator: ['goodsTradeName', {
                     rules: [{
                         required: true,
                         message: '请输入通用名'
                     },]
                 }],
                 //  保存方式
-                saveTypeDecorator: ['saveType', {
+                preservationMethodDecorator: ['preservationMethod', {
                     rules: [{
                         required: true,
                         message: '请选择保存方式'
                     },]
                 }],
+                //  状态
+                statusDecorator: ['status', {
+                    rules: [{
+                        required: true,
+                        message: '请选择状态'
+                    },]
+                }],
                 //  规格
-                specificationsDecorator: ['specifications', {
+                goodsSpecificationsDecorator: ['goodsSpecifications', {
                     rules: [{
                         required: true,
                         message: '请输入规格'
@@ -427,17 +438,18 @@
                 }],
 
                 //  商品图片
-                businessLicenseDecorator: ['commodityImage', {
+                goodsImgDecorator: ['goodsImg', {
                     rules: [{
                         required: true,
                         message: '请上传商品图片'
                     },]
                 }],
-                //  商品介绍富文本
-                productDescription: '1221',
 
                 //  商品图片的封面
-                commodityImageThumbUrl: '',
+                goodsImgThumbUrl: '',
+
+                //  商品介绍富文本
+                goodsDetails: '',
 
                 //  第一种富文本
                 quillOption: {
@@ -446,26 +458,19 @@
 
                 //  基本单位表格
                 basicTableColumns,
-                basicTableData,
+                uintParams,
             };
         },
         created(){
             console.log('是编辑？', !!this.commodityId);
             //  如果是新增，并且是院内
             if (!this.commodityId && this.isLocalAreaNetwork) {
-                this.basicTableData.push(standardUnit);
+                this.uintParams.push(standardUnit);
             }
-//            let aaa = 0
-//            this.basicTableColumns.forEach((item) => {
-//                aaa+=item.width
-//            });
-//            console.log(aaa);
-
-        },
-        created(){
-            this.searchFn();
         },
         methods: {
+            //  上传图片通用方法
+            uploadHandleChange,
             //  主要请求
             searchFn(){
 //                requestChannelBusinessPage(paginationEncode(this.pagination))
@@ -480,35 +485,24 @@
 //                        this.pagination = paginationDecode(this.pagination, data);
 //                    });
             },
+
             //  添加辅助单位
             addAuxiliaryUnits(){
-                this.basicTableData.push(auxiliaryUnitsData);
+                this.uintParams.push(auxiliaryUnitsData);
             },
             //  自动分词，商品关键字用
             autoSplitChange(value){
                 console.log(`selected ${value}`);
             },
-            //  营业执照
-            uploadHandleChange({ fileList }){
-                const { response } = fileList[0];
-                if (response && response.status === 'done') {
-                    //  console.log(this);
-                    //  console.log('封面', response.thumbUrl);
-                    //  console.log('图片', response.url);
-                    this.form.setFieldsValue({
-                        commodityImage: response.url,
-                    });
-                    this.commodityImageThumbUrl = response.thumbUrl;
-                }
-            },
+
             //  第一种编辑好富文本
             onEditorChange(data){
-                this.productDescription = data.html;
+                this.goodsDetails = data.html;
             },
             //  基础单位变化，造成基础单位表单验证的结果
             basicUnitCheck(){
                 let basicUnit = 1;
-                for (let i = 0; i < this.basicTableData.length; i++) {
+                for (let i = 0; i < this.uintParams.length; i++) {
                     const {
                         unit,
                         unitRelations,
@@ -517,7 +511,7 @@
                         protein,
                         fat,
                         carbohydrate,
-                    } = this.basicTableData[i];
+                    } = this.uintParams[i];
                     if (unit === undefined
                         || unitRelations === null
                         || price === null
@@ -540,12 +534,11 @@
                 this.basicUnitCheck();
                 this.$nextTick(() => {
                     this.form.validateFields((err, values) => {
-                        console.log(err);
-                        console.table(values);
-                        console.log(values.keywords);
-                        if (!err) {
-                            console.log('Received values of form: ', values);
+                        if (err) {
+                            return;
                         }
+                        console.table(values);
+                        console.log(this.uintParams);
                     });
                 });
             },
