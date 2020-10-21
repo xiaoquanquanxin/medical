@@ -131,6 +131,9 @@
                             .then(v => {
                                 console.log(v);
                                 resolve();
+                            })
+                            .catch(err => {
+                                reject(err);
                             });
                     });
                 });

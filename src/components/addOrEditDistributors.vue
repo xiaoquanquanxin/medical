@@ -81,7 +81,11 @@
 <script>
     import { formItemLayout } from '@/utils/layout.ts';
     import { compareToFirstPassword } from '@/utils/validate';
-    import { requestChannelBusinessInsert } from '../api/distributors';
+    import {
+        requestChannelBusinessGet,
+        requestChannelBusinessInsert,
+        requestChannelBusinessUpdate
+    } from '../api/distributors';
 
     //  新增或编辑渠道商
     export default {
@@ -160,6 +164,7 @@
         created(){
             this.handleSubmit.bind(this);
             console.log('是编辑？', !!this.channelId);
+            this.searchFn();
         },
         mounted(){
             //  如果是编辑
@@ -170,23 +175,19 @@
                 });
             }
         },
-        created(){
-            this.searchFn();
-        },
         methods: {
             //  主要请求
             searchFn(){
-//                requestChannelBusinessPage(paginationEncode(this.pagination))
-//                    .then(v => {
-//                        const { data } = v;
-//                        console.log(data);
-//                data.records.forEach((item, index) => {
-//                    item.key = index;
-//                    item.createTime = item.createTime.substr(0, 10);
-//                });
-//                        this.data = data.records;
-//                        this.pagination = paginationDecode(this.pagination, data);
-//                    });
+                //  如果是新增
+                if (!this.channelId) {
+                    return;
+                }
+                //  如果是编辑
+                requestChannelBusinessGet(this.channelId)
+                    .then(v => {
+                        const { data } = v;
+                        console.log(data);
+                    });
             },
             //  与第一密码比较，用于确认密码
             compareToFirstPassword,
@@ -195,12 +196,25 @@
                 return new Promise((resolve, reject) => {
                     this.form.validateFields((err, values) => {
                         console.log(values);
-                        return;
-                        if (!err) {
-                            resolve();
-                        } else {
+                        if (err) {
                             reject();
+                            return;
                         }
+                        return (() => {
+                            //  如果是新增
+                            if (!this.channelId) {
+                                return requestChannelBusinessInsert(this.channelId);
+                            }
+                            //  如果是编辑
+                            return requestChannelBusinessUpdate(this.channelId);
+                        })()
+                            .then(v => {
+                                console.log(v);
+                                resolve();
+                            })
+                            .catch(err => {
+                                reject(err);
+                            });
                     });
                 });
             },

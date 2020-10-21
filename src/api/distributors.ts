@@ -9,7 +9,7 @@ export function requestChannelBusinessPage(data: any) {
 	});
 }
 
-//	新增渠道商		✅但是需要修改字段
+//	新增渠道商		❌，需要修改字段
 export function requestChannelBusinessInsert(data: any) {
 	return request({
 		url: '/api/channelBusiness/insert',
