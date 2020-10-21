@@ -73,10 +73,6 @@
                 confirmPasswordDecorator: ['confirmPassword', {
                     rules: [
                         {
-                            required: true,
-                            message: '请输入确认密码'
-                        },
-                        {
                             validator: this.compareToFirstPassword('password'),
                         }
                     ]

@@ -7,24 +7,22 @@
                 autocomplete="off"
         >
             <a-form-item label="渠道商名称">
-                <a-input
-                        v-decorator="distributorsNameDecorator"
-                        placeholder="请输入渠道商名称"
+                <a-input class="add-form-input"
+                         v-decorator="channelBusinessNameDecorator"
+                         placeholder="请输入渠道商名称"
                 />
             </a-form-item>
             <a-form-item label="渠道商编码">
-                <a-input
-                        v-decorator="distributorsCodeDecorator"
-                        placeholder="请输入渠道商编码"
+                <a-input class="add-form-input"
+                         v-decorator="channelBusinessNumberDecorator"
+                         placeholder="请输入渠道商编码"
                 />
             </a-form-item>
             <a-form-item label="渠道商地区-省份">
-                <a-select
-                        v-decorator="provinceDecorator"
+                <a-select class="add-form-input"
+                          v-decorator="provinceDecorator"
+                          placeholder="请选择渠道商地区-省份"
                 >
-                    <a-select-option value="">
-                        渠道商地区-省份
-                    </a-select-option>
                     <a-select-option value="1">
                         山西
                     </a-select-option>
@@ -34,12 +32,10 @@
                 </a-select>
             </a-form-item>
             <a-form-item label="渠道商地区-市区">
-                <a-select
-                        v-decorator="cityDecorator"
+                <a-select class="add-form-input"
+                          v-decorator="cityDecorator"
+                          placeholder="请选择渠道商地区-市区"
                 >
-                    <a-select-option value="">
-                        渠道商地区-市区
-                    </a-select-option>
                     <a-select-option value="1">
                         晋中
                     </a-select-option>
@@ -49,12 +45,10 @@
                 </a-select>
             </a-form-item>
             <a-form-item label="选择仓库">
-                <a-select
-                        v-decorator="warehouseDecorator"
+                <a-select class="add-form-input"
+                          v-decorator="warehouseDecorator"
+                          placeholder="请选择仓库"
                 >
-                    <a-select-option value="">
-                        请选择仓库
-                    </a-select-option>
                     <a-select-option value="1">
                         aaa
                     </a-select-option>
@@ -64,21 +58,21 @@
                 </a-select>
             </a-form-item>
             <a-form-item label="登录账户">
-                <a-input
-                        v-decorator="loginAccountDecorator"
-                        placeholder="请输入登录账户"
+                <a-input class="add-form-input"
+                         v-decorator="loginAccountDecorator"
+                         placeholder="请输入登录账户"
                 />
             </a-form-item>
             <a-form-item label="登录密码">
-                <a-input
-                        v-decorator="passwordDecorator"
-                        placeholder="请输入登录密码"
+                <a-input class="add-form-input"
+                         v-decorator="passwordDecorator"
+                         placeholder="请输入登录密码"
                 />
             </a-form-item>
-            <a-form-item label="确认密码">
-                <a-input
-                        v-decorator="confirmPasswordDecorator"
-                        placeholder="请输入确认密码"
+            <a-form-item label="确认密码" required>
+                <a-input class="add-form-input"
+                         v-decorator="confirmPasswordDecorator"
+                         placeholder="请输入确认密码"
                 />
             </a-form-item>
         </a-form>
@@ -87,6 +81,7 @@
 <script>
     import { formItemLayout } from '@/utils/layout.ts';
     import { compareToFirstPassword } from '@/utils/validate';
+    import { requestChannelBusinessInsert } from '../api/distributors';
 
     //  新增或编辑渠道商
     export default {
@@ -104,14 +99,14 @@
             return {
                 formItemLayout,
                 //  渠道商名称
-                distributorsNameDecorator: ['hospitalName', {
+                channelBusinessNameDecorator: ['channelBusinessName', {
                     rules: [{
                         required: true,
                         message: '请输入渠道商名称'
                     },]
                 }],
                 //  渠道商编码
-                distributorsCodeDecorator: ['distributorsCode', {
+                channelBusinessNumberDecorator: ['channelBusinessNumber', {
                     rules: [{
                         required: true,
                         message: '请输入渠道商编码'
@@ -156,10 +151,6 @@
                 confirmPasswordDecorator: ['confirmPassword', {
                     rules: [
                         {
-                            required: true,
-                            message: '请输入确认密码'
-                        },
-                        {
                             validator: this.compareToFirstPassword('password'),
                         }
                     ]
@@ -201,25 +192,18 @@
             compareToFirstPassword,
             //    表单提交
             handleSubmit(){
-                return new Promise(((resolve, reject) => {
+                return new Promise((resolve, reject) => {
                     console.log(this.form);
                     this.form.validateFields((err, values) => {
                         console.log(values);
+                        return;
                         if (!err) {
                             resolve();
                         } else {
                             reject();
                         }
                     });
-                }))
-                    .then(v => {
-                        return new Promise(((resolve, reject) => {
-                            console.log('发请求吧');
-                            setTimeout(() => {
-                                resolve();
-                            }, 1000);
-                        }));
-                    });
+                });
             },
         },
     };

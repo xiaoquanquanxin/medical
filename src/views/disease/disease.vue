@@ -127,7 +127,7 @@
                         });
                         this.data = data.records;
                         this.pagination = paginationDecode(this.pagination, data);
-                        
+                        console.log(data);
                     });
             },
             //  展示的每一页数据变换

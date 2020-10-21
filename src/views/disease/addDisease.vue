@@ -11,8 +11,18 @@
         >
             <a-form-item label="疾病名称">
                 <a-input
+                        class="add-form-input"
                         v-decorator="diseaseNameDecorator"
+                        placeholder="请输入科室名称"
                 />
+            </a-form-item>
+            <a-form-item label="状态">
+                <a-select v-decorator="statusDecorator"
+                          class="add-form-input"
+                          placeholder="请选择状态">
+                    <a-select-option :value="0">停用</a-select-option>
+                    <a-select-option :value="1">启用</a-select-option>
+                </a-select>
             </a-form-item>
             <a-form-item :wrapper-col="{ span: 4, offset: 5 }">
                 <a-button type="primary" html-type="submit">
@@ -25,6 +35,7 @@
 <script>
     import { formItemLayout } from '@/utils/layout.ts';
     import GoBackButton from '@/components/goBackButton.vue';
+    import { requestDiseaseSave } from '../../api/disease';
 
     export default {
         components: {
@@ -41,14 +52,17 @@
                 formItemLayout,
                 //  疾病名称
                 diseaseNameDecorator: ['diseaseName', {
-                    initialValue: '普通疾病',
-                    rules: [{
-                        max: 11,
-                        message: '最多11位',
-                    }, {
+                    rules: [ {
                         required: true,
                         message: '请输入疾病名称'
                     },]
+                }],
+                //  状态 0 启动 1 停用
+                statusDecorator: ['status', {
+                    rules: [{
+                        required: true,
+                        message: '请选择状态'
+                    }]
                 }],
             };
         },
@@ -78,10 +92,12 @@
             handleSubmit(e){
                 e.preventDefault();
                 this.form.validateFields((err, values) => {
-                    console.log(err);
                     console.table(values);
                     if (!err) {
-                        console.log('Received values of form: ', values);
+                        requestDiseaseSave(values)
+                            .then(v => {
+                                console.log(v);
+                            });
                     }
                 });
             },

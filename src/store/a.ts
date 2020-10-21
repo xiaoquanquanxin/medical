@@ -1,96 +1,96 @@
 export const routeMap = {
 	//	仓库管理
-	'entrepot': false,
+	'entrepot': true,
 	//	渠道商管理
-	'distributors': false,
+	'distributors': true,
 	//	供应商管理
-	'supplier': false,
+	'supplier': true,
 	//	新增供应商
-	'addSupplier': false,
+	'addSupplier': true,
 	//	编辑供应商
-	'editSupplier': false,
+	'editSupplier': true,
 	//	用户管理【平台用户】
-	'platformUser': false,
+	'platformUser': true,
 	//	普通用户
-	'ordinaryUser': false,
+	'ordinaryUser': true,
 	//	患者用户
-	'patientsUser': false,
+	'patientsUser': true,
 	//  商品管理
-	'commodity': false,
+	'commodity': true,
 	//	商品列表
-	'commodityList': false,
+	'commodityList': true,
 	//  添加商品
-	'addCommodity': false,
+	'addCommodity': true,
 	//  编辑商品
-	'editCommodity': false,
+	'editCommodity': true,
 	//	分类管理
-	'commodityClassification': false,
+	'commodityClassification': true,
 	//	品牌管理
-	'brand': false,
+	'brand': true,
 	//	生产厂家管理
-	'manufacturer': false,
+	'manufacturer': true,
 	//  医院管理
-	'hospital': false,
+	'hospital': true,
 	//  新增医院
-	'addHospital': false,
+	'addHospital': true,
 	//	编辑医院
-	'editHospital': false,
+	'editHospital': true,
 	//  科室管理
-	'department': false,
+	'department': true,
 	//  新增科室
-	'addDepartment': false,
+	'addDepartment': true,
 	//  编辑科室
-	'editDepartment': false,
+	'editDepartment': true,
 	//  疾病管理
-	'disease': false,
+	'disease': true,
 	//  新增疾病
-	'addDisease': false,
+	'addDisease': true,
 	//  编辑疾病
-	'editDisease': false,
+	'editDisease': true,
 
 	//  处方模板管理
-	'scheme': false,
+	'scheme': true,
 	//	口服肠内营养补充
-	'oral': false,
+	'oral': true,
 	//	新增口服肠内营养补充
-	'addOral': false,
+	'addOral': true,
 	//	编辑口服肠内营养补充
-	'editOral': false,
+	'editOral': true,
 	//	肠内营养支持
-	'intestinal': false,
+	'intestinal': true,
 	//	新增肠内营养支持
-	'addIntestinal': false,
+	'addIntestinal': true,
 	//	编辑肠内营养支持
-	'editIntestinal': false,
+	'editIntestinal': true,
 	//	膳食营养计划
-	'dietary': false,
+	'dietary': true,
 	//	新增
-	'addDietary': false,
+	'addDietary': true,
 	//	编辑
-	'editDietary': false,
+	'editDietary': true,
 
 	//	评估调查表管理
-	'questionnaire': false,
+	'questionnaire': true,
 	//	新增评估调查表
-	'addQuestionnaire': false,
+	'addQuestionnaire': true,
 	//	编辑评估调查表
-	'editQuestionnaire': false,
+	'editQuestionnaire': true,
 
 	//	暂停⏸️
 	// //  宣教管理
-	// 'mission': false,
+	// 'mission': true,
 	//	新增宣教
-	'addMission': false,
+	'addMission': true,
 	//	编辑宣教
-	'editMission': false,
+	'editMission': true,
 	//  系统管理
-	'system': false,
+	'system': true,
 	//  修改密码
-	'changePassword': false,
+	'changePassword': true,
 	//  角色管理
-	'role': false,
+	'role': true,
 	//  账号管理
-	'account': false,
+	'account': true,
 
 
 	/**
@@ -100,7 +100,7 @@ export const routeMap = {
 
 	//	重复🐦
 	// //	商品查看
-	// 'viewGoods': false,
+	// 'viewGoods': true,
 
 
 	/**
@@ -109,36 +109,36 @@ export const routeMap = {
 	 * */
 	//	重复🐦
 	// //	商品管理
-	// 'distributorsGoods': false,
+	// 'distributorsGoods': true,
 
 	//  医生管理
-	'doctor': false,
+	'doctor': true,
 	//  新增医生
-	'addDoctor': false,
+	'addDoctor': true,
 	//  编辑医生
-	'editDoctor': false,
+	'editDoctor': true,
 	//	订单管理
-	'order': false,
+	'order': true,
 	//	订单详情
-	'orderDetail': false,
+	'orderDetail': true,
 	//	库房管理
-	'warehouse': false,
+	'warehouse': true,
 	//	商品库存
-	'inventory': false,
+	'inventory': true,
 	//	医院采购订单
-	'purchaseOrder': false,
+	'purchaseOrder': true,
 	//	医院退货订单
-	'salesReturnOrder': false,
+	'salesReturnOrder': true,
 	//	出库
-	'outbound': false,
+	'outbound': true,
 	//	入库
-	'putInStorage': false,
+	'putInStorage': true,
 	//	报损
-	'reportedLoss': false,
+	'reportedLoss': true,
 	//	采购单
-	'purchaseList': false,
+	'purchaseList': true,
 	//	出货退货单
-	'shipmentReturn': false,
+	'shipmentReturn': true,
 
 
 	/**
@@ -148,7 +148,7 @@ export const routeMap = {
 
 	//	🍎🍎🍎🍎🍎营养方案系统
 	// 	用户列表
-	'userList': true,
+	'userList': false,
 	//	病人信息
 	'patientInfo': true,
 	//	筛查
