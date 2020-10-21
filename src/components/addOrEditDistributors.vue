@@ -193,7 +193,6 @@
             //    表单提交
             handleSubmit(){
                 return new Promise((resolve, reject) => {
-                    console.log(this.form);
                     this.form.validateFields((err, values) => {
                         console.log(values);
                         return;

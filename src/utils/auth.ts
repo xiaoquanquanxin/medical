@@ -4,7 +4,7 @@ const TOKEN = 'Authorization'
 const USER_INFO = 'USER_INFO'
 
 export function getJwt(): string {
-	return getStorage(TOKEN) || '';
+	return getStorage(TOKEN) || '1';
 }
 
 export function setJwt(token: string) {
