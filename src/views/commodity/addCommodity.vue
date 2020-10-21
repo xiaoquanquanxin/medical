@@ -31,9 +31,9 @@
                           mode="tags"
                           placeholder="请输入商品关键字"
                           :token-separators="[',']"
-                          v-decorator="goodsKeyWordDecorator"
                           @change="autoSplitChange"
                 />
+                <a-input type="hidden" v-decorator="goodsKeyWordDecorator"/>
             </a-form-item>
             <a-form-item label="商品分类">
                 <a-select class="add-form-input"
@@ -111,50 +111,46 @@
             <a-form-item label="基本单位">
                 <div style="overflow: auto;width:1230px;">
                     <a-table
-                            :columns="basicTableColumns"
+                            :columns="columns"
                             :data-source="uintParams"
                             :pagination="false"
                     >
-                        <div slot="unit" slot-scope="scope,sItem,sIndex,extra">
-                            <a-select placeholder="请选择单位"
-                                      v-model="sItem.unit"
-                            >
-                                <a-select-option value="1">
-                                    xxx
-                                </a-select-option>
-                                <a-select-option value="2">
-                                    xxx
-                                </a-select-option>
-                            </a-select>
+                        <div slot="uname" slot-scope="scope,sItem,sIndex,extra">
+                            <a-input placeholder="请输入单位" v-model="sItem.uname"/>
                         </div>
-                        <div slot="unitRelations" slot-scope="scope,sItem,sIndex,extra">
+                        <div slot="unitExchangeRate" slot-scope="scope,sItem,sIndex,extra">
                             <a-input placeholder="请输入单位关系"
-                                     v-model="sItem.unitRelations"
+                                     v-model="sItem.unitExchangeRate"
                             />
                         </div>
-                        <div slot="price" slot-scope="scope,sItem,sIndex,extra">
+                        <div slot="unitPrice" slot-scope="scope,sItem,sIndex,extra">
                             <a-input placeholder="请输入价格"
-                                     v-model="sItem.price"
+                                     v-model="sItem.unitPrice"
                             />
                         </div>
-                        <div slot="energy" slot-scope="scope,sItem,sIndex,extra">
+                        <div slot="unitEnergy" slot-scope="scope,sItem,sIndex,extra">
                             <a-input placeholder="请输入能量"
-                                     v-model="sItem.energy"
+                                     v-model="sItem.unitEnergy"
                             />
                         </div>
-                        <div slot="protein" slot-scope="scope,sItem,sIndex,extra">
+                        <div slot="unitProtein" slot-scope="scope,sItem,sIndex,extra">
                             <a-input placeholder="请输入蛋白质"
-                                     v-model="sItem.protein"
+                                     v-model="sItem.unitProtein"
                             />
                         </div>
-                        <div slot="fat" slot-scope="scope,sItem,sIndex,extra">
+                        <div slot="unitFat" slot-scope="scope,sItem,sIndex,extra">
                             <a-input placeholder="请输入脂肪"
-                                     v-model="sItem.fat"
+                                     v-model="sItem.unitFat"
                             />
                         </div>
-                        <div slot="carbohydrate" slot-scope="scope,sItem,sIndex,extra">
+                        <div slot="unitCarbohydrate" slot-scope="scope,sItem,sIndex,extra">
                             <a-input placeholder="请输入碳水化合物"
-                                     v-model="sItem.carbohydrate"
+                                     v-model="sItem.unitCarbohydrate"
+                            />
+                        </div>
+                        <div slot="unitValue" slot-scope="scope,sItem,sIndex,extra">
+                            <a-input placeholder="请输入使用单位"
+                                     v-model="sItem.unitValue"
                             />
                         </div>
                     </a-table>
@@ -224,103 +220,45 @@
     import VueQuillEditor from 'vue-quill-editor/src/editor';
     import GoBackButton from '@/components/goBackButton.vue';
     import { uploadHandleChange } from '../../utils/upload';
+    import { requestGoodsInsert, requestGoodsUpdate } from '../../api/commodity';
 
-    //  基本单位表格
     const uintParams = [
         {
             key: Math.random(),
             name: '基本单位',
-            unit: undefined,
-            unitRelations: null,
-            price: null,
-            energy: null,
-            protein: null,
-            fat: null,
-            carbohydrate: null,
+            uname: '',
+            unitExchangeRate: '',
+            unitPrice: '',
+            unitEnergy: '',
+            unitProtein: '',
+            unitFat: '',
+            unitCarbohydrate: '',
         },
     ];
     //  标准单位
     const standardUnit = {
         key: Math.random(),
         name: '标准单位',
-        unit: undefined,
-        unitRelations: null,
-        price: null,
-        energy: null,
-        protein: null,
-        fat: null,
-        carbohydrate: null,
+        uname: '',
+        unitExchangeRate: '',
+        unitPrice: '',
+        unitEnergy: '',
+        unitProtein: '',
+        unitFat: '',
+        unitCarbohydrate: '',
     };
     //  辅助单位
     const auxiliaryUnitsData = {
         key: Math.random(),
         name: '辅助单位',
-        unit: undefined,
-        unitRelations: null,
-        price: null,
-        energy: null,
-        protein: null,
-        fat: null,
-        carbohydrate: null,
+        uname: '',
+        unitExchangeRate: '',
+        unitPrice: '',
+        unitEnergy: '',
+        unitProtein: '',
+        unitFat: '',
+        unitCarbohydrate: '',
     };
-    //  基本单位表格
-    const basicTableColumns = [
-        {
-            title: '',
-            key: '类型',
-            dataIndex: 'name',
-            width: 100,
-        },
-        {
-            title: '单位',
-            key: 'unit',
-            dataIndex: 'unit',
-            width: 150,
-            scopedSlots: { customRender: 'unit' }
-        },
-        {
-            title: '单位关系',
-            key: 'unitRelations',
-            dataIndex: 'unitRelations',
-            width: 200,
-            scopedSlots: { customRender: 'unitRelations' }
-        },
-        {
-            title: '价格',
-            key: 'price',
-            dataIndex: 'price',
-            width: 150,
-            scopedSlots: { customRender: 'price' }
-        },
-        {
-            title: '能量kcal',
-            key: 'energy',
-            dataIndex: 'energy',
-            width: 150,
-            scopedSlots: { customRender: 'energy' }
-        },
-        {
-            title: '蛋白质g',
-            key: 'protein',
-            dataIndex: 'protein',
-            width: 150,
-            scopedSlots: { customRender: 'protein' }
-        },
-        {
-            title: '脂肪g',
-            key: 'fat',
-            dataIndex: 'fat',
-            width: 150,
-            scopedSlots: { customRender: 'fat' }
-        },
-        {
-            title: '碳水化合物g',
-            key: 'carbohydrate',
-            dataIndex: 'carbohydrate',
-            width: 180,
-            scopedSlots: { customRender: 'carbohydrate' }
-        }
-    ];
     export default {
         components: {
             GoBackButton,
@@ -457,16 +395,73 @@
                 },
 
                 //  基本单位表格
-                basicTableColumns,
+                columns: [],
                 uintParams,
             };
         },
         created(){
             console.log('是编辑？', !!this.commodityId);
-            //  如果是新增，并且是院内
-            if (!this.commodityId && this.isLocalAreaNetwork) {
+            //  基本单位表格
+            const columns = [
+                {
+                    title: '',
+                    key: '类型',
+                    dataIndex: 'name',
+                    width: 100,
+                },
+                {
+                    title: '单位',
+                    width: 100,
+                    scopedSlots: { customRender: 'uname' }
+                },
+                {
+                    title: '单位关系',
+                    width: 120,
+                    scopedSlots: { customRender: 'unitExchangeRate' }
+                },
+                {
+                    title: '价格',
+                    width: 100,
+                    scopedSlots: { customRender: 'unitPrice' }
+                },
+                {
+                    title: '能量kcal',
+                    width: 100,
+                    scopedSlots: { customRender: 'unitEnergy' }
+                },
+                {
+                    title: '蛋白质g',
+                    width: 120,
+                    scopedSlots: { customRender: 'unitProtein' }
+                },
+                {
+                    title: '脂肪g',
+                    width: 100,
+                    scopedSlots: { customRender: 'unitFat' }
+                },
+                {
+                    title: '碳水化合物g',
+                    width: 150,
+                    scopedSlots: { customRender: 'unitCarbohydrate' }
+                }
+            ];
+            //  如果是院内
+            if (this.isLocalAreaNetwork) {
+                columns.splice(2, 1);
+                columns.push({
+                    title: '使用单位',
+                    width: 120,
+                    scopedSlots: { customRender: 'unitValue' }
+                });
+            } else {
                 this.uintParams.push(standardUnit);
             }
+            //  单位列表院内/院外
+            this.uintParams.forEach((item => {
+                item.type = this.isLocalAreaNetwork ? 1 : 2;
+            }));
+            //  设置表格列的意义
+            this.columns = columns;
         },
         methods: {
             //  上传图片通用方法
@@ -485,14 +480,15 @@
 //                        this.pagination = paginationDecode(this.pagination, data);
 //                    });
             },
-
             //  添加辅助单位
             addAuxiliaryUnits(){
                 this.uintParams.push(auxiliaryUnitsData);
             },
             //  自动分词，商品关键字用
             autoSplitChange(value){
-                console.log(`selected ${value}`);
+                this.form.setFieldsValue({
+                    goodsKeyWord: value.toString(),
+                });
             },
 
             //  第一种编辑好富文本
@@ -504,21 +500,28 @@
                 let basicUnit = 1;
                 for (let i = 0; i < this.uintParams.length; i++) {
                     const {
-                        unit,
-                        unitRelations,
-                        price,
-                        energy,
-                        protein,
-                        fat,
-                        carbohydrate,
+                        uname,
+                        unitPrice,
+                        unitEnergy,
+                        unitProtein,
+                        unitFat,
+                        unitCarbohydrate,
+                        unitValue,
+                        unitExchangeRate,
                     } = this.uintParams[i];
-                    if (unit === undefined
-                        || unitRelations === null
-                        || price === null
-                        || energy === null
-                        || protein === null
-                        || fat === null
-                        || carbohydrate === null
+                    if (uname === ''
+                        || unitPrice === ''
+                        || unitEnergy === ''
+                        || unitProtein === ''
+                        || unitFat === ''
+                        || unitCarbohydrate === ''
+                    ) {
+                        basicUnit = '';
+                        break;
+                    }
+                    //  如果是院内
+                    if ((this.isLocalAreaNetwork && unitValue === '')
+                        || (!this.isLocalAreaNetwork && unitExchangeRate === '')
                     ) {
                         basicUnit = '';
                         break;
@@ -528,17 +531,35 @@
                     basicUnit,
                 });
             },
-            //    表单提交
+            //  保存
             handleSubmit(e){
                 e.preventDefault();
                 this.basicUnitCheck();
                 this.$nextTick(() => {
                     this.form.validateFields((err, values) => {
+                        console.log(values.goodsKeyWord);
+                        console.log(values);
                         if (err) {
                             return;
                         }
                         console.table(values);
                         console.log(this.uintParams);
+                        const data = Object.assign({}, values, this.uintParams);
+                        (() => {
+                            //  如果是新增
+                            if (!this.commodityId) {
+                                return requestGoodsInsert(data);
+                            }
+                            data.id = this.commodityId;
+                            //  如果是编辑
+                            return requestGoodsUpdate(data);
+                        })()
+                            .then(v => {
+                                console.log(v);
+                            })
+                            .catch(err => {
+                                console.log(err);
+                            });
                     });
                 });
             },
