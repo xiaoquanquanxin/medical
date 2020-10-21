@@ -220,7 +220,7 @@
     import VueQuillEditor from 'vue-quill-editor/src/editor';
     import GoBackButton from '@/components/goBackButton.vue';
     import { uploadHandleChange } from '../../utils/upload';
-    import { requestGoodsInsert, requestGoodsUpdate } from '../../api/commodity';
+    import { requestGoodsGet, requestGoodsInsert, requestGoodsUpdate } from '../../api/commodity';
 
     const uintParams = [
         {
@@ -400,6 +400,7 @@
             };
         },
         created(){
+            this.searchFn();
             console.log('是编辑？', !!this.commodityId);
             //  基本单位表格
             const columns = [
@@ -468,17 +469,16 @@
             uploadHandleChange,
             //  主要请求
             searchFn(){
-//                requestChannelBusinessPage(paginationEncode(this.pagination))
-//                    .then(v => {
-//                        const { data } = v;
-//                        console.log(data);
-//                data.records.forEach((item, index) => {
-//                    item.key = index;
-//                    item.createTime = item.createTime.substr(0, 10);
-//                });
-//                        this.data = data.records;
-//                        this.pagination = paginationDecode(this.pagination, data);
-//                    });
+                //  如果是新增
+                if (!this.commodityId) {
+                    return;
+                }
+                //  如果是编辑
+                requestGoodsGet(this.commodityId)
+                    .then(v => {
+                        const { data } = v;
+                        console.log(data);
+                    });
             },
             //  添加辅助单位
             addAuxiliaryUnits(){
