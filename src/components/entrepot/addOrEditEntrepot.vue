@@ -7,24 +7,22 @@
                 autocomplete="off"
         >
             <a-form-item label="仓库名称">
-                <a-input
-                        v-decorator="entrepotNameDecorator"
-                        placeholder="请输入仓库名称"
+                <a-input class="add-form-input"
+                         v-decorator="warehouseNameDecorator"
+                         placeholder="请输入仓库名称"
                 />
             </a-form-item>
             <a-form-item label="仓库编码">
-                <a-input
-                        v-decorator="entrepotCodeDecorator"
-                        placeholder="请输入仓库编码"
+                <a-input class="add-form-input"
+                         v-decorator="warehouseNumberDecorator"
+                         placeholder="请输入仓库编码"
                 />
             </a-form-item>
             <a-form-item label="渠道商地区-省份">
-                <a-select
-                        v-decorator="provinceDecorator"
+                <a-select class="add-form-input"
+                          v-decorator="provinceDecorator"
+                          placeholder="请选择渠道商地区-省份"
                 >
-                    <a-select-option value="">
-                        渠道商地区-省份
-                    </a-select-option>
                     <a-select-option value="1">
                         山西
                     </a-select-option>
@@ -34,12 +32,10 @@
                 </a-select>
             </a-form-item>
             <a-form-item label="渠道商地区-市区">
-                <a-select
-                        v-decorator="cityDecorator"
+                <a-select class="add-form-input"
+                          v-decorator="cityDecorator"
+                          placeholder="请选择渠道商地区-市区"
                 >
-                    <a-select-option value="">
-                        渠道商地区-市区
-                    </a-select-option>
                     <a-select-option value="1">
                         晋中
                     </a-select-option>
@@ -52,9 +48,10 @@
     </div>
 </template>
 <script>
-    import { mapGetters, mapActions } from 'vuex';
     import { formItemLayout } from '@/utils/layout.ts';
+    import { requestWarehouseGet, requestWarehouseInsert, requestWarehouseUpdate } from '../../api/entrepot';
 
+    //  新增、编辑仓库
     export default {
         computed: {
             entrepotId(){
@@ -68,14 +65,14 @@
             return {
                 formItemLayout,
                 //  仓库名称
-                entrepotNameDecorator: ['entrepotName', {
+                warehouseNameDecorator: ['warehouseName', {
                     rules: [{
                         required: true,
                         message: '请输入渠道商名称'
                     },]
                 }],
                 //  仓库编码
-                entrepotCodeDecorator: ['entrepotCode', {
+                warehouseNumberDecorator: ['warehouseNumber', {
                     rules: [{
                         required: true,
                         message: '请输入仓库编码'
@@ -98,48 +95,45 @@
             };
         },
         created(){
-            this.handleSubmit.bind(this);
-            console.log('是编辑？', !!this.entrepotId);
-        },
-        created(){
             this.searchFn();
         },
         methods: {
             //  主要请求
             searchFn(){
-//                requestChannelBusinessPage(paginationEncode(this.pagination))
-//                    .then(v => {
-//                        const { data } = v;
-//                        console.log(data);
-//                data.records.forEach((item, index) => {
-//                    item.key = index;
-//                    item.createTime = item.createTime.substr(0, 10);
-//                });
-//                        this.data = data.records;
-//                        this.pagination = paginationDecode(this.pagination, data);
-//                    });
+                //  如果是新增
+                if (!this.entrepotId) {
+                    return;
+                }
+                //  如果是编辑
+                requestWarehouseGet(this.entrepotId)
+                    .then(v => {
+                        const { data } = v;
+                        console.log(data);
+                    });
             },
             //    表单提交
             handleSubmit(){
-                return new Promise(((resolve, reject) => {
+                return new Promise((resolve, reject) => {
                     console.log(this.form);
                     this.form.validateFields((err, values) => {
-                        console.table(values);
-                        if (!err) {
-                            resolve();
-                        } else {
+                        console.log(values);
+                        if (err) {
                             reject();
+                            return;
                         }
-                    });
-                }))
-                    .then(v => {
-                        return new Promise(((resolve, reject) => {
-                            console.log('发请求吧');
-                            setTimeout(() => {
+                        return (() => {
+                            //  如果是新增
+                            if (!this.entrepotId) {
+                                return requestWarehouseInsert(values);
+                            }
+                            return requestWarehouseUpdate(values);
+                        })()
+                            .then(v => {
+                                console.log(v);
                                 resolve();
-                            }, 1000);
-                        }));
+                            });
                     });
+                });
             },
         },
     };
