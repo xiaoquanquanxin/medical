@@ -192,7 +192,12 @@ span.ant-radio + * {
 /*    white-space: nowrap;*/
 /*}*/
 
-
-.history-list .ant-tabs-nav .ant-tabs-tab{
+/*历史记录组件*/
+.history-list .ant-tabs-nav .ant-tabs-tab {
     margin-right: 0;
+}
+
+/*不折行*/
+.nowrap {
+    white-space: nowrap;
 }
