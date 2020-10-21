@@ -125,6 +125,7 @@
                             if (!this.entrepotId) {
                                 return requestWarehouseInsert(values);
                             }
+                            //  如果是编辑
                             return requestWarehouseUpdate(values);
                         })()
                             .then(v => {
