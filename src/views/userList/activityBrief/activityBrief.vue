@@ -78,7 +78,7 @@
         data(){
             return {
                 //  病人的id
-                patientInfoId: this.$route.params.patientInfoId,
+                patientId: this.$route.params.patientId,
                 data,
                 columns,
                 //  分页信息
@@ -98,7 +98,7 @@
             searchFn(){
                 requestBriefPage(Object.assign({},
                     paginationEncode(this.pagination),
-                    { patientId: this.patientInfoId }))
+                    { patientId: this.patientId }))
                     .then(v => {
                         const { data } = v;
                         data.records.forEach((item, index) => {
