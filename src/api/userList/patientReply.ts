@@ -27,7 +27,7 @@ export function requestFeedbackUpdate(data: any) {
 	});
 }
 
-//	删除病程记录		⚠️原型无
+//	删除反馈		⚠️原型无
 export function requestFeedbackDelete(id: string | number) {
 	return request({
 		url: `/api/feedback/delete/${id}`,

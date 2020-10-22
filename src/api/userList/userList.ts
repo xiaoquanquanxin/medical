@@ -35,7 +35,6 @@ export function requestPatientUpdate(data: any) {
 	});
 }
 
-
 //	根据当前医院查询科室	 ✅
 export function requestPatientSelectDeptByHospital() {
 	return request({
@@ -52,7 +51,7 @@ export function requestPatientSelectDoctorByHospital() {
 	});
 }
 
-//	id的格式不统一，联动存在隐患：doctorId是 1 还是 '1'，为什么要字符串'1'？
+//	id的格式不统一，联动存在隐患：doctorId是 1 还是 '1'，为什么要字符串'1'？但目前没问题
 
-
+//	缺少确认出院、确认入院？我没找见
 
