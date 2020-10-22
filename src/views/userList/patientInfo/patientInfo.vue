@@ -6,7 +6,7 @@
             <a-row type="flex" justify="space-between" align="middle">
                 <a-col>
                     <a-button type="primary" @click="confirmOutHospital">确认出院</a-button>
-                    <router-link :to="{name:'admittedHospital',params:{patientInfoId}}">
+                    <router-link :to="{name:'admittedHospital',params:{patientId}}">
                         <a-button type="primary">
                             确认入院
                         </a-button>
@@ -45,8 +45,8 @@
                 return this.$store.state.userList.groupChatMessage;
             },
             //  页面参数 - 病人id
-            patientInfoId(){
-                return this.$route.params.patientInfoId;
+            patientId(){
+                return this.$route.params.patientId;
             }
         },
         watch: {
@@ -67,8 +67,8 @@
         methods: {
             //  主要请求
             searchFn(){
-                console.log('病人信息tab-病人id', this.patientInfoId);
-                requestPatientSelectOnePatient(this.patientInfoId)
+                console.log('病人信息tab-病人id', this.patientId);
+                requestPatientSelectOnePatient(this.patientId)
                     .then(v => {
                         const { data } = v;
                         console.log(data);

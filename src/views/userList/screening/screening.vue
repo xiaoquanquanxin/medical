@@ -3,7 +3,7 @@
         <!--搜索相关-->
         <div class="a-input-group" data-msg="空"></div>
         <div class="a-input-group">
-            <router-link :to="{name:'addScreening',params:{patientInfoId}}">
+            <router-link :to="{name:'addScreening',params:{patientId}}">
                 <a-button type="primary">新增</a-button>
             </router-link>
         </div>
@@ -78,8 +78,8 @@
     export default {
         computed: {
             //  页面参数 - 病人id
-            patientInfoId(){
-                return this.$route.params.patientInfoId;
+            patientId(){
+                return this.$route.params.patientId;
             },
         },
         data(){
@@ -95,7 +95,7 @@
         },
         created(){
             //  请求数据
-            console.log('请求数据，拿列表数据', this.patientInfoId);
+            console.log('请求数据，拿列表数据', this.patientId);
         }
     };
 </script>
