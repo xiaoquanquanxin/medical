@@ -20,6 +20,7 @@
 </template>
 <script>
     import { formItemLayout } from '@/utils/layout.ts';
+    import { requestBriefSave, requestBriefUpdate } from '../../../api/userList/activityBrief';
     //  活动小结操作
     export default {
         beforeCreate(){
@@ -28,7 +29,11 @@
         computed: {
             activityBriefId(){
                 return this.$store.state.userList.activityBriefId;
-            }
+            },
+            //  页面参数 - 病人id
+            patientId(){
+                return Number(this.$route.params.patientId);
+            },
         },
         data(){
             return {
@@ -69,18 +74,34 @@
                     this.form.validateFields((err, values) => {
                         console.table(values);
                         if (!err) {
-                            resolve();
+                            resolve(values);
                         } else {
                             reject();
                         }
                     });
                 }))
-                    .then(v => {
+                    .then(values => {
                         return new Promise(((resolve, reject) => {
                             console.log('发请求吧');
-                            setTimeout(() => {
-                                resolve();
-                            }, 1000);
+                            (() => {
+                                if (!this.patientReplyId) {
+                                    return requestBriefSave(Object.assign({
+                                        patientId: this.patientId,
+                                    }, values));
+                                } else {
+                                    return requestBriefUpdate(Object.assign({
+                                        patientId: this.patientId,
+                                    }, values));
+                                }
+                            })()
+                                .then(v => {
+                                    resolve(v);
+                                    console.log(v);
+                                })
+                                .catch(err => {
+                                    console.log(err);
+                                    reject(err);
+                                });
                         }));
                     });
             },

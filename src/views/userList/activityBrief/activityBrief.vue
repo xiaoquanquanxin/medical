@@ -36,8 +36,9 @@
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
     import { mapGetters, mapActions } from 'vuex';
     import { paginationInit, paginationDecode, paginationEncode } from '@/utils/pagination.ts';
-    import { requestBriefPage } from '../../../api/userList';
-    
+    import { requestBriefPage } from '../../../api/userList/activityBrief';
+    import { noPaginationData } from '../../../utils/pagination';
+
     const columns = [
         {
             title: '序号',
@@ -60,26 +61,21 @@
             scopedSlots: { customRender: 'operation' },
         },
     ];
-    const data = [];
-    for (let i = 0; i < 10; i++) {
-        data.push({
-            key: i,
-            序号: '序号',
-            医生: '医生',
-            记录时间: '记录时间',
-        });
-    }
 
     //  活动小结
     export default {
         components: {
             ActivityBriefForm,
         },
+        computed: {
+            //  页面参数 - 病人id
+            patientId(){
+                return Number(this.$route.params.patientId);
+            },
+        },
         data(){
             return {
-                //  病人的id
-                patientId: this.$route.params.patientId,
-                data,
+                data: [],
                 columns,
                 //  分页信息
                 pagination: paginationInit(1000),
@@ -97,8 +93,9 @@
             //  主要请求
             searchFn(){
                 requestBriefPage(Object.assign({},
-                    paginationEncode(this.pagination),
-                    { patientId: this.patientId }))
+                    { patientId: this.patientId },
+                    noPaginationData,
+                ))
                     .then(v => {
                         const { data } = v;
                         data.records.forEach((item, index) => {
@@ -107,7 +104,7 @@
                         });
                         this.data = data.records;
                         this.pagination = paginationDecode(this.pagination, data);
-                        
+
                     });
             },
             //  莫泰框方法
