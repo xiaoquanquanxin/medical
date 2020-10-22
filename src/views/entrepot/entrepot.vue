@@ -102,7 +102,7 @@
         data.push({
             key: i,
             name: '许晓飞',
-            sex: '男',
+            sex: 1,
             familyGroup: 'xxx',
         });
     }

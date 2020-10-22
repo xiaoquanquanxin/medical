@@ -350,8 +350,6 @@
             onShelf(sItem){
                 this.$confirm({
                     title: `确定上架${sItem.disease}`,
-                    //  content: 'Bla bla ...',
-                    //  content: (h)=>{h(test)},
                     okText: '确认',
                     cancelText: '取消',
                     onOk(){

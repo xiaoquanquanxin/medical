@@ -149,7 +149,8 @@
 
 /*p标签的大小*/
 .description-content {
-    height: 21px;
+    line-height: 21px;
+    word-break: break-all;
 }
 
 /*这是为了打印背景色*/

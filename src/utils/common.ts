@@ -21,7 +21,7 @@ export function clearStorage() {
 	localStorage.clear();
 }
 
-
+//	浏览器信息
 const browser = {
 	versions: function () {
 		const u = navigator.userAgent;
@@ -57,3 +57,21 @@ export const platform = (() => {
 		windows,
 	}
 })();
+
+//	获取时间
+export function getDateObject(timeStamp?: number) {
+	let date = timeStamp ? new Date(timeStamp) : new Date();
+	return {
+		year: date.getFullYear(),
+		month: date.getMonth() + 1,
+		date: date.getDate(),
+		hour: date.getHours(),
+		minute: date.getMinutes(),
+		second: date.getSeconds(),
+	}
+}
+
+//	根据出生计算年龄
+export function calcAgeByBirth(birthYear: string | number): number {
+	return Number(birthYear) - getDateObject().year;
+}

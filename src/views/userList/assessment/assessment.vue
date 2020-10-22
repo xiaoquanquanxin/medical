@@ -33,6 +33,8 @@
 </template>
 <script>
     import { twoRowSearch } from '@/utils/tableScroll';
+    import { requestPatientAssessDelete, requestPatientAssessPage } from '../../../api/userList/assessment';
+    import { noPaginationData, paginationDecode, paginationEncode } from '../../../utils/pagination';
 
     const columns = [
         {
@@ -66,16 +68,6 @@
             scopedSlots: { customRender: 'operation' },
         },
     ];
-    const data = [];
-    for (let i = 0; i < 10; i++) {
-        data.push({
-            key: i,
-            名称: '名称',
-            评分时间: `评分时间`,
-            得分: `得分`,
-            评分人: `评分人`,
-        });
-    }
     //  营养评估
     export default {
         computed: {
@@ -86,7 +78,7 @@
         },
         data(){
             return {
-                data,
+                data: [],
                 columns,
                 //  搜索数据
                 searchData: {},
@@ -98,39 +90,34 @@
         created(){
             //  请求数据
             console.log('请求数据，拿列表数据', this.patientInfoId);
-        },
-        created(){
             this.searchFn();
         },
         methods: {
             //  主要请求
             searchFn(){
-//                requestChannelBusinessPage(paginationEncode(this.pagination))
-//                    .then(v => {
-//                        const { data } = v;
-//                        console.log(data);
-//                data.records.forEach((item, index) => {
-//                    item.key = index;
-//                    item.createTime = item.createTime.substr(0, 10);
-//                });
-//                        this.data = data.records;
-//                        this.pagination = paginationDecode(this.pagination, data);
-//                    });
+                requestPatientAssessPage(noPaginationData)
+                    .then(v => {
+                        const { data } = v;
+                        console.log(data.records);
+                        this.data = data.records;
+                    });
             },
             //  删除营养评估
             deleteAssessment(sItem){
                 this.$confirm({
-                    title: `确定删除${sItem.disease}`,
-                    //  content: 'Bla bla ...',
-                    //  content: (h)=>{h(test)},
+                    title: `确定删除${sItem.id}`,
                     okText: '确认',
                     okType: 'danger',
                     cancelText: '取消',
                     onOk(){
-                        return new Promise((resolve, reject) => {
-                            console.log('发请求');
-                            setTimeout(Math.random() > 0.5 ? resolve : reject, 1111);
-                        }).catch(() => console.log('Oops errors!'));
+                        requestPatientAssessDelete(sItem.id)
+                            .then(v => {
+                                console.log('删除成功');
+                                console.log(v);
+                            })
+                            .catch(err => {
+                                console.log(err);
+                            });
                     },
                     onCancel(){
                         console.log('取消');
