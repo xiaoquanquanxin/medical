@@ -12,6 +12,13 @@
                 :scroll="scroll"
                 :pagination="false"
         >
+            <!--医生-->
+            <div slot="doctor" slot-scope="scope,sItem,sIndex,extra">
+                <span v-if="item.id === scope.doctorId"
+                      v-for="item in doctorList"
+                >{{item.doctorName}}</span>
+            </div>
+            <!--操作-->
             <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
                 <a @click="progressNoteDetail(sItem)">详情</a>
             </div>
@@ -35,17 +42,20 @@
     import ProgressNoteForm from '@/components/userList/progressNote/progressNoteForm.vue';
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
     import { mapGetters, mapActions } from 'vuex';
+    import { requestDiseaseRecordPage } from '../../../api/userList/progressNote';
+    import { noPaginationData } from '../../../utils/pagination';
+    import { requestPatientSelectDoctorByHospital } from '../../../api/userList/userList';
 
     const columns = [
         {
             title: '序号',
-            dataIndex: '序号',
+            dataIndex: 'index',
             width: 150,
         },
         {
             title: '医生',
-            dataIndex: '医生',
             width: 100,
+            scopedSlots: { customRender: 'doctor' }
         },
         {
             title: '记录时间',
@@ -58,25 +68,24 @@
             scopedSlots: { customRender: 'operation' },
         },
     ];
-    const data = [];
-    for (let i = 0; i < 10; i++) {
-        data.push({
-            key: i,
-            序号: '序号',
-            医生: '医生',
-            记录时间: '记录时间',
-        });
-    }
 
     //  病程记录
     export default {
         components: {
             ProgressNoteForm,
         },
+        computed: {
+            //  页面参数 - 病人id
+            patientId(){
+                return this.$route.params.patientId;
+            }
+        },
         data(){
             return {
-                data,
+                data: [],
                 columns,
+                //  医生list
+                doctorList: [],
 
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
                 scroll: oneRowSearch(columns),
@@ -91,17 +100,28 @@
         methods: {
             //  主要请求
             searchFn(){
-//                requestChannelBusinessPage(paginationEncode(this.pagination))
-//                    .then(v => {
-//                        const { data } = v;
-//                        console.log(data);
-//                data.records.forEach((item, index) => {
-//                    item.key = index;
-//                    item.createTime = item.createTime.substr(0, 10);
-//                });
-//                        this.data = data.records;
-//                        this.pagination = paginationDecode(this.pagination, data);
-//                    });
+                requestDiseaseRecordPage(Object.assign({}, {
+                    param: {
+                        patientId: this.patientId,
+                    }
+                }, noPaginationData))
+                    .then(v => {
+                        const { data } = v;
+                        data.records.forEach((item, index) => {
+                            item.key = index;
+                            item.index = index + 1;
+                        });
+                        console.log(data.records);
+                        this.data = data.records;
+                    });
+                requestPatientSelectDoctorByHospital()
+                    .then(v => {
+                        console.log('根据当前医院查询所有医生', v.data);
+                        v.data.forEach(item => {
+                            item.id = Number(item.id);
+                        });
+                        this.doctorList = v.data;
+                    });
             },
             //  莫泰框方法
             ...dialogMethods,
