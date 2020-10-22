@@ -58,3 +58,6 @@ export const paginationDecode = (
 		pageSize: pagination.size,
 	})
 }
+
+//	不分页的对象
+export const noPaginationData = {current: 1, size: 10000};

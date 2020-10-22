@@ -88,7 +88,7 @@
         data.push({
             key: i,
             name: '许晓飞',
-            sex: '男',
+            sex: 1,
             familyGroup: 'xxx',
             aaa: '处方单号',
             bbb: '医院名称',

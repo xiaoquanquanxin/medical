@@ -4,7 +4,7 @@ export const descriptionsMethods = {
 	descriptionFormFocusFn(activeElementId: number) {
 		//	@ts-ignore
 		this.activeElementId = activeElementId;
-		console.log(activeElementId);
+		//	console.log(activeElementId);
 	},
 	//	点击事件
 	descriptionFormClickFn(activeElementId: number, event: any) {

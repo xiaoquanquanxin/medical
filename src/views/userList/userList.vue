@@ -74,7 +74,8 @@
 <script>
     import { jumpTo } from '@/utils/routerMeta';
     import { requestPatientPage } from '@/api/userList/userList';
-    import { getDateObject } from '@/utils/common';
+    import { calcAgeByBirth, getDateObject } from '@/utils/common';
+    import { noPaginationData } from '@/utils/pagination';
 
     const columns = [
         {
@@ -126,16 +127,15 @@
         methods: {
             //  主要请求
             searchFn(){
-                const data = Object.assign({ param: this.searchData }, { current: 1, size: 1000 });
+                const data = Object.assign({ param: this.searchData }, noPaginationData);
                 requestPatientPage(data)
                     .then(v => {
                         const { data } = v;
-                        const date = getDateObject();
                         data.records.forEach((item, index) => {
                             item.key = index;
-                            item.age = item.birth - date.year;
+                            item.age = calcAgeByBirth(item.birth);
                         });
-                        console.log(JSON.parse(JSON.stringify(data.records)));
+                        //  console.log(JSON.parse(JSON.stringify(data.records)));
                         this.data = data.records;
                     });
             },
@@ -150,7 +150,7 @@
             },
             //  点击table事件
             tableClickFn(scope){
-                console.log('选中的列表的id ', scope.id);
+                console.log('选中的列表的id ', scope.id, '应该监听病人信息页面');
                 //  todo    区分点击的是谁
                 this.$router.push({ name: 'patientInfo', params: { patientInfoId: scope.id.toString() } });
             },
