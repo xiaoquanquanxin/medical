@@ -9,13 +9,27 @@ const request = axios.create({
 	//	baseURL: process.env.VUE_APP_BASE_API,
 	//	当跨域请求时发送cookie
 	// withCredentials: true,
-	timeout: 5000
+	timeout: 5000,
+	transformRequest: [(searchParams => {
+		console.log(searchParams);
+		if (!searchParams) {
+			return searchParams;
+		}
+		let exportUrl = ''
+		Object.keys(searchParams).map((key) => {
+			exportUrl += key + '=' + searchParams[key] + '&';
+		});
+		exportUrl = exportUrl.slice(0, -1)
+		console.log(exportUrl);
+		return exportUrl;
+	})]
 });
 
 //	拦截器
 request.interceptors.request.use(
 	config => {
-		config.headers['Authorization'] = getJwt();
+		config.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+		config.headers['Authorization'] = '1';
 		return config;
 	},
 	error => {
