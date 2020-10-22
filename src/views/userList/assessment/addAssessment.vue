@@ -1022,8 +1022,8 @@
                 return this.$store.state.userList.patientBasicInfo;
             },
             //  页面参数 - 病人id
-            patientInfoId(){
-                return this.$route.params.patientInfoId;
+            patientId(){
+                return this.$route.params.patientId;
             },
             //  详情id
             assessmentDetailId(){
@@ -1060,7 +1060,7 @@
                 //  重置头部信息
                 this.setScreeningInfo({ screeningBasicInfo: [] });
                 //  发请求
-                console.log('病人id', this.patientInfoId);
+                console.log('病人id', this.patientId);
                 console.log('详情id ,有详情id的是编辑', this.assessmentDetailId);
                 //  请求头部数据
                 requestPatientSelectOnePatient(this.patientInfoId)
