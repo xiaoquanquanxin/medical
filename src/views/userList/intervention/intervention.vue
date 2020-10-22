@@ -2,17 +2,21 @@
     <div class="layout-content-inner-main">
         <!--搜索相关-->
         <div class="a-input-group">
-            <a-select v-model="searchData.brand" class="lengthen-select-width" placeholder="请选择方案类型">
-                <a-select-option value="">品牌</a-select-option>
-                <a-select-option value="Option2">Option2</a-select-option>
+            <a-select v-model="searchData.prescriptionType" class="lengthen-select-width" placeholder="请选择方案类型">
+                <a-select-option value="1">待签收</a-select-option>
+                <a-select-option value="2">待配置</a-select-option>
+                <a-select-option value="3">已配置</a-select-option>
+                <a-select-option value="4">待领取</a-select-option>
+                <a-select-option value="5">已领取</a-select-option>
             </a-select>
-            <a-select v-model="searchData.status" class="basic-select-width" placeholder="请选择状态">
-                <a-select-option value="">品牌</a-select-option>
-                <a-select-option value="Option2">Option2</a-select-option>
+            <a-select v-model="searchData.auditStatus" class="lengthen-select-width" placeholder="请选择审核状态">
+                <a-select-option value="1">待审核</a-select-option>
+                <a-select-option value="2">已审核</a-select-option>
+                <a-select-option value="3">已驳回</a-select-option>
             </a-select>
-            <a-select v-model="searchData.status" class="lengthen-select-width" placeholder="请选择付款状态">
-                <a-select-option value="">品牌</a-select-option>
-                <a-select-option value="Option2">Option2</a-select-option>
+            <a-select v-model="searchData.payStatus" class="lengthen-select-width" placeholder="请选择付款状态">
+                <a-select-option value="0">待支付</a-select-option>
+                <a-select-option value="1">已支付</a-select-option>
             </a-select>
             <a-range-picker
                     class="basic-range-picker-width"
@@ -59,6 +63,8 @@
 <script>
     import { paginationInit, paginationDecode, paginationEncode } from '@/utils/pagination.ts';
     import { threeRowSearch } from '@/utils/tableScroll';
+    import { requestPrescriptionPage } from '../../../api/userList/intervention';
+    import { noPaginationData } from '../../../utils/pagination';
 
     const columns = [
         {
@@ -112,27 +118,11 @@
             width: 100,
         },
     ];
-    const data = [];
-    for (let i = 0; i < 10; i++) {
-        data.push({
-            key: i,
-            commodity: `xx商品`,
-            city: '上海',
-            status: String(i % 2),
-            icon: '商品图标',
-            aaa: '商品货号',
-            通用名: '通用名',
-            商品分类: '商品分类',
-            unit: '基本单位',
-            specifications: '规格',
-            manufacturer: '生产厂家',
-        });
-    }
 
     export default {
         data(){
             return {
-                data,
+                data: [],
                 columns,
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
                 scroll: threeRowSearch(columns),
@@ -148,17 +138,14 @@
         methods: {
             //  主要请求
             searchFn(){
-//                requestChannelBusinessPage(paginationEncode(this.pagination))
-//                    .then(v => {
-//                        const { data } = v;
-//                        console.log(data);
-//                data.records.forEach((item, index) => {
-//                    item.key = index;
-//                    item.createTime = item.createTime.substr(0, 10);
-//                });
-//                        this.data = data.records;
-//                        this.pagination = paginationDecode(this.pagination, data);
-//                    });
+                requestPrescriptionPage(Object.assign({}, {
+                    param: this.searchData,
+                }, noPaginationData))
+                    .then(v => {
+                        const { data } = v;
+                        console.log(data);
+                        this.data = data.records;
+                    });
             },
             //  展示的每一页数据变换
             onShowSizeChange(current, pageSize){
@@ -174,6 +161,8 @@
             //  选择日期范围
             onRangePickerChange(value, selectDateValue){
                 console.log(selectDateValue);
+                this.searchData.startTime = selectDateValue[0];
+                this.searchData.endTime = selectDateValue[1];
             },
         }
     };
