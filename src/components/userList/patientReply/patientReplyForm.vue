@@ -20,6 +20,7 @@
 </template>
 <script>
     import { formItemLayout } from '@/utils/layout.ts';
+    import { requestFeedbackSave, requestFeedbackUpdate } from '../../../api/userList/patientReply';
     //  患者反馈操作
     export default {
         beforeCreate(){
@@ -28,7 +29,11 @@
         computed: {
             patientReplyId(){
                 return this.$store.state.userList.patientReplyId;
-            }
+            },
+            //  页面参数 - 病人id
+            patientId(){
+                return Number(this.$route.params.patientId);
+            },
         },
         data(){
             return {
@@ -44,24 +49,17 @@
         },
         created(){
             console.log('是编辑？', !!this.patientReplyId);
-        },
-        created(){
             this.searchFn();
+
         },
         methods: {
             //  主要请求
             searchFn(){
-//                requestChannelBusinessPage(paginationEncode(this.pagination))
-//                    .then(v => {
-//                        const { data } = v;
-//                        console.log(data);
-//                data.records.forEach((item, index) => {
-//                    item.key = index;
-//                    item.createTime = item.createTime.substr(0, 10);
-//                });
-//                        this.data = data.records;
-//                        this.pagination = paginationDecode(this.pagination, data);
-//                    });
+                //  如果是新增
+                if (!this.patientReplyId) {
+                    return;
+                }
+
             },
             //  表单提交 保存
             handleSubmit(){
@@ -69,18 +67,34 @@
                     this.form.validateFields((err, values) => {
                         console.table(values);
                         if (!err) {
-                            resolve();
+                            resolve(values);
                         } else {
                             reject();
                         }
                     });
                 }))
-                    .then(v => {
+                    .then(values => {
                         return new Promise(((resolve, reject) => {
                             console.log('发请求吧');
-                            setTimeout(() => {
-                                resolve();
-                            }, 1000);
+                            (() => {
+                                if (!this.patientReplyId) {
+                                    return requestFeedbackSave(Object.assign({
+                                        patientId: this.patientId,
+                                    }, values));
+                                } else {
+                                    return requestFeedbackUpdate(Object.assign({
+                                        patientId: this.patientId,
+                                    }, values));
+                                }
+                            })()
+                                .then(v => {
+                                    resolve(v);
+                                    console.log(v);
+                                })
+                                .catch(err => {
+                                    console.log(err);
+                                    reject(err);
+                                });
                         }));
                     });
             },

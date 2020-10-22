@@ -35,8 +35,9 @@
     import PatientReplyForm from '@/components/userList/patientReply/patientReplyForm.vue';
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
     import { mapGetters, mapActions } from 'vuex';
-    import { requestFeedbackPage } from '../../../api/userList';
+    import { requestFeedbackPage } from '../../../api/userList/patientReply';
     import { paginationInit, paginationDecode, paginationEncode } from '@/utils/pagination.ts';
+    import { noPaginationData } from '../../../utils/pagination';
 
     const columns = [
         {
@@ -55,26 +56,21 @@
             scopedSlots: { customRender: 'operation' },
         },
     ];
-    const data = [];
-    for (let i = 0; i < 10; i++) {
-        data.push({
-            key: i,
-            序号: '序号',
-            医生: '医生',
-            反馈时间: '反馈时间',
-        });
-    }
 
     //  患者反馈
     export default {
         components: {
             PatientReplyForm,
         },
+        computed: {
+            //  页面参数 - 病人id
+            patientId(){
+                return Number(this.$route.params.patientId);
+            },
+        },
         data(){
             return {
-                //  病人的id
-                patientId: this.$route.params.patientId,
-                data,
+                data: [],
                 columns,
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
                 scroll: oneRowSearch(columns),
@@ -91,8 +87,9 @@
             //  主要请求
             searchFn(){
                 requestFeedbackPage(Object.assign({},
-                    paginationEncode(this.pagination),
-                    { patientId: this.patientId }))
+                    { patientId: this.patientId },
+                    noPaginationData)
+                )
                     .then(v => {
                         const { data } = v;
                         data.records.forEach((item, index) => {
@@ -100,8 +97,6 @@
                             item.createTime = item.createTime.substr(0, 10);
                         });
                         this.data = data.records;
-                        this.pagination = paginationDecode(this.pagination, data);
-                        
                     });
             },
             //  莫泰框方法
