@@ -301,6 +301,7 @@
         methods: {
             //  主要请求
             searchFn(){
+                return;
                 requestGoodsPage(paginationEncode(this.pagination))
                     .then(v => {
                         const { data } = v;

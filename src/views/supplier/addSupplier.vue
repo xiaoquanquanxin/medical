@@ -181,6 +181,7 @@
     import { isPhoneNumber } from '@/utils/validate';
     import GoBackButton from '@/components/goBackButton.vue';
     import { requestSupplierGet, requestSupplierInsert } from '../../api/supplier';
+    import { uploadHandleChange } from '../../utils/upload';
 
     export default {
         components: {
@@ -290,6 +291,8 @@
             this.searchFn();
         },
         methods: {
+            //  上传图片通用方法
+            uploadHandleChange,
             //  主要请求
             searchFn(){
                 //  如果是新增
@@ -319,22 +322,6 @@
                             console.log(err);
                         });
                 });
-            },
-            //  通用的上传图片方法
-            uploadHandleChange({ fileList }, key, thumbUrl){
-                const lastIndex = fileList.length - 1;
-                //  总是找最后一个
-                const { response } = fileList[lastIndex];
-                console.log(response);
-                if (response && response.status === 'done') {
-                    //  console.log(this);
-                    //  console.log('封面', response.thumbUrl);
-                    //  console.log('图片', response.url);
-                    this.form.setFieldsValue({
-                        [key]: response.url,
-                    });
-                    this[thumbUrl] = response.thumbUrl;
-                }
             },
         }
     };
