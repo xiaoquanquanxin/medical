@@ -20,7 +20,7 @@
                           v-decorator="sexDecorator"
                 >
                     <a-select-option value="1">1</a-select-option>
-                    <a-select-option value="3">2</a-select-option>
+                    <a-select-option value="2">2</a-select-option>
                 </a-select>
             </a-form-item>
             <a-form-item label="医院" has-feedback>

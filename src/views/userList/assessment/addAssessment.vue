@@ -1003,6 +1003,7 @@
     import ScreeningBottomInfo from '@/components/userList/screening/screeningBottomInfo.vue';
     import { mapGetters, mapActions } from 'vuex';
     import GoBackButton from '@/components/goBackButton.vue';
+    import { requestPatientSelectOnePatient } from '../../../api/userList/userList';
     //  新增评估
     export default {
         components: {
@@ -1028,7 +1029,7 @@
                     popTitle: '微型营养评价表',
                 },
                 //  表格类型
-                tableTypeSelect: 3,
+                tableTypeSelect: 1,
                 //  类型1
                 typeOneList: [],
                 //  类型2
@@ -1036,16 +1037,11 @@
             };
         },
         created(){
-            setTimeout(() => {
-                this.getAssessmentDetail();
-            }, 20);
-        },
-        created(){
             this.searchFn();
         },
         methods: {
             //  主要请求
-            searchFn(){
+//            searchFn(){
 //                requestChannelBusinessPage(paginationEncode(this.pagination))
 //                    .then(v => {
 //                        const { data } = v;
@@ -1057,39 +1053,47 @@
 //                        this.data = data.records;
 //                        this.pagination = paginationDecode(this.pagination, data);
 //                    });
-            },
+//            },
             ...mapActions('userList', [
                 //  保存病人信息，这是为了给组件用，而不是页面，所以要store
                 'setScreeningInfo',
             ]),
-            //  请求
-            getAssessmentDetail(){
+            //  主要请求
+            searchFn(){
+                //  重置头部信息
+                this.setScreeningInfo({ screeningBasicInfo: [] });
                 //  发请求
                 console.log('病人id', this.patientInfoId);
                 console.log('详情id ,有详情id的是编辑', this.assessmentDetailId);
-                const screeningBasicInfo = [{
-                    key: 1,
-                    a: '姓名：小飞',
-                    b: '性别：男',
-                    c: '年龄：30',
-                    d: '身高：312cm',
-                    e: '现体重：32kg',
-                    f: 'BMI(kg/m2)：322',
-                }];
-                const screenBottomData = [
-                    {
-                        key: 1,
-                        a: '筛查人：',
-                        c: '日期',
-                        e: '时间'
-                    }
-                ];
-                this.setScreeningInfo({
-                    //  设置基础信息
-                    screeningBasicInfo,
-                    //  设置底部信息
-                    screenBottomData,
-                });
+                //  请求头部数据
+                requestPatientSelectOnePatient(this.patientInfoId)
+                    .then(v => {
+                        const { data } = v;
+                        console.log(data);
+                        const screeningBasicInfo = [{
+                            key: 1,
+                            a: `姓名：${data.name}`,
+                            b: `性别：${data.sex === 1 ? '男' : '女'}`,
+                            c: `年龄：${data.birth}`,
+                            d: `身高：${data.height}cm`,
+                            e: `现体重：${data.weight}kg`,
+                            f: `BMI(kg/m2)：${data.bmi}`,
+                        }];
+                        const screenBottomData = [
+                            {
+                                key: 1,
+                                a: '筛查人：',
+                                c: '日期',
+                                e: '时间'
+                            }
+                        ];
+                        this.setScreeningInfo({
+                            //  设置基础信息
+                            screeningBasicInfo,
+                            //  设置底部信息
+                            screenBottomData,
+                        });
+                    });
 
             },
             //  保存
