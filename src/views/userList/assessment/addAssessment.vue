@@ -1004,6 +1004,11 @@
     import { mapGetters, mapActions } from 'vuex';
     import GoBackButton from '@/components/goBackButton.vue';
     import { requestPatientSelectOnePatient } from '../../../api/userList/userList';
+    import {
+        requestPatientAssessSaveMna,
+        requestPatientAssessSavePgsga,
+        requestPatientAssessSaveYbpgb
+    } from '../../../api/userList/assessment';
     //  新增评估
     export default {
         components: {
@@ -1012,6 +1017,10 @@
             ScreeningBottomInfo,
         },
         computed: {
+            //  基础信息，请求来了就会出现数据
+            patientBasicInfo(){
+                return this.$store.state.userList.patientBasicInfo;
+            },
             //  页面参数 - 病人id
             patientInfoId(){
                 return this.$route.params.patientInfoId;
@@ -1040,23 +1049,11 @@
             this.searchFn();
         },
         methods: {
-            //  主要请求
-//            searchFn(){
-//                requestChannelBusinessPage(paginationEncode(this.pagination))
-//                    .then(v => {
-//                        const { data } = v;
-//                        console.log(data);
-//                data.records.forEach((item, index) => {
-//                    item.key = index;
-//                    item.createTime = item.createTime.substr(0, 10);
-//                });
-//                        this.data = data.records;
-//                        this.pagination = paginationDecode(this.pagination, data);
-//                    });
-//            },
             ...mapActions('userList', [
                 //  保存病人信息，这是为了给组件用，而不是页面，所以要store
                 'setScreeningInfo',
+                //  保存病人信息，这是为了给组件用，而不是页面，所以要store
+                'setPatientBasicInfo',
             ]),
             //  主要请求
             searchFn(){
@@ -1069,7 +1066,7 @@
                 requestPatientSelectOnePatient(this.patientInfoId)
                     .then(v => {
                         const { data } = v;
-                        console.log(data);
+                        this.setPatientBasicInfo(data);
                         const screeningBasicInfo = [{
                             key: 1,
                             a: `姓名：${data.name}`,
@@ -1094,15 +1091,99 @@
                             screenBottomData,
                         });
                     });
-
+                this.typeOneList.length = 20;
+                this.typeOneList.fill(1);
             },
             //  保存
             saveScreening(){
                 console.log('保存');
-                console.log(this.typeOneList);
-                console.log(this.typeTwoList);
+                (() => {
+                    switch (this.tableTypeSelect) {
+                        case 1:
+                            if (this.typeOneList.length !== 20) {
+                                this.$error({ title: '请完善表格' });
+                                return Promise.reject();
+                            }
+                            const oneData = this.transformOne();
+                            console.log(oneData);
+                            console.log(this.patientBasicInfo);
+                            const {
+                                age,
+                                bmi,
+                                height,
+                                name,
+                                sex,
+                                weight,
+                            } = this.patientBasicInfo;
+                            const patientId = Number(this.patientInfoId);
+                            const totalScore = this.typeOneList.reduce((a, b) => {return a + b;}, 0);
+                            const assessId = 1;
+                            console.log({
+                                age,
+                                assessId,
+                                bmi,
+                                height,
+                                name,
+                                sex,
+                                patientId,
+                                totalScore,
+                                weight,
+                            });
+                            return requestPatientAssessSaveYbpgb(Object.assign({
+                                age,
+                                assessId,
+                                bmi,
+                                height,
+                                name,
+                                sex,
+                                weight,
+                                patientId,
+                                totalScore,
+                                '营养评估id': 2,
+                            }, oneData));
+                        case 2:
+                            if (this.typeTwoList.length !== 20) {
+                                this.$error({ title: '请完善表格' });
+                                return Promise.reject();
+                            }
+                            return requestPatientAssessSaveMna();
+                        case 3:
+                            return requestPatientAssessSavePgsga();
+                        default:
+                            throw new Error('错误的类型');
+                    }
+                })()
+                    .then(v => {
+
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
             },
-        }
+            transformOne(){
+                const v1 = this.typeOneList[0];
+                const v2 = this.typeOneList[1];
+                const v3 = this.typeOneList[2];
+                const v4 = this.typeOneList[3];
+                const v5 = this.typeOneList[4];
+                const v6 = this.typeOneList[5];
+                const v7 = this.typeOneList[6];
+                const v8 = this.typeOneList[7];
+                const v9 = this.typeOneList[8];
+                const v10 = this.typeOneList[9];
+                const v11 = this.typeOneList[10];
+                const v12 = this.typeOneList[11];
+                const v13 = this.typeOneList[12];
+                const v14 = this.typeOneList[13];
+                const v15 = this.typeOneList[14];
+                const v16 = this.typeOneList[15];
+                const v17 = this.typeOneList[16];
+                const v18 = this.typeOneList[17];
+                const v19 = this.typeOneList[18];
+                const v20 = this.typeOneList[19];
+                return { v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20 };
+            }
+        },
     };
 </script>
 <style scoped>
