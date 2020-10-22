@@ -182,8 +182,8 @@
         },
         computed: {
             //  页面参数 - 病人id
-            patientInfoId(){
-                return this.$route.params.patientInfoId;
+            patientId(){
+                return this.$route.params.patientId;
             },
             //  详情id
             screeningDetailId(){
@@ -258,7 +258,7 @@
             ]),
             getScreeningInfo(){
                 //  发请求
-                console.log('病人id', this.patientInfoId);
+                console.log('病人id', this.patientId);
                 console.log('详情id ,有详情id的是编辑', this.screeningDetailId);
                 const screeningBasicInfo = [{
                     key: 1,

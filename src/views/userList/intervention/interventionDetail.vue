@@ -81,7 +81,7 @@
                 //  详情的id
                 interventionDetailId: this.$route.params.interventionDetailId,
                 //  病人的id
-                patientInfoId: this.$route.params.patientInfoId,
+                patientId: this.$route.params.patientId,
 
                 //  基础数据
                 basicInfoData: [{
@@ -237,7 +237,7 @@
             };
         },
         created(){
-            console.log(this.patientInfoId);
+            console.log(this.patientId);
             console.log(this.interventionDetailId);
         }
     };

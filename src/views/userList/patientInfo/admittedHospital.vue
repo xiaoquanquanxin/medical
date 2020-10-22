@@ -40,11 +40,11 @@
         data(){
             return {
                 //  如果有就是编辑
-                patientInfoId: this.$route.params.patientInfoId,
+                patientId: this.$route.params.patientId,
             };
         },
         created(){
-            console.log('是编辑？', !!this.patientInfoId);
+            console.log('是编辑？', !!this.patientId);
             this.setPatientBasicInfo(null);
             this.searchFn();
         },
@@ -56,11 +56,11 @@
             //  获取病人信息数据
             searchFn(){
                 //  如果是添加，清空 保存病人信息
-                if (!this.patientInfoId) {
+                if (!this.patientId) {
                     return;
                 }
                 //  如果是编辑，重新拉一次数据
-                requestPatientSelectOnePatient(this.patientInfoId)
+                requestPatientSelectOnePatient(this.patientId)
                     .then(v => {
                         const { data } = v;
                         console.log(data);
