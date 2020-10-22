@@ -27,6 +27,8 @@
     import MDTInformation from '@/components/userList/patientInfo/MDTInformation.vue';
     import PatientBasicInfo from '@/components/userList/patientInfo/patientBasicInfo.vue';
     import { mapGetters, mapActions } from 'vuex';
+    import { requestPatientSelectOnePatient, requestPatientUpdate } from '../../../api/userList/userList';
+    import { calcAgeByBirth } from '../../../utils/common';
 
     export default {
         components: {
@@ -34,6 +36,10 @@
             PatientBasicInfo,
         },
         computed: {
+            //  基础信息，请求来了就会出现数据
+            patientBasicInfo(){
+                return this.$store.state.userList.patientBasicInfo;
+            },
             //  群聊信息
             groupChatMessage(){
                 return this.$store.state.userList.groupChatMessage;
@@ -46,7 +52,7 @@
         watch: {
             //  检测这个变化⚠️发请求
             $route(){
-                this.getPatientInfo();
+                this.searchFn();
             }
         },
         data(){
@@ -56,77 +62,26 @@
             };
         },
         created(){
-            this.getPatientInfo();
-        },
-        created(){
             this.searchFn();
         },
         methods: {
             //  主要请求
             searchFn(){
-//                requestChannelBusinessPage(paginationEncode(this.pagination))
-//                    .then(v => {
-//                        const { data } = v;
-//                        console.log(data);
-//                data.records.forEach((item, index) => {
-//                    item.key = index;
-//                    item.createTime = item.createTime.substr(0, 10);
-//                });
-//                        this.data = data.records;
-//                        this.pagination = paginationDecode(this.pagination, data);
-//                    });
+                console.log('病人信息tab-病人id', this.patientInfoId);
+                requestPatientSelectOnePatient(this.patientInfoId)
+                    .then(v => {
+                        const { data } = v;
+                        console.log(data);
+                        data.age = data.age = calcAgeByBirth(data.birth);
+                        this.patientInfo = data;
+                        //  保存到store里，基础信息、群聊信息 ⚠️这里暂时一个，看够不够了
+                        this.setPatientBasicInfo(this.patientInfo);
+                    });
             },
             ...mapActions('userList', [
                 //  保存病人信息，这是为了给组件用，而不是页面，所以要store
                 'setPatientBasicInfo',
             ]),
-            //  获取病人信息数据
-            getPatientInfo(){
-                console.log('病人信息tab-病人id', this.patientInfoId);
-                setTimeout(() => {
-                    //  监听的参数 id病人id
-                    //  console.log(this.$route.params.patientInfoId);
-                    this.patientInfo = {
-                        name: '许晓飞',
-                        sex: '男',
-                        age: 3232,
-                        height: 'height',
-                        weight: 'weight',
-                        BML: 32,
-                        idCard: 'idCard',
-                        //  社保
-                        socialSecurity: '社保',
-                        addr: '山西',
-                        phoneNumber: 87743993292,
-                        //  职业
-                        professional: '职业',
-                        //  就诊号
-                        seeDoctorNumber: '就诊号',
-                        hospital: '就诊医院',
-                        department: '就诊科室',
-                        //  病例号
-                        patientNumber: '病例号',
-                        //  住院号
-                        admissionNumber: '住院号',
-                        //  病床号
-                        sickbedNumber: '病床号',
-                        //  ICD诊断
-                        ICDDiagnosis: 'ICD诊断',
-                        //  民族
-                        national: '汉',
-                        //  现病史
-                        hpi: '现病史',
-                        //  过敏史
-                        allergy: 'allergy',
-                        //  既往史
-                        pastHistory: 'pastHistory',
-                        //  家族史
-                        familyHistory: 'familyHistory'
-                    };
-                    //  保存到store里，基础信息、群聊信息 ⚠️这里暂时一个，看够不够了
-                    this.setPatientBasicInfo(this.patientInfo);
-                }, 40);
-            },
             //  确认出院
             confirmOutHospital(){
                 this.$confirm({
@@ -148,14 +103,18 @@
             //  保存按钮
             handleCheck(){
                 const p1 = this.$refs.refPatientBasicInfo.handleSubmit();
-//                const p2 = this.$refs.refMDTInformation.handleSubmit();
+                const p2 = this.$refs.refMDTInformation.handleSubmit();
                 Promise.all([
                     p1,
-//                    p2,
+                    p2,
                 ])
                     .then(v => {
-                        //  发请求
-
+                        console.log('发请求');
+                        console.table(JSON.parse(JSON.stringify(this.patientBasicInfo)));
+                        requestPatientUpdate(this.patientBasicInfo)
+                            .then(v => {
+                                console.log(v);
+                            });
                     })
                     .catch(error => {
                         console.log('有错');
