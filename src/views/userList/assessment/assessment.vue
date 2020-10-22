@@ -2,11 +2,11 @@
     <div class="layout-content-inner-main">
         <!--搜索相关-->
         <div class="a-input-group">
-            <a-input class="basic-input-width" v-model="searchData.commodityName" placeholder="请输入评估表名"/>
+            <a-input class="basic-input-width" v-model="searchData.assesType" placeholder="请输入评估表名"/>
             <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
         </div>
         <div class="a-input-group">
-            <router-link :to="{name:'addAssessment',params:{patientInfoId}}">
+            <router-link :to="{name:'addAssessment',params:{patientId}}">
                 <a-button type="primary">新增</a-button>
             </router-link>
         </div>
@@ -72,8 +72,8 @@
     export default {
         computed: {
             //  页面参数 - 病人id
-            patientInfoId(){
-                return this.$route.params.patientInfoId;
+            patientId(){
+                return this.$route.params.patientId;
             },
         },
         data(){
@@ -89,13 +89,18 @@
         },
         created(){
             //  请求数据
-            console.log('请求数据，拿列表数据', this.patientInfoId);
+            console.log('请求数据，拿列表数据', this.patientId);
             this.searchFn();
         },
         methods: {
             //  主要请求
             searchFn(){
-                requestPatientAssessPage(noPaginationData)
+                requestPatientAssessPage(Object.assign({}, {
+                    param: {
+                        patientId: this.patientId,
+                        assesType: this.searchData.assesType,
+                    },
+                }, noPaginationData))
                     .then(v => {
                         const { data } = v;
                         console.log(data.records);
