@@ -37,9 +37,15 @@
                             :scroll="{x: 'auto', y: 'calc(100vh - 500px)'}"
                             :customRow="customRow"
                     >
-                        <!--单位-->
+                        <!--年龄/性别-->
                         <div slot="info" slot-scope="scope,sItem,sIndex,extra">
-                            {{scope.age}}/{{scope.sex}}
+                            {{scope.age}}/{{scope.sex===1?'男':'女'}}
+                        </div>
+                        <!--状态-->
+                        <div slot="patientStatus" slot-scope="scope,sItem,sIndex,extra">
+                            <span v-if="scope.patientStatus==='1'">入院</span>
+                            <span v-if="scope.patientStatus==='2'">出院</span>
+                            <span v-if="scope.patientStatus==='3'">永久注销</span>
                         </div>
                     </a-table>
                 </a-card>
@@ -67,6 +73,8 @@
 </template>
 <script>
     import { jumpTo } from '@/utils/routerMeta';
+    import { requestPatientPage } from '@/api/userList/userList';
+    import { getDateObject } from '@/utils/common';
 
     const columns = [
         {
@@ -82,21 +90,10 @@
         },
         {
             title: '状态',
-            dataIndex: 'status',
+            scopedSlots: { customRender: 'patientStatus' },
             width: 90,
         },
     ];
-    const data = [];
-    for (let i = 0; i < 20; i++) {
-        data.push({
-            key: i,
-            age: i,
-            sex: '男',
-            status: '出院',
-            name: '许晓飞'
-        });
-    }
-
     //  处方模板管理
     export default {
         computed: {
@@ -117,7 +114,7 @@
                 transverseSubPaths: [],
 
                 columns,
-                data,
+                data: [],
 
                 //  搜索数据
                 searchData: {},
@@ -129,17 +126,18 @@
         methods: {
             //  主要请求
             searchFn(){
-//                requestChannelBusinessPage(paginationEncode(this.pagination))
-//                    .then(v => {
-//                        const { data } = v;
-//                        console.log(data);
-//                data.records.forEach((item, index) => {
-//                    item.key = index;
-//                    item.createTime = item.createTime.substr(0, 10);
-//                });
-//                        this.data = data.records;
-//                        this.pagination = paginationDecode(this.pagination, data);
-//                    });
+                const data = Object.assign({ param: this.searchData }, { current: 1, size: 1000 });
+                requestPatientPage(data)
+                    .then(v => {
+                        const { data } = v;
+                        const date = getDateObject();
+                        data.records.forEach((item, index) => {
+                            item.key = index;
+                            item.age = item.birth - date.year;
+                        });
+                        console.log(JSON.parse(JSON.stringify(data.records)));
+                        this.data = data.records;
+                    });
             },
             jumpTo,
             //  自定义表格事件
@@ -152,9 +150,9 @@
             },
             //  点击table事件
             tableClickFn(scope){
-                console.log('选中的列表的id ', scope.key);
+                console.log('选中的列表的id ', scope.id);
                 //  todo    区分点击的是谁
-                this.$router.push({ name: 'patientInfo', params: { patientInfoId: scope.key.toString() } });
+                this.$router.push({ name: 'patientInfo', params: { patientInfoId: scope.id.toString() } });
             },
 
             //  横向路由列表，点击去哪儿
