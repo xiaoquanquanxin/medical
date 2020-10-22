@@ -35,7 +35,7 @@ export function requestBriefDelete(id: string | number) {
 	});
 }
 
-
+//	缺少详情接口
 
 
 
