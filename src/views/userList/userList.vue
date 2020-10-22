@@ -152,7 +152,7 @@
             tableClickFn(scope){
                 console.log('选中的列表的id ', scope.id, '应该监听病人信息页面');
                 //  todo    区分点击的是谁
-                this.$router.push({ name: 'patientInfo', params: { patientInfoId: scope.id.toString() } });
+                this.$router.push({ name: 'patientInfo', params: { patientId: scope.id.toString() } });
             },
 
             //  横向路由列表，点击去哪儿
@@ -160,7 +160,7 @@
                 //  原来的路由参数
                 const { meta: prevMeta, params } = this.$route;
                 //  console.log(prevMeta.routerParamsKey, params);
-                //  参数值 其实都叫 病人id 🆔 patientInfoId
+                //  参数值 其实都叫 病人id 🆔 patientId
                 const id = params[prevMeta.routerParamsKey];
                 //  如果没有id，说明就不是正常的
                 if (!id) {
