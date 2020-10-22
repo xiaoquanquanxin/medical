@@ -9,8 +9,7 @@ export function requestDiseaseRecordPage(data: any) {
 	});
 }
 
-
-//	病程记录新增		✅，❓我怎么知道doctorId？登录人id？得先解析auth，院内院外现在区分吗？
+//	病程记录新增		✅，❓我怎么知道doctorId？登录人id？得先解析auth？，院内院外现在区分吗？
 export function requestDiseaseRecordSave(data: any) {
 	return request({
 		url: '/api/diseaseRecord/save',
@@ -19,7 +18,7 @@ export function requestDiseaseRecordSave(data: any) {
 	});
 }
 
-//	删除病程记录
+//	删除病程记录		⚠️原型无
 export function requestDiseaseRecordDelete(id: string | number) {
 	return request({
 		url: `/api/diseaseRecord/delete/${id}`,
@@ -27,5 +26,6 @@ export function requestDiseaseRecordDelete(id: string | number) {
 	});
 }
 
+//	缺少编辑接口？还是说和新增用同一个，别的地方都是update
 
-//	缺少详情接口，虽然是莫泰框，虽然list里有，但也得有详情接口呀
+//	缺少详情接口，虽然list里有，虽然前端能传，但也得有详情接口呀
