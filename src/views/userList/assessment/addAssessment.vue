@@ -1063,7 +1063,7 @@
                 console.log('病人id', this.patientId);
                 console.log('详情id ,有详情id的是编辑', this.assessmentDetailId);
                 //  请求头部数据
-                requestPatientSelectOnePatient(this.patientInfoId)
+                requestPatientSelectOnePatient(this.patientId)
                     .then(v => {
                         const { data } = v;
                         this.setPatientBasicInfo(data);
