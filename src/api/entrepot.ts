@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 
-//  仓库管理列表	✅
+//  仓库管理列表	✅，⚠️回显少仓库地区，没有input功能
 export function requestWarehousePage(data: any) {
 	return request({
 		url: '/api/warehouse/page',
