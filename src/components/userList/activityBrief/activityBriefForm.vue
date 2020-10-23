@@ -20,7 +20,7 @@
 </template>
 <script>
     import { formItemLayout } from '@/utils/layout.ts';
-    import { requestBriefSave, requestBriefUpdate } from '../../../api/userList/activityBrief';
+    import { requestBriefSave, requestBriefGet } from '../../../api/userList/activityBrief';
     //  活动小结操作
     export default {
         beforeCreate(){
@@ -56,54 +56,47 @@
         methods: {
             //  主要请求
             searchFn(){
-//                requestChannelBusinessPage(paginationEncode(this.pagination))
-//                    .then(v => {
-//                        const { data } = v;
-//                        console.log(data);
-//                data.records.forEach((item, index) => {
-//                    item.key = index;
-//                    item.createTime = item.createTime.substr(0, 10);
-//                });
-//                        this.data = data.records;
-//                        this.pagination = paginationDecode(this.pagination, data);
-//                    });
+                //  如果是新增
+                if (!this.activityBriefId) {
+                    return;
+                }
+                //  如果是编辑
+                requestBriefGet(this.activityBriefId)
+                    .then(v => {
+                        const { data } = v;
+                        console.log(data);
+                        this.form.setFieldsValue({
+                            content: data.content,
+                        });
+                    });
             },
             //  表单提交 保存
             handleSubmit(){
-                return new Promise(((resolve, reject) => {
+                //  如果是编辑
+                if (this.activityBriefId) {
+                    return Promise.resolve(true);
+                }
+                return new Promise((resolve, reject) => {
                     this.form.validateFields((err, values) => {
                         console.table(values);
-                        if (!err) {
-                            resolve(values);
-                        } else {
+                        if (err) {
                             reject();
+                            return;
                         }
+                        console.log('发请求吧');
+                        requestBriefSave(Object.assign({
+                            patientId: this.patientId,
+                        }, values))
+                            .then(v => {
+                                resolve();
+                                console.log(v);
+                            })
+                            .catch(err => {
+                                console.log(err);
+                                reject(err);
+                            });
                     });
-                }))
-                    .then(values => {
-                        return new Promise(((resolve, reject) => {
-                            console.log('发请求吧');
-                            (() => {
-                                if (!this.patientReplyId) {
-                                    return requestBriefSave(Object.assign({
-                                        patientId: this.patientId,
-                                    }, values));
-                                } else {
-                                    return requestBriefUpdate(Object.assign({
-                                        patientId: this.patientId,
-                                    }, values));
-                                }
-                            })()
-                                .then(v => {
-                                    resolve(v);
-                                    console.log(v);
-                                })
-                                .catch(err => {
-                                    console.log(err);
-                                    reject(err);
-                                });
-                        }));
-                    });
+                });
             },
         }
     };

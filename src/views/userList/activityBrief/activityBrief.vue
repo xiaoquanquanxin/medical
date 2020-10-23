@@ -42,18 +42,18 @@
     const columns = [
         {
             title: '序号',
-            dataIndex: '序号',
-            width: 150,
+            dataIndex: 'index',
+            width: 100,
         },
         {
             title: '医生',
-            dataIndex: '医生',
+            dataIndex: 'doctorName',
             width: 100,
         },
         {
             title: '记录时间',
-            dataIndex: '记录时间',
-            width: 100,
+            dataIndex: 'startTime',
+            width: 200,
         },
         {
             title: '操作',
@@ -93,18 +93,17 @@
             //  主要请求
             searchFn(){
                 requestBriefPage(Object.assign({},
-                    { patientId: this.patientId },
+                    { param: { patientId: this.patientId } },
                     noPaginationData,
                 ))
                     .then(v => {
                         const { data } = v;
                         data.records.forEach((item, index) => {
                             item.key = index;
-                            item.createTime = item.createTime.substr(0, 10);
+                            item.index = index + 1;
                         });
                         this.data = data.records;
-                        this.pagination = paginationDecode(this.pagination, data);
-
+                        //  console.table(JSON.parse(JSON.stringify(data.records)));
                     });
             },
             //  莫泰框方法
@@ -121,15 +120,19 @@
             },
             //  详情
             activityBriefDetail(sItem){
-                this.setActivityBriefId(3323);
+                this.setActivityBriefId(sItem.id);
                 this.showModal(DIALOG_TYPE.ACTIVITY_BRIEF);
             },
 
             //  确认详情
             addActivityBriefModalCheck(refActivityBriefForm){
                 const promise = this.$refs[refActivityBriefForm].handleSubmit();
-                promise.then(v => {
+                promise.then(isEdit => {
                     this.hideModal(DIALOG_TYPE.ACTIVITY_BRIEF);
+                    if (isEdit) {
+                        return;
+                    }
+                    this.searchFn();
                 }).catch(error => {
                     console.log('有错');
                 });

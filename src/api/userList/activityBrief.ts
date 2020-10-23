@@ -1,6 +1,6 @@
 import request from "@/utils/request"
 
-//	活动小结列表		❌
+//	活动小结列表		✅
 export function requestBriefPage(data: any) {
 	return request({
 		url: '/api/brief/page',
@@ -18,7 +18,16 @@ export function requestBriefSave(data: any) {
 	});
 }
 
-//	活动记录编辑、修改活动记录
+//	活动小结详情		✅
+export function requestBriefGet(id: string | number) {
+	return request({
+		url: `/api/brief/getById/${id}`,
+		method: 'get',
+	});
+}
+
+
+//	活动记录编辑、修改活动记录 ⚠️原型无
 export function requestBriefUpdate(data: any) {
 	return request({
 		url: '/api/brief/update',
@@ -34,11 +43,6 @@ export function requestBriefDelete(id: string | number) {
 		method: 'post',
 	});
 }
-
-//	缺少详情接口
-
-
-
 
 
 
