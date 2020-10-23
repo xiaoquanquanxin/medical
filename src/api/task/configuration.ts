@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 
-//	配置分页			✅，⚠️接口文档请求参数和原型差挺多
+//	配置分页			✅，⚠️接口文档请求参数和原型不同
 export function requestPrescriptionConfigPzrw(data: any) {
 	return request({
 		url: '/api/prescription/config/pzrw',
