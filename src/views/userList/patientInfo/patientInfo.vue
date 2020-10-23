@@ -55,6 +55,7 @@
                 this.searchFn();
             }
         },
+        inject: ['userList_searchFn'],
         data(){
             return {
                 //  病人信息
@@ -67,11 +68,11 @@
         methods: {
             //  主要请求
             searchFn(){
-                console.log('病人信息tab-病人id', this.patientId);
+                //  console.log('病人信息tab-病人id', this.patientId);
                 requestPatientSelectOnePatient(this.patientId)
                     .then(v => {
                         const { data } = v;
-                        console.log(JSON.parse(JSON.stringify(data)));
+                        //  console.log(JSON.parse(JSON.stringify(data)));
                         //  data.age = data.age = calcAgeByBirth(data.birth);
                         this.patientInfo = data;
                         //  保存到store里，基础信息、群聊信息 ⚠️这里暂时一个，看够不够了
@@ -131,8 +132,11 @@
                                 console.log(v);
                                 this.$success({
                                     title: '保存成功',
+                                    onOk: () => {
+                                        console.log('更新左侧列表');
+                                        this.userList_searchFn();
+                                    }
                                 });
-                                this.$router.push({ name: 'userList' });
                             });
                     })
                     .catch(error => {

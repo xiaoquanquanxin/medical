@@ -79,7 +79,7 @@
                         v.data.forEach(item => {
                             item.id = Number(item.id);
                         });
-                        console.log(typeof this.patientBasicInfo.doctorId, this.patientBasicInfo.doctorId);
+                        //  console.log(typeof this.patientBasicInfo.doctorId, this.patientBasicInfo.doctorId);
                         this.doctorList = v.data;
                     });
             },
