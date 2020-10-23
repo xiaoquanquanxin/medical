@@ -107,6 +107,7 @@
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
     import { mapGetters, mapActions } from 'vuex';
     import PayCostForm from '@/components/cost/payCostForm.vue';
+    import { requestBillingsBillingPage } from '../../api/cost/costList';
 
     const columns = [
         {
@@ -160,22 +161,6 @@
             scopedSlots: { customRender: 'operation' },
         },
     ];
-    const data = [];
-    for (let i = 0; i < 10; i++) {
-        data.push({
-            key: i,
-            commodity: `xx商品`,
-            city: '上海',
-            status: String(i % 2),
-            icon: '商品图标',
-            aaa: '商品货号',
-            通用名: '通用名',
-            商品分类: '商品分类',
-            unit: '基本单位',
-            specifications: '规格',
-            manufacturer: '生产厂家',
-        });
-    }
 
     export default {
         components: {
@@ -183,7 +168,7 @@
         },
         data(){
             return {
-                data,
+                data: [],
                 columns,
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
                 scroll: oneRowSearch(columns),
@@ -213,17 +198,20 @@
         methods: {
             //  主要请求
             searchFn(){
-//                requestChannelBusinessPage(paginationEncode(this.pagination))
-//                    .then(v => {
-//                        const { data } = v;
-//                        console.log(data);
-//                data.records.forEach((item, index) => {
-//                    item.key = index;
-//                    item.createTime = item.createTime.substr(0, 10);
-//                });
-//                        this.data = data.records;
-//                        this.pagination = paginationDecode(this.pagination, data);
-//                    });
+                requestBillingsBillingPage(Object.assign({},
+                    { param: this.searchData },
+                    paginationEncode(this.pagination))
+                )
+                    .then(v => {
+                        const { data } = v;
+                        data.records.forEach((item, index) => {
+                            item.key = index;
+                            item.createTime = item.createTime.substr(0, 10);
+                        });
+                        this.data = data.records;
+                        console.log(data.records);
+                        this.pagination = paginationDecode(this.pagination, data);
+                    });
             },
             //  莫泰框方法
             ...dialogMethods,
