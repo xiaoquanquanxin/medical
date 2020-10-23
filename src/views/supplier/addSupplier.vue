@@ -75,7 +75,7 @@
             <a-form-item label="营业执照">
                 <div class="add-form-input">
                     <a-upload-dragger
-                            action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                            action="/api/file/upload"
                             list-type="picture-card"
                             :data="beforeUploadData"
                             @change="uploadHandleChange($event,'businessLicense','businessLicenseThumbUrl')"
@@ -101,7 +101,7 @@
             <a-form-item label="合同上传">
                 <div class="add-form-input">
                     <a-upload-dragger
-                            action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                            action="/api/file/upload"
                             list-type="picture-card"
                             :data="beforeUploadData"
                             @change="uploadHandleChange($event,'contract','contractThumbUrl')"
@@ -127,7 +127,7 @@
             <a-form-item label="食品资格证">
                 <div class="add-form-input">
                     <a-upload-dragger
-                            action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                            action="/api/file/upload"
                             list-type="picture-card"
                             :data="beforeUploadData"
                             @change="uploadHandleChange($event,'foodQualificationCertificate','foodQualificationCertificateThumbUrl')"
@@ -153,7 +153,7 @@
             <a-form-item label="特医食品资格证">
                 <div class="add-form-input">
                     <a-upload-dragger
-                            action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                            action="/api/file/upload"
                             list-type="picture-card"
                             :data="beforeUploadData"
                             @change="uploadHandleChange($event,'specialMedicalFoodQualificationCertificate','specialMedicalFoodQualificationCertificateThumbUrl')"
@@ -188,7 +188,7 @@
     import { formItemLayout } from '@/utils/layout.ts';
     import { isPhoneNumber } from '@/utils/validate';
     import GoBackButton from '@/components/goBackButton.vue';
-    import { requestSupplierGet, requestSupplierInsert } from '../../api/supplier';
+    import { requestSupplierGet, requestSupplierInsert, requestSupplierUpdate } from '../../api/supplier';
     import { uploadHandleChange, beforeUploadFn, beforeUploadData } from '../../utils/upload';
 
     export default {
@@ -208,6 +208,7 @@
                 formItemLayout,
                 //  供应商名称
                 supplierNameDecorator: ['supplierName', {
+                    initialValue: '供应商名称',
                     rules: [{
                         required: true,
                         message: '请输入供应商名称'
@@ -215,6 +216,7 @@
                 }],
                 //  供应商编码
                 supplierNumberDecorator: ['supplierNumber', {
+                    initialValue: '供应商编码',
                     rules: [{
                         required: true,
                         message: '请输入供应商编码'
@@ -222,6 +224,7 @@
                 }],
                 //  地址-省份
                 provinceDecorator: ['province', {
+                    initialValue: '1',
                     rules: [{
                         required: true,
                         message: '请选择地址-省份'
@@ -229,6 +232,7 @@
                 }],
                 //  地址-市区
                 cityDecorator: ['city', {
+                    initialValue: '1',
                     rules: [{
                         required: true,
                         message: '请选择地址-市区'
@@ -236,6 +240,7 @@
                 }],
                 //  详细地址
                 detailedAddressDecorator: ['detailedAddress', {
+                    initialValue: '详细地址',
                     rules: [{
                         required: true,
                         message: '请输入详细地址'
@@ -243,6 +248,7 @@
                 }],
                 //  联系人
                 contactsDecorator: ['contacts', {
+                    initialValue: '联系人',
                     rules: [{
                         required: true,
                         message: '请输入联系人'
@@ -250,12 +256,14 @@
                 }],
                 //  手机号
                 phoneDecorator: ['phone', {
+                    initialValue: '15559448998',
                     rules: [{
                         validator: isPhoneNumber,
                     },]
                 }],
                 //  邮箱
                 emailDecorator: ['email', {
+                    initialValue: '43@32.com',
                     rules: [{
                         required: true,
                         message: '请输入邮箱'
@@ -321,13 +329,25 @@
             handleSubmit(e){
                 e.preventDefault();
                 this.form.validateFields((err, values) => {
-                    console.table(values);
                     if (err) {
                         return;
                     }
-                    requestSupplierInsert(values)
+                    console.table(values);
+                    (() => {
+                        //  如果是新增
+                        if (!this.supplierId) {
+                            return requestSupplierInsert(values);
+                        }
+                        //  如果是编辑
+                        return requestSupplierUpdate(Object.assign(
+                            { id: this.supplierId },
+                            values)
+                        );
+                    })()
                         .then(v => {
-                            console.log(v);
+                            this.$success({
+                                title: '操作成功',
+                            });
                         })
                         .catch(err => {
                             console.log(err);

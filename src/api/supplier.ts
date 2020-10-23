@@ -10,7 +10,7 @@ export function requestSupplierPage(data: any) {
 	});
 }
 
-//	新增供应商	❌
+//	新增供应商	❌404
 export function requestSupplierInsert(data: any) {
 	return request({
 		url: '/api/supplier/insert',
@@ -19,10 +19,10 @@ export function requestSupplierInsert(data: any) {
 	});
 }
 
-//	编辑供应商
+//	编辑供应商	❌404
 export function requestSupplierUpdate(data: any) {
 	return request({
-		url: '//api/supplier/update',
+		url: '/api/supplier/update',
 		method: 'post',
 		data,
 	});

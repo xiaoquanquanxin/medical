@@ -174,7 +174,7 @@
             <a-form-item label="商品图片">
                 <div class="add-form-input">
                     <a-upload-dragger
-                            action="/api/upload"
+                            action="/api/file/upload"
                             list-type="picture-card"
                             :data="beforeUploadData"
                             @change="uploadHandleChange($event,'goodsImg','goodsImgThumbUrl')"
