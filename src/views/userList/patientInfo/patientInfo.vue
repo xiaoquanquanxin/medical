@@ -71,8 +71,8 @@
                 requestPatientSelectOnePatient(this.patientId)
                     .then(v => {
                         const { data } = v;
-                        console.log(data);
-                        data.age = data.age = calcAgeByBirth(data.birth);
+                        console.log(JSON.parse(JSON.stringify(data)));
+                        //  data.age = data.age = calcAgeByBirth(data.birth);
                         this.patientInfo = data;
                         //  保存到store里，基础信息、群聊信息 ⚠️这里暂时一个，看够不够了
                         this.setPatientBasicInfo(this.patientInfo);
@@ -110,6 +110,20 @@
                 ])
                     .then(v => {
                         console.log('发请求');
+//                        //  todo    年龄不是生日
+//                        this.patientBasicInfo.birth = '1919';
+//                        //  todo    就诊科室没有数据
+//                        this.patientBasicInfo.hospitalTreatment = 1;
+//                        //  todo    营养师需要接口
+                        this.patientBasicInfo.nutritionistId = 1;
+//                        //  新增入院所以是1    1入院，2.出院，3.永久注销;
+//                        this.patientBasicInfo.patientStatus = 1;
+//                        //  todo    还有啥叫病区和劳动强度？
+//                        this.patientBasicInfo.pla = '1';
+//                        this.patientBasicInfo.ward = '传染病区';
+                        //  todo    删除jzbh
+                        delete this.patientBasicInfo.jzbh;
+                        console.log(JSON.stringify(this.patientBasicInfo));
                         console.table(JSON.parse(JSON.stringify(this.patientBasicInfo)));
                         requestPatientUpdate(this.patientBasicInfo)
                             .then(v => {

@@ -79,18 +79,8 @@
                        class="description-content"
                     >{{patientBasicInfo.weight}}</p>
                 </a-descriptions-item>
-                <a-descriptions-item label="BML">
-                    <a-input type="hidden"
-                             v-if="activeElementId === 6 ||!patientBasicInfo.bmi"
-                             placeholder="请输入BML"
-                             v-model="patientBasicInfo.bmi"
-                             class="form-element"
-                             @focus="descriptionFormFocusFn(6)"
-                    />
-                    <p v-else
-                       @click="descriptionFormClickFn(6,$event)"
-                       class="description-content"
-                    >{{patientBasicInfo.bmi}}</p>
+                <a-descriptions-item label="BMI">
+                    <p class="description-content">{{patientBasicInfo.bmi}}</p>
                 </a-descriptions-item>
                 <a-descriptions-item label="身份证号">
                     <a-input
@@ -186,7 +176,6 @@
                 </a-descriptions-item>
                 <a-descriptions-item label="就诊科室">
                     <a-select style="width: 100%;"
-                              v-if="activeElementId === 14 ||!patientBasicInfo.hospitalTreatment"
                               placeholder="请选择就诊科室"
                               v-model="patientBasicInfo.hospitalTreatment"
                               class="form-element"
@@ -196,10 +185,6 @@
                             {{item.deptName}}
                         </a-select-option>
                     </a-select>
-                    <p v-else
-                       @click="descriptionFormClickFn(14,$event)"
-                       class="description-content"
-                    >{{patientBasicInfo.hospitalTreatment}}</p>
                 </a-descriptions-item>
                 <a-descriptions-item label="病例号">
                     <a-input
@@ -243,22 +228,17 @@
                 <a-descriptions-item label="ICD诊断">
                     <a-select style="width: 100%;"
                               placeholder="请输入ICD诊断"
-                              v-if="activeElementId === 18 ||!patientBasicInfo.icd"
                               v-model="patientBasicInfo.icd"
                               class="form-element"
                               @focus="descriptionFormFocusFn(18)"
                     >
                         <a-select-option value="1">
-                            32232323
+                            诊断1
                         </a-select-option>
                         <a-select-option value="2">
-                            fewmka
+                            诊断2
                         </a-select-option>
                     </a-select>
-                    <p v-else
-                       @click="descriptionFormClickFn(18,$event)"
-                       class="description-content"
-                    >{{patientBasicInfo.icd}}</p>
                 </a-descriptions-item>
                 <a-descriptions-item label="民族">
                     <a-input
