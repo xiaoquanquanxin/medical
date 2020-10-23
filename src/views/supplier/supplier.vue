@@ -96,20 +96,6 @@
             width: 100,
         },
     ];
-    const data = [];
-    for (let i = 0; i < 10; i++) {
-        data.push({
-            key: i,
-            hospital: `xx供应商`,
-            code: 'xxx-xx',
-            city: '上海',
-            status: String(i % 2),
-            icon: '供应商图标',
-            area: '地区',
-            people: '许晓飞',
-            time: '2020-10-10'
-        });
-    }
     //  供应商管理
     export default {
         data(){
@@ -117,7 +103,7 @@
                 //  搜索相关
                 searchData: {},
 
-                data,
+                data: [],
                 columns,
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
                 scroll: twoRowSearch(columns),
@@ -136,14 +122,12 @@
                         const { data } = v;
                         data.records.forEach((item, index) => {
                             item.key = index;
-                            item.createTime = item.createTime.substr(0, 10);
                         });
                         this.data = data.records;
                         this.pagination = paginationDecode(this.pagination, data);
-                        
                     });
             },
-            
+
             //  展示的每一页数据变换
             onShowSizeChange(current, pageSize){
                 this.pagination.pageSize = pageSize;
