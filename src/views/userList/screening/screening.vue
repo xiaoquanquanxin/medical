@@ -16,7 +16,7 @@
         >
             <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
                 <a-space size="small">
-                    <router-link :to="{name:'screeningDetail',params:{screeningDetailId:sIndex}}">详情</router-link>
+                    <router-link :to="{name:'screeningDetail',params:{screeningDetailId:sItem.id}}">详情</router-link>
                 </a-space>
             </div>
         </a-table>
@@ -24,37 +24,39 @@
 </template>
 <script>
     import { oneRowSearch } from '@/utils/tableScroll';
+    import { requestScreenPage } from '../../../api/userList/screening';
+    import { noPaginationData } from '../../../utils/pagination';
 
     const columns = [
         {
             title: '序号',
-            dataIndex: 'key',
+            dataIndex: 'index',
             width: 100,
         },
         {
             title: '筛查项目',
-            dataIndex: '筛查项目',
+            dataIndex: 'screenType',
             width: 150,
         },
         {
             title: '得分',
-            dataIndex: '得分',
+            dataIndex: 'totalScore',
             width: 100,
         },
         {
             title: '评分人',
-            dataIndex: '评分人',
+            dataIndex: 'doctorName',
             width: 100,
         },
         {
             title: '评分时间',
-            dataIndex: '评分时间',
-            width: 150,
+            dataIndex: 'ctime',
+            width: 200,
         },
         {
             title: '是否有风险',
-            dataIndex: '是否有风险',
-            width: 100,
+            dataIndex: 'isRisk',
+            width: 150,
         },
         {
             title: '操作',
@@ -62,18 +64,7 @@
             scopedSlots: { customRender: 'operation' },
         },
     ];
-    const data = [];
-    for (let i = 0; i < 10; i++) {
-        data.push({
-            key: i,
-            commodityName: `xx供应商`,
-            筛查项目: '筛查项目',
-            是否有风险: '是否有风险',
-            评分时间: '评分时间',
-            评分人: '评分人',
-            得分: '得分',
-        });
-    }
+
     //  筛查
     export default {
         computed: {
@@ -84,7 +75,7 @@
         },
         data(){
             return {
-                data,
+                data: [],
                 columns,
                 //  搜索数据
                 searchData: {},
@@ -96,6 +87,22 @@
         created(){
             //  请求数据
             console.log('请求数据，拿列表数据', this.patientId);
+            this.searchFn();
+        },
+        methods: {
+            searchFn(){
+                requestScreenPage(Object.assign({},
+                    { param: { patientId: this.patientId } },
+                    noPaginationData))
+                    .then(v => {
+                        const { data } = v;
+                        data.records.forEach((item, index) => {
+                            item.key = index;
+                            item.index = index + 1;
+                        });
+                        this.data = data.records;
+                    });
+            }
         }
     };
 </script>
