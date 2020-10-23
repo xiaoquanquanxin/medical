@@ -67,12 +67,12 @@
     const columns = [
         {
             title: '仓库名称',
-            dataIndex: 'name',
+            dataIndex: 'warehouseName',
             width: 100,
         },
         {
             title: '仓库代码',
-            dataIndex: 'aaa',
+            dataIndex: 'warehouseNumber',
             width: 100,
         },
         {
@@ -82,30 +82,21 @@
         },
         {
             title: '添加人',
-            dataIndex: 'ccc',
+            dataIndex: 'createBy',
             width: 100,
         },
         {
             title: '添加时间',
-            dataIndex: 'dddd',
+            dataIndex: 'updateTime',
             width: 100,
         },
-
         {
             title: '操作',
             width: 100,
             scopedSlots: { customRender: 'operation' }
         },
     ];
-    const data = [];
-    for (let i = 0; i < 10; i++) {
-        data.push({
-            key: i,
-            name: '许晓飞',
-            sex: 1,
-            familyGroup: 'xxx',
-        });
-    }
+
     //  仓库管理
     export default {
         components: {
@@ -113,7 +104,7 @@
         },
         data(){
             return {
-                data,
+                data: [],
                 columns,
                 //  搜索相关
                 searchData: {},
@@ -139,9 +130,9 @@
                         const { data } = v;
                         data.records.forEach((item, index) => {
                             item.key = index;
-                            item.createTime = item.createTime.substr(0, 10);
                         });
                         this.data = data.records;
+                        console.log(JSON.parse(JSON.stringify(data.records)));
                         this.pagination = paginationDecode(this.pagination, data);
                     });
             },
@@ -170,7 +161,7 @@
             },
             //  编辑仓库
             editEntrepot(sItem){
-                this.setEntrepotId(1234452321);
+                this.setEntrepotId(sItem.id);
                 this.setDialogTitle(DIALOG_TYPE.ENTREPOT, '编辑仓库');
                 this.showModal(DIALOG_TYPE.ENTREPOT);
             },
@@ -181,6 +172,7 @@
                 const promise = this.$refs.refAddOrEditEntrepot.handleSubmit();
                 promise.then(v => {
                     this.hideModal(DIALOG_TYPE.ENTREPOT);
+                    this.searchFn();
                 }).catch(error => {
                     console.log('有错');
                 }).then(v => {

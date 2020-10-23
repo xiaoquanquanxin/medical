@@ -109,6 +109,10 @@
                     .then(v => {
                         const { data } = v;
                         console.log(data);
+                        this.form.setFieldsValue({
+                            warehouseName: data.warehouseName,
+                            warehouseNumber: data.warehouseNumber
+                        });
                     });
             },
             //    表单提交
@@ -126,7 +130,7 @@
                                 return requestWarehouseInsert(values);
                             }
                             //  如果是编辑
-                            return requestWarehouseUpdate(values);
+                            return requestWarehouseUpdate(Object.assign({ id: this.entrepotId }, values));
                         })()
                             .then(v => {
                                 console.log(v);
