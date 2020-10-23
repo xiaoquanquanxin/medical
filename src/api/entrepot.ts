@@ -27,6 +27,14 @@ export function requestWarehouseUpdate(data: any) {
 	});
 }
 
+//	查看仓库信息	✅
+export function requestWarehouseGet(id: string | number) {
+	return request({
+		url: `/api/warehouse/get/${id}`,
+		method: 'get',
+	});
+}
+
 //	删除仓库信息	⚠️原型无
 export function requestWarehouseDelete(id: string | number) {
 	return request({
@@ -35,10 +43,3 @@ export function requestWarehouseDelete(id: string | number) {
 	});
 }
 
-//	查看仓库信息	✅
-export function requestWarehouseGet(id: string | number) {
-	return request({
-		url: `/api/warehouse/get/${id}`,
-		method: 'get',
-	});
-}
