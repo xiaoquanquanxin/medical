@@ -110,24 +110,29 @@
                 ])
                     .then(v => {
                         console.log('发请求');
-//                        //  todo    年龄不是生日
-//                        this.patientBasicInfo.birth = '1919';
-//                        //  todo    就诊科室没有数据
-//                        this.patientBasicInfo.hospitalTreatment = 1;
-//                        //  todo    营养师需要接口
+                        //  todo    年龄不是生日
+                        this.patientBasicInfo.birth = '1919';
+                        //  todo    就诊科室没有数据
+                        this.patientBasicInfo.hospitalTreatment = 1;
+                        //  todo    营养师需要接口
                         this.patientBasicInfo.nutritionistId = 1;
-//                        //  新增入院所以是1    1入院，2.出院，3.永久注销;
-//                        this.patientBasicInfo.patientStatus = 1;
-//                        //  todo    还有啥叫病区和劳动强度？
-//                        this.patientBasicInfo.pla = '1';
-//                        this.patientBasicInfo.ward = '传染病区';
+                        //  新增入院所以是1    1入院，2.出院，3.永久注销;
+                        this.patientBasicInfo.patientStatus = 1;
+                        //  todo    还有啥叫病区和劳动强度？
+                        this.patientBasicInfo.pla = '1';
+                        this.patientBasicInfo.ward = '传染病区';
                         //  todo    删除jzbh
                         delete this.patientBasicInfo.jzbh;
+                        this.patientBasicInfo.id = this.patientId;
                         console.log(JSON.stringify(this.patientBasicInfo));
                         console.table(JSON.parse(JSON.stringify(this.patientBasicInfo)));
                         requestPatientUpdate(this.patientBasicInfo)
                             .then(v => {
                                 console.log(v);
+                                this.$success({
+                                    title: '保存成功',
+                                });
+                                this.$router.push({ name: 'userList' });
                             });
                     })
                     .catch(error => {
