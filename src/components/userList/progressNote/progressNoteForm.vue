@@ -8,8 +8,8 @@
         >
             <a-form-item label="是否能够按照方案执行">
                 <a-radio-group v-decorator="executionDecorator">
-                    <a-radio :value="1">是</a-radio>
-                    <a-radio :value="2">否</a-radio>
+                    <a-radio value="Y">是</a-radio>
+                    <a-radio value="N">否</a-radio>
                 </a-radio-group>
             </a-form-item>
             <a-form-item label="具体原因">
@@ -19,8 +19,8 @@
             </a-form-item>
             <a-form-item label="是否能够耐受">
                 <a-radio-group v-decorator="toleranceDecorator">
-                    <a-radio :value="1">是</a-radio>
-                    <a-radio :value="2">否</a-radio>
+                    <a-radio value="Y">是</a-radio>
+                    <a-radio value="N">否</a-radio>
                 </a-radio-group>
             </a-form-item>
             <a-form-item label="具体原因">
@@ -30,8 +30,8 @@
             </a-form-item>
             <a-form-item label="有无大便">
                 <a-radio-group v-decorator="shitDecorator">
-                    <a-radio :value="1">是</a-radio>
-                    <a-radio :value="2">否</a-radio>
+                    <a-radio value="Y">是</a-radio>
+                    <a-radio value="N">否</a-radio>
                 </a-radio-group>
             </a-form-item>
             <a-form-item label="具体原因">
@@ -41,8 +41,8 @@
             </a-form-item>
             <a-form-item label="有无饥饿感">
                 <a-radio-group v-decorator="hungerDecorator">
-                    <a-radio :value="1">是</a-radio>
-                    <a-radio :value="2">否</a-radio>
+                    <a-radio value="Y">是</a-radio>
+                    <a-radio value="N">否</a-radio>
                 </a-radio-group>
             </a-form-item>
             <a-form-item label="具体原因">
@@ -55,7 +55,7 @@
 </template>
 <script>
     import { formItemLayout } from '@/utils/layout.ts';
-    import { requestDiseaseRecordSave } from '../../../api/userList/progressNote';
+    import { requestDiseaseRecordGet, requestDiseaseRecordSave } from '../../../api/userList/progressNote';
     //  病程记录操作
     export default {
         beforeCreate(){
@@ -75,7 +75,7 @@
                 formItemLayout,
                 //  是否能够按照方案执行
                 executionDecorator: ['execution', {
-                    initialValue: 1,
+                    initialValue: 'Y',
                 }],
                 executionContentDecorator: ['executionContent', {
                     rules: [{
@@ -86,7 +86,7 @@
 
                 //  是否能够耐受
                 toleranceDecorator: ['tolerance', {
-                    initialValue: 1,
+                    initialValue: 'Y',
                 }],
                 toleranceContentDecorator: ['toleranceContent', {
                     rules: [{
@@ -97,7 +97,7 @@
 
                 //  有无大便
                 shitDecorator: ['shit', {
-                    initialValue: 1,
+                    initialValue: 'Y',
                 }],
                 shitContentDecorator: ['shitContent', {
                     rules: [{
@@ -108,7 +108,7 @@
 
                 //  有无饥饿感
                 hungerDecorator: ['hunger', {
-                    initialValue: 1,
+                    initialValue: 'Y',
                 }],
                 hungerContentDecorator: ['hungerContent', {
                     rules: [{
@@ -119,26 +119,49 @@
             };
         },
         created(){
-            console.log('是编辑？', !!this.progressNoteId);
+            console.log('是编辑？', this.progressNoteId);
             this.searchFn();
         },
         methods: {
             //  主要请求
             searchFn(){
-//                requestChannelBusinessPage(paginationEncode(this.pagination))
-//                    .then(v => {
-//                        const { data } = v;
-//                        console.log(data);
-//                data.records.forEach((item, index) => {
-//                    item.key = index;
-//                    item.createTime = item.createTime.substr(0, 10);
-//                });
-//                        this.data = data.records;
-//                        this.pagination = paginationDecode(this.pagination, data);
-//                    });
+                //  如果是新增
+                if (!this.progressNoteId) {
+                    return;
+                }
+                //  如果是编辑
+                requestDiseaseRecordGet(this.progressNoteId)
+                    .then(v => {
+                        const { data } = v;
+                        console.log(data);
+                        const {
+                            execution,
+                            executionContent,
+                            tolerance,
+                            toleranceContent,
+                            shit,
+                            shitContent,
+                            hunger,
+                            hungerContent,
+                        } = data;
+                        this.form.setFieldsValue({
+                            execution,
+                            executionContent,
+                            tolerance,
+                            toleranceContent,
+                            shit,
+                            shitContent,
+                            hunger,
+                            hungerContent,
+                        });
+                    });
             },
             //  表单提交 保存
             handleSubmit(){
+                //  如果是编辑，直接过
+                if (this.progressNoteId) {
+                    return Promise.resolve(true);
+                }
                 return new Promise(((resolve, reject) => {
                     this.form.validateFields((err, values) => {
                         console.table(values);
@@ -171,14 +194,4 @@
     };
     //	dataType	⚠️todo  数据类型(1内网，2外网)
     //	doctorId	⚠️️todo  录入医生id
-    //	patientId	病人id
-
-    //	execution	是否能够按照方案执行
-    //	executionContent	说明原因
-    //	hunger	是否有饥饿感
-    //	hungerContent	是否有饥饿感备注
-    //	shit	有无大便
-    //	shitContent	说明性状、次数
-    //	tolerance	是否能够耐受
-    //	toleranceContent	不耐受症状
 </script>

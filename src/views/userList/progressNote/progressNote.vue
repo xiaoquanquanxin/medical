@@ -59,7 +59,7 @@
         },
         {
             title: '记录时间',
-            dataIndex: '记录时间',
+            dataIndex: 'ctime',
             width: 100,
         },
         {
@@ -111,7 +111,7 @@
                             item.key = index;
                             item.index = index + 1;
                         });
-                        console.log(data.records);
+                        console.table(JSON.parse(JSON.stringify(data.records[0])));
                         this.data = data.records;
                     });
                 requestPatientSelectDoctorByHospital()
@@ -137,15 +137,19 @@
             },
             //  详情
             progressNoteDetail(sItem){
-                this.setProgressNoteId(3323);
+                this.setProgressNoteId(sItem.id);
                 this.showModal(DIALOG_TYPE.PROGRESS_NOTE);
             },
 
-            //  确认市场价格
+            //  确认病程记录
             addProgressNoteModalCheck(refProgressNoteForm){
                 const promise = this.$refs[refProgressNoteForm].handleSubmit();
-                promise.then(v => {
+                promise.then(isEdit => {
                     this.hideModal(DIALOG_TYPE.PROGRESS_NOTE);
+                    if (isEdit) {
+                        return;
+                    }
+                    this.searchFn();
                 }).catch(error => {
                     console.log('有错');
                 });
