@@ -174,9 +174,11 @@
             <a-form-item label="商品图片">
                 <div class="add-form-input">
                     <a-upload-dragger
-                            action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                            action="/api/upload"
                             list-type="picture-card"
+                            :data="beforeUploadData"
                             @change="uploadHandleChange($event,'goodsImg','goodsImgThumbUrl')"
+                            :beforeUpload="beforeUploadFn"
                             :show-upload-list="false"
                     >
                         <img v-if="goodsImgThumbUrl"
@@ -219,8 +221,8 @@
     import { formItemLayout } from '@/utils/layout.ts';
     import VueQuillEditor from 'vue-quill-editor/src/editor';
     import GoBackButton from '@/components/goBackButton.vue';
-    import { uploadHandleChange } from '../../utils/upload';
     import { requestGoodsGet, requestGoodsInsert, requestGoodsUpdate } from '../../api/commodity';
+    import { uploadHandleChange, beforeUploadFn, beforeUploadData } from '../../utils/upload';
 
     const uintParams = [
         {
@@ -279,6 +281,8 @@
         },
         data(){
             return {
+                //	上传文件的数据，这样的对象只需要一个
+                beforeUploadData,
                 //  商品id
                 commodityId: this.$route.params.commodityId,
                 //  表单大小
@@ -467,6 +471,7 @@
         methods: {
             //  上传图片通用方法
             uploadHandleChange,
+            beforeUploadFn,
             //  主要请求
             searchFn(){
                 //  如果是新增

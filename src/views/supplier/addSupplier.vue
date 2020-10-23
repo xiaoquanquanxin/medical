@@ -77,7 +77,9 @@
                     <a-upload-dragger
                             action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                             list-type="picture-card"
+                            :data="beforeUploadData"
                             @change="uploadHandleChange($event,'businessLicense','businessLicenseThumbUrl')"
+                            :beforeUpload="beforeUploadFn"
                             :show-upload-list="false"
                     >
                         <img v-if="businessLicenseThumbUrl"
@@ -101,7 +103,9 @@
                     <a-upload-dragger
                             action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                             list-type="picture-card"
+                            :data="beforeUploadData"
                             @change="uploadHandleChange($event,'contract','contractThumbUrl')"
+                            :beforeUpload="beforeUploadFn"
                             :show-upload-list="false"
                     >
                         <img v-if="contractThumbUrl"
@@ -125,7 +129,9 @@
                     <a-upload-dragger
                             action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                             list-type="picture-card"
+                            :data="beforeUploadData"
                             @change="uploadHandleChange($event,'foodQualificationCertificate','foodQualificationCertificateThumbUrl')"
+                            :beforeUpload="beforeUploadFn"
                             :show-upload-list="false"
                     >
                         <img v-if="foodQualificationCertificateThumbUrl"
@@ -149,7 +155,9 @@
                     <a-upload-dragger
                             action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                             list-type="picture-card"
+                            :data="beforeUploadData"
                             @change="uploadHandleChange($event,'specialMedicalFoodQualificationCertificate','specialMedicalFoodQualificationCertificateThumbUrl')"
+                            :beforeUpload="beforeUploadFn"
                             :show-upload-list="false"
                     >
                         <img v-if="specialMedicalFoodQualificationCertificateThumbUrl"
@@ -181,7 +189,7 @@
     import { isPhoneNumber } from '@/utils/validate';
     import GoBackButton from '@/components/goBackButton.vue';
     import { requestSupplierGet, requestSupplierInsert } from '../../api/supplier';
-    import { uploadHandleChange } from '../../utils/upload';
+    import { uploadHandleChange, beforeUploadFn, beforeUploadData } from '../../utils/upload';
 
     export default {
         components: {
@@ -192,6 +200,8 @@
         },
         data(){
             return {
+                //	上传文件的数据，这样的对象只需要一个
+                beforeUploadData,
                 //  科室id
                 supplierId: this.$route.params.supplierId,
                 //  表单大小
@@ -293,6 +303,7 @@
         methods: {
             //  上传图片通用方法
             uploadHandleChange,
+            beforeUploadFn,
             //  主要请求
             searchFn(){
                 //  如果是新增
