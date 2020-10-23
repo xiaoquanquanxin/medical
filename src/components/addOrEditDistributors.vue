@@ -46,7 +46,7 @@
             </a-form-item>
             <a-form-item label="选择仓库">
                 <a-select class="add-form-input"
-                          v-decorator="warehouseDecorator"
+                          v-decorator="channelBusunessWarehouseIdDecorator"
                           placeholder="请选择仓库"
                 >
                     <a-select-option value="1">
@@ -131,7 +131,7 @@
                     },]
                 }],
                 //  选择仓库
-                warehouseDecorator: ['warehouse', {
+                channelBusunessWarehouseIdDecorator: ['channelBusunessWarehouseId', {
                     rules: [{
                         required: true,
                         message: '请选择仓库'
@@ -166,15 +166,6 @@
             console.log('是编辑？', !!this.channelId);
             this.searchFn();
         },
-        mounted(){
-            //  如果是编辑
-            //  发完请求以后
-            if (!!this.channelId) {
-                this.form.setFieldsValue({
-                    password: 1
-                });
-            }
-        },
         methods: {
             //  主要请求
             searchFn(){
@@ -187,6 +178,19 @@
                     .then(v => {
                         const { data } = v;
                         console.log(data);
+                        const {
+                            channelBusinessName,
+                            channelBusinessNumber,
+                            province,
+                            city,
+                            channelBusunessWarehouseId,
+                        } = data;
+                        this.form.setFieldsValue({
+                            channelBusinessName,
+                            channelBusinessNumber,
+                            province,
+                            channelBusunessWarehouseId,
+                        });
                     });
             },
             //  与第一密码比较，用于确认密码
@@ -195,15 +199,15 @@
             handleSubmit(){
                 return new Promise((resolve, reject) => {
                     this.form.validateFields((err, values) => {
-                        console.log(values);
                         if (err) {
                             reject();
                             return;
                         }
+                        console.log(values);
                         return (() => {
                             //  如果是新增
                             if (!this.channelId) {
-                                return requestChannelBusinessInsert(this.channelId);
+                                return requestChannelBusinessInsert(values);
                             }
                             //  如果是编辑
                             return requestChannelBusinessUpdate(this.channelId);

@@ -18,15 +18,19 @@
                 :scroll="scroll"
                 :pagination="false"
         >
-            <div
-                    slot="a-switch"
-                    slot-scope="scope,sItem,sIndex,extra"
+            <div slot="area" slot-scope="scope,sItem,sIndex,extra">
+                {{scope.province}}-{{scope.city}}
+            </div>
+            <!--状态选项-->
+            <div slot="a-switch"
+                 slot-scope="scope,sItem,sIndex,extra"
             >
                 <a-switch checked-children="开" un-checked-children="关"
                           :default-checked="!!sIndex"
                           @change="aSwitchChange(sItem,$event)"
                 />
             </div>
+            <!--操作-->
             <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
                 <a-space size="small">
                     <a @click="editDistributors(sItem)">编辑</a>
@@ -77,18 +81,18 @@
     const columns = [
         {
             title: '渠道商名称',
-            dataIndex: 'hospital',
+            dataIndex: 'channelBusinessName',
             width: 120,
         },
         {
             title: '渠道商代码',
-            dataIndex: 'city',
+            dataIndex: 'channelBusinessNumber',
             width: 120,
         },
         {
             title: '渠道商地区',
-            dataIndex: 'area',
             width: 120,
+            scopedSlots: { customRender: 'area' },
         },
         {
             title: '添加人',
@@ -111,18 +115,7 @@
             width: 100,
         },
     ];
-    const data = [];
-    for (let i = 0; i < 10; i++) {
-        data.push({
-            key: i,
-            hospital: `xx渠道商`,
-            city: '上海',
-            status: String(i % 2),
-            icon: '添加人',
-            area: '地区',
-            time: '2020-10-10'
-        });
-    }
+
     //  渠道商管理
     export default {
         components: {
@@ -133,7 +126,7 @@
                 //  搜索相关
                 searchData: {},
 
-                data,
+                data: [],
                 columns,
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
                 scroll: twoRowSearch(columns),
@@ -154,9 +147,9 @@
                         const { data } = v;
                         data.records.forEach((item, index) => {
                             item.key = index;
-                            item.createTime = item.createTime.substr(0, 10);
                         });
                         this.data = data.records;
+                        console.log(JSON.parse(JSON.stringify(data.records[0])));
                         this.pagination = paginationDecode(this.pagination, data);
                     });
             },
@@ -203,6 +196,7 @@
                 const promise = this.$refs[refAddOrEditDistributors].handleSubmit();
                 promise.then(v => {
                     this.hideModal(DIALOG_TYPE.DISTRIBUTORS);
+                    this.searchFn();
                 }).catch(error => {
                     console.log('有错');
                 }).then(v => {
