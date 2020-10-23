@@ -143,7 +143,9 @@
 <script>
     import ScreeningBasicInfo from '@/components/userList/screening/screeningBasicInfo.vue';
     import ScreeningBottomInfo from '@/components/userList/screening/screeningBottomInfo.vue';
-    import { mapGetters, mapActions } from 'vuex';    import GoBackButton from '@/components/goBackButton.vue';
+    import { mapGetters, mapActions } from 'vuex';
+    import GoBackButton from '@/components/goBackButton.vue';
+    import { requestPatientSelectOnePatient } from '../../../api/userList/userList';
 
     //  风险筛查列
     const riskColumns = [
@@ -230,71 +232,81 @@
             }
         },
         created(){
-            setTimeout(() => {
-                this.getScreeningInfo();
-            }, 20);
-        },
-        created(){
             this.searchFn();
         },
         methods: {
-            //  主要请求
-            searchFn(){
-//                requestChannelBusinessPage(paginationEncode(this.pagination))
-//                    .then(v => {
-//                        const { data } = v;
-//                        console.log(data);
-//                data.records.forEach((item, index) => {
-//                    item.key = index;
-//                    item.createTime = item.createTime.substr(0, 10);
-//                });
-//                        this.data = data.records;
-//                        this.pagination = paginationDecode(this.pagination, data);
-//                    });
-            },
             ...mapActions('userList', [
                 //  保存病人信息，这是为了给组件用，而不是页面，所以要store
                 'setScreeningInfo',
+                //  保存病人信息，这是为了给组件用，而不是页面，所以要store
+                'setPatientBasicInfo',
             ]),
-            getScreeningInfo(){
+            searchFn(){
+                //  重置头部信息
+                this.setScreeningInfo({ screeningBasicInfo: [] });
                 //  发请求
                 console.log('病人id', this.patientId);
                 console.log('详情id ,有详情id的是编辑', this.screeningDetailId);
-                const screeningBasicInfo = [{
-                    key: 1,
-                    a: '姓名：小飞',
-                    b: '性别：男',
-                    c: '年龄：30',
-                    d: '身高：312cm',
-                    e: '现体重：32kg',
-                    f: 'BMI(kg/m2)：322',
-                }];
-                const screenBottomData = [
-                    {
-                        key: 1,
-                        a: '筛查人：',
-                        c: '日期',
-                        e: '时间'
-                    }
-                ];
-                this.setScreeningInfo({
-                    //  设置基础信息
-                    screeningBasicInfo,
-                    //  设置底部信息
-                    screenBottomData,
-                });
-
+                requestPatientSelectOnePatient(this.patientId)
+                    .then(v => {
+                        const { data } = v;
+                        this.setPatientBasicInfo(data);
+                        const screeningBasicInfo = [{
+                            key: 1,
+                            a: `姓名：${data.name}`,
+                            b: `性别：${data.sex === 1 ? '男' : '女'}`,
+                            c: `年龄：${data.birth}`,
+                            d: `身高：${data.height}cm`,
+                            e: `现体重：${data.weight}kg`,
+                            f: `BMI(kg/m2)：${data.bmi}`,
+                        }];
+                        const screenBottomData = [
+                            {
+                                key: 1,
+                                a: '筛查人：',
+                                c: '日期',
+                                e: '时间'
+                            }
+                        ];
+                        this.setScreeningInfo({
+                            //  设置基础信息
+                            screeningBasicInfo,
+                            //  设置底部信息
+                            screenBottomData,
+                        });
+                    });
             },
             //  保存
             saveScreening(){
                 console.log('保存');
+                const a = {
+                    ageOption: '1',
+                    ageScore: '1',
+                    disease: '1,3',
+                    diseaseScore: '2',
+                    doctorId: 0,
+                    doctorName: '',
+                    food: '1',
+                    height: 0,
+                    icu: '1',
+                    isRisk: '',
+                    lose: '1',
+                    name: '',
+                    nutrition: '1',
+                    nutritionScore: '3',
+                    patientId: 0,
+                    screenType: '',
+                    sex: '',
+                    totalScore: '3',
+                    weight: 0
+                };
+
             },
             //  疾病评分 选中的数据
             riskSelectChange(riskSelectedList){
                 console.log('selectedRowKeys changed: ', riskSelectedList);
                 this.riskSelectedList = riskSelectedList;
             },
-
         }
     };
 </script>
