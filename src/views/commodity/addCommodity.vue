@@ -221,7 +221,7 @@
     import { formItemLayout } from '@/utils/layout.ts';
     import VueQuillEditor from 'vue-quill-editor/src/editor';
     import GoBackButton from '@/components/goBackButton.vue';
-    import { requestGoodsGet, requestGoodsInsert, requestGoodsUpdate } from '../../api/commodity';
+    import { requestGoodsGet, requestGoodsInsert, requestGoodsUpdate } from '../../api/commodity/commodityList';
     import { uploadHandleChange, beforeUploadFn, beforeUploadData } from '../../utils/upload';
 
     const uintParams = [
@@ -289,6 +289,7 @@
                 formItemLayout,
                 //  商品名称
                 goodsNameDecorator: ['goodsName', {
+                    initialValue: '11',
                     rules: [{
                         required: true,
                         message: '请输入商品名称'
@@ -296,6 +297,7 @@
                 }],
                 //  商品货号
                 goodsProductCodeDecorator: ['goodsProductCode', {
+                    initialValue: '11',
                     rules: [{
                         required: true,
                         message: '请输入商品货号'
@@ -303,6 +305,7 @@
                 }],
                 //  商品条码
                 goodsBarCodeDecorator: ['goodsBarCode', {
+                    initialValue: '11',
                     rules: [{
                         required: true,
                         message: '请输入商品条码'
@@ -317,6 +320,7 @@
                 }],
                 //  商品分类
                 goodsCategoryIdDecorator: ['goodsCategoryId', {
+                    initialValue: '11',
                     rules: [{
                         required: true,
                         message: '请选择商品分类'
@@ -324,6 +328,7 @@
                 }],
                 //  商品品牌
                 goodsBrandIdDecorator: ['goodsBrandId', {
+                    initialValue: '11',
                     rules: [{
                         required: true,
                         message: '请选择商品品牌'
@@ -331,6 +336,7 @@
                 }],
                 //  供应商
                 supplierIdDecorator: ['supplierId', {
+                    initialValue: '11',
                     rules: [{
                         required: true,
                         message: '请选择供应商'
@@ -338,6 +344,7 @@
                 }],
                 //  厂家
                 manufactorIdDecorator: ['manufactorId', {
+                    initialValue: '11',
                     rules: [{
                         required: true,
                         message: '请输入厂家'
@@ -345,6 +352,7 @@
                 }],
                 //  通用名
                 goodsTradeNameDecorator: ['goodsTradeName', {
+                    initialValue: '11',
                     rules: [{
                         required: true,
                         message: '请输入通用名'
@@ -352,6 +360,7 @@
                 }],
                 //  保存方式
                 preservationMethodDecorator: ['preservationMethod', {
+                    initialValue: '11',
                     rules: [{
                         required: true,
                         message: '请选择保存方式'
@@ -359,6 +368,7 @@
                 }],
                 //  状态
                 statusDecorator: ['status', {
+                    initialValue: '11',
                     rules: [{
                         required: true,
                         message: '请选择状态'
@@ -366,6 +376,7 @@
                 }],
                 //  规格
                 goodsSpecificationsDecorator: ['goodsSpecifications', {
+                    initialValue: '11',
                     rules: [{
                         required: true,
                         message: '请输入规格'
@@ -543,11 +554,10 @@
                 this.$nextTick(() => {
                     this.form.validateFields((err, values) => {
                         console.log(values.goodsKeyWord);
-                        console.log(values);
                         if (err) {
                             return;
                         }
-                        console.table(values);
+                        console.log(values);
                         console.log(this.uintParams);
                         const data = Object.assign({}, values, this.uintParams);
                         (() => {
