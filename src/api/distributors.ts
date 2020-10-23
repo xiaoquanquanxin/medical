@@ -18,7 +18,7 @@ export function requestChannelBusinessInsert(data: any) {
 	});
 }
 
-//	查看仓库信息	❌
+//	查看仓库信息		✅，⚠️缺参数
 export function requestChannelBusinessGet(id: string | number) {
 	return request({
 		url: `/api/channelBusiness/get/${id}`,
@@ -26,7 +26,7 @@ export function requestChannelBusinessGet(id: string | number) {
 	});
 }
 
-//	修改渠道商信息
+//	修改渠道商信息		✅
 export function requestChannelBusinessUpdate(data: any) {
 	return request({
 		url: '/api/channelBusiness/update',
@@ -35,7 +35,7 @@ export function requestChannelBusinessUpdate(data: any) {
 	});
 }
 
-//	删除仓库信息
+//	删除仓库信息		⚠️原型无
 export function requestChannelBusinessDelete(id: string | number) {
 	return request({
 		url: `/api/channelBusiness/delete/${id}`,

@@ -185,7 +185,7 @@
 
             //  编辑渠道商
             editDistributors(sItem){
-                this.setChannelId(1);
+                this.setChannelId(sItem.id);
                 this.setDialogTitle(DIALOG_TYPE.DISTRIBUTORS, '编辑渠道商');
                 this.showModal(DIALOG_TYPE.DISTRIBUTORS);
             },

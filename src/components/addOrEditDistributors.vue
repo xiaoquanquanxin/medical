@@ -189,6 +189,7 @@
                             channelBusinessName,
                             channelBusinessNumber,
                             province,
+                            city,
                             channelBusunessWarehouseId,
                         });
                     });
@@ -210,7 +211,10 @@
                                 return requestChannelBusinessInsert(values);
                             }
                             //  如果是编辑
-                            return requestChannelBusinessUpdate(this.channelId);
+                            return requestChannelBusinessUpdate(Object.assign({
+                                    id: this.channelId,
+                                }, values
+                            ));
                         })()
                             .then(v => {
                                 console.log(v);
