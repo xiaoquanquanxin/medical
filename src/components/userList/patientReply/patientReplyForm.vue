@@ -10,7 +10,7 @@
                 <div style="width:500px;">
                     <a-textarea
                             :auto-size="{ minRows: 3, maxRows: 5 }"
-                            v-decorator="contentDecorator"
+                            v-decorator="feedbackDecorator"
                             placeholder="请输入患者反馈"
                     />
                 </div>
@@ -20,7 +20,7 @@
 </template>
 <script>
     import { formItemLayout } from '@/utils/layout.ts';
-    import { requestFeedbackSave, requestFeedbackUpdate } from '../../../api/userList/patientReply';
+    import { requestFeedbackSave, requestFeedbackGet } from '../../../api/userList/patientReply';
     //  患者反馈操作
     export default {
         beforeCreate(){
@@ -39,7 +39,7 @@
             return {
                 formItemLayout,
                 //  内容
-                contentDecorator: ['content', {
+                feedbackDecorator: ['feedback', {
                     rules: [{
                         required: true,
                         message: '请输入患者反馈'
@@ -59,44 +59,39 @@
                 if (!this.patientReplyId) {
                     return;
                 }
-
+                requestFeedbackGet(this.patientReplyId)
+                    .then(v => {
+                        console.log(v.data);
+                        this.form.setFieldsValue({
+                            feedback: v.data.feedback,
+                        });
+                    });
             },
             //  表单提交 保存
             handleSubmit(){
-                return new Promise(((resolve, reject) => {
+                //  如果是编辑
+                if (this.patientReplyId) {
+                    return Promise.resolve(true);
+                }
+                return new Promise((resolve, reject) => {
                     this.form.validateFields((err, values) => {
                         console.table(values);
-                        if (!err) {
-                            resolve(values);
-                        } else {
+                        if (err) {
                             reject();
+                            return;
                         }
+                        requestFeedbackSave(Object.assign({
+                            patientId: this.patientId,
+                        }, values))
+                            .then(v => {
+                                resolve();
+                            })
+                            .catch(err => {
+                                console.log(err);
+                                reject(err);
+                            });
                     });
-                }))
-                    .then(values => {
-                        return new Promise(((resolve, reject) => {
-                            console.log('发请求吧');
-                            (() => {
-                                if (!this.patientReplyId) {
-                                    return requestFeedbackSave(Object.assign({
-                                        patientId: this.patientId,
-                                    }, values));
-                                } else {
-                                    return requestFeedbackUpdate(Object.assign({
-                                        patientId: this.patientId,
-                                    }, values));
-                                }
-                            })()
-                                .then(v => {
-                                    resolve(v);
-                                    console.log(v);
-                                })
-                                .catch(err => {
-                                    console.log(err);
-                                    reject(err);
-                                });
-                        }));
-                    });
+                });
             },
         }
     };

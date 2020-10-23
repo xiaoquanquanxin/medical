@@ -42,13 +42,13 @@
     const columns = [
         {
             title: '序号',
-            dataIndex: '序号',
-            width: 150,
+            dataIndex: 'index',
+            width: 100,
         },
         {
             title: '反馈时间',
-            dataIndex: '反馈时间',
-            width: 100,
+            dataIndex: 'ctime',
+            width: 150,
         },
         {
             title: '操作',
@@ -87,14 +87,14 @@
             //  主要请求
             searchFn(){
                 requestFeedbackPage(Object.assign({},
-                    { patientId: this.patientId },
+                    { param: { patientId: this.patientId } },
                     noPaginationData)
                 )
                     .then(v => {
                         const { data } = v;
                         data.records.forEach((item, index) => {
                             item.key = index;
-                            item.createTime = item.createTime.substr(0, 10);
+                            item.index = index + 1;
                         });
                         this.data = data.records;
                     });
@@ -113,15 +113,19 @@
             },
             //  详情
             patientReplyDetail(sItem){
-                this.setPatientReplyId(3323);
+                this.setPatientReplyId(sItem.id);
                 this.showModal(DIALOG_TYPE.PATIENT_REPLY);
             },
 
             //  确认详情
             addPatientReplyModalCheck(refPatientReplyForm){
                 const promise = this.$refs[refPatientReplyForm].handleSubmit();
-                promise.then(v => {
+                promise.then(isEdit => {
                     this.hideModal(DIALOG_TYPE.PATIENT_REPLY);
+                    if (isEdit) {
+                        return;
+                    }
+                    this.searchFn();
                 }).catch(error => {
                     console.log('有错');
                 });
