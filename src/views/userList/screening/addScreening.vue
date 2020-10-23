@@ -13,7 +13,7 @@
             <a-row type="flex" justify="start" align="middle" class="table-group-title no-border-bottom">
                 <a-space>
                     <span>营养风险筛查：</span>
-                    <span class="red">{{screeningDetailInfo.totalScore}}分</span>
+                    <span class="red">{{totalScore}}分</span>
                 </a-space>
             </a-row>
             <a-table
@@ -28,7 +28,6 @@
                 >
                     <a-radio-group style="display: block;"
                                    v-model="scope.value"
-                                   @change="riskChange"
                     >
                         <a-radio value="1">是</a-radio>
                         <a-radio value="0">否</a-radio>
@@ -195,6 +194,11 @@
             screeningDetailId(){
                 return this.$route.params.screeningDetailId;
             },
+            //  计算总分
+            totalScore(){
+                const { ageScore, diseaseScore, nutritionScore } = this.screeningDetailInfo;
+                return ageScore + diseaseScore + nutritionScore;
+            }
         },
         data(){
             return {
@@ -259,7 +263,6 @@
         },
         created(){
             //  相当于初始化
-            this.riskChange();
             this.nutritionChange();
             this.ageOptionChange();
             this.calcDiseaseScore();
@@ -317,19 +320,12 @@
                         this.riskData[0].value = this.screeningDetailInfo.food;
                         this.riskData[1].value = this.screeningDetailInfo.lose;
                         this.riskData[2].value = this.screeningDetailInfo.icu;
-                        this.riskChange();
                         this.nutritionChange();
                         this.ageOptionChange();
                         this.calcDiseaseScore();
                         console.log(JSON.parse(JSON.stringify(v.data)));
 
                     });
-            },
-            //  营养风险筛查分数
-            riskChange(){
-                this.screeningDetailInfo.totalScore = this.riskData.reduce((a, b) => {
-                    return a + Number(b.value);
-                }, 0);
             },
             //  疾病评分 选中的数据
             riskSelectChange(diseaseSelectList){
@@ -367,13 +363,15 @@
                     this.$router.push({ name: 'userList' });
                     return;
                 }
-                
-                this.screeningDetailInfo.food = this.riskData[0].value;
-                this.screeningDetailInfo.lose = this.riskData[1].value;
-                this.screeningDetailInfo.icu = this.riskData[2].value;
-                this.screeningDetailInfo.patientId = this.patientId;
-                console.log(JSON.parse(JSON.stringify(this.screeningDetailInfo)));
-                requestScreenSave(this.screeningDetailInfo)
+                const screeningDetailInfo = this.screeningDetailInfo;
+                const riskData = this.riskData;
+                screeningDetailInfo.food = riskData[0].value;
+                screeningDetailInfo.lose = riskData[1].value;
+                screeningDetailInfo.icu = riskData[2].value;
+                screeningDetailInfo.patientId = this.patientId;
+                screeningDetailInfo.totalScore = this.totalScore;
+                console.log(JSON.parse(JSON.stringify(screeningDetailInfo)));
+                requestScreenSave(screeningDetailInfo)
                     .then(v => {
                         console.log(v);
                         this.$router.push({ name: 'userList' });
