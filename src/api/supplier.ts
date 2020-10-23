@@ -28,15 +28,7 @@ export function requestSupplierUpdate(data: any) {
 	});
 }
 
-//	删除仓库信息
-export function requestSupplierDelete(id: string | number) {
-	return request({
-		url: `/api/supplier/delete/${id}`,
-		method: 'get',
-	});
-}
-
-//	查看仓库信息	❌
+//	查看仓库信息
 export function requestSupplierGet(id: string | number) {
 	return request({
 		url: `/api/supplier/get/${id}`,
@@ -44,4 +36,11 @@ export function requestSupplierGet(id: string | number) {
 	});
 }
 
-//	❌缺少 上传图片接口
+//	删除仓库信息	⚠️原型无
+export function requestSupplierDelete(id: string | number) {
+	return request({
+		url: `/api/supplier/delete/${id}`,
+		method: 'get',
+	});
+}
+
