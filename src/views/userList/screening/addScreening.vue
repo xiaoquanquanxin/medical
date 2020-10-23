@@ -13,7 +13,7 @@
             <a-row type="flex" justify="start" align="middle" class="table-group-title no-border-bottom">
                 <a-space>
                     <span>营养风险筛查：</span>
-                    <span class="red">{{riskScreeningScore}}分</span>
+                    <span class="red">{{screeningDetailInfo.totalScore}}分</span>
                 </a-space>
             </a-row>
             <a-table
@@ -28,9 +28,10 @@
                 >
                     <a-radio-group style="display: block;"
                                    v-model="scope.value"
+                                   @change="riskChange"
                     >
-                        <a-radio :value="1">是</a-radio>
-                        <a-radio :value="0">否</a-radio>
+                        <a-radio value="1">是</a-radio>
+                        <a-radio value="0">否</a-radio>
                     </a-radio-group>
                 </div>
             </a-table>
@@ -39,7 +40,7 @@
             <a-row type="flex" justify="start" align="middle" class="table-group-title no-border-bottom">
                 <a-space>
                     <span>疾病评分：</span>
-                    <span class="red">{{riskScreeningScore}}分</span>
+                    <span class="red">{{screeningDetailInfo.diseaseScore}}分</span>
                 </a-space>
             </a-row>
             <a-row type="flex" justify="space-between" align="middle" style="border: 1px solid #e8e8e8;">
@@ -47,7 +48,7 @@
                     <div class="" style="text-align: center">疾病评分</div>
                 </div>
                 <div class="radio-group-item-content">
-                    <a-checkbox-group @change="riskSelectChange">
+                    <a-checkbox-group @change="riskSelectChange($event)" v-model="diseaseSelectList">
                         <ul class="check-group-list">
                             <li class="radio-group-item">
                                 <a-checkbox value="1">髋骨折 (1分 )</a-checkbox>
@@ -85,7 +86,7 @@
             <a-row type="flex" justify="start" align="middle" class="table-group-title no-border-bottom">
                 <a-space>
                     <span>营养评分：</span>
-                    <span class="red">{{riskScreeningScore}}分</span>
+                    <span class="red">{{screeningDetailInfo.nutritionScore }}分</span>
                 </a-space>
             </a-row>
             <a-row type="flex" justify="space-between" align="middle" style="border: 1px solid #e8e8e8;">
@@ -93,16 +94,17 @@
                     <div class="" style="text-align: center">营养评分</div>
                 </div>
                 <div class="radio-group-item-content">
-                    <a-radio-group v-model="nutritionScore" style="width: 100%;">
+                    <a-radio-group v-model="screeningDetailInfo.nutrition" style="width: 100%;"
+                                   @change="nutritionChange">
                         <ul class="check-group-list">
                             <li class="radio-group-item">
-                                <a-radio :value="1">3个月体重丢失 > 5%或食物摄入比正常需要量低25% ~ 50%(1分 )</a-radio>
+                                <a-radio value="1">3个月体重丢失 > 5%或食物摄入比正常需要量低25% ~ 50%(1分 )</a-radio>
                             </li>
                             <li class="radio-group-item">
-                                <a-radio :value="2">一般情况差或2个月体重丢失 > 5%或食物摄入比正常需要量低50% ~ 75%(2分 )</a-radio>
+                                <a-radio value="2">一般情况差或2个月体重丢失 > 5%或食物摄入比正常需要量低50% ~ 75%(2分 )</a-radio>
                             </li>
                             <li class="radio-group-item">
-                                <a-radio :value="3">BMI < 18.5，且一般情况差或1个月内体重丢失 > 5%（或3个月体重下降15%）或前1周食物摄入比正常需要量低75% ~
+                                <a-radio value="3">BMI < 18.5，且一般情况差或1个月内体重丢失 > 5%（或3个月体重下降15%）或前1周食物摄入比正常需要量低75% ~
                                     100%(3分 )
                                 </a-radio>
                             </li>
@@ -115,7 +117,7 @@
             <a-row type="flex" justify="start" align="middle" class="table-group-title no-border-bottom">
                 <a-space>
                     <span>年龄评分：</span>
-                    <span class="red">{{riskScreeningScore}}分</span>
+                    <span class="red">{{screeningDetailInfo.ageScore}}分</span>
                 </a-space>
             </a-row>
             <a-row type="flex" justify="space-between" align="middle" style="border: 1px solid #e8e8e8;">
@@ -123,13 +125,14 @@
                     <div class="" style="text-align: center">营养评分</div>
                 </div>
                 <div class="radio-group-item-content">
-                    <a-radio-group v-model="ageScore" style="width: 100%;">
+                    <a-radio-group v-model="screeningDetailInfo.ageOption" style="width: 100%;"
+                                   @change="ageOptionChange">
                         <ul class="check-group-list">
                             <li class="radio-group-item">
-                                <a-radio :value="1">年龄 >= 70(1分 )</a-radio>
+                                <a-radio value="1">年龄 >= 70(1分 )</a-radio>
                             </li>
                             <li class="radio-group-item">
-                                <a-radio :value="2">年龄 < 70岁(0分 )</a-radio>
+                                <a-radio value="2">年龄 < 70岁(0分 )</a-radio>
                             </li>
                         </ul>
                     </a-radio-group>
@@ -146,6 +149,7 @@
     import { mapGetters, mapActions } from 'vuex';
     import GoBackButton from '@/components/goBackButton.vue';
     import { requestPatientSelectOnePatient } from '../../../api/userList/userList';
+    import { requestScreenSave, requestScreenSelectOne } from '../../../api/userList/screening';
 
     //  风险筛查列
     const riskColumns = [
@@ -162,17 +166,17 @@
         {
             key: 1,
             label: '过去一周摄食是否有减少：',
-            value: 1,
+            value: '1',
         },
         {
             key: 2,
             label: '过去三个月体重是否下降：',
-            value: 1,
+            value: '1',
         },
         {
             key: 3,
             label: '有严重疾病吗？（如ICU治疗）：',
-            value: 1,
+            value: '1',
         }
     ];
 
@@ -191,15 +195,6 @@
             screeningDetailId(){
                 return this.$route.params.screeningDetailId;
             },
-            //  风险筛查分数
-            riskScreeningScore(){
-                if (!this.riskData || !this.riskData.length) {
-                    return 0;
-                }
-                return this.riskData.reduce((a, b) => {
-                    return a + b.value;
-                }, 0);
-            },
         },
         data(){
             return {
@@ -213,25 +208,61 @@
                 riskData,
 
                 //  疾病评分 被选中的数据
-                riskSelectedList: [],
+                diseaseSelectList: [],
+                //  分数表 ，id ： 分数
+                diseaseScoreMap: {
+                    1: 1,
+                    2: 1,
+                    3: 2,
+                    4: 2,
+                    5: 2,
+                    6: 2,
+                    7: 3,
+                    8: 3,
+                    9: 3,
+                },
 
-                //  营养评分
-                nutritionScore: 1,
-                //  年龄评分
-                ageScore: 1,
+                //  整个表单
+                screeningDetailInfo: {
+                    //
+//                    name: '',
+                    //
+//                    patientId: 0,
+                    //  性别
+//                    sex: '',
+                    //  总评分，大于3分则为有风险，小于等于3分则为无风险 ,示例值(3)
+                    totalScore: 0,
+
+//                    //  过去一周摄食是否有减少,单选，选中第一项则用1来表示第一项被选中 ,示例值(1)
+//                    food: '1',
+//                    //  过去三个月体重是否下降,单选，选中第一项则用1来表示第一项被选中 ,示例值(1)
+//                    lose: '1',
+//                    //  有严重疾病吗？（如ICU治疗）,单选，选中第一项则用1来表示第一项被选中 ,示例值(1)
+//                    icu: '1',
+
+                    //  疾病选项：多选，如第一，第三项被勾选，其他没有被勾选，则为1,3格式 ,示例值(1,3)
+                    disease: '',
+                    //  疾病分数，多选项情况，分数取选中的最大值 ,示例值(2)
+                    diseaseScore: '0',
+
+                    //  营养选项： 单选，选中第一项则用1来表示第一项被选中 ,示例值(1)
+                    nutrition: '1',
+                    //  营养分数 ,示例值(3)
+                    nutritionScore: '0',
+
+                    //  年龄选项： 单选，选中第一项则用1来表示第一项被选中 ,示例值(1)
+                    ageOption: '1',
+                    //  年龄评分 ,示例值(1)
+                    ageScore: '0',
+                }
             };
         },
-        watch: {
-            //  营养评分
-            nutritionScore(value){
-                console.log('营养评分', value);
-            },
-            //  年龄评分
-            ageScore(value){
-                console.log('年龄评分', value);
-            }
-        },
         created(){
+            //  相当于初始化
+            this.riskChange();
+            this.nutritionChange();
+            this.ageOptionChange();
+            this.calcDiseaseScore();
             this.searchFn();
         },
         methods: {
@@ -275,37 +306,79 @@
                             screenBottomData,
                         });
                     });
+                //  如果是新增
+                if (!this.screeningDetailId) {
+                    return;
+                }
+                //  如果是编辑
+                requestScreenSelectOne(this.screeningDetailId)
+                    .then(v => {
+                        this.screeningDetailInfo = v.data;
+                        this.riskData[0].value = this.screeningDetailInfo.food;
+                        this.riskData[1].value = this.screeningDetailInfo.lose;
+                        this.riskData[2].value = this.screeningDetailInfo.icu;
+                        this.riskChange();
+                        this.nutritionChange();
+                        this.ageOptionChange();
+                        this.calcDiseaseScore();
+                        console.log(JSON.parse(JSON.stringify(v.data)));
+
+                    });
             },
+            //  营养风险筛查分数
+            riskChange(){
+                this.screeningDetailInfo.totalScore = this.riskData.reduce((a, b) => {
+                    return a + Number(b.value);
+                }, 0);
+            },
+            //  疾病评分 选中的数据
+            riskSelectChange(diseaseSelectList){
+                console.log('selectedRowKeys changed: ', diseaseSelectList);
+                this.diseaseSelectList = diseaseSelectList;
+                this.screeningDetailInfo.disease = diseaseSelectList.join(',');
+                this.calcDiseaseScore();
+            },
+            //  计算疾病分数
+            calcDiseaseScore(){
+                this.diseaseSelectList = this.screeningDetailInfo.disease.split(',');
+                const score = this.diseaseSelectList.reduce((a, b) => {
+                    return a + this.diseaseScoreMap[b];
+                }, 0) || 0;
+                //  console.log(score);
+                this.screeningDetailInfo.diseaseScore = score;
+            },
+
+            //  营养评分变化
+            nutritionChange(){
+                const map = { 1: 1, 2: 2, 3: 3 };
+                this.screeningDetailInfo.nutritionScore = map[this.screeningDetailInfo.nutrition];
+            },
+            //  年龄评分变化
+            ageOptionChange(){
+                const map = { 1: 1, 2: 0 };
+                this.screeningDetailInfo.ageScore = map[this.screeningDetailInfo.ageOption];
+            },
+
             //  保存
             saveScreening(){
                 console.log('保存');
-                const a = {
-                    ageOption: '1',
-                    ageScore: '1',
-                    disease: '1,3',
-                    diseaseScore: '2',
-                    doctorId: 0,
-                    doctorName: '',
-                    food: '1',
-                    height: 0,
-                    icu: '1',
-                    isRisk: '',
-                    lose: '1',
-                    name: '',
-                    nutrition: '1',
-                    nutritionScore: '3',
-                    patientId: 0,
-                    screenType: '',
-                    sex: '',
-                    totalScore: '3',
-                    weight: 0
-                };
+                //  如果是编辑
+                if (this.screeningDetailId) {
+                    this.$router.push({ name: 'userList' });
+                    return;
+                }
+                
+                this.screeningDetailInfo.food = this.riskData[0].value;
+                this.screeningDetailInfo.lose = this.riskData[1].value;
+                this.screeningDetailInfo.icu = this.riskData[2].value;
+                this.screeningDetailInfo.patientId = this.patientId;
+                console.log(JSON.parse(JSON.stringify(this.screeningDetailInfo)));
+                requestScreenSave(this.screeningDetailInfo)
+                    .then(v => {
+                        console.log(v);
+                        this.$router.push({ name: 'userList' });
+                    });
 
-            },
-            //  疾病评分 选中的数据
-            riskSelectChange(riskSelectedList){
-                console.log('selectedRowKeys changed: ', riskSelectedList);
-                this.riskSelectedList = riskSelectedList;
             },
         }
     };
