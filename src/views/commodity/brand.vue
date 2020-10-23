@@ -76,7 +76,7 @@
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
     import AddBrandBox from '@/components/commodity/addBrandBox.vue';
     import { mapGetters, mapActions } from 'vuex';
-    import { requestBrandPage } from '../../api/commodity';
+    import { requestBrandPage } from '../../api/commodity/brand';
 
     const columns = [
         {
@@ -100,16 +100,6 @@
             scopedSlots: { customRender: 'operation' },
         },
     ];
-    const data = [];
-    for (let i = 0; i < 10; i++) {
-        data.push({
-            key: i,
-            commodity: `xx品牌`,
-            city: '上海',
-            status: String(i % 2),
-            icon: '品牌图标',
-        });
-    }
 
     export default {
         components: {
@@ -117,7 +107,7 @@
         },
         data(){
             return {
-                data,
+                data: [],
                 columns,
 
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
@@ -144,11 +134,10 @@
                         const { data } = v;
                         data.records.forEach((item, index) => {
                             item.key = index;
-                            item.createTime = item.createTime.substr(0, 10);
                         });
+                        console.log(JSON.parse(JSON.stringify(data.records[0])));
                         this.data = data.records;
                         this.pagination = paginationDecode(this.pagination, data);
-
                     });
             },
             //  莫泰框方法

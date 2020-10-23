@@ -6,13 +6,13 @@
             autocomplete="off"
     >
         <a-form-item label="品牌名称">
-            <a-input
-                    v-decorator="categoryNameDecorator"
-                    placeholder="请输入品牌名称"
+            <a-input class="add-form-input"
+                     v-decorator="brandNameDecorator"
+                     placeholder="请输入品牌名称"
             />
         </a-form-item>
         <a-form-item label="品牌编码">
-            <p>js</p>
+            <p>后台自动生成</p>
         </a-form-item>
         <a-form-item label="是否展示">
             <a-switch checked-children="开" un-checked-children="关"
@@ -23,6 +23,7 @@
 </template>
 <script>
     import { formItemLayout } from '@/utils/layout.ts';
+    import { requestBrandGet, requestBrandInsert, requestBrandUpdate } from '../../api/commodity/brand';
 
     export default {
         beforeCreate(){
@@ -38,7 +39,7 @@
             return {
                 formItemLayout,
                 //  品牌名称
-                categoryNameDecorator: ['categoryName', {
+                brandNameDecorator: ['brandName', {
                     rules: [{
                         required: true,
                         message: '请输入品牌名称'
@@ -50,45 +51,56 @@
         },
         created(){
             console.log('是编辑？', !!this.brandId);
-        },
-        created(){
             this.searchFn();
         },
         methods: {
             //  主要请求
             searchFn(){
-//                requestChannelBusinessPage(paginationEncode(this.pagination))
-//                    .then(v => {
-//                        const { data } = v;
-//                        console.log(data);
-//                data.records.forEach((item, index) => {
-//                    item.key = index;
-//                    item.createTime = item.createTime.substr(0, 10);
-//                });
-//                        this.data = data.records;
-//                        this.pagination = paginationDecode(this.pagination, data);
-//                    });
+                //  如果是新增
+                if (!this.brandId) {
+                    return;
+                }
+                //  如果是编辑
+                requestBrandGet(this.brandId)
+                    .then(v => {
+                        const { data } = v;
+                        console.log(data);
+                        const { brandName } = data;
+                        this.form.setFieldsValue({
+                            brandName,
+                        });
+                    });
             },
             //    表单提交
             handleSubmit(){
-                return new Promise(((resolve, reject) => {
+                return new Promise((resolve, reject) => {
                     this.form.validateFields((err, values) => {
-                        console.table(values);
-                        if (!err) {
-                            resolve();
-                        } else {
+                        if (err) {
                             reject();
+                            return;
                         }
-                    });
-                }))
-                    .then(v => {
-                        return new Promise(((resolve, reject) => {
-                            console.log('发请求吧');
-                            setTimeout(() => {
+                        console.table(values);
+                        (() => {
+                            //  如果是新增
+                            if (!this.brandId) {
+                                return requestBrandInsert(values);
+                            }
+                            //  如果是编辑
+                            return requestBrandUpdate(Object.assign(
+                                { id: this.brandId },
+                                values)
+                            );
+                        })()
+                            .then(v => {
+                                console.log(v);
                                 resolve();
-                            }, 1000);
-                        }));
+                            })
+                            .catch(err => {
+                                console.log(err);
+                                reject(err);
+                            });
                     });
+                });
             },
         }
     };
