@@ -98,6 +98,10 @@
                         requestPatientSave(this.patientBasicInfo)
                             .then(v => {
                                 console.log(v);
+                                this.$success({
+                                    title: '提醒成功',
+                                });
+                                this.$router.push({ name: 'userList' });
                             });
                     })
                     .catch(error => {
