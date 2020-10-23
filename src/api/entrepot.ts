@@ -9,7 +9,7 @@ export function requestWarehousePage(data: any) {
 	});
 }
 
-//  新增仓库
+//  新增仓库		✅，⚠️缺请求参数渠道商省市
 export function requestWarehouseInsert(data: any) {
 	return request({
 		url: '/api/warehouse/insert',
@@ -18,7 +18,7 @@ export function requestWarehouseInsert(data: any) {
 	});
 }
 
-//  修改仓库信息
+//  修改仓库信息	✅，⚠️问题同上
 export function requestWarehouseUpdate(data: any) {
 	return request({
 		url: '/api/warehouse/update',
@@ -27,7 +27,7 @@ export function requestWarehouseUpdate(data: any) {
 	});
 }
 
-//	删除仓库信息
+//	删除仓库信息	⚠️原型无
 export function requestWarehouseDelete(id: string | number) {
 	return request({
 		url: `/api/warehouse/delete/${id}`,
