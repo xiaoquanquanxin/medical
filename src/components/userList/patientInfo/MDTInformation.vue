@@ -17,7 +17,6 @@
                 <a-descriptions-item label="主管医生">
                     <a-select style="width:100%;"
                               placeholder="请选择主管医生"
-                              v-if="patientBasicInfo.doctorId"
                               v-model="patientBasicInfo.doctorId"
                     >
                         <a-select-option v-for="(item,index) in doctorList" :key="index" :value="Number(item.id)">
@@ -27,15 +26,23 @@
                 </a-descriptions-item>
                 <!--主管医生-->
                 <a-descriptions-item label="营养师">
-                    <a-input placeholder="请输入营养师"
-                             v-if="activeElementId === 1 ||!patientBasicInfo.nutritionistId"
-                             v-model="patientBasicInfo.nutritionistId"
-                             class="form-element"
-                    />
-                    <p v-else
-                       @click="descriptionFormClickFn(1,$event)"
-                       class="description-content"
-                    >{{patientBasicInfo.nutritionistId}}</p>
+                    <a-select style="width:100%;"
+                              placeholder="请选择营养师"
+                              v-model="patientBasicInfo.nutritionistId"
+                    >
+                        <a-select-option v-for="(item,index) in doctorList" :key="index" :value="Number(item.id)">
+                            {{item.doctorName}}
+                        </a-select-option>
+                    </a-select>
+<!--                    <a-input placeholder="请输入营养师"-->
+<!--                             v-if="activeElementId === 1 ||!patientBasicInfo.nutritionistId"-->
+<!--                             v-model="patientBasicInfo.nutritionistId"-->
+<!--                             class="form-element"-->
+<!--                    />-->
+<!--                    <p v-else-->
+<!--                       @click="descriptionFormClickFn(1,$event)"-->
+<!--                       class="description-content"-->
+<!--                    >{{patientBasicInfo.nutritionistId}}</p>-->
                 </a-descriptions-item>
             </a-descriptions>
         </div>
