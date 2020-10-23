@@ -6,13 +6,13 @@
             autocomplete="off"
     >
         <a-form-item label="分类名称">
-            <a-input
-                    v-decorator="categoryNameDecorator"
-                    placeholder="请输入分类名称"
+            <a-input class="add-form-input"
+                     v-decorator="categoryNameDecorator"
+                     placeholder="请输入分类名称"
             />
         </a-form-item>
         <a-form-item label="分类编码">
-            <p>js</p>
+            <p>后台自动生成</p>
         </a-form-item>
         <a-form-item label="是否展示">
             <a-switch checked-children="开" un-checked-children="关"
@@ -23,6 +23,11 @@
 </template>
 <script>
     import { formItemLayout } from '@/utils/layout.ts';
+    import {
+        requestCategoryGet,
+        requestCategoryInsert,
+        requestCategoryUpdate
+    } from '../../api/commodity/commodityClassification';
 
     export default {
         beforeCreate(){
@@ -50,45 +55,56 @@
         },
         created(){
             console.log('是编辑？', !!this.classificationId);
-        },
-        created(){
             this.searchFn();
         },
         methods: {
             //  主要请求
             searchFn(){
-//                requestChannelBusinessPage(paginationEncode(this.pagination))
-//                    .then(v => {
-//                        const { data } = v;
-//                        console.log(data);
-//                data.records.forEach((item, index) => {
-//                    item.key = index;
-//                    item.createTime = item.createTime.substr(0, 10);
-//                });
-//                        this.data = data.records;
-//                        this.pagination = paginationDecode(this.pagination, data);
-//                    });
+                //  如果是新增
+                if (!this.classificationId) {
+                    return;
+                }
+                //  如果是编辑
+                requestCategoryGet(this.classificationId)
+                    .then(v => {
+                        const { data } = v;
+                        console.log(data);
+                        const { categoryName } = data;
+                        this.form.setFieldsValue({
+                            categoryName,
+                        });
+                    });
             },
             //    表单提交
             handleSubmit(){
-                return new Promise(((resolve, reject) => {
+                return new Promise((resolve, reject) => {
                     this.form.validateFields((err, values) => {
-                        console.table(values);
-                        if (!err) {
-                            resolve();
-                        } else {
+                        if (err) {
                             reject();
+                            return;
                         }
-                    });
-                }))
-                    .then(v => {
-                        return new Promise(((resolve, reject) => {
-                            console.log('发请求吧');
-                            setTimeout(() => {
+                        console.table(values);
+                        (() => {
+                            //  如果是新增
+                            if (!this.classificationId) {
+                                return requestCategoryInsert(values);
+                            }
+                            //  如果是编辑
+                            return requestCategoryUpdate(Object.assign(
+                                { id: this.classificationId },
+                                values)
+                            );
+                        })()
+                            .then(v => {
+                                console.log(v);
                                 resolve();
-                            }, 1000);
-                        }));
+                            })
+                            .catch(err => {
+                                console.log(err);
+                                reject(err);
+                            });
                     });
+                });
             },
         }
     };

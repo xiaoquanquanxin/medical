@@ -46,7 +46,7 @@
                 </template>
             </a-pagination>
         </a-row>
-        <!--莫泰框-->
+        <!--新增、编辑分类莫泰框-->
         <a-modal v-model="dialogDataAddClassification.visible"
                  v-if="dialogDataAddClassification.visible"
                  :confirm-loading="dialogDataAddClassification.confirmLoading"
@@ -67,17 +67,17 @@
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
     import AddClassificationBox from '@/components/commodity/addClassificationBox.vue';
     import { mapGetters, mapActions } from 'vuex';
-    import { requestCategoryPage } from '../../api/commodity';
+    import { requestCategoryDelete, requestCategoryPage } from '../../api/commodity/commodityClassification';
 
     const columns = [
         {
             title: '分类名称',
-            dataIndex: 'commodity',
+            dataIndex: 'categoryName',
             width: 150,
         },
         {
             title: '分类编码',
-            dataIndex: 'city',
+            dataIndex: 'categoryCode',
             width: 150,
         },
         {
@@ -87,17 +87,6 @@
             scopedSlots: { customRender: 'operation' },
         },
     ];
-    const data = [];
-    for (let i = 0; i < 10; i++) {
-        data.push({
-            key: i,
-            commodity: `xx分类`,
-            city: '上海',
-            status: String(i % 2),
-            icon: '分类图标',
-
-        });
-    }
 
     export default {
         components: {
@@ -105,7 +94,7 @@
         },
         data(){
             return {
-                data,
+                data: [],
                 columns,
 
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
@@ -132,11 +121,10 @@
                         const { data } = v;
                         data.records.forEach((item, index) => {
                             item.key = index;
-                            item.createTime = item.createTime.substr(0, 10);
                         });
                         this.data = data.records;
+                        console.log(JSON.parse(JSON.stringify(data.records[0])));
                         this.pagination = paginationDecode(this.pagination, data);
-
                     });
             },
             //  莫泰框方法
@@ -167,21 +155,26 @@
             editClassification(sItem){
                 this.setDialogTitle(DIALOG_TYPE.ADD_CLASSIFICATION, '编辑分类');
                 this.showModal(DIALOG_TYPE.ADD_CLASSIFICATION);
-                this.setClassificationId(123344);
+                this.setClassificationId(sItem.id);
             },
             //  删除分类
             deleteClassification(sItem){
                 this.$confirm({
-                    title: `确定删除${sItem.disease}`,
+                    title: `确定删除${sItem.categoryName}`,
                     //  content: 'Bla bla ...',
                     okText: '确认',
                     okType: 'danger',
                     cancelText: '取消',
-                    onOk(){
-                        return new Promise((resolve, reject) => {
-                            console.log('发请求');
-                            setTimeout(Math.random() > 0.5 ? resolve : reject, 1111);
-                        }).catch(() => console.log('Oops errors!'));
+                    onOk: () => {
+                        requestCategoryDelete(sItem.id)
+                            .then(v => {
+                                this.$success({ title: '删除成功' });
+                                this.searchFn();
+                            })
+                            .catch(err => {
+                                console.log(err);
+                                this.$message.error('删除失败');
+                            });
                     },
                     onCancel(){
                         console.log('取消');
@@ -196,6 +189,8 @@
                 const promise = this.$refs[refAddClassificationBox].handleSubmit();
                 promise.then(v => {
                     this.hideModal(DIALOG_TYPE.ADD_CLASSIFICATION);
+                    this.$message.success('操作成功');
+                    this.searchFn();
                 }).catch(error => {
                     console.log('有错');
                 }).then(v => {

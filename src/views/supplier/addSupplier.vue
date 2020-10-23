@@ -345,9 +345,7 @@
                         );
                     })()
                         .then(v => {
-                            this.$success({
-                                title: '操作成功',
-                            });
+                            this.$message.success('操作成功');
                         })
                         .catch(err => {
                             console.log(err);
