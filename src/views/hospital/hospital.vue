@@ -35,12 +35,12 @@
                 :scroll="scroll"
                 :pagination="false"
         >
-            <div
-                    slot="a-switch"
-                    slot-scope="scope,sItem,sIndex,extra"
+            <!--状态选择-->
+            <div slot="a-switch"
+                 slot-scope="scope,sItem,sIndex,extra"
             >
                 <a-switch checked-children="开" un-checked-children="关"
-                          :default-checked="!!sIndex"
+                          :default-checked="scope.status"
                           @change="aSwitchChange(sItem,$event)"
                 />
             </div>
@@ -110,7 +110,7 @@
     const columns = [
         {
             title: '医院名称',
-            dataIndex: 'hospital',
+            dataIndex: 'hospitalName',
             width: 100,
         },
         {
@@ -125,7 +125,7 @@
         },
         {
             title: '医院图标',
-            dataIndex: 'icon',
+            dataIndex: 'hospitalPic',
             width: 100,
         },
         {
@@ -134,17 +134,6 @@
             width: 150,
         },
     ];
-    const data = [];
-    for (let i = 0; i < 10; i++) {
-        data.push({
-            key: i,
-            hospital: `xx医院`,
-            city: '上海',
-            status: String(i % 2),
-            icon: '医院图标',
-
-        });
-    }
     //  医院管理
     export default {
         components: {
@@ -161,7 +150,7 @@
                 //  搜索相关
                 searchData: {},
 
-                data,
+                data: [],
                 columns,
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
                 scroll: twoRowSearch(columns),
@@ -184,11 +173,11 @@
                         const { data } = v;
                         data.records.forEach((item, index) => {
                             item.key = index;
-                            item.createTime = item.createTime.substr(0, 10);
                         });
                         this.data = data.records;
-                        this.pagination = paginationDecode(this.pagination, data);
-                        
+                        console.log(JSON.parse(JSON.stringify(data)));
+//                        this.data = data.records;
+//                        this.pagination = paginationDecode(this.pagination, data);
                     });
             },
             //  莫泰框方法
