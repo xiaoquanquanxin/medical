@@ -49,7 +49,7 @@ export const routeMap = {
 	'editDisease': true,
 
 	//  处方模板管理
-	'scheme': false,
+	'scheme': true,
 	//	口服肠内营养补充
 	'oral': true,
 	//	新增口服肠内营养补充
@@ -148,7 +148,7 @@ export const routeMap = {
 
 	//	🍎🍎🍎🍎🍎营养方案系统
 	// 	用户列表
-	'userList': true,
+	'userList': false,
 	//	病人信息
 	'patientInfo': true,
 	//	筛查
