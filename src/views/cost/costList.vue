@@ -204,9 +204,9 @@
                 )
                     .then(v => {
                         const { data } = v;
+                        data.records[0] = {};
                         data.records.forEach((item, index) => {
                             item.key = index;
-                            item.createTime = item.createTime.substr(0, 10);
                         });
                         this.data = data.records;
                         console.log(data.records);

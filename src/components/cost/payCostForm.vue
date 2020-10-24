@@ -19,10 +19,10 @@
                 />
             </a-form-item>
             <a-form-item label="支付方式">
-                <a-radio-group name="radioGroup" :default-value="1">
-                    <a-radio :value="1">现金支付</a-radio>
-                    <a-radio :value="2">微信支付</a-radio>
-                    <a-radio :value="3">支付宝支付</a-radio>
+                <a-radio-group v-decorator="payWayDecorator">
+                    <a-radio value="1">支付宝支付</a-radio>
+                    <a-radio value="2">微信支付</a-radio>
+                    <a-radio value="3">现金支付</a-radio>
                 </a-radio-group>
             </a-form-item>
         </a-form>
@@ -32,6 +32,7 @@
     import { preventDefault } from '@/utils/common';
 
     import { formItemLayout } from '@/utils/layout.ts';
+    import { requestBillingsPayment, requestBillingsRefund } from '../../api/cost/costList';
 
     export default {
         beforeCreate(){
@@ -46,11 +47,11 @@
             costType(){
                 return this.$store.state.cost.costType;
             },
-            
         },
         created(){
             console.log('支付id', this.selectCostId);
             console.log('支付类型', this.costType);
+            this.searchFn();
         },
         data(){
             return {
@@ -62,10 +63,15 @@
                         message: '请输入金额',
                     },]
                 }],
+                //  支付方式(1支付宝，2微信,3现金缴费)
+                payWayDecorator: ['payWay', {
+                    initialValue: '1',
+                    rules: [{
+                        required: true,
+                        message: '请输入金额',
+                    },]
+                }]
             };
-        },
-        created(){
-            this.searchFn();
         },
         methods: {
             //  主要请求
@@ -85,24 +91,35 @@
             preventDefault,
             //  表单提交 保存
             handleSubmit(){
-                return new Promise(((resolve, reject) => {
+                return new Promise((resolve, reject) => {
                     this.form.validateFields((err, values) => {
-                        console.table(values);
-                        if (!err) {
-                            resolve();
-                        } else {
+                        if (err) {
                             reject();
+                            return;
                         }
-                    });
-                }))
-                    .then(v => {
-                        return new Promise(((resolve, reject) => {
-                            console.log('发请求吧');
-                            setTimeout(() => {
+                        console.table(values);
+                        (() => {
+                            switch (this.costType) {
+                                case 1:
+                                    //  如果是缴费
+                                    return requestBillingsPayment(values);
+                                case 2:
+                                    //  如果是退费
+                                    return requestBillingsRefund(Object.assign(values));
+                                default:
+                                    throw new Error('错误的类型');
+                            }
+                        })()
+                            .then(v => {
+                                console.log(v);
                                 resolve();
-                            }, 1000);
-                        }));
+                            })
+                            .catch(err => {
+                                console.log(err);
+                                reject(err);
+                            });
                     });
+                });
             },
         }
     };
