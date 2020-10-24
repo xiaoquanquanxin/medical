@@ -69,7 +69,7 @@
     import { paginationInit, paginationDecode, paginationEncode } from '@/utils/pagination.ts';
     import { twoRowSearch } from '@/utils/tableScroll';
     import { mapGetters, mapActions } from 'vuex';
-    import { requestRolePage, requestRoleRoleAll } from '../../api/system';
+    import { requestRolePage } from '../../api/system/role';
 
     const columns = [
         {
@@ -103,23 +103,13 @@
             width: 100,
         },
     ];
-    const data = [];
-    for (let i = 0; i < 10; i++) {
-        data.push({
-            key: i,
-            hospital: `xx医院`,
-            city: '上海',
-            status: String(i % 2),
-            icon: '医院图标',
-        });
-    }
     export default {
         components: {
             RoleBox,
         },
         data(){
             return {
-                data,
+                data: [],
                 columns,
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
                 scroll: twoRowSearch(columns),
@@ -146,7 +136,7 @@
                             item.createTime = item.createTime.substr(0, 10);
                         });
                         this.data = data.records;
-                        console.table(JSON.parse(JSON.stringify(data.records)));
+                        //  console.log(JSON.parse(JSON.stringify(data.records[0])));
                         this.pagination = paginationDecode(this.pagination, data);
                     });
             },
@@ -178,14 +168,14 @@
             },
             //  编辑角色
             editRoleFn(sItem){
-                this.setSelectRoleId(2323);
+                this.setSelectRoleId(sItem.roleId);
                 this.setRoleOperationType(2);
                 this.setDialogTitle(DIALOG_TYPE.ROLE, '编辑角色');
                 this.showModal(DIALOG_TYPE.ROLE);
             },
             //  查看角色
             toViewRoleFn(sItem){
-                this.setSelectRoleId(444);
+                this.setSelectRoleId(sItem.roleId);
                 this.setRoleOperationType(3);
                 this.setDialogTitle(DIALOG_TYPE.ROLE, '查看角色');
                 this.showModal(DIALOG_TYPE.ROLE);
