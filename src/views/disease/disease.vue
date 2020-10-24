@@ -87,20 +87,12 @@
             width: 150,
         },
     ];
-    const data = [];
-    for (let i = 0; i < 10; i++) {
-        data.push({
-            key: i,
-            disease: `xx疾病`,
-            status: String(i % 2),
-            operation: null,
-        });
-    }
+
     //  疾病管理
     export default {
         data(){
             return {
-                data,
+                data: [],
                 columns,
 
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
@@ -118,7 +110,7 @@
         methods: {
             //  主要请求
             searchFn(){
-                requestDiseasePage(paginationEncode(this.pagination))
+                requestDiseasePage(Object.assign({}, this.searchData, paginationEncode(this.pagination)))
                     .then(v => {
                         const { data } = v;
                         data.records.forEach((item, index) => {
@@ -127,7 +119,7 @@
                         });
                         this.data = data.records;
                         this.pagination = paginationDecode(this.pagination, data);
-                        console.log(data);
+                        console.log(data.records);
                     });
             },
             //  展示的每一页数据变换

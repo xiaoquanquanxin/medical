@@ -35,7 +35,7 @@
 <script>
     import { formItemLayout } from '@/utils/layout.ts';
     import GoBackButton from '@/components/goBackButton.vue';
-    import { requestDiseaseSave } from '../../api/disease';
+    import { requestDiseaseSave, requestDiseaseUpdate } from '../../api/disease';
 
     export default {
         components: {
@@ -69,13 +69,16 @@
         created(){
             //  console.log(this.$route.params);
             console.log('是编辑？', !!this.diseaseId);
-        },
-        created(){
             this.searchFn();
         },
         methods: {
             //  主要请求
             searchFn(){
+                //  如果是新增
+                if (!this.diseaseId) {
+                    return;
+                }
+                //  如果是编辑
 //                requestChannelBusinessPage(paginationEncode(this.pagination))
 //                    .then(v => {
 //                        const { data } = v;
@@ -91,14 +94,33 @@
             //    表单提交
             handleSubmit(e){
                 e.preventDefault();
-                this.form.validateFields((err, values) => {
-                    console.table(values);
-                    if (!err) {
-                        requestDiseaseSave(values)
+                return new Promise((resolve, reject) => {
+                    this.form.validateFields((err, values) => {
+                        if (err) {
+                            reject();
+                            return;
+                        }
+                        console.table(values);
+                        (() => {
+                            //  如果是新增
+                            if (!this.diseaseId) {
+                                return requestDiseaseSave(values);
+                            }
+                            //  如果是编辑
+                            return requestDiseaseUpdate(Object.assign(
+                                { id: this.diseaseId },
+                                values)
+                            );
+                        })()
                             .then(v => {
                                 console.log(v);
+                                resolve();
+                            })
+                            .catch(err => {
+                                console.log(err);
+                                reject(err);
                             });
-                    }
+                    });
                 });
             },
         }
