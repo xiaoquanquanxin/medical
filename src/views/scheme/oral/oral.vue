@@ -122,6 +122,8 @@
         methods: {
             //  主要请求
             searchFn(){
+                this.data.push({ key: 1 });
+                return;
                 requestPrescriptionTemplatePage(paginationEncode(this.pagination))
                     .then(v => {
                         const { data } = v;
@@ -131,7 +133,6 @@
                         });
                         this.data = data.records;
                         this.pagination = paginationDecode(this.pagination, data);
-//
                     });
             },
             //  展示的每一页数据变换

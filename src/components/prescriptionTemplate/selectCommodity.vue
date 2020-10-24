@@ -78,24 +78,13 @@
             //  被选中的列 === 数据 被选中的 id
             this.selectedRowKeys = this.originCommodityList.filter(item => item.isCheckboxChecked).map(item => item.key);
             console.log(this.selectedRowKeys);
-        },
-        created(){
             this.searchFn();
         },
         methods: {
             //  主要请求
             searchFn(){
-//                requestChannelBusinessPage(paginationEncode(this.pagination))
-//                    .then(v => {
-//                        const { data } = v;
-//                        console.log(data);
-//                data.records.forEach((item, index) => {
-//                    item.key = index;
-//                    item.createTime = item.createTime.substr(0, 10);
-//                });
-//                        this.data = data.records;
-//                        this.pagination = paginationDecode(this.pagination, data);
-//                    });
+                //  🏳️🏳️🏳️🏳️🏳️  先请求全部商品
+                
             },
             ...mapActions('prescriptionTemplate', [
                 //  商品源的数据

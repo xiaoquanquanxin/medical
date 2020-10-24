@@ -7,20 +7,18 @@
         <div class="a-input-group">
             <a-row type="flex" justify="space-between" align="middle">
                 <a-space>
-                    <a-select class="basic-select-width" placeholder="请选择医院">
-                        <a-select-option value="1">
-                            男
-                        </a-select-option>
-                        <a-select-option value="2">
-                            女
+                    <a-select class="basic-select-width"
+                              v-model="tableForm.hospitalId"
+                              placeholder="请选择医院">
+                        <a-select-option :value="item.id"
+                                         v-for="item in hospitalList"
+                        >{{item.hospitalName}}
                         </a-select-option>
                     </a-select>
                     <a-select class="lengthen-select-width" placeholder="请选择处方类型">
-                        <a-select-option value="1">
-                            男
-                        </a-select-option>
-                        <a-select-option value="2">
-                            女
+                        <a-select-option :value="item.id"
+                                         v-for="item in prescriptionTypeList"
+                        >{{item.name}}
                         </a-select-option>
                     </a-select>
                 </a-space>
@@ -35,30 +33,24 @@
                     <span>肠内营养支持</span>
                     <a-select
                             class="basic-select-width"
-                            v-model="tableForm.energyId"
+                            v-model="tableForm.energy"
                             placeholder="请选择能量"
                             @change="selectEnergyChange"
                     >
-                        <a-select-option value="1600">1600</a-select-option>
-                        <a-select-option value="1400">1400</a-select-option>
-                        <a-select-option value="1200">1200</a-select-option>
-                        <a-select-option value="1000">1000</a-select-option>
-                        <a-select-option value="800">800</a-select-option>
-                        <a-select-option value="600">600</a-select-option>
-                        <a-select-option value="400">400</a-select-option>
-                        <a-select-option value="200">200</a-select-option>
+                        <a-select-option :value="item.id"
+                                         v-for="item in energyList"
+                        >{{item.name}}
+                        </a-select-option>
                     </a-select>
                 </a-space>
                 <a-select
                         class="lengthen-select-width"
-                        v-model="tableForm.eatingMethod"
+                        v-model="tableForm.usageMethod"
                         placeholder="请选择食用方法"
                 >
-                    <a-select-option value="Option1">
-                        Option1
-                    </a-select-option>
-                    <a-select-option value="Option2">
-                        Option2
+                    <a-select-option :value="item.id"
+                                     v-for="item in usageMethodList"
+                    >{{item.name}}
                     </a-select-option>
                 </a-select>
             </a-row>
@@ -211,6 +203,7 @@
     import SelectCommodity from '@/components/prescriptionTemplate/selectCommodity.vue';
     import GoBackButton from '@/components/goBackButton.vue';
     import TemplateRemarkInput from '@/components/prescriptionTemplate/templateRemarkInput';
+    import { requestPrescriptionTemplateInsert } from '../../../api/scheme/scheme';
 
     //  选择商品表格列的意义
     const commodityTableColumns = [
@@ -258,9 +251,40 @@
             remark(){
                 return this.$store.state.prescriptionTemplate.remark;
             },
+            //  区分编辑
+            oralId(){
+                return this.$route.params.oralId;
+            }
         },
         data(){
             return {
+                //  医院下拉
+                hospitalList: [{ id: 1, hospitalName: 'a医院' }, { id: 2, hospitalName: 'b医院' }],
+                //  处方类型下拉
+                prescriptionTypeList: [
+                    { id: 1, name: '口服肠内营养补充' },
+                    { id: 2, name: '肠内营养支持' },
+                    { id: 3, name: '膳食营养计划' }],
+                //  能量下拉
+                energyList: [
+                    { id: '1600kcal', name: '1600kcal', },
+                    { id: '1400kcal', name: '1400kcal', },
+                    { id: '1200kcal', name: '1200kcal', },
+                    { id: '1000kcal', name: '1000kcal', },
+                    { id: '800kcal', name: '800kcal', },
+                    { id: '600kcal', name: '600kcal', },
+                    { id: '400kcal', name: '400kcal', },
+                    { id: '200kcal', name: '200kcal', }],
+                //  食用方法下拉
+                usageMethodList: [
+                    { id: '口服', name: '口服', },
+                    { id: '经口', name: '经口', },
+                    { id: '管饲', name: '管饲', },
+                    { id: '外周静脉', name: '外周静脉', },
+                    { id: '中心静脉', name: '中心静脉', },
+                    { id: '鼻胃管', name: '鼻胃管', },
+                    { id: '肠胃管', name: '肠胃管', }],
+
                 //  选择商品表格数据
                 commodityTableData: [],
                 commodityTableColumns,
@@ -319,10 +343,16 @@
                 //  处方模板管理 - 增加口服肠内补充方案 - 选择时间
                 dialogDataSelectTime: this.initModal(DIALOG_TYPE.TEMPLATE_SELECT_TIME),
 
-                //  表单中表格的数据 ：能量、 食用方法
+                //  表单中表格的数据
                 tableForm: {
-                    //  能量  energyId
-                    //  食用方法  tableForm
+                    //  hospitalId          医院
+                    //  prescriptionName    处方名
+                    //  prescriptionType    处方类型
+                    //  energy              能量
+                    //  usageMethod         食用方法
+
+                    //  goods               选择的商品
+                    //  dinnerTimes         用餐时间
                 },
 
                 //  选择时间的值的对象
@@ -341,13 +371,13 @@
                     city: '上海',
                     status: String(i % 2),
                     icon: '医院图标',
-
                 });
             }
 //            this.setShoppingList(shoppingList);
         },
         created(){
             this.searchFn();
+            console.log('是编辑？', !!this.oralId);
         },
         methods: {
             //  主要请求
@@ -457,7 +487,7 @@
             //  选择商品
             selectCommodity(){
                 //  必须选择能量方案
-                if (!this.tableForm.energyId) {
+                if (!this.tableForm.energy) {
                     this.$message.error('请先选择能量');
                     return;
                 }
@@ -600,6 +630,23 @@
                 console.log(this.commodityTableData);
                 console.log('备注🍌', this.remark);
                 console.log(this.timeTableData);
+                return;
+                (() => {
+                    //  如果是新增
+                    if (!this.oralId) {
+                        return requestPrescriptionTemplateInsert(data);
+                    }
+                    data.id = this.oralId;
+                    //  如果是编辑
+                    return requestPrescriptionTemplateUpdate(data);
+                })()
+                    .then(v => {
+                        console.log(v);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+
             },
         }
     };
