@@ -3,10 +3,10 @@
         <div v-if="true">
             <!--搜索相关-->
             <div class="a-input-group">
-                <a-input class="basic-input-width" v-model="searchData.commodityName" placeholder="请输入订单编号"/>
-                <a-input class="basic-input-width" v-model="searchData.commodityName" placeholder="请输入处方号"/>
-                <a-input class="basic-input-width" v-model="searchData.commodityName" placeholder="请输入患者姓名"/>
-                <a-select class="lengthen-select-width" v-model="searchData.status" placeholder="请选择支付状态">
+                <a-input class="basic-input-width" v-model="searchData.aaa" placeholder="请输入订单编号"/>
+                <a-input class="basic-input-width" v-model="searchData.prescriptionCode" placeholder="请输入处方号"/>
+                <a-input class="basic-input-width" v-model="searchData.name" placeholder="请输入患者姓名"/>
+                <a-select class="lengthen-select-width" v-model="searchData.payStatus" placeholder="请选择支付状态">
                     <a-select-option value="">
                         状态
                     </a-select-option>
@@ -30,8 +30,8 @@
             <!--分页-->
             <a-row type="flex" justify="end" class="a-pagination">
                 <a-pagination
-                    v-if="pagination.total"
-                    v-model="pagination.current"
+                        v-if="pagination.total"
+                        v-model="pagination.current"
                         :page-size-options="pagination.pageSizeOptions"
                         :total="pagination.total"
                         show-size-changer
@@ -50,7 +50,7 @@
 <script>
     import { paginationInit, paginationDecode, paginationEncode } from '@/utils/pagination.ts';
     import { oneRowSearch } from '@/utils/tableScroll';
-
+    import { requestBillingsBillingPage } from '../../api/cost/costList';
     const columns = [
         {
             title: '订单编号',
@@ -98,34 +98,21 @@
             scopedSlots: { customRender: 'operation' },
         },
     ];
-    const data = [];
-    for (let i = 0; i < 10; i++) {
-        data.push({
-            key: i,
-            commodity: `xx商品`,
-            city: '上海',
-            status: String(i % 2),
-            icon: '商品图标',
-            aaa: '商品货号',
-            通用名: '通用名',
-            商品分类: '商品分类',
-            unit: '基本单位',
-            specifications: '规格',
-            manufacturer: '生产厂家',
-        });
-    }
 
     export default {
         data(){
             return {
-                data,
+                data: [],
                 columns,
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
                 scroll: oneRowSearch(columns),
                 //  分页信息
                 pagination: paginationInit(),
                 //  搜索数据
-                searchData: {},
+                searchData: {
+                    //  缴费方式（0缴费，1退款）
+                    isRefund: 1,
+                },
 
                 //  选择日期的值的对象
                 selectDateMoment: null,
@@ -137,17 +124,20 @@
         methods: {
             //  主要请求
             searchFn(){
-//                requestChannelBusinessPage(paginationEncode(this.pagination))
-//                    .then(v => {
-//                        const { data } = v;
-//                        console.log(data);
-//                data.records.forEach((item, index) => {
-//                    item.key = index;
-//                    item.createTime = item.createTime.substr(0, 10);
-//                });
-//                        this.data = data.records;
-//                        this.pagination = paginationDecode(this.pagination, data);
-//                    });
+                requestBillingsBillingPage(Object.assign({},
+                    { param: this.searchData },
+                    paginationEncode(this.pagination))
+                )
+                    .then(v => {
+                        const { data } = v;
+                        data.records.forEach((item, index) => {
+                            item.key = index;
+                            item.createTime = item.createTime.substr(0, 10);
+                        });
+                        this.data = data.records;
+                        console.log(data.records);
+                        this.pagination = paginationDecode(this.pagination, data);
+                    });
             },
             //  展示的每一页数据变换
             onShowSizeChange(current, pageSize){
