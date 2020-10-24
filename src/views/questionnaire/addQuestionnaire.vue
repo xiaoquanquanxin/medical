@@ -15,7 +15,7 @@
                 autocomplete="off"
         >
             <a-form-item label="评估表名称">
-                <a-input
+                <a-input class="add-form-input"
                         v-decorator="assessNameDecorator"
                         placeholder="请输入评估表名称"
                 />
@@ -87,24 +87,33 @@
             //  表单提交 保存
             handleSubmit(e){
                 e.preventDefault();
-                this.form.validateFields((err, values) => {
-                    console.table(values);
-                    console.log(!err);
-                    const data = { assessName: values.assessName };
-                    if (!err) {
-                        if (this.questionnaireId) {
-                            data.id = this.questionnaireId;
-                            requestAssessUpdate(data)
-                                .then(v => {
-                                    console.log(v);
-                                });
-                        } else {
-                            requestAssessInsert(data)
-                                .then(v => {
-                                    console.log(v);
-                                });
+                new Promise((resolve, reject) => {
+                    this.form.validateFields((err, values) => {
+                        if (err) {
+                            reject();
+                            return;
                         }
-                    }
+                        console.table(values);
+                        (() => {
+                            //  如果是新增
+                            if (!this.questionnaireId) {
+                                return requestAssessInsert(values);
+                            }
+                            //  如果是编辑
+                            return requestAssessUpdate(Object.assign(
+                                { id: this.questionnaireId },
+                                values)
+                            );
+                        })()
+                            .then(v => {
+                                console.log(v);
+                                resolve();
+                            })
+                            .catch(err => {
+                                console.log(err);
+                                reject(err);
+                            });
+                    });
                 });
             },
         }
