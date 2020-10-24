@@ -76,7 +76,7 @@
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
     import AddManufacturerBox from '@/components/commodity/addManufacturerBox.vue';
     import { mapGetters, mapActions } from 'vuex';
-    import { requestManufactorPage } from '../../api/commodity';
+    import { requestManufactorPage } from '../../api/commodity/manufacturer';
 
     const columns = [
         {
@@ -105,17 +105,6 @@
             scopedSlots: { customRender: 'operation' },
         },
     ];
-    const data = [];
-    for (let i = 0; i < 10; i++) {
-        data.push({
-            key: i,
-            commodity: `xx生产厂家`,
-            city: '上海',
-            status: String(i % 2),
-            icon: '生产厂家图标',
-
-        });
-    }
 
     //  生产厂家
     export default {
@@ -124,7 +113,7 @@
         },
         data(){
             return {
-                data,
+                data: [],
                 columns,
 
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
@@ -155,7 +144,6 @@
                         });
                         this.data = data.records;
                         this.pagination = paginationDecode(this.pagination, data);
-                        
                     });
             },
             //  莫泰框方法

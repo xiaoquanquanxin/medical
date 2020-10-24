@@ -6,13 +6,13 @@
             autocomplete="off"
     >
         <a-form-item label="生产厂家名称">
-            <a-input
-                    v-decorator="categoryNameDecorator"
+            <a-input class="add-form-input"
+                    v-decorator="manufactorNameDecorator"
                     placeholder="请输入生产厂家名称"
             />
         </a-form-item>
         <a-form-item label="生产厂家编码">
-            <p>js</p>
+            <p>后台自动生成</p>
         </a-form-item>
         <a-form-item label="是否展示">
             <a-switch checked-children="开" un-checked-children="关"
@@ -23,6 +23,11 @@
 </template>
 <script>
     import { formItemLayout } from '@/utils/layout.ts';
+    import {
+        requestManufactorGet,
+        requestManufactorInsert,
+        requestManufactorUpdate
+    } from '../../api/commodity/manufacturer';
 
     export default {
         beforeCreate(){
@@ -38,7 +43,7 @@
             return {
                 formItemLayout,
                 //  生产厂家名称
-                categoryNameDecorator: ['categoryName', {
+                manufactorNameDecorator: ['manufactorName', {
                     rules: [{
                         required: true,
                         message: '请输入生产厂家名称'
@@ -54,38 +59,51 @@
         methods: {
             //  主要请求
             searchFn(){
-//                requestChannelBusinessPage(paginationEncode(this.pagination))
-//                    .then(v => {
-//                        const { data } = v;
-//                        console.log(data);
-//                data.records.forEach((item, index) => {
-//                    item.key = index;
-//                    item.createTime = item.createTime.substr(0, 10);
-//                });
-//                        this.data = data.records;
-//                        this.pagination = paginationDecode(this.pagination, data);
-//                    });
+                //  如果是新增
+                if (!this.manufacturerId) {
+                    return;
+                }
+                //  如果是编辑
+                requestManufactorGet(this.manufacturerId)
+                    .then(v => {
+                        const { data } = v;
+                        console.log(data);
+                        const { manufactorName } = data;
+                        this.form.setFieldsValue({
+                            manufactorName,
+                        });
+                    });
             },
             //    表单提交
             handleSubmit(){
-                return new Promise(((resolve, reject) => {
+                return new Promise((resolve, reject) => {
                     this.form.validateFields((err, values) => {
-                        console.table(values);
-                        if (!err) {
-                            resolve();
-                        } else {
+                        if (err) {
                             reject();
+                            return;
                         }
-                    });
-                }))
-                    .then(v => {
-                        return new Promise(((resolve, reject) => {
-                            console.log('发请求吧');
-                            setTimeout(() => {
+                        console.table(values);
+                        (() => {
+                            //  如果是新增
+                            if (!this.manufacturerId) {
+                                return requestManufactorInsert(values);
+                            }
+                            //  如果是编辑
+                            return requestManufactorUpdate(Object.assign(
+                                { id: this.manufacturerId },
+                                values)
+                            );
+                        })()
+                            .then(v => {
+                                console.log(v);
                                 resolve();
-                            }, 1000);
-                        }));
+                            })
+                            .catch(err => {
+                                console.log(err);
+                                reject(err);
+                            });
                     });
+                });
             },
         }
     };
