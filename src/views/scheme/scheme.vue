@@ -38,9 +38,6 @@
                 transverseSubPaths: [],
             };
         },
-        created(){
-            this.searchFn();
-        },
         methods: {
             jumpTo,
         }
