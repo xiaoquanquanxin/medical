@@ -6,7 +6,8 @@
             autocomplete="off"
     >
         <a-form-item label="选择角色">
-            <a-select v-decorator="roleDecorator"
+            <a-select class="add-form-input"
+                      v-decorator="roleDecorator"
                       placeholder="请选择角色">
                 <a-select-option value="">
                     状态
@@ -17,20 +18,26 @@
             </a-select>
         </a-form-item>
         <a-form-item label="账号名称">
-            <a-input v-decorator="usernameDecorator" placeholder="请输入账号名称"/>
+            <a-input class="add-form-input"
+                     v-decorator="usernameDecorator"
+                     placeholder="请输入账号名称"/>
         </a-form-item>
         <a-form-item label="账号密码">
-            <a-input v-decorator="accountPasswordDecorator" placeholder="请输入账号密码"/>
+            <a-input class="add-form-input"
+                     v-decorator="accountPasswordDecorator"
+                     placeholder="请输入账号密码"/>
         </a-form-item>
         <a-form-item label="确认密码">
-            <a-input v-decorator="confirmPasswordDecorator" placeholder="请输入账确认密码"/>
+            <a-input class="add-form-input"
+                     v-decorator="confirmPasswordDecorator"
+                     placeholder="请输入账确认密码"/>
         </a-form-item>
     </a-form>
 </template>
 <script>
     import { formItemLayout } from '@/utils/layout.ts';
     import { compareToFirstPassword } from '@/utils/validate';
-    import { requestUserInsert, requestUserUpdate } from '../../api/system';
+    import { requestUserInsert, requestUserUpdate } from '../../api/system/account';
 
     export default {
         beforeCreate(){
@@ -105,29 +112,26 @@
             handleSubmit(){
                 return new Promise(((resolve, reject) => {
                     this.form.validateFields((err, values) => {
-                        console.table(values);
-                        if (!err) {
-                            const { username, password } = values;
-                            const data = { username, password };
-                            (() => {
-                                //  如果是新增账号
-                                if (!this.selectAccountId) {
-                                    return requestUserInsert(data);
-                                } else {
-                                    //  编辑账号
-                                    return requestUserUpdate(data);
-                                }
-                            })()
-                                .then(v => {
-                                    resolve(v);
-                                })
-                                .error(err => {
-                                    reject(err);
-                                });
-
-                        } else {
+                        if (err) {
                             reject();
+                            return;
                         }
+                        console.table(values);
+                        (() => {
+                            //  如果是新增账号
+                            if (!this.selectAccountId) {
+                                return requestUserInsert(values);
+                            } else {
+                                //  编辑账号
+                                return requestUserUpdate(values);
+                            }
+                        })()
+                            .then(v => {
+                                resolve(v);
+                            })
+                            .error(err => {
+                                reject(err);
+                            });
                     });
                 }));
             },

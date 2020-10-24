@@ -61,7 +61,7 @@
     import { paginationInit, paginationDecode, paginationEncode } from '@/utils/pagination.ts';
     import { twoRowSearch } from '@/utils/tableScroll';
     import { mapGetters, mapActions } from 'vuex';
-    import { requestUserPage } from '../../api/system';
+    import { requestUserPage } from '../../api/system/account';
 
     const columns = [
         {
@@ -90,24 +90,14 @@
             width: 100,
         },
     ];
-    const data = [];
-    for (let i = 0; i < 10; i++) {
-        data.push({
-            key: i,
-            hospital: `xx医院`,
-            city: '上海',
-            status: String(i % 2),
-            icon: '医院图标',
 
-        });
-    }
     export default {
         components: {
             AccountBox,
         },
         data(){
             return {
-                data,
+                data: [],
                 columns,
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
                 scroll: twoRowSearch(columns),
@@ -131,7 +121,6 @@
                         const { data } = v;
                         data.records.forEach((item, index) => {
                             item.key = index;
-                            item.createTime = item.createTime.substr(0, 10);
                         });
                         this.data = data.records;
                         this.pagination = paginationDecode(this.pagination, data);
@@ -164,7 +153,7 @@
             },
             //  编辑账号
             editAccountFn(sItem){
-                this.setSelectAccountId(2323);
+                this.setSelectAccountId(sItem.id);
                 this.setAccountOperationType(2);
                 this.setDialogTitle(DIALOG_TYPE.ACCOUNT, '编辑账号');
                 this.showModal(DIALOG_TYPE.ACCOUNT);
@@ -176,6 +165,7 @@
                 const promise = this.$refs[refAccountBox].handleSubmit();
                 promise.then(v => {
                     this.hideModal(DIALOG_TYPE.ACCOUNT);
+                    this.searchFn();
                 }).catch(error => {
                     console.log('有错');
                 }).then(v => {
