@@ -113,19 +113,11 @@
             width: 100,
         },
     ];
-    const data = [];
-    for (let i = 0; i < 10; i++) {
-        data.push({
-            key: i,
-            doctor: `xx医生`,
-            status: String(i % 2),
-        });
-    }
     //  医生管理
     export default {
         data(){
             return {
-                data,
+                data: [],
                 columns,
 
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
