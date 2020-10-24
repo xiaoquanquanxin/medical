@@ -2,16 +2,12 @@
     <div class="layout-content-inner-main">
         <!--搜索相关-->
         <div class="a-input-group">
-            <a-input class="lengthen-input-width" v-model="searchData.departmentName" placeholder="请输入科室名称"/>
+            <a-input class="lengthen-input-width" v-model="searchData.deptName" placeholder="请输入科室名称"/>
             <a-select class="basic-select-width" v-model="searchData.status"
                       placeholder="请选择状态"
             >
-                <a-select-option value="Option1">
-                    Option1
-                </a-select-option>
-                <a-select-option value="Option2">
-                    Option2
-                </a-select-option>
+                <a-select-option value="0">正常</a-select-option>
+                <a-select-option value="1">关闭</a-select-option>
             </a-select>
             <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
         </div>
@@ -23,15 +19,14 @@
             </router-link>
         </div>
         <!--表格-->
-        <a-table
-                :columns="columns"
-                :data-source="data"
-                :scroll="scroll"
-                :pagination="false"
+        <a-table :columns="columns"
+                 :data-source="data"
+                 :scroll="scroll"
+                 :pagination="false"
         >
-            <div
-                    slot="a-switch"
-                    slot-scope="scope,sItem,sIndex,extra"
+            <!--选择状态-->
+            <div slot="a-switch"
+                 slot-scope="scope,sItem,sIndex,extra"
             >
                 <a-switch checked-children="开" un-checked-children="关"
                           :default-checked="!!sIndex"
@@ -119,14 +114,6 @@
             width: 150,
         },
     ];
-    const data = [];
-    for (let i = 0; i < 10; i++) {
-        data.push({
-            key: i,
-            department: `xx科室`,
-            status: String(i % 2),
-        });
-    }
     //  科室管理
     export default {
         components: {
@@ -135,7 +122,7 @@
 
         data(){
             return {
-                data,
+                data: [],
                 columns,
 
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
@@ -159,7 +146,7 @@
         methods: {
             //  主要请求
             searchFn(){
-                requestDeptPage(paginationEncode(this.pagination))
+                requestDeptPage(Object.assign({}, this.searchData, paginationEncode(this.pagination)))
                     .then(v => {
                         const { data } = v;
                         data.records.forEach((item, index) => {
@@ -168,7 +155,7 @@
                         });
                         this.data = data.records;
                         this.pagination = paginationDecode(this.pagination, data);
-                        console.log(data);
+                        console.log(data.records);
                     });
             },
             //  莫泰框方法

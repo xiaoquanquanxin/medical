@@ -43,7 +43,7 @@
 <script>
     import { formItemLayout } from '@/utils/layout.ts';
     import GoBackButton from '@/components/goBackButton.vue';
-    import { requestDeptSave } from '../../api/department';
+    import { requestDeptSave, requestDeptUpdate } from '../../api/department';
 
     export default {
         components: {
@@ -84,8 +84,6 @@
         created(){
             //  console.log(this.$route.params);
             console.log('是编辑？', !!this.departmentId);
-        },
-        created(){
             this.searchFn();
         },
         methods: {
@@ -106,14 +104,34 @@
             //    表单提交
             handleSubmit(e){
                 e.preventDefault();
-                this.form.validateFields((err, values) => {
-                    console.table(values);
-                    if (!err) {
-                        requestDeptSave(values)
+                new Promise((resolve, reject) => {
+                    this.form.validateFields((err, values) => {
+                        if (err) {
+                            reject();
+                            return;
+                        }
+                        console.table(values);
+                        (() => {
+                            //  如果是新增
+                            if (!this.departmentId) {
+                                return requestDeptSave(values);
+                            }
+                            //  如果是编辑
+                            return requestDeptUpdate(Object.assign(
+                                { id: this.departmentId },
+                                values)
+                            );
+                        })()
                             .then(v => {
                                 console.log(v);
+                                resolve();
+                                this.$router.push({ name: 'department' });
+                            })
+                            .catch(err => {
+                                console.log(err);
+                                reject(err);
                             });
-                    }
+                    });
                 });
             },
         }
