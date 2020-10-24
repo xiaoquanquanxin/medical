@@ -89,6 +89,11 @@
         methods: {
             //  主要请求
             searchFn(){
+                //  如果是新增
+                if (!this.departmentId) {
+                    return;
+                }
+                //  如果是编辑
 //                requestChannelBusinessPage(paginationEncode(this.pagination))
 //                    .then(v => {
 //                        const { data } = v;
