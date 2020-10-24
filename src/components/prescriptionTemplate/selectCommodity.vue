@@ -78,14 +78,14 @@
             //  被选中的列 === 数据 被选中的 id
             this.selectedRowKeys = this.originCommodityList.filter(item => item.isCheckboxChecked).map(item => item.key);
             console.log(this.selectedRowKeys);
-            this.searchFn();
+//            this.searchFn();
         },
         methods: {
-            //  主要请求
-            searchFn(){
-                //  🏳️🏳️🏳️🏳️🏳️  先请求全部商品
-                
-            },
+//            //  主要请求
+//            searchFn(){
+//                //  🏳️🏳️🏳️🏳️🏳️  先请求全部商品
+//
+//            },
             ...mapActions('prescriptionTemplate', [
                 //  商品源的数据
                 'setOriginCommodityList',
