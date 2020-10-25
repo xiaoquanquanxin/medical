@@ -6,8 +6,8 @@
             <a-select class="basic-select-width" v-model="searchData.status"
                       placeholder="请选择状态"
             >
-                <a-select-option value="0">正常</a-select-option>
-                <a-select-option value="1">关闭</a-select-option>
+                <a-select-option value="1">正常</a-select-option>
+                <a-select-option value="0">关闭</a-select-option>
             </a-select>
             <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
         </div>
@@ -29,7 +29,7 @@
                  slot-scope="scope,sItem,sIndex,extra"
             >
                 <a-switch checked-children="开" un-checked-children="关"
-                          :checked="!sItem.status"
+                          :checked="!!sItem.status"
                           @change="aSwitchChange(sItem,$event)"
                 />
             </div>
@@ -178,12 +178,12 @@
             aSwitchChange(sItem, checked){
                 requestDeptUpdate(Object.assign({}, sItem, { status: checked ? 1 : 0 }))
                     .then(v => {
-                        sItem.status = !checked;
+                        sItem.status = !!checked;
                         this.$message.success('操作成功');
                     })
                     .catch(err => {
                         this.$message.error('操作失败');
-                        sItem.status = checked;
+                        sItem.status = !checked;
                         console.log(err);
                     });
             },

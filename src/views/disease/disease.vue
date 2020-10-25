@@ -4,8 +4,8 @@
         <div class="a-input-group">
             <a-input class="lengthen-input-width" v-model="searchData.diseaseName" placeholder="请输入疾病名称"/>
             <a-select class="basic-select-width" v-model="searchData.status" placeholder="请选择状态">
-                <a-select-option value="0">正常</a-select-option>
-                <a-select-option value="1">关闭</a-select-option>
+                <a-select-option value="1">正常</a-select-option>
+                <a-select-option value="0">关闭</a-select-option>
             </a-select>
             <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
         </div>
@@ -135,7 +135,7 @@
             },
             //  编辑疾病
             editDisease(sItem, sIndex, extra){
-                this.$router.push({ name: 'editDisease', params: { diseaseId: sIndex } });
+                this.$router.push({ name: 'editDisease', params: { diseaseId: sItem.id } });
             },
             //  删除疾病
             deleteDisease(sItem){
