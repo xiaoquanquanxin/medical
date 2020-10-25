@@ -175,7 +175,7 @@
                             item.key = index;
                         });
                         this.data = data.records;
-                        console.log(JSON.parse(JSON.stringify(data)));
+                        console.log(JSON.parse(JSON.stringify(data.records [0])));
 //                        this.data = data.records;
 //                        this.pagination = paginationDecode(this.pagination, data);
                     });

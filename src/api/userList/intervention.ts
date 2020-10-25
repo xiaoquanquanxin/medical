@@ -9,5 +9,12 @@ export function requestPrescriptionPage(data: any) {
 	});
 }
 
-
+//	查询当前医院的处方模板
+export function requestPrescriptionPrescriptionTpl(data: any) {
+	return request({
+		url: '/api/prescription/prescriptionTpl',
+		method: 'post',
+		data,
+	});
+}
 

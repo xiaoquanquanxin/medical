@@ -369,16 +369,54 @@
                 requestHospitalGetList()
                     .then(v => {
                         this.hospitalList = v.data;
-                    });
-                //  如果是新增
-                if (!this.oralId) {
-                    return;
-                }
-                //  如果是编辑
-                requestPrescriptionTemplateGet(this.oralId)
+                    })
                     .then(v => {
-                        const { data } = v;
-                        console.log(data);
+                        //  如果是新增
+                        if (!this.oralId) {
+                            return;
+                        }
+                        const data = {
+                            'prescriptionName': '肠内营养支持',
+                            'energy': '1600kcal',
+                            'usageMethod': 1,
+                            'prescriptionType': 2,
+                            'prescriptionContent': '{"timeTableData": [{"key": 1, "list": [{"id": 4, "sort": 2, "type": 2, "uname": "23", "dosage": "45", "goodsId": 4, "unitFat": 23, "goodsName": "商品b", "unitPrice": 23, "unitValue": 0, "unitEnergy": 23, "unitProtein": 23, "isRadioChecked": true, "unitCarbohydrate": 23, "unitExchangeRate": 23}], "time": "02:01", "warmWater": "54"}], "commodityTableData": [{"id": 4, "key": 4, "status": 11, "delFlag": "0", "goodsImg": "http://49.232.14.93:8080/file/pic/20201025172803881496.png", "quantity": "32", "goodsName": "商品b", "supplierId": 2, "uintListVos": [{"id": 4, "sort": 2, "type": 2, "uname": "23", "goodsId": 4, "unitFat": 23, "unitPrice": 23, "unitValue": 0, "unitEnergy": 23, "unitProtein": 23, "isRadioChecked": true, "unitCarbohydrate": 23, "unitExchangeRate": 23}], "goodsBarCode": "33", "goodsBrandId": 3, "goodsDetails": "", "goodsKeyWord": "32", "manufactorId": "11", "goodsTradeName": "11", "goodsCategoryId": 3, "goodsProductCode": "33", "isCheckboxChecked": true, "preservationMethod": 11, "goodsSpecifications": "11", "purchaseUnitCheckId": 4}]}'
+                        };
+//                return;
+                        //  如果是编辑
+                        requestPrescriptionTemplateGet(this.oralId)
+                            .then(v => {
+                                const { data } = v;
+                                const tableForm = this.tableForm;
+                                tableForm.prescriptionName = data.prescriptionName;
+                                tableForm.energy = data.energy;
+                                tableForm.usageMethod = data.usageMethod;
+                                tableForm.prescriptionType = data.prescriptionType;
+                                tableForm.hospitalId = data.hospitalId;
+                                console.log(data);
+                                console.log(JSON.parse(data.prescriptionContent));
+                                const prescriptionContent = JSON.parse(data.prescriptionContent);
+                                this.commodityTableData = prescriptionContent.commodityTableData;
+                                this.timeTableData = prescriptionContent.timeTableData;
+                                //  拿一次医院的商品
+                                requestGoodsListByHospital(data.hospitalId)
+                                    .then(v => {
+                                        console.log('该医院下的商品：');
+                                        if (!v.data || !v.data) {
+                                            return;
+                                        }
+                                        v.data.forEach(item => {
+                                            item.key = item.id;
+                                        });
+                                        const originCommodityList = v.data;
+                                        console.log(JSON.parse(JSON.stringify(v.data)));
+                                        //  编辑的数据
+                                        const _originCommodityList = Object.assign([], originCommodityList, prescriptionContent.commodityTableData);
+                                        console.log('编辑的数据');
+                                        console.log(JSON.parse(JSON.stringify(_originCommodityList)));
+                                        this.setOriginCommodityList(originCommodityList);
+                                    });
+                            });
                     });
             },
             //  时间选择器的方法
@@ -406,21 +444,19 @@
                 });
                 console.clear();
                 console.log('🍎🍎🍎🍎发请求，🍉🍉🍉改造数据结构', '医院的id', value);
-                setTimeout(() => {
-                    requestGoodsListByHospital(value)
-                        .then(v => {
-                            console.log('该医院下的商品：');
-                            if (!v.data || !v.data) {
-                                return;
-                            }
-                            v.data.forEach(item => {
-                                item.key = item.id;
-                            });
-                            const originCommodityList = v.data;
-                            console.log(JSON.parse(JSON.stringify(v.data)));
-                            this.setOriginCommodityList(originCommodityList);
+                requestGoodsListByHospital(value)
+                    .then(v => {
+                        console.log('该医院下的商品：');
+                        if (!v.data || !v.data) {
+                            return;
+                        }
+                        v.data.forEach(item => {
+                            item.key = item.id;
                         });
-                });
+                        const originCommodityList = v.data;
+                        console.log(JSON.parse(JSON.stringify(v.data)));
+                        this.setOriginCommodityList(originCommodityList);
+                    });
                 //  重置数据
                 this.commodityTableData = [];
                 this.timeTableData = [];
