@@ -25,8 +25,9 @@
             <div slot="a-switch"
                  slot-scope="scope,sItem,sIndex,extra"
             >
+<!--                :default-checked="!!sItem.status"-->
                 <a-switch checked-children="开" un-checked-children="关"
-                          :default-checked="!!sIndex"
+                          :checked="!!sItem.status"
                           @change="aSwitchChange(sItem,$event)"
                 />
             </div>
@@ -76,7 +77,7 @@
     import { paginationInit, paginationDecode, paginationEncode } from '@/utils/pagination.ts';
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
     import { twoRowSearch } from '@/utils/tableScroll';
-    import { requestChannelBusinessPage } from '../../api/distributors';
+    import { requestChannelBusinessChangeStatus, requestChannelBusinessPage } from '../../api/distributors';
 
     const columns = [
         {
@@ -172,8 +173,17 @@
             },
 
             //  切换状态
-            aSwitchChange(sItem, sIndex, checked){
-                console.log(sItem, sIndex, checked);
+            aSwitchChange(sItem, checked){
+                requestChannelBusinessChangeStatus(sItem.id)
+                    .then(v => {
+                        sItem.status = checked;
+                        this.$message.success('操作成功');
+                    })
+                    .catch(err => {
+                        this.$message.error('操作失败');
+                        sItem.status = !checked;
+                        console.log(err);
+                    });
             },
 
             //  新增渠道商

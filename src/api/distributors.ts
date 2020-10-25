@@ -43,5 +43,10 @@ export function requestChannelBusinessDelete(id: string | number) {
 	});
 }
 
-
-//	❌ 缺少 状态接口 1、开启：该渠道商可正常登录系统 2、关闭：该渠道商不可登录系统
+//	修改渠道商状态
+export function requestChannelBusinessChangeStatus(id: string | number) {
+	return request({
+		url: `/api/channelBusiness/changeStatus/${id}`,
+		method: 'get',
+	});
+}
