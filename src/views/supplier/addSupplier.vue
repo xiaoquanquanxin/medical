@@ -190,6 +190,7 @@
     import GoBackButton from '@/components/goBackButton.vue';
     import { requestSupplierGet, requestSupplierInsert, requestSupplierUpdate } from '../../api/supplier';
     import { uploadHandleChange, beforeUploadFn, beforeUploadData } from '../../utils/upload';
+    import { getProvinceList, provinceChange, areaList } from '../../utils/areaList';
 
     export default {
         components: {
@@ -200,6 +201,8 @@
         },
         data(){
             return {
+                //	地址对象
+                areaList,
                 //	上传文件的数据，这样的对象只需要一个
                 beforeUploadData,
                 //  科室id
@@ -208,7 +211,6 @@
                 formItemLayout,
                 //  供应商名称
                 supplierNameDecorator: ['supplierName', {
-                    initialValue: '供应商名称',
                     rules: [{
                         required: true,
                         message: '请输入供应商名称'
@@ -216,7 +218,6 @@
                 }],
                 //  供应商编码
                 supplierNumberDecorator: ['supplierNumber', {
-                    initialValue: '供应商编码',
                     rules: [{
                         required: true,
                         message: '请输入供应商编码'
@@ -224,7 +225,6 @@
                 }],
                 //  地址-省份
                 provinceDecorator: ['province', {
-                    initialValue: '1',
                     rules: [{
                         required: true,
                         message: '请选择地址-省份'
@@ -232,7 +232,6 @@
                 }],
                 //  地址-市区
                 cityDecorator: ['city', {
-                    initialValue: '1',
                     rules: [{
                         required: true,
                         message: '请选择地址-市区'
@@ -240,7 +239,6 @@
                 }],
                 //  详细地址
                 detailedAddressDecorator: ['detailedAddress', {
-                    initialValue: '详细地址',
                     rules: [{
                         required: true,
                         message: '请输入详细地址'
@@ -248,7 +246,6 @@
                 }],
                 //  联系人
                 contactsDecorator: ['contacts', {
-                    initialValue: '联系人',
                     rules: [{
                         required: true,
                         message: '请输入联系人'
@@ -256,14 +253,12 @@
                 }],
                 //  手机号
                 phoneDecorator: ['phone', {
-                    initialValue: '15559448998',
                     rules: [{
                         validator: isPhoneNumber,
                     },]
                 }],
                 //  邮箱
                 emailDecorator: ['email', {
-                    initialValue: '43@32.com',
                     rules: [{
                         required: true,
                         message: '请输入邮箱'
@@ -309,6 +304,10 @@
             this.searchFn();
         },
         methods: {
+            //  获取省份
+            getProvinceList,
+            //  省份变化
+            provinceChange,
             //  上传图片通用方法
             uploadHandleChange,
             beforeUploadFn,
@@ -323,6 +322,38 @@
                     .then(v => {
                         const { data } = v;
                         console.log(data);
+                        const {
+                            supplierName,
+                            supplierNumber,
+                            province,
+                            city,
+                            detailedAddress,
+                            contacts,
+                            phone,
+                            email,
+                            businessLicense,
+                            contract,
+                            foodQualificationCertificate,
+                            specialMedicalFoodQualificationCertificate,
+                        } = data;
+                        this.businessLicenseThumbUrl = businessLicense;
+                        this.contractThumbUrl = contract;
+                        this.foodQualificationCertificateThumbUrl = foodQualificationCertificate;
+                        this.specialMedicalFoodQualificationCertificateThumbUrl = specialMedicalFoodQualificationCertificate;
+                        this.form.setFieldsValue({
+                            supplierName,
+                            supplierNumber,
+                            province,
+                            city,
+                            detailedAddress,
+                            contacts,
+                            phone,
+                            email,
+                            businessLicense,
+                            contract,
+                            foodQualificationCertificate,
+                            specialMedicalFoodQualificationCertificate,
+                        });
                     });
             },
             //    表单提交
@@ -346,6 +377,7 @@
                     })()
                         .then(v => {
                             this.$message.success('操作成功');
+                            this.$router.push({ name: 'supplier' });
                         })
                         .catch(err => {
                             console.log(err);
