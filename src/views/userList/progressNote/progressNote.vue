@@ -55,12 +55,12 @@
         {
             title: '医生',
             width: 100,
-            scopedSlots: { customRender: 'doctor' }
+            dataIndex: 'doctorName',
         },
         {
             title: '记录时间',
             dataIndex: 'ctime',
-            width: 100,
+            width: 150,
         },
         {
             title: '操作',
@@ -111,7 +111,7 @@
                             item.key = index;
                             item.index = index + 1;
                         });
-                        console.table(JSON.parse(JSON.stringify(data.records[0])));
+                        //  console.table(JSON.parse(JSON.stringify(data.records[0])));
                         this.data = data.records;
                     });
                 requestPatientSelectDoctorByHospital()
