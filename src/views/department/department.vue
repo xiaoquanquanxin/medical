@@ -151,7 +151,6 @@
                         const { data } = v;
                         data.records.forEach((item, index) => {
                             item.key = index;
-                            item.createTime = item.createTime.substr(0, 10);
                         });
                         this.data = data.records;
                         this.pagination = paginationDecode(this.pagination, data);

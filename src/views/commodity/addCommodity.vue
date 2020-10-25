@@ -67,7 +67,7 @@
                     <a-select-option :value="item.id"
                                      :key="item.id"
                                      v-for="item in supplierList"
-                    >{{item.name}}
+                    >{{item.supplierName}}
                     </a-select-option>
                 </a-select>
             </a-form-item>
@@ -79,7 +79,7 @@
                     <a-select-option :value="item.id"
                                      :key="item.id"
                                      v-for="item in manufactorList"
-                    >{{item.name}}
+                    >{{item.manufactorName}}
                     </a-select-option>
                 </a-select>
             </a-form-item>
@@ -535,7 +535,38 @@
                 requestGoodsGet(this.commodityId)
                     .then(v => {
                         const { data } = v;
+                        const {
+                            goodsBarCode,
+                            goodsBrandId,
+                            goodsCategoryId,
+                            goodsDetails,
+                            goodsImg,
+                            goodsKeyWord,
+                            goodsName,
+                            goodsProductCode,
+                            goodsSpecifications,
+                            goodsTradeName,
+                            manufactorId,
+                            preservationMethod,
+                            status,
+                            supplierId,
+                        } = data;
                         console.log(data);
+                        this.form.setFieldsValue({
+                            goodsBarCode,
+                            goodsBrandId,
+                            goodsCategoryId,
+                            goodsImg,
+                            goodsKeyWord,
+                            goodsName,
+                            goodsProductCode,
+                            goodsSpecifications,
+                            goodsTradeName,
+                            manufactorId,
+                            preservationMethod,
+                            status,
+                            supplierId,
+                        });
                     });
             },
             //  添加辅助单位
@@ -651,6 +682,7 @@
                         })()
                             .then(v => {
                                 console.log(v);
+                                this.$router.push({ name: 'commodityList' });
                             })
                             .catch(err => {
                                 console.log(err);

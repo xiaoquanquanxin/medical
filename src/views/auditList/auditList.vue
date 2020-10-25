@@ -61,37 +61,37 @@
     const columns = [
         {
             title: '序号',
-            dataIndex: 'commodity',
+            dataIndex: 'index',
             width: 100,
         },
         {
             title: '处方名称',
-            dataIndex: 'aaa',
+            dataIndex: 'prescriptionName',
             width: 100,
         },
         {
             title: '处方医生',
-            dataIndex: '通用名',
+            dataIndex: 'doctorName',
             width: 100,
         },
         {
             title: '开具时间',
-            dataIndex: '商品分类',
+            dataIndex: 'orderTime',
             width: 100,
         },
         {
             title: '科室',
-            dataIndex: 'unit',
+            dataIndex: 'deptName',
             width: 100,
         },
         {
             title: '姓名',
-            dataIndex: 'specifications',
+            dataIndex: 'name',
             width: 100,
         },
         {
             title: '性别',
-            dataIndex: 'marketPrice',
+            dataIndex: 'sex',
             width: 100,
         },
         {
@@ -138,6 +138,7 @@
                         const { data } = v;
                         data.records.forEach((item, index) => {
                             item.key = index;
+                            item.index = index + 1;
                         });
                         this.data = data.records;
                         console.log(data.records);

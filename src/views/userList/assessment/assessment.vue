@@ -106,7 +106,7 @@
                         data.records.forEach((item, index) => {
                             item.key = index;
                         });
-                        console.log(data.records);
+                        console.log(JSON.parse(JSON.stringify(data.records)));
                         this.data = data.records;
                     });
             },

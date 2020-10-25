@@ -1,11 +1,11 @@
 import request from '@/utils/request';
 
 //  疾病列表			✅
-export function requestDiseasePage(params: any) {
+export function requestDiseasePage(data: any) {
 	return request({
 		url: '/api/disease/page',
-		method: 'get',
-		params,
+		method: 'post',
+		data,
 	});
 }
 

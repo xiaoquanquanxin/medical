@@ -50,6 +50,7 @@
                     <a @click="authorization(sItem)">授权</a>
                     <a @click="onShelf(sItem)">上架</a>
                     <a @click="offShelf(sItem)">下架</a>
+                    <a @click="deleteFn(sItem)">删除</a>
                 </a-space>
             </div>
             <div slot="marketPrice" slot-scope="scope,sItem,sIndex,extra">
@@ -110,7 +111,7 @@
     import ShuttleBox from '@/components/shuttleBox.vue';
     import ViewPrice from '@/components/commodity/viewPrice.vue';
     import { SHUTTLE_BOX } from '../../store/modules/shuttleBox';
-    import { requestGoodsPage } from '../../api/commodity/commodityList';
+    import { requestGoodsDelete, requestGoodsPage } from '../../api/commodity/commodityList';
 
     const columns = [
         {
@@ -321,7 +322,7 @@
             },
             //  编辑商品
             editCommodity(sItem){
-                this.$router.push({ name: 'editCommodity', params: { commodityId: '1232' } });
+                this.$router.push({ name: 'editCommodity', params: { commodityId: sItem.id } });
             },
             //  授权
             authorization(sItem){
@@ -364,6 +365,12 @@
                         console.log('取消');
                     },
                 });
+            },
+            deleteFn(sItem){
+                requestGoodsDelete(sItem.id)
+                    .then(v => {
+                        this.searchFn();
+                    });
             },
             //  确认市场价格
             viewMarketPriceModalCheck(refViewPrice){
