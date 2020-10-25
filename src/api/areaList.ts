@@ -4,14 +4,14 @@ import request from "@/utils/request"
 export function requestProvince() {
 	return request({
 		url: '/api/list/1',
-		method: 'get',
+		method: 'post',
 	});
 }
 
-//	查询市区
+//	查询市区、县城
 export function requestCityByProvince(id: string | number) {
 	return request({
 		url: `/api/getParentList/${id}`,
-		method: 'get',
+		method: 'post',
 	});
 }
