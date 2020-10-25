@@ -12,12 +12,6 @@
                 :scroll="scroll"
                 :pagination="false"
         >
-            <!--医生-->
-            <div slot="doctor" slot-scope="scope,sItem,sIndex,extra">
-                <span v-if="item.id === scope.doctorId"
-                      v-for="item in doctorList"
-                >{{item.doctorName}}</span>
-            </div>
             <!--操作-->
             <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
                 <a @click="progressNoteDetail(sItem)">详情</a>
@@ -84,8 +78,6 @@
             return {
                 data: [],
                 columns,
-                //  医生list
-                doctorList: [],
 
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
                 scroll: oneRowSearch(columns),
@@ -113,14 +105,6 @@
                         });
                         //  console.table(JSON.parse(JSON.stringify(data.records[0])));
                         this.data = data.records;
-                    });
-                requestPatientSelectDoctorByHospital()
-                    .then(v => {
-                        console.log('根据当前医院查询所有医生', v.data);
-                        v.data.forEach(item => {
-                            item.id = Number(item.id);
-                        });
-                        this.doctorList = v.data;
                     });
             },
             //  莫泰框方法
