@@ -51,3 +51,12 @@ export function requestSupplierList() {
 		method: 'get'
 	});
 }
+
+//	删除供应商信息
+export function requestSupplierChangeStatus(id: string | number) {
+	return request({
+		url: `/api/supplier/changeStatus/${id}`,
+		method: 'get',
+	});
+}
+

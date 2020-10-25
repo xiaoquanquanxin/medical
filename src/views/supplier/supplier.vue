@@ -25,7 +25,7 @@
                     slot-scope="scope,sItem,sIndex,extra"
             >
                 <a-switch checked-children="开" un-checked-children="关"
-                          :default-checked="!!sIndex"
+                          :checked="!!sItem.status"
                           @change="aSwitchChange(sItem,$event)"
                 />
             </div>
@@ -57,7 +57,7 @@
 <script>
     import { paginationInit, paginationDecode, paginationEncode } from '@/utils/pagination.ts';
     import { twoRowSearch } from '@/utils/tableScroll';
-    import { requestSupplierPage } from '../../api/supplier';
+    import { requestSupplierChangeStatus, requestSupplierPage } from '../../api/supplier';
 
     const columns = [
         {
@@ -143,7 +143,16 @@
 
             //  切换状态
             aSwitchChange(sItem, checked){
-                console.log(sItem, checked);
+                requestSupplierChangeStatus(sItem.id)
+                    .then(v => {
+                        sItem.status = checked;
+                        this.$message.success('操作成功');
+                    })
+                    .catch(err => {
+                        this.$message.error('操作失败');
+                        sItem.status = !checked;
+                        console.log(err);
+                    });
             },
             //  编辑供应商
             editDistributors(sItem){

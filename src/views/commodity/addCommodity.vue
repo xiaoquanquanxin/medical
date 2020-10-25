@@ -55,7 +55,7 @@
                     <a-select-option :value="item.id"
                                      :key="item.id"
                                      v-for="item in goodsBrandList"
-                    >{{item.name}}
+                    >{{item.brandName}}
                     </a-select-option>
                 </a-select>
             </a-form-item>
@@ -232,22 +232,23 @@
     import { requestSupplierList } from '../../api/supplier';
     import { requestManufactorList } from '../../api/commodity/manufacturer';
 
-    const uintParams = [
-        {
-            key: Math.random(),
-            name: '基本单位',
-            uname: '',
-            unitExchangeRate: '',
-            unitPrice: '',
-            unitEnergy: '',
-            unitProtein: '',
-            unitFat: '',
-            unitCarbohydrate: '',
-        },
-    ];
+    //  基础单位
+    const basicUnit = {
+        sort: 1,
+        key: 1,
+        name: '基本单位',
+        uname: '',
+        unitExchangeRate: '',
+        unitPrice: '',
+        unitEnergy: '',
+        unitProtein: '',
+        unitFat: '',
+        unitCarbohydrate: '',
+    };
     //  标准单位
     const standardUnit = {
-        key: Math.random(),
+        sort: 2,
+        key: 2,
         name: '标准单位',
         uname: '',
         unitExchangeRate: '',
@@ -259,7 +260,8 @@
     };
     //  辅助单位
     const auxiliaryUnitsData = {
-        key: Math.random(),
+        sort: 3,
+        key: 3,
         name: '辅助单位',
         uname: '',
         unitExchangeRate: '',
@@ -427,7 +429,7 @@
 
                 //  基本单位表格
                 columns: [],
-                uintParams,
+                uintParams: [],
             };
         },
         created(){
@@ -555,6 +557,7 @@
             basicUnitCheck(){
                 let basicUnit = 1;
                 for (let i = 0; i < this.uintParams.length; i++) {
+                    this.uintParams[i].type = this.isLocalAreaNetwork ? 1 : 2;
                     const {
                         uname,
                         unitPrice,
@@ -599,9 +602,9 @@
                         }
                         console.log(values);
                         console.log(this.uintParams);
-                        const uintParams = JSON.stringify(this.uintParams);
                         const goodsDetails = this.goodsDetails;
-
+                        console.log(JSON.stringify(this.uintParams));
+                        const uintParams = this.uintParams;
                         const {
                             goodsBarCode,
                             goodsBrandId,
@@ -629,6 +632,7 @@
                             goodsProductCode,
                             goodsSpecifications,
                             goodsTradeName,
+                            id,
                             manufactorId,
                             preservationMethod,
                             status,
@@ -636,8 +640,6 @@
                             uintParams
                         };
                         console.log(data);
-
-//                        const data = Object.assign({}, values, { uintParams: JSON.stringify(this.uintParams), });
                         (() => {
                             //  如果是新增
                             if (!this.commodityId) {
