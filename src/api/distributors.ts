@@ -35,18 +35,18 @@ export function requestChannelBusinessUpdate(data: any) {
 	});
 }
 
-//	删除仓库信息		⚠️原型无
-export function requestChannelBusinessDelete(id: string | number) {
+//	修改渠道商状态		✅
+export function requestChannelBusinessChangeStatus(id: string | number) {
 	return request({
-		url: `/api/channelBusiness/delete/${id}`,
+		url: `/api/channelBusiness/changeStatus/${id}`,
 		method: 'get',
 	});
 }
 
-//	修改渠道商状态
-export function requestChannelBusinessChangeStatus(id: string | number) {
+//	删除仓库信息		⚠️原型无
+export function requestChannelBusinessDelete(id: string | number) {
 	return request({
-		url: `/api/channelBusiness/changeStatus/${id}`,
+		url: `/api/channelBusiness/delete/${id}`,
 		method: 'get',
 	});
 }
