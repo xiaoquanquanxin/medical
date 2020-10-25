@@ -893,7 +893,7 @@ export const asyncRoutesList = [
 			hidden: true,
 		},
 		//	病人的id
-		path: '/userList/addIntervention',
+		path: '/userList/addIntervention/:patientId',
 		name: 'addIntervention',
 		component: () => import(/* webpackChunkName: "addIntervention" */ '@/views/userList/intervention/addIntervention.vue'),
 	},

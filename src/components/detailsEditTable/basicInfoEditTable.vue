@@ -12,17 +12,17 @@
                 bordered
         >
             <!--方案名称-->
-            <div slot="planName" slot-scope="scope,sItem,sIndex,extra">
+            <div slot="prescriptionName" slot-scope="scope,sItem,sIndex,extra">
                 <a-input placeholder="请输入方案名称"
-                         v-model="scope.planName"
+                         v-model="scope.prescriptionName"
                          class="basic-input-width"
                 />
             </div>
             <!--周期-->
-            <div slot="cycle" slot-scope="scope,sItem,sIndex,extra">
+            <div slot="priod" slot-scope="scope,sItem,sIndex,extra">
                 <a-input-number
                         placeholder="请输入周期"
-                        v-model="scope.cycle"
+                        v-model="scope.priod"
                         class="basic-input-width"
                 />
                 天
@@ -32,27 +32,23 @@
                 <a-select v-model="scope.prescriptionType"
                           class="basic-select-width"
                           placeholder="请选择处方类型">
-                    <a-select-option :value="1">
-                        院内配置
-                    </a-select-option>
-                    <a-select-option :value="2">
-                        门诊领药
-                    </a-select-option>
+                    <a-select-option :value="1">院内配置</a-select-option>
+                    <a-select-option :value="2">门诊领药</a-select-option>
                 </a-select>
             </div>
-            <!--咨询费/配置费-->
-            <div slot="cost" slot-scope="scope,sItem,sIndex,extra">
-                <a-select v-model="scope.cost"
-                          class="basic-select-width"
-                          placeholder="请选择咨询费">
-                    <a-select-option :value="1">
-                        恰
-                    </a-select-option>
-                    <a-select-option value="2">
-                        就
-                    </a-select-option>
-                </a-select>
-            </div>
+            <!--            &lt;!&ndash;咨询费/配置费&ndash;&gt;-->
+            <!--            <div slot="cost" slot-scope="scope,sItem,sIndex,extra">-->
+            <!--                <a-select v-model="scope.cost"-->
+            <!--                          class="basic-select-width"-->
+            <!--                          placeholder="请选择咨询费">-->
+            <!--                    <a-select-option :value="1">-->
+            <!--                        恰-->
+            <!--                    </a-select-option>-->
+            <!--                    <a-select-option value="2">-->
+            <!--                        就-->
+            <!--                    </a-select-option>-->
+            <!--                </a-select>-->
+            <!--            </div>-->
         </a-table>
     </div>
 </template>
@@ -61,24 +57,24 @@
     const basicInfoColumns = [
         {
             title: '方案名称',
-            scopedSlots: { customRender: 'planName' },
+            scopedSlots: { customRender: 'prescriptionName' },
             width: 100,
         },
         {
             title: '周期',
             width: 100,
-            scopedSlots: { customRender: 'cycle' },
+            scopedSlots: { customRender: 'priod' },
         },
         {
             title: '处方类型',
             width: 100,
             scopedSlots: { customRender: 'prescriptionType' },
         },
-        {
-            title: '咨询费/配置费',
-            width: 140,
-            scopedSlots: { customRender: 'cost' },
-        },
+//        {
+//            title: '咨询费/配置费',
+//            width: 140,
+//            scopedSlots: { customRender: 'cost' },
+//        },
     ];
 
     export default {

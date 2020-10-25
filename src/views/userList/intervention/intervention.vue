@@ -143,7 +143,7 @@
                 }, noPaginationData))
                     .then(v => {
                         const { data } = v;
-                        console.log(data);
+                        console.log(data.records);
                         this.data = data.records;
                     });
             },

@@ -18,3 +18,13 @@ export function requestPrescriptionPrescriptionTpl(data: any) {
 	});
 }
 
+
+//	保存处方
+export function requestPrescriptionSave(data: any) {
+	return request({
+		url: '/api/prescription/save',
+		method: 'post',
+		data,
+	});
+}
+

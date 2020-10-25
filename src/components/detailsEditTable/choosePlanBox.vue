@@ -103,7 +103,7 @@
                 //  console.log(this.planId);
                 //  console.log(value);
                 //  暂时保存
-                this.chooseInterventionData = value;
+                this.chooseInterventionData = value[0];
             },
 
             //  确认数据
@@ -113,7 +113,7 @@
                 return new Promise(((resolve, reject) => {
                     //  如果没有选择
                     if (!energyId || !planId) {
-                        this.$error({ title: '请选择方案' });
+                        this.$message.error('请选择方案');
                         reject();
                     } else {
                         //  储存
@@ -134,6 +134,8 @@
                         v.data.forEach((item) => {
                             item.key = item.id;
                             const prescriptionContentData = JSON.parse(item.prescriptionContent);
+                            item.commodityTableData = prescriptionContentData.commodityTableData;
+                            item.timeTableData = prescriptionContentData.timeTableData;
                             const _timeTableData = prescriptionContentData.timeTableData[0];
                             const list = _timeTableData.list;
                             let str = '';
