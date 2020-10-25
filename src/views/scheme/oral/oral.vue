@@ -102,6 +102,7 @@
     ];
 
     export default {
+        computed: {},
         data(){
             return {
                 data: [],
@@ -112,7 +113,9 @@
                 //  分页信息
                 pagination: paginationInit(),
                 //  搜索数据
-                searchData: {},
+                searchData: {
+                    prescriptionType: this.$route.name === 'oral' ? 1 : 2
+                },
                 //  处方类型下拉
                 prescriptionTypeList,
                 //  能量下拉
@@ -123,12 +126,16 @@
         },
         created(){
             this.searchFn();
+            console.log(this.aaa);
         },
         methods: {
             //  主要请求
             searchFn(){
 //                this.data.push({ key: 1 });
-                requestPrescriptionTemplatePage(paginationEncode(this.pagination))
+                requestPrescriptionTemplatePage(Object.assign({},
+                    this.searchData,
+                    paginationEncode(this.pagination))
+                )
                     .then(v => {
                         const { data } = v;
                         data.records.forEach((item, index) => {
