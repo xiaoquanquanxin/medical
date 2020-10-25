@@ -37,6 +37,31 @@
                 :scroll="scroll"
                 :pagination="false"
         >
+            <!--方案类型-->
+            <div slot="prescriptionType" slot-scope="scope,sItem,sIndex,extra">
+                <span v-if="sItem.prescriptionType == 1">院内配置</span>
+                <span v-if="sItem.prescriptionType == 2">门诊领药</span>
+            </div>
+            <!--审核状态(1.待审核，2已审核，3已驳回)-->
+            <div slot="auditStatus" slot-scope="scope,sItem,sIndex,extra">
+                <span v-if="sItem.auditStatus == 1">待审核</span>
+                <span v-if="sItem.auditStatus == 2">已审核</span>
+                <span v-if="sItem.auditStatus == 3">已驳回</span>
+            </div>
+            <!--支付状态((1.待签收，2，待配置，3.已配置，4，待领取，5，已领取))-->
+            <div slot="orderStatus" slot-scope="scope,sItem,sIndex,extra">
+                <span v-if="sItem.orderStatus == 1">待签收</span>
+                <span v-if="sItem.orderStatus == 2">待配置</span>
+                <span v-if="sItem.orderStatus == 3">已配置</span>
+                <span v-if="sItem.orderStatus == 4">待领取</span>
+                <span v-if="sItem.orderStatus == 5">已领取</span>
+            </div>
+            <!--支付状态(0待支付,1已支付)-->
+            <div slot="payStatus" slot-scope="scope,sItem,sIndex,extra">
+                <span v-if="sItem.payStatus == 0">待支付</span>
+                <span v-if="sItem.payStatus == 1">已支付</span>
+            </div>
+            <!--操作-->
             <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
                 <router-link :to="{name:'interventionDetail',params:{interventionDetailId:sIndex}}">详情</router-link>
             </div>
@@ -69,47 +94,43 @@
     const columns = [
         {
             title: '序号',
-            dataIndex: 'commodity',
+            dataIndex: 'index',
             width: 100,
         },
         {
-            title: '处方名称',
-            dataIndex: 'aaa',
+            title: '方案名称',
+            dataIndex: 'prescriptionName',
+            width: 200,
+        },
+        {
+            title: '方案周期（天）',
+            dataIndex: 'protein',
+            width: 150,
+        },
+        {
+            title: '生成时间',
+            dataIndex: 'orderTime',
+            width: 200,
+        },
+        {
+            title: '营养师',
+            dataIndex: 'doctorName',
             width: 100,
         },
         {
-            title: '处方医生',
-            dataIndex: '通用名',
-            width: 100,
-        },
-        {
-            title: '开具时间',
-            dataIndex: '商品分类',
-            width: 100,
-        },
-        {
-            title: '科室',
-            dataIndex: 'unit',
-            width: 100,
-        },
-        {
-            title: '姓名',
-            dataIndex: 'specifications',
-            width: 100,
-        },
-        {
-            title: '性别',
-            dataIndex: 'marketPrice',
-            width: 100,
-        },
-        {
-            title: '年龄',
-            dataIndex: 'manufacturer',
+            title: '方案类型',
+            scopedSlots: { customRender: 'prescriptionType' },
             width: 100,
         },
         {
             title: '状态',
-            dataIndex: 'update',
+            scopedSlots: { customRender: 'auditStatus' },
+            width: 100,
+        },
+        {
+            title: '支付状态',
+            dataIndex: 'payStatus',
+            scopedSlots: { customRender: 'payStatus' },
             width: 100,
         },
         {
@@ -122,6 +143,9 @@
     export default {
         data(){
             return {
+                //  病人的id
+                patientId: this.$route.params.patientId,
+
                 data: [],
                 columns,
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
@@ -138,12 +162,16 @@
         methods: {
             //  主要请求
             searchFn(){
-                requestPrescriptionPage(Object.assign({}, {
-                    param: this.searchData,
+                requestPrescriptionPage(Object.assign({
+                    param: Object.assign({ patientId: this.patientId }, this.searchData)
                 }, noPaginationData))
                     .then(v => {
                         const { data } = v;
-                        console.log(data.records);
+                        console.log(JSON.parse(JSON.stringify(data.records[0])));
+                        data.records.forEach((item, index) => {
+                            item.key = index;
+                            item.index = index + 1;
+                        });
                         this.data = data.records;
                     });
             },
