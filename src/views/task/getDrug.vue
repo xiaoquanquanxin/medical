@@ -164,11 +164,6 @@
             width: 100,
         },
         {
-            title: '使用时间',
-            dataIndex: '商品分类',
-            width: 100,
-        },
-        {
             title: '科室',
             dataIndex: 'unit',
             width: 100,
