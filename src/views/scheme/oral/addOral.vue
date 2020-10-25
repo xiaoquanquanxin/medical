@@ -213,7 +213,11 @@
     import SelectCommodity from '@/components/prescriptionTemplate/selectCommodity.vue';
     import GoBackButton from '@/components/goBackButton.vue';
     import TemplateRemarkInput from '@/components/prescriptionTemplate/templateRemarkInput';
-    import { requestPrescriptionTemplateInsert, requestPrescriptionTemplateUpdate } from '../../../api/scheme/scheme';
+    import {
+        requestPrescriptionTemplateGet,
+        requestPrescriptionTemplateInsert,
+        requestPrescriptionTemplateUpdate
+    } from '../../../api/scheme/scheme';
     import { prescriptionTypeList, energyList, usageMethodList } from '../../../utils/constants';
     import { requestHospitalGetList } from '../../../api/hospital';
     import { requestGoodsListByHospital } from '../../../api/commodity/commodityList';
@@ -371,17 +375,11 @@
                     return;
                 }
                 //  如果是编辑
-//                requestChannelBusinessPage(paginationEncode(this.pagination))
-//                    .then(v => {
-//                        const { data } = v;
-//                        console.log(data);
-//                data.records.forEach((item, index) => {
-//                    item.key = index;
-//                    item.createTime = item.createTime.substr(0, 10);
-//                });
-//                        this.data = data.records;
-//                        this.pagination = paginationDecode(this.pagination, data);
-//                    });
+                requestPrescriptionTemplateGet(this.oralId)
+                    .then(v => {
+                        const { data } = v;
+                        console.log(data);
+                    });
             },
             //  时间选择器的方法
             moment,
