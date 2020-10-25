@@ -96,12 +96,12 @@
         },
         {
             title: '年龄',
-            dataIndex: 'manufacturer',
+            dataIndex: 'birth',
             width: 100,
         },
         {
             title: '状态',
-            dataIndex: 'update',
+            dataIndex: 'orderStatus',
             width: 100,
         },
         {
