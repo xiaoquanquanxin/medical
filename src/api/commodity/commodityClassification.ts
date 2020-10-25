@@ -44,6 +44,14 @@ export function requestCategoryDelete(id: string | number) {
 }
 
 
+//	获取商品分类列表		✅
+export function requestCategoryList() {
+	return request({
+		url: `/api/category/list`,
+		method: 'get',
+	});
+}
+
 
 
 

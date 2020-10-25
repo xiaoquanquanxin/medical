@@ -25,6 +25,7 @@
                     >
                         <a-select-option :value="item.id"
                                          v-for="item in prescriptionTypeList"
+                                         :key="item.id"
                         >{{item.name}}
                         </a-select-option>
                     </a-select>

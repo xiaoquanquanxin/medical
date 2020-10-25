@@ -40,11 +40,10 @@
                           placeholder="请选择商品分类"
                           v-decorator="goodsCategoryIdDecorator"
                 >
-                    <a-select-option value="1">
-                        xxx
-                    </a-select-option>
-                    <a-select-option value="2">
-                        xxx
+                    <a-select-option :value="item.id"
+                                     :key="item.id"
+                                     v-for="item in goodsCategoryList"
+                    >{{item.categoryName}}
                     </a-select-option>
                 </a-select>
             </a-form-item>
@@ -53,11 +52,10 @@
                           placeholder="请选择商品品牌"
                           v-decorator="goodsBrandIdDecorator"
                 >
-                    <a-select-option value="1">
-                        xxx
-                    </a-select-option>
-                    <a-select-option value="2">
-                        xxx
+                    <a-select-option :value="item.id"
+                                     :key="item.id"
+                                     v-for="item in goodsBrandList"
+                    >{{item.name}}
                     </a-select-option>
                 </a-select>
             </a-form-item>
@@ -66,18 +64,24 @@
                           placeholder="请选择供应商"
                           v-decorator="supplierIdDecorator"
                 >
-                    <a-select-option value="1">
-                        xxx
-                    </a-select-option>
-                    <a-select-option value="2">
-                        xxx
+                    <a-select-option :value="item.id"
+                                     :key="item.id"
+                                     v-for="item in supplierList"
+                    >{{item.name}}
                     </a-select-option>
                 </a-select>
             </a-form-item>
             <a-form-item label="厂家">
-                <a-input class="add-form-input"
-                         v-decorator="manufactorIdDecorator"
-                         placeholder="请输入厂家"/>
+                <a-select class="add-form-input"
+                          placeholder="请选择厂家"
+                          v-decorator="manufactorIdDecorator"
+                >
+                    <a-select-option :value="item.id"
+                                     :key="item.id"
+                                     v-for="item in manufactorList"
+                    >{{item.name}}
+                    </a-select-option>
+                </a-select>
             </a-form-item>
             <a-form-item label="通用名">
                 <a-input class="add-form-input"
@@ -223,6 +227,10 @@
     import GoBackButton from '@/components/goBackButton.vue';
     import { requestGoodsGet, requestGoodsInsert, requestGoodsUpdate } from '../../api/commodity/commodityList';
     import { uploadHandleChange, beforeUploadFn, beforeUploadData } from '../../utils/upload';
+    import { requestCategoryList } from '../../api/commodity/commodityClassification';
+    import { requestBrandList } from '../../api/commodity/brand';
+    import { requestSupplierList } from '../../api/supplier';
+    import { requestManufactorList } from '../../api/commodity/manufacturer';
 
     const uintParams = [
         {
@@ -281,6 +289,14 @@
         },
         data(){
             return {
+                //  商品分类list
+                goodsCategoryList: [],
+                //  商品品牌list
+                goodsBrandList: [],
+                //  供应商list
+                supplierList: [],
+                //  厂家list
+                manufactorList: [],
                 //	上传文件的数据，这样的对象只需要一个
                 beforeUploadData,
                 //  商品id
@@ -347,7 +363,7 @@
                     initialValue: '11',
                     rules: [{
                         required: true,
-                        message: '请输入厂家'
+                        message: '请选择厂家'
                     },]
                 }],
                 //  通用名
@@ -485,6 +501,30 @@
             beforeUploadFn,
             //  主要请求
             searchFn(){
+                requestCategoryList()
+                    .then(v => {
+                        //  商品分类list
+                        console.log(v.data);
+                        this.goodsCategoryList = v.data;
+                    });
+                requestBrandList()
+                    .then(v => {
+                        //  商品品牌list
+                        console.log(v.data);
+                        this.goodsBrandList = v.data;
+                    });
+                requestSupplierList()
+                    .then(v => {
+                        //  供应商list
+                        console.log(v.data);
+                        this.supplierList = v.data;
+                    });
+                requestManufactorList()
+                    .then(v => {
+                        //  厂家list
+                        console.log(v.data);
+                        this.manufactorList = v.data;
+                    });
                 //  如果是新增
                 if (!this.commodityId) {
                     return;
@@ -553,13 +593,51 @@
                 this.basicUnitCheck();
                 this.$nextTick(() => {
                     this.form.validateFields((err, values) => {
-                        console.log(values.goodsKeyWord);
+                        console.log(err);
                         if (err) {
                             return;
                         }
                         console.log(values);
                         console.log(this.uintParams);
-                        const data = Object.assign({}, values, this.uintParams);
+                        const uintParams = JSON.stringify(this.uintParams);
+                        const goodsDetails = this.goodsDetails;
+
+                        const {
+                            goodsBarCode,
+                            goodsBrandId,
+                            goodsCategoryId,
+                            goodsImg,
+                            goodsKeyWord,
+                            goodsName,
+                            goodsProductCode,
+                            goodsSpecifications,
+                            goodsTradeName,
+                            id,
+                            manufactorId,
+                            preservationMethod,
+                            status,
+                            supplierId,
+                        } = values;
+                        const data = {
+                            goodsBarCode,
+                            goodsBrandId,
+                            goodsCategoryId,
+                            goodsDetails,
+                            goodsImg,
+                            goodsKeyWord,
+                            goodsName,
+                            goodsProductCode,
+                            goodsSpecifications,
+                            goodsTradeName,
+                            manufactorId,
+                            preservationMethod,
+                            status,
+                            supplierId,
+                            uintParams
+                        };
+                        console.log(data);
+
+//                        const data = Object.assign({}, values, { uintParams: JSON.stringify(this.uintParams), });
                         (() => {
                             //  如果是新增
                             if (!this.commodityId) {

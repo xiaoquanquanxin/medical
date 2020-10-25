@@ -10,14 +10,16 @@ import UserList from '@/views/userList/userList.vue';
  * chName				:	中文名
  * selectRouteKey		:	被选中的菜单的key，不区分一级二级，只要是蓝色的就是
  * openRouteKey			:	展开的菜单的key
- * hasTransverseSubPaths:	有页面内的横向子路由
+ * hasTransverseSubPaths1:	有页面内的横向子路由，模板
+ * hasTransverseSubPaths2:	有页面内的横向子路由，用户list
  * isMenuItem			:	虽然有子项，但作为一个项存在，而不是一个菜单
  * infoForHistory		:	用于历史记录的激活，[chName,name]
  * hiddenHistory		:	隐藏历史记录，仅保留返回按钮
  * hidden				:	隐藏
  *
  * 🍌🍌children中的:
- * transverseSubPaths	:	横向子路由的name，不在左侧菜单展示。e.g.处方模板列表、用户列表【很多的那个】
+ * transverseSubPaths1	:	横向子路由的name，不在左侧菜单展示。e.g.处方模板列表
+ * transverseSubPaths2	:	横向子路由的name，不在左侧菜单展示。e.g.用户列表【很多的那个】
  * routerParamsKey		:	路由参数的名称，用于骚操作，病人列表-横向路由区分用
  * **/
 export const asyncRoutesList = [
@@ -293,7 +295,7 @@ export const asyncRoutesList = [
 			chName: '处方模板管理',
 			selectRouteKey: 'scheme',
 			//	有页面内的横向子路由
-			hasTransverseSubPaths: true,
+			hasTransverseSubPaths1: true,
 			//	虽然有子项，但作为一个项存在，而不是一个菜单
 			isMenuItem: true,
 		},
@@ -306,7 +308,7 @@ export const asyncRoutesList = [
 					chName: '口服肠内营养补充',
 					selectRouteKey: 'scheme',
 					//	是scheme路由的某一项子路由
-					transverseSubPaths: 'oral',
+					transverseSubPaths1: 'oral',
 					infoForHistory: ['处方模板管理', 'scheme'],
 					hidden: true,
 				},
@@ -319,7 +321,7 @@ export const asyncRoutesList = [
 					chName: '肠内营养支持',
 					selectRouteKey: 'scheme',
 					//	是scheme路由的某一项子路由
-					transverseSubPaths: 'intestinal',
+					transverseSubPaths1: 'intestinal',
 					infoForHistory: ['处方模板管理', 'scheme'],
 					hidden: true,
 				},
@@ -333,7 +335,7 @@ export const asyncRoutesList = [
 					chName: '膳食营养计划',
 					selectRouteKey: 'scheme',
 					//	是scheme路由的某一项子路由
-					transverseSubPaths: 'dietary',
+					transverseSubPaths1: 'dietary',
 					infoForHistory: ['处方模板管理', 'scheme'],
 					hidden: true,
 				},
@@ -707,7 +709,7 @@ export const asyncRoutesList = [
 			chName: '用户列表',
 			selectRouteKey: 'userList',
 			//	有页面内的横向子路由
-			hasTransverseSubPaths: true,
+			hasTransverseSubPaths2: true,
 			//	虽然有子项，但作为一个项存在，而不是一个菜单
 			isMenuItem: true,
 		},
@@ -719,7 +721,7 @@ export const asyncRoutesList = [
 				meta: {
 					chName: '病人信息',
 					selectRouteKey: 'userList',
-					transverseSubPaths: 'patientInfo',
+					transverseSubPaths2: 'patientInfo',
 					routerParamsKey: 'patientId',
 					infoForHistory: ['用户列表', 'userList'],
 				},
@@ -731,7 +733,7 @@ export const asyncRoutesList = [
 				meta: {
 					chName: '筛查',
 					selectRouteKey: 'userList',
-					transverseSubPaths: 'screening',
+					transverseSubPaths2: 'screening',
 					routerParamsKey: 'patientId',
 					infoForHistory: ['用户列表', 'userList'],
 				},
@@ -743,7 +745,7 @@ export const asyncRoutesList = [
 				meta: {
 					chName: '营养评估',
 					selectRouteKey: 'userList',
-					transverseSubPaths: 'assessment',
+					transverseSubPaths2: 'assessment',
 					routerParamsKey: 'patientId',
 					infoForHistory: ['用户列表', 'userList'],
 				},
@@ -755,7 +757,7 @@ export const asyncRoutesList = [
 				meta: {
 					chName: '营养干预',
 					selectRouteKey: 'userList',
-					transverseSubPaths: 'intervention',
+					transverseSubPaths2: 'intervention',
 					routerParamsKey: 'patientId',
 					infoForHistory: ['用户列表', 'userList'],
 				},
@@ -767,7 +769,7 @@ export const asyncRoutesList = [
 				meta: {
 					chName: '病程记录',
 					selectRouteKey: 'userList',
-					transverseSubPaths: 'progressNote',
+					transverseSubPaths2: 'progressNote',
 					routerParamsKey: 'patientId',
 					infoForHistory: ['用户列表', 'userList'],
 				},
@@ -779,7 +781,7 @@ export const asyncRoutesList = [
 				meta: {
 					chName: '患者反馈',
 					selectRouteKey: 'userList',
-					transverseSubPaths: 'patientReply',
+					transverseSubPaths2: 'patientReply',
 					routerParamsKey: 'patientId',
 					infoForHistory: ['用户列表', 'userList'],
 				},
@@ -791,7 +793,7 @@ export const asyncRoutesList = [
 				meta: {
 					chName: '活动小结',
 					selectRouteKey: 'userList',
-					transverseSubPaths: 'activityBrief',
+					transverseSubPaths2: 'activityBrief',
 					routerParamsKey: 'patientId',
 					infoForHistory: ['用户列表', 'userList'],
 				},
