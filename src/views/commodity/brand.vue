@@ -81,17 +81,17 @@
     const columns = [
         {
             title: '品牌名称',
-            dataIndex: 'commodity',
+            dataIndex: 'brandName',
             width: 150,
         },
         {
             title: '品牌编码',
-            dataIndex: 'city',
+            dataIndex: 'brandNumber',
             width: 150,
         },
         {
             title: '生产厂家',
-            dataIndex: 'manufacturer',
+            dataIndex: 'brandManufactorId',
             width: 150,
         },
         {
