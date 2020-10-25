@@ -31,7 +31,7 @@
                 <a-form-item>
                     <a-input
                             placeholder="请输入用户名"
-                            v-decorator="userNameDecorator"
+                            v-decorator="usernameDecorator"
                     >
                         <a-icon slot="prefix" type="user" class="icon-color"/>
                     </a-input>
@@ -52,7 +52,7 @@
                         <a-form-item>
                             <a-input
                                     placeholder="请输入用户名"
-                                    v-decorator="userNameDecorator"
+                                    v-decorator="usernameDecorator"
                             >
                                 <a-icon slot="prefix" type="user" class="icon-color"/>
                             </a-input>
@@ -119,7 +119,8 @@
                 },
 
                 //  用户名
-                userNameDecorator: ['userName', {
+                usernameDecorator: ['username', {
+                    initialValue: 'admin',
                     rules: [{
                         required: true,
                         message: '请输入用户名'
@@ -127,6 +128,7 @@
                 }],
                 //  密码
                 passwordDecorator: ['password', {
+                    initialValue: '123456',
                     rules: [{
                         required: true,
                         message: '请输入密码'
@@ -157,7 +159,7 @@
                 this.basicForm = e > 0;
                 this.loginWrapStyle.height = `${(e > 0) ? 380 : 420}px`;
                 this.loginWrapStyle.top = `${(e > 0) ? 0 : 40}px`;
-                this.form.resetFields(['userName', 'password', 'phoneNumber', 'verification']);
+                this.form.resetFields(['username', 'password', 'phoneNumber', 'verification']);
             },
             //  获取短信验证码
             getMessage(){
@@ -172,11 +174,13 @@
             handleSubmit(){
                 this.form.validateFields((err, values) => {
                     if (!err) {
-                        console.log('发请求吧');
-                        this.login()
+                        this.login(values)
                             .then(v => {
                                 console.log('登录成功');
                                 this.$router.push('/');
+                            })
+                            .catch(err => {
+                                console.log(err);
                             });
                     }
                 });
