@@ -148,7 +148,7 @@ export const routeMap = {
 
 	//	🍎🍎🍎🍎🍎营养方案系统
 	// 	用户列表
-	'userList': false,
+	'userList': true,
 	//	病人信息
 	'patientInfo': true,
 	//	筛查
