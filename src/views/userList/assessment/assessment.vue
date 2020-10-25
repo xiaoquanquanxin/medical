@@ -103,6 +103,9 @@
                 }, noPaginationData))
                     .then(v => {
                         const { data } = v;
+                        data.records.forEach((item, index) => {
+                            item.key = index;
+                        });
                         console.log(data.records);
                         this.data = data.records;
                     });

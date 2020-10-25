@@ -78,25 +78,26 @@
     import { mapGetters, mapActions } from 'vuex';
     import { requestManufactorPage } from '../../api/commodity/manufacturer';
 
+    
     const columns = [
         {
             title: '生产厂家名称',
-            dataIndex: 'commodity',
+            dataIndex: 'manufactorName',
             width: 150,
         },
         {
             title: '生产厂家编码',
-            dataIndex: 'city',
+            dataIndex: 'manufactorCode',
             width: 150,
         },
         {
             title: '地址',
-            dataIndex: 'manufacturer',
+            dataIndex: 'address',
             width: 150,
         },
         {
             title: '联系方式',
-            dataIndex: 'manufac1turer',
+            dataIndex: 'phone',
             width: 150,
         },
         {
@@ -140,7 +141,6 @@
                         const { data } = v;
                         data.records.forEach((item, index) => {
                             item.key = index;
-                            item.createTime = item.createTime.substr(0, 10);
                         });
                         this.data = data.records;
                         this.pagination = paginationDecode(this.pagination, data);
@@ -203,6 +203,7 @@
                 const promise = this.$refs[refAddManufacturerBox].handleSubmit();
                 promise.then(v => {
                     this.hideModal(DIALOG_TYPE.ADD_MANUFACTURER);
+                    this.searchFn();
                 }).catch(error => {
                     console.log('有错');
                 }).then(v => {
