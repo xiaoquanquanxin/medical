@@ -168,7 +168,7 @@
             editBrand(sItem){
                 this.setDialogTitle(DIALOG_TYPE.ADD_BRAND, '编辑品牌');
                 this.showModal(DIALOG_TYPE.ADD_BRAND);
-                this.setBrandId(123344);
+                this.setBrandId(sItem.id);
             },
 //            //  删除品牌
 //            deleteBrand(sItem){

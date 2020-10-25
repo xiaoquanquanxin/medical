@@ -78,7 +78,6 @@
     import { mapGetters, mapActions } from 'vuex';
     import { requestManufactorPage } from '../../api/commodity/manufacturer';
 
-    
     const columns = [
         {
             title: '生产厂家名称',
@@ -143,6 +142,7 @@
                             item.key = index;
                         });
                         this.data = data.records;
+                        console.log(JSON.parse(JSON.stringify(this.data[0])));
                         this.pagination = paginationDecode(this.pagination, data);
                     });
             },
@@ -174,7 +174,7 @@
             editManufacturer(sItem){
                 this.setDialogTitle(DIALOG_TYPE.ADD_MANUFACTURER, '编辑生产厂家');
                 this.showModal(DIALOG_TYPE.ADD_MANUFACTURER);
-                this.setManufacturerId(123344);
+                this.setManufacturerId(sItem.id);
             },
 //            //  删除生产厂家
 //            deleteManufacturer(sItem){
@@ -203,6 +203,7 @@
                 const promise = this.$refs[refAddManufacturerBox].handleSubmit();
                 promise.then(v => {
                     this.hideModal(DIALOG_TYPE.ADD_MANUFACTURER);
+                    this.$message.success('操作成功');
                     this.searchFn();
                 }).catch(error => {
                     console.log('有错');

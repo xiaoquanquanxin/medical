@@ -7,8 +7,9 @@
     >
         <a-form-item label="生产厂家名称">
             <a-input class="add-form-input"
-                    v-decorator="manufactorNameDecorator"
-                    placeholder="请输入生产厂家名称"
+                     v-decorator="manufactorNameDecorator"
+                     placeholder="请输入生产厂家名称"
+                     @pressEnter="preventDefault"
             />
         </a-form-item>
         <a-form-item label="生产厂家编码">
@@ -28,6 +29,7 @@
         requestManufactorInsert,
         requestManufactorUpdate
     } from '../../api/commodity/manufacturer';
+    import { preventDefault } from '@/utils/common';
 
     export default {
         beforeCreate(){
@@ -55,6 +57,7 @@
         },
         created(){
             console.log('是编辑？', !!this.manufacturerId);
+            this.searchFn();
         },
         methods: {
             //  主要请求
@@ -105,6 +108,7 @@
                     });
                 });
             },
+            preventDefault,
         }
     };
 </script>

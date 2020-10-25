@@ -9,6 +9,7 @@
             <a-input class="add-form-input"
                      v-decorator="categoryNameDecorator"
                      placeholder="请输入分类名称"
+                     @pressEnter="preventDefault"
             />
         </a-form-item>
         <a-form-item label="分类编码">
@@ -28,6 +29,7 @@
         requestCategoryInsert,
         requestCategoryUpdate
     } from '../../api/commodity/commodityClassification';
+    import { preventDefault } from '@/utils/common';
 
     export default {
         beforeCreate(){
@@ -76,7 +78,7 @@
                     });
             },
             //    表单提交
-            handleSubmit(){
+            handleSubmit(e){
                 return new Promise((resolve, reject) => {
                     this.form.validateFields((err, values) => {
                         if (err) {
@@ -97,6 +99,8 @@
                         })()
                             .then(v => {
                                 console.log(v);
+                                this.$message.success('操作成功');
+                                this.searchFn();
                                 resolve();
                             })
                             .catch(err => {
@@ -106,6 +110,7 @@
                     });
                 });
             },
+            preventDefault,
         }
     };
 </script>
