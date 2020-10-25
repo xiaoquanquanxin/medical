@@ -1,20 +1,22 @@
 <template>
     <div class="custom-flex">
         <div class="custom-flex-left">
-            <a-select v-model="energyId"
-                      class="basic-select-width"
-                      placeholder="请选择方案"
-                      @change="choosePlanChange"
+            <a-select class="basic-select-width"
+                      v-model="energyId"
+                      placeholder="请选择能量"
+                      @change="energyChange"
             >
-                <a-select-option :value="1">1000</a-select-option>
-                <a-select-option :value="2">2000</a-select-option>
-                <a-select-option :value="3">3000</a-select-option>
+                <a-select-option :value="item.id"
+                                 :key="item.id"
+                                 v-for="item in energyList"
+                >{{item.name}}
+                </a-select-option>
             </a-select>
         </div>
         <a-table class="custom-flex-right"
                  :row-selection="rowSelection"
                  :columns="columns"
-                 :data-source="planMap[energyId]"
+                 :data-source="data"
                  :pagination="false"
                  bordered
         >
@@ -22,10 +24,14 @@
     </div>
 </template>
 <script>
+    import { requestPrescriptionPrescriptionTpl } from '../../api/userList/intervention';
+    import { prescriptionTypeList, energyList, usageMethodList } from '../../utils/constants';
+    import { mapGetters, mapActions } from 'vuex';
+
     const columns = [
         {
             title: '方案名',
-            dataIndex: 'planName',
+            dataIndex: 'prescriptionName',
         },
         {
             title: '方案名内容',
@@ -34,19 +40,18 @@
     ];
     //  选择计划
     export default {
-        props: ['choosePlanData', 'planMap'],
+        props: ['choosePlanData', 'planMap', 'dataTitle'],
         data(){
             let { energyId, planId } = this.choosePlanData;
-            //  console.log(energyId, planId);
+            console.log(JSON.parse(JSON.stringify(this.dataTitle)));
+            console.log(energyId, planId);
             //  如果没有planId
             if (!planId) {
-                //  如果有数据list
-                if (this.planMap[energyId]) {
-                    //  默认选择第一个
-                    planId = this.planMap[energyId][0].key;
-                }
+                this.energyId = energyList[0];
             }
             return {
+                //  能量下拉
+                energyList,
                 //  能量id
                 energyId: energyId || undefined,
                 //  单选的id
@@ -58,12 +63,24 @@
                     onChange: this.onSelectChange,
                 },
                 columns,
+                data: []
             };
         },
         created(){
             console.log('打开弹框时候默认选择的单选', this.rowSelection.selectedRowKeys);
+            this.searchFn();
         },
         methods: {
+            ...mapActions('intervention', [
+                //  设置被选中的营养干预方案
+                'setChooseInterventionData',
+            ]),
+            searchFn(){
+                if (!this.energyId) {
+                    return;
+                }
+                this.energyChange(this.energyId);
+            },
             //  下拉
             choosePlanChange(value){
                 const planList = this.planMap[value];
@@ -81,6 +98,7 @@
                 //  console.log(selectedRowKeys);
                 this.rowSelection.selectedRowKeys = selectedRowKeys;
                 this.planId = selectedRowKeys[0];
+
             },
 
             //  确认数据
@@ -96,6 +114,28 @@
                         resolve({ energyId, planId });
                     }
                 }));
+            },
+            //  切换能量
+            energyChange(energy){
+                console.log(this.energyId);
+                const { prescriptionType } = this.dataTitle;
+                requestPrescriptionPrescriptionTpl({ energy, prescriptionType })
+                    .then(v => {
+                        console.log(JSON.parse(JSON.stringify(v.data)));
+                        console.log('打开弹框时候默认选择的单选', this.rowSelection.selectedRowKeys);
+                        v.data.forEach((item) => {
+                            item.key = item.id;
+                            const prescriptionContentData = JSON.parse(item.prescriptionContent);
+                            const _timeTableData = prescriptionContentData.timeTableData[0];
+                            const list = _timeTableData.list;
+                            let str = '';
+                            list.forEach(_item => {
+                                str += `${_item.goodsName}${_item.uname};`;
+                            });
+                            item.planContent = `${str}温水：${_timeTableData.warmWater}ml`;
+                        });
+                        this.data = v.data;
+                    });
             }
         }
     };

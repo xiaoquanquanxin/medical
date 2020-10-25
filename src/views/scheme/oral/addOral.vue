@@ -13,19 +13,19 @@
                               @change="selectHospitalChange"
                     >
                         <a-select-option :value="item.id"
-                                         :key="item.id"
-                                         v-for="item in hospitalList"
+                                         :key="index"
+                                         v-for="(item,index) in hospitalList"
                         >{{item.hospitalName}}
                         </a-select-option>
                     </a-select>
                     <a-select class="add-form-input"
                               v-model="tableForm.prescriptionType"
                               placeholder="请选择处方类型"
-                              @change="selectPrescriptionChange"
+                              @change="$forceUpdate()"
                     >
                         <a-select-option :value="item.id"
-                                         v-for="item in prescriptionTypeList"
-                                         :key="item.id"
+                                         :key="index"
+                                         v-for="(item,index) in prescriptionTypeList"
                         >{{item.name}}
                         </a-select-option>
                     </a-select>
@@ -44,10 +44,11 @@
                             class="basic-select-width"
                             v-model="tableForm.energy"
                             placeholder="请选择能量"
+                            @change="$forceUpdate()"
                     >
                         <a-select-option :value="item.id"
-                                         :key="item.id"
-                                         v-for="item in energyList"
+                                         :key="index"
+                                         v-for="(item,index) in energyList"
                         >{{item.name}}
                         </a-select-option>
                     </a-select>
@@ -56,10 +57,11 @@
                         class="lengthen-select-width"
                         v-model="tableForm.usageMethod"
                         placeholder="请选择食用方法"
+                        @change="$forceUpdate()"
                 >
                     <a-select-option :value="item.id"
-                                     :key="item.id"
-                                     v-for="item in usageMethodList"
+                                     :key="index"
+                                     v-for="(item,index) in usageMethodList"
                     >{{item.name}}
                     </a-select-option>
                 </a-select>
@@ -390,7 +392,7 @@
                                 const tableForm = this.tableForm;
                                 tableForm.prescriptionName = data.prescriptionName;
                                 tableForm.energy = data.energy;
-                                tableForm.usageMethod = data.usageMethod;
+                                tableForm.usageMethod = Number(data.usageMethod);
                                 tableForm.prescriptionType = data.prescriptionType;
                                 tableForm.hospitalId = data.hospitalId;
                                 console.log(data);
@@ -463,6 +465,8 @@
             },
             //  切换处方类型
             selectPrescriptionChange(value){
+                console.log(value);
+                console.log(this.tableForm.prescriptionType);
                 //  如果去新增膳食营养计划
                 if (value === 3) {
                     this.$router.push({ name: 'addDietary' });
@@ -471,7 +475,6 @@
                 //  计算处方类型名称
                 this.prescriptionTypeList.forEach(item => {
                     if (item.id === value) {
-                        console.log(item);
                         this.tableForm.prescriptionName = item.name;
                     }
                 });
@@ -635,9 +638,8 @@
                     if (!this.oralId) {
                         return requestPrescriptionTemplateInsert(this.tableForm);
                     }
-                    data.id = this.oralId;
                     //  如果是编辑
-                    return requestPrescriptionTemplateUpdate(this.tableForm);
+                    return requestPrescriptionTemplateUpdate(Object.assign({}, this.tableForm, { id: this.oralId }));
                 })()
                     .then(v => {
                         console.log(v);

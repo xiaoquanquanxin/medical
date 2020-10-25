@@ -39,5 +39,7 @@ const getters = {
 	detailsTable: (state: any) => state.app.detailsTable,
 
 	addOral: (state: any) => state.app.addOral,
+
+	intervention: (state: any) => state.app.intervention,
 };
 export default getters;
