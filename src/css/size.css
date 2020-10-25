@@ -54,6 +54,6 @@
 }
 
 /*在新增、编辑页面的form表单中的普通输入框*/
-.form .add-form-input {
+.form .add-form-input, .add-form-input {
     width: 200px;
 }

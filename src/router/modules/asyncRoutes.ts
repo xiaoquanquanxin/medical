@@ -325,7 +325,8 @@ export const asyncRoutesList = [
 				},
 				name: 'intestinal',
 				path: '/scheme/intestinal',
-				component: () => import(/* webpackChunkName: "intestinal" */ '@/views/scheme/intestinal/intestinal.vue'),
+				// component: () => import(/* webpackChunkName: "intestinal" */ '@/views/scheme/intestinal/intestinal.vue'),
+				component: () => import(/* webpackChunkName: "oral" */ '@/views/scheme/oral/oral.vue'),
 			},
 			{
 				meta: {

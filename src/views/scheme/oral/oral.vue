@@ -4,27 +4,25 @@
         <div class="a-input-group">
             <a-input class="lengthen-input-width" v-model="searchData.schemeName" placeholder="请输入方案名称"/>
             <a-select class="basic-select-width" v-model="searchData.energy" placeholder="请选择能量">
-                <a-select-option value="">
-                    分类
-                </a-select-option>
-                <a-select-option value="Option2">
-                    Option2
+                <a-select-option :value="item.id"
+                                 :key="item.id"
+                                 v-for="item in energyList"
+                >{{item.name}}
                 </a-select-option>
             </a-select>
-            <a-select class="lengthen-select-width" v-model="searchData.method" placeholder="请选择使用方法">
-                <a-select-option value="">
-                    分类
-                </a-select-option>
-                <a-select-option value="Option2">
-                    Option2
+            <a-select class="lengthen-select-width" v-model="searchData.usageMethod" placeholder="请选择食用方法">
+                <a-select-option :value="item.id"
+                                 :key="item.id"
+                                 v-for="item in usageMethodList"
+                >{{item.name}}
                 </a-select-option>
             </a-select>
             <a-select class="basic-select-width" v-model="searchData.department" placeholder="请选择科室">
                 <a-select-option value="">
-                    分类
+                    科室1
                 </a-select-option>
                 <a-select-option value="Option2">
-                    Option2
+                    科室2
                 </a-select-option>
             </a-select>
             <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
@@ -72,22 +70,23 @@
 <script>
     import { paginationInit, paginationDecode, paginationEncode } from '@/utils/pagination.ts';
     import { threeRowSearch } from '@/utils/tableScroll';
-    import { requestPrescriptionTemplatePage } from '../../../api/scheme/scheme';
+    import { requestPrescriptionTemplateDelete, requestPrescriptionTemplatePage } from '../../../api/scheme/scheme';
+    import { prescriptionTypeList, energyList, usageMethodList } from '../../../utils/constants';
 
     const columns = [
         {
             title: '方案名称',
-            dataIndex: 'hospital',
+            dataIndex: 'prescriptionName',
             width: 100,
         },
         {
             title: '能量',
-            dataIndex: 'city',
+            dataIndex: 'energy',
             width: 100,
         },
         {
             title: '使用方法',
-            dataIndex: 'status',
+            dataIndex: 'usageMethod',
             width: 100,
         },
         {
@@ -114,6 +113,12 @@
                 pagination: paginationInit(),
                 //  搜索数据
                 searchData: {},
+                //  处方类型下拉
+                prescriptionTypeList,
+                //  能量下拉
+                energyList,
+                //  食用方法下拉
+                usageMethodList,
             };
         },
         created(){
@@ -122,17 +127,16 @@
         methods: {
             //  主要请求
             searchFn(){
-                this.data.push({ key: 1 });
-                return;
+//                this.data.push({ key: 1 });
                 requestPrescriptionTemplatePage(paginationEncode(this.pagination))
                     .then(v => {
                         const { data } = v;
                         data.records.forEach((item, index) => {
                             item.key = index;
-                            item.createTime = item.createTime.substr(0, 10);
                         });
                         this.data = data.records;
                         this.pagination = paginationDecode(this.pagination, data);
+                        console.log(JSON.parse(JSON.stringify(this.data[0])));
                     });
             },
             //  展示的每一页数据变换
@@ -153,11 +157,15 @@
                     okText: '确认',
                     okType: 'danger',
                     cancelText: '取消',
-                    onOk(){
-                        return new Promise((resolve, reject) => {
-                            console.log('发请求');
-                            setTimeout(Math.random() > 0.5 ? resolve : reject, 1111);
-                        }).catch(() => console.log('Oops errors!'));
+                    onOk: () => {
+                        return requestPrescriptionTemplateDelete(sItem.id)
+                            .then(v => {
+                                this.$message.success('操作成功');
+                                this.searchFn();
+                            })
+                            .catch(v => {
+                                this.$message.error('操作失败');
+                            });
                     },
                     onCancel(){
                         console.log('取消');

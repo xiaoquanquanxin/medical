@@ -61,7 +61,9 @@
         computed: {
             //  选择商品弹框列表源数据
             originCommodityList(){
-                return JSON.parse(JSON.stringify(this.$store.state.prescriptionTemplate.originCommodityList));
+                //  💡修改，这地方不存了
+                return this.$store.state.prescriptionTemplate.originCommodityList;
+                //  return JSON.parse(JSON.stringify(this.$store.state.prescriptionTemplate.originCommodityList));
             },
         },
         data(){
@@ -77,15 +79,11 @@
         created(){
             //  被选中的列 === 数据 被选中的 id
             this.selectedRowKeys = this.originCommodityList.filter(item => item.isCheckboxChecked).map(item => item.key);
-            console.log(this.selectedRowKeys);
-//            this.searchFn();
+            console.log('初始化打开选择商品');
+            console.log('被选中的数据', this.selectedRowKeys);
+            console.log('总数据', JSON.parse(JSON.stringify(this.originCommodityList)));
         },
         methods: {
-//            //  主要请求
-//            searchFn(){
-//                //  🏳️🏳️🏳️🏳️🏳️  先请求全部商品
-//
-//            },
             ...mapActions('prescriptionTemplate', [
                 //  商品源的数据
                 'setOriginCommodityList',

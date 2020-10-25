@@ -7,22 +7,29 @@
         <div class="a-input-group">
             <a-row type="flex" justify="space-between" align="middle">
                 <a-space>
-                    <a-select class="basic-select-width"
+                    <a-select class="add-form-input"
                               v-model="tableForm.hospitalId"
-                              placeholder="请选择医院">
+                              placeholder="请选择医院"
+                              @change="selectHospitalChange"
+                    >
                         <a-select-option :value="item.id"
+                                         :key="item.id"
                                          v-for="item in hospitalList"
                         >{{item.hospitalName}}
                         </a-select-option>
                     </a-select>
-                    <a-select class="lengthen-select-width" placeholder="请选择处方类型">
+                    <a-select class="add-form-input"
+                              v-model="tableForm.prescriptionType"
+                              placeholder="请选择处方类型"
+                              @change="selectPrescriptionChange"
+                    >
                         <a-select-option :value="item.id"
                                          v-for="item in prescriptionTypeList"
                         >{{item.name}}
                         </a-select-option>
                     </a-select>
                 </a-space>
-                <a-button type="primary" @click>保存</a-button>
+                <a-button type="primary" @click="handleSubmit">保存</a-button>
             </a-row>
         </div>
         <div class="a-input-group" data-msg="空"></div>
@@ -31,13 +38,14 @@
             <a-row type="flex" justify="space-between" align="middle" class="table-group-title">
                 <a-space>
                     <span>肠内营养支持</span>
+                    <!--@change="selectEnergyChange"-->
                     <a-select
                             class="basic-select-width"
                             v-model="tableForm.energy"
                             placeholder="请选择能量"
-                            @change="selectEnergyChange"
                     >
                         <a-select-option :value="item.id"
+                                         :key="item.id"
                                          v-for="item in energyList"
                         >{{item.name}}
                         </a-select-option>
@@ -49,6 +57,7 @@
                         placeholder="请选择食用方法"
                 >
                     <a-select-option :value="item.id"
+                                     :key="item.id"
                                      v-for="item in usageMethodList"
                     >{{item.name}}
                     </a-select-option>
@@ -203,7 +212,10 @@
     import SelectCommodity from '@/components/prescriptionTemplate/selectCommodity.vue';
     import GoBackButton from '@/components/goBackButton.vue';
     import TemplateRemarkInput from '@/components/prescriptionTemplate/templateRemarkInput';
-    import { requestPrescriptionTemplateInsert } from '../../../api/scheme/scheme';
+    import { requestPrescriptionTemplateInsert, requestPrescriptionTemplateUpdate } from '../../../api/scheme/scheme';
+    import { prescriptionTypeList, energyList, usageMethodList } from '../../../utils/constants';
+    import { requestHospitalGetList } from '../../../api/hospital';
+    import { requestGoodsListByHospital } from '../../../api/commodity/commodityList';
 
     //  选择商品表格列的意义
     const commodityTableColumns = [
@@ -259,31 +271,13 @@
         data(){
             return {
                 //  医院下拉
-                hospitalList: [{ id: 1, hospitalName: 'a医院' }, { id: 2, hospitalName: 'b医院' }],
+                hospitalList: [],
                 //  处方类型下拉
-                prescriptionTypeList: [
-                    { id: 1, name: '口服肠内营养补充' },
-                    { id: 2, name: '肠内营养支持' },
-                    { id: 3, name: '膳食营养计划' }],
+                prescriptionTypeList,
                 //  能量下拉
-                energyList: [
-                    { id: '1600kcal', name: '1600kcal', },
-                    { id: '1400kcal', name: '1400kcal', },
-                    { id: '1200kcal', name: '1200kcal', },
-                    { id: '1000kcal', name: '1000kcal', },
-                    { id: '800kcal', name: '800kcal', },
-                    { id: '600kcal', name: '600kcal', },
-                    { id: '400kcal', name: '400kcal', },
-                    { id: '200kcal', name: '200kcal', }],
+                energyList,
                 //  食用方法下拉
-                usageMethodList: [
-                    { id: '口服', name: '口服', },
-                    { id: '经口', name: '经口', },
-                    { id: '管饲', name: '管饲', },
-                    { id: '外周静脉', name: '外周静脉', },
-                    { id: '中心静脉', name: '中心静脉', },
-                    { id: '鼻胃管', name: '鼻胃管', },
-                    { id: '肠胃管', name: '肠胃管', }],
+                usageMethodList,
 
                 //  选择商品表格数据
                 commodityTableData: [],
@@ -346,13 +340,11 @@
                 //  表单中表格的数据
                 tableForm: {
                     //  hospitalId          医院
+                    //  hospitalName        医院名
                     //  prescriptionName    处方名
                     //  prescriptionType    处方类型
                     //  energy              能量
                     //  usageMethod         食用方法
-
-                    //  goods               选择的商品
-                    //  dinnerTimes         用餐时间
                 },
 
                 //  选择时间的值的对象
@@ -361,20 +353,6 @@
                 selectTimeValue: null,
             };
         },
-        mounted(){
-            //  选择商品
-            const shoppingList = [];
-            for (let i = 0; i < 10; i++) {
-                shoppingList.push({
-                    key: i,
-                    hospital: `xx医院`,
-                    city: '上海',
-                    status: String(i % 2),
-                    icon: '医院图标',
-                });
-            }
-//            this.setShoppingList(shoppingList);
-        },
         created(){
             this.searchFn();
             console.log('是编辑？', !!this.oralId);
@@ -382,6 +360,15 @@
         methods: {
             //  主要请求
             searchFn(){
+                requestHospitalGetList()
+                    .then(v => {
+                        this.hospitalList = v.data;
+                    });
+                //  如果是新增
+                if (!this.oralId) {
+                    return;
+                }
+                //  如果是编辑
 //                requestChannelBusinessPage(paginationEncode(this.pagination))
 //                    .then(v => {
 //                        const { data } = v;
@@ -403,21 +390,31 @@
 //                'setShoppingList',
 //            ]),
             ...mapActions('prescriptionTemplate', [
-                //  处方模板，选择的能量，请求选择商品的源数据
+                //  处方模板，请求选择商品的源数据
                 'setOriginCommodityList',
                 //  设置remark的行数
                 'setRowForRemark',
             ]),
-
-            //  切换能量
-            selectEnergyChange(value){
-                console.log(value);
-                console.log('🍎🍎🍎🍎发请求');
+            //  切换医院
+            selectHospitalChange(value){
+                //  计算医院名
+                this.hospitalList.forEach(item => {
+                    if (item.id === value) {
+                        console.log(item);
+                        this.tableForm.hospitalName = item.hospitalName;
+                    }
+                });
+                console.log('🍎🍎🍎🍎发请求，🍉🍉🍉改造数据结构', '医院的id', value);
                 setTimeout(() => {
+                    requestGoodsListByHospital(value)
+                        .then(v => {
+                            console.log('该医院下的商品：');
+                            console.log(v.data);
+                        });
                     //  源数据
                     const originCommodityList = [
                         {
-                            commodityName: '许晓飞',
+                            commodityName: '商品1',
                             key: 1,
                             buyUnitList: [
                                 {
@@ -456,7 +453,7 @@
 //                            isCheckboxChecked: true,
 //                        },
                         {
-                            commodityName: '大斯',
+                            commodityName: '商品2',
                             key: 3,
                             buyUnitList: [
                                 {
@@ -483,12 +480,28 @@
                 this.commodityTableData = [];
                 this.timeTableData = [];
             },
-
+            //  切换处方类型
+            selectPrescriptionChange(value){
+                //  如果去新增膳食营养计划
+                if (value === 3) {
+                    this.$router.push({ name: 'addDietary' });
+                    return;
+                }
+                //  计算处方类型名称
+                this.prescriptionTypeList.forEach(item => {
+                    if (item.id === value) {
+                        console.log(item);
+                        this.tableForm.prescriptionName = item.name;
+                    }
+                });
+            },
             //  选择商品
             selectCommodity(){
                 //  必须选择能量方案
-                if (!this.tableForm.energy) {
-                    this.$message.error('请先选择能量');
+                //  必须选择医院
+                if (!this.tableForm.hospitalId) {
+                    //  this.$message.error('请先选择能量');
+                    this.$message.error('请先选择医院');
                     return;
                 }
                 this.showModal(DIALOG_TYPE.TEMPLATE_SELECT_COMMODITY);
@@ -546,7 +559,7 @@
                 //  一条数据
                 const data = {
                     //  key
-                    key: Math.random(),
+                    key: this.timeTableData.length + 1,
                     //  时间
                     time: this.selectTimeValue,
                     //  温水
@@ -627,21 +640,28 @@
             //  表单提交 保存
             handleSubmit(e){
                 e.preventDefault();
-                console.log(this.commodityTableData);
+                console.log(JSON.parse(JSON.stringify(this.commodityTableData)));
                 console.log('备注🍌', this.remark);
-                console.log(this.timeTableData);
-                return;
+                console.log(JSON.parse(JSON.stringify(this.timeTableData)));
+                const prescriptionContent = {
+                    commodityTableData: this.commodityTableData,
+                    timeTableData: this.timeTableData,
+                };
+                this.tableForm.prescriptionContent = JSON.stringify(prescriptionContent);
+                console.log(JSON.parse(JSON.stringify(this.tableForm)));
                 (() => {
                     //  如果是新增
                     if (!this.oralId) {
-                        return requestPrescriptionTemplateInsert(data);
+                        return requestPrescriptionTemplateInsert(this.tableForm);
                     }
                     data.id = this.oralId;
                     //  如果是编辑
-                    return requestPrescriptionTemplateUpdate(data);
+                    return requestPrescriptionTemplateUpdate(this.tableForm);
                 })()
                     .then(v => {
                         console.log(v);
+                        this.$message.success('操作成功');
+                        this.$router.push({ name: 'scheme' });
                     })
                     .catch(err => {
                         console.log(err);
