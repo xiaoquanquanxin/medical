@@ -35,11 +35,11 @@ const mutations = {
 const actions = {
 	// 用户登录
 	login({commit, state}: COMMIT_INTERFACE<STATE>, loginInfo: any) {
-		//	const {username, password} = loginInfo;
+		const {username, password} = loginInfo;
 		return new Promise((resolve, reject) => {
 			autoLogin({
-				username: "sysadmin@hachismart.org",
-				password: "sysadmin",
+				password,
+				username,
 			}).then(response => {
 				const {data} = response;
 				//	console.log(data.token);
