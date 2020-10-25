@@ -25,7 +25,7 @@ const mutations = {
 		state.jwt = jwt;
 	},
 	SET_LOGIN_INFO: (state: STATE, loginInfo: string) => {
-		state.loginInfo = JSON.parse(loginInfo);
+		state.loginInfo = loginInfo;
 	},
 	SET_NETWORK_ENVIRONMENT: (state: STATE, isLocalAreaNetwork: boolean) => {
 		state.isLocalAreaNetwork = isLocalAreaNetwork;
@@ -41,14 +41,13 @@ const actions = {
 				password,
 				username,
 			}).then(response => {
+				debugger;
 				const {data} = response;
-				//	console.log(data.token);
-				const loginInfo = decode(data.token);
-				console.table(loginInfo);
-				commit('SET_JWT', data.token);
-				commit('SET_LOGIN_INFO', loginInfo);
-				setJwt(data.token);
-				setLoginInfo(loginInfo)
+				const {userInfo, token} = data;
+				commit('SET_JWT', token);
+				commit('SET_LOGIN_INFO', userInfo);
+				setJwt(token);
+				setLoginInfo(userInfo)
 				resolve();
 			}).catch((error: Error) => {
 				reject(error);
