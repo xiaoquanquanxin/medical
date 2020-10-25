@@ -62,22 +62,22 @@
     const columns = [
         {
             title: '供应商名称',
-            dataIndex: 'hospital',
+            dataIndex: 'supplierName',
             width: 120,
         },
         {
             title: '供应商代码',
-            dataIndex: 'code',
+            dataIndex: 'supplierNumber',
             width: 120,
         },
         {
             title: '供应商地区',
-            dataIndex: 'area',
+            dataIndex: 'detailedAddress',
             width: 120,
         },
         {
             title: '添加人',
-            dataIndex: 'people',
+            dataIndex: 'contacts',
             width: 100,
         },
         {
@@ -123,8 +123,8 @@
                         data.records.forEach((item, index) => {
                             item.key = index;
                         });
-                        console.log(data);
                         this.data = data.records;
+                        console.log(JSON.parse(JSON.stringify(this.data[0])));
                         this.pagination = paginationDecode(this.pagination, data);
                     });
             },
@@ -156,8 +156,7 @@
             },
             //  编辑供应商
             editDistributors(sItem){
-                console.log(sItem);
-                this.$router.push({ name: 'editSupplier', params: { supplierId: '12345' } });
+                this.$router.push({ name: 'editSupplier', params: { supplierId: sItem.id } });
             },
         },
     };
