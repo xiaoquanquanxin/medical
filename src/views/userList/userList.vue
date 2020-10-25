@@ -52,7 +52,7 @@
             </a-col>
             <a-col style="width:calc(100vw - 500px);min-width: 700px;">
                 <a-menu v-if="currentMeta"
-                        v-model="transverseSubPaths"
+                        v-model="transverseSubPaths2"
                         mode="horizontal">
                     <a-menu-item
                             v-for="(item , index) in userRouteList"
@@ -105,14 +105,14 @@
             //  当前激活路由的元信息
             currentMeta(){
                 const { currentMeta } = this.$store.state.routeList;
-                this.transverseSubPaths = [currentMeta.transverseSubPaths || ''];
+                this.transverseSubPaths2 = [currentMeta.transverseSubPaths2 || ''];
                 return currentMeta;
             },
         },
         data(){
             return {
                 //  横向二级路由
-                transverseSubPaths: [],
+                transverseSubPaths2: [],
 
                 columns,
                 data: [],

@@ -46,9 +46,10 @@ export function requestPatientSelectDeptByHospital() {
 }
 
 //	根据当前医院查询所有医生	 ✅
-export function requestPatientSelectDoctorByHospital() {
+export function requestPatientSelectDoctorByHospital(type: string | number) {
+	//	type1 医生，type2，营养师
 	return request({
-		url: '/api/patient/selectDoctorByHospital',
+		url: `/api/patient/selectDoctorByHospital/${type}`,
 		method: 'get',
 	});
 }

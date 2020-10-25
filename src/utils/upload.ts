@@ -6,7 +6,7 @@ export function uploadHandleChange({file}: { file: any }, key: string, thumbUrl:
 		//  console.log(this);
 		//  console.log('封面', response.thumbUrl);
 		//  console.log('图片', response.url);
-		response.data = 'https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png'
+		// response.data = 'https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png'
 		//	@ts-ignore
 		this.form.setFieldsValue({
 			[key]: response.data,

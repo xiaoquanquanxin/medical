@@ -123,6 +123,7 @@
                         data.records.forEach((item, index) => {
                             item.key = index;
                         });
+                        console.log(data);
                         this.data = data.records;
                         this.pagination = paginationDecode(this.pagination, data);
                     });

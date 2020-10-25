@@ -14,12 +14,19 @@ export function setRouteListByMap(map: any, asyncRoutesList: any): RouteConfig[]
 				item.children = children;
 			}
 			//	有页面内的横向子路由
-			if (item.meta.hasTransverseSubPaths) {
+			if (item.meta.hasTransverseSubPaths1) {
 				//	如果没有子路由，直接抛出错误
 				if (!item.children.length) {
 					throw new Error('用户列表必须要有子路由，因为要指定重定向');
 				}
-				//	console.log(item.children);
+				//	放在特殊的列表里
+				store.dispatch('routeList/setTemplateRouteList', item.children);
+			}
+			if (item.meta.hasTransverseSubPaths2) {
+				//	如果没有子路由，直接抛出错误
+				if (!item.children.length) {
+					throw new Error('用户列表必须要有子路由，因为要指定重定向');
+				}
 				//	放在特殊的列表里
 				store.dispatch('routeList/setUserRouteList', item.children);
 			}

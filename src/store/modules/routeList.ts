@@ -15,6 +15,7 @@ interface STATE {
 	routeListLength: number;
 	routes: RouteConfig[];
 	userRouteList: RouteConfig[];
+	templateRouteList: RouteConfig[];
 	currentMeta: any;
 }
 
@@ -23,6 +24,7 @@ const state: STATE = {
 	//	路由的长度，默认为同步路由的长度
 	routeListLength: syncRoutesListLength,
 	userRouteList: [],
+	templateRouteList: [],
 	currentMeta: null,
 };
 
@@ -34,6 +36,10 @@ const mutations = {
 	SET_USER_ROUTE_LIST: (state: STATE, userRouteList: RouteConfig[]) => {
 		state.userRouteList = userRouteList
 	},
+	SET_TEMPLATE_ROUTER_LIST: (state: STATE, templateRouteList: RouteConfig[]) => {
+		state.templateRouteList = templateRouteList
+	},
+
 	SET_CURRENT_META: (state: STATE, currentMeta: any) => {
 		state.currentMeta = currentMeta;
 	}
@@ -69,6 +75,11 @@ const actions = {
 	setUserRouteList({commit}: COMMIT_INTERFACE<null>, userRouteList: RouteConfig[]) {
 		commit('SET_USER_ROUTE_LIST', userRouteList);
 	},
+	//	设置用户路由的子路由
+	setTemplateRouteList({commit}: COMMIT_INTERFACE<null>, userRouteList: RouteConfig[]) {
+		commit('SET_TEMPLATE_ROUTER_LIST', userRouteList);
+	},
+
 	//	设置当前激活路由的元信息
 	setCurrentMeta({commit}: COMMIT_INTERFACE<null>, currentMeta: any) {
 		commit('SET_CURRENT_META', currentMeta);

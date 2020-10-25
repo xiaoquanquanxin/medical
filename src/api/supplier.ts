@@ -44,3 +44,10 @@ export function requestSupplierDelete(id: string | number) {
 	});
 }
 
+//  供应商列表		✅
+export function requestSupplierList() {
+	return request({
+		url: '/api/supplier/list',
+		method: 'get'
+	});
+}
