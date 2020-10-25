@@ -564,7 +564,7 @@
                         });
                         //  关键字
                         this.goodsKeyWord = goodsKeyWord;
-                        //  基本单位    todo    服务端字段换下名字
+                        //  基本单位    todo    服务端换字段
                         console.clear();
                         console.log(uintListVos);
                         uintListVos.forEach(item => {

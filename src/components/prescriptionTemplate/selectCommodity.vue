@@ -9,28 +9,28 @@
                 bordered
         >
             <!--购买单位-->
-            <div slot="buyUnit"
+            <div slot="purchaseUnit"
                  slot-scope="scope,sItem,sIndex,extra"
                  class="negative-margin-16">
                 <a-radio-group style="width: 100%;"
-                               v-model="sItem.buyUnitCheckId"
+                               v-model="sItem.purchaseUnitCheckId"
                                @change="radioGroupChange(sItem)"
                 >
                     <a-radio :key="index"
-                             v-for="(item,index) in scope.buyUnitList"
-                             :value="item.buyUnitId"
+                             v-for="(item,index) in scope.uintListVos"
+                             :value="item.id"
                              class="negative-margin-item"
                     >
-                        {{item.buyUnit}}
+                        {{item.uname}}
                     </a-radio>
                 </a-radio-group>
             </div>
             <!--价格-->
             <div slot="price" slot-scope="scope,sItem,sIndex,extra" class="negative-margin-16">
-                <p v-for="(item,index) in scope.buyUnitList"
+                <p v-for="(item,index) in scope.uintListVos"
                    :key="index"
                    class="negative-margin-item"
-                >{{item.price}}</p>
+                >{{item.unitPrice}}</p>
             </div>
         </a-table>
     </div>
@@ -48,7 +48,7 @@
         {
             title: '购买单位',
             width: 200,
-            scopedSlots: { customRender: 'buyUnit' },
+            scopedSlots: { customRender: 'purchaseUnit' },
         },
         {
             title: '价格',
@@ -102,14 +102,14 @@
                     //  如果在map中没有，说明不是多选的勾选态
                     if (!map[item.key]) {
                         //  去掉单选的勾选状态
-                        item.buyUnitCheckId = null;
+                        item.purchaseUnitCheckId = null;
                         //  去掉多选的勾选状态
                         item.isCheckboxChecked = false;
                     } else {
                         //  得设置默认值，如果没有的话
-                        if (!item.buyUnitCheckId) {
-                            item.buyUnitCheckId = item.buyUnitList[0].buyUnitId;
-                            item.buyUnitList[0].isRadioChecked = true;
+                        if (!item.purchaseUnitCheckId) {
+                            item.purchaseUnitCheckId = item.uintListVos[0].id;
+                            item.uintListVos[0].isRadioChecked = true;
                         }
                         //  补充多选的勾选状态
                         item.isCheckboxChecked = true;
@@ -121,11 +121,11 @@
                 //  左侧多选需要钩上
                 this.selectedRowKeys.push(sItem.key);
                 this.selectedRowKeys = [...new Set(this.selectedRowKeys)];
-                //  console.log(sItem.buyUnitList);
-                //  console.log(sItem.buyUnitCheckId);
+                //  console.log(sItem.uintListVos);
+                //  console.log(sItem.purchaseUnitCheckId);
                 //  单选的勾选状态
-                sItem.buyUnitList.forEach(item => {
-                    item.isRadioChecked = item.buyUnitId === sItem.buyUnitCheckId;
+                sItem.uintListVos.forEach(item => {
+                    item.isRadioChecked = item.id === sItem.purchaseUnitCheckId;
                 });
                 //  多选的勾选状态，一定勾选了
                 sItem.isCheckboxChecked = true;

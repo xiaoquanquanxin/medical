@@ -80,18 +80,18 @@
                              bordered
                              class="custom-select-title-table">
                         <!--购买单位-->
-                        <div slot="buyUnitList" slot-scope="scope,sItem,sIndex,extra">
-                            <p v-for="(item,index) in sItem.buyUnitList"
+                        <div slot="uintListVos" slot-scope="scope,sItem,sIndex,extra">
+                            <p v-for="(item,index) in sItem.uintListVos"
                                :key="index"
-                               v-if="item.buyUnitId === sItem.buyUnitCheckId"
-                            >{{item.buyUnit}}</p>
+                               v-if="item.id === sItem.purchaseUnitCheckId"
+                            >{{item.unitPrice}}</p>
                         </div>
                         <!--单价-->
-                        <div slot="price" slot-scope="scope,sItem,sIndex,extra">
-                            <p v-for="(item , index) in sItem.buyUnitList"
+                        <div slot="unitPrice" slot-scope="scope,sItem,sIndex,extra">
+                            <p v-for="(item , index) in sItem.uintListVos"
                                :key="index"
-                               v-if="item.buyUnitId === sItem.buyUnitCheckId"
-                            >{{item.price}}</p>
+                               v-if="item.id === sItem.purchaseUnitCheckId"
+                            >{{item.unitPrice}}</p>
                         </div>
                         <!--数量-->
                         <div slot="quantity" slot-scope="scope,sItem,sIndex,extra">
@@ -227,15 +227,15 @@
         },
         {
             title: '购买单位',
-            dataIndex: 'buyUnitList',
+            dataIndex: 'uintListVos',
             width: 100,
-            scopedSlots: { customRender: 'buyUnitList' },
+            scopedSlots: { customRender: 'uintListVos' },
         },
         {
             title: '商品单价',
-            dataIndex: 'price',
+            dataIndex: 'unitPrice',
             width: 100,
-            scopedSlots: { customRender: 'price' },
+            scopedSlots: { customRender: 'unitPrice' },
         },
         {
             title: '数量',
@@ -356,6 +356,7 @@
         },
         created(){
             this.searchFn();
+            console.clear();
             console.log('是编辑？', !!this.oralId);
         },
         methods: {
@@ -411,86 +412,16 @@
                     requestGoodsListByHospital(value)
                         .then(v => {
                             console.log('该医院下的商品：');
-                            console.log(v.data[0]);
                             if (!v.data || !v.data) {
                                 return;
                             }
-                            const originCommodityList = [];
-                            v.data.forEach((item, index) => {
-                                const _data = {
-                                    key: item.id,
-                                    goodsId: item.id,
-                                    goodsName: item.goodsName,
-                                    buyUnitList: []
-                                };
-                                originCommodityList.push(_data);
+                            v.data.forEach(item => {
+                                item.key = item.id;
                             });
+                            const originCommodityList = v.data;
+                            console.log(JSON.parse(JSON.stringify(v.data)));
                             this.setOriginCommodityList(originCommodityList);
                         });
-                    //  源数据
-                    const originCommodityList = [
-                        {
-                            goodsName: '商品1',
-                            key: 1,
-                            buyUnitList: [
-                                {
-                                    buyUnit: '11111克',
-                                    price: 11111,
-                                    buyUnitId: 1,
-                                },
-                                {
-                                    buyUnit: '100克',
-                                    price: 100,
-                                    buyUnitId: 2,
-                                }
-                            ],
-                        },
-                        //  ⚠️别删
-//                        {
-//                            goodsName: '小斯',
-//                            key: 2,
-//                            buyUnitList: [
-//                                {
-//                                    buyUnit: '333克',
-//                                    price: 333,
-//                                    buyUnitId: 3,
-//                                    //  用于组织 buyUnitCheckId
-//                                    isRadioChecked: true,
-//                                },
-//                                {
-//                                    buyUnit: '55克',
-//                                    price: 55,
-//                                    buyUnitId: 4,
-//                                }
-//                            ],
-//                            //  被选中的购买单位的id
-//                            buyUnitCheckId: 1,
-//                            //  多选的勾选状态
-//                            isCheckboxChecked: true,
-//                        },
-                        {
-                            goodsName: '商品2',
-                            key: 3,
-                            buyUnitList: [
-                                {
-                                    buyUnit: '666克',
-                                    price: 66,
-                                    buyUnitId: 6,
-                                },
-                                {
-                                    buyUnit: '777克',
-                                    price: 77,
-                                    buyUnitId: 7,
-                                },
-                                {
-                                    buyUnit: '88克',
-                                    price: 8,
-                                    buyUnitId: 8,
-                                }
-                            ],
-                        },
-                    ];
-                    
                 });
                 //  重置数据
                 this.commodityTableData = [];
@@ -564,7 +495,7 @@
                 const commodityTableData = JSON.parse(JSON.stringify(this.commodityTableData));
                 //  子列表数据
                 const list = commodityTableData.map(item => {
-                    const child = item.buyUnitList.filter((_item) => {
+                    const child = item.uintListVos.filter((_item) => {
                         //  console.log(_item.isRadioChecked);
                         return _item.isRadioChecked;
                     });
@@ -593,11 +524,11 @@
             //  删除选择商品表格的一行
             deleteTypeTable(sItem, sIndex){
                 //  内部的id，单选id
-                const { buyUnitCheckId } = sItem;
+                const { purchaseUnitCheckId } = sItem;
                 //  洗主数据
-                delete sItem.buyUnitCheckId;
+                delete sItem.purchaseUnitCheckId;
                 delete sItem.isCheckboxChecked;
-                sItem.buyUnitList.forEach((item => {
+                sItem.uintListVos.forEach((item => {
                     if (item.isRadioChecked) {
                         delete item.isRadioChecked;
                     }
@@ -606,7 +537,7 @@
                 this.timeTableData.forEach(item => {
                     for (let i = 0; i < item.list.length; i++) {
                         //  要被删除的商品类型
-                        if (item.list[i].buyUnitId === buyUnitCheckId) {
+                        if (item.list[i].id === purchaseUnitCheckId) {
                             item.list.splice(i, 1);
                             break;
                         }
