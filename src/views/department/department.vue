@@ -29,7 +29,7 @@
                  slot-scope="scope,sItem,sIndex,extra"
             >
                 <a-switch checked-children="开" un-checked-children="关"
-                          :default-checked="!!sIndex"
+                          :checked="!sItem.status"
                           @change="aSwitchChange(sItem,$event)"
                 />
             </div>
@@ -95,12 +95,12 @@
     import { paginationInit, paginationDecode, paginationEncode } from '@/utils/pagination.ts';
     import { twoRowSearch } from '@/utils/tableScroll';
     import { SHUTTLE_BOX } from '../../store/modules/shuttleBox';
-    import { requestDeptPage } from '../../api/department';
+    import { requestDeptPage, requestDeptUpdate } from '../../api/department';
 
     const columns = [
         {
             title: '科室名称',
-            dataIndex: 'department',
+            dataIndex: 'deptName',
             width: 150,
         },
         {
@@ -154,7 +154,7 @@
                         });
                         this.data = data.records;
                         this.pagination = paginationDecode(this.pagination, data);
-                        console.log(data.records);
+                        console.log(JSON.parse(JSON.stringify(data.records[0])));
                     });
             },
             //  莫泰框方法
@@ -176,7 +176,16 @@
             },
             //  切换状态
             aSwitchChange(sItem, checked){
-                console.log(sItem, checked);
+                requestDeptUpdate(Object.assign({}, sItem, { status: checked ? 1 : 0 }))
+                    .then(v => {
+                        sItem.status = !checked;
+                        this.$message.success('操作成功');
+                    })
+                    .catch(err => {
+                        this.$message.error('操作失败');
+                        sItem.status = checked;
+                        console.log(err);
+                    });
             },
             //  编辑科室
             editDepartment(sItem){
