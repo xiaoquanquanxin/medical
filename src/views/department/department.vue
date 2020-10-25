@@ -146,7 +146,7 @@
         methods: {
             //  主要请求
             searchFn(){
-                requestDeptPage(Object.assign({...this.pagination}, this.searchData, ))
+                requestDeptPage(Object.assign({}, this.searchData, paginationEncode(this.pagination)))
                     .then(v => {
                         const { data } = v;
                         data.records.forEach((item, index) => {
