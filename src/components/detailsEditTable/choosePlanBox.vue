@@ -40,6 +40,7 @@
     ];
     //  选择计划
     export default {
+        //  todo    choosePlanData就是 chooseInterventionData
         props: ['choosePlanData', 'planMap', 'dataTitle'],
         data(){
             let { energyId, planId } = this.choosePlanData;
@@ -63,7 +64,8 @@
                     onChange: this.onSelectChange,
                 },
                 columns,
-                data: []
+                data: [],
+                chooseInterventionData: null,
             };
         },
         created(){
@@ -98,7 +100,10 @@
                 //  console.log(selectedRowKeys);
                 this.rowSelection.selectedRowKeys = selectedRowKeys;
                 this.planId = selectedRowKeys[0];
-
+                //  console.log(this.planId);
+                //  console.log(value);
+                //  暂时保存
+                this.chooseInterventionData = value;
             },
 
             //  确认数据
@@ -111,6 +116,8 @@
                         this.$error({ title: '请选择方案' });
                         reject();
                     } else {
+                        //  储存
+                        this.setChooseInterventionData(this.chooseInterventionData);
                         resolve({ energyId, planId });
                     }
                 }));
@@ -118,8 +125,9 @@
             //  切换能量
             energyChange(energy){
                 console.log(this.energyId);
-                const { prescriptionType } = this.dataTitle;
-                requestPrescriptionPrescriptionTpl({ energy, prescriptionType })
+                const { prescriptionType, usageMethod } = this.dataTitle;
+                console.log('选择的食用方法', usageMethod);
+                requestPrescriptionPrescriptionTpl({ energy, prescriptionType, usageMethod })
                     .then(v => {
                         console.log(JSON.parse(JSON.stringify(v.data)));
                         console.log('打开弹框时候默认选择的单选', this.rowSelection.selectedRowKeys);
