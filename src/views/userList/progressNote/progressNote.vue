@@ -44,7 +44,7 @@
         {
             title: '序号',
             dataIndex: 'index',
-            width: 150,
+            width: 100,
         },
         {
             title: '医生',
