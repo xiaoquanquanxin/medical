@@ -42,7 +42,7 @@
     const countTableColumns = [
         {
             title: '商品名称',
-            dataIndex: 'commodityName',
+            dataIndex: 'goodsName',
             width: 150,
         },
         {

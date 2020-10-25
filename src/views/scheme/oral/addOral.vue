@@ -94,8 +94,8 @@
                             >{{item.price}}</p>
                         </div>
                         <!--数量-->
-                        <div slot="number" slot-scope="scope,sItem,sIndex,extra">
-                            <a-input v-model="sItem.number" placeholder="请输入数量"/>
+                        <div slot="quantity" slot-scope="scope,sItem,sIndex,extra">
+                            <a-input v-model="sItem.quantity" placeholder="请输入数量"/>
                         </div>
                         <!--操作-->
                         <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
@@ -123,7 +123,7 @@
                             bordered
                             class="custom-select-title-table">
                         <!--商品名称-->
-                        <div slot="commodityName"
+                        <div slot="goodsName"
                              slot-scope="scope,sItem,sIndex,extra"
                              class="negative-margin-16"
                         >
@@ -131,7 +131,7 @@
                                  :key="index"
                                  class="negative-margin-item"
                             >
-                                {{item.commodityName}}
+                                {{item.goodsName}}
                             </div>
                         </div>
                         <!--使用量-->
@@ -177,7 +177,7 @@
                 </a-col>
             </a-row>
         </div>
-        <!--查看价格莫泰框-->
+        <!--选择商品莫泰框-->
         <a-modal v-model="dialogDataSelectCommodity.visible"
                  v-if="dialogDataSelectCommodity.visible"
                  :maskClosable="false"
@@ -222,7 +222,7 @@
     const commodityTableColumns = [
         {
             title: '商品名称',
-            dataIndex: 'commodityName',
+            dataIndex: 'goodsName',
             width: 100,
         },
         {
@@ -239,9 +239,9 @@
         },
         {
             title: '数量',
-            dataIndex: 'number',
+            dataIndex: 'quantity',
             width: 100,
-            scopedSlots: { customRender: 'number' },
+            scopedSlots: { customRender: 'quantity' },
         },
         {
             title: '操作',
@@ -296,7 +296,7 @@
                     {
                         title: '商品名称',
                         width: 200,
-                        scopedSlots: { customRender: 'commodityName' },
+                        scopedSlots: { customRender: 'goodsName' },
                     },
                     {
                         title: '使用量',
@@ -405,17 +405,32 @@
                         this.tableForm.hospitalName = item.hospitalName;
                     }
                 });
+                console.clear();
                 console.log('🍎🍎🍎🍎发请求，🍉🍉🍉改造数据结构', '医院的id', value);
                 setTimeout(() => {
                     requestGoodsListByHospital(value)
                         .then(v => {
                             console.log('该医院下的商品：');
-                            console.log(v.data);
+                            console.log(v.data[0]);
+                            if (!v.data || !v.data) {
+                                return;
+                            }
+                            const originCommodityList = [];
+                            v.data.forEach((item, index) => {
+                                const _data = {
+                                    key: item.id,
+                                    goodsId: item.id,
+                                    goodsName: item.goodsName,
+                                    buyUnitList: []
+                                };
+                                originCommodityList.push(_data);
+                            });
+                            this.setOriginCommodityList(originCommodityList);
                         });
                     //  源数据
                     const originCommodityList = [
                         {
-                            commodityName: '商品1',
+                            goodsName: '商品1',
                             key: 1,
                             buyUnitList: [
                                 {
@@ -432,7 +447,7 @@
                         },
                         //  ⚠️别删
 //                        {
-//                            commodityName: '小斯',
+//                            goodsName: '小斯',
 //                            key: 2,
 //                            buyUnitList: [
 //                                {
@@ -454,7 +469,7 @@
 //                            isCheckboxChecked: true,
 //                        },
                         {
-                            commodityName: '商品2',
+                            goodsName: '商品2',
                             key: 3,
                             buyUnitList: [
                                 {
@@ -475,7 +490,7 @@
                             ],
                         },
                     ];
-                    this.setOriginCommodityList(originCommodityList);
+                    
                 });
                 //  重置数据
                 this.commodityTableData = [];
@@ -554,7 +569,7 @@
                         return _item.isRadioChecked;
                     });
                     //  console.log(child);
-                    return Object.assign(child[0], { commodityName: item.commodityName });
+                    return Object.assign(child[0], { goodsName: item.goodsName });
                 });
                 //  console.log(list);
                 //  一条数据

@@ -22,12 +22,12 @@
                 <a-select class="add-form-input"
                           v-decorator="provinceDecorator"
                           placeholder="请选择渠道商地区-省份"
+                          @change="provinceChange"
                 >
-                    <a-select-option value="1">
-                        山西
-                    </a-select-option>
-                    <a-select-option value="2">
-                        陕西
+                    <a-select-option :value="item.id"
+                                     :key="item.id"
+                                     v-for="item in areaList.provinceList"
+                    >{{item.name}}
                     </a-select-option>
                 </a-select>
             </a-form-item>
@@ -57,19 +57,19 @@
                     </a-select-option>
                 </a-select>
             </a-form-item>
-            <a-form-item label="登录账户">
+            <a-form-item label="登录账户" v-if="!channelId">
                 <a-input class="add-form-input"
                          v-decorator="loginAccountDecorator"
                          placeholder="请输入登录账户"
                 />
             </a-form-item>
-            <a-form-item label="登录密码">
+            <a-form-item label="登录密码" v-if="!channelId">
                 <a-input class="add-form-input"
                          v-decorator="passwordDecorator"
                          placeholder="请输入登录密码"
                 />
             </a-form-item>
-            <a-form-item label="确认密码" required>
+            <a-form-item label="确认密码" required v-if="!channelId">
                 <a-input class="add-form-input"
                          v-decorator="confirmPasswordDecorator"
                          placeholder="请输入确认密码"
@@ -86,6 +86,7 @@
         requestChannelBusinessInsert,
         requestChannelBusinessUpdate
     } from '../api/distributors';
+    import { getProvinceList, provinceChange, areaList } from '../utils/areaList';
 
     //  新增或编辑渠道商
     export default {
@@ -101,6 +102,8 @@
         },
         data(){
             return {
+                //	地址对象
+                areaList,
                 formItemLayout,
                 //  渠道商名称
                 channelBusinessNameDecorator: ['channelBusinessName', {
@@ -167,12 +170,21 @@
             this.searchFn();
         },
         methods: {
+            //  获取省份
+            getProvinceList,
+            //  省份变化
+            provinceChange,
             //  主要请求
             searchFn(){
+                this.areaList.provinceList = [{ id: 1, name: '陕西' }];
                 //  如果是新增
                 if (!this.channelId) {
                     return;
                 }
+                //  修改编辑的表单验证
+                this.form.validateFields(['loginAccount']);
+                this.form.validateFields(['password']);
+                this.form.validateFields(['confirmPassword']);
                 //  如果是编辑
                 requestChannelBusinessGet(this.channelId)
                     .then(v => {
