@@ -543,6 +543,7 @@
                             preservationMethod,
                             status,
                             supplierId,
+                            uintListVos,
                         } = data;
                         console.log(data);
                         //  设置编辑值
@@ -563,7 +564,13 @@
                         });
                         //  关键字
                         this.goodsKeyWord = goodsKeyWord;
-                        //  基本单位
+                        //  基本单位    todo    服务端字段换下名字
+                        console.clear();
+                        console.log(uintListVos);
+                        uintListVos.forEach(item => {
+                            item.key = item.id;
+                        });
+                        this.uintParams = uintListVos;
                         //  图片
                         this.goodsImgThumbUrl = goodsImg;
                         //  描述富文本

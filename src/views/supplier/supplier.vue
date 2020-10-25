@@ -25,7 +25,7 @@
                     slot-scope="scope,sItem,sIndex,extra"
             >
                 <a-switch checked-children="开" un-checked-children="关"
-                          :checked="!sItem.status"
+                          :checked="!!sItem.status"
                           @change="aSwitchChange(sItem,$event)"
                 />
             </div>
@@ -145,12 +145,12 @@
             aSwitchChange(sItem, checked){
                 requestSupplierChangeStatus(sItem.id)
                     .then(v => {
-                        sItem.status = !checked;
+                        sItem.status = !!checked;
                         this.$message.success('操作成功');
                     })
                     .catch(err => {
                         this.$message.error('操作失败');
-                        sItem.status = checked;
+                        sItem.status = !checked;
                         console.log(err);
                     });
             },
