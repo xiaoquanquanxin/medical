@@ -41,7 +41,6 @@ const actions = {
 				password,
 				username,
 			}).then(response => {
-				debugger;
 				const {data} = response;
 				const {userInfo, token} = data;
 				commit('SET_JWT', token);

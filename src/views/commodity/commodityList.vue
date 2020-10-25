@@ -115,22 +115,22 @@
     const columns = [
         {
             title: '商品名称',
-            dataIndex: 'commodity',
+            dataIndex: 'goodsName',
             width: 100,
         },
         {
             title: '商品货号',
-            dataIndex: 'aaa',
+            dataIndex: 'goodsBarCode',
             width: 100,
         },
         {
             title: '通用名',
-            dataIndex: '通用名',
+            dataIndex: 'goodsTradeName',
             width: 100,
         },
         {
             title: '商品分类',
-            dataIndex: '商品分类',
+            dataIndex: 'goodsCategoryId',
             width: 100,
         },
         {
@@ -140,7 +140,7 @@
         },
         {
             title: '规格',
-            dataIndex: 'specifications',
+            dataIndex: 'goodsSpecifications',
             width: 100,
         },
         {
@@ -150,17 +150,17 @@
         },
         {
             title: '生产厂家',
-            dataIndex: 'manufacturer',
+            dataIndex: 'manufactorId',
             width: 100,
         },
         {
             title: '品牌',
-            dataIndex: 'brand',
+            dataIndex: 'goodsBrandId',
             width: 100,
         },
         {
             title: '供应商',
-            dataIndex: 'supplier',
+            dataIndex: 'supplierId',
             width: 100,
         },
         {
@@ -292,6 +292,7 @@
                             item.key = index;
                         });
                         this.data = data.records;
+                        console.log(JSON.parse(JSON.stringify(this.data[0])));
                         this.pagination = paginationDecode(this.pagination, data);
                     });
             },
