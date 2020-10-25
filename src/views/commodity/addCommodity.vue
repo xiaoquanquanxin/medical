@@ -31,6 +31,7 @@
                           mode="tags"
                           placeholder="请输入商品关键字"
                           :token-separators="[',']"
+                          v-model="goodsKeyWord"
                           @change="autoSplitChange"
                 />
                 <a-input type="hidden" v-decorator="goodsKeyWordDecorator"/>
@@ -112,7 +113,7 @@
                          v-decorator="goodsSpecificationsDecorator"
                          placeholder="请输入规格"/>
             </a-form-item>
-            <a-form-item label="基本单位">
+            <a-form-item label="基本单位" required>
                 <div style="overflow: auto;width:1230px;">
                     <a-table
                             :columns="columns"
@@ -307,7 +308,6 @@
                 formItemLayout,
                 //  商品名称
                 goodsNameDecorator: ['goodsName', {
-                    initialValue: '11',
                     rules: [{
                         required: true,
                         message: '请输入商品名称'
@@ -315,7 +315,6 @@
                 }],
                 //  商品货号
                 goodsProductCodeDecorator: ['goodsProductCode', {
-                    initialValue: '11',
                     rules: [{
                         required: true,
                         message: '请输入商品货号'
@@ -323,7 +322,6 @@
                 }],
                 //  商品条码
                 goodsBarCodeDecorator: ['goodsBarCode', {
-                    initialValue: '11',
                     rules: [{
                         required: true,
                         message: '请输入商品条码'
@@ -338,7 +336,6 @@
                 }],
                 //  商品分类
                 goodsCategoryIdDecorator: ['goodsCategoryId', {
-                    initialValue: '11',
                     rules: [{
                         required: true,
                         message: '请选择商品分类'
@@ -346,7 +343,6 @@
                 }],
                 //  商品品牌
                 goodsBrandIdDecorator: ['goodsBrandId', {
-                    initialValue: '11',
                     rules: [{
                         required: true,
                         message: '请选择商品品牌'
@@ -354,7 +350,6 @@
                 }],
                 //  供应商
                 supplierIdDecorator: ['supplierId', {
-                    initialValue: '11',
                     rules: [{
                         required: true,
                         message: '请选择供应商'
@@ -362,7 +357,6 @@
                 }],
                 //  厂家
                 manufactorIdDecorator: ['manufactorId', {
-                    initialValue: '11',
                     rules: [{
                         required: true,
                         message: '请选择厂家'
@@ -370,7 +364,6 @@
                 }],
                 //  通用名
                 goodsTradeNameDecorator: ['goodsTradeName', {
-                    initialValue: '11',
                     rules: [{
                         required: true,
                         message: '请输入通用名'
@@ -378,7 +371,6 @@
                 }],
                 //  保存方式
                 preservationMethodDecorator: ['preservationMethod', {
-                    initialValue: '11',
                     rules: [{
                         required: true,
                         message: '请选择保存方式'
@@ -386,7 +378,6 @@
                 }],
                 //  状态
                 statusDecorator: ['status', {
-                    initialValue: '11',
                     rules: [{
                         required: true,
                         message: '请选择状态'
@@ -394,7 +385,6 @@
                 }],
                 //  规格
                 goodsSpecificationsDecorator: ['goodsSpecifications', {
-                    initialValue: '11',
                     rules: [{
                         required: true,
                         message: '请输入规格'
@@ -430,6 +420,9 @@
                 //  基本单位表格
                 columns: [],
                 uintParams: [],
+
+                //  关键字
+                goodsKeyWord: undefined,
             };
         },
         created(){
@@ -552,6 +545,7 @@
                             supplierId,
                         } = data;
                         console.log(data);
+                        //  设置编辑值
                         this.form.setFieldsValue({
                             goodsBarCode,
                             goodsBrandId,
@@ -567,6 +561,13 @@
                             status,
                             supplierId,
                         });
+                        //  关键字
+                        this.goodsKeyWord = goodsKeyWord;
+                        //  基本单位
+                        //  图片
+                        this.goodsImgThumbUrl = goodsImg;
+                        //  描述富文本
+                        this.goodsDetails = goodsDetails;
                     });
             },
             //  添加辅助单位
