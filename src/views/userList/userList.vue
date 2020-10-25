@@ -140,7 +140,7 @@
                             item.key = index;
                             item.age = calcAgeByBirth(item.birth);
                         });
-                          console.log(JSON.parse(JSON.stringify(data.records)));
+                        console.log(JSON.parse(JSON.stringify(data.records)));
                         this.data = data.records;
                     });
             },
