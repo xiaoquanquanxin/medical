@@ -35,7 +35,7 @@
 <script>
     import { formItemLayout } from '@/utils/layout.ts';
     import GoBackButton from '@/components/goBackButton.vue';
-    import { requestDiseaseSave, requestDiseaseUpdate } from '../../api/disease';
+    import { requestDiseaseGet, requestDiseaseSave, requestDiseaseUpdate } from '../../api/disease';
 
     export default {
         components: {
@@ -52,7 +52,7 @@
                 formItemLayout,
                 //  疾病名称
                 diseaseNameDecorator: ['diseaseName', {
-                    rules: [ {
+                    rules: [{
                         required: true,
                         message: '请输入疾病名称'
                     },]
@@ -79,17 +79,15 @@
                     return;
                 }
                 //  如果是编辑
-//                requestChannelBusinessPage(paginationEncode(this.pagination))
-//                    .then(v => {
-//                        const { data } = v;
-//                        console.log(data);
-//                data.records.forEach((item, index) => {
-//                    item.key = index;
-//                    item.createTime = item.createTime.substr(0, 10);
-//                });
-//                        this.data = data.records;
-//                        this.pagination = paginationDecode(this.pagination, data);
-//                    });
+                requestDiseaseGet(this.diseaseId)
+                    .then(v => {
+                        const { data } = v;
+                        const { diseaseName, status } = data;
+                        this.form.setFieldsValue({
+                            diseaseName,
+                            status,
+                        });
+                    });
             },
             //    表单提交
             handleSubmit(e){
@@ -114,6 +112,7 @@
                         })()
                             .then(v => {
                                 console.log(v);
+                                this.$router.push({ name: 'disease' });
                                 resolve();
                             })
                             .catch(err => {
