@@ -16,7 +16,11 @@
     import PatientBasicInfo from '@/components/userList/patientInfo/patientBasicInfo.vue';
     import { mapGetters, mapActions } from 'vuex';
     import GoBackButton from '@/components/goBackButton.vue';
-    import { requestPatientSave, requestPatientSelectOnePatient } from '../../../api/userList/userList';
+    import {
+        requestPatientSave,
+        requestPatientSelectOnePatient,
+        requestPatientUpdate
+    } from '../../../api/userList/userList';
     import { calcAgeByBirth } from '../../../utils/common';
 
     export default {
@@ -64,7 +68,6 @@
                     .then(v => {
                         const { data } = v;
                         console.log(data);
-                        data.age = data.age = calcAgeByBirth(data.birth);
                         this.patientInfo = data;
                         //  保存到store里，基础信息、群聊信息 ⚠️这里暂时一个，看够不够了
                         this.setPatientBasicInfo(this.patientInfo);
@@ -82,26 +85,42 @@
                         console.log('发请求');
                         console.log(JSON.stringify(this.patientBasicInfo));
                         console.table(JSON.parse(JSON.stringify(this.patientBasicInfo)));
-                        //  todo    年龄不是生日
-                        this.patientBasicInfo.birth = '1919';
-                        //  todo    就诊科室没有数据
+
+//                        //  todo    就诊科室没有数据
                         this.patientBasicInfo.hospitalTreatment = 1;
                         //  todo    营养师需要接口
-                        this.patientBasicInfo.nutritionistId = 1;
+                        this.patientBasicInfo.nutritionistId = this.patientBasicInfo.nutritionistId || 1;
+                        //  医生
+                        this.patientBasicInfo.doctorId = this.patientBasicInfo.doctorId || 1;
                         //  新增入院所以是1    1入院，2.出院，3.永久注销;
                         this.patientBasicInfo.patientStatus = 1;
-                        //  todo    还有啥叫病区和劳动强度？
+//                        //  todo    还有啥叫病区和劳动强度？
                         this.patientBasicInfo.pla = '1';
                         this.patientBasicInfo.ward = '传染病区';
                         //  todo    删除jzbh
                         delete this.patientBasicInfo.jzbh;
-                        requestPatientSave(this.patientBasicInfo)
+
+                        //  如果是新增
+                        if (!this.patientId) {
+                            requestPatientSave(this.patientBasicInfo)
+                                .then(v => {
+                                    console.log(v);
+                                    this.$success({
+                                        title: '保存成功',
+                                    });
+                                    this.$router.push({ name: 'userList' });
+                                });
+                            return;
+                        }
+                        //  如果是编辑
+                        this.patientBasicInfo.id = this.patientId;
+                        requestPatientUpdate(this.patientBasicInfo)
                             .then(v => {
                                 console.log(v);
                                 this.$success({
                                     title: '保存成功',
                                 });
-                                this.$router.push({ name: 'userList' });
+                                this.$router.push({ name: 'patientInfo' });
                             });
                     })
                     .catch(error => {
