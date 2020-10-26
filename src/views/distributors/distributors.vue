@@ -2,8 +2,8 @@
     <div class="layout-content-inner-main">
         <!--搜索相关-->
         <div class="a-input-group">
-            <a-input class="lengthen-input-width" v-model="searchData.entrepotName" placeholder="请输入渠道商名称"/>
-            <a-input class="lengthen-input-width" v-model="searchData.entrepotCode" placeholder="请输入渠道商代码"/>
+            <a-input class="lengthen-input-width" v-model="searchData.channelBusinessName" placeholder="请输入渠道商名称"/>
+            <a-input class="lengthen-input-width" v-model="searchData.channelBusinessNumber" placeholder="请输入渠道商代码"/>
             <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
         </div>
         <div class="a-input-group">
@@ -27,7 +27,7 @@
             >
 <!--                :default-checked="!!sItem.status"-->
                 <a-switch checked-children="开" un-checked-children="关"
-                          :checked="!!sItem.status"
+                          v-model="sItem.statusBooleanFormat"
                           @change="aSwitchChange(sItem,$event)"
                 />
             </div>
@@ -93,7 +93,8 @@
         {
             title: '渠道商地区',
             width: 120,
-            scopedSlots: { customRender: 'area' },
+            dataIndex: 'region',
+            //  scopedSlots: { customRender: 'area' },
         },
         {
             title: '添加人',
@@ -143,14 +144,16 @@
         methods: {
             //  主要请求
             searchFn(){
-                requestChannelBusinessPage(paginationEncode(this.pagination))
+                requestChannelBusinessPage(Object.assign({}, this.searchData, paginationEncode(this.pagination)))
                     .then(v => {
                         const { data } = v;
                         data.records.forEach((item, index) => {
                             item.key = index;
+                            //  状态需要布尔值
+                            item.statusBooleanFormat = item.status === 1;
                         });
                         this.data = data.records;
-                        console.log(JSON.parse(JSON.stringify(data.records[0])));
+                        console.log(JSON.parse(JSON.stringify(data.records[2])));
                         this.pagination = paginationDecode(this.pagination, data);
                     });
             },
@@ -176,13 +179,12 @@
             aSwitchChange(sItem, checked){
                 requestChannelBusinessChangeStatus(sItem.id)
                     .then(v => {
-                        sItem.status = !!checked;
                         this.$message.success('操作成功');
+                        this.searchFn();
                     })
                     .catch(err => {
+                        sItem.statusBooleanFormat = !checked;
                         this.$message.error('操作失败');
-                        sItem.status = !checked;
-                        console.log(err);
                     });
             },
 

@@ -36,11 +36,10 @@
                           v-decorator="cityDecorator"
                           placeholder="请选择渠道商地区-市区"
                 >
-                    <a-select-option value="1">
-                        晋中
-                    </a-select-option>
-                    <a-select-option value="2">
-                        大同
+                    <a-select-option :value="item.id"
+                                     :key="item.id"
+                                     v-for="item in areaList.cityList"
+                    >{{item.name}}
                     </a-select-option>
                 </a-select>
             </a-form-item>
@@ -86,8 +85,7 @@
         requestChannelBusinessInsert,
         requestChannelBusinessUpdate
     } from '../api/distributors';
-    import { getProvinceList, provinceChange, areaList } from '../utils/areaList';
-
+    import { getProvinceList, provinceChange, areaList } from '@/utils/areaList';
     //  新增或编辑渠道商
     export default {
         beforeCreate(){
@@ -176,7 +174,7 @@
             provinceChange,
             //  主要请求
             searchFn(){
-                this.areaList.provinceList = [{ id: 1, name: '陕西' }];
+                this.getProvinceList();
                 //  如果是新增
                 if (!this.channelId) {
                     return;

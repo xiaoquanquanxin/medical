@@ -254,7 +254,7 @@
     import GoBackButton from '@/components/goBackButton.vue';
     import { uploadHandleChange, beforeUploadFn, beforeUploadData } from '../../utils/upload';
     import { requestHospitalSave, requestHospitalUpdate } from '../../api/hospital';
-    import { getProvinceList, provinceChange, cityChange, areaList } from '../../utils/areaList';
+    import { getProvinceList, provinceChange, cityChange, areaList } from '@/utils/areaList';
 
     export default {
         components: {

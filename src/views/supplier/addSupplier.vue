@@ -190,7 +190,7 @@
     import GoBackButton from '@/components/goBackButton.vue';
     import { requestSupplierGet, requestSupplierInsert, requestSupplierUpdate } from '../../api/supplier';
     import { uploadHandleChange, beforeUploadFn, beforeUploadData } from '../../utils/upload';
-    import { getProvinceList, provinceChange, areaList } from '../../utils/areaList';
+    import { getProvinceList, provinceChange, areaList } from '@/utils/areaList';
 
     export default {
         components: {
