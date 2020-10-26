@@ -4,8 +4,8 @@
         <div class="a-input-group">
             <a-input class="lengthen-input-width" v-model="searchData.diseaseName" placeholder="请输入疾病名称"/>
             <a-select class="basic-select-width" v-model="searchData.status" placeholder="请选择状态">
-                <a-select-option value="1">正常</a-select-option>
-                <a-select-option value="0">关闭</a-select-option>
+                <a-select-option :value="1">正常</a-select-option>
+                <a-select-option :value="0">关闭</a-select-option>
             </a-select>
             <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
         </div>
@@ -29,14 +29,14 @@
                  slot-scope="scope,sItem,sIndex,extra"
             >
                 <a-switch checked-children="开" un-checked-children="关"
-                          :default-checked="!!sIndex"
+                          v-model="sItem.statusBooleanFormat"
                           @change="aSwitchChange(sItem,$event)"
                 />
             </div>
             <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
                 <a-space size="small">
                     <a @click="editDisease(sItem,sIndex,extra)">编辑</a>
-                    <a @click="deleteDisease(sItem)">删除</a>
+                    <!--                    <a @click="deleteDisease(sItem)">删除</a>-->
                     <!--                    <a @click="relatedDisease(sItem,sIndex,)">关联疾病</a>-->
                 </a-space>
             </div>
@@ -63,7 +63,7 @@
 <script>
     import { paginationInit, paginationDecode, paginationEncode } from '@/utils/pagination.ts';
     import { twoRowSearch } from '@/utils/tableScroll';
-    import { requestDiseasePage } from '../../api/disease';
+    import { requestDiseaseChangeStatus, requestDiseasePage } from '../../api/disease';
 
     const columns = [
         {
@@ -111,6 +111,8 @@
                         const { data } = v;
                         data.records.forEach((item, index) => {
                             item.key = index;
+                            //  状态需要布尔值
+                            item.statusBooleanFormat = item.status === 1;
                         });
                         this.data = data.records;
                         this.pagination = paginationDecode(this.pagination, data);
@@ -132,31 +134,40 @@
             //  切换状态
             aSwitchChange(sItem, checked){
                 console.log(sItem, checked);
+                requestDiseaseChangeStatus(sItem.id)
+                    .then(v => {
+                        this.$message.success('操作成功');
+                        this.searchFn();
+                    })
+                    .catch(err => {
+                        sItem.statusBooleanFormat = !checked;
+                        this.$message.error('操作失败');
+                    });
             },
             //  编辑疾病
             editDisease(sItem, sIndex, extra){
                 this.$router.push({ name: 'editDisease', params: { diseaseId: sItem.id } });
             },
-            //  删除疾病
-            deleteDisease(sItem){
-                console.log(sItem.disease);
-                this.$confirm({
-                    title: `确定删除${sItem.disease}`,
-                    //  content: 'Bla bla ...',
-                    okText: '确认',
-                    okType: 'danger',
-                    cancelText: '取消',
-                    onOk(){
-                        return new Promise((resolve, reject) => {
-                            console.log('发请求');
-                            setTimeout(Math.random() > 0.5 ? resolve : reject, 1111);
-                        }).catch(() => console.log('Oops errors!'));
-                    },
-                    onCancel(){
-                        console.log('取消');
-                    },
-                });
-            },
+//            //  删除疾病
+//            deleteDisease(sItem){
+//                console.log(sItem.disease);
+//                this.$confirm({
+//                    title: `确定删除${sItem.disease}`,
+//                    //  content: 'Bla bla ...',
+//                    okText: '确认',
+//                    okType: 'danger',
+//                    cancelText: '取消',
+//                    onOk(){
+//                        return new Promise((resolve, reject) => {
+//                            console.log('发请求');
+//                            setTimeout(Math.random() > 0.5 ? resolve : reject, 1111);
+//                        }).catch(() => console.log('Oops errors!'));
+//                    },
+//                    onCancel(){
+//                        console.log('取消');
+//                    },
+//                });
+//            },
         }
     };
 </script>

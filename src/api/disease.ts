@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 
-//  疾病列表			✅
+//  疾病列表			✅✅
 export function requestDiseasePage(data: any) {
 	return request({
 		url: '/api/disease/page',
@@ -9,7 +9,7 @@ export function requestDiseasePage(data: any) {
 	});
 }
 
-//	新增疾病			✅，新增成功了，但是列表里没有出来
+//	新增疾病			✅✅
 export function requestDiseaseSave(data: any) {
 	return request({
 		url: '/api/disease/save',
@@ -18,7 +18,7 @@ export function requestDiseaseSave(data: any) {
 	});
 }
 
-//	编辑疾病
+//	编辑疾病			✅✅
 export function requestDiseaseUpdate(data: any) {
 	return request({
 		url: '/api/disease/update',
@@ -27,7 +27,13 @@ export function requestDiseaseUpdate(data: any) {
 	});
 }
 
-//	缺少疾病详情接口
+//	修改疾病状态		✅✅
+export function requestDiseaseChangeStatus(id: string | number) {
+	return request({
+		url: `/api/disease/changeStatus/${id}`,
+		method: 'get',
+	});
+}
 
 
 //	删除疾病		⚠️原型无
@@ -38,4 +44,14 @@ export function requestDiseaseDelete(id: string | number) {
 		data: {id,}
 	});
 }
+
+//	疾病详情			✅✅
+export function requestDiseaseGet(id: string | number) {
+	return request({
+		url: `/api/disease/get/${id}`,
+		method: 'get'
+	});
+}
+
+
 
