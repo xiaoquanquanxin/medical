@@ -4,9 +4,14 @@
         <div class="a-input-group" data-msg="空"></div>
         <div class="a-input-group">
             <a-row type="flex" justify="space-between" align="middle">
-                <a-col>
-                    <a-button type="primary" @click="confirmOutHospital">确认出院</a-button>
-                    <router-link :to="{name:'admittedHospital',params:{patientId}}">
+                <a-col v-if="patientInfo">
+                    <a-button type="primary" @click="confirmOutHospital"
+                              v-if="patientInfo.patientStatus == 1"
+                    >确认出院
+                    </a-button>
+                    <router-link :to="{name:'admittedHospital',params:{patientId}}"
+                                 v-if="patientInfo.patientStatus == 2"
+                    >
                         <a-button type="primary">
                             确认入院
                         </a-button>
@@ -72,8 +77,8 @@
                 requestPatientSelectOnePatient(this.patientId)
                     .then(v => {
                         const { data } = v;
-                        //  console.log(JSON.parse(JSON.stringify(data)));
-                        //  data.age = data.age = calcAgeByBirth(data.birth);
+                        console.log(JSON.parse(JSON.stringify(data)));
+                        //  this.patientInfo.patientStatus
                         this.patientInfo = data;
                         //  保存到store里，基础信息、群聊信息 ⚠️这里暂时一个，看够不够了
                         this.setPatientBasicInfo(this.patientInfo);
@@ -89,12 +94,23 @@
                     title: `确定${this.patientInfo.name}出院`,
                     okText: '确认',
                     cancelText: '取消',
-                    onOk(){
-                        return new Promise((resolve, reject) => {
-                            console.log('发请求');
-                            setTimeout(Math.random() > 0.5 ? resolve : reject, 1111);
-                            //  这里要通知的有很多
-                        }).catch(() => console.log('Oops errors!'));
+                    onOk: () => {
+                        console.log(this.patientBasicInfo);
+                        this.patientBasicInfo.id = this.patientId;
+                        this.patientBasicInfo.patientStatus = 2;
+                        requestPatientUpdate(this.patientBasicInfo)
+                            .then(v => {
+                                console.log(v);
+                                this.$success({
+                                    title: '保存成功',
+                                    onOk: () => {
+                                        console.log('更新左侧列表');
+                                        this.userList_searchFn();
+                                        this.$router.push({ name: 'patientInfo' });
+                                    }
+                                });
+                            });
+
                     },
                     onCancel(){
                         console.log('取消');
@@ -111,19 +127,13 @@
                 ])
                     .then(v => {
                         console.log('发请求');
-                        //  todo    年龄不是生日
-                        this.patientBasicInfo.birth = '1919';
-                        //  todo    就诊科室没有数据
-                        this.patientBasicInfo.hospitalTreatment = 1;
-                        //  todo    营养师需要接口
-                        this.patientBasicInfo.nutritionistId = 1;
-                        //  新增入院所以是1    1入院，2.出院，3.永久注销;
-                        this.patientBasicInfo.patientStatus = 1;
-                        //  todo    还有啥叫病区和劳动强度？
-                        this.patientBasicInfo.pla = '1';
-                        this.patientBasicInfo.ward = '传染病区';
-                        //  todo    删除jzbh
-                        delete this.patientBasicInfo.jzbh;
+//                        //  todo    就诊科室没有数据
+//                        this.patientBasicInfo.hospitalTreatment = 1;
+//                        //  todo    还有啥叫病区和劳动强度？
+//                        this.patientBasicInfo.pla = '1';
+//                        this.patientBasicInfo.ward = '传染病区';
+//                        //  todo    删除jzbh
+//                        delete this.patientBasicInfo.jzbh;
                         this.patientBasicInfo.id = this.patientId;
                         console.log(JSON.stringify(this.patientBasicInfo));
                         console.table(JSON.parse(JSON.stringify(this.patientBasicInfo)));

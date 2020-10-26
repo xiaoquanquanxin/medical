@@ -39,7 +39,7 @@
                     >
                         <!--年龄/性别-->
                         <div slot="info" slot-scope="scope,sItem,sIndex,extra">
-                            {{scope.age}}/{{scope.sex===1?'男':'女'}}
+                            {{scope.birth}}/{{scope.sex===1?'男':'女'}}
                         </div>
                         <!--状态-->
                         <div slot="patientStatus" slot-scope="scope,sItem,sIndex,extra">
@@ -138,7 +138,6 @@
                         const { data } = v;
                         data.records.forEach((item, index) => {
                             item.key = index;
-                            item.age = calcAgeByBirth(item.birth);
                         });
                         console.log(JSON.parse(JSON.stringify(data.records)));
                         this.data = data.records;

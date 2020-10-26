@@ -42,16 +42,16 @@
                 </a-descriptions-item>
                 <a-descriptions-item label="年龄">
                     <a-input
-                            v-if="activeElementId === 3 ||!patientBasicInfo.age"
+                            v-if="activeElementId === 3 ||!patientBasicInfo.birth"
                             placeholder="请输入年龄"
-                            v-model="patientBasicInfo.age"
+                            v-model="patientBasicInfo.birth"
                             class="form-element"
                             @focus="descriptionFormFocusFn(3)"
                     />
                     <p v-else
                        @click="descriptionFormClickFn(3,$event)"
                        class="description-content"
-                    >{{patientBasicInfo.age}}</p>
+                    >{{patientBasicInfo.birth}}</p>
                 </a-descriptions-item>
                 <a-descriptions-item label="身高">
                     <a-input
