@@ -1,12 +1,12 @@
 <template>
     <a-transfer
-            :data-source="mockData"
+            :data-source="renderOriginList"
             :show-search="true"
             :showSelectAll="true"
             :list-style="{width: '250px',height: '300px',}"
             :operations="['右移动', '左移动']"
             :target-keys="targetKeys"
-            :render="item => `${item.title}-${item.description}`"
+            :render="item => `${item.title}`"
             @change="handleChange"
             :titles="shuttleBoxBasicData.title"
     >
@@ -25,6 +25,7 @@
 <script>
     import { mapGetters, mapActions } from 'vuex';
     import { SHUTTLE_BOX } from '../store/modules/shuttleBox';
+    import { requestDiseaseList } from '../api/disease';
 
     //	穿梭框的基础数据
     export const SHUTTLE_BOX_BASIC_DATA = {};
@@ -36,9 +37,15 @@
             shuttleBoxType(){
                 return this.$store.state.shuttleBox.shuttleBoxType;
             },
+            //  原始数据
+//            originList(){
+//                return this.$store.state.shuttleBox.originList;
+//            }
         },
+        props: ['originList'],
         data(){
             return {
+                renderOriginList: [],
                 mockData: [],
                 targetKeys: [],
                 //  请求相关数据
@@ -46,9 +53,7 @@
             };
         },
         created(){
-            //  console.log(SHUTTLE_BOX_BASIC_DATA);
-            //  console.log(this.shuttleBoxType);
-            //  console.log(this.shuttleBoxBasicData);
+            this.renderOriginList = JSON.parse(JSON.stringify(this.originList));
             this.shuttleBoxBasicData = (() => {
                 switch (this.shuttleBoxType) {
                     //	商品列表 - 授权
@@ -74,8 +79,6 @@
                     case SHUTTLE_BOX.ASSOCIATED_DISEASE:
                         return {
                             title: ['疾病列表', '已选疾病列表'],
-                            //	请求数据
-                            requestDataUrl: 'requestDataUrl',
                             //	提交数据
                             submitDataUrl: 'submitDataUrl',
                         };
@@ -93,47 +96,8 @@
                         return {};
                 }
             })();
-            this.handleSubmit = this.handleSubmit.bind(this);
-            this.getMock();
-            console.log('mounted🍉，发请求', '类型是', this.shuttleBoxType);
-        },
-        created(){
-            this.searchFn();
         },
         methods: {
-            //  主要请求
-            searchFn(){
-//                requestChannelBusinessPage(paginationEncode(this.pagination))
-//                    .then(v => {
-//                        const { data } = v;
-//                        console.log(data);
-//                data.records.forEach((item, index) => {
-//                    item.key = index;
-//                    item.createTime = item.createTime.substr(0, 10);
-//                });
-//                        this.data = data.records;
-//                        this.pagination = paginationDecode(this.pagination, data);
-//                    });
-            },
-            getMock(props){
-                //  console.log(props);
-                const targetKeys = [];
-                const mockData = [];
-                for (let i = 0; i < 20; i++) {
-                    const data = {
-                        key: i.toString(),
-                        title: `渠道商${i + 1}`,
-                        description: `渠道商${i + 1}`,
-                        chosen: Math.random() * 2 > 1,
-                    };
-                    if (data.chosen) {
-                        targetKeys.push(data.key);
-                    }
-                    mockData.push(data);
-                }
-                this.mockData = mockData;
-                //  this.targetKeys = targetKeys;
-            },
             handleChange(targetKeys, direction, moveKeys){
                 //  console.log(targetKeys, direction, moveKeys);
                 console.log(targetKeys);
@@ -143,24 +107,16 @@
             reset(props){
                 console.log('重置');
                 console.log(props);
-                console.log(props.dataSource);
                 this.targetKeys = [];
             },
 
             //  发请求
             handleSubmit(){
-                return new Promise(((resolve, reject) => {
-                    console.log(this.targetKeys);
-                    resolve();
-                }))
-                    .then(v => {
-                        return new Promise(((resolve, reject) => {
-                            console.log('发请求吧');
-                            setTimeout(() => {
-                                resolve();
-                            }, 1000);
-                        }));
-                    });
+                if (this.targetKeys.length) {
+                    return Promise.resolve(this.targetKeys);
+                }
+                this.$message.error('请先选择数据');
+                return Promise.reject();
             },
         },
     };

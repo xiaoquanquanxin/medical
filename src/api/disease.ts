@@ -54,4 +54,13 @@ export function requestDiseaseGet(id: string | number) {
 }
 
 
+//	疾病列表接口
+export function requestDiseaseList() {
+	return request({
+		url: '/api/disease/list',
+		method: 'get',
+	});
+}
+
+
 

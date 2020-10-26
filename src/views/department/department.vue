@@ -70,7 +70,9 @@
                  ok-text="确认"
                  cancel-text="取消"
                  @ok="associatedDiseaseModalCheck('refAssociatedDisease')">
-            <ShuttleBox ref="refAssociatedDisease"/>
+            <ShuttleBox ref="refAssociatedDisease"
+                        :origin-list="diseaseOriginList"
+            />
         </a-modal>
         <!--关联评估调查表-->
         <a-modal v-model="dialogDataQuestionnaire.visible"
@@ -83,7 +85,9 @@
                  ok-text="确认"
                  cancel-text="取消"
                  @ok="questionnaireModalCheck('refQuestionnaire')">
-            <ShuttleBox ref="refQuestionnaire"/>
+            <ShuttleBox ref="refQuestionnaire"
+                        :origin-list="diseaseOriginList"
+            />
         </a-modal>
     </div>
 </template>
@@ -95,7 +99,9 @@
     import { paginationInit, paginationDecode, paginationEncode } from '@/utils/pagination.ts';
     import { twoRowSearch } from '@/utils/tableScroll';
     import { SHUTTLE_BOX } from '../../store/modules/shuttleBox';
-    import { requestDeptPage, requestDeptUpdate } from '../../api/department';
+    import { requestDeptPage, requestDeptRelatedDiseases, requestDeptUpdate } from '../../api/department';
+    import { requestDiseaseList } from '../../api/disease';
+    import { requestAssessList } from '../../api/questionnaire';
 
     const columns = [
         {
@@ -106,12 +112,12 @@
         {
             title: '状态',
             scopedSlots: { customRender: 'a-switch' },
-            width: 150,
+            width: 100,
         },
         {
             title: '操作',
             scopedSlots: { customRender: 'operation' },
-            width: 150,
+            width: 250,
         },
     ];
     //  科室管理
@@ -137,6 +143,11 @@
 
                 //  搜索数据
                 searchData: {},
+
+                //  疾病关联列表
+                diseaseOriginList: [],
+                //  被操作的穿梭框
+                shuttleBoxData: {}
             };
         },
 
@@ -154,7 +165,7 @@
                         });
                         this.data = data.records;
                         this.pagination = paginationDecode(this.pagination, data);
-                        console.log(JSON.parse(JSON.stringify(data.records[0])));
+                        //  console.log(JSON.parse(JSON.stringify(data.records[0])));
                     });
             },
             //  莫泰框方法
@@ -162,6 +173,10 @@
             ...mapActions('shuttleBox', [
                 //  设置穿梭框类型
                 'setShuttleBoxType',
+                //  设置原始数据
+                'setOriginList',
+                //  设置被选中的数据
+                'setSelectList',
             ]),
             //  展示的每一页数据变换
             onShowSizeChange(current, pageSize){
@@ -194,21 +209,57 @@
 
             //  关联疾病
             relatedDisease(sItem){
-                this.showModal(DIALOG_TYPE.ASSOCIATED_DISEASE);
-                this.setShuttleBoxType(SHUTTLE_BOX.ASSOCIATED_DISEASE);
+                this.shuttleBoxData = sItem;
+                requestDiseaseList()
+                    .then(v => {
+                        this.showModal(DIALOG_TYPE.ASSOCIATED_DISEASE);
+                        this.setShuttleBoxType(SHUTTLE_BOX.ASSOCIATED_DISEASE);
+                        this.diseaseOriginList = [];
+                        v.data.forEach(item => {
+                            const data = {};
+                            data.key = item.id.toString();
+                            data.title = item.diseaseName;
+                            data.description = item.diseaseName;
+                            //  todo    处理被选中
+                            data.chosen = false;
+                            this.diseaseOriginList.push(data);
+                        });
+                    });
             },
             //  关联评估调查表
             relatedQuestionnaire(sItem){
-                this.showModal(DIALOG_TYPE.QUESTIONNAIRE);
-                this.setShuttleBoxType(SHUTTLE_BOX.QUESTIONNAIRE);
+                this.shuttleBoxData = sItem;
+                requestAssessList()
+                    .then(v => {
+                        this.showModal(DIALOG_TYPE.QUESTIONNAIRE);
+                        this.setShuttleBoxType(SHUTTLE_BOX.QUESTIONNAIRE);
+                        this.diseaseOriginList = [];
+                        v.data.forEach(item => {
+                            const data = {};
+                            data.key = item.id.toString();
+                            data.title = item.diseaseName;
+                            data.description = item.diseaseName;
+                            //  todo    处理被选中
+                            data.chosen = false;
+                            this.diseaseOriginList.push(data);
+                        });
+                    });
             },
-            //  关联疾病
+            //  关联疾病确定
             associatedDiseaseModalCheck(refAssociatedDisease){
                 //  防止连点
                 this.setConfirmLoading(DIALOG_TYPE.ASSOCIATED_DISEASE, true);
                 const promise = this.$refs[refAssociatedDisease].handleSubmit();
-                promise.then(v => {
-                    this.hideModal(DIALOG_TYPE.ASSOCIATED_DISEASE);
+                promise.then(targetKeys => {
+                    console.log(targetKeys);
+                    console.log(this.shuttleBoxData.id);
+                    return requestDeptRelatedDiseases({
+                        id: this.shuttleBoxData.id,
+                        diseasesds: targetKeys
+                    })
+                        .then(v => {
+                            this.hideModal(DIALOG_TYPE.ASSOCIATED_DISEASE);
+                        });
                 }).catch(error => {
                     console.log('有错');
                 }).then(v => {
@@ -216,7 +267,7 @@
                     this.setConfirmLoading(DIALOG_TYPE.ASSOCIATED_DISEASE, false);
                 });
             },
-            //  关联评估调查表
+            //  关联评估调查表确定
             questionnaireModalCheck(refQuestionnaire){
                 //  防止连点
                 this.setConfirmLoading(DIALOG_TYPE.QUESTIONNAIRE, true);

@@ -43,3 +43,11 @@ export function requestAssessDelete(id: string | number) {
 		method: 'get',
 	})
 }
+
+//	获取评估列表
+export function requestAssessList() {
+	return request({
+		url: '/api/assess/list',
+		method: 'get',
+	});
+}

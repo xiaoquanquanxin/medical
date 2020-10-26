@@ -53,4 +53,13 @@ export function requestHospitalGet(id: string | number) {
 	});
 }
 
-//	缺医院详情接口
+//	修改医院信息状态
+export function requestHospitalChangeStatus(id: string | number) {
+	return request({
+		url: `/api/hospital/changeStatus/${id}`,
+		method: 'get',
+	})
+}
+
+
+

@@ -11,11 +11,16 @@ export const SHUTTLE_BOX = {
 	ASSOCIATED_DISEASE: 'ASSOCIATED_DISEASE',
 	//	科室管理 - 关联评估调查表
 	QUESTIONNAIRE: 'QUESTIONNAIRE',
+
+
 };
 
 
 interface STATE {
-	modalTargetKeys: Array<any>;
+	//	原始数据
+	originList: [];
+	//	被选中的数据
+	selectList: [];
 	//	shuttleBoxBasicData: any;
 	shuttleBoxType: string;
 }
@@ -25,8 +30,11 @@ const state: STATE = {
 	shuttleBoxType: '',
 	//	穿梭框的基础数据
 	//	shuttleBoxBasicData: null,
-	//	穿梭框的数据
-	modalTargetKeys: [],
+
+	//	原始数据
+	originList: [],
+	//	被选中的数据
+	selectList: []
 }
 
 
@@ -34,8 +42,11 @@ const mutations = {
 	SET_SHUTTLE_BOX_TYPE: (state: STATE, shuttleBoxType: string) => {
 		state.shuttleBoxType = shuttleBoxType;
 	},
-	SET_MODAL_TARGET_KEY: (state: STATE, modalTargetKeys: Array<any>) => {
-		state.modalTargetKeys = modalTargetKeys;
+	SET_ORIGIN_LIST: (state: STATE, originList: []) => {
+		state.originList = originList;
+	},
+	SET_SELECT_LIST: (state: STATE, selectList: []) => {
+		state.selectList = selectList;
 	},
 
 }
@@ -44,8 +55,13 @@ const actions = {
 	setShuttleBoxType({commit}: COMMIT_INTERFACE<STATE>, shuttleBoxType: string) {
 		commit('SET_SHUTTLE_BOX_TYPE', shuttleBoxType)
 	},
-	setModalTargetKey({commit}: COMMIT_INTERFACE<STATE>, modalTargetKeys: Array<any>) {
-		commit('SET_MODAL_TARGET_KEY', modalTargetKeys)
+	//	设置原始数据
+	setOriginList({commit}: COMMIT_INTERFACE<STATE>, originList: []) {
+		commit('SET_ORIGIN_LIST', originList)
+	},
+	//	设置被选中的数据
+	setSelectList({commit}: COMMIT_INTERFACE<STATE>, selectList: []) {
+		commit('SET_SELECT_LIST', selectList)
 	},
 }
 

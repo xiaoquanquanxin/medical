@@ -35,10 +35,15 @@
                  slot-scope="scope,sItem,sIndex,extra"
             >
                 <a-switch checked-children="开" un-checked-children="关"
-                          :default-checked="scope.status"
+                          v-model="sItem.statusBooleanFormat"
                           @change="aSwitchChange(sItem,$event)"
                 />
             </div>
+            <!--图片-->
+            <div slot="hospitalPic" slot-scope="scope,sItem,sIndex,extra">
+                <img :src="scope.hospitalPic" alt="">
+            </div>
+            <!--操作-->
             <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
                 <a-space size="small">
                     <a @click="editHospital(sItem)">编辑</a>
@@ -100,7 +105,7 @@
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
     import { twoRowSearch } from '@/utils/tableScroll';
     import { SHUTTLE_BOX } from '../../store/modules/shuttleBox';
-    import { requestHospitalPage } from '../../api/hospital';
+    import { requestHospitalChangeStatus, requestHospitalPage } from '../../api/hospital';
     import { getProvinceList, provinceChange, cityChange, areaList } from '@/utils/areaList';
 
     const columns = [
@@ -121,7 +126,7 @@
         },
         {
             title: '医院图标',
-            dataIndex: 'hospitalPic',
+            scopedSlots: { customRender: 'hospitalPic' },
             width: 100,
         },
         {
@@ -135,11 +140,6 @@
         components: {
             ShuttleBox,
             ChannelProviderBox,
-        },
-        computed: {
-            modalTargetKeys(){
-                return this.$store.state.shuttleBox.modalTargetKeys;
-            }
         },
         data(){
             return {
@@ -172,6 +172,8 @@
                         const { data } = v;
                         data.records.forEach((item, index) => {
                             item.key = index;
+                            //  状态需要布尔值
+                            item.statusBooleanFormat = item.status === 1;
                         });
                         this.data = data.records;
                         console.log(JSON.parse(JSON.stringify(data.records [0])));
@@ -203,8 +205,16 @@
             },
 
             //  切换状态
-            aSwitchChange(sItem, $event){
-                console.log(sItem, $event);
+            aSwitchChange(sItem, checked){
+                requestHospitalChangeStatus(sItem.id)
+                    .then(v => {
+                        this.$message.success('操作成功');
+                        this.searchFn();
+                    })
+                    .catch(err => {
+                        sItem.statusBooleanFormat = !checked;
+                        this.$message.error('操作失败');
+                    });
             },
 
             //  编辑医院
