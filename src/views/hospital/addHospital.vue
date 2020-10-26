@@ -19,7 +19,7 @@
                 <a-select class="add-form-input"
                           v-decorator="provinceDecorator"
                           placeholder="请选择渠道商地区-省份"
-                          @change="provinceChange"
+                          @change="_provinceChange"
                 >
                     <a-select-option :value="item.id"
                                      :key="item.id"
@@ -32,7 +32,7 @@
                 <a-select class="add-form-input"
                           v-decorator="cityDecorator"
                           placeholder="请选择渠道商地区-市区"
-                          @change="cityChange"
+                          @change="_cityChange"
                 >
                     <a-select-option :value="item.id"
                                      :key="item.id"
@@ -45,7 +45,6 @@
                 <a-select class="add-form-input"
                           v-decorator="countyDecorator"
                           placeholder="请选择渠道商地区-县城"
-                          @change="cityChange"
                 >
                     <a-select-option :value="item.id"
                                      :key="item.id"
@@ -80,73 +79,48 @@
                     />
                 </div>
             </a-form-item>
-            <!--            <a-divider orientation="left"></a-divider>-->
-            <!--            <a-form-item label="状态">-->
-            <!--                <a-switch v-decorator="['switch', { valuePropName: 'checked' }]"/>-->
-            <!--            </a-form-item>-->
-            <!--            <a-form-item label="支付商家为医院">-->
-            <!--                <a-radio-group v-decorator="['radio-group']">-->
-            <!--                    <a-radio value="a">-->
-            <!--                        是-->
-            <!--                    </a-radio>-->
-            <!--                    <a-radio value="b">-->
-            <!--                        否-->
-            <!--                    </a-radio>-->
-            <!--                </a-radio-group>-->
-            <!--            </a-form-item>-->
-            <!--            <a-form-item label="方式">-->
-            <!--                <a-radio-group v-decorator="['radio-group']">-->
-            <!--                    <a-radio value="a">-->
-            <!--                        线上-->
-            <!--                    </a-radio>-->
-            <!--                    <a-radio value="b">-->
-            <!--                        线下-->
-            <!--                    </a-radio>-->
-            <!--                    <a-radio value="b">-->
-            <!--                        线上线下-->
-            <!--                    </a-radio>-->
-            <!--                </a-radio-group>-->
-            <!--            </a-form-item>-->
-            <!--            <a-form-item label="是否有支付二维码">-->
-            <!--                <a-radio-group v-decorator="['radio-group']">-->
-            <!--                    <a-radio value="a">-->
-            <!--                        是-->
-            <!--                    </a-radio>-->
-            <!--                    <a-radio value="b">-->
-            <!--                        否-->
-            <!--                    </a-radio>-->
-            <!--                </a-radio-group>-->
-            <!--            </a-form-item>-->
-            <!--            <a-form-item label="是否有处方号条形码">-->
-            <!--                <a-radio-group v-decorator="['radio-group']">-->
-            <!--                    <a-radio value="a">-->
-            <!--                        是-->
-            <!--                    </a-radio>-->
-            <!--                    <a-radio value="b">-->
-            <!--                        否-->
-            <!--                    </a-radio>-->
-            <!--                </a-radio-group>-->
-            <!--            </a-form-item>-->
-            <!--            <a-form-item label="是否需要审核">-->
-            <!--                <a-radio-group v-decorator="['radio-group']">-->
-            <!--                    <a-radio value="a">-->
-            <!--                        是-->
-            <!--                    </a-radio>-->
-            <!--                    <a-radio value="b">-->
-            <!--                        否-->
-            <!--                    </a-radio>-->
-            <!--                </a-radio-group>-->
-            <!--            </a-form-item>-->
-            <!--            <a-form-item label="是否是充值缴费方式">-->
-            <!--                <a-radio-group v-decorator="['radio-group']">-->
-            <!--                    <a-radio value="a">-->
-            <!--                        是-->
-            <!--                    </a-radio>-->
-            <!--                    <a-radio value="b">-->
-            <!--                        否-->
-            <!--                    </a-radio>-->
-            <!--                </a-radio-group>-->
-            <!--            </a-form-item>-->
+            <a-divider orientation="left"></a-divider>
+            <a-form-item label="状态">
+                <a-switch checked-children="开启" un-checked-children="关闭"
+                          v-model="status"/>
+            </a-form-item>
+            <a-form-item label="支付商家为医院">
+                <a-radio-group v-decorator="isHospitalDecorator">
+                    <a-radio :value="0">是</a-radio>
+                    <a-radio :value="1">否</a-radio>
+                </a-radio-group>
+            </a-form-item>
+            <a-form-item label="运营方式">
+                <a-radio-group v-decorator="operationModeDecorator">
+                    <a-radio :value="0">线上</a-radio>
+                    <a-radio :value="1">线下</a-radio>
+                    <a-radio :value="2">线上线下</a-radio>
+                </a-radio-group>
+            </a-form-item>
+            <a-form-item label="处方上是否有二维码用于支付">
+                <a-radio-group v-decorator="displayQrCodeDecorator">
+                    <a-radio :value="0">是</a-radio>
+                    <a-radio :value="1">否</a-radio>
+                </a-radio-group>
+            </a-form-item>
+            <a-form-item label="处方上是否有处方号条形码">
+                <a-radio-group v-decorator="displayBarcodeDecorator">
+                    <a-radio :value="0">是</a-radio>
+                    <a-radio :value="1">否</a-radio>
+                </a-radio-group>
+            </a-form-item>
+            <a-form-item label="是否需要审核">
+                <a-radio-group v-decorator="isAuditRequiredDecorator">
+                    <a-radio :value="0">是</a-radio>
+                    <a-radio :value="1">否</a-radio>
+                </a-radio-group>
+            </a-form-item>
+            <a-form-item label="是否是充值缴费方式">
+                <a-radio-group v-decorator="rechargePaymentDecorator">
+                    <a-radio :value="0">是</a-radio>
+                    <a-radio :value="1">否</a-radio>
+                </a-radio-group>
+            </a-form-item>
             <!--            <a-divider orientation="left"></a-divider>-->
             <!--            <a-form-item label="微信商户号">-->
             <!--                <a-input class="add-form-input"-->
@@ -250,10 +224,9 @@
     </div>
 </template>
 <script>
-    import { formItemLayout } from '@/utils/layout.ts';
     import GoBackButton from '@/components/goBackButton.vue';
     import { uploadHandleChange, beforeUploadFn, beforeUploadData } from '../../utils/upload';
-    import { requestHospitalSave, requestHospitalUpdate } from '../../api/hospital';
+    import { requestHospitalGet, requestHospitalSave, requestHospitalUpdate } from '../../api/hospital';
     import { getProvinceList, provinceChange, cityChange, areaList } from '@/utils/areaList';
 
     export default {
@@ -269,7 +242,10 @@
                 areaList,
                 //	上传文件的数据，这样的对象只需要一个
                 beforeUploadData,
-                formItemLayout,
+                formItemLayout: {
+                    labelCol: { span: 7 },
+                    wrapperCol: { offset: 1, span: 15 },
+                },
                 //  医院id
                 hospitalId: this.$route.params.hospitalId,
 
@@ -302,14 +278,6 @@
                     },]
                 }],
 
-                //  地址
-                addrDecorator: ['addr', {
-                    initialValue: null,
-                }],
-
-                //  地址下拉
-                addrList: [],
-
                 //  医院图标
                 hospitalPicDecorator: ['hospitalPic', {
                     rules: [{
@@ -318,6 +286,51 @@
                     },]
                 }],
                 hospitalPicThumbUrl: null,
+
+                //  状态
+                status: true,
+                //  支付商家为医院
+                isHospitalDecorator: ['isHospital', {
+                    initialValue: 0,
+                    rules: [{
+                        required: true,
+                    },]
+                }],
+                //  运营方式
+                operationModeDecorator: ['operationMode', {
+                    initialValue: 0,
+                    rules: [{
+                        required: true,
+                    },]
+                }],
+                //  处方上是否有二维码用于支付
+                displayQrCodeDecorator: ['displayQrCode', {
+                    initialValue: 0,
+                    rules: [{
+                        required: true,
+                    },]
+                }],
+                //  处方上是否有处方号条形码
+                displayBarcodeDecorator: ['displayBarcode', {
+                    initialValue: 0,
+                    rules: [{
+                        required: true,
+                    },]
+                }],
+                //  是否需要审核
+                isAuditRequiredDecorator: ['isAuditRequired', {
+                    initialValue: 0,
+                    rules: [{
+                        required: true,
+                    },]
+                }],
+                //  是否是充值缴费方式
+                rechargePaymentDecorator: ['rechargePayment', {
+                    initialValue: 0,
+                    rules: [{
+                        required: true,
+                    },]
+                }]
             };
         },
         created(){
@@ -330,18 +343,17 @@
             beforeUploadFn,
             //  主要请求
             searchFn(){
-                this.getProvinceList();
-//                requestChannelBusinessPage(paginationEncode(this.pagination))
-//                    .then(v => {
-//                        const { data } = v;
-//                        console.log(data);
-//                data.records.forEach((item, index) => {
-//                    item.key = index;
-//                    item.createTime = item.createTime.substr(0, 10);
-//                });
-//                        this.data = data.records;
-//                        this.pagination = paginationDecode(this.pagination, data);
-//                    });
+                this.getProvinceList(this);
+                //  如果是新增
+                if (!this.hospitalId) {
+                    return;
+                }
+                //  如果是编辑
+                requestHospitalGet(this.hospitalId)
+                    .then(v => {
+                        const { data } = v;
+                        console.log(data);
+                    });
             },
             //    表单提交
             handleSubmit(e){
@@ -352,20 +364,23 @@
                             reject();
                             return;
                         }
-                        console.table(values);
+                        //  console.table(values);
+                        const data = Object.assign({ status: this.status }, values);
+                        console.log(data);
                         (() => {
                             //  如果是新增
                             if (!this.manufacturerId) {
-                                return requestHospitalSave(values);
+                                return requestHospitalSave(data);
                             }
                             //  如果是编辑
                             return requestHospitalUpdate(Object.assign(
-                                { id: this.manufacturerId },
-                                values)
+                                { id: this.hospitalId },
+                                data)
                             );
                         })()
                             .then(v => {
                                 console.log(v);
+                                this.$router.push({ name: 'hospital' });
                                 resolve();
                             })
                             .catch(err => {
@@ -378,10 +393,17 @@
 
             //  获取省份
             getProvinceList,
+
             //  省份变化
             provinceChange,
+            _provinceChange(value){
+                this.provinceChange(this, value);
+            },
             //  市区变化
             cityChange,
+            _cityChange(value){
+                this.cityChange(this, value);
+            },
         },
     };
 </script>
