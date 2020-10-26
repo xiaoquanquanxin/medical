@@ -20,8 +20,8 @@
                 <a-select v-decorator="deptTypeDecorator"
                           class="add-form-input"
                           placeholder="请选择科室类型">
-                    <a-select-option :value="0">默认</a-select-option>
-                    <a-select-option :value="1">公共</a-select-option>
+                    <a-select-option value="0">默认</a-select-option>
+                    <a-select-option value="1">公共</a-select-option>
                 </a-select>
             </a-form-item>
             <a-form-item label="状态">
@@ -43,7 +43,7 @@
 <script>
     import { formItemLayout } from '@/utils/layout.ts';
     import GoBackButton from '@/components/goBackButton.vue';
-    import { requestDeptSave, requestDeptUpdate } from '../../api/department';
+    import { requestDeptGet, requestDeptSave, requestDeptUpdate } from '../../api/department';
 
     export default {
         components: {
@@ -94,17 +94,21 @@
                     return;
                 }
                 //  如果是编辑
-//                requestChannelBusinessPage(paginationEncode(this.pagination))
-//                    .then(v => {
-//                        const { data } = v;
-//                        console.log(data);
-//                data.records.forEach((item, index) => {
-//                    item.key = index;
-//                    item.createTime = item.createTime.substr(0, 10);
-//                });
-//                        this.data = data.records;
-//                        this.pagination = paginationDecode(this.pagination, data);
-//                    });
+                requestDeptGet(this.departmentId)
+                    .then(v => {
+                        const { data } = v;
+                        const {
+                            deptName,
+                            deptType,
+                            status,
+                        } = data;
+                        console.log(data);
+                        this.form.setFieldsValue({
+                            deptName,
+                            deptType,
+                            status,
+                        });
+                    });
             },
             //    表单提交
             handleSubmit(e){

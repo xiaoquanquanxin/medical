@@ -53,8 +53,13 @@ export function requestDeptDelete(id: string | number) {
 	});
 }
 
-
-//	缺少科室详情接口
+//	科室详情
+export function requestDeptGet(id: string | number) {
+	return request({
+		url: `/api/dept/get/${id}`,
+		method: 'get',
+	});
+}
 
 
 

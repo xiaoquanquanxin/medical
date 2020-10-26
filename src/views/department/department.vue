@@ -189,7 +189,7 @@
             },
             //  编辑科室
             editDepartment(sItem){
-                this.$router.push({ name: 'editDepartment', params: { departmentId: '12343312' } });
+                this.$router.push({ name: 'editDepartment', params: { departmentId: sItem.id } });
             },
 
             //  关联疾病
