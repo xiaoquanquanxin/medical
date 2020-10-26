@@ -78,15 +78,15 @@
                     <a-select-option value="3">2</a-select-option>
                 </a-select>
             </a-form-item>
-            <a-form-item label="医生咨询费" has-feedback>
-                <a-select class="add-form-input"
-                          placeholder="请选择医生咨询费"
-                          v-decorator="doctorConsultingFeesDecorator"
-                >
-                    <a-select-option value="1">1</a-select-option>
-                    <a-select-option value="3">2</a-select-option>
-                </a-select>
-            </a-form-item>
+<!--            <a-form-item label="医生咨询费" has-feedback>-->
+<!--                <a-select class="add-form-input"-->
+<!--                          placeholder="请选择医生咨询费"-->
+<!--                          v-decorator="doctorConsultingFeesDecorator"-->
+<!--                >-->
+<!--                    <a-select-option value="1">1</a-select-option>-->
+<!--                    <a-select-option value="3">2</a-select-option>-->
+<!--                </a-select>-->
+<!--            </a-form-item>-->
             <a-form-item label="手机号">
                 <a-input class="add-form-input"
                          v-decorator="phoneNumberDecorator"
@@ -189,13 +189,13 @@
                         message: '请选择医生角色'
                     },]
                 }],
-                //  医生咨询费
-                doctorConsultingFeesDecorator: ['doctorConsultingFees', {
-                    rules: [{
-                        required: true,
-                        message: '医生咨询费'
-                    },]
-                }],
+//                //  医生咨询费
+//                doctorConsultingFeesDecorator: ['doctorConsultingFees', {
+//                    rules: [{
+//                        required: true,
+//                        message: '医生咨询费'
+//                    },]
+//                }],
 
                 //  手机号
                 phoneNumberDecorator: ['phoneNumber', {
