@@ -22,7 +22,7 @@
                 <a-select class="add-form-input"
                           v-decorator="provinceDecorator"
                           placeholder="请选择渠道商地区-省份"
-                          @change="provinceChange"
+                          @change="_provinceChange"
                 >
                     <a-select-option :value="item.id"
                                      :key="item.id"
@@ -172,6 +172,9 @@
             getProvinceList,
             //  省份变化
             provinceChange,
+            _provinceChange(value){
+                this.provinceChange(this, value);
+            },
             //  主要请求
             searchFn(){
                 this.getProvinceList();

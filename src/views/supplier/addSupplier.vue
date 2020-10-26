@@ -308,6 +308,9 @@
             getProvinceList,
             //  省份变化
             provinceChange,
+            _provinceChange(value){
+                this.provinceChange(this, value);
+            },
             //  上传图片通用方法
             uploadHandleChange,
             beforeUploadFn,

@@ -48,6 +48,23 @@
                             <span v-if="scope.patientStatus==='3'">永久注销</span>
                         </div>
                     </a-table>
+                    <!--分页-->
+                    <a-row type="flex" justify="end" class="a-pagination">
+                        <a-pagination
+                                v-if="pagination.total"
+                                v-model="pagination.current"
+                                :page-size-options="pagination.pageSizeOptions"
+                                :total="pagination.total"
+                                show-size-changer
+                                :page-size="pagination.pageSize"
+                                @showSizeChange="onShowSizeChange"
+                                @change="pageChange"
+                        >
+                            <template slot="buildOptionText" slot-scope="props">
+                                <span>{{ props.value }}条/页</span>
+                            </template>
+                        </a-pagination>
+                    </a-row>
                 </a-card>
             </a-col>
             <a-col style="width:calc(100vw - 500px);min-width: 700px;">
@@ -72,6 +89,7 @@
     </div>
 </template>
 <script>
+    import { paginationInit, paginationDecode, paginationEncode } from '@/utils/pagination.ts';
     import { jumpTo } from '@/utils/routerMeta';
     import { requestPatientPage } from '@/api/userList/userList';
     import { calcAgeByBirth, getDateObject } from '@/utils/common';
@@ -111,6 +129,8 @@
         },
         data(){
             return {
+                //  分页信息
+                pagination: paginationInit(),
                 //  横向二级路由
                 transverseSubPaths2: [],
 

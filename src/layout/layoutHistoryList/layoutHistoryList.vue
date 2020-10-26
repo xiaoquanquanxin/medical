@@ -16,7 +16,10 @@
                     :key="item.name"
                     v-for="(item , index) in historyRouteList"
             >
-                <router-link :to="{name:item.name}">{{item.chName}}</router-link>
+                <router-link :to="{name:item.name}">
+                    <span>{{item.chName}}</span>
+                    <span @click="deleteHistory($event,item)">x</span>
+                </router-link>
             </a-menu-item>
         </a-menu>
     </div>
@@ -78,6 +81,11 @@
                 //  新增list的item
                 this.historyRouteList.push(routeItem);
             },
+            //
+            deleteHistory($event, item){
+                debugger
+                console.log($event, item);
+            }
         }
     };
 </script>

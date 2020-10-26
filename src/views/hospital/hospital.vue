@@ -4,20 +4,15 @@
         <div class="a-input-group">
             <a-input class="lengthen-input-width" v-model="searchData.hospital" placeholder="请输入医院名称"/>
             <a-select class="basic-select-width" v-model="searchData.province" placeholder="请选择省份">
-                <a-select-option value="Option1">
-                    Option1
-                </a-select-option>
-                <a-select-option value="Option2">
-                    Option2
+                <a-select-option :value="item.id"
+                                 :key="item.id"
+                                 v-for="item in areaList.provinceList"
+                >{{item.name}}
                 </a-select-option>
             </a-select>
             <a-select class="basic-select-width" v-model="searchData.status" placeholder="请选择状态">
-                <a-select-option value="Option2">
-                    Option2
-                </a-select-option>
-                <a-select-option value="323">
-                    122112
-                </a-select-option>
+                <a-select-option value="0">开启</a-select-option>
+                <a-select-option value="1">关闭</a-select-option>
             </a-select>
             <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
         </div>
@@ -106,6 +101,7 @@
     import { twoRowSearch } from '@/utils/tableScroll';
     import { SHUTTLE_BOX } from '../../store/modules/shuttleBox';
     import { requestHospitalPage } from '../../api/hospital';
+    import { getProvinceList, provinceChange, cityChange, areaList } from '@/utils/areaList';
 
     const columns = [
         {
@@ -147,6 +143,8 @@
         },
         data(){
             return {
+                //	地址对象
+                areaList,
                 //  搜索相关
                 searchData: {},
 
@@ -168,6 +166,7 @@
         methods: {
             //  主要请求
             searchFn(){
+                this.getProvinceList(this);
                 requestHospitalPage(paginationEncode(this.pagination))
                     .then(v => {
                         const { data } = v;
@@ -250,7 +249,20 @@
                     //  最后设置可以再次点击
                     this.setConfirmLoading(DIALOG_TYPE.ASSOCIATED_CHANNEL_PROVIDER, false);
                 });
-            }
+            },
+            //  获取省份
+            getProvinceList,
+
+            //  省份变化
+            provinceChange,
+            _provinceChange(value){
+                this.provinceChange(this, value);
+            },
+            //  市区变化
+            cityChange,
+            _cityChange(value){
+                this.cityChange(this, value);
+            },
         },
     };
 </script>

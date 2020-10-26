@@ -144,11 +144,11 @@
             dataIndex: 'goodsSpecifications',
             width: 100,
         },
-        {
-            title: '市场价',
-            scopedSlots: { customRender: 'marketPrice' },
-            width: 100,
-        },
+//        {
+//            title: '市场价',
+//            scopedSlots: { customRender: 'marketPrice' },
+//            width: 100,
+//        },
         {
             title: '生产厂家',
             dataIndex: 'manufactorId',
@@ -366,9 +366,11 @@
                     },
                 });
             },
+            //  删除
             deleteFn(sItem){
                 requestGoodsDelete(sItem.id)
                     .then(v => {
+                        this.$message.success('操作成功');
                         this.searchFn();
                     });
             },

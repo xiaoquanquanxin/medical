@@ -3,15 +3,16 @@ import request from "@/utils/request"
 //	查询省份
 export function requestProvince() {
 	return request({
-		url: '/api/list/1',
-		method: 'post',
+		url: '/api/area/list/1',
+		method: 'get',
 	});
 }
 
 //	查询市区、县城
 export function requestCityByProvince(id: string | number) {
 	return request({
-		url: `/api/getParentList/${id}`,
-		method: 'post',
+		url: `/api/area/getParentList/${id}`,
+		method: 'get',
 	});
 }
+

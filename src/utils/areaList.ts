@@ -6,30 +6,40 @@ export const areaList = {
 	cityList: [],
 	countyList: [],
 }
+
 //	获取省份
-export const getProvinceList = () => {
+export const getProvinceList = (_this: any) => {
 	requestProvince()
 		.then(v => {
+			v.data.forEach((item: any) => {
+				item.key = item.id;
+			});
 			//	@ts-ignore
-			this.areaList.provinceList = v;
+			_this.areaList.provinceList = v.data;
 		});
 
 }
 
 //	省份变化
-export const provinceChange = (id: string | number) => {
+export const provinceChange = (_this: any, id: string | number) => {
 	requestCityByProvince(id)
 		.then(v => {
+			v.data.forEach((item: any) => {
+				item.key = item.id;
+			});
 			//	@ts-ignore
-			this.areaList.cityList = v;
+			_this.areaList.cityList = v.data;
 		})
 }
 
 //	市区变化
-export const cityChange = (id: string | number) => {
+export const cityChange = (_this: any, id: string | number) => {
 	requestCityByProvince(id)
 		.then(v => {
+			v.data.forEach((item: any) => {
+				item.key = item.id;
+			});
 			//	@ts-ignore
-			this.areaList.countyList = v;
+			_this.areaList.countyList = v.data;
 		})
 }

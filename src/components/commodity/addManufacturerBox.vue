@@ -16,6 +16,7 @@
             <p>后台自动生成</p>
         </a-form-item>
         <a-form-item label="是否展示">
+            
             <a-switch checked-children="开" un-checked-children="关"
                       v-model="whetherShow"
             />

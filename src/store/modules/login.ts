@@ -17,7 +17,7 @@ interface STATE {
 const state: STATE = {
 	jwt: getJwt(),
 	loginInfo: JSON.parse(getLoginInfo()),
-	isLocalAreaNetwork: false,
+	isLocalAreaNetwork: true,
 };
 
 const mutations = {

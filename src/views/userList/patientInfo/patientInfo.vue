@@ -130,7 +130,6 @@
 //                        //  todo    就诊科室没有数据
 //                        this.patientBasicInfo.hospitalTreatment = 1;
 //                        //  todo    还有啥叫病区和劳动强度？
-//                        this.patientBasicInfo.pla = '1';
 //                        this.patientBasicInfo.ward = '传染病区';
 //                        //  todo    删除jzbh
 //                        delete this.patientBasicInfo.jzbh;

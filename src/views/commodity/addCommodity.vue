@@ -116,7 +116,7 @@
             <a-form-item label="基本单位" required>
                 <div style="overflow: auto;width:1230px;">
                     <a-table
-                            :columns="columns"
+                            :columns="columns1"
                             :data-source="uintParams"
                             :pagination="false"
                     >
@@ -272,6 +272,98 @@
         unitFat: '',
         unitCarbohydrate: '',
     };
+    //  基本单位表格
+    const columns1 = [
+        {
+            title: '',
+            key: '类型',
+            dataIndex: 'name',
+            width: 100,
+        },
+        {
+            title: '单位',
+            width: 100,
+            scopedSlots: { customRender: 'uname' }
+        },
+        {
+            title: '单位关系',
+            width: 120,
+            scopedSlots: { customRender: 'unitExchangeRate' }
+        },
+        {
+            title: '价格',
+            width: 100,
+            scopedSlots: { customRender: 'unitPrice' }
+        },
+        {
+            title: '能量kcal',
+            width: 100,
+            scopedSlots: { customRender: 'unitEnergy' }
+        },
+        {
+            title: '蛋白质g',
+            width: 120,
+            scopedSlots: { customRender: 'unitProtein' }
+        },
+        {
+            title: '脂肪g',
+            width: 100,
+            scopedSlots: { customRender: 'unitFat' }
+        },
+        {
+            title: '碳水化合物g',
+            width: 150,
+            scopedSlots: { customRender: 'unitCarbohydrate' }
+        }
+    ];
+    const columns2 = [
+        {
+            title: '',
+            key: '类型',
+            dataIndex: 'name',
+            width: 100,
+        },
+        {
+            title: '单位',
+            width: 100,
+            scopedSlots: { customRender: 'uname' }
+        },
+        {
+            title: '单位关系',
+            width: 120,
+            scopedSlots: { customRender: 'unitExchangeRate' }
+        },
+        {
+            title: '价格',
+            width: 100,
+            scopedSlots: { customRender: 'unitPrice' }
+        },
+        {
+            title: '能量kcal',
+            width: 100,
+            scopedSlots: { customRender: 'unitEnergy' }
+        },
+        {
+            title: '蛋白质g',
+            width: 120,
+            scopedSlots: { customRender: 'unitProtein' }
+        },
+        {
+            title: '脂肪g',
+            width: 100,
+            scopedSlots: { customRender: 'unitFat' }
+        },
+        {
+            title: '碳水化合物g',
+            width: 150,
+            scopedSlots: { customRender: 'unitCarbohydrate' }
+        },
+        {
+            title: '使用单位',
+            width: 120,
+            scopedSlots: { customRender: 'unitValue' }
+        }
+    ];
     export default {
         components: {
             GoBackButton,
@@ -418,7 +510,8 @@
                 },
 
                 //  基本单位表格
-                columns: [],
+                columns1,
+                columns2,
                 uintParams: [],
 
                 //  关键字
@@ -428,61 +521,6 @@
         created(){
             this.searchFn();
             console.log('是编辑？', !!this.commodityId);
-            //  基本单位表格
-            const columns = [
-                {
-                    title: '',
-                    key: '类型',
-                    dataIndex: 'name',
-                    width: 100,
-                },
-                {
-                    title: '单位',
-                    width: 100,
-                    scopedSlots: { customRender: 'uname' }
-                },
-                {
-                    title: '单位关系',
-                    width: 120,
-                    scopedSlots: { customRender: 'unitExchangeRate' }
-                },
-                {
-                    title: '价格',
-                    width: 100,
-                    scopedSlots: { customRender: 'unitPrice' }
-                },
-                {
-                    title: '能量kcal',
-                    width: 100,
-                    scopedSlots: { customRender: 'unitEnergy' }
-                },
-                {
-                    title: '蛋白质g',
-                    width: 120,
-                    scopedSlots: { customRender: 'unitProtein' }
-                },
-                {
-                    title: '脂肪g',
-                    width: 100,
-                    scopedSlots: { customRender: 'unitFat' }
-                },
-                {
-                    title: '碳水化合物g',
-                    width: 150,
-                    scopedSlots: { customRender: 'unitCarbohydrate' }
-                }
-            ];
-            //  如果是院内
-            if (this.isLocalAreaNetwork) {
-                columns.splice(2, 1);
-                columns.push({
-                    title: '使用单位',
-                    width: 120,
-                    scopedSlots: { customRender: 'unitValue' }
-                });
-            } else {
-                this.uintParams.push(standardUnit);
-            }
             //  单位列表院内/院外
             this.uintParams.forEach((item => {
                 item.type = this.isLocalAreaNetwork ? 1 : 2;
@@ -565,7 +603,7 @@
                         //  关键字
                         this.goodsKeyWord = goodsKeyWord;
                         //  基本单位    todo    服务端换字段
-                        console.clear();
+//                        console.clear();
                         console.log(uintListVos);
                         uintListVos.forEach(item => {
                             item.key = item.id;
