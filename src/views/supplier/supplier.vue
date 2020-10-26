@@ -2,8 +2,8 @@
     <div class="layout-content-inner-main">
         <!--搜索相关-->
         <div class="a-input-group">
-            <a-input class="lengthen-input-width" v-model="searchData.entrepotName" placeholder="请输入供应商名称"/>
-            <a-input class="lengthen-input-width" v-model="searchData.entrepotCode" placeholder="请输入供应商代码"/>
+            <a-input class="lengthen-input-width" v-model="searchData.supplierName" placeholder="请输入供应商名称"/>
+            <a-input class="lengthen-input-width" v-model="searchData.supplierNumber" placeholder="请输入供应商代码"/>
             <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
         </div>
         <div class="a-input-group">
@@ -117,7 +117,7 @@
         methods: {
             //  主要请求
             searchFn(){
-                requestSupplierPage(paginationEncode(this.pagination))
+                requestSupplierPage(Object.assign({}, this.searchData, paginationEncode(this.pagination)))
                     .then(v => {
                         const { data } = v;
                         data.records.forEach((item, index) => {
