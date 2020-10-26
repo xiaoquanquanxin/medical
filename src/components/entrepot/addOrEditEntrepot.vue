@@ -50,6 +50,7 @@
 <script>
     import { formItemLayout } from '@/utils/layout.ts';
     import { requestWarehouseGet, requestWarehouseInsert, requestWarehouseUpdate } from '../../api/entrepot';
+    import { getProvinceList, provinceChange, areaList } from '@/utils/areaList';
 
     //  新增、编辑仓库
     export default {
@@ -98,8 +99,13 @@
             this.searchFn();
         },
         methods: {
+            //  获取省份
+            getProvinceList,
+            //  省份变化
+            provinceChange,
             //  主要请求
             searchFn(){
+                this.getProvinceList();
                 //  如果是新增
                 if (!this.entrepotId) {
                     return;
