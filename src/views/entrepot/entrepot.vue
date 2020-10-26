@@ -2,8 +2,8 @@
     <div class="layout-content-inner-main">
         <!--搜索相关-->
         <div class="a-input-group">
-            <a-input class="basic-input-width" v-model="searchData.entrepotName" placeholder="请输入仓库名称"/>
-            <a-input class="basic-input-width" v-model="searchData.entrepotCode" placeholder="请输入仓库代码"/>
+            <a-input class="basic-input-width" v-model="searchData.warehouseName" placeholder="请输入仓库名称"/>
+            <a-input class="basic-input-width" v-model="searchData.warehouseNumber" placeholder="请输入仓库代码"/>
             <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
         </div>
         <div class="a-input-group">
@@ -87,8 +87,8 @@
         },
         {
             title: '添加时间',
-            dataIndex: 'updateTime',
-            width: 100,
+            dataIndex: 'createTime',
+            width: 150,
         },
         {
             title: '操作',
@@ -125,15 +125,16 @@
         methods: {
             //  主要请求
             searchFn(){
-                requestWarehousePage(paginationEncode(this.pagination))
+                requestWarehousePage(Object.assign({}, this.searchData, paginationEncode(this.pagination)))
                     .then(v => {
                         const { data } = v;
                         data.records.forEach((item, index) => {
                             item.key = index;
+                            item.createTime = (item.createTime || '').substr(0, 10);
                         });
                         this.data = data.records;
-                        console.log(JSON.parse(JSON.stringify(data.records)));
                         this.pagination = paginationDecode(this.pagination, data);
+                        console.log(JSON.parse(JSON.stringify(data.records[0])));
                     });
             },
             //  莫泰框方法

@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 
-//  仓库管理列表	✅，⚠️回显少仓库地区，没有input功能
+//  仓库管理列表	✅，⚠️input不好使，缺少地区
 export function requestWarehousePage(data: any) {
 	return request({
 		url: '/api/warehouse/page',
@@ -9,7 +9,7 @@ export function requestWarehousePage(data: any) {
 	});
 }
 
-//  新增仓库		✅，⚠️缺请求参数渠道商省市
+//  新增仓库		✅，⚠️地区待检测
 export function requestWarehouseInsert(data: any) {
 	return request({
 		url: '/api/warehouse/insert',
@@ -18,7 +18,7 @@ export function requestWarehouseInsert(data: any) {
 	});
 }
 
-//  修改仓库信息	✅，⚠️问题同上
+//  修改仓库信息	✅，⚠️同上
 export function requestWarehouseUpdate(data: any) {
 	return request({
 		url: '/api/warehouse/update',
@@ -27,7 +27,7 @@ export function requestWarehouseUpdate(data: any) {
 	});
 }
 
-//	查看仓库信息	✅
+//	查看仓库信息	✅✅
 export function requestWarehouseGet(id: string | number) {
 	return request({
 		url: `/api/warehouse/get/${id}`,
