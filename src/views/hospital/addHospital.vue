@@ -357,6 +357,7 @@
             },
             //    表单提交
             handleSubmit(e){
+                console.log( this.status ? 0 : 1);
                 e.preventDefault();
                 return new Promise((resolve, reject) => {
                     this.form.validateFields((err, values) => {
@@ -365,7 +366,7 @@
                             return;
                         }
                         //  console.table(values);
-                        const data = Object.assign({ status: this.status }, values);
+                        const data = Object.assign({ status: this.status ? 0 : 1 }, values);
                         console.log(data);
                         (() => {
                             //  如果是新增
