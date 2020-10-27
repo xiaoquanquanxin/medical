@@ -6,12 +6,8 @@
             <a-input class="basic-input-width" v-model="searchData.prescriptionCode" placeholder="请输入处方号"/>
             <a-input class="basic-input-width" v-model="searchData.name" placeholder="请输入患者姓名"/>
             <a-select class="lengthen-select-width" v-model="searchData.payStatus" placeholder="请选择支付状态">
-                <a-select-option value="">
-                    状态
-                </a-select-option>
-                <a-select-option value="Option2">
-                    Option2
-                </a-select-option>
+                <a-select-option value="0">待支付</a-select-option>
+                <a-select-option value="1">已支付</a-select-option>
             </a-select>
             <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
         </div>
@@ -22,11 +18,21 @@
                 :scroll="scroll"
                 :pagination="false"
         >
+            <!--支付状态(0,待支付,1,已支付)-->
+            <div slot="payStatus" slot-scope="scope,sItem,sIndex,extra">
+                <span v-if="scope.payStatus == 0">待支付</span>
+                <span v-if="scope.payStatus == 1">已支付</span>
+            </div>
+            <!--操作-->
             <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
+                <!--{{scope.isRefund}}-->
+                <!--退费了，支付状态不变，处方状态也不变，缴费方式变，是缴费，还是退费-->
                 <a-space>
-                    <router-link :to="{name:'auditDetail',params:{auditDetailId:sIndex}}">详情</router-link>
-                    <a @click="payCost(sItem)">缴费</a>
-                    <a @click="returnCost(sItem)">退费</a>
+                    <router-link :to="{name:'auditDetail',params:{auditDetailId:sItem.id}}">详情</router-link>
+                    <a @click="payCost(sItem)" v-if="scope.payStatus == 0">缴费</a>
+                    <span v-if="scope.isRefund == 0">
+                    <a @click="returnCost(sItem)" v-if="scope.payStatus == 1">退费</a>
+                        </span>
                 </a-space>
             </div>
         </a-table>
@@ -112,47 +118,47 @@
     const columns = [
         {
             title: '订单编号',
-            dataIndex: 'prescriptionCode',
-            width: 100,
+            dataIndex: 'prescriptionCode1',
+            width: 200,
         },
         {
             title: '处方号',
-            dataIndex: 'aaa',
-            width: 100,
+            dataIndex: 'prescriptionCode',
+            width: 200,
         },
         {
             title: '患者姓名',
-            dataIndex: '通用名',
+            dataIndex: 'name',
             width: 100,
         },
         {
             title: '科室',
-            dataIndex: 'unit',
+            dataIndex: 'deptName',
             width: 100,
         },
         {
             title: '床号',
-            dataIndex: 'specifications',
+            dataIndex: 'bedCode',
             width: 100,
         },
         {
             title: '缴费金额',
-            dataIndex: 'marketPrice',
+            dataIndex: 'amountPayable',
             width: 100,
         },
         {
             title: '支付状态',
-            dataIndex: '222',
+            scopedSlots: { customRender: 'payStatus' },
             width: 100,
         },
         {
             title: '收费时间',
-            dataIndex: 'manufacturer',
+            dataIndex: 'payTime',
             width: 100,
         },
         {
             title: '收费人',
-            dataIndex: 'update',
+            dataIndex: 'doctorName',
             width: 100,
         },
         {
@@ -216,8 +222,8 @@
             ...dialogMethods,
             ...mapActions('cost', [
                 //  弹框id
-                'setSelectCostId',
-                //	操作类型	缴费1 、退费-1
+                'setSelectCostData',
+                //  操作类型	0,缴费，1退款
                 'setCostType',
             ]),
             //  展示的每一页数据变换
@@ -233,15 +239,15 @@
             },
             //  缴费
             payCost(sItem){
-                this.setSelectCostId('11111');
-                this.setCostType(1);
+                this.setSelectCostData(sItem);
+                this.setCostType(0);
                 this.setDialogTitle(DIALOG_TYPE.PAY_COST, '缴费');
                 this.showModal(DIALOG_TYPE.PAY_COST);
             },
             //  退费
             returnCost(sItem){
-                this.setSelectCostId('-1111');
-                this.setCostType(-1);
+                this.setSelectCostData(sItem);
+                this.setCostType(1);
                 this.setDialogTitle(DIALOG_TYPE.PAY_COST, '退费');
                 this.showModal(DIALOG_TYPE.PAY_COST);
             },

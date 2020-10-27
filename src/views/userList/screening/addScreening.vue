@@ -488,7 +488,7 @@
                                 this.riskData[2].value = this.screeningDetailInfo.icu;
                                 this.nutritionChange();
                                 this.calcDiseaseScore();
-                                console.log(JSON.parse(JSON.stringify(v.data)));
+                                //console.log(JSON.parse(JSON.stringify(v.data)));
                                 console.log(v.data.ctime);
                                 //  如果有处方时间
                                 const { ctime } = v.data;

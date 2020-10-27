@@ -414,7 +414,7 @@
                                             item.key = item.id;
                                         });
                                         const originCommodityList = v.data;
-                                        console.log(JSON.parse(JSON.stringify(v.data)));
+                                        //console.log(JSON.parse(JSON.stringify(v.data)));
                                         //  编辑的数据
                                         const _originCommodityList = Object.assign([], originCommodityList, prescriptionContent.commodityTableData);
                                         console.log('编辑的数据');

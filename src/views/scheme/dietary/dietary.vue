@@ -4,27 +4,27 @@
         <div class="a-input-group">
             <a-input class="lengthen-input-width" v-model="searchData.schemeName" placeholder="请输入方案名称"/>
             <a-select class="basic-select-width" v-model="searchData.energy" placeholder="请选择能量">
-                <a-select-option value="">
-                    分类
-                </a-select-option>
-                <a-select-option value="Option2">
-                    Option2
+                <a-select-option :value="item.id"
+                                 :key="item.id"
+                                 v-for="item in energyList"
+                >{{item.name}}
                 </a-select-option>
             </a-select>
             <a-select class="lengthen-select-width" v-model="searchData.method" placeholder="请选择食物类型">
-                <a-select-option value="">
-                    分类
+                <a-select-option value="1">
+                    流食
                 </a-select-option>
-                <a-select-option value="Option2">
-                    Option2
+                <a-select-option value="2">
+                    普食
                 </a-select-option>
             </a-select>
-            <a-select class="basic-select-width" v-model="searchData.department" placeholder="请选择科室">
-                <a-select-option value="">
-                    分类
-                </a-select-option>
-                <a-select-option value="Option2">
-                    Option2
+            <a-select class="basic-select-width" placeholder="请选择医院" v-model="searchData.hospitalId"
+            >
+                <a-select-option v-for="(item,index) in hospitalList"
+                                 :key="index"
+                                 :value="item.id"
+                >
+                    {{item.hospitalName}}
                 </a-select-option>
             </a-select>
             <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
@@ -72,7 +72,9 @@
 <script>
     import { paginationInit, paginationDecode, paginationEncode } from '@/utils/pagination.ts';
     import { threeRowSearch } from '@/utils/tableScroll';
-    import { requestPrescriptionTemplatePage } from '../../../api/scheme/scheme';import { usageMethodList } from '../../../utils/constants';
+    import { requestPrescriptionTemplatePage } from '../../../api/scheme/scheme';
+    import { prescriptionTypeList, energyList, usageMethodList } from '../../../utils/constants';
+    import { requestHospitalGetList } from '../../../api/hospital';
 
     const columns = [
         {
@@ -106,6 +108,14 @@
     export default {
         data(){
             return {
+                //  处方类型下拉
+                prescriptionTypeList,
+                //  能量下拉
+                energyList,
+
+                //  医院列表
+                hospitalList: [],
+                //  食用方法下拉
                 usageMethodList,
                 data: [],
                 columns,
@@ -114,8 +124,10 @@
                 scroll: threeRowSearch(columns),
                 //  分页信息
                 pagination: paginationInit(),
-                //  搜索数据
-                searchData: {},
+                //  搜索数据,
+                searchData: {
+                    prescriptionType: 3,
+                },
             };
         },
         created(){
@@ -124,6 +136,11 @@
         methods: {
             //  主要请求
             searchFn(){
+                requestHospitalGetList()
+                    .then(v => {
+                        this.hospitalList = v.data;
+                        //console.log(JSON.parse(JSON.stringify(v.data)));
+                    });
 //                this.data.push({ key: 1 });
                 requestPrescriptionTemplatePage(Object.assign({},
                     this.searchData,
@@ -136,7 +153,7 @@
                         });
                         this.data = data.records;
                         this.pagination = paginationDecode(this.pagination, data);
-                        console.log(JSON.parse(JSON.stringify(this.data[0])));
+                        //  console.log(JSON.parse(JSON.stringify(this.data[0])));
                     });
             },
             //  展示的每一页数据变换

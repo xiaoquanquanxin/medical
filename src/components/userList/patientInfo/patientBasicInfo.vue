@@ -338,7 +338,7 @@
                 requestHospitalGetList()
                     .then(v => {
                         this.hospitalList = v.data;
-                        console.log(JSON.parse(JSON.stringify(v.data)));
+                        //console.log(JSON.parse(JSON.stringify(v.data)));
                     });
             },
             //  切换医院

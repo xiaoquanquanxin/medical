@@ -7,14 +7,14 @@
                 autocomplete="off"
         >
             <a-form-item label="缴费金额">
-                xxx
+                {{selectCostData.amountPayable}}
             </a-form-item>
             <a-form-item label="缴费金额">
                 <a-input-number
                         placeholder="请输入"
                         :min="0"
-                        :max="10"
-                        v-decorator="costDecorator"
+                        :max="selectCostData.amountPayable"
+                        v-decorator="amountPaidDecorator"
                         @pressEnter="preventDefault"
                 />
             </a-form-item>
@@ -40,24 +40,24 @@
         },
         computed: {
             //  支付id
-            selectCostId(){
-                return this.$store.state.cost.selectCostId;
+            selectCostData(){
+                return this.$store.state.cost.selectCostData;
             },
-            //	操作类型	缴费1 、退费-1
-            costType(){
-                return this.$store.state.cost.costType;
+            //  操作类型	0,缴费，1退款）
+            isRefund(){
+                return this.$store.state.cost.isRefund;
             },
         },
         created(){
-            console.log('支付id', this.selectCostId);
-            console.log('支付类型', this.costType);
+            console.log('支付对象', JSON.parse(JSON.stringify(this.selectCostData)));
+            console.log('支付类型', this.isRefund);
             this.searchFn();
         },
         data(){
             return {
                 formItemLayout,
                 //  金额
-                costDecorator: ['cost', {
+                amountPaidDecorator: ['amountPaid', {
                     rules: [{
                         required: true,
                         message: '请输入金额',
@@ -98,14 +98,19 @@
                             return;
                         }
                         console.table(values);
+                        const data = {
+                            id: this.selectCostData.id,
+                            amountPaid: values.amountPaid,
+                            isRefund: this.isRefund,
+                        };
                         (() => {
-                            switch (this.costType) {
-                                case 1:
+                            switch (this.isRefund) {
+                                case 0:
                                     //  如果是缴费
-                                    return requestBillingsPayment(values);
-                                case 2:
+                                    return requestBillingsPayment(data);
+                                case 1:
                                     //  如果是退费
-                                    return requestBillingsRefund(Object.assign(values));
+                                    return requestBillingsRefund(data);
                                 default:
                                     throw new Error('错误的类型');
                             }

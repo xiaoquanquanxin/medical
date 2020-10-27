@@ -151,7 +151,7 @@
                 console.log('处方类型', prescriptionType);
                 requestPrescriptionPrescriptionTpl({ energy, prescriptionType: prescriptionType, usageMethod })
                     .then(v => {
-                        console.log(JSON.parse(JSON.stringify(v.data)));
+                        //console.log(JSON.parse(JSON.stringify(v.data)));
                         console.log('打开弹框时候默认选择的单选', this.rowSelection.selectedRowKeys);
                         v.data.forEach((item) => {
                             item.key = item.id;

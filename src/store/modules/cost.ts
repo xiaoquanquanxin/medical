@@ -2,32 +2,32 @@
 import {COMMIT_INTERFACE} from "@/store";
 
 interface STATE {
-	//	收计费被选中的id
-	selectCostId: number;
-	//	操作类型	缴费1 、退费-1
-	costType: 1 | -1;
+	//	收计费被选中的对象
+	selectCostData: any;
+	//	操作类型	0,缴费，1退款）
+	isRefund: 0 | 1,
 }
 
 //	有id，就是编辑了
 const state: STATE = {
-	selectCostId: 0,
-	costType: 1,
+	selectCostData: null,
+	isRefund: 1,
 }
 const mutations = {
-	SET_SELECT_COST_ID: (state: STATE, selectCostId: number) => {
-		state.selectCostId = selectCostId;
+	SET_SELECT_COST_DATA: (state: STATE, selectCostData: number) => {
+		state.selectCostData = selectCostData;
 	},
-	SET_COST_TYPE: (state: STATE, costType: 1 | -1) => {
-		state.costType = costType;
+	SET_COST_TYPE: (state: STATE, isRefund: 0 | 1) => {
+		state.isRefund = isRefund;
 	},
 }
 
 const actions = {
-	setSelectCostId: ({commit}: COMMIT_INTERFACE<STATE>, selectCostId: number) => {
-		commit('SET_SELECT_COST_ID', selectCostId);
+	setSelectCostData: ({commit}: COMMIT_INTERFACE<STATE>, selectCostData: number) => {
+		commit('SET_SELECT_COST_DATA', selectCostData);
 	},
-	setCostType: ({commit}: COMMIT_INTERFACE<STATE>, costType: 1 | -1) => {
-		commit('SET_COST_TYPE', costType);
+	setCostType: ({commit}: COMMIT_INTERFACE<STATE>, isRefund: 0 | 1) => {
+		commit('SET_COST_TYPE', isRefund);
 	},
 }
 

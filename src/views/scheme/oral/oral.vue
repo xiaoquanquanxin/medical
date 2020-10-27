@@ -147,7 +147,7 @@
                 requestHospitalGetList()
                     .then(v => {
                         this.hospitalList = v.data;
-                        console.log(JSON.parse(JSON.stringify(v.data)));
+                        //console.log(JSON.parse(JSON.stringify(v.data)));
                     });
 //                this.data.push({ key: 1 });
                 requestPrescriptionTemplatePage(Object.assign({},
