@@ -41,11 +41,30 @@
                     :scroll="scroll"
                     :pagination="false"
             >
+                <!--性别-->
+                <div slot="sex" slot-scope="scope,sItem,sIndex,extra">
+                    <span v-if="scope.sex == 1">男</span>
+                    <span v-if="scope.sex == 0">女</span>
+                </div>
+                <!--支付状态-->
+                <div slot="payStatus" slot-scope="scope,sItem,sIndex,extra">
+                    <span v-if="scope.payStatus == 1">已支付</span>
+                    <span v-if="scope.payStatus == 0">待支付</span>
+                </div>
+                <!-- 配置状态(1.待签收，2，待配置，3.已配置，4，待领取，5，已领取)-->
+                <div slot="orderStatus" slot-scope="scope,sItem,sIndex,extra">
+                    <span v-if="scope.orderStatus == 1">待签收</span>
+                    <span v-if="scope.orderStatus == 2">待配置</span>
+                    <span v-if="scope.orderStatus == 3">已配置</span>
+                    <span v-if="scope.orderStatus == 4">待领取</span>
+                    <span v-if="scope.orderStatus == 5">已领取</span>
+                </div>
+                <!--操作-->
                 <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
                     <a-space>
                         <router-link :to="{name:'getDrugDetail',params:{getDrugDetailId:sIndex}}">详情
                         </router-link>
-                        <a @click="confirmGetDrug(sItem)">确定领药</a>
+                        <a @click="confirmGetDrug(sItem)" v-if="scope.orderStatus == 4">确定领药</a>
                     </a-space>
                 </div>
             </a-table>
@@ -144,46 +163,47 @@
     import { paginationInit, paginationDecode, paginationEncode } from '@/utils/pagination.ts';
     import { oneRowSearch } from '@/utils/tableScroll';
     import { requestPrescriptionConfigCfly } from '../../api/task/getDrug';
+    import { requestPrescriptionConfigConfirmSave } from '../../api/task/configuration';
 
     const columns = [
         {
             title: '序号',
-            dataIndex: 'commodity',
+            dataIndex: 'index',
             width: 100,
         },
         {
             title: '处方名称',
-            dataIndex: 'aaa',
-            width: 100,
+            dataIndex: 'prescriptionName',
+            width: 200,
         },
         {
             title: '处方医生',
-            dataIndex: '通用名',
+            dataIndex: 'doctorName',
             width: 100,
         },
         {
             title: '科室',
-            dataIndex: 'unit',
+            dataIndex: 'deptName',
             width: 100,
         },
         {
             title: '姓名',
-            dataIndex: 'specifications',
+            dataIndex: 'name',
             width: 100,
         },
         {
             title: '性别',
-            dataIndex: 'marketPrice',
+            scopedSlots: { customRender: 'sex' },
             width: 100,
         },
         {
             title: '支付状态',
-            dataIndex: 'manufacturer',
+            scopedSlots: { customRender: 'payStatus' },
             width: 100,
         },
         {
             title: '领药状态',
-            dataIndex: 'update',
+            scopedSlots: { customRender: 'orderStatus' },
             width: 100,
         },
         {
@@ -233,9 +253,10 @@
                         const { data } = v;
                         data.records.forEach((item, index) => {
                             item.key = index;
+                            item.index = index + 1;
                         });
                         this.data = data.records;
-                        console.log(data.records);
+                        console.log(JSON.parse(JSON.stringify(data.records[0])));
                         this.pagination = paginationDecode(this.pagination, data);
                     });
             },
@@ -256,16 +277,22 @@
             },
             //  确定领药
             confirmGetDrug(sItem){
+                //  确认签收接口:orderStatus=2，确认配置，orderStatus=3,确认领药接口：orderStatus=5
                 this.$confirm({
-                    title: `确定领药${sItem.disease}`,
+                    title: `确定领药${sItem.prescriptionName}`,
                     //  content: 'Bla bla ...',
                     okText: '确认',
                     cancelText: '取消',
                     onOk(){
-                        return new Promise((resolve, reject) => {
-                            console.log('发请求');
-                            setTimeout(Math.random() > 0.5 ? resolve : reject, 1111);
-                        }).catch(() => console.log('Oops errors!'));
+                        const data = { orderStatus: 5, id: sItem.id };
+                        return requestPrescriptionConfigConfirmSave(data)
+                            .then(v => {
+                                this.$message.success('操作成功');
+                                this.searchFn();
+                            })
+                            .catch(err => {
+                                this.$message.error('操作失败');
+                            });
                     },
                     onCancel(){
                         console.log('取消');

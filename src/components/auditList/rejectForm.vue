@@ -48,13 +48,7 @@
                         if (err) {
                             reject();
                         }
-                        const data = {
-                            //  审核状态(1.待审核，2.已审核，3.已驳回)
-                            auditStatus: 1,
-                            id: this.auditDetailId,
-                            rejectReason: values.rejectReason,
-                        };
-                        return requestPrescriptionAuditUpdate(data);
+                        resolve(values.rejectReason);
                     });
                 });
             },

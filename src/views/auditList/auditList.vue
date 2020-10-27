@@ -27,7 +27,7 @@
                 <span v-if="scope.sex == 0">女</span>
             </div>
             <!--状态-->
-            <!--审核状态(1.待审核，2，已审核，3，已驳回)-->
+            <!--审核状态auditStatus(1.待审核，2，已审核，3，已驳回)-->
             <div slot="auditStatus" slot-scope="scope,sItem,sIndex,extra">
                 <span v-if="scope.auditStatus == 1">待审核</span>
                 <span v-if="scope.auditStatus == 2">已审核</span>

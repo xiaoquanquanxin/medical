@@ -69,15 +69,15 @@
                     <a-select-option value="3">2</a-select-option>
                 </a-select>
             </a-form-item>
-            <a-form-item label="医生角色" has-feedback>
-                <a-select class="add-form-input"
-                          placeholder="请选择医生角色"
-                          v-decorator="doctorRoleDecorator"
-                >
-                    <a-select-option value="1">1</a-select-option>
-                    <a-select-option value="3">2</a-select-option>
-                </a-select>
-            </a-form-item>
+<!--            <a-form-item label="医生类型" has-feedback>-->
+<!--                <a-select class="add-form-input"-->
+<!--                          placeholder="请选择医生类型"-->
+<!--                          v-decorator="doctorRoleDecorator"-->
+<!--                >-->
+<!--                    <a-select-option value="1">1</a-select-option>-->
+<!--                    <a-select-option value="3">2</a-select-option>-->
+<!--                </a-select>-->
+<!--            </a-form-item>-->
 <!--            <a-form-item label="医生咨询费" has-feedback>-->
 <!--                <a-select class="add-form-input"-->
 <!--                          placeholder="请选择医生咨询费"-->
@@ -182,13 +182,13 @@
                         message: '请选择医生状态'
                     },]
                 }],
-                //  医生角色
-                doctorRoleDecorator: ['doctorRole', {
-                    rules: [{
-                        required: true,
-                        message: '请选择医生角色'
-                    },]
-                }],
+//                //  医生类型
+//                doctorRoleDecorator: ['doctorRole', {
+//                    rules: [{
+//                        required: true,
+//                        message: '请选择医生类型'
+//                    },]
+//                }],
 //                //  医生咨询费
 //                doctorConsultingFeesDecorator: ['doctorConsultingFees', {
 //                    rules: [{

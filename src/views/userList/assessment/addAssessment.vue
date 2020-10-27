@@ -1121,7 +1121,7 @@
                                 weight,
                                 oneData,
                             });
-                            console.log(Object.assign({
+                            const saveData = Object.assign({
                                 birth,
                                 bmi,
                                 height,
@@ -1130,7 +1130,10 @@
                                 weight,
                                 patientId,
                                 totalScore,
-                            }, oneData));
+                            }, oneData);
+                            console.log(saveData);
+                            console.log(JSON.stringify(saveData));
+                            return;
                             return requestPatientAssessSaveYbpgb(Object.assign({
                                 birth,
                                 bmi,

@@ -58,8 +58,8 @@
                 <a-space>
                     <router-link :to="{name:'configurationDetail',params:{configurationDetailId:sIndex}}">详情
                     </router-link>
-                    <a @click="confirmReceiving(sItem)">确定签收</a>
-                    <a @click="confirmConfig(sItem)">确定配置</a>
+                    <a @click="confirmReceiving(sItem)" v-if="scope.orderStatus == 1">确定签收</a>
+                    <a @click="confirmConfig(sItem)" v-if="scope.orderStatus == 2">确定配置</a>
                 </a-space>
             </div>
         </a-table>
@@ -156,7 +156,7 @@
 <script>
     import { paginationInit, paginationDecode, paginationEncode } from '@/utils/pagination.ts';
     import { oneRowSearch } from '@/utils/tableScroll';
-    import { requestPrescriptionConfigPzrw } from '../../api/task/configuration';
+    import { requestPrescriptionConfigConfirmSave, requestPrescriptionConfigPzrw } from '../../api/task/configuration';
 
     const columns = [
         {
@@ -271,16 +271,22 @@
             },
             //  确定签收
             confirmReceiving(sItem){
+                //  确认签收接口:orderStatus=2，确认配置，orderStatus=3,确认领药接口：orderStatus=5
                 this.$confirm({
-                    title: `确定签收${sItem.disease}`,
+                    title: `确定签收${sItem.prescriptionName}`,
                     //  content: 'Bla bla ...',
                     okText: '确认',
                     cancelText: '取消',
-                    onOk(){
-                        return new Promise((resolve, reject) => {
-                            console.log('发请求');
-                            setTimeout(Math.random() > 0.5 ? resolve : reject, 1111);
-                        }).catch(() => console.log('Oops errors!'));
+                    onOk: () => {
+                        const data = { orderStatus: 2, id: sItem.id };
+                        return requestPrescriptionConfigConfirmSave(data)
+                            .then(v => {
+                                this.$message.success('操作成功');
+                                this.searchFn();
+                            })
+                            .catch(err => {
+                                this.$message.error('操作失败');
+                            });
                     },
                     onCancel(){
                         console.log('取消');
@@ -290,15 +296,20 @@
             //  确定配置
             confirmConfig(sItem){
                 this.$confirm({
-                    title: `确定配置${sItem.disease}`,
+                    title: `确定配置${sItem.prescriptionName}`,
                     //  content: 'Bla bla ...',
                     okText: '确认',
                     cancelText: '取消',
-                    onOk(){
-                        return new Promise((resolve, reject) => {
-                            console.log('发请求');
-                            setTimeout(Math.random() > 0.5 ? resolve : reject, 1111);
-                        }).catch(() => console.log('Oops errors!'));
+                    onOk: () => {
+                        const data = { orderStatus: 3, id: sItem.id };
+                        return requestPrescriptionConfigConfirmSave(data)
+                            .then(v => {
+                                this.$message.success('操作成功');
+                                this.searchFn();
+                            })
+                            .catch(err => {
+                                this.$message.error('操作失败');
+                            });
                     },
                     onCancel(){
                         console.log('取消');

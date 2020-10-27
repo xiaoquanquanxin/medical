@@ -4,8 +4,12 @@
             <div class="a-input-group">
                 <!--返回按钮-->
                 <GoBackButton/>
-                <a-button class="basic-button-width" type="primary" @click="passFn">通过</a-button>
-                <a-button class="basic-button-width" type="primary" @click="rejectFn">驳回</a-button>
+                <!--审核状态,auditStatus(1.待审核，2，已审核，3，已驳回)-->
+                <a-button class="basic-button-width" type="primary" @click="passFn"
+                          v-if="auditStatus==1||auditStatus===3">通过
+                </a-button>
+                <a-button class="basic-button-width" type="primary" @click="rejectFn" v-if="auditStatus==2">驳回
+                </a-button>
             </div>
             <span data-msg="占位"></span>
             <b>状态：{{2323232}}</b>
@@ -76,6 +80,7 @@
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
     import GoBackButton from '@/components/goBackButton.vue';
     import { requestPrescriptionDetail } from '../../api/userList/intervention';
+    import { requestPrescriptionAuditUpdate } from '../../api/auditList';
 
     export default {
         components: {
@@ -89,6 +94,8 @@
         },
         data(){
             return {
+                //  auditStatus(1.待审核，2，已审核，3，已驳回)
+                auditStatus: null,
                 //  详情的id
                 auditDetailId: this.$route.params.auditDetailId,
 
@@ -244,6 +251,7 @@
                 requestPrescriptionDetail(this.auditDetailId)
                     .then(v => {
                         const { data } = v;
+                        this.auditStatus = data.auditStatus;
                         const prescriptionDetail = JSON.parse(data.prescriptionDetail);
                         const { prescriptionName, priod, prescriptionType, } = data;
                         //  头部
@@ -265,7 +273,7 @@
                         const { cnyyzc, kqcnyybc } = prescriptionDetail;
                         const { dataTitle: kqcnyybcDataTitle, commodity: kqcnyybcCommodity, timeTableData: kqcnyybcTimeTableData } = kqcnyybc;
                         const { dataTitle: cnyyzcDataTitle, commodity: cnyyzcCommodity, timeTableData: cnyyzcTimeTableData } = cnyyzc;
-//                        console.log(prescriptionDetail);
+                        console.log(data);
                         console.log('结果');
 //                        console.log(kqcnyybcDataTitle);
 //                        console.log(kqcnyybcCommodity);
@@ -287,15 +295,24 @@
             //  通过
             passFn(){
                 this.$confirm({
-                    title: `确定领药${11}`,
+                    title: `确定通过${this.basicInfoData[0].prescriptionName}`,
                     //  content: 'Bla bla ...',
                     okText: '确认',
                     cancelText: '取消',
-                    onOk(){
-                        return new Promise((resolve, reject) => {
-                            console.log('发请求');
-                            setTimeout(Math.random() > 0.5 ? resolve : reject, 1111);
-                        }).catch(() => console.log('Oops errors!'));
+                    onOk: () => {
+                        const data = {
+                            //  审核状态auditStatus(1.待审核，2.已审核，3.已驳回)
+                            id: this.auditDetailId,
+                            auditStatus: 2,
+                        };
+                        return requestPrescriptionAuditUpdate(data)
+                            .then(v => {
+                                this.$message.success('操作成功');
+                                this.searchFn();
+                            })
+                            .catch(err=>{
+                                this.$message.error('操作失败');
+                            })
                     },
                     onCancel(){
                         console.log('取消');
@@ -304,7 +321,6 @@
             },
             //  驳回
             rejectFn(){
-
                 this.showModal(DIALOG_TYPE.REJECT);
             },
             //  确认驳回
@@ -312,8 +328,22 @@
                 //  防止连点
                 this.setConfirmLoading(DIALOG_TYPE.REJECT, true);
                 const promise = this.$refs[refRejectForm].handleSubmit();
-                promise.then(v => {
+                promise.then(rejectReason => {
                     this.hideModal(DIALOG_TYPE.REJECT);
+                    const data = {
+                        //  审核状态auditStatus(1.待审核，2.已审核，3.已驳回)
+                        id: this.auditDetailId,
+                        auditStatus: 3,
+                        rejectReason,
+                    };
+                    return requestPrescriptionAuditUpdate(data)
+                        .then(v => {
+                            this.$message.success('操作成功');
+                            this.searchFn();
+                        })
+                        .catch(err=>{
+                            this.$message.error('操作失败');
+                        })
                 }).catch(error => {
                     console.log('有错');
                 }).then(v => {

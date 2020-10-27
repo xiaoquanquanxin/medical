@@ -9,7 +9,16 @@ export function requestPrescriptionConfigPzrw(data: any) {
 	});
 }
 
-//	缺少业务接口
-//	木木：缺少报损页面接口
+//	确认领药，确认签收，确认配置,
+export function requestPrescriptionConfigConfirmSave(data: any) {
+	return request({
+		url: '/api/prescription/config/confirmSave',
+		method: 'post',
+		data,
+	});
+}
+
+
+
 
 
