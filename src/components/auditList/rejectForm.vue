@@ -9,7 +9,7 @@
             <div style="width:calc((100vw - 200px)*.65)">
                 <a-textarea
                         placeholder="请输入驳回原因"
-                        v-decorator="rejectDecorator"
+                        v-decorator="rejectReasonDecorator"
                         :auto-size="{ minRows: 3, maxRows: 5 }"
                 />
             </div>
@@ -18,6 +18,7 @@
 </template>
 <script>
     import { formItemLayout } from '@/utils/layout.ts';
+    import { requestPrescriptionAuditUpdate } from '../../api/auditList';
     //  驳回原因
     export default {
         beforeCreate(){
@@ -30,7 +31,7 @@
                 formItemLayout,
 
                 //  驳回原因
-                rejectDecorator: ['reject', {
+                rejectReasonDecorator: ['rejectReason', {
                     rules: [{
                         required: true,
                         message: '请输入驳回原因',
@@ -38,44 +39,24 @@
                 }]
             };
         },
-        created(){
-            this.searchFn();
-        },
         methods: {
-            //  主要请求
-            searchFn(){
-//                requestChannelBusinessPage(paginationEncode(this.pagination))
-//                    .then(v => {
-//                        const { data } = v;
-//                        console.log(data);
-//                data.records.forEach((item, index) => {
-//                    item.key = index;
-//                    item.createTime = item.createTime.substr(0, 10);
-//                });
-//                        this.data = data.records;
-//                        this.pagination = paginationDecode(this.pagination, data);
-//                    });
-            },
             //  表单提交 保存
             handleSubmit(){
-                return new Promise(((resolve, reject) => {
+                return new Promise((resolve, reject) => {
                     this.form.validateFields((err, values) => {
                         console.table(values);
-                        if (!err) {
-                            resolve();
-                        } else {
+                        if (err) {
                             reject();
                         }
+                        const data = {
+                            //  审核状态(1.待审核，2.已审核，3.已驳回)
+                            auditStatus: 1,
+                            id: this.auditDetailId,
+                            rejectReason: values.rejectReason,
+                        };
+                        return requestPrescriptionAuditUpdate(data);
                     });
-                }))
-                    .then(v => {
-                        return new Promise(((resolve, reject) => {
-                            console.log('发请求吧');
-                            setTimeout(() => {
-                                resolve();
-                            }, 1000);
-                        }));
-                    });
+                });
             },
         }
     };

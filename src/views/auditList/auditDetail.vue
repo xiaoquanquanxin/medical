@@ -241,8 +241,6 @@
         },
         created(){
             console.log('编辑id', this.auditDetailId);
-        },
-        created(){
             this.searchFn();
         },
         methods: {
@@ -283,6 +281,7 @@
             },
             //  驳回
             rejectFn(){
+                
                 this.showModal(DIALOG_TYPE.REJECT);
             },
             //  确认驳回

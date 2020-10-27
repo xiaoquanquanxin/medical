@@ -2,22 +2,15 @@
     <div class="layout-content-inner-main">
         <!--搜索相关-->
         <div class="a-input-group">
-            <a-input class="basic-input-width" v-model="searchData.commodityName" placeholder="请输入处方条码"/>
-            <a-select v-model="searchData.brand" class="basic-select-width" placeholder="请选择科室">
-                <a-select-option value="">
-                    品牌
-                </a-select-option>
-                <a-select-option value="Option2">
-                    Option2
-                </a-select-option>
+            <a-input class="basic-input-width" v-model="searchData.prescriptionCode" placeholder="请输入处方条码"/>
+            <a-select v-model="searchData.deptId" class="basic-select-width" placeholder="请选择科室">
+            
             </a-select>
-            <a-select v-model="searchData.status" class="basic-select-width" placeholder="请选择状态">
-                <a-select-option value="">
-                    状态
-                </a-select-option>
-                <a-select-option value="Option2">
-                    Option2
-                </a-select-option>
+            <!--审核状态(1.待审核，2，已审核，3，已驳回)-->
+            <a-select v-model="searchData.auditStatus" class="basic-select-width" placeholder="请选择状态">
+                <a-select-option value="1">待审核</a-select-option>
+                <a-select-option value="2">已审核</a-select-option>
+                <a-select-option value="3">已驳回</a-select-option>
             </a-select>
             <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
         </div>
@@ -28,6 +21,19 @@
                 :scroll="scroll"
                 :pagination="false"
         >
+            <!--性别-->
+            <div slot="sex" slot-scope="scope,sItem,sIndex,extra">
+                <span v-if="scope.sex == 1">男</span>
+                <span v-if="scope.sex == 0">女</span>
+            </div>
+            <!--状态-->
+            <!--审核状态(1.待审核，2，已审核，3，已驳回)-->
+            <div slot="auditStatus" slot-scope="scope,sItem,sIndex,extra">
+                <span v-if="scope.auditStatus == 1">待审核</span>
+                <span v-if="scope.auditStatus == 2">已审核</span>
+                <span v-if="scope.auditStatus == 3">已驳回</span>
+            </div>
+            <!--操作-->
             <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
                 <router-link :to="{name:'auditDetail',params:{auditDetailId:sItem.id}}">详情</router-link>
             </div>
@@ -65,7 +71,7 @@
         {
             title: '处方名称',
             dataIndex: 'prescriptionName',
-            width: 100,
+            width: 200,
         },
         {
             title: '处方医生',
@@ -75,7 +81,7 @@
         {
             title: '开具时间',
             dataIndex: 'orderTime',
-            width: 100,
+            width: 200,
         },
         {
             title: '科室',
@@ -89,7 +95,7 @@
         },
         {
             title: '性别',
-            dataIndex: 'sex',
+            scopedSlots: { customRender: 'sex' },
             width: 100,
         },
         {
@@ -99,7 +105,7 @@
         },
         {
             title: '状态',
-            dataIndex: 'orderStatus',
+            scopedSlots: { customRender: 'auditStatus' },
             width: 100,
         },
         {

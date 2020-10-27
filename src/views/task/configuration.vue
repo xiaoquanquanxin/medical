@@ -12,22 +12,17 @@
                     @change="onDateChange"
             />
             <a-select v-model="searchData.brand" class="basic-select-width" placeholder="请选择科室">
-                <a-select-option value="">
-                    品牌
-                </a-select-option>
-                <a-select-option value="Option2">
-                    Option2
-                </a-select-option>
             </a-select>
-            <a-select v-model="searchData.status" class="basic-select-width" placeholder="请选择状态">
-                <a-select-option value="">
-                    状态
-                </a-select-option>
-                <a-select-option value="Option2">
-                    Option2
-                </a-select-option>
+            <!--(1.待签收，2，待配置，3.已配置，4，待领取，5，已领取)-->
+            <a-select v-model="searchData.orderStatus" class="basic-select-width" placeholder="请选择状态">
+                <a-select-option value="1">待签收</a-select-option>
+                <a-select-option value="2">待配置</a-select-option>
+                <a-select-option value="3">已配置</a-select-option>
+                <a-select-option value="4">待领取</a-select-option>
+                <a-select-option value="5">已领取</a-select-option>
             </a-select>
             <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
+            <b>查询有问题，文档不对应</b>
         </div>
         <div class="a-input-group" v-if="false" data-msg="暂时不做">
             <a-space>
@@ -42,6 +37,25 @@
                 :scroll="scroll"
                 :pagination="false"
         >
+            <!--性别-->
+            <div slot="sex" slot-scope="scope,sItem,sIndex,extra">
+                <span v-if="scope.sex == 1">男</span>
+                <span v-if="scope.sex == 0">女</span>
+            </div>
+            <!--支付状态-->
+            <div slot="payStatus" slot-scope="scope,sItem,sIndex,extra">
+                <span v-if="scope.payStatus == 1">已支付</span>
+                <span v-if="scope.payStatus == 0">待支付</span>
+            </div>
+            <!-- 配置状态(1.待签收，2，待配置，3.已配置，4，待领取，5，已领取)-->
+            <div slot="orderStatus" slot-scope="scope,sItem,sIndex,extra">
+                <span v-if="scope.orderStatus == 1">待签收</span>
+                <span v-if="scope.orderStatus == 2">待配置</span>
+                <span v-if="scope.orderStatus == 3">已配置</span>
+                <span v-if="scope.orderStatus == 4">待领取</span>
+                <span v-if="scope.orderStatus == 5">已领取</span>
+            </div>
+            <!--操作-->
             <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
                 <a-space>
                     <router-link :to="{name:'configurationDetail',params:{configurationDetailId:sIndex}}">详情
@@ -149,42 +163,42 @@
     const columns = [
         {
             title: '序号',
-            dataIndex: 'commodity',
+            dataIndex: 'index',
             width: 100,
         },
         {
             title: '处方名称',
-            dataIndex: 'aaa',
-            width: 100,
+            dataIndex: 'prescriptionName',
+            width: 200,
         },
         {
             title: '处方医生',
-            dataIndex: '通用名',
+            dataIndex: 'doctorName',
             width: 100,
         },
         {
             title: '科室',
-            dataIndex: 'unit',
+            dataIndex: 'deptName',
             width: 100,
         },
         {
             title: '姓名',
-            dataIndex: 'specifications',
+            dataIndex: 'name',
             width: 100,
         },
         {
             title: '性别',
-            dataIndex: 'marketPrice',
+            scopedSlots: { customRender: 'sex' },
             width: 100,
         },
         {
             title: '支付状态',
-            dataIndex: 'manufacturer',
+            scopedSlots: { customRender: 'payStatus' },
             width: 100,
         },
         {
             title: '配置状态',
-            dataIndex: 'update',
+            scopedSlots: { customRender: 'orderStatus' },
             width: 100,
         },
         {
@@ -235,10 +249,11 @@
                         const { data } = v;
                         data.records.forEach((item, index) => {
                             item.key = index;
+                            item.index = index + 1;
                         });
                         this.data = data.records;
-                        console.log(data.records);
                         this.pagination = paginationDecode(this.pagination, data);
+                        console.log(JSON.parse(JSON.stringify(data.records[0])));
                     });
             },
             //  展示的每一页数据变换
