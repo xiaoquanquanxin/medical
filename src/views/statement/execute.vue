@@ -118,22 +118,6 @@
             width: 100,
         },
     ];
-    const data = [];
-    for (let i = 0; i < 4; i++) {
-        data.push({
-            key: i,
-            commodity: `xx商品`,
-            city: '上海',
-            status: String(i % 2),
-            icon: '商品图标',
-            aaa: '商品货号',
-            通用名: '通用名',
-            商品分类: '商品分类',
-            unit: '基本单位',
-            specifications: '规格',
-            manufacturer: '生产厂家',
-        });
-    }
 
     export default {
         components: {
@@ -141,7 +125,7 @@
         },
         data(){
             return {
-                data,
+                data: [],
                 columns,
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
                 scroll: oneRowSearch(columns),

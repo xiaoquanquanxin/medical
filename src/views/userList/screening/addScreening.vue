@@ -558,7 +558,11 @@
                 console.log(this.screenBottomData);
                 //  底部评分数据
                 const screenBottomData = this.screenBottomData[0];
-                const ctime = `${screenBottomData.c} ${screenBottomData.e}`;
+                let ctime;
+                if (screenBottomData) {
+                    ctime = `${screenBottomData.c} ${screenBottomData.e}`;
+                }
+
                 console.log('保存');
                 //  如果是编辑
                 if (this.screeningDetailId) {

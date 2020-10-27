@@ -2,7 +2,6 @@
     <div class="layout-content-inner-main">
         <!--搜索相关-->
         <div class="a-input-group">
-            <a-input class="basic-input-width" v-model="searchData.aaa" placeholder="请输入订单编号"/>
             <a-input class="basic-input-width" v-model="searchData.prescriptionCode" placeholder="请输入处方号"/>
             <a-input class="basic-input-width" v-model="searchData.name" placeholder="请输入患者姓名"/>
             <a-select class="lengthen-select-width" v-model="searchData.payStatus" placeholder="请选择支付状态">
@@ -116,11 +115,6 @@
     import { requestBillingsBillingPage } from '../../api/cost/costList';
 
     const columns = [
-        {
-            title: '订单编号',
-            dataIndex: 'prescriptionCode1',
-            width: 200,
-        },
         {
             title: '处方号',
             dataIndex: 'prescriptionCode',

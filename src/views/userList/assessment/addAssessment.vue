@@ -1101,7 +1101,7 @@
                             console.log(oneData);
                             console.log(this.patientBasicInfo);
                             const {
-                                birth,
+                                birth: age,
                                 bmi,
                                 height,
                                 name,
@@ -1111,7 +1111,7 @@
                             const patientId = Number(this.patientId);
                             const totalScore = this.typeOneList.reduce((a, b) => {return a + b;}, 0);
                             console.log({
-                                birth,
+                                age,
                                 bmi,
                                 height,
                                 name,
@@ -1122,7 +1122,7 @@
                                 oneData,
                             });
                             const saveData = Object.assign({
-                                birth,
+                                age,
                                 bmi,
                                 height,
                                 name,
@@ -1133,9 +1133,8 @@
                             }, oneData);
                             console.log(saveData);
                             console.log(JSON.stringify(saveData));
-                            return;
                             return requestPatientAssessSaveYbpgb(Object.assign({
-                                birth,
+                                age,
                                 bmi,
                                 height,
                                 name,

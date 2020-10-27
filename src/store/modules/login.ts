@@ -43,6 +43,7 @@ const actions = {
 			}).then(response => {
 				const {data} = response;
 				const {userInfo, token} = data;
+				console.log(userInfo);
 				commit('SET_JWT', token);
 				commit('SET_LOGIN_INFO', userInfo);
 				setJwt(token);

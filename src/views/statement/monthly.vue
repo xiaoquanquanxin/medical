@@ -112,8 +112,8 @@
                 pagination: paginationInit(),
                 //  搜索数据
                 searchData: {
-                    startDateMoment: null,
-                    endDateMoment: null,
+                    settleEndtime: null,
+                    settleStarttime: null,
                 },
             };
         },
@@ -124,7 +124,7 @@
             //  主要请求
             searchFn(){
                 requestSettlementPage(Object.assign({},
-                    { param: {} },
+                    { param: this.searchData },
                     paginationEncode(this.pagination)))
                     .then(v => {
                         const { data } = v;
@@ -151,6 +151,8 @@
             //  选择日期范围
             onRangePickerChange(value, selectDateValue){
                 console.log(selectDateValue);
+                this.searchData.settleStarttime = selectDateValue[0];
+                this.searchData.settleEndtime = selectDateValue[1];
             },
             //  执行月结
             executeFn(){
