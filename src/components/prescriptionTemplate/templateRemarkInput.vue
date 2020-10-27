@@ -26,6 +26,14 @@
                 value: this.remark,
             };
         },
+        $watch: {
+            remark(value){
+                this.value = value;
+            }
+        },
+        created(){
+            this.value = this.remark;
+        },
         methods: {
             ...mapActions('prescriptionTemplate', [
                 //  设置商品列表数据

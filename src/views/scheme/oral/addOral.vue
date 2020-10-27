@@ -21,7 +21,7 @@
                     <a-select class="add-form-input"
                               v-model="tableForm.prescriptionType"
                               placeholder="请选择处方类型"
-                              @change="$forceUpdate()"
+                              @change="selectPrescriptionChange"
                     >
                         <a-select-option :value="item.id"
                                          :key="index"
@@ -147,7 +147,7 @@
                             >
                                 <a-space size="small">
                                     <a-input placeholder="请输入使用量" v-model="item.dosage"/>
-                                    {{item.unit}}
+                                    {{item.uname}}
                                 </a-space>
                             </div>
                         </div>
@@ -351,6 +351,7 @@
 
                 //  表单中表格的数据
                 tableForm: {
+                    prescriptionName: '口服肠内营养补充',
                     //  hospitalId          医院
                     //  hospitalName        医院名
                     //  prescriptionName    处方名
@@ -385,14 +386,6 @@
                         if (!this.oralId) {
                             return;
                         }
-                        const data = {
-                            'prescriptionName': '肠内营养支持',
-                            'energy': '1600kcal',
-                            'usageMethod': 1,
-                            'prescriptionType': 2,
-                            'prescriptionContent': '{"timeTableData": [{"key": 1, "list": [{"id": 4, "sort": 2, "type": 2, "uname": "23", "dosage": "45", "goodsId": 4, "unitFat": 23, "goodsName": "商品b", "unitPrice": 23, "unitValue": 0, "unitEnergy": 23, "unitProtein": 23, "isRadioChecked": true, "unitCarbohydrate": 23, "unitExchangeRate": 23}], "time": "02:01", "warmWater": "54"}], "commodityTableData": [{"id": 4, "key": 4, "status": 11, "delFlag": "0", "goodsImg": "http://49.232.14.93:8080/file/pic/20201025172803881496.png", "quantity": "32", "goodsName": "商品b", "supplierId": 2, "uintListVos": [{"id": 4, "sort": 2, "type": 2, "uname": "23", "goodsId": 4, "unitFat": 23, "unitPrice": 23, "unitValue": 0, "unitEnergy": 23, "unitProtein": 23, "isRadioChecked": true, "unitCarbohydrate": 23, "unitExchangeRate": 23}], "goodsBarCode": "33", "goodsBrandId": 3, "goodsDetails": "", "goodsKeyWord": "32", "manufactorId": "11", "goodsTradeName": "11", "goodsCategoryId": 3, "goodsProductCode": "33", "isCheckboxChecked": true, "preservationMethod": 11, "goodsSpecifications": "11", "purchaseUnitCheckId": 4}]}'
-                        };
-//                return;
                         //  如果是编辑
                         requestPrescriptionTemplateGet(this.oralId)
                             .then(v => {
@@ -408,6 +401,8 @@
                                 const prescriptionContent = JSON.parse(data.prescriptionContent);
                                 this.commodityTableData = prescriptionContent.commodityTableData;
                                 this.timeTableData = prescriptionContent.timeTableData;
+                                const { remark } = this.timeTableData[0];
+                                this.setRemark(remark);
                                 //  拿一次医院的商品
                                 requestGoodsListByHospital(data.hospitalId)
                                     .then(v => {
@@ -442,6 +437,10 @@
                 'setOriginCommodityList',
                 //  设置remark的行数
                 'setRowForRemark',
+            ]),
+            ...mapActions('prescriptionTemplate', [
+                //  设置商品列表数据
+                'setRemark',
             ]),
             //  切换医院
             selectHospitalChange(value){
@@ -505,6 +504,7 @@
                         this.tableForm.prescriptionName = item.name;
                     }
                 });
+                this.$forceUpdate();
             },
             //  选择商品
             selectCommodity(){
@@ -527,6 +527,8 @@
                     this.commodityTableData = this.originCommodityList.filter(item => item.isCheckboxChecked);
                     //  重置时间表格数据
                     this.timeTableData = [];
+                    //  清除备注
+                    this.setRemark('');
                 }).catch(error => {
                     console.log(error);
                     console.log('有错');
@@ -651,15 +653,19 @@
             //  表单提交 保存
             handleSubmit(e){
                 e.preventDefault();
-                console.log(JSON.parse(JSON.stringify(this.commodityTableData)));
-                console.log('备注🍌', this.remark);
-                console.log(JSON.parse(JSON.stringify(this.timeTableData)));
+                //  console.log(JSON.parse(JSON.stringify(this.commodityTableData)));
+                //  console.log('备注🍌', this.remark);
+                this.timeTableData.forEach(item => {
+                    item.remark = this.remark;
+                });
+                //  console.log(JSON.parse(JSON.stringify(this.timeTableData)));
                 const prescriptionContent = {
                     commodityTableData: this.commodityTableData,
                     timeTableData: this.timeTableData,
                 };
                 this.tableForm.prescriptionContent = JSON.stringify(prescriptionContent);
-                console.log(JSON.parse(JSON.stringify(this.tableForm)));
+                //  console.log(JSON.parse(JSON.stringify(this.tableForm)));
+                console.log(prescriptionContent);
                 (() => {
                     //  如果是新增
                     if (!this.oralId) {
