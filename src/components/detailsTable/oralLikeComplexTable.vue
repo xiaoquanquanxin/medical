@@ -1,12 +1,5 @@
 <template>
     <div>
-        <a-row type="flex" justify="space-between" align="middle"
-               class="table-group-title no-border-bottom"
-               v-if="dataTitle"
-        >
-            <span>{{dataTitle.name}}</span>
-            <span>{{dataTitle.method}}</span>
-        </a-row>
         <a-table
                 :columns="columns"
                 :data-source="dataSource"
@@ -17,18 +10,18 @@
             <!--商品名称-->
             <div slot="commodityName" slot-scope="scope,sItem,sIndex,extra">
                 <div class="negative-margin-16">
-                    <div v-for="(item , index) in scope.childrenList"
+                    <div v-for="(item , index) in scope.list"
                          class="negative-margin-item">
-                        {{item.commodity}}
+                        {{item.goodsName}}
                     </div>
                 </div>
             </div>
             <!--配置量-->
             <div slot="quality" slot-scope="scope,sItem,sIndex,extra">
                 <div class="negative-margin-16">
-                    <div v-for="(item , index) in scope.childrenList"
+                    <div v-for="(item , index) in scope.list"
                          class="negative-margin-item">
-                        {{item.quality}}
+                        {{item.dosage}}/{{item.uname}}
                     </div>
                 </div>
             </div>
@@ -37,7 +30,7 @@
 </template>
 <script>
     export default {
-        props: ['dataSource','dataTitle'],
+        props: ['dataSource'],
         data(){
             const columns = [
                 {
@@ -57,7 +50,7 @@
                 },
                 {
                     title: '温水',
-                    dataIndex: 'water',
+                    dataIndex: 'warmWater',
                     width: 100,
                 },
                 {
@@ -80,6 +73,11 @@
             return {
                 columns,
             };
+        },
+        created(){
+            setTimeout(() => {
+                console.log(JSON.parse(JSON.stringify(this.dataSource[0].list)));
+            }, 1000);
         }
     };
 </script>

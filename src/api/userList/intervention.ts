@@ -28,3 +28,13 @@ export function requestPrescriptionSave(data: any) {
 	});
 }
 
+
+//	根据处方ID查询[处方详情]，详情页面，只取prescriptionDetail字段中的JSON进行渲染
+export function requestPrescriptionDetail(prescriptionId: number | string) {
+	return request({
+		url: `/api/prescription/detail/${prescriptionId}`,
+		method: 'get',
+	});
+}
+
+

@@ -3,7 +3,12 @@
         <!--口服肠内营养补充-->
         <a-row type="flex" justify="space-between" align="middle" class="table-group-title no-border-bottom">
             <span>{{dataTitle.name}}</span>
-            <span>{{dataTitle.method}}</span>
+            <span v-for="(item,index) in usageMethodList"
+                  :key="index"
+                  v-if="dataTitle.usageMethod === item.id"
+            >
+                {{item.name }}
+            </span>
         </a-row>
         <a-table
                 :columns="oralColumns"
@@ -15,17 +20,18 @@
     </div>
 </template>
 <script>
+    import { prescriptionTypeList, liquidEnergyList, usageMethodList } from '../../utils/constants';
     //  口服肠内营养支持 表格 列的意义
     const oralColumns = [
         {
             title: '商品名称',
-            dataIndex: 'commodityName',
+            dataIndex: 'goodsName',
             width: 100,
         },
         {
             title: '购买单位',
             width: 100,
-            dataIndex: 'buyer',
+            dataIndex: 'purchaseUnit',
         },
         {
             title: '商品单价',
@@ -47,11 +53,13 @@
         props: ['dataSource', 'dataTitle'],
         data(){
             return {
+                //  能量下拉
+                usageMethodList,
                 oralColumns,
             };
         },
         created(){
-            //  console.log(this.dataSource);
+//            console.log(JSON.parse(JSON.stringify(this.dataSource)));
         }
     };
 </script>

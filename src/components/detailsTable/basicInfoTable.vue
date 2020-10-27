@@ -11,6 +11,10 @@
                 :pagination="false"
                 bordered
         >
+            <div slot="prescriptionType" slot-scope="scope,sItem,sIndex,extra">
+                <span v-if="scope.prescriptionType == 1">院内配置</span>
+                <span v-if="scope.prescriptionType == 2">门诊领药</span>
+            </div>
         </a-table>
     </div>
 </template>
@@ -19,18 +23,18 @@
     const basicInfoColumns = [
         {
             title: '方案名称',
-            dataIndex: 'planName',
+            dataIndex: 'prescriptionName',
             width: 100,
         },
         {
-            title: '周期',
+            title: '周期/天',
             width: 100,
-            dataIndex: 'cycle',
+            dataIndex: 'priod',
         },
         {
             title: '处方类型',
             width: 100,
-            dataIndex: 'prescriptionType',
+            scopedSlots: { customRender: 'prescriptionType' },
         },
     ];
 

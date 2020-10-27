@@ -131,9 +131,7 @@
                 let fat = 0;
                 //  蛋白质
                 let protein = 0;
-                //  todo    肠内only
-                const commodity = [];
-                const calc = (list) => {
+                const calc = (list, commodity) => {
                     list.forEach(item => {
                         const { purchaseUnitCheckId, quantity } = item;
                         item.uintListVos.forEach(_item => {
@@ -144,10 +142,12 @@
                                 fat += quantity * _item.unitFat;
                                 protein += quantity * _item.unitProtein;
                                 const data = {
+                                    key: _item.id,
                                     goodsId: _item.id,
                                     goodsName: item.goodsName,
                                     purchaseUnit: _item.uname,
                                     quantity: item.quantity,
+                                    unitPrice: _item.unitPrice,
                                     subtotal: item.quantity * _item.unitPrice
                                 };
                                 commodity.push(data);
@@ -155,17 +155,27 @@
                         });
                     });
                 };
-                calc(this.kqcnData.commodityTableData);
-                console.log(fat);
-//                console.log(JSON.parse(JSON.stringify(this.kqcnData.commodityTableData[0])));
-//                console.log(JSON.parse(JSON.stringify(this.cnyyzcData.commodityTableData[0])));
-                calc(this.cnyyzcData.commodityTableData);
-                console.log(fat);
+                //  口服肠内
+                const kqcnyybcCommodity = [];
+                calc(this.kqcnData.commodityTableData, kqcnyybcCommodity);
+                //  肠内营养
+                const cnyyzcCommodity = [];
+                calc(this.cnyyzcData.commodityTableData, cnyyzcCommodity);
                 //  详情json
                 const prescriptionDetail = {
-                    cnyyzc: commodity,
+                    //  口服肠内
+                    kqcnyybc: {
+                        commodity: kqcnyybcCommodity,
+                        dataTitle: this.kqcnOralEditDataTitle,
+                        timeTableData: this.kqcnData.timeTableData
+                    },
+                    cnyyzc: {
+                        commodity: cnyyzcCommodity,
+                        dataTitle: this.cnyyzcOralEditDataTitle,
+                        timeTableData: this.cnyyzcData.timeTableData
+                    },
                 };
-
+                console.log(JSON.parse(JSON.stringify(prescriptionDetail)));
                 const saveData = {
                     patientId,
                     priod,

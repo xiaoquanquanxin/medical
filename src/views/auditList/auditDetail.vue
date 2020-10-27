@@ -17,27 +17,28 @@
         <br>
         <!--口服肠内营养补充-->
         <OralLikeBasicTable
-                :data-title="oralDataTitle" :data-source="oralData"
+                :data-title="kqcnyybcDataTitle" :data-source="kqcnyybcCommodity"
         />
         <br>
         <!--复杂-->
         <OralLikeComplexTable
-                :data-source="oralComplexData"
+                :data-source="kqcnyybcTimeTableData"
         />
         <br>
         <!--肠内营养支持-->
         <OralLikeBasicTable
-                :data-title="intestinalDataTitle" :data-source="intestinalData"
+                :data-title="cnyyzcDataTitle"
+                :data-source="cnyyzcCommodity"
         />
         <br>
         <!--复杂-->
         <OralLikeComplexTable
-                :data-source="intestinalComplexData"
+                :data-source="cnyyzcTimeTableData"
         />
         <br>
         <!--膳食营养计划-->
-        <DietaryTable
-                :data-source="dietaryData"
+        <DietaryTable v-if="false"
+                      :data-source="dietaryData"
         />
         <br>
         <!--能量表-->
@@ -74,6 +75,7 @@
     import RejectForm from '@/components/auditList/rejectForm.vue';
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
     import GoBackButton from '@/components/goBackButton.vue';
+    import { requestPrescriptionDetail } from '../../api/userList/intervention';
 
     export default {
         components: {
@@ -93,124 +95,117 @@
                 //  基础数据
                 basicInfoData: [{
                     key: 1,
-                    planName: '许晓飞123',
-                    cycle: '年',
-                    prescriptionType: '吃',
-                    cost: '¥20',
+                    prescriptionName: '',
+                    priod: '',
+                    prescriptionType: '',
                 }],
 
                 //  口服数据
-                oralDataTitle: {
-                    name: '口服肠内营养补充',
-                    method: '方法1',
-                },
-                oralData: [
-                    {
-                        key: 1,
-                        commodityName: '许晓飞123',
-                        buyer: '年',
-                        unitPrice: '吃',
-                        quantity: '¥20',
-                        subtotal: 43,
-                    }, {
-                        key: 2,
-                        commodityName: '许晓飞123',
-                        buyer: '年',
-                        unitPrice: '吃',
-                        quantity: '¥20',
-                        subtotal: 433,
-                    }
+                kqcnyybcDataTitle: {},
+                kqcnyybcCommodity: [
+//                    {
+//                        key: 1,
+//                        commodityName: '许晓飞123',
+//                        buyer: '年',
+//                        unitPrice: '吃',
+//                        quantity: '¥20',
+//                        subtotal: 43,
+//                    }, {
+//                        key: 2,
+//                        commodityName: '许晓飞123',
+//                        buyer: '年',
+//                        unitPrice: '吃',
+//                        quantity: '¥20',
+//                        subtotal: 433,
+//                    }
                 ],
-                oralComplexData: [
-                    {
-                        key: 1,
-                        time: '4:00',
-                        water: 11,
-                        remark: '备注',
-                        childrenList: [
-                            {
-                                quality: 1,
-                                commodity: 'commodity1',
-                            },
-                            {
-                                quality: 2,
-                                commodity: 'commodity2',
-                            }
-                        ]
-                    },
-                    {
-                        key: 2,
-                        time: '12:00',
-                        water: 23,
-                        remark: '备注',
-                        childrenList: [
-                            {
-                                quality: 3,
-                                commodity: 'commodity3',
-                            },
-                            {
-                                quality: 4,
-                                commodity: 'commodity4',
-                            }
-                        ]
-                    },
+                kqcnyybcTimeTableData: [
+//                    {
+//                        key: 1,
+//                        time: '4:00',
+//                        water: 11,
+//                        remark: '备注',
+//                        childrenList: [
+//                            {
+//                                quality: 1,
+//                                commodity: 'commodity1',
+//                            },
+//                            {
+//                                quality: 2,
+//                                commodity: 'commodity2',
+//                            }
+//                        ]
+//                    },
+//                    {
+//                        key: 2,
+//                        time: '12:00',
+//                        water: 23,
+//                        remark: '备注',
+//                        childrenList: [
+//                            {
+//                                quality: 3,
+//                                commodity: 'commodity3',
+//                            },
+//                            {
+//                                quality: 4,
+//                                commodity: 'commodity4',
+//                            }
+//                        ]
+//                    },
                 ],
 
                 //  肠内数据
-                intestinalDataTitle: {
-                    name: '肠内营养补充',
-                    method: '方法3',
-                },
-                intestinalData: [
-                    {
-                        key: 1,
-                        commodityName: '许晓飞123',
-                        buyer: '年',
-                        unitPrice: '吃',
-                        quantity: '¥20',
-                        subtotal: 433,
-                    }, {
-                        key: 2,
-                        commodityName: '许晓飞123',
-                        buyer: '年',
-                        unitPrice: '吃',
-                        quantity: '¥20',
-                        subtotal: 433,
-                    }
+                cnyyzcDataTitle: {},
+                cnyyzcCommodity: [
+//                    {
+//                        key: 1,
+//                        commodityName: '许晓飞123',
+//                        buyer: '年',
+//                        unitPrice: '吃',
+//                        quantity: '¥20',
+//                        subtotal: 433,
+//                    }, {
+//                        key: 2,
+//                        commodityName: '许晓飞123',
+//                        buyer: '年',
+//                        unitPrice: '吃',
+//                        quantity: '¥20',
+//                        subtotal: 433,
+//                    }
                 ],
-                intestinalComplexData: [
-                    {
-                        key: 1,
-                        time: '4:00',
-                        water: 11,
-                        remark: '备注',
-                        childrenList: [
-                            {
-                                quality: 1,
-                                commodity: 'commodity1',
-                            },
-                            {
-                                quality: 2,
-                                commodity: 'commodity2',
-                            }
-                        ]
-                    },
-                    {
-                        key: 2,
-                        time: '12:00',
-                        water: 23,
-                        remark: '备注',
-                        childrenList: [
-                            {
-                                quality: 3,
-                                commodity: 'commodity3',
-                            },
-                            {
-                                quality: 4,
-                                commodity: 'commodity4',
-                            }
-                        ]
-                    },
+                cnyyzcTimeTableData: [
+//                    {
+//                        key: 1,
+//                        time: '4:00',
+//                        water: 11,
+//                        remark: '备注',
+//                        childrenList: [
+//                            {
+//                                quality: 1,
+//                                commodity: 'commodity1',
+//                            },
+//                            {
+//                                quality: 2,
+//                                commodity: 'commodity2',
+//                            }
+//                        ]
+//                    },
+//                    {
+//                        key: 2,
+//                        time: '12:00',
+//                        water: 23,
+//                        remark: '备注',
+//                        childrenList: [
+//                            {
+//                                quality: 3,
+//                                commodity: 'commodity3',
+//                            },
+//                            {
+//                                quality: 4,
+//                                commodity: 'commodity4',
+//                            }
+//                        ]
+//                    },
                 ],
 
                 //  膳食营养计划数据
@@ -230,33 +225,61 @@
                 //  能量数据
                 energyData: [{
                     key: 1,
-                    energy: 123,
-                    protein: 234,
-                    fat: 345,
-                    carbohydrates: 456,
+                    energy: null,
+                    protein: null,
+                    fat: null,
+                    carbohydrates: null,
                 }],
                 //  拒绝的莫泰框
                 dialogReject: this.initModal(DIALOG_TYPE.REJECT),
             };
         },
         created(){
-            console.log('编辑id', this.auditDetailId);
+            console.log('编辑auditDetailId', this.auditDetailId);
             this.searchFn();
         },
         methods: {
             //  主要请求
             searchFn(){
-//                requestChannelBusinessPage(paginationEncode(this.pagination))
-//                    .then(v => {
-//                        const { data } = v;
-//                        console.log(data);
-//                data.records.forEach((item, index) => {
-//                    item.key = index;
-//                    item.createTime = item.createTime.substr(0, 10);
-//                });
-//                        this.data = data.records;
-//                        this.pagination = paginationDecode(this.pagination, data);
-//                    });
+                requestPrescriptionDetail(this.auditDetailId)
+                    .then(v => {
+                        const { data } = v;
+                        const prescriptionDetail = JSON.parse(data.prescriptionDetail);
+                        const { prescriptionName, priod, prescriptionType, } = data;
+                        //  头部
+                        this.basicInfoData = [{
+                            key: 1,
+                            prescriptionName,
+                            priod,
+                            prescriptionType,
+                        }];
+                        //  合计
+                        const { energy, protein, fat, carbohydrates } = data;
+                        this.energyData = [{
+                            key: 1,
+                            energy,
+                            protein,
+                            fat,
+                            carbohydrates,
+                        }];
+                        const { cnyyzc, kqcnyybc } = prescriptionDetail;
+                        const { dataTitle: kqcnyybcDataTitle, commodity: kqcnyybcCommodity, timeTableData: kqcnyybcTimeTableData } = kqcnyybc;
+                        const { dataTitle: cnyyzcDataTitle, commodity: cnyyzcCommodity, timeTableData: cnyyzcTimeTableData } = cnyyzc;
+//                        console.log(prescriptionDetail);
+                        console.log('结果');
+//                        console.log(kqcnyybcDataTitle);
+//                        console.log(kqcnyybcCommodity);
+//                        console.log(cnyyzcDataTitle);
+//                        console.log(cnyyzcCommodity);
+                        this.kqcnyybcDataTitle = kqcnyybcDataTitle;
+                        this.kqcnyybcCommodity = kqcnyybcCommodity;
+                        this.kqcnyybcTimeTableData = kqcnyybcTimeTableData;
+                        this.cnyyzcDataTitle = cnyyzcDataTitle;
+                        this.cnyyzcCommodity = cnyyzcCommodity;
+                        this.cnyyzcTimeTableData = cnyyzcTimeTableData;
+                        console.log(this.kqcnyybcTimeTableData);
+                        console.log(this.cnyyzcTimeTableData);
+                    });
             },
             //  莫泰框方法
             ...dialogMethods,
@@ -281,7 +304,7 @@
             },
             //  驳回
             rejectFn(){
-                
+
                 this.showModal(DIALOG_TYPE.REJECT);
             },
             //  确认驳回

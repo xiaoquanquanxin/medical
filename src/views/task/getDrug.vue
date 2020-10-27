@@ -4,8 +4,6 @@
             <!--搜索相关-->
             <div class="a-input-group">
                 <a-input class="basic-input-width" v-model="searchData.commodityName" placeholder="请输入处方号"/>
-                <a-input class="basic-input-width" v-model="searchData.commodityName" placeholder="请输入处方名称"/>
-                <a-input class="basic-input-width" v-model="searchData.commodityName" placeholder="请输入患者姓名"/>
                 <a-date-picker
                         class="lengthen-select-width"
                         placeholder="请选择配置日期"
