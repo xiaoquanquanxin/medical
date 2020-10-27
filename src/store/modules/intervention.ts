@@ -2,11 +2,22 @@
 import {COMMIT_INTERFACE} from "@/store";
 
 interface STATE {
+	//	口服肠内营养补充 dataTitle
+	kqcnOralEditDataTitle: any;
+	cnyyzcOralEditDataTitle: any;
 	//	被选中的营养干预方案
 	chooseInterventionData: any
 }
 
 const state: STATE = {
+	kqcnOralEditDataTitle: {
+		name: '口服肠内营养补充',
+		prescriptionType: 1,
+	},
+	cnyyzcOralEditDataTitle:{
+		name: '肠内营养支持',
+		prescriptionType: 2,
+	},
 	chooseInterventionData: null,
 }
 const mutations = {
