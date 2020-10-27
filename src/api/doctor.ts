@@ -38,3 +38,20 @@ export function requestDoctorDelete(id: string | number) {
 	});
 }
 
+
+//	医生类型接口
+export function requestDoctorDoctorType() {
+	return request({
+		url: `/api/doctor/doctorType`,
+		method: 'get'
+	});
+}
+
+//	医生职称接口
+export function requestDoctorDoctorTitle() {
+	return request({
+		url: `/api/doctor/doctorTitle`,
+		method: 'get'
+	});
+}
+

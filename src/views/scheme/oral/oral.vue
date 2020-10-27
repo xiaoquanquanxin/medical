@@ -17,12 +17,13 @@
                 >{{item.name}}
                 </a-select-option>
             </a-select>
-            <a-select class="basic-select-width" v-model="searchData.department" placeholder="请选择科室">
-                <a-select-option value="">
-                    科室1
-                </a-select-option>
-                <a-select-option value="Option2">
-                    科室2
+            <a-select class="basic-select-width" placeholder="请选择医院" v-model="searchData.hospitalId"
+            >
+                <a-select-option v-for="(item,index) in hospitalList"
+                                 :key="index"
+                                 :value="item.id"
+                >
+                    {{item.hospitalName}}
                 </a-select-option>
             </a-select>
             <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
@@ -72,6 +73,7 @@
     import { threeRowSearch } from '@/utils/tableScroll';
     import { requestPrescriptionTemplateDelete, requestPrescriptionTemplatePage } from '../../../api/scheme/scheme';
     import { prescriptionTypeList, energyList, usageMethodList } from '../../../utils/constants';
+    import { requestHospitalGetList } from '../../../api/hospital';
 
     const columns = [
         {
@@ -108,6 +110,9 @@
                 data: [],
                 columns,
 
+                //  医院列表
+                hospitalList: [],
+
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
                 scroll: threeRowSearch(columns),
                 //  分页信息
@@ -127,6 +132,7 @@
         watch: {
             $route(value){
                 console.log('路由变化请求');
+                this.searchData.prescriptionType = this.$route.name === 'oral' ? 1 : 2;
                 this.searchFn();
             }
         },
@@ -138,6 +144,11 @@
         methods: {
             //  主要请求
             searchFn(){
+                requestHospitalGetList()
+                    .then(v => {
+                        this.hospitalList = v.data;
+                        console.log(JSON.parse(JSON.stringify(v.data)));
+                    });
 //                this.data.push({ key: 1 });
                 requestPrescriptionTemplatePage(Object.assign({},
                     this.searchData,

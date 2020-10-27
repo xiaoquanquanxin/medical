@@ -47,8 +47,11 @@
                           placeholder="请选择医生类型"
                           v-decorator="doctorTypeDecorator"
                 >
-                    <a-select-option value="1">1</a-select-option>
-                    <a-select-option value="3">2</a-select-option>
+                    <a-select-option :value="item.id"
+                                     :key="item.id"
+                                     v-for="item in doctorTypeList"
+                    >{{item.name}}
+                    </a-select-option>
                 </a-select>
             </a-form-item>
             <a-form-item label="医生职称" has-feedback>
@@ -56,8 +59,11 @@
                           placeholder="请选择医生职称"
                           v-decorator="doctorTitleDecorator"
                 >
-                    <a-select-option value="1">1</a-select-option>
-                    <a-select-option value="3">2</a-select-option>
+                    <a-select-option :value="item.id"
+                                     :key="item.id"
+                                     v-for="item in doctorTitleList"
+                    >{{item.name}}
+                    </a-select-option>
                 </a-select>
             </a-form-item>
             <a-form-item label="医生状态" has-feedback>
@@ -69,24 +75,6 @@
                     <a-select-option value="3">2</a-select-option>
                 </a-select>
             </a-form-item>
-<!--            <a-form-item label="医生类型" has-feedback>-->
-<!--                <a-select class="add-form-input"-->
-<!--                          placeholder="请选择医生类型"-->
-<!--                          v-decorator="doctorRoleDecorator"-->
-<!--                >-->
-<!--                    <a-select-option value="1">1</a-select-option>-->
-<!--                    <a-select-option value="3">2</a-select-option>-->
-<!--                </a-select>-->
-<!--            </a-form-item>-->
-<!--            <a-form-item label="医生咨询费" has-feedback>-->
-<!--                <a-select class="add-form-input"-->
-<!--                          placeholder="请选择医生咨询费"-->
-<!--                          v-decorator="doctorConsultingFeesDecorator"-->
-<!--                >-->
-<!--                    <a-select-option value="1">1</a-select-option>-->
-<!--                    <a-select-option value="3">2</a-select-option>-->
-<!--                </a-select>-->
-<!--            </a-form-item>-->
             <a-form-item label="手机号">
                 <a-input class="add-form-input"
                          v-decorator="phoneNumberDecorator"
@@ -118,7 +106,12 @@
     import { compareToFirstPassword } from '@/utils/validate';
     import { isPhoneNumber } from '@/utils/validate';
     import GoBackButton from '@/components/goBackButton.vue';
-    import { requestDoctorSave, requestDoctorUpdate } from '../../api/doctor';
+    import {
+        requestDoctorDoctorTitle,
+        requestDoctorDoctorType,
+        requestDoctorSave,
+        requestDoctorUpdate
+    } from '../../api/doctor';
 
     export default {
         components: {
@@ -129,6 +122,8 @@
         },
         data(){
             return {
+                doctorTypeList: [],
+                doctorTitleList: [],
                 //  医生id
                 doctorId: this.$route.params.doctorId,
                 //  表单大小
@@ -233,6 +228,22 @@
         methods: {
             //  主要请求
             searchFn(){
+                requestDoctorDoctorType()
+                    .then(v => {
+                        v.data.forEach((item, index) => {
+                            item.key = index;
+                        });
+                        this.doctorTypeList = v.data;
+                        console.log(v);
+                    });
+                requestDoctorDoctorTitle()
+                    .then(v => {
+                        v.data.forEach((item, index) => {
+                            item.key = index;
+                        });
+                        this.doctorTitleList = v.data;
+                        console.log(v);
+                    });
                 //  如果是新增
                 if (!this.doctorId) {
                     return;

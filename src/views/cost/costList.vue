@@ -112,7 +112,7 @@
     const columns = [
         {
             title: '订单编号',
-            dataIndex: 'commodity',
+            dataIndex: 'prescriptionCode',
             width: 100,
         },
         {
@@ -204,12 +204,11 @@
                 )
                     .then(v => {
                         const { data } = v;
-                        data.records[0] = {};
                         data.records.forEach((item, index) => {
                             item.key = index;
                         });
                         this.data = data.records;
-                        console.log(data.records);
+                        console.log(JSON.parse(JSON.stringify(data.records[0])));
                         this.pagination = paginationDecode(this.pagination, data);
                     });
             },
