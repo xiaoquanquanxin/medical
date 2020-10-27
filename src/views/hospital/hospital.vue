@@ -223,8 +223,23 @@
             },
             //  关联科室操作
             relatedDepartments(){
-                this.showModal(DIALOG_TYPE.RELATED_DEPARTMENTS);
-                this.setShuttleBoxType(SHUTTLE_BOX.RELATED_DEPARTMENTS);
+                this.shuttleBoxData = sItem;
+                return;
+//                requestDiseaseList()
+//                    .then(v => {
+//                        this.showModal(DIALOG_TYPE.RELATED_DEPARTMENTS);
+//                        this.setShuttleBoxType(SHUTTLE_BOX.RELATED_DEPARTMENTS);
+//                        this.diseaseOriginList = [];
+//                        v.data.forEach(item => {
+//                            const data = {};
+//                            data.key = item.id.toString();
+//                            data.title = item.diseaseName;
+//                            data.description = item.diseaseName;
+//                            //  todo    处理被选中
+//                            data.chosen = false;
+//                            this.diseaseOriginList.push(data);
+//                        });
+//                    });
             },
             //  关联渠道商
             associatedChannelProvider(){

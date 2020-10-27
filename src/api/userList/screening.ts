@@ -26,11 +26,11 @@ export function requestScreenSave(data: any) {
 	});
 }
 
-//	删除营养筛查		⚠️原型无
-export function requestBriefDelete(screenId: string | number) {
+//	删除营养筛查
+export function requestScreenDelete(screenId: string | number) {
 	return request({
 		url: `/api/screen/delete/${screenId}`,
-		method: 'post',
+		method: 'get',
 	});
 }
 

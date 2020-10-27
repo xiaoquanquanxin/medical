@@ -72,21 +72,22 @@
 <script>
     import { paginationInit, paginationDecode, paginationEncode } from '@/utils/pagination.ts';
     import { threeRowSearch } from '@/utils/tableScroll';
+    import { requestPrescriptionTemplatePage } from '../../../api/scheme/scheme';import { usageMethodList } from '../../../utils/constants';
 
     const columns = [
         {
             title: '方案名称',
-            dataIndex: 'hospital',
+            dataIndex: 'prescriptionName',
             width: 100,
         },
         {
             title: '能量',
-            dataIndex: 'city',
+            dataIndex: 'energy',
             width: 100,
         },
         {
             title: '食物类型',
-            dataIndex: 'status',
+            dataIndex: 'usageMethod',
             width: 100,
         },
         {
@@ -100,23 +101,13 @@
             width: 100,
         },
     ];
-    const data = [];
-    for (let i = 0; i < 10; i++) {
-        data.push({
-            key: i,
-            hospital: `xx医院`,
-            city: '上海',
-            status: String(i % 2),
-            icon: '医院图标',
-
-        });
-    }
 
     //  膳食营养计划
     export default {
         data(){
             return {
-                data,
+                usageMethodList,
+                data: [],
                 columns,
 
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
@@ -133,17 +124,20 @@
         methods: {
             //  主要请求
             searchFn(){
-//                requestChannelBusinessPage(paginationEncode(this.pagination))
-//                    .then(v => {
-//                        const { data } = v;
-//                        console.log(data);
-//                data.records.forEach((item, index) => {
-//                    item.key = index;
-//                    item.createTime = item.createTime.substr(0, 10);
-//                });
-//                        this.data = data.records;
-//                        this.pagination = paginationDecode(this.pagination, data);
-//                    });
+//                this.data.push({ key: 1 });
+                requestPrescriptionTemplatePage(Object.assign({},
+                    this.searchData,
+                    paginationEncode(this.pagination))
+                )
+                    .then(v => {
+                        const { data } = v;
+                        data.records.forEach((item, index) => {
+                            item.key = index;
+                        });
+                        this.data = data.records;
+                        this.pagination = paginationDecode(this.pagination, data);
+                        console.log(JSON.parse(JSON.stringify(this.data[0])));
+                    });
             },
             //  展示的每一页数据变换
             onShowSizeChange(current, pageSize){

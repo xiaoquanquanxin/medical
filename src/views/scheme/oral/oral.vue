@@ -124,7 +124,14 @@
                 usageMethodList,
             };
         },
+        watch: {
+            $route(value){
+                console.log('路由变化请求');
+                this.searchFn();
+            }
+        },
         created(){
+            console.log('create请求');
             this.searchFn();
             console.log(this.aaa);
         },

@@ -3,8 +3,12 @@
         <div class="a-input-group">
             <!--返回按钮-->
             <GoBackButton/>
-            <a-button class="basic-button-width" type="primary" v-print="printObj">打印</a-button>
-            <a-button class="basic-button-width" type="primary" @click="saveScreening">保存</a-button>
+            <a-button class="basic-button-width" type="primary" v-print="printObj" v-if="screeningDetailId">打印
+            </a-button>
+            <a-button class="basic-button-width" type="primary" @click="saveScreening" v-if="!screeningDetailId">保存
+            </a-button>
+            <a-button class="basic-button-width" type="primary" @click="deleteScreening" v-if="screeningDetailId">删除
+            </a-button>
         </div>
         <div id="printContent">
             <ScreeningBasicInfo/>
@@ -148,7 +152,7 @@
     import { mapGetters, mapActions } from 'vuex';
     import GoBackButton from '@/components/goBackButton.vue';
     import { requestPatientSelectOnePatient } from '../../../api/userList/userList';
-    import { requestScreenSave, requestScreenSelectOne } from '../../../api/userList/screening';
+    import { requestScreenDelete, requestScreenSave, requestScreenSelectOne } from '../../../api/userList/screening';
 
     //  风险筛查列
     const riskColumns = [
@@ -159,23 +163,6 @@
         },
         {
             scopedSlots: { customRender: 'operation' }
-        }
-    ];
-    const riskData = [
-        {
-            key: 1,
-            label: '过去一周摄食是否有减少：',
-            value: '1',
-        },
-        {
-            key: 2,
-            label: '过去三个月体重是否下降：',
-            value: '1',
-        },
-        {
-            key: 3,
-            label: '有严重疾病吗？（如ICU治疗）：',
-            value: '1',
         }
     ];
 
@@ -201,6 +188,23 @@
             }
         },
         data(){
+            const riskData = [
+                {
+                    key: 1,
+                    label: '过去一周摄食是否有减少：',
+                    value: '1',
+                },
+                {
+                    key: 2,
+                    label: '过去三个月体重是否下降：',
+                    value: '1',
+                },
+                {
+                    key: 3,
+                    label: '有严重疾病吗？（如ICU治疗）：',
+                    value: '1',
+                }
+            ];
             return {
                 //  打印对象
                 printObj: {
@@ -378,6 +382,30 @@
                     });
 
             },
+            //  删除
+            deleteScreening(){
+                console.log(this.screeningDetailId);
+                this.$confirm({
+                    title: `确定删除${this.screeningDetailId}`,
+                    okText: '确认',
+                    okType: 'danger',
+                    cancelText: '取消',
+                    onOk: () => {
+                        requestScreenDelete(this.screeningDetailId)
+                            .then(v => {
+                                console.log('删除成功');
+                                console.log(v);
+                                this.$router.push({ name: 'screening', params: { patientId: this.patientId } });
+                            })
+                            .catch(err => {
+                                console.log(err);
+                            });
+                    },
+                    onCancel(){
+                        console.log('取消');
+                    },
+                });
+            }
         }
     };
 </script>

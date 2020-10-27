@@ -34,7 +34,7 @@
                             :columns="columns"
                             :data-source="data"
                             :pagination="false"
-                            :scroll="{x: 'auto', y: 'calc(100vh - 600px)'}"
+                            :scroll="{x: 'auto', y: 'calc(100vh - 530px)'}"
                             :customRow="customRow"
                     >
                         <!--年龄/性别-->
@@ -152,15 +152,13 @@
         methods: {
             //  主要请求
             searchFn(){
-                const data = Object.assign({ param: this.searchData }, noPaginationData);
-                requestPatientPage(data)
-//                requestPatientPage(Object.assign({}, this.searchData, paginationEncode(this.pagination)))
+                requestPatientPage(Object.assign({ param: this.searchData }, paginationEncode(this.pagination)))
                     .then(v => {
                         const { data } = v;
                         data.records.forEach((item, index) => {
                             item.key = index;
                         });
-                        console.log(JSON.parse(JSON.stringify(data.records)));
+                        //  console.log(JSON.parse(JSON.stringify(data.records)));
                         this.data = data.records;
                         this.pagination = paginationDecode(this.pagination, data);
                     });

@@ -162,17 +162,16 @@
                     >{{patientBasicInfo.jzbh}}</p>
                 </a-descriptions-item>
                 <a-descriptions-item label="就诊医院">
-                    <a-input
-                            v-if="activeElementId === 13 ||!patientBasicInfo.departTreatment"
-                            placeholder="请输入就诊医院"
-                            v-model="patientBasicInfo.departTreatment"
-                            class="form-element"
-                            @focus="descriptionFormFocusFn(13)"
-                    />
-                    <p v-else
-                       @click="descriptionFormClickFn(13,$event)"
-                       class="description-content"
-                    >{{patientBasicInfo.departTreatment}}</p>
+                    <a-select placeholder="请输入就诊医院"
+                              v-model="patientBasicInfo.departTreatment"
+                              class="form-element basic-select-width"
+                              @focus="descriptionFormFocusFn(14)"
+                              @change="selectHospitalChange"
+                    >
+                        <a-select-option v-for="(item,index) in hospitalList" :key="index" :value="item.id">
+                            {{item.hospitalName}}
+                        </a-select-option>
+                    </a-select>
                 </a-descriptions-item>
                 <a-descriptions-item label="就诊科室">
                     <a-select style="width: 100%;"
@@ -312,6 +311,7 @@
 <script>
     import { descriptionsMethods } from '@/utils/patientInfo';
     import { requestPatientSelectDeptByHospital } from '../../../api/userList/userList';
+    import { requestHospitalGetList } from '../../../api/hospital';
 
     export default {
         computed: {
@@ -326,14 +326,23 @@
                 activeElementId: null,
                 //  科室列表
                 deptList: [],
+                //  医院列表
+                hospitalList: []
             };
         },
         created(){
-            this.getDeptList();
+            this.searchFn();
         },
         methods: {
-            //  根据当前医院查询科室
-            getDeptList(){
+            searchFn(){
+                requestHospitalGetList()
+                    .then(v => {
+                        this.hospitalList = v.data;
+                        console.log(JSON.parse(JSON.stringify(v.data)));
+                    });
+            },
+            //  切换医院
+            selectHospitalChange(value){
                 requestPatientSelectDeptByHospital()
                     .then(v => {
                         console.log('根据当前医院查询科室', v.data);
