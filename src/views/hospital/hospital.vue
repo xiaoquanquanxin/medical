@@ -112,7 +112,7 @@
         {
             title: '医院名称',
             dataIndex: 'hospitalName',
-            width: 100,
+            width: 150,
         },
         {
             title: '城市',

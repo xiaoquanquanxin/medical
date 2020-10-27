@@ -34,7 +34,7 @@
                             :columns="columns"
                             :data-source="data"
                             :pagination="false"
-                            :scroll="{x: 'auto', y: 'calc(100vh - 500px)'}"
+                            :scroll="{x: 'auto', y: 'calc(100vh - 600px)'}"
                             :customRow="customRow"
                     >
                         <!--年龄/性别-->
@@ -154,6 +154,7 @@
             searchFn(){
                 const data = Object.assign({ param: this.searchData }, noPaginationData);
                 requestPatientPage(data)
+//                requestPatientPage(Object.assign({}, this.searchData, paginationEncode(this.pagination)))
                     .then(v => {
                         const { data } = v;
                         data.records.forEach((item, index) => {
@@ -161,7 +162,19 @@
                         });
                         console.log(JSON.parse(JSON.stringify(data.records)));
                         this.data = data.records;
+                        this.pagination = paginationDecode(this.pagination, data);
                     });
+            },
+            //  展示的每一页数据变换
+            onShowSizeChange(current, pageSize){
+                this.pagination.pageSize = pageSize;
+                this.pagination.current = 1;
+                this.searchFn();
+            },
+            //  切换分页页码
+            pageChange(current){
+                this.pagination.current = current;
+                this.searchFn();
             },
             jumpTo,
             //  自定义表格事件

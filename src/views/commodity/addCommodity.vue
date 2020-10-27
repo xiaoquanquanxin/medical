@@ -668,30 +668,36 @@
                         uintParams1.forEach((item, index) => {
                             switch (index) {
                                 case 0:
-                                    item.key = 1;
+                                    item.key = item.id;
                                     item.sort = 1;
                                     item.name = '基本单位';
                                     break;
                                 case 1:
-                                    item.key = 2;
+                                    item.key = item.id;
                                     item.sort = 2;
                                     item.name = '标准单位';
                                     break;
+                                case 2:
+                                    item.key = item.id;
+                                    item.sort = 3;
+                                    item.name = '辅助单位';
+                                    break;
                             }
                         });
+                        this.uintParams1 = uintParams1;
                         //  院外
                         const uintParams2 = data.uintListVos.filter(item => {
                             return item.type === 2;
                         }).sort((a, b) => {return a.sort - b.sort;});
-                        debugger
+                        
                         uintParams2.forEach((item, index) => {
-                            item.key = 1;
+                            item.key = item.id;
                             item.sort = 1;
                             item.name = '基本单位';
                         });
                         this.uintParams2 = uintParams2;
-                        console.log(JSON.parse(JSON.stringify(this.uintParams1[0])));
-                        console.log(JSON.parse(JSON.stringify(this.uintParams2[0])));
+                        console.log(JSON.parse(JSON.stringify(this.uintParams1)));
+                        console.log(JSON.parse(JSON.stringify(this.uintParams2)));
                         //  图片
                         this.goodsImgThumbUrl = goodsImg;
                         //  描述富文本
