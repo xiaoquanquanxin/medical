@@ -286,13 +286,11 @@
                         size="small"
                 >
                     <a-descriptions-item label="筛查人">
-                        <a-input/>
+                        <div class="basic-input-width"></div>
                     </a-descriptions-item>
+                    <!--评分日期-->
                     <a-descriptions-item label="评分日期">
-                        <a-input/>
-                    </a-descriptions-item>
-                    <a-descriptions-item label="评分时间">
-                        <a-input/>
+                        <div class="add-form-input"></div>
                     </a-descriptions-item>
                 </a-descriptions>
             </div>
@@ -464,14 +462,7 @@
                             f: `BMI(kg/m2)：${data.bmi}`,
                         }];
                         console.log(this.loginInfo.username);
-                        const screenBottomData = [
-                            {
-                                key: 1,
-                                a: this.loginInfo.username,
-                                c: '',
-                                e: ''
-                            }
-                        ];
+                        const screenBottomData = {};
                         //  如果是新增
                         if (!this.screeningDetailId) {
                             this.setScreeningInfo({
@@ -500,21 +491,12 @@
                                 console.log(JSON.parse(JSON.stringify(v.data)));
                                 console.log(v.data.ctime);
                                 //  如果有处方时间
-                                let c;
-                                let e;
-                                if (v.data.ctime) {
-                                    const _ctime = v.data.ctime.split(' ');
-                                    c = _ctime[0];
-                                    e = _ctime[1];
-                                }
-                                const screenBottomData = [
-                                    {
-                                        key: 1,
-                                        a: this.loginInfo.username,
-                                        c,
-                                        e,
-                                    }
-                                ];
+                                const { ctime } = v.data;
+                                const { username } = this.loginInfo;
+                                const screenBottomData = {
+                                    username,
+                                    ctime,
+                                };
                                 this.setScreeningInfo({
                                     //  设置基础信息
                                     screeningBasicInfo,

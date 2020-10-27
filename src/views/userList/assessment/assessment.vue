@@ -19,7 +19,7 @@
         >
             <!--评分结果-->
             <div slot="result" slot-scope="scope,sItem,sIndex,extra">
-                xxxx
+                只有空数据，没有任何字段
             </div>
             <!--操作-->
             <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
@@ -34,7 +34,7 @@
 <script>
     import { twoRowSearch } from '@/utils/tableScroll';
     import { requestPatientAssessDelete, requestPatientAssessPage } from '../../../api/userList/assessment';
-    import { noPaginationData, paginationDecode, paginationEncode } from '../../../utils/pagination';
+    import { noPaginationData, paginationDecode, paginationEncode, paginationInit } from '../../../utils/pagination';
 
     const columns = [
         {
@@ -83,6 +83,10 @@
                 //  搜索数据
                 searchData: {},
 
+
+                //  分页信息
+                pagination: paginationInit(),
+
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
                 scroll: twoRowSearch(columns),
             };
@@ -95,12 +99,14 @@
         methods: {
             //  主要请求
             searchFn(){
-                requestPatientAssessPage(Object.assign({}, {
-                    param: {
-                        patientId: this.patientId,
-                        assesType: this.searchData.assesType,
-                    },
-                }, noPaginationData))
+                requestPatientAssessPage(Object.assign({},
+                    {
+                        param: {
+                            patientId: this.patientId,
+                            assesType: this.searchData.assesType,
+                        },
+                    }, paginationEncode(this.pagination))
+                )
                     .then(v => {
                         const { data } = v;
                         data.records.forEach((item, index) => {

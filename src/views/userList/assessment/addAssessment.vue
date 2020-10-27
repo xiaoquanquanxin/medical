@@ -1079,9 +1079,8 @@
                         const screenBottomData = [
                             {
                                 key: 1,
-                                a: '筛查人：',
-                                c: '日期',
-                                e: '时间'
+                                a: '',
+                                cTime
                             }
                         ];
                         this.setScreeningInfo({
