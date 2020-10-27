@@ -1076,13 +1076,7 @@
                             e: `现体重：${data.weight}kg`,
                             f: `BMI(kg/m2)：${data.bmi}`,
                         }];
-                        const screenBottomData = [
-                            {
-                                key: 1,
-                                a: '',
-                                cTime
-                            }
-                        ];
+                        const screenBottomData = {};
                         this.setScreeningInfo({
                             //  设置基础信息
                             screeningBasicInfo,
@@ -1107,19 +1101,17 @@
                             console.log(oneData);
                             console.log(this.patientBasicInfo);
                             const {
-                                age,
+                                birth,
                                 bmi,
                                 height,
                                 name,
                                 sex,
                                 weight,
                             } = this.patientBasicInfo;
-                            const patientId = Number(this.patientInfoId);
+                            const patientId = Number(this.patientId);
                             const totalScore = this.typeOneList.reduce((a, b) => {return a + b;}, 0);
-                            const assessId = 1;
                             console.log({
-                                age,
-                                assessId,
+                                birth,
                                 bmi,
                                 height,
                                 name,
@@ -1127,10 +1119,10 @@
                                 patientId,
                                 totalScore,
                                 weight,
+                                oneData,
                             });
-                            return requestPatientAssessSaveYbpgb(Object.assign({
-                                age,
-                                assessId,
+                            console.log(Object.assign({
+                                birth,
                                 bmi,
                                 height,
                                 name,
@@ -1138,7 +1130,16 @@
                                 weight,
                                 patientId,
                                 totalScore,
-                                '营养评估id': 2,
+                            }, oneData));
+                            return requestPatientAssessSaveYbpgb(Object.assign({
+                                birth,
+                                bmi,
+                                height,
+                                name,
+                                sex,
+                                weight,
+                                patientId,
+                                totalScore,
                             }, oneData));
                         case 2:
                             if (this.typeTwoList.length !== 20) {
