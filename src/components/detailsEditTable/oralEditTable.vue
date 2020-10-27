@@ -5,6 +5,7 @@
             <a-space>
                 <span>{{dataTitle.name}}</span>
                 <a @click="choosePlanFn">选择方案<a v-if="choosePlanData.energyId">(已选：{{choosePlanData.energyId}})</a></a>
+                {{dataTitle.prescriptionType}}
             </a-space>
             <a-select class="lengthen-select-width" v-model="dataTitle.usageMethod" placeholder="请选择食用方法">
                 <a-select-option :value="item.id"
@@ -125,6 +126,7 @@
         <a-modal v-model="dialogChoosePlan.visible"
                  v-if="dialogChoosePlan.visible"
                  :confirm-loading="dialogChoosePlan.confirmLoading"
+                 :key="dataTitle.prescriptionType"
                  :maskClosable="false"
                  centered
                  :width="800"
@@ -133,12 +135,19 @@
                  cancel-text="取消"
                  @ok="choosePlanModalCheck('refChoosePlanBox')">
             <ChoosePlanBox
+                    :key="dataTitle.prescriptionType"
                     :choosePlanData="choosePlanData"
                     :planMap="mainData"
-                    :dataTitle="dataTitle"
+                    :data-title="dataTitle"
                     ref="refChoosePlanBox"
             />
         </a-modal>
+        <ChoosePlanBox
+                :choosePlanData="choosePlanData"
+                :planMap="mainData"
+                :data-title="dataTitle"
+                ref="refChoosePlanBox"
+        />
         <!--选择商品莫泰框-->
         <a-modal v-model="dialogChooseCommodity.visible"
                  v-if="dialogChooseCommodity.visible"
@@ -311,6 +320,7 @@
             };
         },
         created(){
+            console.log(JSON.parse(JSON.stringify(this.dataTitle)));
             //  发请求，拿下拉的数据
             this.mainData = {
                 1: [
@@ -524,6 +534,9 @@
             ...dialogMethods,
             //  选择方案
             choosePlanFn(){
+//                this.dataTitle = this.dataTitle;
+                Object.assign(this.dataTitle, this.dataTitle);
+                console.log(JSON.parse(JSON.stringify(this.dataTitle)));
                 this.showModal(DIALOG_TYPE.CHOOSE_PLAN);
             },
             //  关闭选择方案

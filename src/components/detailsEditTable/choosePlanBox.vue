@@ -1,5 +1,6 @@
 <template>
     <div class="custom-flex">
+        {{dataTitle}}
         <div class="custom-flex-left">
             <a-select class="basic-select-width"
                       v-model="energyId"

@@ -4,12 +4,21 @@
             <!--返回按钮-->
             <GoBackButton/>
         </div>
+        <!--基础数据-->
         <BasicInfoEditTable
                 :data-source="basicInfoEditData"
         />
         <br>
+        <!--口腔肠内-->
         <OralEditTable
-                :data-title="oralEditDataTitle"
+                :key="1"
+                :data-title="kqcnOralEditDataTitle"
+        />
+        <br>
+        <!--肠内-->
+        <OralEditTable
+                :key="2"
+                :data-title="cnyyzcOralEditDataTitle"
         />
         <br>
         <a-button type="primary" @click="saveIntervention">保存</a-button>
@@ -45,56 +54,46 @@
                 //  病人的id
                 patientId: this.$route.params.patientId,
 
-                //  基础数据编辑
+                //  基础数据
                 basicInfoEditData: [
                     {
                         key: 1,
                         prescriptionName: '',
                         priod: '',
                         prescriptionType: 1,
-//                        cost: '¥20',
                     }
                 ],
-                //  口服数据
-                oralEditDataTitle: {
+                //  口腔肠内数据
+                kqcnOralEditDataTitle: {
                     name: '口服肠内营养补充',
                     prescriptionType: 1,
                 },
+                //
+                cnyyzcOralEditDataTitle: {
+                    name: '肠内营养支持',
+                    prescriptionType: 2,
+                }
             };
         },
         created(){
             console.log('参数', this.$route.params);
             //  如果是编辑
             if (this.$route.params.interventionDetailId) {
-                //  设置能量表数据
-                this.setEnergyDetail([{
-                    key: 1,
-                    energy: 123,
-                    protein: 234,
-                    fat: 345,
-                    carbohydrates: 456,
-                }]);
+//                //  设置能量表数据
+//                this.setEnergyDetail([{
+//                    key: 1,
+//                    energy: 123,
+//                    protein: 234,
+//                    fat: 345,
+//                    carbohydrates: 456,
+//                }]);
             }
             this.searchFn();
         },
 
         methods: {
-            //
-
             //  主要请求
-            searchFn(){
-//                requestPrescriptionPrescriptionTpl(paginationEncode(this.pagination))
-//                    .then(v => {
-//                        const { data } = v;
-//                        console.log(data);
-//                data.records.forEach((item, index) => {
-//                    item.key = index;
-//                    item.createTime = item.createTime.substr(0, 10);
-//                });
-//                        this.data = data.records;
-//                        this.pagination = paginationDecode(this.pagination, data);
-//                    });
-            },
+            searchFn(){},
             //  保存
             saveIntervention(){
                 //  病人id
