@@ -386,35 +386,6 @@
         }
     ];
 
-    //  院内数据
-    const uintParams1 = [
-        {
-            sort: 1,
-            key: 1,
-            type: 1,
-            name: '基本单位',
-            uname: '',
-            unitExchangeRate: '',
-            unitPrice: '',
-            unitEnergy: '',
-            unitProtein: '',
-            unitFat: '',
-            unitCarbohydrate: '',
-        },
-        {
-            sort: 2,
-            key: 2,
-            type: 1,
-            name: '标准单位',
-            uname: '',
-            unitExchangeRate: '',
-            unitPrice: '',
-            unitEnergy: '',
-            unitProtein: '',
-            unitFat: '',
-            unitCarbohydrate: '',
-        }
-    ];
     //  院外数据
     const uintParams2 = [
         {
@@ -451,6 +422,36 @@
             }
         },
         data(){
+
+            //  院内数据
+            const uintParams1 = [
+                {
+                    sort: 1,
+                    key: 1,
+                    type: 1,
+                    name: '基本单位',
+                    uname: '',
+                    unitExchangeRate: '',
+                    unitPrice: '',
+                    unitEnergy: '',
+                    unitProtein: '',
+                    unitFat: '',
+                    unitCarbohydrate: '',
+                },
+                {
+                    sort: 2,
+                    key: 2,
+                    type: 1,
+                    name: '标准单位',
+                    uname: '',
+                    unitExchangeRate: '',
+                    unitPrice: '',
+                    unitEnergy: '',
+                    unitProtein: '',
+                    unitFat: '',
+                    unitCarbohydrate: '',
+                }
+            ];
             return {
                 //  商品分类list
                 goodsCategoryList: [],

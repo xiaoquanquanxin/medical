@@ -222,7 +222,12 @@
     } from '../../../api/scheme/scheme';
     import { prescriptionTypeList, energyList, usageMethodList } from '../../../utils/constants';
     import { requestHospitalGetList } from '../../../api/hospital';
-    import { requestGoodsListByHospital } from '../../../api/commodity/commodityList';
+    import {
+        requestGoodsGet,
+        requestGoodsListByHospital,
+        requestGoodsPage
+    } from '../../../api/commodity/commodityList';
+    import { noPaginationData } from '../../../utils/pagination';
 
     //  选择商品表格列的意义
     const commodityTableColumns = [
@@ -251,7 +256,7 @@
         },
         {
             title: '操作',
-            width: 100,
+            width: 150,
             scopedSlots: { customRender: 'operation' },
         },
     ];
@@ -368,6 +373,9 @@
         methods: {
             //  主要请求
             searchFn(){
+                //  fixme   ❌❌❌，这里理论上是 requestGoodsListByHospital ，但是报错
+                this.requestGoodsPageAll();
+                //  医院list
                 requestHospitalGetList()
                     .then(v => {
                         this.hospitalList = v.data;
@@ -444,24 +452,43 @@
                         this.tableForm.hospitalName = item.hospitalName;
                     }
                 });
-                console.clear();
                 console.log('🍎🍎🍎🍎发请求，🍉🍉🍉改造数据结构', '医院的id', value);
-                requestGoodsListByHospital(value)
+                //  fixme   ❌❌❌，这里理论上是 requestGoodsListByHospital ，但是报错
+//                requestGoodsListByHospital(value)
+                //  重置数据
+                this.commodityTableData = [];
+                this.timeTableData = [];
+            },
+            //  fixme   ❌❌❌，这里理论上是 requestGoodsListByHospital ，但是报错
+            requestGoodsPageAll(){
+                requestGoodsPage(noPaginationData)
                     .then(v => {
                         console.log('该医院下的商品：');
                         if (!v.data || !v.data) {
                             return;
                         }
-                        v.data.forEach(item => {
-                            item.key = item.id;
-                        });
-                        const originCommodityList = v.data;
-                        console.log(JSON.parse(JSON.stringify(v.data)));
-                        this.setOriginCommodityList(originCommodityList);
+                        const { records } = v.data;
+//                        records.forEach(item => {
+//                            item.key = item.id;
+//                        });
+                        const promiseList = [];
+                        for (let i = 0; i < records.length; i++) {
+                            const { id } = records[i];
+                            promiseList.push(requestGoodsGet(id));
+                        }
+                        Promise.all(promiseList)
+                            .then(v => {
+                                const originCommodityList = [];
+                                v.forEach(item => {
+                                    item.data.key = item.data.id;
+                                    originCommodityList.push(item.data);
+                                });
+                                this.setOriginCommodityList(originCommodityList);
+                            })
+                            .catch(err => {
+
+                            });
                     });
-                //  重置数据
-                this.commodityTableData = [];
-                this.timeTableData = [];
             },
             //  切换处方类型
             selectPrescriptionChange(value){
