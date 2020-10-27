@@ -3,21 +3,22 @@
         <!--搜索相关-->
         <div class="a-input-group">
             <a-input class="basic-input-width" placeholder="请输入姓名" v-model="searchData.doctorName"/>
-            <a-input class="basic-input-width" placeholder="请输入手机号" v-model="searchData.phoneNumber"/>
-            <a-select class="basic-select-width" placeholder="请选择医院" v-model="searchData.hospital">
-                <a-select-option value="Option1">
-                    Option1
-                </a-select-option>
-                <a-select-option value="Option2">
-                    Option2
+            <a-input class="basic-input-width" placeholder="请输入手机号" v-model="searchData.phone"/>
+            <a-select class="basic-select-width" placeholder="请选择医院" v-model="searchData.hospitalId"
+                      @change="selectHospitalChange"
+            >
+                <a-select-option v-for="(item,index) in hospitalList"
+                                 :key="index"
+                                 :value="item.id"
+                >
+                    {{item.hospitalName}}
                 </a-select-option>
             </a-select>
             <a-select class="basic-select-width" placeholder="请选择科室" v-model="searchData.department">
-                <a-select-option value="Option1">
-                    Option1
-                </a-select-option>
-                <a-select-option value="Option2">
-                    Option2
+                <a-select-option v-for="(item,index) in deptList"
+                                 :key="index"
+                                 :value="item.id">
+                    {{item.deptName}}
                 </a-select-option>
             </a-select>
             <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
@@ -38,6 +39,12 @@
                 :scroll="scroll"
                 :pagination="false"
         >
+            <!--性别-->
+            <div slot="sex" slot-scope="scope,sItem,sIndex,extra">
+                <span v-if="scope.sex == 1">男</span>
+                <span v-if="scope.sex == 0">女</span>
+            </div>
+            <!--操作-->
             <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
                 <a-space size="small">
                     <router-link :to="{name:'editDoctor',params:{doctorId:'32'}}">编辑</router-link>
@@ -72,25 +79,27 @@
     import { paginationInit, paginationDecode, paginationEncode } from '@/utils/pagination.ts';
     import { twoRowSearch } from '@/utils/tableScroll';
     import { requestDoctorPage } from '../../api/doctor';
+    import { requestHospitalGetList } from '../../api/hospital';
+    import { requestPatientSelectDeptByHospital } from '../../api/userList/userList';
 
     const columns = [
         {
             title: '姓名',
-            dataIndex: 'doctor',
+            dataIndex: 'doctorName',
             width: 100,
         },
         {
             title: '手机号',
             dataIndex: 'phone',
-            width: 100,
+            width: 150,
         }, {
             title: '性别',
-            dataIndex: 'sex',
+            scopedSlots: { customRender: 'sex' },
             width: 100,
         },
         {
             title: '医院',
-            dataIndex: 'hospital',
+            dataIndex: 'hospitalId',
             width: 100,
         },
         {
@@ -129,24 +138,43 @@
 
                 //  搜索数据
                 searchData: {},
+                //  科室列表
+                deptList: [],
+                //  医院列表
+                hospitalList: []
             };
         },
 
         created(){
             this.searchFn();
+            requestHospitalGetList()
+                .then(v => {
+                    this.hospitalList = v.data;
+                });
         },
         methods: {
             //  主要请求
             searchFn(){
-                requestDoctorPage(paginationEncode(this.pagination))
+                requestDoctorPage(Object.assign({}, this.searchData, paginationEncode(this.pagination)))
                     .then(v => {
                         const { data } = v;
-                        console.log(data);
                         data.records.forEach((item, index) => {
                             item.key = index;
                         });
                         this.data = data.records;
+                        console.log(data.records[0]);
                         this.pagination = paginationDecode(this.pagination, data);
+                    });
+            },
+            //  切换医院
+            selectHospitalChange(value){
+                requestPatientSelectDeptByHospital()
+                    .then(v => {
+                        console.log('根据当前医院查询科室', v.data);
+                        v.data.forEach(item => {
+                            item.id = Number(item.id);
+                        });
+                        this.deptList = v.data;
                     });
             },
             //  莫泰框方法

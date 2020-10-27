@@ -37,7 +37,7 @@ export function requestPatientSave(data: any) {
 	});
 }
 
-//	根据当前医院查询科室	 ✅
+//	根据当前医院查询科室	 ❌
 export function requestPatientSelectDeptByHospital() {
 	return request({
 		url: '/api/patient/selectDeptByHospital',
