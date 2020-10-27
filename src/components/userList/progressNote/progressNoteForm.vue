@@ -8,8 +8,8 @@
         >
             <a-form-item label="是否能够按照方案执行">
                 <a-radio-group v-decorator="executionDecorator">
-                    <a-radio value="Y">是</a-radio>
-                    <a-radio value="N">否</a-radio>
+                    <a-radio value="1">是</a-radio>
+                    <a-radio value="0">否</a-radio>
                 </a-radio-group>
             </a-form-item>
             <a-form-item label="具体原因">
@@ -19,8 +19,8 @@
             </a-form-item>
             <a-form-item label="是否能够耐受">
                 <a-radio-group v-decorator="toleranceDecorator">
-                    <a-radio value="Y">是</a-radio>
-                    <a-radio value="N">否</a-radio>
+                    <a-radio value="1">是</a-radio>
+                    <a-radio value="0">否</a-radio>
                 </a-radio-group>
             </a-form-item>
             <a-form-item label="具体原因">
@@ -30,8 +30,8 @@
             </a-form-item>
             <a-form-item label="有无大便">
                 <a-radio-group v-decorator="shitDecorator">
-                    <a-radio value="Y">是</a-radio>
-                    <a-radio value="N">否</a-radio>
+                    <a-radio value="1">是</a-radio>
+                    <a-radio value="0">否</a-radio>
                 </a-radio-group>
             </a-form-item>
             <a-form-item label="具体原因">
@@ -41,8 +41,8 @@
             </a-form-item>
             <a-form-item label="有无饥饿感">
                 <a-radio-group v-decorator="hungerDecorator">
-                    <a-radio value="Y">是</a-radio>
-                    <a-radio value="N">否</a-radio>
+                    <a-radio value="1">是</a-radio>
+                    <a-radio value="0">否</a-radio>
                 </a-radio-group>
             </a-form-item>
             <a-form-item label="具体原因">
@@ -144,6 +144,14 @@
                             hunger,
                             hungerContent,
                         } = data;
+                        console.log( execution,
+                            executionContent,
+                            tolerance,
+                            toleranceContent,
+                            shit,
+                            shitContent,
+                            hunger,
+                            hungerContent,)
                         this.form.setFieldsValue({
                             execution,
                             executionContent,

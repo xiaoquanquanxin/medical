@@ -41,14 +41,14 @@
     //  选择计划
     export default {
         computed: {
-//            //  处方模板类型
-//            prescriptionType(){
-//                const { basicInfoEditData } = this.$store.state.intervention;
-//                if (!basicInfoEditData) {
-//                    return;
-//                }
-//                return basicInfoEditData[0].prescriptionType;
-//            },
+            //  处方模板类型
+            prescriptionType(){
+                const { basicInfoEditData } = this.$store.state.intervention;
+                if (!basicInfoEditData) {
+                    return;
+                }
+                return basicInfoEditData[0].prescriptionType;
+            },
         },
         //  todo    choosePlanData就是 chooseInterventionData
         props: ['choosePlanData', 'planMap', 'dataTitle'],
@@ -84,8 +84,10 @@
         },
         methods: {
             ...mapActions('intervention', [
-                //  设置被选中的营养干预方案
-                'setChooseInterventionData',
+                //  口服肠内营养补充数据
+                'setKqcnData',
+                //  肠内营养支持数据
+                'setCnyyzcData',
             ]),
             searchFn(){
                 if (!this.energyId) {
@@ -125,8 +127,18 @@
                         this.$message.error('请选择方案');
                         reject();
                     } else {
+                        console.log(this.dataTitle.prescriptionType);
                         //  储存
-                        this.setChooseInterventionData(this.chooseInterventionData);
+                        switch (this.dataTitle.prescriptionType) {
+                            case 1:
+                                this.setKqcnData(this.chooseInterventionData);
+                                break;
+                            case 2:
+                                this.setCnyyzcData(this.chooseInterventionData);
+                                break;
+                            default :
+                                throw new Error('错误');
+                        }
                         resolve({ energyId, planId });
                     }
                 }));

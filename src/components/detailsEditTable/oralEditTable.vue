@@ -45,7 +45,7 @@
                     <!--小计-->
                     <div slot="subtotal" slot-scope="scope,sItem,sIndex,extra">
                         <p v-for="(item , index) in sItem.uintListVos"
-                           v-if="item.buyUnitId === sItem.buyUnitCheckId"
+                           v-if="item.id === sItem.purchaseUnitCheckId"
                         >{{ sItem.quantity * item.unitPrice || 0}}</p>
                     </div>
                     <!--操作-->
@@ -261,10 +261,14 @@
                 }
                 return basicInfoEditData[0].prescriptionType;
             },
-            //  被选中的处方
-            chooseInterventionData(){
-                return this.$store.state.intervention.chooseInterventionData;
-            }
+            //  被选中的处方-口服肠内营养补充数据
+            kqcnData(){
+                return this.$store.state.intervention.kqcnData;
+            },
+            //  被选中的处方-肠内营养支持数据
+            cnyyzcData(){
+                return this.$store.state.intervention.cnyyzcData;
+            },
         },
         data(){
             return {
@@ -534,8 +538,17 @@
                 promise.then(v => {
                     //  关闭弹框
                     this.modal1 = false;
+                    let chooseInterventionData;
+                    switch (this.dataTitle.prescriptionType) {
+                        case 1:
+                            chooseInterventionData = this.kqcnData;
+                            break;
+                        case 2:
+                            chooseInterventionData = this.cnyyzcData;
+                            break;
+                    }
                     //  被选中的方案
-                    const { commodityTableData, timeTableData } = this.chooseInterventionData;
+                    const { commodityTableData, timeTableData } = chooseInterventionData;
                     console.log('被选中的方案');
                     console.log(JSON.parse(JSON.stringify(commodityTableData)));
 //                    commodityTableData.forEach(item => {
@@ -609,13 +622,55 @@
             },
             //  删除基础数据
             deleteTypeTable(sItem, sIndex){
-                const deleteItem = this.commodityTableData.splice(sIndex, 1);
-                //  重置数据
-                deleteItem[0].isCheckboxChecked = false;
-                deleteItem[0].buyUnitCheckId = null;
-                deleteItem[0].customList.forEach(item => {
-                    item.isRadioChecked = false;
+                //  内部的id，单选id
+                const { purchaseUnitCheckId } = sItem;
+                //  洗主数据
+                delete sItem.purchaseUnitCheckId;
+                delete sItem.isCheckboxChecked;
+                sItem.uintListVos.forEach((item => {
+                    if (item.isRadioChecked) {
+                        delete item.isRadioChecked;
+                    }
+                }));
+                //  清洗时间表格数据，只删除一行
+                this.timeTableData.forEach(item => {
+                    for (let i = 0; i < item.list.length; i++) {
+                        //  要被删除的商品类型
+                        if (item.list[i].id === purchaseUnitCheckId) {
+                            item.list.splice(i, 1);
+                            break;
+                        }
+                    }
                 });
+                this.clearTimeTableData();
+                //  清除选择商品表格的该行，只删除一行
+                this.commodityTableData.splice(sIndex, 1);
+                debugger
+                switch (this.dataTitle.prescriptionType) {
+                    case 1:
+                        
+                        break;
+                    case 2:
+                        
+                        break;
+                }
+                //  这里要存store
+                //  this.setOriginCommodityList(this.originCommodityList);
+            },
+            //  清洗时间表格数据
+            clearTimeTableData(){
+                for (let i = 0; i < this.timeTableData.length; i++) {
+                    const item = this.timeTableData[i];
+                    //  在时间列表里删除这个项，这是被删除完了
+                    if (!item.list.length) {
+                        this.timeTableData.splice(i, 1);
+                        //  ⚠️可能删除多行
+                        i--;
+                    }
+                }
+                console.table(JSON.parse(JSON.stringify(this.timeTableData)));
+                //  计算时间框的总行数
+//                this.rowCount();
             },
 
             //  新增时间

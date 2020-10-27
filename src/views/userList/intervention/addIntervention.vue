@@ -47,6 +47,14 @@
             basicInfoEditData(){
                 return this.$store.state.intervention.basicInfoEditData;
             },
+            //  被选中的处方-口服肠内营养补充数据
+            kqcnData(){
+                return this.$store.state.intervention.kqcnData;
+            },
+            //  被选中的处方-肠内营养支持数据
+            cnyyzcData(){
+                return this.$store.state.intervention.cnyyzcData;
+            },
         },
         data(){
             return {
@@ -112,13 +120,6 @@
                     //  处方名称
                     prescriptionName,
                 } = basicInfoEditData;
-                console.log(this.$refs.kqcnOralEditTableRef.chooseInterventionData);
-                console.log(this.$refs.cnyyzcOralEditTableRef.chooseInterventionData);
-                //  被选中的方案
-                //  口腔肠内
-                const { chooseInterventionData: kqcnCommodityTableData } = this.$refs.kqcnOralEditTableRef;
-                //  肠内营养支持
-                const { chooseInterventionData: cnyyzcCommodityTableData } = this.$refs.cnyyzcOralEditTableRef;
 
                 //  金额
                 let amountPayable = 0;
@@ -154,10 +155,12 @@
                         });
                     });
                 };
-                calc(kqcnCommodityTableData.commodityTableData);
-                console.log(JSON.parse(JSON.stringify(kqcnCommodityTableData.commodityTableData[0])));
-                console.log(JSON.parse(JSON.stringify(cnyyzcCommodityTableData.commodityTableData[0])));
-                calc(cnyyzcCommodityTableData.commodityTableData);
+                calc(this.kqcnData.commodityTableData);
+                console.log(fat);
+//                console.log(JSON.parse(JSON.stringify(this.kqcnData.commodityTableData[0])));
+//                console.log(JSON.parse(JSON.stringify(this.cnyyzcData.commodityTableData[0])));
+                calc(this.cnyyzcData.commodityTableData);
+                console.log(fat);
                 //  详情json
                 const prescriptionDetail = {
                     cnyyzc: commodity,
@@ -176,7 +179,6 @@
                     prescriptionDetail: JSON.stringify(prescriptionDetail)
                 };
                 console.log(saveData);
-                return;
                 requestPrescriptionSave(saveData)
                     .then(v => {
                         console.log(v);
