@@ -20,12 +20,29 @@
                 </a-space>
             </div>
         </a-table>
+        <!--分页-->
+        <a-row type="flex" justify="end" class="a-pagination">
+            <a-pagination
+                    v-if="pagination.total"
+                    v-model="pagination.current"
+                    :page-size-options="pagination.pageSizeOptions"
+                    :total="pagination.total"
+                    show-size-changer
+                    :page-size="pagination.pageSize"
+                    @showSizeChange="onShowSizeChange"
+                    @change="pageChange"
+            >
+                <template slot="buildOptionText" slot-scope="props">
+                    <span>{{ props.value }}条/页</span>
+                </template>
+            </a-pagination>
+        </a-row>
     </div>
 </template>
 <script>
     import { oneRowSearch } from '@/utils/tableScroll';
     import { requestScreenPage } from '../../../api/userList/screening';
-    import { noPaginationData } from '../../../utils/pagination';
+    import { noPaginationData, paginationDecode, paginationEncode, paginationInit } from '../../../utils/pagination';
 
     const columns = [
         {
@@ -75,6 +92,8 @@
         },
         data(){
             return {
+                //  分页信息
+                pagination: paginationInit(),
                 data: [],
                 columns,
                 //  搜索数据
@@ -93,7 +112,8 @@
             searchFn(){
                 requestScreenPage(Object.assign({},
                     { param: { patientId: this.patientId } },
-                    noPaginationData))
+                    paginationEncode(this.pagination))
+                )
                     .then(v => {
                         const { data } = v;
                         data.records.forEach((item, index) => {
@@ -101,8 +121,20 @@
                             item.index = index + 1;
                         });
                         this.data = data.records;
+                        this.pagination = paginationDecode(this.pagination, data);
                     });
-            }
+            },
+            //  展示的每一页数据变换
+            onShowSizeChange(current, pageSize){
+                this.pagination.pageSize = pageSize;
+                this.pagination.current = 1;
+                this.searchFn();
+            },
+            //  切换分页页码
+            pageChange(current){
+                this.pagination.current = current;
+                this.searchFn();
+            },
         }
     };
 </script>

@@ -7,27 +7,14 @@
                 size="small"
         >
             <a-descriptions-item label="筛查人">
-                <a-input placeholder="请输入筛查人"
-                         class="basic-input-width"
-                />
+                {{screenBottomData&&screenBottomData[0].a}}
             </a-descriptions-item>
-            <!--选择日期-->
-            <a-descriptions-item label="选择日期">
-                <a-date-picker
-                        placeholder="请选择日期"
-                        v-model="selectDateMoment"
-                        @change="onDateChange"
-                        class="basic-select-width"
-                />
+            <!--评分日期-->
+            <a-descriptions-item label="评分日期">
+                {{screenBottomData&&screenBottomData[0].c}}
             </a-descriptions-item>
-            <a-descriptions-item label="选择时间">
-                <a-time-picker
-                        placeholder="请选择时间"
-                        v-model="selectTimeMoment"
-                        @change="selectTimeChange"
-                        class="basic-select-width"
-                        format="HH:mm"
-                />
+            <a-descriptions-item label="评分时间">
+                {{screenBottomData&&screenBottomData[0].e}}
             </a-descriptions-item>
         </a-descriptions>
     </div>
@@ -36,62 +23,20 @@
     //  底部信息
     export default {
         computed: {
+            //  筛查人底部信息
             screenBottomData(){
                 //  console.log(this.$store.state.userList.screeningInfo);
                 return this.$store.state.userList.screeningInfo.screenBottomData;
-            }
+            },
         },
         data(){
             return {
-                //  选择日期的值的对象
-                selectDateMoment: null,
-                //  选择日期的值
+                //  评分日期的值
                 selectDateValue: null,
-                //  选择时间的值的对象
-                selectTimeMoment: null,
-                //  选择时间的值
+                //  评分时间的值
                 selectTimeValue: null,
             };
         },
-
-        watch: {
-            screenBottomData(value){
-                //  console.log(value)
-            }
-        },
-        created(){
-//            setTimeout(() => {
-//                console.table(JSON.parse(JSON.stringify(this.screenBottomData)));
-//            }, 332);
-        },
-        created(){
-            this.searchFn();
-        },
-        methods: {
-            //  主要请求
-            searchFn(){
-//                requestChannelBusinessPage(paginationEncode(this.pagination))
-//                    .then(v => {
-//                        const { data } = v;
-//                        console.log(data);
-//                data.records.forEach((item, index) => {
-//                    item.key = index;
-//                    item.createTime = item.createTime.substr(0, 10);
-//                });
-//                        this.data = data.records;
-//                        this.pagination = paginationDecode(this.pagination, data);
-//                    });
-            },
-            //  选择过期日期
-            onDateChange(value, selectDateValue){
-                console.log(selectDateValue);
-
-            },
-            //  选择时间的变换
-            selectTimeChange(value, selectTimeValue){
-                console.log(selectTimeValue);
-                this.selectTimeValue = selectTimeValue;
-            },
-        }
+        methods: {}
     };
 </script>

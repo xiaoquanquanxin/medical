@@ -3,8 +3,6 @@
         <!--搜索相关-->
         <div class="a-input-group">
             <a-input class="basic-input-width" v-model="searchData.commodityName" placeholder="请输入处方条码"/>
-            <a-input class="basic-input-width" v-model="searchData.commodityName" placeholder="请输入处方医生"/>
-            <a-input class="basic-input-width" v-model="searchData.commodityName" placeholder="请输入患者姓名"/>
             <a-select v-model="searchData.brand" class="basic-select-width" placeholder="请选择科室">
                 <a-select-option value="">
                     品牌

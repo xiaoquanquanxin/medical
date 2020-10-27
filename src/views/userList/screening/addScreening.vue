@@ -10,139 +10,292 @@
             <a-button class="basic-button-width" type="primary" @click="deleteScreening" v-if="screeningDetailId">删除
             </a-button>
         </div>
-        <div id="printContent">
-            <ScreeningBasicInfo/>
-            <br>
-            <!--营养风险筛查-->
-            <a-row type="flex" justify="start" align="middle" class="table-group-title no-border-bottom">
-                <a-space>
-                    <span>营养风险筛查：</span>
-                    <span class="red">{{totalScore}}分</span>
-                </a-space>
-            </a-row>
-            <a-table
-                    :columns="riskColumns"
-                    :data-source="riskData"
-                    :pagination="false"
-                    :showHeader="false"
-                    bordered
+        <ScreeningBasicInfo/>
+        <br>
+        <!--营养风险筛查-->
+        <a-row type="flex" justify="start" align="middle" class="table-group-title no-border-bottom">
+            <a-space>
+                <span>营养风险筛查：</span>
+                <span class="red">{{totalScore}}分</span>
+            </a-space>
+        </a-row>
+        <a-table
+                :columns="riskColumns"
+                :data-source="riskData"
+                :pagination="false"
+                :showHeader="false"
+                bordered
+        >
+            <div slot="operation"
+                 slot-scope="scope,sItem,sIndex,extra"
             >
-                <div slot="operation"
-                     slot-scope="scope,sItem,sIndex,extra"
+                <a-radio-group style="display: block;"
+                               v-model="scope.value"
                 >
-                    <a-radio-group style="display: block;"
-                                   v-model="scope.value"
+                    <a-radio value="1">是</a-radio>
+                    <a-radio value="0">否</a-radio>
+                </a-radio-group>
+            </div>
+        </a-table>
+        <br>
+        <!--疾病评分：-->
+        <a-row type="flex" justify="start" align="middle" class="table-group-title no-border-bottom">
+            <a-space>
+                <span>疾病评分：</span>
+                <span class="red">{{screeningDetailInfo.diseaseScore}}分</span>
+            </a-space>
+        </a-row>
+        <a-row type="flex" justify="space-between" align="middle" style="border: 1px solid #e8e8e8;">
+            <div class="radio-group-item-label">
+                <div class="" style="text-align: center">疾病评分</div>
+            </div>
+            <div class="radio-group-item-content">
+                <a-checkbox-group @change="riskSelectChange($event)" v-model="diseaseSelectList">
+                    <ul class="check-group-list">
+                        <li class="radio-group-item">
+                            <a-checkbox value="1">髋骨折 (1分 )</a-checkbox>
+                        </li>
+                        <li class="radio-group-item">
+                            <a-checkbox value="2">慢性疾病急性发作或有并发症者（如肝硬化、COPD、血液透析、糖尿病、恶性肿瘤）(1分 )</a-checkbox>
+                        </li>
+                        <li class="radio-group-item">
+                            <a-checkbox value="3">腹部大手术 (2分 )</a-checkbox>
+                        </li>
+                        <li class="radio-group-item">
+                            <a-checkbox value="4">脑卒中 (2分 )</a-checkbox>
+                        </li>
+                        <li class="radio-group-item">
+                            <a-checkbox value="5">重度肺炎(2分 )</a-checkbox>
+                        </li>
+                        <li class="radio-group-item">
+                            <a-checkbox value="6">血液恶性肿瘤(2分 )</a-checkbox>
+                        </li>
+                        <li class="radio-group-item">
+                            <a-checkbox value="7">颅脑损伤(3分 )</a-checkbox>
+                        </li>
+                        <li class="radio-group-item">
+                            <a-checkbox value="8">骨髓移植(3分 )</a-checkbox>
+                        </li>
+                        <li class="radio-group-item">
+                            <a-checkbox value="9">大于APACHE10分的ICU患者(3分 )</a-checkbox>
+                        </li>
+                    </ul>
+                </a-checkbox-group>
+            </div>
+        </a-row>
+        <br>
+        <!--营养评分-->
+        <a-row type="flex" justify="start" align="middle" class="table-group-title no-border-bottom">
+            <a-space>
+                <span>营养评分：</span>
+                <span class="red">{{screeningDetailInfo.nutritionScore }}分</span>
+            </a-space>
+        </a-row>
+        <a-row type="flex" justify="space-between" align="middle" style="border: 1px solid #e8e8e8;">
+            <div class="radio-group-item-label">
+                <div class="" style="text-align: center">营养评分</div>
+            </div>
+            <div class="radio-group-item-content">
+                <a-radio-group v-model="screeningDetailInfo.nutrition" style="width: 100%;"
+                               @change="nutritionChange">
+                    <ul class="check-group-list">
+                        <li class="radio-group-item">
+                            <a-radio value="1">3个月体重丢失 > 5%或食物摄入比正常需要量低25% ~ 50%(1分 )</a-radio>
+                        </li>
+                        <li class="radio-group-item">
+                            <a-radio value="2">一般情况差或2个月体重丢失 > 5%或食物摄入比正常需要量低50% ~ 75%(2分 )</a-radio>
+                        </li>
+                        <li class="radio-group-item">
+                            <a-radio value="3">BMI < 18.5，且一般情况差或1个月内体重丢失 > 5%（或3个月体重下降15%）或前1周食物摄入比正常需要量低75% ~
+                                100%(3分 )
+                            </a-radio>
+                        </li>
+                    </ul>
+                </a-radio-group>
+            </div>
+        </a-row>
+        <br>
+        <!--年龄评分-->
+        <a-row type="flex" justify="start" align="middle" class="table-group-title no-border-bottom">
+            <a-space>
+                <span>年龄评分：</span>
+                <span class="red">{{screeningDetailInfo.ageScore}}分</span>
+            </a-space>
+        </a-row>
+        <a-row type="flex" justify="space-between" align="middle" style="border: 1px solid #e8e8e8;">
+            <div class="radio-group-item-label">
+                <div class="" style="text-align: center">营养评分</div>
+            </div>
+            <div class="radio-group-item-content">
+                <a-radio-group v-model="screeningDetailInfo.ageOption"
+                               style="width: 100%;"
+                               :disabled="true"
+                >
+                    <ul class="check-group-list">
+                        <li class="radio-group-item">
+                            <a-radio :value="1">年龄 >= 70(1分 )</a-radio>
+                        </li>
+                        <li class="radio-group-item">
+                            <a-radio :value="2">年龄 < 70岁(0分 )</a-radio>
+                        </li>
+                    </ul>
+                </a-radio-group>
+            </div>
+        </a-row>
+        <br>
+        <ScreeningBottomInfo/>
+        <div v-show="false">
+            <div id="printContent">
+                <ScreeningBasicInfo/>
+                <br>
+                <!--营养风险筛查-->
+                <a-row type="flex" justify="start" align="middle" class="table-group-title no-border-bottom">
+                    <a-space>
+                        <span>营养风险筛查：</span>
+                        <span class="red">{{totalScore}}分</span>
+                    </a-space>
+                </a-row>
+                <a-table
+                        :columns="riskColumns"
+                        :data-source="riskData"
+                        :pagination="false"
+                        :showHeader="false"
+                        bordered
+                >
+                    <div slot="operation"
+                         slot-scope="scope,sItem,sIndex,extra"
                     >
-                        <a-radio value="1">是</a-radio>
-                        <a-radio value="0">否</a-radio>
-                    </a-radio-group>
-                </div>
-            </a-table>
-            <br>
-            <!--疾病评分：-->
-            <a-row type="flex" justify="start" align="middle" class="table-group-title no-border-bottom">
-                <a-space>
-                    <span>疾病评分：</span>
-                    <span class="red">{{screeningDetailInfo.diseaseScore}}分</span>
-                </a-space>
-            </a-row>
-            <a-row type="flex" justify="space-between" align="middle" style="border: 1px solid #e8e8e8;">
-                <div class="radio-group-item-label">
-                    <div class="" style="text-align: center">疾病评分</div>
-                </div>
-                <div class="radio-group-item-content">
-                    <a-checkbox-group @change="riskSelectChange($event)" v-model="diseaseSelectList">
-                        <ul class="check-group-list">
-                            <li class="radio-group-item">
-                                <a-checkbox value="1">髋骨折 (1分 )</a-checkbox>
-                            </li>
-                            <li class="radio-group-item">
-                                <a-checkbox value="2">慢性疾病急性发作或有并发症者（如肝硬化、COPD、血液透析、糖尿病、恶性肿瘤）(1分 )</a-checkbox>
-                            </li>
-                            <li class="radio-group-item">
-                                <a-checkbox value="3">腹部大手术 (2分 )</a-checkbox>
-                            </li>
-                            <li class="radio-group-item">
-                                <a-checkbox value="4">脑卒中 (2分 )</a-checkbox>
-                            </li>
-                            <li class="radio-group-item">
-                                <a-checkbox value="5">重度肺炎(2分 )</a-checkbox>
-                            </li>
-                            <li class="radio-group-item">
-                                <a-checkbox value="6">血液恶性肿瘤(2分 )</a-checkbox>
-                            </li>
-                            <li class="radio-group-item">
-                                <a-checkbox value="7">颅脑损伤(3分 )</a-checkbox>
-                            </li>
-                            <li class="radio-group-item">
-                                <a-checkbox value="8">骨髓移植(3分 )</a-checkbox>
-                            </li>
-                            <li class="radio-group-item">
-                                <a-checkbox value="9">大于APACHE10分的ICU患者(3分 )</a-checkbox>
-                            </li>
-                        </ul>
-                    </a-checkbox-group>
-                </div>
-            </a-row>
-            <br>
-            <!--营养评分-->
-            <a-row type="flex" justify="start" align="middle" class="table-group-title no-border-bottom">
-                <a-space>
-                    <span>营养评分：</span>
-                    <span class="red">{{screeningDetailInfo.nutritionScore }}分</span>
-                </a-space>
-            </a-row>
-            <a-row type="flex" justify="space-between" align="middle" style="border: 1px solid #e8e8e8;">
-                <div class="radio-group-item-label">
-                    <div class="" style="text-align: center">营养评分</div>
-                </div>
-                <div class="radio-group-item-content">
-                    <a-radio-group v-model="screeningDetailInfo.nutrition" style="width: 100%;"
-                                   @change="nutritionChange">
-                        <ul class="check-group-list">
-                            <li class="radio-group-item">
-                                <a-radio value="1">3个月体重丢失 > 5%或食物摄入比正常需要量低25% ~ 50%(1分 )</a-radio>
-                            </li>
-                            <li class="radio-group-item">
-                                <a-radio value="2">一般情况差或2个月体重丢失 > 5%或食物摄入比正常需要量低50% ~ 75%(2分 )</a-radio>
-                            </li>
-                            <li class="radio-group-item">
-                                <a-radio value="3">BMI < 18.5，且一般情况差或1个月内体重丢失 > 5%（或3个月体重下降15%）或前1周食物摄入比正常需要量低75% ~
-                                    100%(3分 )
-                                </a-radio>
-                            </li>
-                        </ul>
-                    </a-radio-group>
-                </div>
-            </a-row>
-            <br>
-            <!--年龄评分-->
-            <a-row type="flex" justify="start" align="middle" class="table-group-title no-border-bottom">
-                <a-space>
-                    <span>年龄评分：</span>
-                    <span class="red">{{screeningDetailInfo.ageScore}}分</span>
-                </a-space>
-            </a-row>
-            <a-row type="flex" justify="space-between" align="middle" style="border: 1px solid #e8e8e8;">
-                <div class="radio-group-item-label">
-                    <div class="" style="text-align: center">营养评分</div>
-                </div>
-                <div class="radio-group-item-content">
-                    <a-radio-group v-model="screeningDetailInfo.ageOption" style="width: 100%;"
-                                   @change="ageOptionChange">
-                        <ul class="check-group-list">
-                            <li class="radio-group-item">
-                                <a-radio value="1">年龄 >= 70(1分 )</a-radio>
-                            </li>
-                            <li class="radio-group-item">
-                                <a-radio value="2">年龄 < 70岁(0分 )</a-radio>
-                            </li>
-                        </ul>
-                    </a-radio-group>
-                </div>
-            </a-row>
-            <br>
-            <ScreeningBottomInfo/>
+                        <a-radio-group style="display: block;"
+                                       v-model="scope.value"
+                        >
+                            <a-radio value="1">是</a-radio>
+                            <a-radio value="0">否</a-radio>
+                        </a-radio-group>
+                    </div>
+                </a-table>
+                <br>
+                <!--疾病评分：-->
+                <a-row type="flex" justify="start" align="middle" class="table-group-title no-border-bottom">
+                    <a-space>
+                        <span>疾病评分：</span>
+                        <span class="red">{{screeningDetailInfo.diseaseScore}}分</span>
+                    </a-space>
+                </a-row>
+                <a-row type="flex" justify="space-between" align="middle" style="border: 1px solid #e8e8e8;">
+                    <div class="radio-group-item-label">
+                        <div class="" style="text-align: center">疾病评分</div>
+                    </div>
+                    <div class="radio-group-item-content">
+                        <a-checkbox-group @change="riskSelectChange($event)" v-model="diseaseSelectList">
+                            <ul class="check-group-list">
+                                <li class="radio-group-item">
+                                    <a-checkbox value="1">髋骨折 (1分 )</a-checkbox>
+                                </li>
+                                <li class="radio-group-item">
+                                    <a-checkbox value="2">慢性疾病急性发作或有并发症者（如肝硬化、COPD、血液透析、糖尿病、恶性肿瘤）(1分 )</a-checkbox>
+                                </li>
+                                <li class="radio-group-item">
+                                    <a-checkbox value="3">腹部大手术 (2分 )</a-checkbox>
+                                </li>
+                                <li class="radio-group-item">
+                                    <a-checkbox value="4">脑卒中 (2分 )</a-checkbox>
+                                </li>
+                                <li class="radio-group-item">
+                                    <a-checkbox value="5">重度肺炎(2分 )</a-checkbox>
+                                </li>
+                                <li class="radio-group-item">
+                                    <a-checkbox value="6">血液恶性肿瘤(2分 )</a-checkbox>
+                                </li>
+                                <li class="radio-group-item">
+                                    <a-checkbox value="7">颅脑损伤(3分 )</a-checkbox>
+                                </li>
+                                <li class="radio-group-item">
+                                    <a-checkbox value="8">骨髓移植(3分 )</a-checkbox>
+                                </li>
+                                <li class="radio-group-item">
+                                    <a-checkbox value="9">大于APACHE10分的ICU患者(3分 )</a-checkbox>
+                                </li>
+                            </ul>
+                        </a-checkbox-group>
+                    </div>
+                </a-row>
+                <br>
+                <!--营养评分-->
+                <a-row type="flex" justify="start" align="middle" class="table-group-title no-border-bottom">
+                    <a-space>
+                        <span>营养评分：</span>
+                        <span class="red">{{screeningDetailInfo.nutritionScore }}分</span>
+                    </a-space>
+                </a-row>
+                <a-row type="flex" justify="space-between" align="middle" style="border: 1px solid #e8e8e8;">
+                    <div class="radio-group-item-label">
+                        <div class="" style="text-align: center">营养评分</div>
+                    </div>
+                    <div class="radio-group-item-content">
+                        <a-radio-group v-model="screeningDetailInfo.nutrition" style="width: 100%;"
+                                       @change="nutritionChange">
+                            <ul class="check-group-list">
+                                <li class="radio-group-item">
+                                    <a-radio value="1">3个月体重丢失 > 5%或食物摄入比正常需要量低25% ~ 50%(1分 )</a-radio>
+                                </li>
+                                <li class="radio-group-item">
+                                    <a-radio value="2">一般情况差或2个月体重丢失 > 5%或食物摄入比正常需要量低50% ~ 75%(2分 )</a-radio>
+                                </li>
+                                <li class="radio-group-item">
+                                    <a-radio value="3">BMI < 18.5，且一般情况差或1个月内体重丢失 > 5%（或3个月体重下降15%）或前1周食物摄入比正常需要量低75% ~
+                                        100%(3分 )
+                                    </a-radio>
+                                </li>
+                            </ul>
+                        </a-radio-group>
+                    </div>
+                </a-row>
+                <br>
+                <!--年龄评分-->
+                <a-row type="flex" justify="start" align="middle" class="table-group-title no-border-bottom">
+                    <a-space>
+                        <span>年龄评分：</span>
+                        <span class="red">{{screeningDetailInfo.ageScore}}分</span>
+                    </a-space>
+                </a-row>
+                <a-row type="flex" justify="space-between" align="middle" style="border: 1px solid #e8e8e8;">
+                    <div class="radio-group-item-label">
+                        <div class="" style="text-align: center">营养评分</div>
+                    </div>
+                    <div class="radio-group-item-content">
+                        <a-radio-group v-model="screeningDetailInfo.ageOption"
+                                       style="width: 100%;"
+                                       :disabled="true"
+                        >
+                            <ul class="check-group-list">
+                                <li class="radio-group-item">
+                                    <a-radio :value="1">年龄 >= 70(1分 )</a-radio>
+                                </li>
+                                <li class="radio-group-item">
+                                    <a-radio :value="2">年龄 < 70岁(0分 )</a-radio>
+                                </li>
+                            </ul>
+                        </a-radio-group>
+                    </div>
+                </a-row>
+                <br>
+                <a-descriptions
+                        :title="null"
+                        bordered
+                        :column="3"
+                        size="small"
+                >
+                    <a-descriptions-item label="筛查人">
+                        <a-input/>
+                    </a-descriptions-item>
+                    <a-descriptions-item label="评分日期">
+                        <a-input/>
+                    </a-descriptions-item>
+                    <a-descriptions-item label="评分时间">
+                        <a-input/>
+                    </a-descriptions-item>
+                </a-descriptions>
+            </div>
         </div>
     </div>
 </template>
@@ -185,6 +338,19 @@
             totalScore(){
                 const { ageScore, diseaseScore, nutritionScore } = this.screeningDetailInfo;
                 return ageScore + diseaseScore + nutritionScore;
+            },
+            //  基础信息，请求来了就会出现数据
+            patientBasicInfo(){
+                return this.$store.state.userList.patientBasicInfo;
+            },
+            //  筛查人底部信息
+            screenBottomData(){
+                //  console.log(this.$store.state.userList.screeningInfo);
+                return this.$store.state.userList.screeningInfo.screenBottomData;
+            },
+            //  登录人信息
+            loginInfo(){
+                return this.$store.state.login.loginInfo;
             }
         },
         data(){
@@ -268,7 +434,6 @@
         created(){
             //  相当于初始化
             this.nutritionChange();
-            this.ageOptionChange();
             this.calcDiseaseScore();
             this.searchFn();
         },
@@ -298,37 +463,65 @@
                             e: `现体重：${data.weight}kg`,
                             f: `BMI(kg/m2)：${data.bmi}`,
                         }];
+                        console.log(this.loginInfo.username);
                         const screenBottomData = [
                             {
                                 key: 1,
-                                a: '筛查人：',
-                                c: '日期',
-                                e: '时间'
+                                a: this.loginInfo.username,
+                                c: '',
+                                e: ''
                             }
                         ];
-                        this.setScreeningInfo({
-                            //  设置基础信息
-                            screeningBasicInfo,
-                            //  设置底部信息
-                            screenBottomData,
-                        });
-                    });
-                //  如果是新增
-                if (!this.screeningDetailId) {
-                    return;
-                }
-                //  如果是编辑
-                requestScreenSelectOne(this.screeningDetailId)
-                    .then(v => {
-                        this.screeningDetailInfo = v.data;
-                        this.riskData[0].value = this.screeningDetailInfo.food;
-                        this.riskData[1].value = this.screeningDetailInfo.lose;
-                        this.riskData[2].value = this.screeningDetailInfo.icu;
-                        this.nutritionChange();
-                        this.ageOptionChange();
-                        this.calcDiseaseScore();
-                        console.log(JSON.parse(JSON.stringify(v.data)));
-
+                        //  如果是新增
+                        if (!this.screeningDetailId) {
+                            this.setScreeningInfo({
+                                //  设置基础信息
+                                screeningBasicInfo,
+                                //  设置底部信息
+                                screenBottomData,
+                            });
+                            const ageOption = this.patientBasicInfo.birth >= 70;
+                            this.screeningDetailInfo.ageOption = ageOption ? 1 : 2;
+                            this.screeningDetailInfo.ageScore = ageOption ? 1 : 0;
+                            return;
+                        }
+                        //  如果是编辑
+                        requestScreenSelectOne(this.screeningDetailId)
+                            .then(v => {
+                                this.screeningDetailInfo = v.data;
+                                const ageOption = this.patientBasicInfo.birth >= 70;
+                                this.screeningDetailInfo.ageOption = ageOption ? 1 : 2;
+                                this.screeningDetailInfo.ageScore = ageOption ? 1 : 0;
+                                this.riskData[0].value = this.screeningDetailInfo.food;
+                                this.riskData[1].value = this.screeningDetailInfo.lose;
+                                this.riskData[2].value = this.screeningDetailInfo.icu;
+                                this.nutritionChange();
+                                this.calcDiseaseScore();
+                                console.log(JSON.parse(JSON.stringify(v.data)));
+                                console.log(v.data.ctime);
+                                //  如果有处方时间
+                                let c;
+                                let e;
+                                if (v.data.ctime) {
+                                    const _ctime = v.data.ctime.split(' ');
+                                    c = _ctime[0];
+                                    e = _ctime[1];
+                                }
+                                const screenBottomData = [
+                                    {
+                                        key: 1,
+                                        a: this.loginInfo.username,
+                                        c,
+                                        e,
+                                    }
+                                ];
+                                this.setScreeningInfo({
+                                    //  设置基础信息
+                                    screeningBasicInfo,
+                                    //  设置底部信息
+                                    screenBottomData,
+                                });
+                            });
                     });
             },
             //  疾病评分 选中的数据
@@ -353,35 +546,6 @@
                 const map = { 1: 1, 2: 2, 3: 3 };
                 this.screeningDetailInfo.nutritionScore = map[this.screeningDetailInfo.nutrition];
             },
-            //  年龄评分变化
-            ageOptionChange(){
-                const map = { 1: 1, 2: 0 };
-                this.screeningDetailInfo.ageScore = map[this.screeningDetailInfo.ageOption];
-            },
-
-            //  保存
-            saveScreening(){
-                console.log('保存');
-                //  如果是编辑
-                if (this.screeningDetailId) {
-                    this.$router.push({ name: 'userList' });
-                    return;
-                }
-                const screeningDetailInfo = this.screeningDetailInfo;
-                const riskData = this.riskData;
-                screeningDetailInfo.food = riskData[0].value;
-                screeningDetailInfo.lose = riskData[1].value;
-                screeningDetailInfo.icu = riskData[2].value;
-                screeningDetailInfo.patientId = this.patientId;
-                screeningDetailInfo.totalScore = this.totalScore;
-                console.log(JSON.parse(JSON.stringify(screeningDetailInfo)));
-                requestScreenSave(screeningDetailInfo)
-                    .then(v => {
-                        console.log(v);
-                        this.$router.push({ name: 'userList' });
-                    });
-
-            },
             //  删除
             deleteScreening(){
                 console.log(this.screeningDetailId);
@@ -405,7 +569,36 @@
                         console.log('取消');
                     },
                 });
-            }
+            },
+
+            //  保存
+            saveScreening(){
+                console.log(this.screenBottomData);
+                //  底部评分数据
+                const screenBottomData = this.screenBottomData[0];
+                const ctime = `${screenBottomData.c} ${screenBottomData.e}`;
+                console.log('保存');
+                //  如果是编辑
+                if (this.screeningDetailId) {
+                    this.$router.push({ name: 'userList' });
+                    return;
+                }
+                const screeningDetailInfo = this.screeningDetailInfo;
+                const riskData = this.riskData;
+                screeningDetailInfo.food = riskData[0].value;
+                screeningDetailInfo.lose = riskData[1].value;
+                screeningDetailInfo.icu = riskData[2].value;
+                screeningDetailInfo.patientId = this.patientId;
+                screeningDetailInfo.totalScore = this.totalScore;
+                screeningDetailInfo.ctime = ctime;
+                console.log(JSON.parse(JSON.stringify(screeningDetailInfo)));
+                requestScreenSave(screeningDetailInfo)
+                    .then(v => {
+                        console.log(v);
+                        this.$router.push({ name: 'screening', params: { patientId: this.patientId } });
+                    });
+
+            },
         }
     };
 </script>
