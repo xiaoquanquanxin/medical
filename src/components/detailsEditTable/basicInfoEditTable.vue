@@ -7,7 +7,7 @@
         </a-row>
         <a-table
                 :columns="basicInfoColumns"
-                :data-source="dataSource"
+                :data-source="basicInfoEditData"
                 :pagination="false"
                 bordered
         >
@@ -31,28 +31,18 @@
             <div slot="prescriptionType" slot-scope="scope,sItem,sIndex,extra">
                 <a-select v-model="scope.prescriptionType"
                           class="basic-select-width"
-                          placeholder="请选择处方类型">
+                          placeholder="请选择处方类型"
+                          @change="changeFn"
+                >
                     <a-select-option :value="1">院内配置</a-select-option>
                     <a-select-option :value="2">门诊领药</a-select-option>
                 </a-select>
             </div>
-            <!--            &lt;!&ndash;咨询费/配置费&ndash;&gt;-->
-            <!--            <div slot="cost" slot-scope="scope,sItem,sIndex,extra">-->
-            <!--                <a-select v-model="scope.cost"-->
-            <!--                          class="basic-select-width"-->
-            <!--                          placeholder="请选择咨询费">-->
-            <!--                    <a-select-option :value="1">-->
-            <!--                        恰-->
-            <!--                    </a-select-option>-->
-            <!--                    <a-select-option value="2">-->
-            <!--                        就-->
-            <!--                    </a-select-option>-->
-            <!--                </a-select>-->
-            <!--            </div>-->
         </a-table>
     </div>
 </template>
 <script>
+    import { mapGetters, mapActions } from 'vuex';
     //  基本信息 表格 列的意义
     const basicInfoColumns = [
         {
@@ -70,19 +60,29 @@
             width: 100,
             scopedSlots: { customRender: 'prescriptionType' },
         },
-//        {
-//            title: '咨询费/配置费',
-//            width: 140,
-//            scopedSlots: { customRender: 'cost' },
-//        },
     ];
 
     export default {
-        props: ['dataSource'],
+        computed: {
+            //	新增处方、编辑处方选择的头部数据
+            basicInfoEditData(){
+                return this.$store.state.intervention.basicInfoEditData;
+            },
+        },
         data(){
             return {
                 basicInfoColumns,
             };
+        },
+        methods: {
+            ...mapActions('intervention', [
+                //  处方头部信息
+                'setBasicInfoEditData',
+            ]),
+            //  切换处方类型
+            changeFn(){
+                this.setBasicInfoEditData(this.basicInfoEditData);
+            }
         }
     };
 </script>

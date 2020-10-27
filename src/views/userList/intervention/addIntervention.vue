@@ -5,26 +5,27 @@
             <GoBackButton/>
         </div>
         <!--基础数据-->
-        <BasicInfoEditTable
-                :data-source="basicInfoEditData"
-        />
+        <BasicInfoEditTable/>
         <br>
         <!--口腔肠内-->
         <OralEditTable
                 :key="1"
                 :data-title="kqcnOralEditDataTitle"
+                ref="kqcnOralEditTableRef"
         />
         <br>
         <!--肠内-->
         <OralEditTable
                 :key="2"
                 :data-title="cnyyzcOralEditDataTitle"
+                ref="cnyyzcOralEditTableRef"
         />
         <br>
         <a-button type="primary" @click="saveIntervention">保存</a-button>
     </div>
 </template>
 <script>
+    import { mapGetters, mapActions } from 'vuex';
     import GoBackButton from '@/components/goBackButton.vue';
     //  基础数据
     import BasicInfoEditTable from '@/components/detailsEditTable/basicInfoEditTable.vue';
@@ -42,10 +43,10 @@
             OralEditTable,
         },
         computed: {
-            //  被选中的处方
-            chooseInterventionData(){
-                return this.$store.state.intervention.chooseInterventionData;
-            }
+            //	新增处方、编辑处方选择的头部数据
+            basicInfoEditData(){
+                return this.$store.state.intervention.basicInfoEditData;
+            },
         },
         data(){
             return {
@@ -53,25 +54,17 @@
                 interventionDetailId: this.$route.params.interventionDetailId,
                 //  病人的id
                 patientId: this.$route.params.patientId,
-
-                //  基础数据
-                basicInfoEditData: [
-                    {
-                        key: 1,
-                        prescriptionName: '',
-                        priod: '',
-                        prescriptionType: 1,
-                    }
-                ],
                 //  口腔肠内数据
                 kqcnOralEditDataTitle: {
                     name: '口服肠内营养补充',
                     prescriptionType: 1,
+                    usageMethod: 1,
                 },
                 //
                 cnyyzcOralEditDataTitle: {
                     name: '肠内营养支持',
                     prescriptionType: 2,
+                    usageMethod: 1,
                 }
             };
         },
@@ -88,12 +81,24 @@
 //                    carbohydrates: 456,
 //                }]);
             }
+            this.setBasicInfoEditData([{
+                key: 1,
+                prescriptionName: '',
+                priod: '',
+                prescriptionType: 1,
+            }]);
             this.searchFn();
         },
 
         methods: {
+            ...mapActions('intervention', [
+                //  处方头部信息
+                'setBasicInfoEditData',
+            ]),
             //  主要请求
-            searchFn(){},
+            searchFn(){
+
+            },
             //  保存
             saveIntervention(){
                 //  病人id
@@ -107,11 +112,14 @@
                     //  处方名称
                     prescriptionName,
                 } = basicInfoEditData;
-                console.log(JSON.parse(JSON.stringify(this.chooseInterventionData)));
+                console.log(this.$refs.kqcnOralEditTableRef.chooseInterventionData);
+                console.log(this.$refs.cnyyzcOralEditTableRef.chooseInterventionData);
                 //  被选中的方案
-                const { commodityTableData, timeTableData } = this.chooseInterventionData;
-                console.log(JSON.parse(JSON.stringify(commodityTableData)));
-                console.log(JSON.parse(JSON.stringify(timeTableData)));
+                //  口腔肠内
+                const { chooseInterventionData: kqcnCommodityTableData } = this.$refs.kqcnOralEditTableRef;
+                //  肠内营养支持
+                const { chooseInterventionData: cnyyzcCommodityTableData } = this.$refs.cnyyzcOralEditTableRef;
+
                 //  金额
                 let amountPayable = 0;
                 //  碳水化合物
@@ -124,26 +132,32 @@
                 let protein = 0;
                 //  todo    肠内only
                 const commodity = [];
-                commodityTableData.forEach(item => {
-                    const { purchaseUnitCheckId, quantity } = item;
-                    item.uintListVos.forEach(_item => {
-                        if (purchaseUnitCheckId === _item.id) {
-                            amountPayable += quantity * _item.unitPrice;
-                            carbohydrates += quantity * _item.unitCarbohydrate;
-                            energy += quantity * _item.unitEnergy;
-                            fat += quantity * _item.unitFat;
-                            protein += quantity * _item.unitProtein;
-                            const data = {
-                                goodsId: _item.id,
-                                goodsName: item.goodsName,
-                                purchaseUnit: _item.uname,
-                                quantity: item.quantity,
-                                subtotal: item.quantity * _item.unitPrice
-                            };
-                            commodity.push(data);
-                        }
+                const calc = (list) => {
+                    list.forEach(item => {
+                        const { purchaseUnitCheckId, quantity } = item;
+                        item.uintListVos.forEach(_item => {
+                            if (purchaseUnitCheckId === _item.id) {
+                                amountPayable += quantity * _item.unitPrice;
+                                carbohydrates += quantity * _item.unitCarbohydrate;
+                                energy += quantity * _item.unitEnergy;
+                                fat += quantity * _item.unitFat;
+                                protein += quantity * _item.unitProtein;
+                                const data = {
+                                    goodsId: _item.id,
+                                    goodsName: item.goodsName,
+                                    purchaseUnit: _item.uname,
+                                    quantity: item.quantity,
+                                    subtotal: item.quantity * _item.unitPrice
+                                };
+                                commodity.push(data);
+                            }
+                        });
                     });
-                });
+                };
+                calc(kqcnCommodityTableData.commodityTableData);
+                console.log(JSON.parse(JSON.stringify(kqcnCommodityTableData.commodityTableData[0])));
+                console.log(JSON.parse(JSON.stringify(cnyyzcCommodityTableData.commodityTableData[0])));
+                calc(cnyyzcCommodityTableData.commodityTableData);
                 //  详情json
                 const prescriptionDetail = {
                     cnyyzc: commodity,
@@ -162,6 +176,7 @@
                     prescriptionDetail: JSON.stringify(prescriptionDetail)
                 };
                 console.log(saveData);
+                return;
                 requestPrescriptionSave(saveData)
                     .then(v => {
                         console.log(v);

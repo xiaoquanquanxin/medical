@@ -28,3 +28,14 @@ export const usageMethodList = [
 	{id: 5, key: 5, name: '中心静脉',},
 	{id: 6, key: 6, name: '鼻胃管',},
 	{id: 7, key: 7, name: '肠胃管',}];
+
+
+//	处方模板类型
+export const kqcnOralEditDataTitle = {
+	name: '口服肠内营养补充',
+	prescriptionType: 1,
+};
+export const cnyyzcOralEditDataTitle = {
+	name: '肠内营养支持',
+	prescriptionType: 2,
+}

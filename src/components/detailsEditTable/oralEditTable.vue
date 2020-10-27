@@ -5,9 +5,9 @@
             <a-space>
                 <span>{{dataTitle.name}}</span>
                 <a @click="choosePlanFn">选择方案<a v-if="choosePlanData.energyId">(已选：{{choosePlanData.energyId}})</a></a>
-                {{dataTitle.prescriptionType}}
             </a-space>
-            <a-select class="lengthen-select-width" v-model="dataTitle.usageMethod" placeholder="请选择食用方法">
+            <a-select class="lengthen-select-width" v-model="dataTitle.usageMethod" placeholder="请选择食用方法"
+                      @change="usageMethodChangeFn">
                 <a-select-option :value="item.id"
                                  :key="item.id"
                                  v-for="item in usageMethodList"
@@ -21,7 +21,7 @@
             </div>
             <div class="custom-flex-right">
                 <a-table
-                        :columns="basicColumns"
+                        :columns="basicColumns1"
                         :data-source="commodityTableData"
                         :pagination="false"
                         bordered
@@ -91,7 +91,7 @@
                         >
                             <a-space size="small">
                                 <a-input placeholder="请输入使用量" v-model="item.dosage"/>
-                                {{item.unit}}
+                                {{item.uname}}
                             </a-space>
                         </div>
                     </div>
@@ -123,10 +123,8 @@
             </div>
         </div>
         <!--选择方案泰框-->
-        <a-modal v-model="dialogChoosePlan.visible"
-                 v-if="dialogChoosePlan.visible"
-                 :confirm-loading="dialogChoosePlan.confirmLoading"
-                 :key="dataTitle.prescriptionType"
+        <a-modal v-model="modal1"
+                 v-if="modal1"
                  :maskClosable="false"
                  centered
                  :width="800"
@@ -135,23 +133,14 @@
                  cancel-text="取消"
                  @ok="choosePlanModalCheck('refChoosePlanBox')">
             <ChoosePlanBox
-                    :key="dataTitle.prescriptionType"
                     :choosePlanData="choosePlanData"
-                    :planMap="mainData"
                     :data-title="dataTitle"
                     ref="refChoosePlanBox"
             />
         </a-modal>
-        <ChoosePlanBox
-                :choosePlanData="choosePlanData"
-                :planMap="mainData"
-                :data-title="dataTitle"
-                ref="refChoosePlanBox"
-        />
         <!--选择商品莫泰框-->
-        <a-modal v-model="dialogChooseCommodity.visible"
-                 v-if="dialogChooseCommodity.visible"
-                 :confirm-loading="dialogChooseCommodity.confirmLoading"
+        <a-modal v-model="modal2"
+                 v-if="modal2"
                  :maskClosable="false"
                  centered
                  :width="800"
@@ -165,8 +154,8 @@
             />
         </a-modal>
         <!--新增时间莫泰框-->
-        <a-modal v-model="dialogAddTime.visible"
-                 v-if="dialogAddTime.visible"
+        <a-modal v-model="modal3"
+                 v-if="modal3"
                  :maskClosable="false"
                  centered
                  :width="200"
@@ -192,7 +181,39 @@
     import { usageMethodList } from '../../utils/constants';
     import { mapGetters, mapActions } from 'vuex';
 
-    const basicColumns = [
+    const basicColumns1 = [
+        {
+            title: '商品名称',
+            width: 100,
+            dataIndex: 'goodsName'
+        },
+        {
+            title: '购买单位',
+            width: 100,
+            scopedSlots: { customRender: 'buyUnit' }
+        },
+        {
+            title: '商品单价',
+            width: 100,
+            scopedSlots: { customRender: 'price' }
+        },
+        {
+            title: '数量',
+            width: 100,
+            scopedSlots: { customRender: 'count' }
+        },
+        {
+            title: '小计',
+            width: 100,
+            scopedSlots: { customRender: 'subtotal' }
+        },
+        {
+            title: '操作',
+            width: 100,
+            scopedSlots: { customRender: 'operation' }
+        }
+    ];
+    const basicColumns2 = [
         {
             title: '商品名称',
             width: 100,
@@ -232,6 +253,14 @@
         },
         props: ['dataTitle'],
         computed: {
+            //  处方模板类型
+            prescriptionType(){
+                const { basicInfoEditData } = this.$store.state.intervention;
+                if (!basicInfoEditData) {
+                    return;
+                }
+                return basicInfoEditData[0].prescriptionType;
+            },
             //  被选中的处方
             chooseInterventionData(){
                 return this.$store.state.intervention.chooseInterventionData;
@@ -239,9 +268,16 @@
         },
         data(){
             return {
+                //  选择方案弹框
+                modal1: false,
+                //  选择商品莫泰框
+                modal2: false,
+                //  选择时间莫泰框
+                modal3: false,
                 //  食用方法下拉
                 usageMethodList,
-                basicColumns,
+                basicColumns1,
+                basicColumns2,
                 //  基础表格数据
                 commodityTableData: [],
                 //  选择时间表格数据
@@ -301,60 +337,32 @@
                     planId: null,
                 },
 
-                //  选择方案莫泰框
-                dialogChoosePlan: this.initModal(DIALOG_TYPE.CHOOSE_PLAN),
-                //  选择商品莫泰框
-                dialogChooseCommodity: this.initModal(DIALOG_TYPE.CHOOSE_COMMODITY),
-
                 //  页面整体数据
                 mainData: null,
                 //  商品数据
                 commodityList: null,
-
-                //  新增时间莫泰框
-                dialogAddTime: this.initModal(DIALOG_TYPE.ADD_TIME),
                 //  新增时间的值的对象
                 addTimeMoment: null,
                 //  新增时间的值
                 addTimeValue: null,
             };
         },
+        watch: {
+            //  处方类型
+            prescriptionType(value){
+                console.log(value);
+                this.resetTableData();
+//                //  选择方案数据
+//                this.choosePlanData = {
+//                    //  选择的能量
+//                    energyId: null,
+//                    //  选择的具体的方案，是一个结果。如果是编辑，需要反向设计到planMap里
+//                    planId: null,
+//                };
+            }
+        },
         created(){
             console.log(JSON.parse(JSON.stringify(this.dataTitle)));
-            //  发请求，拿下拉的数据
-            this.mainData = {
-                1: [
-                    {
-                        key: 1,
-                        planName: '方案1',
-                        planContent: '伊肽素1勺；其他1勺；水150ml',
-                    },
-                    {
-                        key: 2,
-                        planName: '方案2',
-                        planContent: '伊肽素1勺；其他1勺；水150ml',
-                    },
-                ],
-                2: [
-                    {
-                        key: 3,
-                        planName: '方案133',
-                        planContent: '伊肽素1勺；其他1勺；水150ml',
-                    },
-                    {
-                        key: 4,
-                        planName: '方案222',
-                        planContent: '伊肽素1勺；其他1勺；水150ml',
-                    }
-                ],
-                3: [
-                    {
-                        key: 5,
-                        planName: '方案3',
-                        planContent: '伊肽素1勺；其他1勺；水150ml',
-                    }
-                ]
-            };
             //  商品数据
             this.commodityList = {
                 1: [{
@@ -506,38 +514,18 @@
                     ]
                 },],
             };
-            this.searchFn();
+            //  this.searchFn();
         },
         methods: {
             ...mapActions('prescriptionTemplate', [
                 //  设置商品列表数据
                 'setRemark',
             ]),
-            //  主要请求
-            searchFn(){
-//                requestPrescriptionPrescriptionTpl()
-//                requestChannelBusinessPage(paginationEncode(this.pagination))
-//                    .then(v => {
-//                        const { data } = v;
-//                        console.log(data);
-//                data.records.forEach((item, index) => {
-//                    item.key = index;
-//                    item.createTime = item.createTime.substr(0, 10);
-//                });
-//                        this.data = data.records;
-//                        this.pagination = paginationDecode(this.pagination, data);
-//                    });
-            },
             //  时间选择器的方法
             moment,
-            //  莫泰框方法
-            ...dialogMethods,
             //  选择方案
             choosePlanFn(){
-//                this.dataTitle = this.dataTitle;
-                Object.assign(this.dataTitle, this.dataTitle);
-                console.log(JSON.parse(JSON.stringify(this.dataTitle)));
-                this.showModal(DIALOG_TYPE.CHOOSE_PLAN);
+                this.modal1 = true;
             },
             //  关闭选择方案
             choosePlanModalCheck(refChoosePlanBox){
@@ -545,7 +533,7 @@
                 const promise = this.$refs[refChoosePlanBox].handleSubmit();
                 promise.then(v => {
                     //  关闭弹框
-                    this.hideModal(DIALOG_TYPE.CHOOSE_PLAN);
+                    this.modal1 = false;
                     //  被选中的方案
                     const { commodityTableData, timeTableData } = this.chooseInterventionData;
                     console.log('被选中的方案');
@@ -597,7 +585,6 @@
                     this.$message.error('请选择方案');
                     return;
                 }
-                this.showModal(DIALOG_TYPE.CHOOSE_COMMODITY);
             },
             //  确认选择商品
             chooseCommodityModalCheck(refChooseCommodityBox){
@@ -642,8 +629,7 @@
                 this.addTimeValue = '00:00';
                 //  初始化时间
                 this.addTimeMoment = this.moment(this.addTimeValue, 'HH:mm');
-                //  弹框
-                this.showModal(DIALOG_TYPE.ADD_TIME);
+                this.modal3 = true;
             },
             //  新增时间的变换
             addTimeChange(value, addTimeValue){
@@ -652,6 +638,19 @@
             //  新增时间确认
             addTimeModalCheck(){
 
+            },
+            //  使用方法下拉
+            usageMethodChangeFn(value){
+                console.log(value);
+                this.resetTableData();
+            },
+
+            //  重置table的数据
+            resetTableData(){
+                //  基础表格数据
+                this.commodityTableData = [];
+                //  选择时间表格数据
+                this.timeTableData = [];
             }
         },
     };

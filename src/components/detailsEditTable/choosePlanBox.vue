@@ -1,6 +1,5 @@
 <template>
     <div class="custom-flex">
-        {{dataTitle}}
         <div class="custom-flex-left">
             <a-select class="basic-select-width"
                       v-model="energyId"
@@ -41,10 +40,20 @@
     ];
     //  选择计划
     export default {
+        computed: {
+//            //  处方模板类型
+//            prescriptionType(){
+//                const { basicInfoEditData } = this.$store.state.intervention;
+//                if (!basicInfoEditData) {
+//                    return;
+//                }
+//                return basicInfoEditData[0].prescriptionType;
+//            },
+        },
         //  todo    choosePlanData就是 chooseInterventionData
         props: ['choosePlanData', 'planMap', 'dataTitle'],
         data(){
-            let { energyId, planId } = this.choosePlanData;
+            let { energyId, planId, } = this.choosePlanData;
             console.log(JSON.parse(JSON.stringify(this.dataTitle)));
             console.log(energyId, planId);
             //  如果没有planId
@@ -102,7 +111,6 @@
                 this.rowSelection.selectedRowKeys = selectedRowKeys;
                 this.planId = selectedRowKeys[0];
                 //  console.log(this.planId);
-                //  console.log(value);
                 //  暂时保存
                 this.chooseInterventionData = value[0];
             },
@@ -126,9 +134,10 @@
             //  切换能量
             energyChange(energy){
                 console.log(this.energyId);
-                const { prescriptionType, usageMethod } = this.dataTitle;
+                const { usageMethod, prescriptionType } = this.dataTitle;
                 console.log('选择的食用方法', usageMethod);
-                requestPrescriptionPrescriptionTpl({ energy, prescriptionType, usageMethod })
+                console.log('处方类型', prescriptionType);
+                requestPrescriptionPrescriptionTpl({ energy, prescriptionType: prescriptionType, usageMethod })
                     .then(v => {
                         console.log(JSON.parse(JSON.stringify(v.data)));
                         console.log('打开弹框时候默认选择的单选', this.rowSelection.selectedRowKeys);
