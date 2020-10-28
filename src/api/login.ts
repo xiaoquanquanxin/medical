@@ -13,6 +13,6 @@ export function autoLogin(data: {}) {
 export function authLogout() {
 	return request({
 		url: '/api/auth/logout',
-		method: 'post',
+		method: 'get',
 	});
 }

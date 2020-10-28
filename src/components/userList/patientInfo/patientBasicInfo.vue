@@ -149,17 +149,7 @@
                 </a-descriptions-item>
                 <a-descriptions-item></a-descriptions-item>
                 <a-descriptions-item label="就诊号">
-                    <a-input
-                            v-if="activeElementId === 12 ||!patientBasicInfo.jzbh"
-                            placeholder="请输入就诊号"
-                            v-model="patientBasicInfo.jzbh"
-                            class="form-element"
-                            @focus="descriptionFormFocusFn(12)"
-                    />
-                    <p v-else
-                       @click="descriptionFormClickFn(12,$event)"
-                       class="description-content"
-                    >{{patientBasicInfo.jzbh}}</p>
+                    {{patientBasicInfo.jzbh}}
                 </a-descriptions-item>
                 <a-descriptions-item label="就诊医院">
                     <a-select placeholder="请输入就诊医院"
@@ -385,6 +375,17 @@
 //                    ) {
 //
 //                    }
+
+                    //  todo    就诊科室没有数据
+                    this.patientBasicInfo.hospitalTreatment = this.patientBasicInfo.hospitalTreatment || 1;
+                    //  todo    营养师需要接口
+                    this.patientBasicInfo.nutritionistId = this.patientBasicInfo.nutritionistId || 1;
+                    //  医生
+                    this.patientBasicInfo.doctorId = this.patientBasicInfo.doctorId || '1';
+                    //  新增入院所以是1    1入院，2.出院，3.永久注销;
+                    this.patientBasicInfo.patientStatus = '1';
+                    //  todo    等数据
+                    this.patientBasicInfo.icd = '1';
                     if (true) {
                         resolve();
                     } else {

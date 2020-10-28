@@ -127,16 +127,7 @@
                 ])
                     .then(v => {
                         console.log('发请求');
-//                        //  todo    就诊科室没有数据
-//                        this.patientBasicInfo.hospitalTreatment = 1;
-//                        //  todo    还有啥叫病区和劳动强度？
-//                        this.patientBasicInfo.ward = '传染病区';
-//                        //  todo    删除jzbh
-//                        delete this.patientBasicInfo.jzbh;
-                        this.patientBasicInfo.id = this.patientId;
-                        console.log(JSON.stringify(this.patientBasicInfo));
-                        console.table(JSON.parse(JSON.stringify(this.patientBasicInfo)));
-                        requestPatientUpdate(this.patientBasicInfo)
+                        requestPatientUpdate(Object.assign({ id: this.patientId }, this.patientBasicInfo))
                             .then(v => {
                                 console.log(v);
                                 this.$success({

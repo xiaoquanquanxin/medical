@@ -2,7 +2,12 @@
     <div class="layout-content-inner-main">
         <!--搜索相关-->
         <div class="a-input-group">
-            <a-input class="basic-input-width" v-model="searchData.assesType" placeholder="请输入评估表名"/>
+<!--            <a-input class="basic-input-width" v-model="searchData.assesType" placeholder="请输入评估表名"/>-->
+            <a-select class="basic-range-picker-width" v-model="searchData.assesType" placeholder="请选择评估表名">
+                <a-select-option value="1">微型营养评价表</a-select-option>
+                <a-select-option value="2">一般评估表</a-select-option>
+                <a-select-option value="3">PG - SGA主观营养状况评估</a-select-option>
+            </a-select>
             <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
         </div>
         <div class="a-input-group">

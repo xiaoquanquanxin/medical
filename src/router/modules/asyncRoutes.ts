@@ -1021,6 +1021,7 @@ export const asyncRoutesList = [
 					chName: '日结',
 					selectRouteKey: 'daily',
 					openRouteKey: 'statement',
+					hidden: true,
 				},
 				name: 'daily',
 				path: '/statement/daily',

@@ -60,8 +60,10 @@
 		logoutFn() {
 			authLogout()
 				.then(v => {
-					clearStorage();
-					window.location.reload();
+					console.log(v)
+					return;
+					// clearStorage();
+					// window.location.reload();
 				});
 		}
 	}

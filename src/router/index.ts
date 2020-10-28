@@ -20,7 +20,6 @@ router.beforeEach(async (to, from, next) => {
 	window.document.title = getPageTitle(to.meta);
 	const loginInfo = getLoginInfo();
 	//	console.log(loginInfo);
-
 	//	如果有权限
 	if (loginInfo) {
 		//	如果没更新路由
@@ -37,7 +36,12 @@ router.beforeEach(async (to, from, next) => {
 			//	console.log('拿到路由');
 			await router.addRoutes(accessRoutes);
 			const {name} = accessRoutes[0];
-			next({name, replace: true});
+			//	如果刷新前没有路由
+			if (to.fullPath === '/') {
+				next({name, replace: true});
+				return
+			}
+			next({...to, replace: true});
 			return;
 		}
 		if (to.path === from.path) {

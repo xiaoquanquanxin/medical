@@ -66,3 +66,32 @@ export function requestPatientSelectICD() {
 	});
 }
 
+
+interface PatientInfo {
+	"address": "",
+	"allergy": "",
+	"bedCode": "",
+	"birth": "",
+	"bmi": "",
+	"departTreatment": "",
+	"doctorId": "",
+	"family": "",
+	"height": 0,
+	"hospitalCode": "",
+	"hospitalTreatment": "",
+	"icd": "",
+	"id": 0,
+	"idCard": "",
+	"idSocial": "",
+	"name": "",
+	"nation": "",
+	"now": "",
+	"nutritionistId": "",
+	"past": "",
+	"patientStatus": "",
+	"phone": "15536325689",
+	"professional": "",
+	"treatCode": "",
+	"weight": 75,
+	"sex": 0,
+}
