@@ -98,7 +98,10 @@
                 if (this.historyRouteList.length < 2) {
                     return;
                 }
-                this.historyRouteList.splice(index, 1);
+                const deleteItem = this.historyRouteList.splice(index, 1);
+                const { name } = deleteItem[0];
+                console.log(this.historyRouteMap,name);
+                delete this.historyRouteMap[name];
             }
         }
     };
