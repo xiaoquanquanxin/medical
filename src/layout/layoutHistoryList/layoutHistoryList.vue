@@ -9,11 +9,11 @@
                     v-for="(item , index) in historyRouteList"
             >
                 <div class="history-item">
-                <span>
-                    <router-link :to="{name:item.name}">
-                        <span class="router-link-span">{{item.chName}}</span>
-                    </router-link>
-                </span>
+                    <span class="router-link-item">
+                        <router-link :to="{name:item.name}">
+                            <span class="router-link-span">{{item.chName}}</span>
+                        </router-link>
+                    </span>
                     <b @click="deleteHistory($event,item,index)"
                        class="close-svg"
                        v-if="historyRouteList.length>=2"
@@ -104,7 +104,7 @@
     /*历史记录*/
     .history-list {
         height: 50px;
-        line-height: 50px;
+        line-height: 40px;
         background-color: white;
         /*border-top: none;*/
         /*border-bottom: 1px solid #e8e8e8;*/
@@ -115,21 +115,16 @@
     }
     
     
-    /*关闭*/
-    .close-svg {
-        color: grey !important;
-        vertical-align: middle;
-        margin: 0 -4px 0 4px;
-    }
-    
     .history-item {
-        border: 1px solid #e8e8e8;
-        border-bottom: none;
+        /*border: 1px solid #e8e8e8;*/
+        /*border-bottom: none;*/
         border-radius: 4px 4px 0 0;
-        margin: 3px -15px 0;
+        margin: 0 -20px;
         padding: 0 15px;
         box-sizing: content-box;
-        height: 40px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
     }
     
     .ant-menu-horizontal > .ant-menu-item:hover .history-item,
@@ -143,9 +138,25 @@
         border-color: rgba(24, 144, 255, 0.49);
     }
     
+    
+    .router-link-item {
+        flex: auto;
+    }
+    
+    /*文字*/
     .router-link-span {
         color: grey;
         display: inline-block;
+        /*background-color: pink;*/
+    }
+    
+    
+    /*关闭*/
+    .close-svg {
+        color: grey !important;
+        vertical-align: middle;
+        margin: 0 -4px 0 4px;
+        flex: 1;
     }
     
     .ant-menu-horizontal > .ant-menu-item:hover .router-link-span,
@@ -157,10 +168,5 @@
     .ant-menu-horizontal > .ant-menu-item-selected .router-link-span,
     .ant-menu-horizontal > .ant-menu-submenu-selected .router-link-span {
         color: #1890ff;
-    }
-    
-    
-    .ant-menu-submenu-title {
-        padding-right: 30px;
     }
 </style>
