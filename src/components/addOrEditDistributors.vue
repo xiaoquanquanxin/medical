@@ -48,11 +48,9 @@
                           v-decorator="channelBusunessWarehouseIdDecorator"
                           placeholder="请选择仓库"
                 >
-                    <a-select-option value="1">
-                        aaa
-                    </a-select-option>
-                    <a-select-option value="2">
-                        bbb
+                    <a-select-option :value="item.id"
+                                     v-for="item in entrepotList"
+                    >{{item.warehouseName}}
                     </a-select-option>
                 </a-select>
             </a-form-item>
@@ -86,6 +84,8 @@
         requestChannelBusinessUpdate
     } from '../api/distributors';
     import { getProvinceList, provinceChange, areaList } from '@/utils/areaList';
+    import { noPaginationData } from '../utils/pagination';
+    import { requestWarehousePage } from '../api/entrepot';
     //  新增或编辑渠道商
     export default {
         beforeCreate(){
@@ -100,6 +100,7 @@
         },
         data(){
             return {
+                entrepotList: [],
                 //	地址对象
                 areaList,
                 formItemLayout,
@@ -177,7 +178,15 @@
             },
             //  主要请求
             searchFn(){
-                this.getProvinceList();
+                //  仓库list
+                requestWarehousePage(noPaginationData)
+                    .then(v => {
+                        v.data.records.forEach((item) => {
+                            item.key = item.id;
+                        });
+                        this.entrepotList = v.data.records;
+                    });
+                this.getProvinceList(this);
                 //  如果是新增
                 if (!this.channelId) {
                     return;

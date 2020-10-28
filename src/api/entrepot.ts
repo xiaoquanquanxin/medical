@@ -43,3 +43,4 @@ export function requestWarehouseDelete(id: string | number) {
 	});
 }
 
+//	⚠️ 缺少仓库不分页接口

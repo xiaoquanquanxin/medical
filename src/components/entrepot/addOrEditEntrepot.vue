@@ -18,29 +18,28 @@
                          placeholder="请输入仓库编码"
                 />
             </a-form-item>
-            <a-form-item label="渠道商地区-省份">
+            <a-form-item label="仓库地址-省份">
                 <a-select class="add-form-input"
                           v-decorator="provinceDecorator"
-                          placeholder="请选择渠道商地区-省份"
+                          placeholder="请选择仓库地址-省份"
+                          @change="_provinceChange"
                 >
-                    <a-select-option value="1">
-                        山西
-                    </a-select-option>
-                    <a-select-option value="2">
-                        陕西
+                    <a-select-option :value="item.id"
+                                     :key="item.id"
+                                     v-for="item in areaList.provinceList"
+                    >{{item.name}}
                     </a-select-option>
                 </a-select>
             </a-form-item>
-            <a-form-item label="渠道商地区-市区">
+            <a-form-item label="仓库地址-市区">
                 <a-select class="add-form-input"
                           v-decorator="cityDecorator"
-                          placeholder="请选择渠道商地区-市区"
+                          placeholder="请选择仓库地址-市区"
                 >
-                    <a-select-option value="1">
-                        晋中
-                    </a-select-option>
-                    <a-select-option value="2">
-                        大同
+                    <a-select-option :value="item.id"
+                                     :key="item.id"
+                                     v-for="item in areaList.cityList"
+                    >{{item.name}}
                     </a-select-option>
                 </a-select>
             </a-form-item>
@@ -51,7 +50,6 @@
     import { formItemLayout } from '@/utils/layout.ts';
     import { requestWarehouseGet, requestWarehouseInsert, requestWarehouseUpdate } from '../../api/entrepot';
     import { getProvinceList, provinceChange, areaList } from '@/utils/areaList';
-
     //  新增、编辑仓库
     export default {
         computed: {
@@ -64,12 +62,14 @@
         },
         data(){
             return {
+                //	地址对象
+                areaList,
                 formItemLayout,
                 //  仓库名称
                 warehouseNameDecorator: ['warehouseName', {
                     rules: [{
                         required: true,
-                        message: '请输入渠道商名称'
+                        message: '请输入仓库名称'
                     },]
                 }],
                 //  仓库编码
@@ -108,7 +108,7 @@
             },
             //  主要请求
             searchFn(){
-                this.getProvinceList();
+                this.getProvinceList(this);
                 //  如果是新增
                 if (!this.entrepotId) {
                     return;
