@@ -437,14 +437,10 @@
                     <div class="radio-group-item-content">
                         <a-radio-group v-model="typeTwoList[0]" class="radio-group">
                             <ul class="radio-group-list">
-                                <li class="radio-group-item">
-                                    <a-radio :value="1">饱满（0分）</a-radio>
-                                </li>
-                                <li class="radio-group-item">
-                                    <a-radio :value="2">一般（1分）</a-radio>
-                                </li>
-                                <li class="radio-group-item">
-                                    <a-radio :value="3">差（2分）</a-radio>
+                                <li class="radio-group-item"
+                                    v-for="item in typeTwoListData[0]"
+                                >
+                                    <a-radio :value="item">{{item.label}}</a-radio>
                                 </li>
                             </ul>
                         </a-radio-group>
@@ -458,17 +454,10 @@
                     <div class="radio-group-item-content">
                         <a-radio-group v-model="typeTwoList[1]" class="radio-group">
                             <ul class="radio-group-list">
-                                <li class="radio-group-item">
-                                    <a-radio :value="1">经口（0分）</a-radio>
-                                </li>
-                                <li class="radio-group-item">
-                                    <a-radio :value="2">鼻胃管（1分）</a-radio>
-                                </li>
-                                <li class="radio-group-item">
-                                    <a-radio :value="3">鼻肠管（2分）</a-radio>
-                                </li>
-                                <li class="radio-group-item">
-                                    <a-radio :value="4">禁食（3分）</a-radio>
+                                <li class="radio-group-item"
+                                    v-for="item in typeTwoListData[1]"
+                                >
+                                    <a-radio :value="item">{{item.label}}</a-radio>
                                 </li>
                             </ul>
                         </a-radio-group>
@@ -482,20 +471,10 @@
                     <div class="radio-group-item-content">
                         <a-radio-group v-model="typeTwoList[2]" class="radio-group">
                             <ul class="radio-group-list">
-                                <li class="radio-group-item">
-                                    <a-radio :value="1">1 ~ 2次/每日（0分）</a-radio>
-                                </li>
-                                <li class="radio-group-item">
-                                    <a-radio :value="2">2 ~ 3天1次（1分）</a-radio>
-                                </li>
-                                <li class="radio-group-item">
-                                    <a-radio :value="3">3次及以上/每日（2分）</a-radio>
-                                </li>
-                                <li class="radio-group-item">
-                                    <a-radio :value="4">常年便秘，需要通便药物（3分）</a-radio>
-                                </li>
-                                <li class="radio-group-item">
-                                    <a-radio :value="5">1周1次（4分）</a-radio>
+                                <li class="radio-group-item"
+                                    v-for="item in typeTwoListData[2]"
+                                >
+                                    <a-radio :value="item">{{item.label}}</a-radio>
                                 </li>
                             </ul>
                         </a-radio-group>
@@ -509,23 +488,10 @@
                     <div class="radio-group-item-content">
                         <a-radio-group v-model="typeTwoList[3]" class="radio-group">
                             <ul class="radio-group-list">
-                                <li class="radio-group-item">
-                                    <a-radio :value="1">呈球状（2分）</a-radio>
-                                </li>
-                                <li class="radio-group-item">
-                                    <a-radio :value="2">呈水状（2分）</a-radio>
-                                </li>
-                                <li class="radio-group-item">
-                                    <a-radio :value="3">呈泥状（2分）</a-radio>
-                                </li>
-                                <li class="radio-group-item">
-                                    <a-radio :value="4">呈半链状（1分）</a-radio>
-                                </li>
-                                <li class="radio-group-item">
-                                    <a-radio :value="5">呈块状（1分）</a-radio>
-                                </li>
-                                <li class="radio-group-item">
-                                    <a-radio :value="6">呈香蕉状（0分）</a-radio>
+                                <li class="radio-group-item"
+                                    v-for="item in typeTwoListData[3]"
+                                >
+                                    <a-radio :value="item">{{item.label}}</a-radio>
                                 </li>
                             </ul>
                         </a-radio-group>
@@ -537,16 +503,12 @@
                         <div>5、腹痛、胀痛（可多选）</div>
                     </div>
                     <div class="radio-group-item-content">
-                        <a-checkbox-group v-model="typeTwoList[4]" class="radio-group">
+                        <a-checkbox-group v-model="typeTwoList[4]" class="radio-group" @change="aaa">
                             <ul class="radio-group-list">
-                                <li class="radio-group-item">
-                                    <a-checkbox :value="1">腹胀（1分）</a-checkbox>
-                                </li>
-                                <li class="radio-group-item">
-                                    <a-checkbox :value="2">腹痛（2分）</a-checkbox>
-                                </li>
-                                <li class="radio-group-item">
-                                    <a-checkbox :value="3">无（0分）</a-checkbox>
+                                <li class="radio-group-item"
+                                    v-for="item in typeTwoListData[4]"
+                                >
+                                    <a-checkbox :value="item">{{item.label}}</a-checkbox>
                                 </li>
                             </ul>
                         </a-checkbox-group>
@@ -560,20 +522,10 @@
                     <div class="radio-group-item-content">
                         <a-radio-group v-model="typeTwoList[5]" class="radio-group">
                             <ul class="radio-group-list">
-                                <li class="radio-group-item">
-                                    <a-radio :value="1">一天只能喝点纯液体的流食（4分）</a-radio>
-                                </li>
-                                <li class="radio-group-item">
-                                    <a-radio :value="2">一天喝三晚粥、烂面条或半流食，吃一点小菜，偶尔吃个鸡蛋、喝点奶，基本不吃肉（3分）</a-radio>
-                                </li>
-                                <li class="radio-group-item">
-                                    <a-radio :value="3">一天吃一餐比较正常的饮食，常在早餐或中餐，其他两餐仍然是以稀粥为主的半流食，有时能是1两肉、1个鸡蛋（2分）</a-radio>
-                                </li>
-                                <li class="radio-group-item">
-                                    <a-radio :value="4">一天可以吃两餐比较正常的饮食，会有一餐半流食或流食，肉在1 ~ 2两，少油脂（1分）</a-radio>
-                                </li>
-                                <li class="radio-group-item">
-                                    <a-radio :value="5">一天三餐基本正常，可以吃到5 ~ 6两主食，3两肉及相应的油脂，1个鸡蛋，奶及加餐水果（0分）</a-radio>
+                                <li class="radio-group-item"
+                                    v-for="item in typeTwoListData[5]"
+                                >
+                                    <a-radio :value="item">{{item.label}}</a-radio>
                                 </li>
                             </ul>
                         </a-radio-group>
@@ -705,14 +657,16 @@
                     </div>
                     <div class="radio-group-item-content">
                         <ul class="radio-group-list">
-                            <li class="radio-group-item radio-group-item-title">1、在过去的1个月，患者的活动（）单选</li>
+                            <li class="radio-group-item radio-group-item-title">1、在过去的1个月，患者的活动（单选）</li>
                             <li class="radio-group-item">
-                                <a-radio-group name="radioGroup">
-                                    <a-radio :value="1">正常，无限制（0分）</a-radio>
-                                    <a-radio :value="2">不像往常，但是还能够起床进行轻微的活动（1分）</a-radio>
-                                    <a-radio :value="3">多数时候不想起床活动，但卧床或桌椅时间不超过半天（2分）</a-radio>
-                                    <a-radio :value="4">几乎干不了什么，一天大多是时间都卧床或坐在椅子上（3分）</a-radio>
-                                    <a-radio :value="5">几乎完全卧床，无法起床（3分）</a-radio>
+                                <a-radio-group v-model="typeThreeList.activityBodyfunction" class="radio-group">
+                                    <ul class="radio-group-list">
+                                        <li class="radio-group-item"
+                                            v-for="item in typeThreeListData[3]"
+                                        >
+                                            <a-radio :value="item">{{item.label}}</a-radio>
+                                        </li>
+                                    </ul>
                                 </a-radio-group>
                             </li>
                         </ul>
@@ -1039,14 +993,69 @@
                     popTitle: '微型营养评价表',
                 },
                 //  表格类型
-                tableTypeSelect: 1,
+                tableTypeSelect: 3,
                 //  类型1
                 typeOneList: [],
+                typeTwoListData: [
+                    [
+                        { label: '饱满（0分）', score: 0, id: 1, key: 1 },
+                        { label: '一般（1分）', score: 1, id: 2, key: 2 },
+                        { label: '一般差（2分）', score: 2, id: 3, key: 3 },
+                    ],
+                    [
+                        { label: '经口（0分）', score: 0, id: 1, key: 1 },
+                        { label: '鼻胃管（1分）', score: 1, id: 2, key: 2 },
+                        { label: '鼻肠管（2分）', score: 2, id: 3, key: 3 },
+                        { label: '禁食（3分）', score: 3, id: 4, key: 4 },
+                    ],
+                    [
+                        { label: '1 ~ 2次/每日（0分）', score: 0, id: 1, key: 1 },
+                        { label: '2 ~ 3天1次（1分）', score: 1, id: 2, key: 2 },
+                        { label: '3次及以上/每日（2分）', score: 2, id: 3, key: 3 },
+                        { label: '常年便秘，需要通便药物（3分）', score: 3, id: 4, key: 4 },
+                        { label: '1周1次（4分）', score: 4, id: 5, key: 5 },
+                    ],
+                    [
+                        { label: '呈球状（2分）', score: 2, id: 1, key: 1, },
+                        { label: '呈水状（2分）', score: 2, id: 2, key: 2, },
+                        { label: '呈泥状（2分）', score: 2, id: 3, key: 3, },
+                        { label: '呈半链状（1分）', score: 1, id: 4, key: 4, },
+                        { label: '呈块状（1分）', score: 1, id: 5, key: 5, },
+                        { label: '呈香蕉状（0分）', score: 0, id: 6, key: 6, },
+                    ],
+                    [
+                        { label: '腹胀（1分）', score: 1, id: 1, key: 1, },
+                        { label: '腹痛（2分）', score: 2, id: 2, key: 2, },
+                        { label: '无（0分）', score: 0, id: 3, key: 3, },
+                    ],
+                    [
+                        { label: '一天只能喝点纯液体的流食（4分）', score: 4, id: 1, key: 1 },
+                        { label: '一天喝三晚粥、烂面条或半流食，吃一点小菜，偶尔吃个鸡蛋、喝点奶，基本不吃肉（3分）', score: 3, id: 2, key: 2 },
+                        { label: '一天吃一餐比较正常的饮食，常在早餐或中餐，其他两餐仍然是以稀粥为主的半流食，有时能是1两肉、1个鸡蛋（2分）', score: 2, id: 3, key: 3 },
+                        { label: '一天可以吃两餐比较正常的饮食，会有一餐半流食或流食，肉在1 ~ 2两，少油脂（1分）', score: 1, id: 4, key: 4 },
+                        { label: '一天三餐基本正常，可以吃到5 ~ 6两主食，3两肉及相应的油脂，1个鸡蛋，奶及加餐水果（0分）', score: 0, id: 5, key: 5 },
+                    ]
+                ],
                 //  类型2
                 typeTwoList: [],
+                typeThreeListData: [
+                    [],
+                    [],
+                    [],
+                    [
+                        { label: '正常，无限制（0分）', score: 0, id: 1, key: 1, },
+                        { label: '不像往常，但是还能够起床进行轻微的活动（1分）', score: 1, id: 2, key: 2, },
+                        { label: '多数时候不想起床活动，但卧床或桌椅时间不超过半天（2分）', score: 2, id: 3, key: 3, },
+                        { label: '几乎干不了什么，一天大多是时间都卧床或坐在椅子上（3分）', score: 3, id: 4, key: 4, },
+                        { label: '几乎完全卧床，无法起床（3分）', score: 3, id: 5, key: 5, },
+                    ]
+                ],
+                //  类型3
+                typeThreeList: {},
             };
         },
         created(){
+            this.initList();
             this.searchFn();
         },
         methods: {
@@ -1056,6 +1065,21 @@
                 //  保存病人信息，这是为了给组件用，而不是页面，所以要store
                 'setPatientBasicInfo',
             ]),
+            initList(){
+                this.typeOneList = new Array(20).fill(1);
+                this.typeTwoList = [
+                    this.typeTwoListData[0][0],
+                    this.typeTwoListData[1][0],
+                    this.typeTwoListData[2][0],
+                    this.typeTwoListData[3][0],
+                    [this.typeTwoListData[4][2]],
+                    this.typeTwoListData[5][0],
+                ];
+                this.typeThreeList = {
+                    //  活动和身体功能
+                    activityBodyfunction: this.typeThreeListData[3][0],
+                };
+            },
             //  主要请求
             searchFn(){
                 //  重置头部信息
@@ -1084,8 +1108,6 @@
                             screenBottomData,
                         });
                     });
-                this.typeOneList.length = 20;
-                this.typeOneList.fill(1);
                 if (this.assessmentDetailId) {
                     console.log('详情id ,有详情id的是编辑', this.assessmentDetailId);
                     PatientAssessSelectAssesById(this.assessmentDetailId)
@@ -1098,53 +1120,39 @@
             saveScreening(){
                 console.log('保存');
                 (() => {
+                    const {
+                        birth: age,
+                        bmi,
+                        height,
+                        name,
+                        sex,
+                        weight,
+                    } = this.patientBasicInfo;
+                    const patientId = Number(this.patientId);
+
                     switch (this.tableTypeSelect) {
                         case 1:
+                            //  微型营养评估表保存
                             if (this.typeOneList.length !== 20) {
                                 this.$error({ title: '请完善表格' });
                                 return Promise.reject();
                             }
-                            const oneData = this.transformOne();
-                            console.log(oneData);
-                            console.log(this.patientBasicInfo);
-                            const {
-                                birth: age,
-                                bmi,
-                                height,
-                                name,
-                                sex,
-                                weight,
-                            } = this.patientBasicInfo;
-                            const patientId = Number(this.patientId);
-                            const totalScore = this.typeOneList.reduce((a, b) => {return a + b;}, 0);
-                            const saveData = Object.assign({
-                                age,
-                                bmi,
-                                height,
-                                name,
-                                sex,
-                                weight,
-                                patientId,
-                                totalScore,
-                            }, oneData);
-                            console.log(saveData);
-                            console.log(JSON.stringify(saveData));
+                            const oneData = this.oneDataTransform();
+                            const oneDataTotalScore = this.typeOneList.reduce((a, b) => {return a + b;}, 0);
                             return requestPatientAssessSaveMna(Object.assign({
-                                age,
-                                bmi,
-                                height,
-                                name,
-                                sex,
-                                weight,
-                                patientId,
-                                totalScore,
+                                age, bmi, height, name, sex, weight, patientId, totalScore: oneDataTotalScore,
                             }, oneData));
                         case 2:
-                            if (this.typeTwoList.length !== 20) {
+                            //  一般营养评估表保存
+                            if (this.typeTwoList.length !== 6) {
                                 this.$error({ title: '请完善表格' });
                                 return Promise.reject();
                             }
-                            return requestPatientAssessSaveMna();
+                            const towData = this.towDataTransform();
+                            console.log(towData);
+                            return requestPatientAssessSaveYbpgb(Object.assign({
+                                age, bmi, height, name, sex, weight, patientId,
+                            }, towData));
                         case 3:
                             return requestPatientAssessSavePgsga();
                         default:
@@ -1158,7 +1166,7 @@
                         console.log(err);
                     });
             },
-            transformOne(){
+            oneDataTransform(){
                 const v1 = this.typeOneList[0];
                 const v2 = this.typeOneList[1];
                 const v3 = this.typeOneList[2];
@@ -1180,6 +1188,48 @@
                 const v19 = this.typeOneList[18];
                 const v20 = this.typeOneList[19];
                 return { v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20 };
+            },
+            towDataTransform(){
+                let totalScore = 0;
+                const v1 = this.typeTwoList[0];
+                const v2 = this.typeTwoList[1];
+                const v3 = this.typeTwoList[2];
+                const v4 = this.typeTwoList[3];
+                const v5List = this.typeTwoList[4];
+                const v6 = this.typeTwoList[5];
+                totalScore += v1.score;
+                totalScore += v2.score;
+                totalScore += v3.score;
+                totalScore += v4.score;
+                const v5IdList = [];
+                let v5Score = 0;
+                v5List.forEach(item => {
+                    if (item.score > v5Score) {
+                        v5Score = item.score;
+                    }
+                    v5IdList.push(item.id);
+                });
+                totalScore += v5Score;
+                totalScore += v6.score;
+                return {
+                    v1: v1.id, v2: v2.id, v3: v3.id, v4: v4.id,
+                    v5: v5IdList.join(','),
+                    v6: v6.id, totalScore,
+                };
+            },
+            threeDataTransform(){
+                let totalScore = 0;
+                const {
+                    activityBodyfunction,
+                } = this.typeThreeList;
+                return {
+                    activityBodyfunction,
+                    totalScore,
+                };
+            },
+
+            aaa(value){
+                console.log(value);
             }
         },
     };

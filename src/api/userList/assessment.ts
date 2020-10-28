@@ -17,18 +17,7 @@ export function requestPatientAssessDelete(assesId: string | number) {
 	});
 }
 
-
-//	一般营养评估表保存	❌403，auth问题？但是我写的是1。参数缺少选择日期，筛查人；assessId是什么；营养评估id是什么，参数还有汉字？
-export function requestPatientAssessSaveYbpgb(data: any) {
-	return request({
-		url: 'api/patientAssess/saveYbpgb',
-		method: 'post',
-		data,
-	});
-}
-
-
-//	微型营养评估表保存
+//	微型营养评估表保存		✅
 export function requestPatientAssessSaveMna(data: any) {
 	return request({
 		url: '/api/patientAssess/saveMna',
@@ -37,6 +26,14 @@ export function requestPatientAssessSaveMna(data: any) {
 	});
 }
 
+//	一般营养评估表保存
+export function requestPatientAssessSaveYbpgb(data: any) {
+	return request({
+		url: '/api/patientAssess/saveYbpgb',
+		method: 'post',
+		data,
+	});
+}
 
 //	PG-SGA主观营养状况评估表保存
 export function requestPatientAssessSavePgsga(data: any) {
