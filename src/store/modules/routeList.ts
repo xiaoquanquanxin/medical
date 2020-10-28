@@ -10,6 +10,17 @@ import {setRouteListByMap} from "@/utils/routerBasicMap"
 import {asyncRoutesList} from "@/router/modules/asyncRoutes"
 import {routeMap} from '@/store/a.ts';
 import {COMMIT_INTERFACE} from "@/store"
+import {getLoginInfo} from "@/utils/auth"
+import {
+	roleType1,
+	roleType2,
+	roleType3,
+	roleType4,
+	roleType5,
+	roleType6,
+	roleType7,
+	roleType8,
+} from "@/utils/roleConstant"
 
 interface STATE {
 	routeListLength: number;
@@ -50,7 +61,36 @@ const actions = {
 	//  生成路由权限，从服务端动态拉取
 	generateRoutes({commit}: COMMIT_INTERFACE<null>) {
 		//	服务端数据
-		const map = routeMap;
+		// const map = routeMap;
+		let map = {};
+		const loginInfo = getLoginInfo();
+		//	@ts-ignore
+		switch (loginInfo.type) {
+			case 1:
+				map = roleType1;
+				break;
+			case 2:
+				map = roleType2;
+				break;
+			case 3:
+			case 8:
+				map = roleType3;
+				break;
+			case 4:
+				map = roleType4;
+				break;
+			case 5:
+				map = roleType5;
+				break;
+			case 6:
+				map = roleType6;
+				break;
+			case 7:
+				map = roleType7;
+				break;
+			default:
+				throw new Error('错误的类型');
+		}
 		return new Promise(resolve => {
 			setTimeout(() => {
 				resolve(map);

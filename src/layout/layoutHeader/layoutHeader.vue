@@ -14,7 +14,7 @@
                         <a-avatar :size="36" icon="user"/>
                         <a-dropdown>
                             <a class="ant-dropdown-link" @click="e => e.preventDefault()">
-                                {{ loginInfo.sub }}
+                                {{ loginInfo&&loginInfo.username }}
                                 <a-icon type="down"/>
                             </a>
                             <a-menu slot="overlay" @click="logoutFn">

@@ -137,7 +137,7 @@ export const asyncRoutesList = [
 				},
 				name: 'commodityList',
 				path: '/commodity/commodityList',
-				component: () => import(/* webpackChunkName: "platformUser" */ '@/views/commodity/commodityList.vue'),
+				component: () => import(/* webpackChunkName: "commodityList" */ '@/views/commodity/commodityList.vue'),
 			},
 			{
 				meta: {
@@ -526,16 +526,16 @@ export const asyncRoutesList = [
 	 * 供应商部分
 	 * */
 
-	// {
-	// 	meta: {
-	// 		chName: '商品查看',
-	// 		selectRouteKey: 'viewGoods',
-	// 		openRouteKey: 'viewGoods',
-	// 	},
-	// 	name: 'viewGoods',
-	// 	path: '/viewGoods',
-	// 	component: () => import(/* webpackChunkName: "viewGoods" */ '@/views/viewGoods/viewGoods.vue'),
-	// },
+	{
+		meta: {
+			chName: '商品查看',
+			selectRouteKey: 'viewGoods',
+			openRouteKey: 'viewGoods',
+		},
+		name: 'viewGoods',
+		path: '/viewGoods',
+		component: () => import(/* webpackChunkName: "commodityList" */ '@/views/commodity/commodityList.vue'),
+	},
 
 	/**
 	 * 🍉🍉🍉🍉

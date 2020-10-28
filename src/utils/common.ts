@@ -75,3 +75,8 @@ export function getDateObject(timeStamp?: number) {
 export function calcAgeByBirth(birthYear: string | number): number {
 	return Number(birthYear) - getDateObject().year;
 }
+
+//	获取页面title
+export default function getPageTitle(meta: { chName: string }): string {
+	return meta.chName;
+}
