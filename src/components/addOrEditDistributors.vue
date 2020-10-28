@@ -174,6 +174,7 @@
             //  省份变化
             provinceChange,
             _provinceChange(value){
+                console.log('手动', value);
                 this.provinceChange(this, value);
             },
             //  主要请求
@@ -210,10 +211,11 @@
                         this.form.setFieldsValue({
                             channelBusinessName,
                             channelBusinessNumber,
-                            province,
-                            city,
+                            province: Number(province),
+                            city: Number(city),
                             channelBusunessWarehouseId,
                         });
+                        this._provinceChange(province);
                     });
             },
             //  与第一密码比较，用于确认密码
