@@ -85,7 +85,7 @@
                 //  新增list的item
                 this.historyRouteList.push(routeItem);
             },
-            //
+            //  删除历史记录
             deleteHistory(e, item, index){
                 e.stopPropagation();
                 //  至少保留1个
@@ -94,8 +94,20 @@
                 }
                 const deleteItem = this.historyRouteList.splice(index, 1);
                 const { name } = deleteItem[0];
-                console.log(this.historyRouteMap, name);
+                //  console.log(this.historyRouteMap, name);
                 delete this.historyRouteMap[name];
+
+                try {
+                    let { meta } = this.$route;
+                    let { infoForHistory } = meta;
+                    if (name === this.$route.name || name === (infoForHistory && infoForHistory[1])) {
+                        console.log('关闭了当前的');
+                        const activeIndex = Math.min(this.historyRouteList.length - 1, index);
+                        this.$router.push({ name: this.historyRouteList[activeIndex].name });
+                    }
+                } catch (e) {
+                    console.error(e);
+                }
             }
         }
     };
