@@ -25,12 +25,12 @@
                 <a-select class="add-form-input"
                           v-decorator="provinceDecorator"
                           placeholder="请选择地址-省份"
+                          @change="_provinceChange"
                 >
-                    <a-select-option value="1">
-                        山西
-                    </a-select-option>
-                    <a-select-option value="2">
-                        陕西
+                    <a-select-option :value="item.id"
+                                     :key="item.id"
+                                     v-for="item in areaList.provinceList"
+                    >{{item.name}}
                     </a-select-option>
                 </a-select>
             </a-form-item>
@@ -39,11 +39,10 @@
                           v-decorator="cityDecorator"
                           placeholder="请选择地址-市区"
                 >
-                    <a-select-option value="1">
-                        啊啊啊啊
-                    </a-select-option>
-                    <a-select-option value="2">
-                        宝贝宝贝
+                    <a-select-option :value="item.id"
+                                     :key="item.id"
+                                     v-for="item in areaList.cityList"
+                    >{{item.name}}
                     </a-select-option>
                 </a-select>
             </a-form-item>
@@ -316,6 +315,7 @@
             beforeUploadFn,
             //  主要请求
             searchFn(){
+                this.getProvinceList(this);
                 //  如果是新增
                 if (!this.supplierId) {
                     return;
@@ -346,8 +346,8 @@
                         this.form.setFieldsValue({
                             supplierName,
                             supplierNumber,
-                            province,
-                            city,
+                            province:Number(province),
+                            city:Number(city),
                             detailedAddress,
                             contacts,
                             phone,
@@ -357,6 +357,7 @@
                             foodQualificationCertificate,
                             specialMedicalFoodQualificationCertificate,
                         });
+                        this._provinceChange(province);
                     });
             },
             //    表单提交

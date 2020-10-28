@@ -95,9 +95,9 @@
                               placeholder="请选择保存方式"
                               v-decorator="preservationMethodDecorator"
                     >
-                        <a-select-option value="1">冷藏</a-select-option>
-                        <a-select-option value="2">常温</a-select-option>
-                        <a-select-option value="3">冷冻</a-select-option>
+                        <a-select-option :value="1">冷藏</a-select-option>
+                        <a-select-option :value="2">常温</a-select-option>
+                        <a-select-option :value="3">冷冻</a-select-option>
                     </a-select>
                 </a-form-item>
                 <a-form-item label="状态">
@@ -690,7 +690,7 @@
                         const uintParams2 = data.uintListVos.filter(item => {
                             return item.type === 2;
                         }).sort((a, b) => {return a.sort - b.sort;});
-                        
+
                         uintParams2.forEach((item, index) => {
                             item.key = item.id;
                             item.sort = 1;
@@ -703,8 +703,11 @@
                         this.goodsImgThumbUrl = goodsImg;
                         //  描述富文本
                         this.goodsDetails = goodsDetails;
+                        //  禁止富文本自动聚焦
+                        this.$refs.myTextEditor.quill.enable(false);
                         this.$nextTick(() => {
                             this.$forceUpdate();
+                            this.$refs.myTextEditor.quill.enable(true);
                         });
                     });
             },

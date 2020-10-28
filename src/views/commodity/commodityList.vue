@@ -2,31 +2,25 @@
     <div class="layout-content-inner-main">
         <!--搜索相关-->
         <div class="a-input-group">
-            <a-input class="basic-input-width" v-model="searchData.commodityName" placeholder="请输入商品名称"/>
-            <a-input class="basic-input-width" v-model="searchData.itemNo" placeholder="请输入商品货号"/>
-            <a-select class="basic-select-width" v-model="searchData.brand" placeholder="请选择品牌">
-                <a-select-option value="">
-                    品牌
-                </a-select-option>
-                <a-select-option value="Option2">
-                    Option2
+            <a-input class="basic-input-width" v-model="searchData.goodsName" placeholder="请输入商品名称"/>
+            <a-input class="basic-input-width" v-model="searchData.goodsProductCode" placeholder="请输入商品货号"/>
+            <a-select class="basic-select-width" v-model="searchData.goodsBrandId" placeholder="请选择品牌">
+                <a-select-option :value="item.id"
+                                 :key="item.id"
+                                 v-for="item in goodsBrandList"
+                >{{item.brandName}}
                 </a-select-option>
             </a-select>
-            <a-select class="basic-select-width" v-model="searchData.classification" placeholder="请选择分类">
-                <a-select-option value="">
-                    分类
-                </a-select-option>
-                <a-select-option value="Option2">
-                    Option2
+            <a-select class="basic-select-width" v-model="searchData.goodsCategoryId" placeholder="请选择分类">
+                <a-select-option :value="item.id"
+                                 :key="item.id"
+                                 v-for="item in goodsCategoryList"
+                >{{item.categoryName}}
                 </a-select-option>
             </a-select>
             <a-select class="basic-select-width" v-model="searchData.status" placeholder="请选择状态">
-                <a-select-option value="">
-                    状态
-                </a-select-option>
-                <a-select-option value="Option2">
-                    Option2
-                </a-select-option>
+                <a-select-option value="1">上架</a-select-option>
+                <a-select-option value="2">下架</a-select-option>
             </a-select>
             <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
         </div>
@@ -112,6 +106,8 @@
     import ViewPrice from '@/components/commodity/viewPrice.vue';
     import { SHUTTLE_BOX } from '../../store/modules/shuttleBox';
     import { requestGoodsDelete, requestGoodsPage } from '../../api/commodity/commodityList';
+    import { requestCategoryList } from '../../api/commodity/commodityClassification';
+    import { requestBrandList } from '../../api/commodity/brand';
 
     const columns = [
         {
@@ -121,7 +117,7 @@
         },
         {
             title: '商品货号',
-            dataIndex: 'goodsBarCode',
+            dataIndex: 'goodsProductCode',
             width: 100,
         },
         {
@@ -260,6 +256,10 @@
                 },
             ];
             return {
+                //  商品分类list
+                goodsCategoryList: [],
+                //  商品品牌list
+                goodsBrandList: [],
                 data: [],
                 columns,
 
@@ -286,6 +286,18 @@
         methods: {
             //  主要请求
             searchFn(){
+                requestCategoryList()
+                    .then(v => {
+                        //  商品分类list
+//                        console.log(v.data);
+                        this.goodsCategoryList = v.data;
+                    });
+                requestBrandList()
+                    .then(v => {
+                        //  商品品牌list
+//                        console.log(v.data);
+                        this.goodsBrandList = v.data;
+                    });
                 requestGoodsPage(paginationEncode(this.pagination))
                     .then(v => {
                         const { data } = v;
