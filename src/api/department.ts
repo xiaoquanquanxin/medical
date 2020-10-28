@@ -61,5 +61,26 @@ export function requestDeptGet(id: string | number) {
 	});
 }
 
+//	科室列表
+export function requestDeptList() {
+	return request({
+		url: '/api/dept/list',
+		method: 'get',
+	});
+}
+
+
+//	医院-关联科室保存
+export function requestHospitalRelatedDepartments(data: {
+	"hospitalId": number
+	"deptIds": [],
+}) {
+	return request({
+		url: '/api/hospital/relatedDepartments',
+		method: 'post',
+		data,
+	});
+}
+
 
 

@@ -348,6 +348,7 @@
                 if (!this.hospitalId) {
                     return;
                 }
+                alert('编辑接口没有了');
                 //  如果是编辑
                 requestHospitalGet(this.hospitalId)
                     .then(v => {
@@ -357,7 +358,7 @@
             },
             //    表单提交
             handleSubmit(e){
-                console.log( this.status ? 0 : 1);
+                console.log(this.status ? 0 : 1);
                 e.preventDefault();
                 return new Promise((resolve, reject) => {
                     this.form.validateFields((err, values) => {

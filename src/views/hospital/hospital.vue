@@ -80,7 +80,9 @@
                  ok-text="确认"
                  cancel-text="取消"
                  @ok="relatedDepartmentsModalCheck('refShuttleBox')">
-            <ShuttleBox ref="refShuttleBox"/>
+            <ShuttleBox ref="refShuttleBox"
+                        :origin-list="departOriginList"
+            />
         </a-modal>
         <!--关联渠道商-->
         <a-modal v-model="dialogDataDistributors.visible"
@@ -107,6 +109,7 @@
     import { SHUTTLE_BOX } from '../../store/modules/shuttleBox';
     import { requestHospitalChangeStatus, requestHospitalPage } from '../../api/hospital';
     import { getProvinceList, provinceChange, cityChange, areaList } from '@/utils/areaList';
+    import { requestDeptList, requestHospitalRelatedDepartments } from '../../api/department';
 
     const columns = [
         {
@@ -132,7 +135,7 @@
         {
             title: '操作',
             scopedSlots: { customRender: 'operation' },
-            width: 150,
+            width: 250,
         },
     ];
     //  医院管理
@@ -158,6 +161,11 @@
                 dialogDataRelatedDepartments: this.initModal(DIALOG_TYPE.RELATED_DEPARTMENTS),
                 //  关联渠道商
                 dialogDataDistributors: this.initModal(DIALOG_TYPE.ASSOCIATED_CHANNEL_PROVIDER),
+
+                //  科室关联列表
+                departOriginList: [],
+                //  被操作的穿梭框
+                shuttleBoxData: {}
             };
         },
         created(){
@@ -219,27 +227,27 @@
 
             //  编辑医院
             editHospital(sItem){
-                this.$router.push({ name: 'editHospital', params: { hospitalId: '123232' } });
+                this.$router.push({ name: 'editHospital', params: { hospitalId: sItem.id } });
             },
             //  关联科室操作
-            relatedDepartments(){
+            relatedDepartments(sItem){
                 this.shuttleBoxData = sItem;
-                return;
-//                requestDiseaseList()
-//                    .then(v => {
-//                        this.showModal(DIALOG_TYPE.RELATED_DEPARTMENTS);
-//                        this.setShuttleBoxType(SHUTTLE_BOX.RELATED_DEPARTMENTS);
-//                        this.diseaseOriginList = [];
-//                        v.data.forEach(item => {
-//                            const data = {};
-//                            data.key = item.id.toString();
-//                            data.title = item.diseaseName;
-//                            data.description = item.diseaseName;
-//                            //  todo    处理被选中
-//                            data.chosen = false;
-//                            this.diseaseOriginList.push(data);
-//                        });
-//                    });
+                requestDeptList()
+                    .then(v => {
+                        this.showModal(DIALOG_TYPE.RELATED_DEPARTMENTS);
+                        this.setShuttleBoxType(SHUTTLE_BOX.RELATED_DEPARTMENTS);
+                        this.departOriginList = [];
+                        v.data.forEach(item => {
+                            const data = {};
+                            data.key = item.id.toString();
+                            data.title = item.deptName;
+                            data.description = item.deptName;
+                            //  todo    处理被选中
+                            data.chosen = false;
+                            this.departOriginList.push(data);
+                        });
+                        //  console.log(JSON.parse(JSON.stringify(this.departOriginList)));
+                    });
             },
             //  关联渠道商
             associatedChannelProvider(){
@@ -251,8 +259,16 @@
                 //  防止连点
                 this.setConfirmLoading(DIALOG_TYPE.RELATED_DEPARTMENTS, true);
                 const promise = this.$refs[refShuttleBox].handleSubmit();
-                promise.then(v => {
-                    this.hideModal(DIALOG_TYPE.RELATED_DEPARTMENTS);
+                promise.then(targetKeys => {
+                    console.log(targetKeys);
+                    console.log(this.shuttleBoxData.id);
+                    return requestHospitalRelatedDepartments({
+                        hospitalId: this.shuttleBoxData.id,
+                        deptIds: targetKeys
+                    })
+                        .then(v => {
+                            this.hideModal(DIALOG_TYPE.RELATED_DEPARTMENTS);
+                        });
                 }).catch(error => {
                     console.log('有错');
                 }).then(v => {

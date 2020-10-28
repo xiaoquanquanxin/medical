@@ -45,11 +45,11 @@ export function requestHospitalGetList() {
 }
 
 
-//	获取医院信息		✅
+//	获取医院信息
 export function requestHospitalGet(id: string | number) {
 	return request({
-		url: `/api/category/get/${id}`,
-		method: 'get',
+		url: `/api/hospital/get/${id}`,
+		method: 'post',
 	});
 }
 
