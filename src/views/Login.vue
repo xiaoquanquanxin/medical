@@ -176,8 +176,12 @@
                     if (!err) {
                         this.login(values)
                             .then(v => {
-                                console.log('登录成功');
-                                this.$router.push('/');
+                                const { query } = this.$route;
+                                if (!query.redirect) {
+                                    this.$router.push('/');
+                                    return;
+                                }
+                                this.$router.push({ path: query.redirect });
                             })
                             .catch(err => {
                                 console.log(err);
@@ -185,6 +189,14 @@
                     }
                 });
             },
+            getOtherQuery(query){
+                return Object.keys(query).reduce((acc, cur) => {
+                    if (cur !== 'redirect') {
+                        acc[cur] = query[cur];
+                    }
+                    return acc;
+                }, {});
+            }
         }
     };
 </script>
