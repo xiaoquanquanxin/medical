@@ -38,8 +38,11 @@
                           placeholder="请选择科室"
                           v-decorator="departmentDecorator"
                 >
-                    <a-select-option value="1">1</a-select-option>
-                    <a-select-option value="3">2</a-select-option>
+                    <a-select-option v-for="(item,index) in deptList"
+                                     :key="index"
+                                     :value="item.id">
+                        {{item.deptName}}
+                    </a-select-option>
                 </a-select>
             </a-form-item>
             <a-form-item label="医生类型" has-feedback>
@@ -71,11 +74,11 @@
                           placeholder="请选择医生状态"
                           v-decorator="doctorStatusDecorator"
                 >
-                    <a-select-option value="1">1</a-select-option>
-                    <a-select-option value="3">2</a-select-option>
+                    <a-select-option value="1">可用</a-select-option>
+                    <a-select-option value="0">不可用</a-select-option>
                 </a-select>
             </a-form-item>
-            <a-form-item label="手机号">
+            <a-form-item label="手机号" required>
                 <a-input class="add-form-input"
                          v-decorator="phoneNumberDecorator"
                          placeholder="请输入手机号"
@@ -112,6 +115,7 @@
         requestDoctorSave,
         requestDoctorUpdate
     } from '../../api/doctor';
+    import { requestDeptList } from '../../api/department';
 
     export default {
         components: {
@@ -122,6 +126,7 @@
         },
         data(){
             return {
+                deptList: [],
                 doctorTypeList: [],
                 doctorTitleList: [],
                 //  医生id
@@ -230,6 +235,7 @@
             searchFn(){
                 requestDoctorDoctorType()
                     .then(v => {
+                        alert('医生类型接口没数据');
                         v.data.forEach((item, index) => {
                             item.key = index;
                         });
@@ -238,16 +244,27 @@
                     });
                 requestDoctorDoctorTitle()
                     .then(v => {
+                        alert('医生职称接口没数据');
                         v.data.forEach((item, index) => {
                             item.key = index;
                         });
                         this.doctorTitleList = v.data;
                         console.log(v);
                     });
+
+                requestDeptList()
+                    .then(v => {
+                        v.data.forEach(item => {
+                            item.key = item.id;
+                        });
+                        console.log(v.data);
+                        this.deptList = v.data;
+                    });
                 //  如果是新增
                 if (!this.doctorId) {
                     return;
                 }
+                alert('缺医生详情');
                 //  如果是编辑
 //                requestChannelBusinessPage(paginationEncode(this.pagination))
 //                    .then(v => {

@@ -250,9 +250,11 @@
                     });
             },
             //  关联渠道商
-            associatedChannelProvider(){
+            associatedChannelProvider(sItem){
+                this.shuttleBoxData = sItem;
                 this.showModal(DIALOG_TYPE.ASSOCIATED_CHANNEL_PROVIDER);
-                this.setDistributorsId(12334);
+                alert('缺渠道商列表');
+                //  this.setDistributorsId(sItem.id);
             },
             //  关联科室确定
             relatedDepartmentsModalCheck(refShuttleBox){

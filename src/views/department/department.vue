@@ -229,6 +229,7 @@
             //  关联评估调查表
             relatedQuestionnaire(sItem){
                 this.shuttleBoxData = sItem;
+                alert('评估调查表list报错');
                 requestAssessList()
                     .then(v => {
                         this.showModal(DIALOG_TYPE.QUESTIONNAIRE);

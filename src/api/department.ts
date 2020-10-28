@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 
-//  科室列表				✅
+//  科室分页列表				✅
 export function requestDeptPage(data: any) {
 	return request({
 		url: '/api/dept/page',

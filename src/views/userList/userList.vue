@@ -34,7 +34,7 @@
                             :columns="columns"
                             :data-source="data"
                             :pagination="false"
-                            :scroll="{x: 'auto', y: 'calc(100vh - 530px)'}"
+                            :scroll="{x: 'auto', y: 'calc(100vh - 550px)'}"
                             :customRow="customRow"
                     >
                         <!--年龄/性别-->
