@@ -19,7 +19,7 @@ router.beforeEach(async (to, from, next) => {
 	//	console.log('去哪儿', to.path);
 	window.document.title = getPageTitle(to.meta);
 	const loginInfo = getLoginInfo();
-	console.log(loginInfo);
+	//	console.log(loginInfo);
 
 	//	如果有权限
 	if (loginInfo) {

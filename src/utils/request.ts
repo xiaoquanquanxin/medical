@@ -31,7 +31,8 @@ request.interceptors.request.use(
 	config => {
 		//	config.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 		config.headers.post['Content-Type'] = 'application/json';
-		//	config.headers['Authorization'] = '1';
+		const Authorization = getJwt();
+		// config.headers['Authorization'] = Authorization;
 		return config;
 	},
 	error => {

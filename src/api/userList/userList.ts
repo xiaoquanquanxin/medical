@@ -58,3 +58,11 @@ export function requestPatientSelectDoctorByHospital(type: string | number) {
 
 //	缺少确认出院、确认入院？我没找见
 
+//	ICD诊断配置
+export function requestPatientSelectICD() {
+	return request({
+		url: `/api/patient/selectICD`,
+		method: 'get',
+	});
+}
+

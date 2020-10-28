@@ -477,49 +477,6 @@ export const asyncRoutesList = [
 	// 	component: () => import(/* webpackChunkName: "addMission" */ '@/views/mission/addMission.vue'),
 	// },
 
-	{
-		meta: {
-			chName: '系统管理',
-			selectRouteKey: 'system',
-		},
-		path: '/system',
-		name: 'system',
-		component: LayoutStair,
-		children: [
-			{
-				meta: {
-					chName: '角色管理',
-					selectRouteKey: 'role',
-					openRouteKey: 'system',
-					// hidden: true,
-				},
-				name: 'role',
-				path: '/system/role',
-				component: () => import(/* webpackChunkName: "role" */ '@/views/system/role.vue'),
-			},
-			{
-				meta: {
-					chName: '账号管理',
-					selectRouteKey: 'account',
-					openRouteKey: 'system',
-				},
-				name: 'account',
-				path: '/system/account',
-				component: () => import(/* webpackChunkName: "account" */ '@/views/system/account.vue'),
-			},
-			{
-				meta: {
-					chName: '修改密码',
-					selectRouteKey: 'changePassword',
-					openRouteKey: 'system',
-				},
-				name: 'changePassword',
-				path: '/system/changePassword',
-				component: () => import(/* webpackChunkName: "changePassword" */ '@/views/system/changePassword.vue'),
-			},
-		]
-	},
-
 
 	/**
 	 * 🍉🍉🍉🍉
@@ -1118,7 +1075,50 @@ export const asyncRoutesList = [
 				component: () => import(/* webpackChunkName: "execute" */ '@/views/statement/execute.vue'),
 			},
 		]
-	}
+	},
+
+	{
+		meta: {
+			chName: '系统管理',
+			selectRouteKey: 'system',
+		},
+		path: '/system',
+		name: 'system',
+		component: LayoutStair,
+		children: [
+			{
+				meta: {
+					chName: '角色管理',
+					selectRouteKey: 'role',
+					openRouteKey: 'system',
+					// hidden: true,
+				},
+				name: 'role',
+				path: '/system/role',
+				component: () => import(/* webpackChunkName: "role" */ '@/views/system/role.vue'),
+			},
+			{
+				meta: {
+					chName: '账号管理',
+					selectRouteKey: 'account',
+					openRouteKey: 'system',
+				},
+				name: 'account',
+				path: '/system/account',
+				component: () => import(/* webpackChunkName: "account" */ '@/views/system/account.vue'),
+			},
+			{
+				meta: {
+					chName: '修改密码',
+					selectRouteKey: 'changePassword',
+					openRouteKey: 'system',
+				},
+				name: 'changePassword',
+				path: '/system/changePassword',
+				component: () => import(/* webpackChunkName: "changePassword" */ '@/views/system/changePassword.vue'),
+			},
+		]
+	},
 ]
 
 

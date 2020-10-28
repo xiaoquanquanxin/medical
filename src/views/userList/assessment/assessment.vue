@@ -19,12 +19,11 @@
         >
             <!--评分结果-->
             <div slot="result" slot-scope="scope,sItem,sIndex,extra">
-                只有空数据，没有任何字段
             </div>
             <!--操作-->
             <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
                 <a-space size="small">
-                    <router-link :to="{name:'assessmentDetail',params:{assessmentDetailId:sIndex}}">详情</router-link>
+                    <router-link :to="{name:'assessmentDetail',params:{assessmentDetailId:sItem.id}}">详情</router-link>
                     <a @click="deleteAssessment(sItem,sIndex)">删除</a>
                 </a-space>
             </div>
@@ -39,7 +38,7 @@
     const columns = [
         {
             title: '名称',
-            dataIndex: '名称',
+            dataIndex: 'assesName',
             width: 150,
         },
         {
@@ -49,18 +48,18 @@
         },
         {
             title: '评分人',
-            dataIndex: '评分人',
+            dataIndex: 'doctorName',
             width: 100,
         },
         {
             title: '评分结果',
             width: 150,
-            scopedSlots: { customRender: 'result' },
+            dataIndex: 'assesResult',
         },
         {
             title: '评分时间',
-            dataIndex: '评分时间',
-            width: 150,
+            dataIndex: 'ctime',
+            width: 200,
         },
         {
             title: '操作',
@@ -82,7 +81,6 @@
                 columns,
                 //  搜索数据
                 searchData: {},
-
 
                 //  分页信息
                 pagination: paginationInit(),
@@ -119,18 +117,18 @@
             //  删除营养评估
             deleteAssessment(sItem){
                 this.$confirm({
-                    title: `确定删除${sItem.id}`,
+                    title: `确定删除${sItem.assesName}`,
                     okText: '确认',
                     okType: 'danger',
                     cancelText: '取消',
-                    onOk(){
-                        requestPatientAssessDelete(sItem.id)
+                    onOk: () => {
+                        return requestPatientAssessDelete(sItem.id)
                             .then(v => {
-                                console.log('删除成功');
-                                console.log(v);
+                                this.$message.success('操作成功');
+                                this.searchFn();
                             })
-                            .catch(err => {
-                                console.log(err);
+                            .catch(v => {
+                                this.$message.error('操作失败');
                             });
                     },
                     onCancel(){

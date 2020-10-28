@@ -231,11 +231,10 @@
                               class="form-element"
                               @focus="descriptionFormFocusFn(18)"
                     >
-                        <a-select-option value="1">
-                            诊断1
-                        </a-select-option>
-                        <a-select-option value="2">
-                            诊断2
+                        <a-select-option :value="item.id"
+                                         :key="item.id"
+                                         v-for="item in ICDList"
+                        >{{item.name}}
                         </a-select-option>
                     </a-select>
                 </a-descriptions-item>
@@ -310,7 +309,7 @@
 </template>
 <script>
     import { descriptionsMethods } from '@/utils/patientInfo';
-    import { requestPatientSelectDeptByHospital } from '../../../api/userList/userList';
+    import { requestPatientSelectDeptByHospital, requestPatientSelectICD } from '../../../api/userList/userList';
     import { requestHospitalGetList } from '../../../api/hospital';
 
     export default {
@@ -327,7 +326,9 @@
                 //  科室列表
                 deptList: [],
                 //  医院列表
-                hospitalList: []
+                hospitalList: [],
+                //  icd
+                ICDList: []
             };
         },
         created(){
@@ -335,6 +336,11 @@
         },
         methods: {
             searchFn(){
+                requestPatientSelectICD()
+                    .then(v => {
+                        console.log(v);
+                        this.ICDList = v.data || [];
+                    });
                 requestHospitalGetList()
                     .then(v => {
                         this.hospitalList = v.data;

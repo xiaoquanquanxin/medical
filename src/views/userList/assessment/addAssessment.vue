@@ -1004,6 +1004,7 @@
     import { mapGetters, mapActions } from 'vuex';
     import GoBackButton from '@/components/goBackButton.vue';
     import { requestPatientSelectOnePatient } from '../../../api/userList/userList';
+    import { PatientAssessSelectAssesById } from '../../../api/userList/assessment';
     import {
         requestPatientAssessSaveMna,
         requestPatientAssessSavePgsga,
@@ -1061,7 +1062,6 @@
                 this.setScreeningInfo({ screeningBasicInfo: [] });
                 //  发请求
                 console.log('病人id', this.patientId);
-                console.log('详情id ,有详情id的是编辑', this.assessmentDetailId);
                 //  请求头部数据
                 requestPatientSelectOnePatient(this.patientId)
                     .then(v => {
@@ -1086,6 +1086,13 @@
                     });
                 this.typeOneList.length = 20;
                 this.typeOneList.fill(1);
+                if (this.assessmentDetailId) {
+                    console.log('详情id ,有详情id的是编辑', this.assessmentDetailId);
+                    PatientAssessSelectAssesById(this.assessmentDetailId)
+                        .then(v => {
+                            console.log(v);
+                        });
+                }
             },
             //  保存
             saveScreening(){

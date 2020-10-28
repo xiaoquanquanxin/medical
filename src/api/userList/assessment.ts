@@ -48,5 +48,13 @@ export function requestPatientAssessSavePgsga(data: any) {
 }
 
 
+//	根据评估表ID查看评估表详情
+export function PatientAssessSelectAssesById(assesId: string | number) {
+	//	type1 医生，type2，营养师
+	return request({
+		url: `/api/patientAssess/selectAssesById/${assesId}`,
+		method: 'post',
+	});
+}
 
 
