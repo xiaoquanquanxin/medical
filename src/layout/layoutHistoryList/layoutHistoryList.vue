@@ -1,14 +1,6 @@
 <template>
     <div class="history-list" v-show="!hiddenHistory" id="layoutHistory" v-if="currentMeta">
-        <!--<template v-for="(item , index) in historyRouteList">
-            <a-divider type="vertical"/>
-            <router-link :to="{name:item.name}"
-                         :class="item.highlight?'highlight':'nonactivated'"
-            >{{item.chName}}
-            </router-link>
-        </template>-->
-        <!--        <a-divider type="vertical"/>-->
-        <a-menu
+        <a-menu style="padding-right: 5px;"
                 :selectedKeys="[currentMeta.selectRouteKey||'']"
                 mode="horizontal"
         >
@@ -16,20 +8,22 @@
                     :key="item.name"
                     v-for="(item , index) in historyRouteList"
             >
+                <div class="history-item">
                 <span>
                     <router-link :to="{name:item.name}">
-                        <span>{{item.chName}}</span>
+                        <span class="router-link-span">{{item.chName}}</span>
                     </router-link>
                 </span>
-                <b @click="deleteHistory($event,item,index)"
-                   class="close-svg"
-                   v-if="historyRouteList.length>=2"
-                >
-                    <svg viewBox="64 64 896 896" data-icon="close" width="1em" height="1em" fill="currentColor"
-                         aria-hidden="true" focusable="false" class="">
-                        <path d="M563.8 512l262.5-312.9c4.4-5.2.7-13.1-6.1-13.1h-79.8c-4.7 0-9.2 2.1-12.3 5.7L511.6 449.8 295.1 191.7c-3-3.6-7.5-5.7-12.3-5.7H203c-6.8 0-10.5 7.9-6.1 13.1L459.4 512 196.9 824.9A7.95 7.95 0 0 0 203 838h79.8c4.7 0 9.2-2.1 12.3-5.7l216.5-258.1 216.5 258.1c3 3.6 7.5 5.7 12.3 5.7h79.8c6.8 0 10.5-7.9 6.1-13.1L563.8 512z"></path>
-                    </svg>
-                </b>
+                    <b @click="deleteHistory($event,item,index)"
+                       class="close-svg"
+                       v-if="historyRouteList.length>=2"
+                    >
+                        <svg viewBox="64 64 896 896" data-icon="close" width="1em" height="1em" fill="currentColor"
+                             aria-hidden="true" focusable="false" class="">
+                            <path d="M563.8 512l262.5-312.9c4.4-5.2.7-13.1-6.1-13.1h-79.8c-4.7 0-9.2 2.1-12.3 5.7L511.6 449.8 295.1 191.7c-3-3.6-7.5-5.7-12.3-5.7H203c-6.8 0-10.5 7.9-6.1 13.1L459.4 512 196.9 824.9A7.95 7.95 0 0 0 203 838h79.8c4.7 0 9.2-2.1 12.3-5.7l216.5-258.1 216.5 258.1c3 3.6 7.5 5.7 12.3 5.7h79.8c6.8 0 10.5-7.9 6.1-13.1L563.8 512z"></path>
+                        </svg>
+                    </b>
+                </div>
             </a-menu-item>
         </a-menu>
     </div>
@@ -100,7 +94,7 @@
                 }
                 const deleteItem = this.historyRouteList.splice(index, 1);
                 const { name } = deleteItem[0];
-                console.log(this.historyRouteMap,name);
+                console.log(this.historyRouteMap, name);
                 delete this.historyRouteMap[name];
             }
         }
@@ -120,19 +114,53 @@
         white-space: nowrap;
     }
     
-    /*高亮*/
-    .highlight {
-        color: #1890ff;
-    }
-    
-    /*未激活*/
-    .nonactivated {
-        color: grey;
-    }
     
     /*关闭*/
     .close-svg {
         color: grey !important;
         vertical-align: middle;
+        margin: 0 -4px 0 4px;
+    }
+    
+    .history-item {
+        border: 1px solid #e8e8e8;
+        border-bottom: none;
+        border-radius: 4px 4px 0 0;
+        margin: 3px -15px 0;
+        padding: 0 15px;
+        box-sizing: content-box;
+        height: 40px;
+    }
+    
+    .ant-menu-horizontal > .ant-menu-item:hover .history-item,
+    .ant-menu-horizontal > .ant-menu-submenu:hover .history-item,
+    .ant-menu-horizontal > .ant-menu-item-active .history-item,
+    .ant-menu-horizontal > .ant-menu-submenu-active .history-item,
+    .ant-menu-horizontal > .ant-menu-item-open .history-item,
+    .ant-menu-horizontal > .ant-menu-submenu-open .history-item,
+    .ant-menu-horizontal > .ant-menu-item-selected .history-item,
+    .ant-menu-horizontal > .ant-menu-submenu-selected .history-item {
+        border-color: rgba(24, 144, 255, 0.49);
+    }
+    
+    .router-link-span {
+        color: grey;
+        display: inline-block;
+    }
+    
+    .ant-menu-horizontal > .ant-menu-item:hover .router-link-span,
+    .ant-menu-horizontal > .ant-menu-submenu:hover .router-link-span,
+    .ant-menu-horizontal > .ant-menu-item-active .router-link-span,
+    .ant-menu-horizontal > .ant-menu-submenu-active .router-link-span,
+    .ant-menu-horizontal > .ant-menu-item-open .router-link-span,
+    .ant-menu-horizontal > .ant-menu-submenu-open .router-link-span,
+    .ant-menu-horizontal > .ant-menu-item-selected .router-link-span,
+    .ant-menu-horizontal > .ant-menu-submenu-selected .router-link-span {
+        color: #1890ff;
+    }
+    
+    
+    .ant-menu-submenu-title {
+        padding-right: 30px;
     }
 </style>
