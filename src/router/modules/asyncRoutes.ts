@@ -939,8 +939,8 @@ export const asyncRoutesList = [
 					hidden: true,
 				},
 				name: 'getDrugDetail',
-				path: '/task/getDrugDetail/:getDrugDetailId',
-				component: () => import(/* webpackChunkName: "getDrugDetail" */ '@/views/task/getDrugDetail.vue'),
+				path: '/task/getDrugDetail/:detailId',
+				component: () => import(/* webpackChunkName: "auditDetail" */ '@/views/auditList/auditDetail.vue'),
 			},
 			{
 				meta: {

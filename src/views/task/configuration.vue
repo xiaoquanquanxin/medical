@@ -56,7 +56,7 @@
             <!--操作-->
             <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
                 <a-space>
-                    <router-link :to="{name:'configurationDetail',params:{configurationDetailId:sIndex}}">详情
+                    <router-link :to="{name:'configurationDetail',params:{detailId:sItem.id}}">详情
                     </router-link>
                     <a @click="confirmReceiving(sItem)" v-if="scope.orderStatus == 1">确定签收</a>
                     <a @click="confirmConfig(sItem)" v-if="scope.orderStatus == 2">确定配置</a>

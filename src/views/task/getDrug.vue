@@ -62,7 +62,7 @@
                 <!--操作-->
                 <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
                     <a-space>
-                        <router-link :to="{name:'getDrugDetail',params:{getDrugDetailId:sIndex}}">详情
+                        <router-link :to="{name:'getDrugDetail',params:{detailId:sItem.id}}">详情
                         </router-link>
                         <a @click="confirmGetDrug(sItem)" v-if="scope.orderStatus == 4">确定领药</a>
                     </a-space>

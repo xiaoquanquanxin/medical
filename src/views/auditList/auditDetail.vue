@@ -132,6 +132,10 @@
                     //  配置任务详情
                     detailType = 3;
                     break;
+                case 'getDrugDetail':
+                    //  领药任务详情
+                    detailType = 3;
+                    break;
                 default:
                     throw new Error(`这是什么页面？${name}`);
             }
