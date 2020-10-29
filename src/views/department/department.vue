@@ -71,7 +71,7 @@
                  cancel-text="取消"
                  @ok="associatedDiseaseModalCheck('refAssociatedDisease')">
             <ShuttleBox ref="refAssociatedDisease"
-                        :origin-list="diseaseOriginList"
+                        :origin-list="shuttleOriginList"
             />
         </a-modal>
         <!--关联评估调查表-->
@@ -86,7 +86,7 @@
                  cancel-text="取消"
                  @ok="questionnaireModalCheck('refQuestionnaire')">
             <ShuttleBox ref="refQuestionnaire"
-                        :origin-list="diseaseOriginList"
+                        :origin-list="shuttleOriginList"
             />
         </a-modal>
     </div>
@@ -144,9 +144,9 @@
                 //  搜索数据
                 searchData: {},
 
-                //  疾病关联列表
-                diseaseOriginList: [],
-                //  被操作的穿梭框
+                //  穿梭框数据
+                shuttleOriginList: [],
+                //  穿梭框操作的sItem
                 shuttleBoxData: {}
             };
         },
@@ -214,35 +214,30 @@
                     .then(v => {
                         this.showModal(DIALOG_TYPE.ASSOCIATED_DISEASE);
                         this.setShuttleBoxType(SHUTTLE_BOX.ASSOCIATED_DISEASE);
-                        this.diseaseOriginList = [];
+                        this.shuttleOriginList = [];
                         v.data.forEach(item => {
                             const data = {};
                             data.key = item.id.toString();
                             data.title = item.diseaseName;
                             data.description = item.diseaseName;
-                            //  todo    处理被选中
-                            data.chosen = false;
-                            this.diseaseOriginList.push(data);
+                            this.shuttleOriginList.push(data);
                         });
                     });
             },
             //  关联评估调查表
             relatedQuestionnaire(sItem){
                 this.shuttleBoxData = sItem;
-                alert('评估调查表list报错');
                 requestAssessList()
                     .then(v => {
                         this.showModal(DIALOG_TYPE.QUESTIONNAIRE);
                         this.setShuttleBoxType(SHUTTLE_BOX.QUESTIONNAIRE);
-                        this.diseaseOriginList = [];
+                        this.shuttleOriginList = [];
                         v.data.forEach(item => {
                             const data = {};
                             data.key = item.id.toString();
-                            data.title = item.diseaseName;
-                            data.description = item.diseaseName;
-                            //  todo    处理被选中
-                            data.chosen = false;
-                            this.diseaseOriginList.push(data);
+                            data.title = item.assessName;
+                            data.description = item.assessName;
+                            this.shuttleOriginList.push(data);
                         });
                     });
             },
@@ -259,7 +254,13 @@
                         diseasesds: targetKeys
                     })
                         .then(v => {
+                            this.$message.success('操作成功');
                             this.hideModal(DIALOG_TYPE.ASSOCIATED_DISEASE);
+                            this.searchFn();
+                        })
+                        .catch(err => {
+                            console.log(err);
+                            this.$message.error('操作失败');
                         });
                 }).catch(error => {
                     console.log('有错');
@@ -273,8 +274,22 @@
                 //  防止连点
                 this.setConfirmLoading(DIALOG_TYPE.QUESTIONNAIRE, true);
                 const promise = this.$refs[refQuestionnaire].handleSubmit();
-                promise.then(v => {
-                    this.hideModal(DIALOG_TYPE.QUESTIONNAIRE);
+                promise.then(targetKeys => {
+                    console.log(targetKeys);
+                    console.log(this.shuttleBoxData.id);
+                    return requestDeptRelatedDiseases({
+                        id: this.shuttleBoxData.id,
+                        diseasesds: targetKeys
+                    })
+                        .then(v => {
+                            this.$message.success('操作成功');
+                            this.hideModal(DIALOG_TYPE.QUESTIONNAIRE);
+                            this.searchFn();
+                        })
+                        .catch(err => {
+                            console.log(err);
+                            this.$message.error('操作失败');
+                        });
                 }).catch(error => {
                     console.log('有错');
                 }).then(v => {

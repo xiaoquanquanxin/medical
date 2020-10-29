@@ -453,13 +453,18 @@
                 });
                 console.log('🍎🍎🍎🍎发请求，🍉🍉🍉改造数据结构', '医院的id', value);
                 //  fixme   ❌❌❌，这里理论上是 requestGoodsListByHospital ，但是报错
-//                requestGoodsListByHospital(value)
+                requestGoodsListByHospital(value)
+                    .then(v => {
+                        console.log(v);
+                    });
                 //  重置数据
                 this.commodityTableData = [];
                 this.timeTableData = [];
             },
             //  fixme   ❌❌❌，这里理论上是 requestGoodsListByHospital ，但是报错
             requestGoodsPageAll(){
+
+                return;
                 requestGoodsPage(noPaginationData)
                     .then(v => {
                         console.log('该医院下的商品：');

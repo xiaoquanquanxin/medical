@@ -235,7 +235,7 @@
             searchFn(){
                 requestDoctorDoctorType()
                     .then(v => {
-                        alert('医生类型接口没数据');
+                        alert('医生类型接口没数据，已处理');
                         v.data.forEach((item, index) => {
                             item.key = index;
                         });
@@ -244,7 +244,7 @@
                     });
                 requestDoctorDoctorTitle()
                     .then(v => {
-                        alert('医生职称接口没数据');
+                        alert('医生职称接口没数据，已处理');
                         v.data.forEach((item, index) => {
                             item.key = index;
                         });
@@ -264,7 +264,7 @@
                 if (!this.doctorId) {
                     return;
                 }
-                alert('缺医生详情');
+                alert('缺医生详情，已处理');
                 //  如果是编辑
 //                requestChannelBusinessPage(paginationEncode(this.pagination))
 //                    .then(v => {

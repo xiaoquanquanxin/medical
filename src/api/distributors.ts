@@ -51,3 +51,11 @@ export function requestChannelBusinessDelete(id: string | number) {
 		method: 'get',
 	});
 }
+
+//	渠道商列表
+export function requestChannelBusinessList() {
+	return request({
+		url: '/api/channelBusiness/list',
+		method: 'get',
+	});
+}

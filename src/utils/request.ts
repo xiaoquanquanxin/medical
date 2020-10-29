@@ -9,7 +9,7 @@ const request = axios.create({
 	//	baseURL: process.env.VUE_APP_BASE_API,
 	//	当跨域请求时发送cookie
 	// withCredentials: true,
-	timeout: 5000,
+	timeout: 20000,
 	// transformRequest: [(searchParams => {
 	// 	return searchParams;
 	// 	console.log(searchParams);

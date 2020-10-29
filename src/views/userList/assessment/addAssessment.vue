@@ -4,11 +4,13 @@
             <!--返回按钮-->
             <GoBackButton/>
             <a-button class="basic-button-width" type="primary" v-print="printObj">打印</a-button>
-            <a-button class="basic-button-width" type="primary" @click="saveScreening">保存</a-button>
+            <a-button class="basic-button-width" type="primary" @click="saveScreening" v-if="!assessmentDetailId">保存
+            </a-button>
             <a-select
                     class="basic-range-picker-width"
                     placeholder="请选择主管医生"
                     v-model="tableTypeSelect"
+                    :disabled="!!assessmentDetailId"
             >
                 <a-select-option :value="1">微型营养评价表</a-select-option>
                 <a-select-option :value="2">一般评估表</a-select-option>
@@ -544,36 +546,45 @@
                             <li class="radio-group-item">
                                 <a-space>
                                     <span>目前患者的体重约为</span>
-                                    <a-input class="basic-input-width" placeholder="请输入体重" suffix="kg" size="small"/>
+                                    <a-input class="basic-input-width" placeholder="请输入体重" suffix="kg" size="small"
+                                             v-model="typeThreeList.nowWeight"
+                                    />
                                 </a-space>
                             </li>
                             <li class="radio-group-item">
                                 <a-space>
                                     <span>目前患者的身高约为</span>
-                                    <a-input class="basic-input-width" placeholder="请输入身高" suffix="cm" size="small"/>
+                                    <a-input class="basic-input-width" placeholder="请输入身高" suffix="cm" size="small"
+                                             v-model="typeThreeList.nowHeight"
+                                    />
                                 </a-space>
                             </li>
                             <li class="radio-group-item">
                                 <a-space>
                                     <span>一个月前患者的体重约为</span>
-                                    <a-input class="basic-input-width" placeholder="请输入体重" suffix="kg" size="small"/>
+                                    <a-input class="basic-input-width" placeholder="请输入体重" suffix="kg" size="small"
+                                             v-model="typeThreeList.oneagoWeight"
+                                    />
                                 </a-space>
                             </li>
                             <li class="radio-group-item">
                                 <a-space>
                                     <span>六个月前患者的体重约为</span>
-                                    <a-input class="basic-input-width" placeholder="请输入身高" suffix="cm" size="small"/>
+                                    <a-input class="basic-input-width" placeholder="请输入身高" suffix="cm" size="small"
+                                             v-model="typeThreeList.sixagoWeight"
+                                    />
                                 </a-space>
                             </li>
                             <li class="radio-group-item">
                                 <a-space>
                                     <span>在过去的两周，患者的体重</span>
-                                    <a-radio-group name="radioGroup">
-                                        <a-radio value="1">减少（1分）</a-radio>
-                                        <a-radio value="2">没有改变（0分）</a-radio>
-                                        <a-radio value="3">增加（0分）</a-radio>
-                                    </a-radio-group>
                                 </a-space>
+                                <a-radio-group v-model="typeThreeList.weightCondition" class="radio-group">
+                                    <a-radio v-for="item in typeThreeListData.weightCondition"
+                                             :value="item.id"
+                                    >{{item.label}}
+                                    </a-radio>
+                                </a-radio-group>
                             </li>
                         </ul>
                     </div>
@@ -588,21 +599,20 @@
                             <li class="radio-group-item radio-group-item-title">1、过去的1个月以来，患者的进食情况与平时情况相比（以最高分选项为本项计分）
                             </li>
                             <li class="radio-group-item">
-                                <a-radio-group name="radioGroup">
-                                    <a-radio value="1">没有改变（0分）</a-radio>
-                                    <a-radio value="2">比以前多（0分）</a-radio>
-                                    <a-radio value="3">比以前少（0分）</a-radio>
+                                <a-radio-group v-model="typeThreeList.eatingSituation" class="radio-group">
+                                    <a-radio v-for="item in typeThreeListData.eatingSituation"
+                                             :value="item.id"
+                                    >{{item.label}}
+                                    </a-radio>
                                 </a-radio-group>
                             </li>
                             <li class="radio-group-item radio-group-item-title">2、患者目前进食</li>
                             <li class="radio-group-item">
-                                <a-radio-group name="radioGroup">
-                                    <a-radio value="1">正常饮食（0分）</a-radio>
-                                    <a-radio value="2">但比正常情况少(1分）</a-radio>
-                                    <a-radio value="3">软饭（2分）</a-radio>
-                                    <a-radio value="4">流食（3分）</a-radio>
-                                    <a-radio value="5">只能进食营养制剂（4分）</a-radio>
-                                    <a-radio value="6">只能通过管饲或静脉营养（0分）</a-radio>
+                                <a-radio-group v-model="typeThreeList.eatingNow" class="radio-group">
+                                    <a-radio v-for="item in typeThreeListData.eatingNow"
+                                             :value="item.id"
+                                    >{{item.label}}
+                                    </a-radio>
                                 </a-radio-group>
                             </li>
                         </ul>
@@ -618,32 +628,21 @@
                             <li class="radio-group-item radio-group-item-title">1、近2周来，患者有以下的问题，影响患者摄入足够的饮食（多选，累计计分）
                             </li>
                             <li class="radio-group-item">
-                                <a-checkbox-group class="radio-group">
-                                    <a-checkbox :value="1">吃饭没有问题（0分）</a-checkbox>
-                                    <a-checkbox :value="2">恶心（1分）</a-checkbox>
-                                    <a-checkbox :value="3">便秘（1分）</a-checkbox>
-                                    <a-checkbox :value="4">口干（1分）</a-checkbox>
-                                    <a-checkbox :value="5">一会就吃不了（1分）</a-checkbox>
-                                    <a-checkbox :value="6">食品没味（1分）</a-checkbox>
-                                    <a-checkbox :value="7">食品气味不好（1分）</a-checkbox>
-                                    <a-checkbox :value="8">口腔溃疡（2分）</a-checkbox>
-                                    <a-checkbox :value="9">吞咽困难（2分）</a-checkbox>
-                                    <a-checkbox :value="10">没有食欲，不想吃（3分）</a-checkbox>
-                                    <a-checkbox :value="11">呕吐（3分）</a-checkbox>
-                                    <a-checkbox :value="12">腹泻（3分）</a-checkbox>
-                                    <a-checkbox :value="13">
-                                        <a-space>
-                                            <span>其他</span>
-                                            <a-input placeholder="其他原因" size="small"/>
-                                            <span>（如抑郁、经济、牙齿）(1分)</span>
+                                <b>❌❌️</b>
+                                <a-checkbox-group class="radio-group" v-model="typeThreeList.symptom">
+                                    <a-checkbox v-for="item in typeThreeListData.symptom"
+                                                :value="item.id"
+                                    >
+                                        <a-space v-if="item.hasInput">
+                                            <a-space>
+                                                <span>{{item.label}}</span>
+                                                <a-input :placeholder="item.placeholder" size="small"
+                                                         v-model="item.input"
+                                                />
+                                                <span>{{item.suffix}}</span>
+                                            </a-space>
                                         </a-space>
-                                    </a-checkbox>
-                                    <a-checkbox :value="14">
-                                        <a-space>
-                                            <span>疼痛</span>
-                                            <a-input placeholder="疼痛部位" size="small"/>
-                                            <span>（部位）（3分）</span>
-                                        </a-space>
+                                        <span v-else>{{item.label}}</span>
                                     </a-checkbox>
                                 </a-checkbox-group>
                             </li>
@@ -659,14 +658,11 @@
                         <ul class="radio-group-list">
                             <li class="radio-group-item radio-group-item-title">1、在过去的1个月，患者的活动（单选）</li>
                             <li class="radio-group-item">
-                                <a-radio-group v-model="typeThreeList.activityBodyfunction" class="radio-group">
-                                    <ul class="radio-group-list">
-                                        <li class="radio-group-item"
-                                            v-for="item in typeThreeListData[3]"
-                                        >
-                                            <a-radio :value="item">{{item.label}}</a-radio>
-                                        </li>
-                                    </ul>
+                                <a-radio-group v-model="typeThreeList.activityBodyfunction">
+                                    <a-radio v-for="item in typeThreeListData.activityBodyfunction"
+                                             :value="item.id"
+                                    >{{item.label}}
+                                    </a-radio>
                                 </a-radio-group>
                             </li>
                         </ul>
@@ -698,12 +694,13 @@
                             <li class="radio-group-item radio-group-item-title">2、年龄</li>
                             <li class="radio-group-item">
                                 <a-space>
-                                    <a-input placeholder="请输入年龄" size="small"/>
+                                    <a-input placeholder="请输入年龄" size="small" v-model="typeThreeList.diseaseAge"/>
                                 </a-space>
                             </li>
                             <li class="radio-group-item radio-group-item-title">3、原发疾病分期</li>
                             <li class="radio-group-item">
-                                <a-radio-group name="radioGroup">
+                                ❌❌
+                                <a-radio-group name="radioGroup" v-model="typeThreeList.diseaseStage">
                                     <a-radio value="1">1期</a-radio>
                                     <a-radio value="2">2期</a-radio>
                                     <a-radio value="3">3期</a-radio>
@@ -719,7 +716,8 @@
                             <li class="radio-group-item radio-group-item-title">4、放疗次数</li>
                             <li class="radio-group-item">
                                 <a-space>
-                                    <a-input placeholder="请输入放疗次数" size="small"/>
+                                    <a-input placeholder="请输入放疗次数" size="small"
+                                             v-model="typeThreeList.radiotherapyCount"/>
                                 </a-space>
                             </li>
                         </ul>
@@ -734,29 +732,29 @@
                         <ul class="radio-group-list">
                             <li class="radio-group-item radio-group-item-title">1、发热</li>
                             <li class="radio-group-item">
-                                <a-radio-group name="radioGroup">
-                                    <a-radio value="1">无（0分）</a-radio>
-                                    <a-radio value="2">37.2 ~ 38.3（1分）</a-radio>
-                                    <a-radio value="3">38.3 ~ 38.8（2分）</a-radio>
-                                    <a-radio value="4">> 38.8（3分）</a-radio>
+                                <a-radio-group v-model="typeThreeList.hot">
+                                    <a-radio v-for="item in typeThreeListData.hot"
+                                             :value="item.id"
+                                    >{{item.label}}
+                                    </a-radio>
                                 </a-radio-group>
                             </li>
                             <li class="radio-group-item radio-group-item-title">2、持续发热时间</li>
                             <li class="radio-group-item">
-                                <a-radio-group name="radioGroup">
-                                    <a-radio value="1">无（0分）</a-radio>
-                                    <a-radio value="2">< 72小时（1分）</a-radio>
-                                    <a-radio value="3">72小时（2分）</a-radio>
-                                    <a-radio value="4">> 72小时（3分）</a-radio>
+                                <a-radio-group v-model="typeThreeList.lastHottime">
+                                    <a-radio v-for="item in typeThreeListData.lastHottime"
+                                             :value="item.id"
+                                    >{{item.label}}
+                                    </a-radio>
                                 </a-radio-group>
                             </li>
                             <li class="radio-group-item radio-group-item-title">3、是否使用激素（如波尼松或相当剂量的其他激素/天）</li>
                             <li class="radio-group-item">
-                                <a-radio-group name="radioGroup">
-                                    <a-radio value="1">无（0分）</a-radio>
-                                    <a-radio value="2">低剂量（< 10mg）（1分）</a-radio>
-                                    <a-radio value="3">中剂量（10 ~ 30mg）（2分）</a-radio>
-                                    <a-radio value="4">高剂量（>30mg）（3分）</a-radio>
+                                <a-radio-group v-model="typeThreeList.isuseHormone">
+                                    <a-radio v-for="item in typeThreeListData.isuseHormone"
+                                             :value="item.id"
+                                    >{{item.label}}
+                                    </a-radio>
                                 </a-radio-group>
                             </li>
                         </ul>
@@ -779,41 +777,41 @@
                                             <li class="radio-group-item radio-group-item-title">1、眼眶脂肪垫
                                             </li>
                                             <li class="radio-group-item">
-                                                <a-radio-group name="radioGroup">
-                                                    <a-radio value="1">正常</a-radio>
-                                                    <a-radio value="2">轻度</a-radio>
-                                                    <a-radio value="3">中度</a-radio>
-                                                    <a-radio value="3">严重</a-radio>
+                                                <a-radio-group v-model="typeThreeList.fatreserveorbitalfatpad">
+                                                    <a-radio v-for="item in typeThreeListData.fourKindsOf"
+                                                             :value="item.id"
+                                                    >{{item.label}}
+                                                    </a-radio>
                                                 </a-radio-group>
                                             </li>
                                             <li class="radio-group-item radio-group-item-title">2、三头肌皮褶厚度
                                             </li>
                                             <li class="radio-group-item">
-                                                <a-radio-group name="radioGroup">
-                                                    <a-radio value="1">正常</a-radio>
-                                                    <a-radio value="2">轻度</a-radio>
-                                                    <a-radio value="3">中度</a-radio>
-                                                    <a-radio value="3">严重</a-radio>
+                                                <a-radio-group v-model="typeThreeList.fatreservetricepsskinfold">
+                                                    <a-radio v-for="item in typeThreeListData.fourKindsOf"
+                                                             :value="item.id"
+                                                    >{{item.label}}
+                                                    </a-radio>
                                                 </a-radio-group>
                                             </li>
                                             <li class="radio-group-item radio-group-item-title">3、下肋脂肪厚度
                                             </li>
                                             <li class="radio-group-item">
-                                                <a-radio-group name="radioGroup">
-                                                    <a-radio value="1">正常</a-radio>
-                                                    <a-radio value="2">轻度</a-radio>
-                                                    <a-radio value="3">中度</a-radio>
-                                                    <a-radio value="3">严重</a-radio>
+                                                <a-radio-group v-model="typeThreeList.fatreservelowerribfatthickness">
+                                                    <a-radio v-for="item in typeThreeListData.fourKindsOf"
+                                                             :value="item.id"
+                                                    >{{item.label}}
+                                                    </a-radio>
                                                 </a-radio-group>
                                             </li>
                                             <li class="radio-group-item radio-group-item-title">4、总体脂肪缺乏程度
                                             </li>
                                             <li class="radio-group-item">
-                                                <a-radio-group name="radioGroup">
-                                                    <a-radio value="1">正常</a-radio>
-                                                    <a-radio value="2">轻度</a-radio>
-                                                    <a-radio value="3">中度</a-radio>
-                                                    <a-radio value="3">严重</a-radio>
+                                                <a-radio-group v-model="typeThreeList.fatreservetotalfatdeficiency">
+                                                    <a-radio v-for="item in typeThreeListData.fourKindsOf"
+                                                             :value="item.id"
+                                                    >{{item.label}}
+                                                    </a-radio>
                                                 </a-radio-group>
                                             </li>
                                         </ul>
@@ -829,66 +827,73 @@
                                             <li class="radio-group-item radio-group-item-title">1、颞部（颞肌）
                                             </li>
                                             <li class="radio-group-item">
-                                                <a-radio-group name="radioGroup">
-                                                    <a-radio value="1">正常</a-radio>
-                                                    <a-radio value="2">轻度</a-radio>
-                                                    <a-radio value="3">中度</a-radio>
-                                                    <a-radio value="3">严重</a-radio>
+                                                <a-radio-group v-model="typeThreeList.muscleconditiontemporal">
+                                                    <a-radio v-for="item in typeThreeListData.fourKindsOf"
+                                                             :value="item.id"
+                                                    >{{item.label}}
+                                                    </a-radio>
                                                 </a-radio-group>
                                             </li>
                                             <li class="radio-group-item radio-group-item-title">2、锁骨部位（胸部三角肌）
                                             </li>
                                             <li class="radio-group-item">
-                                                <a-radio-group name="radioGroup">
-                                                    <a-radio value="1">正常</a-radio>
-                                                    <a-radio value="2">轻度</a-radio>
-                                                    <a-radio value="3">中度</a-radio>
-                                                    <a-radio value="3">严重</a-radio>
+                                                <a-radio-group v-model="typeThreeList.muscleconditioncollarbone">
+                                                    <a-radio v-for="item in typeThreeListData.fourKindsOf"
+                                                             :value="item.id"
+                                                    >{{item.label}}
+                                                    </a-radio>
                                                 </a-radio-group>
                                             </li>
                                             <li class="radio-group-item radio-group-item-title">3、肩部（三角肌）
                                             </li>
                                             <li class="radio-group-item">
-                                                <a-radio-group name="radioGroup">
-                                                    <a-radio value="1">正常</a-radio>
-                                                    <a-radio value="2">轻度</a-radio>
-                                                    <a-radio value="3">中度</a-radio>
-                                                    <a-radio value="3">严重</a-radio>
+                                                <a-radio-group v-model="typeThreeList.muscleconditionshoulder">
+                                                    <a-radio v-for="item in typeThreeListData.fourKindsOf"
+                                                             :value="item.id"
+                                                    >{{item.label}}
+                                                    </a-radio>
                                                 </a-radio-group>
                                             </li>
                                             <li class="radio-group-item radio-group-item-title">4、肩胛部（背阔肌、斜方肌、三角肌）
                                             </li>
                                             <li class="radio-group-item">
-                                                <a-radio-group name="radioGroup">
-                                                    <a-radio value="1">正常</a-radio>
-                                                    <a-radio value="2">轻度</a-radio>
-                                                    <a-radio value="3">中度</a-radio>
-                                                    <a-radio value="3">严重</a-radio>
+                                                <a-radio-group v-model="typeThreeList.muscleconditionshoulderblade">
+                                                    <a-radio v-for="item in typeThreeListData.fourKindsOf"
+                                                             :value="item.id"
+                                                    >{{item.label}}
+                                                    </a-radio>
                                                 </a-radio-group>
                                             </li>
                                             <li class="radio-group-item radio-group-item-title">5、手背骨间肌
                                             </li>
                                             <li class="radio-group-item">
-                                                <a-radio-group name="radioGroup">
-                                                    <a-radio value="1">正常</a-radio>
-                                                    <a-radio value="2">轻度</a-radio>
-                                                    <a-radio value="3">中度</a-radio>
+                                                <a-radio-group
+                                                        v-model="typeThreeList.muscleconditiondorsalmuscleofTheBackOfTheHand">
+                                                    <a-radio v-for="item in typeThreeListData.threeKindsOf"
+                                                             :value="item.id"
+                                                    >{{item.label}}
+                                                    </a-radio>
                                                 </a-radio-group>
                                             </li>
                                             <li class="radio-group-item radio-group-item-title">6、大腿（四头肌）
                                             </li>
                                             <li class="radio-group-item">
-                                                <a-radio-group name="radioGroup">
-                                                    <a-radio value="1">正常</a-radio>
-                                                    <a-radio value="2">轻度</a-radio>
+                                                <a-radio-group v-model="typeThreeList.muscleconditionthigh">
+                                                    <a-radio v-for="item in typeThreeListData.twoKindsOf"
+                                                             :value="item.id"
+                                                    >{{item.label}}
+                                                    </a-radio>
                                                 </a-radio-group>
                                             </li>
                                             <li class="radio-group-item radio-group-item-title">7、小腿（腓肠肌）
                                             </li>
                                             <li class="radio-group-item">
-                                                <a-radio-group name="radioGroup">
-                                                    <a-radio value="1">正常</a-radio>
-                                                    <a-radio value="2">轻度</a-radio>
+                                                <a-radio-group
+                                                        v-model="typeThreeList.muscleconditionleg">
+                                                    <a-radio v-for="item in typeThreeListData.twoKindsOf"
+                                                             :value="item.id"
+                                                    >{{item.label}}
+                                                    </a-radio>
                                                 </a-radio-group>
                                             </li>
                                         </ul>
@@ -904,26 +909,34 @@
                                             <li class="radio-group-item radio-group-item-title">1、踝水肿
                                             </li>
                                             <li class="radio-group-item">
-                                                <a-radio-group name="radioGroup">
-                                                    <a-radio value="1">正常</a-radio>
-                                                    <a-radio value="2">轻度</a-radio>
-                                                    <a-radio value="3">中度</a-radio>
+                                                <a-radio-group
+                                                        v-model="typeThreeList.liquidstateankleedema">
+                                                    <a-radio v-for="item in typeThreeListData.threeKindsOf"
+                                                             :value="item.id"
+                                                    >{{item.label}}
+                                                    </a-radio>
                                                 </a-radio-group>
                                             </li>
                                             <li class="radio-group-item radio-group-item-title">2、骶部水肿
                                             </li>
                                             <li class="radio-group-item">
-                                                <a-radio-group name="radioGroup">
-                                                    <a-radio value="1">正常</a-radio>
-                                                    <a-radio value="2">轻度</a-radio>
+                                                <a-radio-group
+                                                        v-model="typeThreeList.liquidstatesacraledema">
+                                                    <a-radio v-for="item in typeThreeListData.twoKindsOf"
+                                                             :value="item.id"
+                                                    >{{item.label}}
+                                                    </a-radio>
                                                 </a-radio-group>
                                             </li>
                                             <li class="radio-group-item radio-group-item-title">3、腹水
                                             </li>
                                             <li class="radio-group-item">
-                                                <a-radio-group name="radioGroup">
-                                                    <a-radio value="1">正常</a-radio>
-                                                    <a-radio value="2">轻度</a-radio>
+                                                <a-radio-group
+                                                        v-model="typeThreeList.liquidstateascites">
+                                                    <a-radio v-for="item in typeThreeListData.twoKindsOf"
+                                                             :value="item.id"
+                                                    >{{item.label}}
+                                                    </a-radio>
                                                 </a-radio-group>
                                             </li>
                                         </ul>
@@ -934,11 +947,12 @@
                                     <li class="radio-group-item radio-group-item-title">本项计分（以肌肉状况情况，主观计分）
                                     </li>
                                     <li class="radio-group-item">
-                                        <a-radio-group name="radioGroup">
-                                            <a-radio value="1">0分</a-radio>
-                                            <a-radio value="2">1分</a-radio>
-                                            <a-radio value="3">2分</a-radio>
-                                            <a-radio value="4">3分</a-radio>
+                                        <a-radio-group
+                                                v-model="typeThreeList.liquidstateoveralledemaacore">
+                                            <a-radio v-for="item in typeThreeListData.liquidstateoveralledemaacore"
+                                                     :value="item.id"
+                                            >{{item.label}}
+                                            </a-radio>
                                         </a-radio-group>
                                     </li>
                                 </ul>
@@ -993,7 +1007,7 @@
                     popTitle: '微型营养评价表',
                 },
                 //  表格类型
-                tableTypeSelect: 2,
+                tableTypeSelect: 3,
                 //  类型1
                 typeOneList: [],
                 typeTwoListData: [
@@ -1038,18 +1052,123 @@
                 ],
                 //  类型2
                 typeTwoList: [],
-                typeThreeListData: [
-                    [],
-                    [],
-                    [],
-                    [
-                        { label: '正常，无限制（0分）', score: 0, id: 1, key: 1, },
-                        { label: '不像往常，但是还能够起床进行轻微的活动（1分）', score: 1, id: 2, key: 2, },
-                        { label: '多数时候不想起床活动，但卧床或桌椅时间不超过半天（2分）', score: 2, id: 3, key: 3, },
-                        { label: '几乎干不了什么，一天大多是时间都卧床或坐在椅子上（3分）', score: 3, id: 4, key: 4, },
-                        { label: '几乎完全卧床，无法起床（3分）', score: 3, id: 5, key: 5, },
+                typeThreeListData: {
+                    //  在过去的两周，患者的体重
+                    weightCondition: [
+                        { label: '减少（1分）', score: '1', id: '1', key: '1', },
+                        { label: '没有改变（0分）', score: '0', id: '2', key: '2', },
+                        { label: '增加（0分）', score: '0', id: '3', key: '3', },
+                    ],
+                    //  过去的1个月以来，患者的进食情况与平时情况相比（以最高分选项为本项计分）
+                    eatingSituation: [
+                        { label: '没有改变（0分）', score: '0', id: '1', key: '1', },
+                        { label: '比以前多（0分）', score: '0', id: '2', key: '2', },
+                        { label: '比以前少（1分）', score: '1', id: '3', key: '3', },
+                    ],
+                    //  患者目前进食
+                    eatingNow: [
+                        { label: '正常饮食（0分）', score: '0', id: '1', key: '1', },
+                        { label: '但比正常情况少(1分）', score: '1', id: '2', key: '2', },
+                        { label: '软饭（2分）', score: '2', id: '3', key: '3', },
+                        { label: '流食（3分）', score: '3', id: '4', key: '4', },
+                        { label: '只能进食营养制剂（4分）', score: '4', id: '5', key: '5', },
+                        { label: '只能通过管饲或静脉营养（0分）', score: '0', id: '6', key: '6', },
+                    ],
+
+                    //  症状
+                    symptom: [
+                        { label: '吃饭没有问题（0分）', score: '0', id: '1', key: '1', },
+                        { label: '恶心（1分）', score: '1', id: '2', key: '2', },
+                        { label: '便秘（1分）', score: '1', id: '3', key: '3', },
+                        { label: '口干（1分）', score: '1', id: '4', key: '4', },
+                        { label: '一会就吃不了（1分）', score: '1', id: '5', key: '5', },
+                        { label: '食品没味（1分）', score: '1', id: '6', key: '6', },
+                        { label: '食品气味不好（1分）', score: '1', id: '7', key: '7', },
+                        { label: '口腔溃疡（2分）', score: '2', id: '8', key: '8', },
+                        { label: '吞咽困难（2分）', score: '2', id: '9', key: '9', },
+                        { label: '没有食欲，不想吃（3分）', score: '3', id: '10', key: '10', },
+                        { label: '呕吐（3分）', score: '3', id: '11', key: '11', },
+                        { label: '腹泻（3分）', score: '3', id: '12', key: '12', },
+                        {
+                            label: '其他',
+                            score: '1',
+                            id: '13',
+                            key: '13',
+                            hasInput: true,
+                            input: '',
+                            placeholder: '其他原因',
+                            suffix: '（如抑郁、经济、牙齿）(1分)',
+                        },
+                        {
+                            label: '疼痛',
+                            score: '3',
+                            id: '14',
+                            key: '14',
+                            hasInput: true,
+                            input: '',
+                            placeholder: '疼痛部位',
+                            suffix: '（部位）（3分）',
+                        },
+                    ],
+
+                    //  活动和身体功能情况评估
+                    activityBodyfunction: [
+                        { label: '正常，无限制（0分）', score: '0', id: '1', key: '1', },
+                        { label: '不像往常，但是还能够起床进行轻微的活动（1分）', score: '1', id: '2', key: '2', },
+                        { label: '多数时候不想起床活动，但卧床或桌椅时间不超过半天（2分）', score: '2', id: '3', key: '3', },
+                        { label: '几乎干不了什么，一天大多是时间都卧床或坐在椅子上（3分）', score: '3', id: '4', key: '4', },
+                        { label: '几乎完全卧床，无法起床（3分）', score: '3', id: '5', key: '5', },
+                    ],
+
+                    //  发热
+                    hot: [
+                        { label: '无（0分）', score: '0', id: '1', key: '1' },
+                        { label: '37.2 ~ 38.3（1分）', score: '1', id: '2', key: '2' },
+                        { label: '38.3 ~ 38.8（2分）', score: '2', id: '3', key: '3' },
+                        { label: '> 38.8（3分）', score: '3', id: '4', key: '4' },
+                    ],
+                    //  持续发热时间
+                    lastHottime: [
+                        { label: '无（0分）', score: '0', id: '1', key: '1', },
+                        { label: '< 72小时（1分）', score: '1', id: '2', key: '2', },
+                        { label: '72小时（2分）', score: '2', id: '3', key: '3', },
+                        { label: '> 72小时（3分）', score: '3', id: '4', key: '4', },
+                    ],
+                    //  是否使用激素
+                    isuseHormone: [
+                        { label: '无（0分）', score: '0', id: '1', key: '1', },
+                        { label: '低剂量（< 10mg）（1分）', score: '1', id: '2', key: '2', },
+                        { label: '中剂量（10 ~ 30mg）（2分）', score: '2', id: '3', key: '3', },
+                        { label: '高剂量（>30mg）（3分）', score: '3', id: '4', key: '4', },
+                    ],
+
+                    //  4类【正常、轻度、中度、严重】
+                    fourKindsOf: [
+                        { label: '正常', score: '0', id: '1', key: '1' },
+                        { label: '轻度', score: '0', id: '2', key: '2' },
+                        { label: '中度', score: '0', id: '3', key: '3' },
+                        { label: '严重', score: '0', id: '4', key: '4' },
+                    ],
+                    //  3类
+                    threeKindsOf: [
+                        { label: '正常', score: '0', id: '1', key: '1' },
+                        { label: '轻度', score: '0', id: '2', key: '2' },
+                        { label: '中度', score: '0', id: '3', key: '3' },
+                    ],
+                    //  2类
+                    twoKindsOf: [
+                        { label: '正常', score: '0', id: '1', key: '1' },
+                        { label: '轻度', score: '0', id: '2', key: '2' },
+                    ],
+
+                    //  本项计分（以肌肉状况情况，主观计分）
+                    liquidstateoveralledemaacore: [
+                        { label: '0分', score: '0', id: '1', key: '1' },
+                        { label: '1分', score: '1', id: '2', key: '2' },
+                        { label: '2分', score: '2', id: '3', key: '3' },
+                        { label: '3分', score: '3', id: '4', key: '4' },
                     ]
-                ],
+                },
                 //  类型3
                 typeThreeList: {},
             };
@@ -1076,8 +1195,77 @@
                     this.typeTwoListData[5][0],
                 ];
                 this.typeThreeList = {
-                    //  活动和身体功能
-                    activityBodyfunction: this.typeThreeListData[3][0],
+                    //  目前患者的身高约为
+                    nowWeight: '',
+                    nowHeight: '',
+                    //  一个月前患者的体重约为
+                    oneagoWeight: '',
+                    //  六个月前患者的体重约为
+                    sixagoWeight: '',
+                    //  在过去的两周，患者的体重
+                    weightCondition: '1',
+
+                    //  过去的1个月以来，患者的进食情况与平时情况相比（以最高分选项为本项计分）
+                    eatingSituation: '1',
+                    //  患者目前进食
+                    eatingNow: '1',
+
+                    //  症状评分
+                    threeScore: '',
+
+                    //  活动和身体功能情况评估
+                    activityBodyfunction: '1',
+
+                    //  相关诊断（特定，多选）
+                    disease: '',
+                    //  年龄
+                    diseaseAge: '',
+                    //  原发疾病分期
+                    diseaseStage: '1',
+                    //  放疗次数
+                    radiotherapyCount: '',
+
+                    //  发热
+                    hot: '1',
+                    //  持续发热时间
+                    lastHottime: '1',
+                    //  是否使用激素
+                    isuseHormone: '1',
+
+                    //  眼眶脂肪垫
+                    fatreserveorbitalfatpad: '1',
+                    //  三头肌皮褶厚度
+                    fatreservetricepsskinfold: '1',
+                    //  下肋脂肪厚度
+                    fatreservelowerribfatthickness: '1',
+                    //  总体脂肪缺乏程度
+                    fatreservetotalfatdeficiency: '1',
+
+                    //  颞部（颞肌）
+                    muscleconditiontemporal: '1',
+                    //  锁骨部位（胸部三角肌）
+                    muscleconditioncollarbone: '1',
+                    //  肩部（三角肌）
+                    muscleconditionshoulder: '1',
+                    //  肩胛部（北阔肌、斜方肌、三角肌）
+                    muscleconditionshoulderblade: '1',
+
+                    //  手背骨间肌
+                    muscleconditiondorsalmuscleofTheBackOfTheHand: '1',
+                    //  大腿（四头肌）
+                    muscleconditionthigh: '1',
+                    //  小腿（腓肠肌）
+                    muscleconditionleg: '1',
+
+                    //  踝水肿
+                    liquidstateankleedema: '1',
+                    //  骶部水肿
+                    liquidstatesacraledema: '1',
+                    //  腹水
+                    liquidstateascites: '1',
+
+                    //  本项计分（以肌肉状况情况，主观计分）
+                    liquidstateoveralledemaacore: '1',
                 };
             },
             //  主要请求
@@ -1136,10 +1324,6 @@
                     switch (this.tableTypeSelect) {
                         case 1:
                             //  微型营养评估表保存
-                            if (this.typeOneList.length !== 20) {
-                                this.$error({ title: '请完善表格' });
-                                return Promise.reject();
-                            }
                             const oneData = this.oneDataTransform();
                             const oneDataTotalScore = this.typeOneList.reduce((a, b) => {return +a + +b;}, 0);
                             return requestPatientAssessSaveMna(Object.assign({
@@ -1151,13 +1335,18 @@
                                 this.$error({ title: '请完善表格' });
                                 return Promise.reject();
                             }
-                            const towData = this.towDataTransform();
-                            console.log(towData);
+                            const twoData = this.twoDataTransform();
+                            console.log(twoData);
                             return requestPatientAssessSaveYbpgb(Object.assign({
                                 age, bmi, height, name, sex, weight, patientId,
-                            }, towData));
+                            }, twoData));
                         case 3:
-                            return requestPatientAssessSavePgsga();
+                            const threeData = this.threeDataTransform();
+                            console.log(threeData);
+                            return Promise.reject();
+                            return requestPatientAssessSavePgsga(Object.assign({
+                                age, bmi, height, name, sex, weight, patientId,
+                            }, threeData));
                         default:
                             throw new Error('错误的类型');
                     }
@@ -1219,7 +1408,7 @@
                 const v20 = this.typeOneList[19];
                 return { v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20 };
             },
-            towDataTransform(){
+            twoDataTransform(){
                 let totalScore = 0;
                 const v1 = this.typeTwoList[0];
                 const v2 = this.typeTwoList[1];
@@ -1248,12 +1437,21 @@
                 };
             },
             threeDataTransform(){
-                let totalScore = 0;
                 const {
                     activityBodyfunction,
                 } = this.typeThreeList;
+                console.log(activityBodyfunction);
+                //  活动和身体功能评分
+                let activityScore;
+                this.typeThreeListData.activityBodyfunction.forEach(item => {
+                    if (item.id === activityBodyfunction) {
+                        activityScore = item.score;
+                    }
+                });
+                //  总分
+                const totalScore = +activityScore;
                 return {
-                    activityBodyfunction,
+                    activityScore,
                     totalScore,
                 };
             },
@@ -1263,6 +1461,7 @@
             }
         },
     };
+    '                                                                                                                                                                           con';
 </script>
 <style scoped>
     @import "~@/css/custom.css";

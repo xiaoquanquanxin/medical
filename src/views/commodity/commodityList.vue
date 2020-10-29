@@ -93,7 +93,9 @@
                  ok-text="确认"
                  cancel-text="取消"
                  @ok="authorizationModalCheck('refShuttleBox')">
-            <ShuttleBox ref="refShuttleBox"/>
+            <ShuttleBox ref="refShuttleBox"
+                        :origin-list="shuttleOriginList"
+            />
         </a-modal>
     </div>
 </template>
@@ -105,9 +107,11 @@
     import ShuttleBox from '@/components/shuttleBox.vue';
     import ViewPrice from '@/components/commodity/viewPrice.vue';
     import { SHUTTLE_BOX } from '../../store/modules/shuttleBox';
-    import { requestGoodsDelete, requestGoodsPage } from '../../api/commodity/commodityList';
+    import { requestGoodsAuthorize, requestGoodsDelete, requestGoodsPage } from '../../api/commodity/commodityList';
     import { requestCategoryList } from '../../api/commodity/commodityClassification';
     import { requestBrandList } from '../../api/commodity/brand';
+    import { requestDeptList } from '../../api/department';
+    import { requestChannelBusinessList } from '../../api/distributors';
 
     const columns = [
         {
@@ -278,6 +282,11 @@
 
                 //  搜索数据
                 searchData: {},
+
+                //  穿梭框数据
+                shuttleOriginList: [],
+                //  穿梭框操作的sItem
+                shuttleBoxData: {},
             };
         },
         created(){
@@ -338,8 +347,22 @@
             },
             //  授权
             authorization(sItem){
-                this.showModal(DIALOG_TYPE.AUTHORIZATION);
-                this.setShuttleBoxType(SHUTTLE_BOX.DIALOG_AUTHORIZATION);
+                this.shuttleBoxData = sItem;
+                //  换接口
+                requestChannelBusinessList()
+                    .then(v => {
+                        this.showModal(DIALOG_TYPE.AUTHORIZATION);
+                        this.setShuttleBoxType(SHUTTLE_BOX.DIALOG_AUTHORIZATION);
+                        this.shuttleOriginList = [];
+                        v.data.forEach(item => {
+                            const data = {};
+                            data.key = item.id.toString();
+                            data.title = item.channelBusinessName;
+                            data.description = item.channelBusinessName;
+                            this.shuttleOriginList.push(data);
+                        });
+                        //  console.log(JSON.parse(JSON.stringify(this.shuttleOriginList)));
+                    });
             },
             //  上架
             onShelf(sItem){
@@ -395,13 +418,27 @@
                     console.log('有错');
                 });
             },
-            //  确认权限
+            //  确认授权
             authorizationModalCheck(refShuttleBox){
                 //  防止连点
                 this.setConfirmLoading(DIALOG_TYPE.AUTHORIZATION, true);
                 const promise = this.$refs[refShuttleBox].handleSubmit();
-                promise.then(v => {
-                    this.hideModal(DIALOG_TYPE.AUTHORIZATION);
+                promise.then(targetKeys => {
+                    console.log(targetKeys);
+                    console.log(this.shuttleBoxData.id);
+                    return requestGoodsAuthorize({
+                        goodsId: this.shuttleBoxData.id,
+                        channelBusinessId: targetKeys
+                    })
+                        .then(v => {
+                            this.$message.success('操作成功');
+                            this.hideModal(DIALOG_TYPE.AUTHORIZATION);
+                            this.searchFn();
+                        })
+                        .catch(err => {
+                            console.log(err);
+                            this.$message.error('操作失败');
+                        });
                 }).catch(error => {
                     console.log('有错');
                 }).then(v => {

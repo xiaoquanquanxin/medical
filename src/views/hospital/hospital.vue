@@ -81,7 +81,7 @@
                  cancel-text="取消"
                  @ok="relatedDepartmentsModalCheck('refShuttleBox')">
             <ShuttleBox ref="refShuttleBox"
-                        :origin-list="departOriginList"
+                        :origin-list="shuttleOriginList"
             />
         </a-modal>
         <!--关联渠道商-->
@@ -162,9 +162,9 @@
                 //  关联渠道商
                 dialogDataDistributors: this.initModal(DIALOG_TYPE.ASSOCIATED_CHANNEL_PROVIDER),
 
-                //  科室关联列表
-                departOriginList: [],
-                //  被操作的穿梭框
+                //  穿梭框数据
+                shuttleOriginList: [],
+                //  穿梭框操作的sItem
                 shuttleBoxData: {}
             };
         },
@@ -236,25 +236,34 @@
                     .then(v => {
                         this.showModal(DIALOG_TYPE.RELATED_DEPARTMENTS);
                         this.setShuttleBoxType(SHUTTLE_BOX.RELATED_DEPARTMENTS);
-                        this.departOriginList = [];
+                        this.shuttleOriginList = [];
                         v.data.forEach(item => {
                             const data = {};
                             data.key = item.id.toString();
                             data.title = item.deptName;
                             data.description = item.deptName;
-                            //  todo    处理被选中
-                            data.chosen = false;
-                            this.departOriginList.push(data);
+                            this.shuttleOriginList.push(data);
                         });
-                        //  console.log(JSON.parse(JSON.stringify(this.departOriginList)));
+                        //  console.log(JSON.parse(JSON.stringify(this.shuttleOriginList)));
                     });
             },
             //  关联渠道商
             associatedChannelProvider(sItem){
                 this.shuttleBoxData = sItem;
-                this.showModal(DIALOG_TYPE.ASSOCIATED_CHANNEL_PROVIDER);
-                alert('缺渠道商列表');
-                //  this.setDistributorsId(sItem.id);
+                alert('已处理');
+                requestDeptList()
+                    .then(v => {
+                        return;
+                        this.showModal(DIALOG_TYPE.ASSOCIATED_CHANNEL_PROVIDER);
+                        this.shuttleOriginList = [];
+                        v.data.forEach(item => {
+                            const data = {};
+                            data.key = item.id.toString();
+                            data.title = item.deptName;
+                            data.description = item.deptName;
+                            this.shuttleOriginList.push(data);
+                        });
+                    });
             },
             //  关联科室确定
             relatedDepartmentsModalCheck(refShuttleBox){
@@ -269,7 +278,13 @@
                         deptIds: targetKeys
                     })
                         .then(v => {
+                            this.$message.success('操作成功');
                             this.hideModal(DIALOG_TYPE.RELATED_DEPARTMENTS);
+                            this.searchFn();
+                        })
+                        .catch(err => {
+                            console.log(err);
+                            this.$message.error('操作失败');
                         });
                 }).catch(error => {
                     console.log('有错');

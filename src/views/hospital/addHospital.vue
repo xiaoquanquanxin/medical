@@ -348,7 +348,8 @@
                 if (!this.hospitalId) {
                     return;
                 }
-                alert('编辑接口没有了');
+                
+                alert('编辑接口没有了，已处理');
                 //  如果是编辑
                 requestHospitalGet(this.hospitalId)
                     .then(v => {
