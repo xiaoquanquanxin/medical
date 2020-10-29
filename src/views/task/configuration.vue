@@ -257,7 +257,7 @@
                         });
                         this.data = data.records;
                         this.pagination = paginationDecode(this.pagination, data);
-                        console.log(JSON.parse(JSON.stringify(data.records[0])));
+                        console.log(JSON.parse(JSON.stringify(data.records[0])).patientId);
                     });
             },
             //  展示的每一页数据变换
@@ -284,7 +284,7 @@
                     okText: '确认',
                     cancelText: '取消',
                     onOk: () => {
-                        const data = { orderStatus: 2, id: sItem.id };
+                        const data = { orderStatus: 2, id: sItem.id, patientId: sItem.patientId };
                         return requestPrescriptionConfigConfirmSave(data)
                             .then(v => {
                                 this.$message.success('操作成功');
@@ -307,7 +307,7 @@
                     okText: '确认',
                     cancelText: '取消',
                     onOk: () => {
-                        const data = { orderStatus: 3, id: sItem.id };
+                        const data = { orderStatus: 3, id: sItem.id, patientId: sItem.patientId };
                         return requestPrescriptionConfigConfirmSave(data)
                             .then(v => {
                                 this.$message.success('操作成功');

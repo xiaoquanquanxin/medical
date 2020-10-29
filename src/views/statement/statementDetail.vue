@@ -180,8 +180,6 @@
         created(){
             console.log('日结id', this.dailyDetailId);
             console.log('月结id', this.monthlyDetailId);
-        },
-        created(){
             this.searchFn();
         },
         methods: {

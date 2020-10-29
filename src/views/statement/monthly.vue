@@ -28,9 +28,14 @@
                 :scroll="scroll"
                 :pagination="false"
         >
+            <!--月结执行时间-->
+            <div slot="settleTimeRange" slot-scope="scope,sItem,sIndex,extra">
+                {{scope.settleStarttime}}至<br> {{scope.settleEndtime}}
+            </div>
+            <!--操作-->
             <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
                 <a-space>
-                    <router-link :to="{name:'monthlyDetail',params:{monthlyDetailId:sIndex}}">详情</router-link>
+                    <router-link :to="{name:'monthlyDetail',params:{monthlyDetailId:sItem.id}}">详情</router-link>
                 </a-space>
             </div>
         </a-table>
@@ -73,33 +78,28 @@
         },
         {
             title: '月结日期',
-            dataIndex: 'aaa',
-            width: 100,
+            dataIndex: 'settleTime',
+            width: 200,
         },
         {
             title: '月结部门',
-            dataIndex: '通用名',
+            dataIndex: 'settleDeptname',
             width: 100,
         },
         {
             title: '操作人',
-            dataIndex: 'unit',
+            dataIndex: 'optionName',
             width: 100,
         },
         {
             title: '月结执行时间',
-            dataIndex: 'specifications',
-            width: 150,
+            scopedSlots: { customRender: 'settleTimeRange' },
+            width: 240,
         },
         {
             title: '月结总额',
-            dataIndex: 'marketPrice',
+            dataIndex: 'settleMoney',
             width: 100,
-        },
-        {
-            title: '实际销售金额',
-            dataIndex: '222',
-            width: 150,
         },
         {
             title: '操作',

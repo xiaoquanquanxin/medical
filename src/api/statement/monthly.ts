@@ -18,3 +18,16 @@ export function requestSettlementMonthOverSelect(data: any) {
 	});
 }
 
+//	确认月结
+export function requestSettlementMosSave(data: any) {
+	return request({
+		url: '/api/settlement/mosSave',
+		method: 'post',
+		data,
+	});
+}
+
+
+
+
+

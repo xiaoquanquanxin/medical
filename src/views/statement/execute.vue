@@ -20,8 +20,10 @@
             />
             <a-space>
                 <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
-                <a-button type="primary" @click="confirmExecute">确认结算</a-button>
             </a-space>
+        </div>
+        <div class="a-input-group">
+            <a-button type="primary" @click="confirmExecute">确认结算</a-button>
         </div>
         <!--表格-->
         <a-table
@@ -68,47 +70,42 @@
     import { oneRowSearch } from '@/utils/tableScroll';
     import GoBackButton from '@/components/goBackButton.vue';
     import { onRangePickerChange } from '../../utils/monthly';
-    import { requestSettlementMonthOverSelect } from '../../api/statement/monthly';
+    import { requestSettlementMonthOverSelect, requestSettlementMosSave } from '../../api/statement/monthly';
 
     const columns = [
         {
             title: '序号',
-            dataIndex: 'commodity',
+            dataIndex: 'index',
             width: 100,
         },
         {
             title: '订单号',
-            dataIndex: 'aaa',
-            width: 100,
+            dataIndex: 'prescriptionCode',
+            width: 200,
         },
         {
             title: '姓名',
-            dataIndex: '通用名',
+            dataIndex: 'name',
             width: 100,
         },
         {
             title: '住院号',
-            dataIndex: 'unit',
+            dataIndex: 'hospitalCode',
             width: 100,
         },
         {
             title: '类型',
-            dataIndex: 'specifications',
+            dataIndex: 'prescriptionType',
             width: 100,
         },
         {
             title: '科室',
-            dataIndex: 'marketPrice',
+            dataIndex: 'deptName',
             width: 100,
         },
         {
             title: '缴费金额',
             dataIndex: '222',
-            width: 100,
-        },
-        {
-            title: '缴费金额',
-            dataIndex: '2223',
             width: 100,
         },
         {
@@ -119,15 +116,6 @@
         {
             title: '缴退方式',
             dataIndex: '22222',
-            width: 100,
-        },
-        {
-            title: '日期',
-            dataIndex: '122222',
-            width: 100,
-        },
-        {
-            title: '收费员',
             width: 100,
         },
     ];
@@ -146,8 +134,10 @@
                 scroll: oneRowSearch(columns),
                 //  搜索数据
                 searchData: {
-                    settleStarttime: null,
-                    settleEndtime: null,
+//                    settleStarttime: null,
+//                    settleEndtime: null,
+                    'settleEndtime': '2020-10-25',
+                    'settleStarttime': '2020-09-25'
                 },
             };
         },
@@ -166,8 +156,10 @@
                         console.log(data);
                         data.records.forEach((item, index) => {
                             item.key = index;
+                            item.index = index + 1;
                         });
                         this.data = data.records;
+                        console.log(JSON.parse(JSON.stringify(this.data[0])));
                         this.pagination = paginationDecode(this.pagination, data);
                     });
             },
@@ -175,15 +167,19 @@
             //  确认结算
             confirmExecute(){
                 this.$confirm({
-                    title: `确认结算${'xxx'}`,
+                    title: `确认结算?`,
                     //  content: 'Bla bla ...',
                     okText: '确认',
                     cancelText: '取消',
-                    onOk(){
-                        return new Promise((resolve, reject) => {
-                            console.log('发请求');
-                            setTimeout(Math.random() > 0.5 ? resolve : reject, 1111);
-                        }).catch(() => console.log('Oops errors!'));
+                    onOk: () => {
+                        return requestSettlementMosSave(this.searchData)
+                            .then(v => {
+                                this.$message.success('操作成功');
+                                this.$router.push({ name: 'monthly' });
+                            })
+                            .catch(v => {
+                                this.$message.error('操作失败');
+                            });
                     },
                     onCancel(){
                         console.log('取消');

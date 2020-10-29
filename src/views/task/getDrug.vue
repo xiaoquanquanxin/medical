@@ -289,8 +289,8 @@
                     //  content: 'Bla bla ...',
                     okText: '确认',
                     cancelText: '取消',
-                    onOk(){
-                        const data = { orderStatus: 5, id: sItem.id };
+                    onOk: () => {
+                        const data = { orderStatus: 5, id: sItem.id, patientId: sItem.patientId };
                         return requestPrescriptionConfigConfirmSave(data)
                             .then(v => {
                                 this.$message.success('操作成功');
