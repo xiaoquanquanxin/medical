@@ -109,11 +109,6 @@
             width: 100,
         },
         {
-            title: '缴费金额',
-            dataIndex: '2223',
-            width: 100,
-        },
-        {
             title: '退费金额',
             dataIndex: '2222',
             width: 100,
@@ -121,15 +116,6 @@
         {
             title: '缴退方式',
             dataIndex: '22222',
-            width: 100,
-        },
-        {
-            title: '日期',
-            dataIndex: '122222',
-            width: 100,
-        },
-        {
-            title: '收费员',
             width: 100,
         },
     ];

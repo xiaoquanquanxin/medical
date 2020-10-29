@@ -27,7 +27,14 @@ export function requestSettlementMosSave(data: any) {
 	});
 }
 
-
+//	月结详情列表分页
+export function requestSettlementyjxq(data: any) {
+	return request({
+		url: '/api/settlement/yjxq',
+		method: 'post',
+		data,
+	});
+}
 
 
 
