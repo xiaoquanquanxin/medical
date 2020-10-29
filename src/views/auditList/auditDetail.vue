@@ -4,15 +4,39 @@
             <div class="a-input-group">
                 <!--返回按钮-->
                 <GoBackButton/>
-                <!--审核状态,auditStatus(1.待审核，2，已审核，3，已驳回)-->
-                <a-button class="basic-button-width" type="primary" @click="passFn"
-                          v-if="auditStatus==1||auditStatus===3">通过
+                <!--只有营养干预详情 、 待审核才能编辑-->
+                <router-link v-if="detailType === 1 && auditStatus === 1"
+                             :to="{name:'editIntervention',params:{patientId,detailId}}">
+                    <a-button class="basic-button-width" type="primary">编辑</a-button>
+                </router-link>
+                <!--只有处方审核才有通过、驳回-->
+                <a-button v-if="detailType ===2 && (auditStatus === 1||auditStatus === 3)"
+                          class="basic-button-width" type="primary" @click="passFn">通过
                 </a-button>
-                <a-button class="basic-button-width" type="primary" @click="rejectFn" v-if="auditStatus==2">驳回
+                <a-button v-if="detailType ===2 && auditStatus === 2"
+                          class="basic-button-width" type="primary" @click="rejectFn">驳回
                 </a-button>
             </div>
             <span data-msg="占位"></span>
-            <b>状态：{{2323232}}</b>
+            <b>状态：
+                <span v-if="detailType === 1" data-msg="营养干预方案详情">
+                    <span v-if="auditStatus === 1 ">待审核</span>
+                    <span v-if="auditStatus === 2 ">已审核</span>
+                    <span v-if="auditStatus === 3 ">已驳回</span>
+                </span>
+                <span v-if="detailType === 2" data-msg="处方审核详情">
+                    <span v-if="auditStatus === 1 ">待审核</span>
+                    <span v-if="auditStatus === 2 ">已审核</span>
+                    <span v-if="auditStatus === 3 ">已驳回</span>
+                </span>
+                <span v-if="detailType === 3" data-msg="配置任务详情">
+                    <span v-if="orderStatus === 1 ">待签收</span>
+                    <span v-if="orderStatus === 2 ">待配置</span>
+                    <span v-if="orderStatus === 3 ">已配置</span>
+                    <span v-if="orderStatus === 4 ">待领取</span>
+                    <span v-if="orderStatus === 5 ">已领取</span>
+                </span>
+            </b>
         </a-row>
         <!--基础表格-->
         <BasicInfoTable
@@ -93,11 +117,37 @@
             EnergyTable,
         },
         data(){
+            const { name } = this.$route;
+            let detailType;
+            switch (name) {
+                case 'interventionDetail':
+                    //  营养干预方案详情
+                    detailType = 1;
+                    break;
+                case 'auditDetail':
+                    //  处方审核详情
+                    detailType = 2;
+                    break;
+                case 'configurationDetail':
+                    //  配置任务详情
+                    detailType = 3;
+                    break;
+                default:
+                    throw new Error(`这是什么页面？${name}`);
+            }
             return {
-                //  auditStatus(1.待审核，2，已审核，3，已驳回)
+                //  审核状态(1.待审核，2，已审核，3，已驳回)
                 auditStatus: null,
+                //  配置状态(1.待签收，2，待配置，3.已配置，4，待领取，5，已领取)
+                orderStatus: null,
+                //  病人id
+                patientId: null,
+
+                //  详情的类型
+                detailType,
+
                 //  详情的id
-                auditDetailId: this.$route.params.auditDetailId,
+                detailId: this.$route.params.detailId,
 
                 //  基础数据
                 basicInfoData: [{
@@ -242,16 +292,18 @@
             };
         },
         created(){
-            console.log('编辑auditDetailId', this.auditDetailId);
+            console.log('编辑detailId', this.detailId);
             this.searchFn();
         },
         methods: {
             //  主要请求
             searchFn(){
-                requestPrescriptionDetail(this.auditDetailId)
+                requestPrescriptionDetail(this.detailId)
                     .then(v => {
                         const { data } = v;
                         this.auditStatus = data.auditStatus;
+                        this.orderStatus = data.orderStatus;
+                        this.patientId = data.patientId;
                         const prescriptionDetail = JSON.parse(data.prescriptionDetail);
                         const { prescriptionName, priod, prescriptionType, } = data;
                         //  头部
@@ -294,25 +346,27 @@
 
             //  通过
             passFn(){
+                const { prescriptionType, prescriptionName } = this.basicInfoData[0];
                 this.$confirm({
-                    title: `确定通过${this.basicInfoData[0].prescriptionName}`,
+                    title: `确定通过${prescriptionName}`,
                     //  content: 'Bla bla ...',
                     okText: '确认',
                     cancelText: '取消',
                     onOk: () => {
                         const data = {
                             //  审核状态auditStatus(1.待审核，2.已审核，3.已驳回)
-                            id: this.auditDetailId,
+                            id: this.detailId,
                             auditStatus: 2,
+                            prescriptionType,
                         };
                         return requestPrescriptionAuditUpdate(data)
                             .then(v => {
                                 this.$message.success('操作成功');
                                 this.searchFn();
                             })
-                            .catch(err=>{
+                            .catch(err => {
                                 this.$message.error('操作失败');
-                            })
+                            });
                     },
                     onCancel(){
                         console.log('取消');
@@ -325,6 +379,7 @@
             },
             //  确认驳回
             rejectModalCheck(refRejectForm){
+                const { prescriptionType, prescriptionName } = this.basicInfoData[0];
                 //  防止连点
                 this.setConfirmLoading(DIALOG_TYPE.REJECT, true);
                 const promise = this.$refs[refRejectForm].handleSubmit();
@@ -332,18 +387,19 @@
                     this.hideModal(DIALOG_TYPE.REJECT);
                     const data = {
                         //  审核状态auditStatus(1.待审核，2.已审核，3.已驳回)
-                        id: this.auditDetailId,
+                        id: this.detailId,
                         auditStatus: 3,
                         rejectReason,
+                        prescriptionType,
                     };
                     return requestPrescriptionAuditUpdate(data)
                         .then(v => {
                             this.$message.success('操作成功');
                             this.searchFn();
                         })
-                        .catch(err=>{
+                        .catch(err => {
                             this.$message.error('操作失败');
-                        })
+                        });
                 }).catch(error => {
                     console.log('有错');
                 }).then(v => {

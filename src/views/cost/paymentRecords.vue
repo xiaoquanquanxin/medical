@@ -19,7 +19,7 @@
                     :pagination="false"
             >
                 <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
-                    <router-link :to="{name:'auditDetail',params:{auditDetailId:sItem.id}}">详情</router-link>
+                    <router-link :to="{name:'auditDetail',params:{detailId:sItem.id}}">详情</router-link>
                 </div>
             </a-table>
             <!--分页-->

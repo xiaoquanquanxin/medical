@@ -74,11 +74,11 @@
                 columns,
             };
         },
-        created(){
-            setTimeout(() => {
-                console.log(JSON.parse(JSON.stringify(this.dataSource[0].list)));
-            }, 1000);
-        }
+//        created(){
+//            setTimeout(() => {
+//                console.log(JSON.parse(JSON.stringify(this.dataSource[0].list)));
+//            }, 1000);
+//        }
     };
 </script>
 <style scoped>

@@ -4,7 +4,11 @@
         <div class="a-input-group">
             <a-input class="basic-input-width" v-model="searchData.prescriptionCode" placeholder="请输入处方条码"/>
             <a-select v-model="searchData.deptId" class="basic-select-width" placeholder="请选择科室">
-            
+                <a-select-option v-for="(item,index) in deptList"
+                                 :key="index"
+                                 :value="item.id">
+                    {{item.deptName}}
+                </a-select-option>
             </a-select>
             <!--审核状态(1.待审核，2，已审核，3，已驳回)-->
             <a-select v-model="searchData.auditStatus" class="basic-select-width" placeholder="请选择状态">
@@ -13,6 +17,7 @@
                 <a-select-option value="3">已驳回</a-select-option>
             </a-select>
             <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
+            <b>搜索条件没区分</b>
         </div>
         <!--表格-->
         <a-table
@@ -35,7 +40,7 @@
             </div>
             <!--操作-->
             <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
-                <router-link :to="{name:'auditDetail',params:{auditDetailId:sItem.id}}">详情</router-link>
+                <router-link :to="{name:'auditDetail',params:{detailId:sItem.id}}">详情</router-link>
             </div>
         </a-table>
         <!--分页-->
@@ -67,6 +72,7 @@
     } from '@/utils/pagination.ts';
     import { oneRowSearch } from '@/utils/tableScroll';
     import { requestPrescriptionAuditPage } from '../../api/auditList';
+    import { requestDeptList } from '../../api/department';
 
     const columns = [
         {
@@ -124,6 +130,7 @@
     export default {
         data(){
             return {
+                deptList: [],
                 data: [],
                 columns,
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
@@ -140,6 +147,15 @@
         methods: {
             //  主要请求
             searchFn(){
+                requestDeptList()
+                    .then(v => {
+                        v.data.forEach(item => {
+                            item.key = item.id;
+                        });
+                        console.log(v.data);
+                        this.deptList = v.data;
+                    });
+
                 requestPrescriptionAuditPage(Object.assign({},
                     { param: this.searchData },
                     paginationEncode(this.pagination)

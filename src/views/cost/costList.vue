@@ -27,7 +27,7 @@
                 <!--{{scope.isRefund}}-->
                 <!--退费了，支付状态不变，处方状态也不变，缴费方式变，是缴费，还是退费-->
                 <a-space>
-                    <router-link :to="{name:'auditDetail',params:{auditDetailId:sItem.id}}">详情</router-link>
+                    <router-link :to="{name:'auditDetail',params:{detailId:sItem.id}}">详情</router-link>
                     <a @click="payCost(sItem)" v-if="scope.payStatus == 0">缴费</a>
                     <span v-if="scope.isRefund == 0">
                     <a @click="returnCost(sItem)" v-if="scope.payStatus == 1">退费</a>

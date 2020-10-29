@@ -63,7 +63,7 @@
             </div>
             <!--操作-->
             <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
-                <router-link :to="{name:'interventionDetail',params:{interventionDetailId:sIndex}}">详情</router-link>
+                <router-link :to="{name:'interventionDetail',params:{detailId:sItem.id}}">详情</router-link>
             </div>
         </a-table>
         <!--分页-->

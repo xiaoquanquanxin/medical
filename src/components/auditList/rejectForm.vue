@@ -27,7 +27,7 @@
         data(){
             return {
                 //  详情的id
-                auditDetailId: this.$route.params.auditDetailId,
+                detailId: this.$route.params.detailId,
                 formItemLayout,
 
                 //  驳回原因

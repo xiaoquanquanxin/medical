@@ -840,9 +840,9 @@ export const asyncRoutesList = [
 			hiddenHistory: true,
 			hidden: true,
 		},
-		path: '/userList/interventionDetail/:patientId/:interventionDetailId',
+		path: '/userList/interventionDetail/:patientId/:detailId',
 		name: 'interventionDetail',
-		component: () => import(/* webpackChunkName: "interventionDetail" */ '@/views/userList/intervention/interventionDetail.vue'),
+		component: () => import(/* webpackChunkName: "auditDetail" */ '@/views/auditList/auditDetail.vue'),
 	},
 	{
 		meta: {
@@ -863,7 +863,7 @@ export const asyncRoutesList = [
 			hiddenHistory: true,
 			hidden: true,
 		},
-		path: '/userList/editIntervention/:patientId/:interventionDetailId',
+		path: '/userList/editIntervention/:patientId/:detailId',
 		name: 'editIntervention',
 		component: () => import(/* webpackChunkName: "addIntervention" */ '@/views/userList/intervention/addIntervention.vue'),
 	},
@@ -884,7 +884,7 @@ export const asyncRoutesList = [
 			hiddenHistory: true,
 			hidden: true,
 		},
-		path: '/auditList/auditDetail/:auditDetailId',
+		path: '/auditList/auditDetail/:detailId',
 		name: 'auditDetail',
 		component: () => import(/* webpackChunkName: "auditDetail" */ '@/views/auditList/auditDetail.vue'),
 	},
@@ -917,8 +917,8 @@ export const asyncRoutesList = [
 					hidden: true,
 				},
 				name: 'configurationDetail',
-				path: '/task/configurationDetail/:configurationDetailId',
-				component: () => import(/* webpackChunkName: "configurationDetail" */ '@/views/task/configurationDetail.vue'),
+				path: '/task/configurationDetail/:detailId',
+				component: () => import(/* webpackChunkName: "auditDetail" */ '@/views/auditList/auditDetail.vue'),
 			},
 			{
 				meta: {
