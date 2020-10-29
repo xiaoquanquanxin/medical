@@ -33,13 +33,13 @@
                         <a-radio-group v-model="typeOneList[0]" class="radio-group">
                             <ul class="radio-group-list">
                                 <li class="radio-group-item">
-                                    <a-radio :value="1">严重的食欲减退</a-radio>
+                                    <a-radio value="1">严重的食欲减退</a-radio>
                                 </li>
                                 <li class="radio-group-item">
-                                    <a-radio :value="2">中等程度食欲减退</a-radio>
+                                    <a-radio value="2">中等程度食欲减退</a-radio>
                                 </li>
                                 <li class="radio-group-item">
-                                    <a-radio :value="3">食欲减退</a-radio>
+                                    <a-radio value="3">食欲减退</a-radio>
                                 </li>
                             </ul>
                         </a-radio-group>
@@ -54,16 +54,16 @@
                         <a-radio-group v-model="typeOneList[1]" class="radio-group">
                             <ul class="radio-group-list">
                                 <li class="radio-group-item">
-                                    <a-radio :value="1">体重减轻超过3千克</a-radio>
+                                    <a-radio value="1">体重减轻超过3千克</a-radio>
                                 </li>
                                 <li class="radio-group-item">
-                                    <a-radio :value="2">不清楚</a-radio>
+                                    <a-radio value="2">不清楚</a-radio>
                                 </li>
                                 <li class="radio-group-item">
-                                    <a-radio :value="3">体重减轻1 ~ 3kg</a-radio>
+                                    <a-radio value="3">体重减轻1 ~ 3kg</a-radio>
                                 </li>
                                 <li class="radio-group-item">
-                                    <a-radio :value="4">无体重下降</a-radio>
+                                    <a-radio value="4">无体重下降</a-radio>
                                 </li>
                             </ul>
                         </a-radio-group>
@@ -78,13 +78,13 @@
                         <a-radio-group v-model="typeOneList[2]" class="radio-group">
                             <ul class="radio-group-list">
                                 <li class="radio-group-item">
-                                    <a-radio :value="1">卧床或长期坐着</a-radio>
+                                    <a-radio value="1">卧床或长期坐着</a-radio>
                                 </li>
                                 <li class="radio-group-item">
-                                    <a-radio :value="2">能离床或椅子，但不能外出</a-radio>
+                                    <a-radio value="2">能离床或椅子，但不能外出</a-radio>
                                 </li>
                                 <li class="radio-group-item">
-                                    <a-radio :value="3">能独立外出</a-radio>
+                                    <a-radio value="3">能独立外出</a-radio>
                                 </li>
                             </ul>
                         </a-radio-group>
@@ -99,10 +99,10 @@
                         <a-radio-group v-model="typeOneList[3]" class="radio-group">
                             <ul class="radio-group-list">
                                 <li class="radio-group-item">
-                                    <a-radio :value="1">是</a-radio>
+                                    <a-radio value="1">是</a-radio>
                                 </li>
                                 <li class="radio-group-item">
-                                    <a-radio :value="2">否</a-radio>
+                                    <a-radio value="2">否</a-radio>
                                 </li>
                             </ul>
                         </a-radio-group>
@@ -117,13 +117,13 @@
                         <a-radio-group v-model="typeOneList[4]" class="radio-group">
                             <ul class="radio-group-list">
                                 <li class="radio-group-item">
-                                    <a-radio :value="1">严重痴呆或抑郁</a-radio>
+                                    <a-radio value="1">严重痴呆或抑郁</a-radio>
                                 </li>
                                 <li class="radio-group-item">
-                                    <a-radio :value="2">轻度痴呆</a-radio>
+                                    <a-radio value="2">轻度痴呆</a-radio>
                                 </li>
                                 <li class="radio-group-item">
-                                    <a-radio :value="3">无心里问题</a-radio>
+                                    <a-radio value="3">无心里问题</a-radio>
                                 </li>
                             </ul>
                         </a-radio-group>
@@ -138,16 +138,16 @@
                         <a-radio-group v-model="typeOneList[5]" class="radio-group">
                             <ul class="radio-group-list">
                                 <li class="radio-group-item">
-                                    <a-radio :value="1">小于19</a-radio>
+                                    <a-radio value="1">小于19</a-radio>
                                 </li>
                                 <li class="radio-group-item">
-                                    <a-radio :value="2">19 - 21</a-radio>
+                                    <a-radio value="2">19 - 21</a-radio>
                                 </li>
                                 <li class="radio-group-item">
-                                    <a-radio :value="3">21 - 23</a-radio>
+                                    <a-radio value="3">21 - 23</a-radio>
                                 </li>
                                 <li class="radio-group-item">
-                                    <a-radio :value="3">大于或等于23</a-radio>
+                                    <a-radio value="3">大于或等于23</a-radio>
                                 </li>
                             </ul>
                         </a-radio-group>
@@ -162,10 +162,10 @@
                         <a-radio-group v-model="typeOneList[6]" class="radio-group">
                             <ul class="radio-group-list">
                                 <li class="radio-group-item">
-                                    <a-radio :value="1">是</a-radio>
+                                    <a-radio value="1">是</a-radio>
                                 </li>
                                 <li class="radio-group-item">
-                                    <a-radio :value="2">否</a-radio>
+                                    <a-radio value="2">否</a-radio>
                                 </li>
                             </ul>
                         </a-radio-group>
@@ -180,10 +180,10 @@
                         <a-radio-group v-model="typeOneList[7]" class="radio-group">
                             <ul class="radio-group-list">
                                 <li class="radio-group-item">
-                                    <a-radio :value="1">是</a-radio>
+                                    <a-radio value="1">是</a-radio>
                                 </li>
                                 <li class="radio-group-item">
-                                    <a-radio :value="2">否</a-radio>
+                                    <a-radio value="2">否</a-radio>
                                 </li>
                             </ul>
                         </a-radio-group>
@@ -198,10 +198,10 @@
                         <a-radio-group v-model="typeOneList[8]" class="radio-group">
                             <ul class="radio-group-list">
                                 <li class="radio-group-item">
-                                    <a-radio :value="1">是</a-radio>
+                                    <a-radio value="1">是</a-radio>
                                 </li>
                                 <li class="radio-group-item">
-                                    <a-radio :value="2">否</a-radio>
+                                    <a-radio value="2">否</a-radio>
                                 </li>
                             </ul>
                         </a-radio-group>
@@ -216,13 +216,13 @@
                         <a-radio-group v-model="typeOneList[9]" class="radio-group">
                             <ul class="radio-group-list">
                                 <li class="radio-group-item">
-                                    <a-radio :value="1">1餐</a-radio>
+                                    <a-radio value="1">1餐</a-radio>
                                 </li>
                                 <li class="radio-group-item">
-                                    <a-radio :value="2">2餐</a-radio>
+                                    <a-radio value="2">2餐</a-radio>
                                 </li>
                                 <li class="radio-group-item">
-                                    <a-radio :value="3">3餐</a-radio>
+                                    <a-radio value="3">3餐</a-radio>
                                 </li>
                             </ul>
                         </a-radio-group>
@@ -237,10 +237,10 @@
                         <a-radio-group v-model="typeOneList[10]" class="radio-group">
                             <ul class="radio-group-list">
                                 <li class="radio-group-item">
-                                    <a-radio :value="1">是</a-radio>
+                                    <a-radio value="1">是</a-radio>
                                 </li>
                                 <li class="radio-group-item">
-                                    <a-radio :value="2">否</a-radio>
+                                    <a-radio value="2">否</a-radio>
                                 </li>
                             </ul>
                         </a-radio-group>
@@ -255,10 +255,10 @@
                         <a-radio-group v-model="typeOneList[11]" class="radio-group">
                             <ul class="radio-group-list">
                                 <li class="radio-group-item">
-                                    <a-radio :value="1">是</a-radio>
+                                    <a-radio value="1">是</a-radio>
                                 </li>
                                 <li class="radio-group-item">
-                                    <a-radio :value="2">否</a-radio>
+                                    <a-radio value="2">否</a-radio>
                                 </li>
                             </ul>
                         </a-radio-group>
@@ -273,10 +273,10 @@
                         <a-radio-group v-model="typeOneList[12]" class="radio-group">
                             <ul class="radio-group-list">
                                 <li class="radio-group-item">
-                                    <a-radio :value="1">是</a-radio>
+                                    <a-radio value="1">是</a-radio>
                                 </li>
                                 <li class="radio-group-item">
-                                    <a-radio :value="2">否</a-radio>
+                                    <a-radio value="2">否</a-radio>
                                 </li>
                             </ul>
                         </a-radio-group>
@@ -291,10 +291,10 @@
                         <a-radio-group v-model="typeOneList[13]" class="radio-group">
                             <ul class="radio-group-list">
                                 <li class="radio-group-item">
-                                    <a-radio :value="1">是</a-radio>
+                                    <a-radio value="1">是</a-radio>
                                 </li>
                                 <li class="radio-group-item">
-                                    <a-radio :value="2">否</a-radio>
+                                    <a-radio value="2">否</a-radio>
                                 </li>
                             </ul>
                         </a-radio-group>
@@ -309,13 +309,13 @@
                         <a-radio-group v-model="typeOneList[14]" class="radio-group">
                             <ul class="radio-group-list">
                                 <li class="radio-group-item">
-                                    <a-radio :value="1">小于3杯</a-radio>
+                                    <a-radio value="1">小于3杯</a-radio>
                                 </li>
                                 <li class="radio-group-item">
-                                    <a-radio :value="2">3 ~ 5杯</a-radio>
+                                    <a-radio value="2">3 ~ 5杯</a-radio>
                                 </li>
                                 <li class="radio-group-item">
-                                    <a-radio :value="3">大于5杯</a-radio>
+                                    <a-radio value="3">大于5杯</a-radio>
                                 </li>
                             </ul>
                         </a-radio-group>
@@ -330,13 +330,13 @@
                         <a-radio-group v-model="typeOneList[15]" class="radio-group">
                             <ul class="radio-group-list">
                                 <li class="radio-group-item">
-                                    <a-radio :value="1">无法独立进食</a-radio>
+                                    <a-radio value="1">无法独立进食</a-radio>
                                 </li>
                                 <li class="radio-group-item">
-                                    <a-radio :value="2">独立进食稍有困难</a-radio>
+                                    <a-radio value="2">独立进食稍有困难</a-radio>
                                 </li>
                                 <li class="radio-group-item">
-                                    <a-radio :value="3">完全独立进食</a-radio>
+                                    <a-radio value="3">完全独立进食</a-radio>
                                 </li>
                             </ul>
                         </a-radio-group>
@@ -351,13 +351,13 @@
                         <a-radio-group v-model="typeOneList[16]" class="radio-group">
                             <ul class="radio-group-list">
                                 <li class="radio-group-item">
-                                    <a-radio :value="1">营养不良</a-radio>
+                                    <a-radio value="1">营养不良</a-radio>
                                 </li>
                                 <li class="radio-group-item">
-                                    <a-radio :value="2">不能确定</a-radio>
+                                    <a-radio value="2">不能确定</a-radio>
                                 </li>
                                 <li class="radio-group-item">
-                                    <a-radio :value="3">营养良好</a-radio>
+                                    <a-radio value="3">营养良好</a-radio>
                                 </li>
                             </ul>
                         </a-radio-group>
@@ -372,16 +372,16 @@
                         <a-radio-group v-model="typeOneList[17]" class="radio-group">
                             <ul class="radio-group-list">
                                 <li class="radio-group-item">
-                                    <a-radio :value="1">不太好</a-radio>
+                                    <a-radio value="1">不太好</a-radio>
                                 </li>
                                 <li class="radio-group-item">
-                                    <a-radio :value="2">不知道</a-radio>
+                                    <a-radio value="2">不知道</a-radio>
                                 </li>
                                 <li class="radio-group-item">
-                                    <a-radio :value="3">一样好</a-radio>
+                                    <a-radio value="3">一样好</a-radio>
                                 </li>
                                 <li class="radio-group-item">
-                                    <a-radio :value="4">更好</a-radio>
+                                    <a-radio value="4">更好</a-radio>
                                 </li>
                             </ul>
                         </a-radio-group>
@@ -396,13 +396,13 @@
                         <a-radio-group v-model="typeOneList[18]" class="radio-group">
                             <ul class="radio-group-list">
                                 <li class="radio-group-item">
-                                    <a-radio :value="1">小于21</a-radio>
+                                    <a-radio value="1">小于21</a-radio>
                                 </li>
                                 <li class="radio-group-item">
-                                    <a-radio :value="2">21 ~ 22</a-radio>
+                                    <a-radio value="2">21 ~ 22</a-radio>
                                 </li>
                                 <li class="radio-group-item">
-                                    <a-radio :value="3">大于等于22</a-radio>
+                                    <a-radio value="3">大于等于22</a-radio>
                                 </li>
                             </ul>
                         </a-radio-group>
@@ -417,10 +417,10 @@
                         <a-radio-group v-model="typeOneList[19]" class="radio-group">
                             <ul class="radio-group-list">
                                 <li class="radio-group-item">
-                                    <a-radio :value="1">小于31</a-radio>
+                                    <a-radio value="1">小于31</a-radio>
                                 </li>
                                 <li class="radio-group-item">
-                                    <a-radio :value="2">大于等于31</a-radio>
+                                    <a-radio value="2">大于等于31</a-radio>
                                 </li>
                             </ul>
                         </a-radio-group>
@@ -569,9 +569,9 @@
                                 <a-space>
                                     <span>在过去的两周，患者的体重</span>
                                     <a-radio-group name="radioGroup">
-                                        <a-radio :value="1">减少（1分）</a-radio>
-                                        <a-radio :value="2">没有改变（0分）</a-radio>
-                                        <a-radio :value="3">增加（0分）</a-radio>
+                                        <a-radio value="1">减少（1分）</a-radio>
+                                        <a-radio value="2">没有改变（0分）</a-radio>
+                                        <a-radio value="3">增加（0分）</a-radio>
                                     </a-radio-group>
                                 </a-space>
                             </li>
@@ -589,20 +589,20 @@
                             </li>
                             <li class="radio-group-item">
                                 <a-radio-group name="radioGroup">
-                                    <a-radio :value="1">没有改变（0分）</a-radio>
-                                    <a-radio :value="2">比以前多（0分）</a-radio>
-                                    <a-radio :value="3">比以前少（0分）</a-radio>
+                                    <a-radio value="1">没有改变（0分）</a-radio>
+                                    <a-radio value="2">比以前多（0分）</a-radio>
+                                    <a-radio value="3">比以前少（0分）</a-radio>
                                 </a-radio-group>
                             </li>
                             <li class="radio-group-item radio-group-item-title">2、患者目前进食</li>
                             <li class="radio-group-item">
                                 <a-radio-group name="radioGroup">
-                                    <a-radio :value="1">正常饮食（0分）</a-radio>
-                                    <a-radio :value="2">但比正常情况少(1分）</a-radio>
-                                    <a-radio :value="3">软饭（2分）</a-radio>
-                                    <a-radio :value="4">流食（3分）</a-radio>
-                                    <a-radio :value="5">只能进食营养制剂（4分）</a-radio>
-                                    <a-radio :value="6">只能通过管饲或静脉营养（0分）</a-radio>
+                                    <a-radio value="1">正常饮食（0分）</a-radio>
+                                    <a-radio value="2">但比正常情况少(1分）</a-radio>
+                                    <a-radio value="3">软饭（2分）</a-radio>
+                                    <a-radio value="4">流食（3分）</a-radio>
+                                    <a-radio value="5">只能进食营养制剂（4分）</a-radio>
+                                    <a-radio value="6">只能通过管饲或静脉营养（0分）</a-radio>
                                 </a-radio-group>
                             </li>
                         </ul>
@@ -704,11 +704,11 @@
                             <li class="radio-group-item radio-group-item-title">3、原发疾病分期</li>
                             <li class="radio-group-item">
                                 <a-radio-group name="radioGroup">
-                                    <a-radio :value="1">1期</a-radio>
-                                    <a-radio :value="2">2期</a-radio>
-                                    <a-radio :value="3">3期</a-radio>
-                                    <a-radio :value="4">4期</a-radio>
-                                    <a-radio :value="5">
+                                    <a-radio value="1">1期</a-radio>
+                                    <a-radio value="2">2期</a-radio>
+                                    <a-radio value="3">3期</a-radio>
+                                    <a-radio value="4">4期</a-radio>
+                                    <a-radio value="5">
                                         <a-space>
                                             <span>其他</span>
                                             <a-input placeholder="请输入其他" size="small"/>
@@ -735,28 +735,28 @@
                             <li class="radio-group-item radio-group-item-title">1、发热</li>
                             <li class="radio-group-item">
                                 <a-radio-group name="radioGroup">
-                                    <a-radio :value="1">无（0分）</a-radio>
-                                    <a-radio :value="2">37.2 ~ 38.3（1分）</a-radio>
-                                    <a-radio :value="3">38.3 ~ 38.8（2分）</a-radio>
-                                    <a-radio :value="4">> 38.8（3分）</a-radio>
+                                    <a-radio value="1">无（0分）</a-radio>
+                                    <a-radio value="2">37.2 ~ 38.3（1分）</a-radio>
+                                    <a-radio value="3">38.3 ~ 38.8（2分）</a-radio>
+                                    <a-radio value="4">> 38.8（3分）</a-radio>
                                 </a-radio-group>
                             </li>
                             <li class="radio-group-item radio-group-item-title">2、持续发热时间</li>
                             <li class="radio-group-item">
                                 <a-radio-group name="radioGroup">
-                                    <a-radio :value="1">无（0分）</a-radio>
-                                    <a-radio :value="2">< 72小时（1分）</a-radio>
-                                    <a-radio :value="3">72小时（2分）</a-radio>
-                                    <a-radio :value="4">> 72小时（3分）</a-radio>
+                                    <a-radio value="1">无（0分）</a-radio>
+                                    <a-radio value="2">< 72小时（1分）</a-radio>
+                                    <a-radio value="3">72小时（2分）</a-radio>
+                                    <a-radio value="4">> 72小时（3分）</a-radio>
                                 </a-radio-group>
                             </li>
                             <li class="radio-group-item radio-group-item-title">3、是否使用激素（如波尼松或相当剂量的其他激素/天）</li>
                             <li class="radio-group-item">
                                 <a-radio-group name="radioGroup">
-                                    <a-radio :value="1">无（0分）</a-radio>
-                                    <a-radio :value="2">低剂量（< 10mg）（1分）</a-radio>
-                                    <a-radio :value="3">中剂量（10 ~ 30mg）（2分）</a-radio>
-                                    <a-radio :value="4">高剂量（>30mg）（3分）</a-radio>
+                                    <a-radio value="1">无（0分）</a-radio>
+                                    <a-radio value="2">低剂量（< 10mg）（1分）</a-radio>
+                                    <a-radio value="3">中剂量（10 ~ 30mg）（2分）</a-radio>
+                                    <a-radio value="4">高剂量（>30mg）（3分）</a-radio>
                                 </a-radio-group>
                             </li>
                         </ul>
@@ -780,40 +780,40 @@
                                             </li>
                                             <li class="radio-group-item">
                                                 <a-radio-group name="radioGroup">
-                                                    <a-radio :value="1">正常</a-radio>
-                                                    <a-radio :value="2">轻度</a-radio>
-                                                    <a-radio :value="3">中度</a-radio>
-                                                    <a-radio :value="3">严重</a-radio>
+                                                    <a-radio value="1">正常</a-radio>
+                                                    <a-radio value="2">轻度</a-radio>
+                                                    <a-radio value="3">中度</a-radio>
+                                                    <a-radio value="3">严重</a-radio>
                                                 </a-radio-group>
                                             </li>
                                             <li class="radio-group-item radio-group-item-title">2、三头肌皮褶厚度
                                             </li>
                                             <li class="radio-group-item">
                                                 <a-radio-group name="radioGroup">
-                                                    <a-radio :value="1">正常</a-radio>
-                                                    <a-radio :value="2">轻度</a-radio>
-                                                    <a-radio :value="3">中度</a-radio>
-                                                    <a-radio :value="3">严重</a-radio>
+                                                    <a-radio value="1">正常</a-radio>
+                                                    <a-radio value="2">轻度</a-radio>
+                                                    <a-radio value="3">中度</a-radio>
+                                                    <a-radio value="3">严重</a-radio>
                                                 </a-radio-group>
                                             </li>
                                             <li class="radio-group-item radio-group-item-title">3、下肋脂肪厚度
                                             </li>
                                             <li class="radio-group-item">
                                                 <a-radio-group name="radioGroup">
-                                                    <a-radio :value="1">正常</a-radio>
-                                                    <a-radio :value="2">轻度</a-radio>
-                                                    <a-radio :value="3">中度</a-radio>
-                                                    <a-radio :value="3">严重</a-radio>
+                                                    <a-radio value="1">正常</a-radio>
+                                                    <a-radio value="2">轻度</a-radio>
+                                                    <a-radio value="3">中度</a-radio>
+                                                    <a-radio value="3">严重</a-radio>
                                                 </a-radio-group>
                                             </li>
                                             <li class="radio-group-item radio-group-item-title">4、总体脂肪缺乏程度
                                             </li>
                                             <li class="radio-group-item">
                                                 <a-radio-group name="radioGroup">
-                                                    <a-radio :value="1">正常</a-radio>
-                                                    <a-radio :value="2">轻度</a-radio>
-                                                    <a-radio :value="3">中度</a-radio>
-                                                    <a-radio :value="3">严重</a-radio>
+                                                    <a-radio value="1">正常</a-radio>
+                                                    <a-radio value="2">轻度</a-radio>
+                                                    <a-radio value="3">中度</a-radio>
+                                                    <a-radio value="3">严重</a-radio>
                                                 </a-radio-group>
                                             </li>
                                         </ul>
@@ -830,65 +830,65 @@
                                             </li>
                                             <li class="radio-group-item">
                                                 <a-radio-group name="radioGroup">
-                                                    <a-radio :value="1">正常</a-radio>
-                                                    <a-radio :value="2">轻度</a-radio>
-                                                    <a-radio :value="3">中度</a-radio>
-                                                    <a-radio :value="3">严重</a-radio>
+                                                    <a-radio value="1">正常</a-radio>
+                                                    <a-radio value="2">轻度</a-radio>
+                                                    <a-radio value="3">中度</a-radio>
+                                                    <a-radio value="3">严重</a-radio>
                                                 </a-radio-group>
                                             </li>
                                             <li class="radio-group-item radio-group-item-title">2、锁骨部位（胸部三角肌）
                                             </li>
                                             <li class="radio-group-item">
                                                 <a-radio-group name="radioGroup">
-                                                    <a-radio :value="1">正常</a-radio>
-                                                    <a-radio :value="2">轻度</a-radio>
-                                                    <a-radio :value="3">中度</a-radio>
-                                                    <a-radio :value="3">严重</a-radio>
+                                                    <a-radio value="1">正常</a-radio>
+                                                    <a-radio value="2">轻度</a-radio>
+                                                    <a-radio value="3">中度</a-radio>
+                                                    <a-radio value="3">严重</a-radio>
                                                 </a-radio-group>
                                             </li>
                                             <li class="radio-group-item radio-group-item-title">3、肩部（三角肌）
                                             </li>
                                             <li class="radio-group-item">
                                                 <a-radio-group name="radioGroup">
-                                                    <a-radio :value="1">正常</a-radio>
-                                                    <a-radio :value="2">轻度</a-radio>
-                                                    <a-radio :value="3">中度</a-radio>
-                                                    <a-radio :value="3">严重</a-radio>
+                                                    <a-radio value="1">正常</a-radio>
+                                                    <a-radio value="2">轻度</a-radio>
+                                                    <a-radio value="3">中度</a-radio>
+                                                    <a-radio value="3">严重</a-radio>
                                                 </a-radio-group>
                                             </li>
                                             <li class="radio-group-item radio-group-item-title">4、肩胛部（背阔肌、斜方肌、三角肌）
                                             </li>
                                             <li class="radio-group-item">
                                                 <a-radio-group name="radioGroup">
-                                                    <a-radio :value="1">正常</a-radio>
-                                                    <a-radio :value="2">轻度</a-radio>
-                                                    <a-radio :value="3">中度</a-radio>
-                                                    <a-radio :value="3">严重</a-radio>
+                                                    <a-radio value="1">正常</a-radio>
+                                                    <a-radio value="2">轻度</a-radio>
+                                                    <a-radio value="3">中度</a-radio>
+                                                    <a-radio value="3">严重</a-radio>
                                                 </a-radio-group>
                                             </li>
                                             <li class="radio-group-item radio-group-item-title">5、手背骨间肌
                                             </li>
                                             <li class="radio-group-item">
                                                 <a-radio-group name="radioGroup">
-                                                    <a-radio :value="1">正常</a-radio>
-                                                    <a-radio :value="2">轻度</a-radio>
-                                                    <a-radio :value="3">中度</a-radio>
+                                                    <a-radio value="1">正常</a-radio>
+                                                    <a-radio value="2">轻度</a-radio>
+                                                    <a-radio value="3">中度</a-radio>
                                                 </a-radio-group>
                                             </li>
                                             <li class="radio-group-item radio-group-item-title">6、大腿（四头肌）
                                             </li>
                                             <li class="radio-group-item">
                                                 <a-radio-group name="radioGroup">
-                                                    <a-radio :value="1">正常</a-radio>
-                                                    <a-radio :value="2">轻度</a-radio>
+                                                    <a-radio value="1">正常</a-radio>
+                                                    <a-radio value="2">轻度</a-radio>
                                                 </a-radio-group>
                                             </li>
                                             <li class="radio-group-item radio-group-item-title">7、小腿（腓肠肌）
                                             </li>
                                             <li class="radio-group-item">
                                                 <a-radio-group name="radioGroup">
-                                                    <a-radio :value="1">正常</a-radio>
-                                                    <a-radio :value="2">轻度</a-radio>
+                                                    <a-radio value="1">正常</a-radio>
+                                                    <a-radio value="2">轻度</a-radio>
                                                 </a-radio-group>
                                             </li>
                                         </ul>
@@ -905,25 +905,25 @@
                                             </li>
                                             <li class="radio-group-item">
                                                 <a-radio-group name="radioGroup">
-                                                    <a-radio :value="1">正常</a-radio>
-                                                    <a-radio :value="2">轻度</a-radio>
-                                                    <a-radio :value="3">中度</a-radio>
+                                                    <a-radio value="1">正常</a-radio>
+                                                    <a-radio value="2">轻度</a-radio>
+                                                    <a-radio value="3">中度</a-radio>
                                                 </a-radio-group>
                                             </li>
                                             <li class="radio-group-item radio-group-item-title">2、骶部水肿
                                             </li>
                                             <li class="radio-group-item">
                                                 <a-radio-group name="radioGroup">
-                                                    <a-radio :value="1">正常</a-radio>
-                                                    <a-radio :value="2">轻度</a-radio>
+                                                    <a-radio value="1">正常</a-radio>
+                                                    <a-radio value="2">轻度</a-radio>
                                                 </a-radio-group>
                                             </li>
                                             <li class="radio-group-item radio-group-item-title">3、腹水
                                             </li>
                                             <li class="radio-group-item">
                                                 <a-radio-group name="radioGroup">
-                                                    <a-radio :value="1">正常</a-radio>
-                                                    <a-radio :value="2">轻度</a-radio>
+                                                    <a-radio value="1">正常</a-radio>
+                                                    <a-radio value="2">轻度</a-radio>
                                                 </a-radio-group>
                                             </li>
                                         </ul>
@@ -935,10 +935,10 @@
                                     </li>
                                     <li class="radio-group-item">
                                         <a-radio-group name="radioGroup">
-                                            <a-radio :value="1">0分</a-radio>
-                                            <a-radio :value="2">1分</a-radio>
-                                            <a-radio :value="3">2分</a-radio>
-                                            <a-radio :value="4">3分</a-radio>
+                                            <a-radio value="1">0分</a-radio>
+                                            <a-radio value="2">1分</a-radio>
+                                            <a-radio value="3">2分</a-radio>
+                                            <a-radio value="4">3分</a-radio>
                                         </a-radio-group>
                                     </li>
                                 </ul>
@@ -993,7 +993,7 @@
                     popTitle: '微型营养评价表',
                 },
                 //  表格类型
-                tableTypeSelect: 3,
+                tableTypeSelect: 2,
                 //  类型1
                 typeOneList: [],
                 typeTwoListData: [
@@ -1066,7 +1066,7 @@
                 'setPatientBasicInfo',
             ]),
             initList(){
-                this.typeOneList = new Array(20).fill(1);
+                this.typeOneList = new Array(20).fill('1');
                 this.typeTwoList = [
                     this.typeTwoListData[0][0],
                     this.typeTwoListData[1][0],
@@ -1112,24 +1112,27 @@
                     console.log('详情id ,有详情id的是编辑', this.assessmentDetailId);
                     PatientAssessSelectAssesById(this.assessmentDetailId)
                         .then(v => {
-                            console.log(v);
+                            //  是第一个表
+                            if (v.data.v20 !== undefined) {
+                                this.tableTypeSelect = 1;
+                                this.setOneData(v.data);
+                            }
                         });
                 }
             },
             //  保存
             saveScreening(){
                 console.log('保存');
+                const {
+                    birth: age,
+                    bmi,
+                    height,
+                    name,
+                    sex,
+                    weight,
+                } = this.patientBasicInfo;
+                const patientId = Number(this.patientId);
                 (() => {
-                    const {
-                        birth: age,
-                        bmi,
-                        height,
-                        name,
-                        sex,
-                        weight,
-                    } = this.patientBasicInfo;
-                    const patientId = Number(this.patientId);
-
                     switch (this.tableTypeSelect) {
                         case 1:
                             //  微型营养评估表保存
@@ -1138,7 +1141,7 @@
                                 return Promise.reject();
                             }
                             const oneData = this.oneDataTransform();
-                            const oneDataTotalScore = this.typeOneList.reduce((a, b) => {return a + b;}, 0);
+                            const oneDataTotalScore = this.typeOneList.reduce((a, b) => {return +a + +b;}, 0);
                             return requestPatientAssessSaveMna(Object.assign({
                                 age, bmi, height, name, sex, weight, patientId, totalScore: oneDataTotalScore,
                             }, oneData));
@@ -1160,11 +1163,38 @@
                     }
                 })()
                     .then(v => {
-
+                        this.$message.success('操作成功');
+                        this.$router.push({ name: 'assessment', params: { patientId: this.patientId.toString() } });
                     })
                     .catch(err => {
                         console.log(err);
+                        this.$message.error('操作失败');
                     });
+            },
+            //  设置第一张表
+            setOneData(data){
+                const { v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20 } = data;
+                console.log(v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20);
+                this.typeOneList[0] = v1;
+                this.typeOneList[1] = v2;
+                this.typeOneList[2] = v3;
+                this.typeOneList[3] = v4;
+                this.typeOneList[4] = v5;
+                this.typeOneList[5] = v6;
+                this.typeOneList[6] = v7;
+                this.typeOneList[7] = v8;
+                this.typeOneList[8] = v9;
+                this.typeOneList[9] = v10;
+                this.typeOneList[10] = v11;
+                this.typeOneList[11] = v12;
+                this.typeOneList[12] = v13;
+                this.typeOneList[13] = v14;
+                this.typeOneList[14] = v15;
+                this.typeOneList[15] = v16;
+                this.typeOneList[16] = v17;
+                this.typeOneList[17] = v18;
+                this.typeOneList[18] = v19;
+                this.typeOneList[19] = v20;
             },
             oneDataTransform(){
                 const v1 = this.typeOneList[0];
@@ -1197,10 +1227,10 @@
                 const v4 = this.typeTwoList[3];
                 const v5List = this.typeTwoList[4];
                 const v6 = this.typeTwoList[5];
-                totalScore += v1.score;
-                totalScore += v2.score;
-                totalScore += v3.score;
-                totalScore += v4.score;
+                totalScore += +v1.score;
+                totalScore += +v2.score;
+                totalScore += +v3.score;
+                totalScore += +v4.score;
                 const v5IdList = [];
                 let v5Score = 0;
                 v5List.forEach(item => {

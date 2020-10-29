@@ -13,7 +13,7 @@ export function requestPatientAssessPage(data: any) {
 export function requestPatientAssessDelete(assesId: string | number) {
 	return request({
 		url: `/api/patientAssess/delete/${assesId}`,
-		method: 'post',
+		method: 'get',
 	});
 }
 
