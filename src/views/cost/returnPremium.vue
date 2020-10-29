@@ -3,16 +3,11 @@
         <div v-if="true">
             <!--搜索相关-->
             <div class="a-input-group">
-                <a-input class="basic-input-width" v-model="searchData.aaa" placeholder="请输入订单编号"/>
                 <a-input class="basic-input-width" v-model="searchData.prescriptionCode" placeholder="请输入处方号"/>
                 <a-input class="basic-input-width" v-model="searchData.name" placeholder="请输入患者姓名"/>
                 <a-select class="lengthen-select-width" v-model="searchData.payStatus" placeholder="请选择支付状态">
-                    <a-select-option value="">
-                        状态
-                    </a-select-option>
-                    <a-select-option value="Option2">
-                        Option2
-                    </a-select-option>
+                    <a-select-option value="0">待支付</a-select-option>
+                    <a-select-option value="1">已支付</a-select-option>
                 </a-select>
                 <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
             </div>
@@ -51,45 +46,42 @@
     import { paginationInit, paginationDecode, paginationEncode } from '@/utils/pagination.ts';
     import { oneRowSearch } from '@/utils/tableScroll';
     import { requestBillingsBillingPage } from '../../api/cost/costList';
+
     const columns = [
-        {
-            title: '订单编号',
-            dataIndex: 'commodity',
-            width: 100,
-        },
+        
         {
             title: '处方号',
-            dataIndex: 'aaa',
-            width: 100,
+            dataIndex: 'prescriptionCode',
+            width: 200,
         },
         {
             title: '患者姓名',
-            dataIndex: '通用名',
+            dataIndex: 'name',
             width: 100,
         },
         {
             title: '科室',
-            dataIndex: 'unit',
+            dataIndex: 'deptName',
             width: 100,
         },
         {
             title: '床号',
-            dataIndex: 'specifications',
+            dataIndex: 'bedCode',
             width: 100,
         },
         {
             title: '退费金额',
-            dataIndex: 'marketPrice',
+            dataIndex: 'xxx',
             width: 100,
         },
         {
             title: '收费时间',
-            dataIndex: 'manufacturer',
+            dataIndex: 'payTime',
             width: 100,
         },
         {
             title: '收费人',
-            dataIndex: 'update',
+            dataIndex: 'doctorName',
             width: 100,
         },
         {
@@ -132,10 +124,9 @@
                         const { data } = v;
                         data.records.forEach((item, index) => {
                             item.key = index;
-                            item.createTime = item.createTime.substr(0, 10);
                         });
                         this.data = data.records;
-                        console.log(data.records);
+                        console.log(JSON.parse(JSON.stringify(data.records[0])));
                         this.pagination = paginationDecode(this.pagination, data);
                     });
             },
