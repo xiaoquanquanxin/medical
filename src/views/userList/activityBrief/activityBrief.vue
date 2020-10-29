@@ -35,7 +35,13 @@
     import ActivityBriefForm from '@/components/userList/activityBrief/activityBriefForm.vue';
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
     import { mapGetters, mapActions } from 'vuex';
-    import { paginationInit, paginationDecode, paginationEncode } from '@/utils/pagination.ts';
+    import {
+        paginationInit,
+        paginationDecode,
+        paginationEncode,
+        pageChange,
+        onShowSizeChange
+    } from '@/utils/pagination.ts';
     import { requestBriefPage } from '../../../api/userList/activityBrief';
     import { noPaginationData } from '../../../utils/pagination';
 

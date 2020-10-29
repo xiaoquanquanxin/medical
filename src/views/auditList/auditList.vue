@@ -58,7 +58,13 @@
     </div>
 </template>
 <script>
-    import { paginationInit, paginationDecode, paginationEncode } from '@/utils/pagination.ts';
+    import {
+        paginationInit,
+        paginationDecode,
+        paginationEncode,
+        pageChange,
+        onShowSizeChange
+    } from '@/utils/pagination.ts';
     import { oneRowSearch } from '@/utils/tableScroll';
     import { requestPrescriptionAuditPage } from '../../api/auditList';
 

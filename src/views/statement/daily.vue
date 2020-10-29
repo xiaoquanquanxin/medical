@@ -12,13 +12,13 @@
             </a-select>
             <a-date-picker class="lengthen-select-width"
                            placeholder="请选择开始日期"
-                           v-model="searchData.startDateMoment"
+                           v-model="searchData.settleStarttime"
                            @change="onStartDateChange"
             />
             <!--            <a-date-picker-->
             <!--                    class="lengthen-select-width"-->
             <!--                    placeholder="请选择结束日期"-->
-            <!--                    v-model="searchData.endDateMoment"-->
+            <!--                    v-model="searchData.settleEndtime"-->
             <!--                    @change="onEndDateChange"-->
             <!--            />-->
             <a-space>
@@ -59,7 +59,13 @@
     </div>
 </template>
 <script>
-    import { paginationInit, paginationDecode, paginationEncode } from '@/utils/pagination.ts';
+    import {
+        paginationInit,
+        paginationDecode,
+        paginationEncode,
+        pageChange,
+        onShowSizeChange
+    } from '@/utils/pagination.ts';
     import { oneRowSearch } from '@/utils/tableScroll';
 
     const columns = [
@@ -132,8 +138,8 @@
                 pagination: paginationInit(),
                 //  搜索数据
                 searchData: {
-                    startDateMoment: null,
-                    endDateMoment: null,
+                    settleStarttime: null,
+                    settleEndtime: null,
                 },
             };
         },

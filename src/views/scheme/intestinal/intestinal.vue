@@ -70,7 +70,13 @@
     </div>
 </template>
 <script>
-    import { paginationInit, paginationDecode, paginationEncode } from '@/utils/pagination.ts';
+    import {
+        paginationInit,
+        paginationDecode,
+        paginationEncode,
+        pageChange,
+        onShowSizeChange
+    } from '@/utils/pagination.ts';
     import { threeRowSearch } from '@/utils/tableScroll';
 
     const columns = [

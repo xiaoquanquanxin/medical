@@ -103,7 +103,13 @@
     import ShuttleBox from '@/components/shuttleBox.vue';
     import ChannelProviderBox from '@/components/hospital/channelProviderBox.vue';
     import { mapGetters, mapActions } from 'vuex';
-    import { paginationInit, paginationDecode, paginationEncode } from '@/utils/pagination.ts';
+    import {
+        paginationInit,
+        paginationDecode,
+        paginationEncode,
+        pageChange,
+        onShowSizeChange
+    } from '@/utils/pagination.ts';
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
     import { twoRowSearch } from '@/utils/tableScroll';
     import { SHUTTLE_BOX } from '../../store/modules/shuttleBox';

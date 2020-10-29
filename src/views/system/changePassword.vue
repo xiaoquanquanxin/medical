@@ -7,12 +7,14 @@
                 autocomplete="off"
         >
             <a-form-item label="输入新密码">
-                <a-input placeholder="输入新密码"
+                <a-input class="lengthen-input-width"
+                         placeholder="输入新密码"
                          v-decorator="passwordDecorator"
                 />
             </a-form-item>
             <a-form-item label="确认新密码" required>
-                <a-input placeholder="确认新密码"
+                <a-input class="lengthen-input-width"
+                         placeholder="确认新密码"
                          v-decorator="checkPasswordDecorator"
                 />
             </a-form-item>
@@ -27,6 +29,7 @@
 <script>
     import { formItemLayout } from '@/utils/layout.ts';
     import { compareToFirstPassword } from '@/utils/validate';
+    import { requestUserUpdate } from '../../api/system/account';
 
     export default {
         name: 'changePassword',
@@ -54,32 +57,18 @@
                 }],
             };
         },
-        created(){
-            this.searchFn();
-        },
         methods: {
-            //  主要请求
-            searchFn(){
-//                requestChannelBusinessPage(paginationEncode(this.pagination))
-//                    .then(v => {
-//                        const { data } = v;
-//                        console.log(data);
-//                        this.data = data.order;
-//                        this.pagination = paginationDecode(this.pagination, data);
-
-//                    });
-            },
             //  与第一密码比较，用于确认密码
             compareToFirstPassword,
             //    表单提交
             handleSubmit(e){
                 e.preventDefault();
                 this.form.validateFields((err, values) => {
-                    console.log(err);
-                    console.table(values);
-                    if (!err) {
-                        console.log('Received values of form: ', values);
+                    if (err) {
+                        console.log(err);
                     }
+                    //  修改用户
+                    requestUserUpdate(values);
                 });
             },
         }

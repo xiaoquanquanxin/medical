@@ -6,16 +6,20 @@
             <GoBackButton/>
         </div>
         <div class="a-input-group">
-            <a-select v-model="searchData.status" class="lengthen-select-width" placeholder="请选择会计部门">
-                <a-select-option value="">
-                    状态
+            <a-select class="lengthen-select-width" v-model="searchData.aaaa" placeholder="请选择会计部门">
+                <a-select-option value="1">
+                    这里有问题？这是什么列表
                 </a-select-option>
-                <a-select-option value="Option2">
-                    Option2
+                <a-select-option value="2">
+                    这里有问题？这是什么列表
                 </a-select-option>
             </a-select>
+            <a-range-picker class="basic-range-picker-width"
+                            :placeholder="['开始日期','结束日期']"
+                            @change="onRangePickerChange"
+            />
             <a-space>
-                <!--<a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>-->
+                <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
                 <a-button type="primary" @click="confirmExecute">确认结算</a-button>
             </a-space>
         </div>
@@ -54,8 +58,17 @@
     </div>
 </template>
 <script>
+    import {
+        paginationInit,
+        paginationDecode,
+        paginationEncode,
+        pageChange,
+        onShowSizeChange
+    } from '@/utils/pagination.ts';
     import { oneRowSearch } from '@/utils/tableScroll';
     import GoBackButton from '@/components/goBackButton.vue';
+    import { onRangePickerChange } from '../../utils/monthly';
+    import { requestSettlementMonthOverSelect } from '../../api/statement/monthly';
 
     const columns = [
         {
@@ -127,22 +140,16 @@
             return {
                 data: [],
                 columns,
+                //  分页信息
+                pagination: paginationInit(),
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
                 scroll: oneRowSearch(columns),
                 //  搜索数据
                 searchData: {
-                    startDateMoment: null,
-                    endDateMoment: null,
+                    settleStarttime: null,
+                    settleEndtime: null,
                 },
-
-                //  路由id
-                dailyExecuteId: this.$route.params.dailyExecuteId,
-                monthlyExecuteId: this.$route.params.monthlyExecuteId,
             };
-        },
-        created(){
-            console.log('日结id', this.dailyExecuteId);
-            console.log('月结id', this.monthlyExecuteId);
         },
         created(){
             this.searchFn();
@@ -150,33 +157,21 @@
         methods: {
             //  主要请求
             searchFn(){
-//                requestChannelBusinessPage(paginationEncode(this.pagination))
-//                    .then(v => {
-//                        const { data } = v;
-//                        console.log(data);
-//                data.records.forEach((item, index) => {
-//                    item.key = index;
-//                    item.createTime = item.createTime.substr(0, 10);
-//                });
-//                        this.data = data.records;
-//                        this.pagination = paginationDecode(this.pagination, data);
-//                    });
+                requestSettlementMonthOverSelect(Object.assign({},
+                    { param: this.searchData },
+                    paginationEncode(this.pagination)
+                ))
+                    .then(v => {
+                        const { data } = v;
+                        console.log(data);
+                        data.records.forEach((item, index) => {
+                            item.key = index;
+                        });
+                        this.data = data.records;
+                        this.pagination = paginationDecode(this.pagination, data);
+                    });
             },
-            //  展示的每一页数据变换
-            onShowSizeChange(current, pageSize){
-                this.pagination.pageSize = pageSize;
-                this.pagination.current = 1;
-                this.searchFn();
-            },
-            //  切换分页页码
-            pageChange(current){
-                this.pagination.current = current;
-                this.searchFn();
-            },
-            //  选择日期范围
-            onRangePickerChange(value, selectDateValue){
-                console.log(selectDateValue);
-            },
+
             //  确认结算
             confirmExecute(){
                 this.$confirm({
@@ -194,7 +189,10 @@
                         console.log('取消');
                     },
                 });
-            }
+            },
+            pageChange,
+            onShowSizeChange,
+            onRangePickerChange,
         }
     };
 </script>

@@ -1019,48 +1019,55 @@
                 tableTypeSelect: 3,
                 //  类型1
                 typeOneList: [],
+
                 typeTwoListData: [
                     [
-                        { label: '饱满（0分）', score: 0, id: 1, key: 1 },
-                        { label: '一般（1分）', score: 1, id: 2, key: 2 },
-                        { label: '一般差（2分）', score: 2, id: 3, key: 3 },
+                        { label: '饱满（0分）', score: '0', id: '1', key: '1' },
+                        { label: '一般（1分）', score: '1', id: '2', key: '2' },
+                        { label: '一般差（2分）', score: '2', id: '3', key: '3' },
                     ],
                     [
-                        { label: '经口（0分）', score: 0, id: 1, key: 1 },
-                        { label: '鼻胃管（1分）', score: 1, id: 2, key: 2 },
-                        { label: '鼻肠管（2分）', score: 2, id: 3, key: 3 },
-                        { label: '禁食（3分）', score: 3, id: 4, key: 4 },
+                        { label: '经口（0分）', score: '0', id: '1', key: '1' },
+                        { label: '鼻胃管（1分）', score: '1', id: '2', key: '2' },
+                        { label: '鼻肠管（2分）', score: '2', id: '3', key: '3' },
+                        { label: '禁食（3分）', score: '3', id: '4', key: '4' },
                     ],
                     [
-                        { label: '1 ~ 2次/每日（0分）', score: 0, id: 1, key: 1 },
-                        { label: '2 ~ 3天1次（1分）', score: 1, id: 2, key: 2 },
-                        { label: '3次及以上/每日（2分）', score: 2, id: 3, key: 3 },
-                        { label: '常年便秘，需要通便药物（3分）', score: 3, id: 4, key: 4 },
-                        { label: '1周1次（4分）', score: 4, id: 5, key: 5 },
+                        { label: '1 ~ 2次/每日（0分）', score: '0', id: '1', key: '1' },
+                        { label: '2 ~ 3天1次（1分）', score: '1', id: '2', key: '2' },
+                        { label: '3次及以上/每日（2分）', score: '2', id: '3', key: '3' },
+                        { label: '常年便秘，需要通便药物（3分）', score: '3', id: '4', key: '4' },
+                        { label: '1周1次（4分）', score: '4', id: '5', key: '5' },
                     ],
                     [
-                        { label: '呈球状（2分）', score: 2, id: 1, key: 1, },
-                        { label: '呈水状（2分）', score: 2, id: 2, key: 2, },
-                        { label: '呈泥状（2分）', score: 2, id: 3, key: 3, },
-                        { label: '呈半链状（1分）', score: 1, id: 4, key: 4, },
-                        { label: '呈块状（1分）', score: 1, id: 5, key: 5, },
-                        { label: '呈香蕉状（0分）', score: 0, id: 6, key: 6, },
+                        { label: '呈球状（2分）', score: '2', id: '1', key: '1', },
+                        { label: '呈水状（2分）', score: '2', id: '2', key: '2', },
+                        { label: '呈泥状（2分）', score: '2', id: '3', key: '3', },
+                        { label: '呈半链状（1分）', score: '1', id: '4', key: '4', },
+                        { label: '呈块状（1分）', score: '1', id: '5', key: '5', },
+                        { label: '呈香蕉状（0分）', score: '0', id: '6', key: '6', },
                     ],
                     [
-                        { label: '腹胀（1分）', score: 1, id: 1, key: 1, },
-                        { label: '腹痛（2分）', score: 2, id: 2, key: 2, },
-                        { label: '无（0分）', score: 0, id: 3, key: 3, },
+                        { label: '腹胀（1分）', score: '1', id: '1', key: '1', },
+                        { label: '腹痛（2分）', score: '2', id: '2', key: '2', },
+                        { label: '无（0分）', score: '0', id: '3', key: '3', },
                     ],
                     [
-                        { label: '一天只能喝点纯液体的流食（4分）', score: 4, id: 1, key: 1 },
-                        { label: '一天喝三晚粥、烂面条或半流食，吃一点小菜，偶尔吃个鸡蛋、喝点奶，基本不吃肉（3分）', score: 3, id: 2, key: 2 },
-                        { label: '一天吃一餐比较正常的饮食，常在早餐或中餐，其他两餐仍然是以稀粥为主的半流食，有时能是1两肉、1个鸡蛋（2分）', score: 2, id: 3, key: 3 },
-                        { label: '一天可以吃两餐比较正常的饮食，会有一餐半流食或流食，肉在1 ~ 2两，少油脂（1分）', score: 1, id: 4, key: 4 },
-                        { label: '一天三餐基本正常，可以吃到5 ~ 6两主食，3两肉及相应的油脂，1个鸡蛋，奶及加餐水果（0分）', score: 0, id: 5, key: 5 },
+                        { label: '一天只能喝点纯液体的流食（4分）', score: '4', id: '1', key: '1' },
+                        { label: '一天喝三晚粥、烂面条或半流食，吃一点小菜，偶尔吃个鸡蛋、喝点奶，基本不吃肉（3分）', score: '3', id: '2', key: '2' },
+                        {
+                            label: '一天吃一餐比较正常的饮食，常在早餐或中餐，其他两餐仍然是以稀粥为主的半流食，有时能是1两肉、1个鸡蛋（2分）',
+                            score: '2',
+                            id: '3',
+                            key: '3'
+                        },
+                        { label: '一天可以吃两餐比较正常的饮食，会有一餐半流食或流食，肉在1 ~ 2两，少油脂（1分）', score: '1', id: '4', key: '4' },
+                        { label: '一天三餐基本正常，可以吃到5 ~ 6两主食，3两肉及相应的油脂，1个鸡蛋，奶及加餐水果（0分）', score: '0', id: '5', key: '5' },
                     ]
                 ],
                 //  类型2
                 typeTwoList: [],
+
                 typeThreeListData: {
                     //  在过去的两周，患者的体重
                     weightCondition: [
@@ -1334,11 +1341,27 @@
                     console.log('详情id ,有详情id的是编辑', this.assessmentDetailId);
                     PatientAssessSelectAssesById(this.assessmentDetailId)
                         .then(v => {
-                            //  是第一个表
-                            if (v.data.v20 !== undefined) {
+                            const { data } = v;
+                            const {
+                                v20,
+                                weightCondition,
+                            } = data;
+
+                            //  微型营养评价表
+                            if (v20 !== undefined) {
                                 this.tableTypeSelect = 1;
-                                this.setOneData(v.data);
+                                this.setOneData(data);
+                                return;
                             }
+                            //  PG - SGA主观营养状况评估
+                            if (weightCondition !== undefined) {
+                                this.tableTypeSelect = 3;
+                                return;
+                            }
+                            //  一般评估表
+                            this.tableTypeSelect = 2;
+                            this.setTwoData(data);
+                            this.$forceUpdate();
                         });
                 }
             },
@@ -1371,6 +1394,7 @@
                             }
                             const twoData = this.twoDataTransform();
                             console.log(twoData);
+                            return Promise.reject();
                             return requestPatientAssessSaveYbpgb(Object.assign({
                                 age, bmi, height, name, sex, weight, patientId,
                             }, twoData));
@@ -1399,10 +1423,9 @@
                         this.$message.error('操作失败');
                     });
             },
-            //  设置第一张表
+            //  微型营养评价表
             setOneData(data){
                 const { v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20 } = data;
-                console.log(v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20);
                 this.typeOneList[0] = v1;
                 this.typeOneList[1] = v2;
                 this.typeOneList[2] = v3;
@@ -1424,7 +1447,7 @@
                 this.typeOneList[18] = v19;
                 this.typeOneList[19] = v20;
             },
-            //  类型1转换
+            //  类型1转换 微型营养评价表
             oneDataTransform(){
                 const v1 = this.typeOneList[0];
                 const v2 = this.typeOneList[1];
@@ -1448,7 +1471,8 @@
                 const v20 = this.typeOneList[19];
                 return { v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20 };
             },
-            //  类型2转换
+
+            //  类型2转换 一般评估表
             twoDataTransform(){
                 let totalScore = 0;
                 const v1 = this.typeTwoList[0];
@@ -1477,7 +1501,23 @@
                     v6: v6.id, totalScore,
                 };
             },
-            //  类型3转换
+
+            //  一般评估表
+            setTwoData(data){
+                const { v1, v2, v3, v4, v5, v6 } = data;
+                this.typeTwoList[0] = this.typeTwoListData[0].filter(item => item.id === v1)[0];
+                this.typeTwoList[1] = this.typeTwoListData[1].filter(item => item.id === v2)[0];
+                this.typeTwoList[2] = this.typeTwoListData[2].filter(item => item.id === v3)[0];
+                this.typeTwoList[3] = this.typeTwoListData[3].filter(item => item.id === v4)[0];
+                this.typeTwoList[5] = this.typeTwoListData[5].filter(item => item.id === v6)[0];
+                console.log(this.typeTwoList);
+                console.log(v5);
+                //  多选那个地方
+                const v5Set = new Set(v5.split(','));
+                this.typeTwoList[4] = this.typeTwoListData[4].filter(item => v5Set.has(item.id));
+                console.log(this.typeTwoList[4]);
+            },
+            //  类型3转换 PG - SGA主观营养状况评估
             threeDataTransform(){
                 console.log('转换🍗');
                 const {

@@ -162,8 +162,8 @@
                 scroll: oneRowSearch(columns),
                 //  搜索数据
                 searchData: {
-                    startDateMoment: null,
-                    endDateMoment: null,
+                    settleStarttime: null,
+                    settleEndtime: null,
                 },
 
                 //  路由id
@@ -209,10 +209,6 @@
             pageChange(current){
                 this.pagination.current = current;
                 this.searchFn();
-            },
-            //  选择日期范围
-            onRangePickerChange(value, selectDateValue){
-                console.log(selectDateValue);
             },
         }
     };

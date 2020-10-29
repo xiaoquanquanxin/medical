@@ -61,7 +61,13 @@
     </div>
 </template>
 <script>
-    import { paginationInit, paginationDecode, paginationEncode } from '@/utils/pagination.ts';
+    import {
+        paginationInit,
+        paginationDecode,
+        paginationEncode,
+        pageChange,
+        onShowSizeChange
+    } from '@/utils/pagination.ts';
     import { twoRowSearch } from '@/utils/tableScroll';
     import { requestDiseaseChangeStatus, requestDiseasePage } from '../../api/disease';
 

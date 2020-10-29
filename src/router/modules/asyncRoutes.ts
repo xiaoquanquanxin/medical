@@ -1060,7 +1060,7 @@ export const asyncRoutesList = [
 					hidden: true,
 				},
 				name: 'monthlyExecute',
-				path: '/statement/execute/:monthlyExecuteId',
+				path: '/statement/execute',
 				component: () => import(/* webpackChunkName: "execute" */ '@/views/statement/execute.vue'),
 			},
 			{

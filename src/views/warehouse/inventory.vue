@@ -88,7 +88,13 @@
     </div>
 </template>
 <script>
-    import { paginationInit, paginationDecode, paginationEncode } from '@/utils/pagination.ts';
+    import {
+        paginationInit,
+        paginationDecode,
+        paginationEncode,
+        pageChange,
+        onShowSizeChange
+    } from '@/utils/pagination.ts';
     import { oneRowSearch } from '@/utils/tableScroll';
     import ViewTotalInventory from '@/components/warehouse/viewTotalInventory';
     import ProcurementForm from '@/components/warehouse/procurementForm';

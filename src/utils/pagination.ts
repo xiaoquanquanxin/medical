@@ -61,3 +61,21 @@ export const paginationDecode = (
 
 //	不分页的对象
 export const noPaginationData = {current: 1, size: 10000};
+
+//	切换分页页码
+export function pageChange(current: string) {
+	//	@ts-ignore
+	this.pagination.current = current;
+	//	@ts-ignore
+	this.searchFn();
+}
+
+//  展示的每一页数据变换
+export function onShowSizeChange(current: string, pageSize: string) {
+	//	@ts-ignore
+	this.pagination.pageSize = pageSize;
+	//	@ts-ignore
+	this.pagination.current = 1;
+	//	@ts-ignore
+	this.searchFn();
+}

@@ -2,24 +2,24 @@
     <div class="layout-content-inner-main">
         <!--搜索相关-->
         <div class="a-input-group">
-            <a-select class="lengthen-select-width" v-model="searchData.status" placeholder="请选择会计部门">
-                <a-select-option value="">
-                    状态
+            <a-select class="lengthen-select-width" v-model="searchData.aaaa" placeholder="请选择会计部门">
+                <a-select-option value="1">
+                    这里有问题？这是什么列表
                 </a-select-option>
-                <a-select-option value="Option2">
-                    Option2
+                <a-select-option value="2">
+                    这里有问题？这是什么列表
                 </a-select-option>
             </a-select>
             <a-range-picker class="basic-range-picker-width"
                             :placeholder="['开始日期','结束日期']"
                             @change="onRangePickerChange"
             />
-            <a-space>
-                <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
-                <a-button type="primary" @click="executeFn">
-                    执行月结
-                </a-button>
-            </a-space>
+            <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
+        </div>
+        <div class="a-input-group">
+            <a-button type="primary" @click="executeFn">
+                执行月结
+            </a-button>
         </div>
         <!--表格-->
         <a-table
@@ -54,14 +54,21 @@
     </div>
 </template>
 <script>
-    import { paginationInit, paginationDecode, paginationEncode } from '@/utils/pagination.ts';
+    import {
+        paginationInit,
+        paginationDecode,
+        paginationEncode,
+        pageChange,
+        onShowSizeChange
+    } from '@/utils/pagination.ts';
     import { oneRowSearch } from '@/utils/tableScroll';
     import { requestSettlementPage } from '../../api/statement/monthly';
+    import { onRangePickerChange } from '../../utils/monthly';
 
     const columns = [
         {
             title: '序号',
-            dataIndex: 'commodity',
+            dataIndex: 'index',
             width: 100,
         },
         {
@@ -112,8 +119,8 @@
                 pagination: paginationInit(),
                 //  搜索数据
                 searchData: {
-                    settleEndtime: null,
                     settleStarttime: null,
+                    settleEndtime: null,
                 },
             };
         },
@@ -131,33 +138,21 @@
                         console.log(data);
                         data.records.forEach((item, index) => {
                             item.key = index;
-                            item.createTime = item.createTime.substr(0, 10);
+                            item.index = index + 1;
                         });
                         this.data = data.records;
+                        console.log(JSON.parse(JSON.stringify(this.data[0])));
                         this.pagination = paginationDecode(this.pagination, data);
                     });
             },
-            //  展示的每一页数据变换
-            onShowSizeChange(current, pageSize){
-                this.pagination.pageSize = pageSize;
-                this.pagination.current = 1;
-                this.searchFn();
-            },
-            //  切换分页页码
-            pageChange(current){
-                this.pagination.current = current;
-                this.searchFn();
-            },
-            //  选择日期范围
-            onRangePickerChange(value, selectDateValue){
-                console.log(selectDateValue);
-                this.searchData.settleStarttime = selectDateValue[0];
-                this.searchData.settleEndtime = selectDateValue[1];
-            },
+
             //  执行月结
             executeFn(){
-                this.$router.push({ name: 'monthlyExecute', params: { monthlyExecuteId: '122' } });
-            }
+                this.$router.push({ name: 'monthlyExecute' });
+            },
+            pageChange,
+            onShowSizeChange,
+            onRangePickerChange,
         }
     };
 </script>

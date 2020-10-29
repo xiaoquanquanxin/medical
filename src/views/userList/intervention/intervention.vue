@@ -86,7 +86,13 @@
     </div>
 </template>
 <script>
-    import { paginationInit, paginationDecode, paginationEncode } from '@/utils/pagination.ts';
+    import {
+        paginationInit,
+        paginationDecode,
+        paginationEncode,
+        pageChange,
+        onShowSizeChange
+    } from '@/utils/pagination.ts';
     import { threeRowSearch } from '@/utils/tableScroll';
     import { requestPrescriptionPage } from '../../../api/userList/intervention';
     import { noPaginationData } from '../../../utils/pagination';

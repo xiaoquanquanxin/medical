@@ -66,7 +66,13 @@
 <script>
     import RoleBox from '@/components/system/roleBox.vue';
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
-    import { paginationInit, paginationDecode, paginationEncode } from '@/utils/pagination.ts';
+    import {
+        paginationInit,
+        paginationDecode,
+        paginationEncode,
+        pageChange,
+        onShowSizeChange
+    } from '@/utils/pagination.ts';
     import { twoRowSearch } from '@/utils/tableScroll';
     import { mapGetters, mapActions } from 'vuex';
     import { requestRolePage } from '../../api/system/role';

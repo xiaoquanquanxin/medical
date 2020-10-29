@@ -89,7 +89,13 @@
     </div>
 </template>
 <script>
-    import { paginationInit, paginationDecode, paginationEncode } from '@/utils/pagination.ts';
+    import {
+        paginationInit,
+        paginationDecode,
+        paginationEncode,
+        pageChange,
+        onShowSizeChange
+    } from '@/utils/pagination.ts';
     import { jumpTo } from '@/utils/routerMeta';
     import { requestPatientPage } from '@/api/userList/userList';
     import { calcAgeByBirth, getDateObject } from '@/utils/common';

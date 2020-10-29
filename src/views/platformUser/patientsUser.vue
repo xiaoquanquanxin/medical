@@ -35,14 +35,6 @@
                     否
                 </a-select-option>
             </a-select>
-            <a-select class="basic-select-width" v-model="searchData.status" placeholder="请选择状态">
-                <a-select-option value="4">
-                    是
-                </a-select-option>
-                <a-select-option value="1">
-                    否
-                </a-select-option>
-            </a-select>
             <a-button class="basic-button-width" type="primary" @click="searchFn()">搜索</a-button>
         </div>
         <!--表格-->
@@ -92,7 +84,13 @@
     </div>
 </template>
 <script>
-    import { paginationInit, paginationDecode, paginationEncode } from '@/utils/pagination.ts';
+    import {
+        paginationInit,
+        paginationDecode,
+        paginationEncode,
+        pageChange,
+        onShowSizeChange
+    } from '@/utils/pagination.ts';
     import { oneRowSearch } from '@/utils/tableScroll';
     import { mapGetters, mapActions } from 'vuex';
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
@@ -128,11 +126,6 @@
             title: '是否为患者',
             dataIndex: 'applets',
             width: 120,
-        },
-        {
-            title: '状态',
-            dataIndex: 'status',
-            width: 100,
         },
         {
             title: '操作',

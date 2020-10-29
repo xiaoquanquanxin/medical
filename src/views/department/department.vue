@@ -96,7 +96,13 @@
     import ShuttleBox from '@/components/shuttleBox.vue';
     import { mapGetters, mapActions } from 'vuex';
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
-    import { paginationInit, paginationDecode, paginationEncode } from '@/utils/pagination.ts';
+    import {
+        paginationInit,
+        paginationDecode,
+        paginationEncode,
+        pageChange,
+        onShowSizeChange
+    } from '@/utils/pagination.ts';
     import { twoRowSearch } from '@/utils/tableScroll';
     import { SHUTTLE_BOX } from '../../store/modules/shuttleBox';
     import { requestDeptPage, requestDeptRelatedDiseases, requestDeptUpdate } from '../../api/department';

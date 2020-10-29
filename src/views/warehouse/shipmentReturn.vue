@@ -54,7 +54,13 @@
     </div>
 </template>
 <script>
-    import { paginationInit, paginationDecode, paginationEncode } from '@/utils/pagination.ts';
+    import {
+        paginationInit,
+        paginationDecode,
+        paginationEncode,
+        pageChange,
+        onShowSizeChange
+    } from '@/utils/pagination.ts';
     import { twoRowSearch } from '@/utils/tableScroll';
     import ShipmentReturnFormForm from '@/components/warehouse/shipmentReturnForm';
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
