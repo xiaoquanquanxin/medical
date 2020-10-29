@@ -18,7 +18,7 @@
             </a-select>
         </div>
         <div id="printContent">
-            <ScreeningBasicInfo/>
+            <ScreeningBasicInfo v-if="true"/>
             <br>
             <div class="table-flex-title table-group-title no-border-bottom">
                 <div style="width: 201px;">名称</div>
@@ -537,7 +537,7 @@
             <!--PG - SGA主观营养状况评估-->
             <div v-if="tableTypeSelect === 3">
                 <!--1-->
-                <a-row type="flex" justify="space-between" align="middle" class="radio-group-row">
+                <a-row v-if="true" type="flex" justify="space-between" align="middle" class="radio-group-row">
                     <div class="radio-group-item-label">
                         <div class="text-align-center">体重评分</div>
                     </div>
@@ -590,7 +590,7 @@
                     </div>
                 </a-row>
                 <!--2-->
-                <a-row type="flex" justify="space-between" align="middle" class="radio-group-row">
+                <a-row v-if="true" type="flex" justify="space-between" align="middle" class="radio-group-row">
                     <div class="radio-group-item-label">
                         <div class="text-align-center">进食情况评分</div>
                     </div>
@@ -650,7 +650,7 @@
                     </div>
                 </a-row>
                 <!--4-->
-                <a-row type="flex" justify="space-between" align="middle" class="radio-group-row">
+                <a-row v-if="true" type="flex" justify="space-between" align="middle" class="radio-group-row">
                     <div class="radio-group-item-label">
                         <div class="text-align-center">活动和身体功能情况评估</div>
                     </div>
@@ -677,18 +677,23 @@
                         <ul class="radio-group-list">
                             <li class="radio-group-item radio-group-item-title">1、相关诊断（特定，多选）
                             </li>
+                            ❌❌
                             <li class="radio-group-item">
-                                <a-checkbox-group class="radio-group">
-                                    <a-checkbox :value="1">
-                                        <a-space>
-                                            <span>癌症（1分）</span>
-                                            <a-input placeholder="请输入癌症类型" size="small"/>
+                                <a-checkbox-group class="radio-group" v-model="typeThreeList.disease">
+                                    <a-checkbox v-for="item in typeThreeListData.disease"
+                                                :value="item.id"
+                                    >
+                                        <a-space v-if="item.hasInput">
+                                            <a-space>
+                                                <span>{{item.label}}</span>
+                                                <a-input :placeholder="item.placeholder" size="small"
+                                                         v-model="item.input"
+                                                />
+                                                <span>{{item.suffix}}</span>
+                                            </a-space>
                                         </a-space>
+                                        <span v-else>{{item.label}}</span>
                                     </a-checkbox>
-                                    <a-checkbox :value="2">AIDS（1分）</a-checkbox>
-                                    <a-checkbox :value="3">呼吸或心脏病恶液质（1分）</a-checkbox>
-                                    <a-checkbox :value="4">存在开放性伤口或肠瘘或压疮（1分）</a-checkbox>
-                                    <a-checkbox :value="5">创伤（1分）</a-checkbox>
                                 </a-checkbox-group>
                             </li>
                             <li class="radio-group-item radio-group-item-title">2、年龄</li>
@@ -700,18 +705,22 @@
                             <li class="radio-group-item radio-group-item-title">3、原发疾病分期</li>
                             <li class="radio-group-item">
                                 ❌❌
-                                <a-radio-group name="radioGroup" v-model="typeThreeList.diseaseStage">
-                                    <a-radio value="1">1期</a-radio>
-                                    <a-radio value="2">2期</a-radio>
-                                    <a-radio value="3">3期</a-radio>
-                                    <a-radio value="4">4期</a-radio>
-                                    <a-radio value="5">
-                                        <a-space>
-                                            <span>其他</span>
-                                            <a-input placeholder="请输入其他" size="small"/>
+                                <a-checkbox-group class="radio-group" v-model="typeThreeList.diseaseStage">
+                                    <a-checkbox v-for="item in typeThreeListData.diseaseStage"
+                                                :value="item.id"
+                                    >
+                                        <a-space v-if="item.hasInput">
+                                            <a-space>
+                                                <span>{{item.label}}</span>
+                                                <a-input :placeholder="item.placeholder" size="small"
+                                                         v-model="item.input"
+                                                />
+                                                <span>{{item.suffix}}</span>
+                                            </a-space>
                                         </a-space>
-                                    </a-radio>
-                                </a-radio-group>
+                                        <span v-else>{{item.label}}</span>
+                                    </a-checkbox>
+                                </a-checkbox-group>
                             </li>
                             <li class="radio-group-item radio-group-item-title">4、放疗次数</li>
                             <li class="radio-group-item">
@@ -724,7 +733,7 @@
                     </div>
                 </a-row>
                 <!--6-->
-                <a-row type="flex" justify="space-between" align="middle" class="radio-group-row">
+                <a-row v-if="true" type="flex" justify="space-between" align="middle" class="radio-group-row">
                     <div class="radio-group-item-label">
                         <div class="text-align-center">代谢方面需求评估</div>
                     </div>
@@ -761,7 +770,7 @@
                     </div>
                 </a-row>
                 <!--7-->
-                <a-row type="flex" justify="space-between" align="middle" class="radio-group-row">
+                <a-row v-if="true" type="flex" justify="space-between" align="middle" class="radio-group-row">
                     <div class="radio-group-item-label">
                         <div class="text-align-center">体格检查评分</div>
                     </div>
@@ -1075,7 +1084,7 @@
                         { label: '只能通过管饲或静脉营养（0分）', score: '0', id: '6', key: '6', },
                     ],
 
-                    //  症状
+                    //  1、近2周来，患者有以下的问题，影响患者摄入足够的饮食（多选，累计计分）⚠️
                     symptom: [
                         { label: '吃饭没有问题（0分）', score: '0', id: '1', key: '1', },
                         { label: '恶心（1分）', score: '1', id: '2', key: '2', },
@@ -1118,6 +1127,31 @@
                         { label: '多数时候不想起床活动，但卧床或桌椅时间不超过半天（2分）', score: '2', id: '3', key: '3', },
                         { label: '几乎干不了什么，一天大多是时间都卧床或坐在椅子上（3分）', score: '3', id: '4', key: '4', },
                         { label: '几乎完全卧床，无法起床（3分）', score: '3', id: '5', key: '5', },
+                    ],
+
+                    //  相关诊断（特定，多选）⚠️
+                    disease: [
+                        {
+                            label: '癌症（1分）',
+                            score: '1',
+                            id: '1',
+                            key: '1',
+                            hasInput: true,
+                            input: '',
+                            placeholder: '请输入癌症类型',
+                        },
+                        { label: 'AIDS（1分）', score: '1', id: '2', key: '2' },
+                        { label: '呼吸或心脏病恶液质（1分）', score: '1', id: '3', key: '3' },
+                        { label: '存在开放性伤口或肠瘘或压疮（1分）', score: '1', id: '4', key: '4' },
+                        { label: '创伤（1分）', score: '1', id: '5', key: '5' },
+                    ],
+                    //  原发疾病分期⚠️
+                    diseaseStage: [
+                        { label: '1期', score: 0, id: '1', key: '1', },
+                        { label: '2期', score: 0, id: '2', key: '2', },
+                        { label: '3期', score: 0, id: '3', key: '3', },
+                        { label: '4期', score: 0, id: '4', key: '4', },
+                        { label: '其他', score: 0, id: '5', key: '5', hasInput: true, input: '', placeholder: '请输入其他', },
                     ],
 
                     //  发热
@@ -1210,18 +1244,18 @@
                     //  患者目前进食
                     eatingNow: '1',
 
-                    //  症状评分
-                    threeScore: '',
+                    //  1、近2周来，患者有以下的问题，影响患者摄入足够的饮食（多选，累计计分）⚠️
+                    symptom: undefined,
 
                     //  活动和身体功能情况评估
                     activityBodyfunction: '1',
 
-                    //  相关诊断（特定，多选）
-                    disease: '',
+                    //  相关诊断（特定，多选）⚠️初始化啥也不要
+                    disease: undefined,
                     //  年龄
                     diseaseAge: '',
-                    //  原发疾病分期
-                    diseaseStage: '1',
+                    //  原发疾病分期⚠️初始化啥也不要
+                    diseaseStage: undefined,
                     //  放疗次数
                     radiotherapyCount: '',
 
@@ -1342,11 +1376,16 @@
                             }, twoData));
                         case 3:
                             const threeData = this.threeDataTransform();
-                            console.log(threeData);
-                            return Promise.reject();
+                            const _threeData = Object.assign({}, this.typeThreeList, threeData);
+                            console.log(_threeData);
+                            console.log(JSON.stringify(_threeData));
+                            console.log((JSON.stringify(Object.assign({
+                                age, bmi, height, name, sex, weight, patientId,
+                            }, _threeData))));
+//                            return Promise.reject();
                             return requestPatientAssessSavePgsga(Object.assign({
                                 age, bmi, height, name, sex, weight, patientId,
-                            }, threeData));
+                            }, _threeData));
                         default:
                             throw new Error('错误的类型');
                     }
@@ -1385,6 +1424,7 @@
                 this.typeOneList[18] = v19;
                 this.typeOneList[19] = v20;
             },
+            //  类型1转换
             oneDataTransform(){
                 const v1 = this.typeOneList[0];
                 const v2 = this.typeOneList[1];
@@ -1408,6 +1448,7 @@
                 const v20 = this.typeOneList[19];
                 return { v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20 };
             },
+            //  类型2转换
             twoDataTransform(){
                 let totalScore = 0;
                 const v1 = this.typeTwoList[0];
@@ -1436,22 +1477,186 @@
                     v6: v6.id, totalScore,
                 };
             },
+            //  类型3转换
             threeDataTransform(){
+                console.log('转换🍗');
                 const {
-                    activityBodyfunction,
+                    symptom,
+                    disease,
+                    diseaseStage,
                 } = this.typeThreeList;
-                console.log(activityBodyfunction);
+                //  console.log(activityBodyfunction);
                 //  活动和身体功能评分
-                let activityScore;
                 this.typeThreeListData.activityBodyfunction.forEach(item => {
                     if (item.id === activityBodyfunction) {
                         activityScore = item.score;
                     }
                 });
+
+                //  1、近2周来，患者有以下的问题，影响患者摄入足够的饮食（多选，累计计分）
+                let threeScore = 0;
+                //  console.log(JSON.parse(JSON.stringify(this.typeThreeListData.symptom)));
+                const symptomSet = new Set(symptom);
+                let _symptom = (symptom || []).join(',').split(',');
+                this.typeThreeListData.symptom.forEach(item => {
+                    //  是否勾选？为了加分
+                    if (symptomSet.has(item.id)) {
+                        threeScore += +item.score;
+                        //  做[1,2,3]
+                        if (item.hasInput) {
+                            _symptom.push(`${item.id}:${item.input}`);
+                        }
+                    }
+                });
+                //  console.log(_symptom);
+                //  1、相关诊断（特定，多选）
+                //  console.log('🍉');
+                const diseaseSet = new Set(disease);
+                let diseaseHighScore = 0;
+                let _disease = (disease || []).join(',').split(',');
+                this.typeThreeListData.disease.forEach(item => {
+                    //  是否勾选？为了筛查高分
+                    if (diseaseSet.has(item.id)) {
+                        if (diseaseHighScore < item.score) {
+                            diseaseHighScore = item.score;
+                        }
+                        //  做[1,2,3]
+                        if (item.hasInput) {
+                            _disease.push(`${item.id}:${item.input}`);
+                        }
+                    }
+                });
+                //  console.log(diseaseHighScore);
+                //  console.log(_disease);
+                //  console.log('🍉');
+
+                //  3、原发疾病分期
+                const diseaseStageSet = new Set(diseaseStage);
+                let _diseaseStage = (diseaseStage || []).join(',').split(',');
+                this.typeThreeListData.diseaseStage.forEach(item => {
+                    //  是否勾选？
+                    if (diseaseStageSet.has(item.id)) {
+                        //  做[1,2,3]
+                        if (item.hasInput) {
+                            _diseaseStage.push(`${item.id}:${item.input}`);
+                        }
+                    }
+                });
+                //  console.log(_diseaseStage);
+
+                //  🌟🌟🌟🌟以下计算分数🌟🌟🌟🌟🌟
+                const {
+                    //  在过去的两周，患者的体重
+                    weightCondition,
+                    //  过去的1个月以来，我的进食情况与平时情况相比：
+                    eatingSituation,
+                    //  患者目前进食
+                    eatingNow,
+                    //  活动和身体功能情况评估
+                    activityBodyfunction,
+                    //  发热
+                    hot,
+                    //  持续发热时间
+                    lastHottime,
+                    //  是否使用激素
+                    isuseHormone,
+                    //  本项计分（以肌肉状况情况，主观计分）
+                    liquidstateoveralledemaacore,
+                } = this.typeThreeList;
+                const {
+                    //  在过去的两周，患者的体重
+                    weightCondition: _weightCondition,
+                    //  过去的1个月以来，我的进食情况与平时情况相比：
+                    eatingSituation: _eatingSituation,
+                    //  患者目前进食
+                    eatingNow: _eatingNow,
+                    //  活动和身体功能情况评估
+                    activityBodyfunction: _activityBodyfunction,
+                    //  发热
+                    hot: _hot,
+                    //  持续发热时间
+                    lastHottime: _lastHottime,
+                    //  是否使用激素
+                    isuseHormone: _isuseHormone,
+                    //  本项计分（以肌肉状况情况，主观计分）
+                    liquidstateoveralledemaacore: _liquidstateoveralledemaacore,
+                } = this.typeThreeListData;
+
+                //  体重评分
+                let weightScore = 0;
+                _weightCondition.forEach(item => {
+                    if (item.id === weightCondition) {
+                        weightScore = item.score;
+                    }
+                });
+                //  进食情况评分
+                let eatingScore = 0;
+                _eatingSituation.forEach(item => {
+                    if (item.id === eatingSituation) {
+                        eatingScore += +item.score;
+                    }
+                });
+                _eatingNow.forEach(item => {
+                    if (item.id === eatingNow) {
+                        eatingScore += +item.score;
+                    }
+                });
+                //  活动和身体功能评分
+                let activityScore = 0;
+                _activityBodyfunction.forEach(item => {
+                    if (item.id === activityBodyfunction) {
+                        activityScore = item.score;
+                    }
+                });
+
+                //  代谢方面需求评估评分
+                let metabolicScore = 0;
+                _hot.forEach(item => {
+                    if (item.id === hot) {
+                        metabolicScore += +item.score;
+                    }
+                });
+                _lastHottime.forEach(item => {
+                    if (item.id === lastHottime) {
+                        metabolicScore += +item.score;
+                    }
+                });
+                _isuseHormone.forEach(item => {
+                    if (item.id === isuseHormone) {
+                        metabolicScore += +item.score;
+                    }
+                });
+                //
+                let muscleconditiontotalmusclewastingScore = 0;
+                _liquidstateoveralledemaacore.forEach(item => {
+                    if (item.id === liquidstateoveralledemaacore) {
+                        muscleconditiontotalmusclewastingScore += +item.score;
+                    }
+                });
+//                console.log('🌟🌟🌟🌟以下计算分数🌟🌟🌟🌟🌟');
+//                console.log(weightScore);
+//                console.log(eatingScore);
+//                console.log(activityScore);
+//                console.log(metabolicScore);
+//                console.log(muscleconditiontotalmusclewastingScore);
+//
+//                console.log('🔘🔘🔘复杂的计算分数🔘🔘🔘');
+//                console.log(threeScore);
+//                console.log(diseaseHighScore);
+
                 //  总分
-                const totalScore = +activityScore;
+                const totalScore = +threeScore + +diseaseHighScore + weightScore + +eatingScore + +activityScore + +metabolicScore + +muscleconditiontotalmusclewastingScore;
                 return {
+                    symptom: (_symptom && _symptom.join(',')) || '',
+                    disease: (_disease && _disease.join(',')) || '',
+                    diseaseStage: (_diseaseStage && _diseaseStage.join(',')) || '',
+                    threeScore,
+                    diseaseHighScore,
+                    weightScore,
+                    eatingScore,
                     activityScore,
+                    metabolicScore,
+                    muscleconditiontotalmusclewastingScore,
                     totalScore,
                 };
             },

@@ -22,7 +22,7 @@
                 <a-select-option value="1">上架</a-select-option>
                 <a-select-option value="2">下架</a-select-option>
             </a-select>
-            <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
+            <a-button class="basic-button-width" type="primary" @click="searchFn">搜索[缺查询细节]</a-button>
         </div>
         <div class="a-input-group">
             <router-link :to="{name:'addCommodity'}">
@@ -291,23 +291,23 @@
         },
         created(){
             this.searchFn();
+            requestCategoryList()
+                .then(v => {
+                    //  商品分类list
+//                        console.log(v.data);
+                    this.goodsCategoryList = v.data;
+                });
+            requestBrandList()
+                .then(v => {
+                    //  商品品牌list
+//                        console.log(v.data);
+                    this.goodsBrandList = v.data;
+                });
         },
         methods: {
             //  主要请求
             searchFn(){
-                requestCategoryList()
-                    .then(v => {
-                        //  商品分类list
-//                        console.log(v.data);
-                        this.goodsCategoryList = v.data;
-                    });
-                requestBrandList()
-                    .then(v => {
-                        //  商品品牌list
-//                        console.log(v.data);
-                        this.goodsBrandList = v.data;
-                    });
-                requestGoodsPage(paginationEncode(this.pagination))
+                requestGoodsPage(Object.assign({}, this.searchData, paginationEncode(this.pagination)))
                     .then(v => {
                         const { data } = v;
                         data.records.forEach((item, index) => {
