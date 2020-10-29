@@ -6,7 +6,7 @@
             autocomplete="off"
     >
         <a-form-item label="驳回原因">
-            <div style="width:calc((100vw - 200px)*.65)">
+            <div style="width:100%;">
                 <a-textarea
                         placeholder="请输入驳回原因"
                         v-decorator="rejectReasonDecorator"
