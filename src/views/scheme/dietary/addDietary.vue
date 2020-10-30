@@ -16,7 +16,6 @@
                           @change="selectHospitalChange"
                 >
                     <a-select-option :value="item.id"
-                                     :key="item.id"
                                      v-for="item in hospitalList"
                     >{{item.hospitalName}}
                     </a-select-option>
@@ -28,14 +27,12 @@
                     <a-row type="flex" justify="space-between" align="middle" class="table-group-title">
                         <a-space>
                             <span>膳食营养计划</span>
-                            <!--@change="selectEnergyChange"-->
                             <a-select
                                     class="lengthen-select-width"
                                     v-model="tableForm.energy"
                                     placeholder="请选择能量"
                             >
                                 <a-select-option :value="item.id"
-                                                 :key="item.id"
                                                  v-for="item in liquidEnergyList"
                                 >{{item.name}}
                                 </a-select-option>
@@ -55,6 +52,13 @@
                                      v-model="sItem.goodsName"
                             />
                         </div>
+                        <!--用餐时间-->
+                        <div slot="time" slot-scope="scope,sItem,sIndex,extra">
+                            <a-time-picker
+                                    v-model="sItem.moment"
+                                    format="HH:mm"/>
+                        </div>
+                        <!--操作-->
                         <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
                             <a-space size="small">
                                 <a @click="deleteNutritionPlan(sItem,sIndex)">删除</a>
@@ -82,6 +86,7 @@
     </div>
 </template>
 <script>
+    import moment from 'moment';
     import { twoRowSearch } from '@/utils/tableScroll';
     import { formItemLayout } from '@/utils/layout.ts';
     import GoBackButton from '@/components/goBackButton.vue';
@@ -92,13 +97,24 @@
 
     const columns = [
         {
+            title: '序号',
+            dataIndex: 'index',
+            width: 100,
+        },
+        {
             title: '用餐内容',
-            width: 250,
+            width: 200,
             scopedSlots: { customRender: 'goodsName' },
+        },
+        {
+            title: '用餐时间',
+            scopedSlots: { customRender: 'time' },
+            width: 200,
         },
         {
             title: '操作',
             scopedSlots: { customRender: 'operation' },
+            width: 100,
         },
     ];
 
@@ -190,28 +206,19 @@
             },
             //  切换医院
             selectHospitalChange(value){
-                //  计算医院名
+                //  组织医院名
                 this.hospitalList.forEach(item => {
                     if (item.id === value) {
-                        console.log(item);
                         this.tableForm.hospitalName = item.hospitalName;
                     }
                 });
-                console.log('🍎🍎🍎🍎发请求，🍉🍉🍉改造数据结构', '医院的id', value);
-                setTimeout(() => {
-                    requestGoodsListByHospital(value)
-                        .then(v => {
-                            console.log('该医院下的商品：');
-                            console.log(v.data);
-                            if (!v.data || !v.data.length) {
-                                return;
-                            }
-                            v.data.forEach((item, index) => {
-                                item.key = index;
-                            });
-                            this.data = v.data;
+                requestGoodsListByHospital(value)
+                    .then(v => {
+                        v.data.forEach((item, index) => {
+                            item.key = index;
                         });
-                });
+                        this.data = v.data;
+                    });
             },
             //  删除营养计划
             deleteNutritionPlan(sItem, sIndex){
@@ -237,17 +244,13 @@
             handleSubmit(e){
                 e.preventDefault();
                 this.mealPlanCheck();
-                console.log(this.data);
-//                this.form.validateFields((err, values) => {
-//                    console.table(values);
-//                    console.log(!err);
-//                });
-
-                console.log('备注🍌', this.remark);
-//                console.log(JSON.parse(JSON.stringify(this.timeTableData)));
+                this.data.forEach(item => {
+                    const time = new Date(item.moment);
+                    item.time = `${time.getHours()}-${time.getMinutes()}`;
+                });
+                console.log(JSON.parse(JSON.stringify(this.data)));
                 const prescriptionContent = {
                     mealPlanTableData: this.data,
-//                    timeTableData: this.timeTableData,
                 };
                 this.tableForm.prescriptionContent = JSON.stringify(prescriptionContent);
                 console.log(JSON.parse(JSON.stringify(this.tableForm)));
@@ -269,6 +272,8 @@
                         console.log(err);
                     });
             },
+            //  时间选择器的方法
+            moment,
         }
     };
 </script>

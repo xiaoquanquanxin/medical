@@ -472,7 +472,7 @@
                     this.$router.push({ name: 'addDietary' });
                     return;
                 }
-                //  计算处方类型名称
+                //  组织处方类型名称
                 this.prescriptionTypeList.forEach(item => {
                     if (item.id === value) {
                         this.tableForm.prescriptionName = item.name;
@@ -649,7 +649,6 @@
                 //  console.log(JSON.parse(JSON.stringify(this.tableForm)));
                 console.log(prescriptionContent);
                 console.log(JSON.stringify(prescriptionContent));
-                return;
                 (() => {
                     //  如果是新增
                     if (!this.oralId) {

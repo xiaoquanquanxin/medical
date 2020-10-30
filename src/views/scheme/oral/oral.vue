@@ -71,15 +71,13 @@
 <script>
     import {
         paginationInit,
-        paginationDecode,
-        paginationEncode,
         pageChange,
         onShowSizeChange
     } from '@/utils/pagination.ts';
     import { threeRowSearch } from '@/utils/tableScroll';
-    import { requestPrescriptionTemplateDelete, requestPrescriptionTemplatePage } from '../../../api/scheme/scheme';
     import { prescriptionTypeList, energyList, usageMethodList } from '../../../utils/constants';
     import { requestHospitalGetList } from '../../../api/hospital';
+    import { deleteSchemeFn, getSchemeListFn } from '../../../utils/scheme';
 
     const columns = [
         {
@@ -144,64 +142,22 @@
         },
         created(){
             console.log('create请求');
+            requestHospitalGetList()
+                .then(hospitalList => {
+                    this.hospitalList = hospitalList;
+                });
             this.searchFn();
-            console.log(this.aaa);
         },
         methods: {
             //  主要请求
             searchFn(){
-                requestHospitalGetList()
-                    .then(hospitalList => {
-                        this.hospitalList = hospitalList;
-                    });
-//                this.data.push({ key: 1 });
-                requestPrescriptionTemplatePage(Object.assign({},
-                    this.searchData,
-                    paginationEncode(this.pagination))
-                )
-                    .then(v => {
-                        const { data } = v;
-                        data.records.forEach((item, index) => {
-                            item.key = index;
-                        });
-                        this.data = data.records;
-                        this.pagination = paginationDecode(this.pagination, data);
-                        console.log(JSON.parse(JSON.stringify(this.data[0])));
-                    });
+                this.getSchemeListFn();
             },
-            //  展示的每一页数据变换
-            onShowSizeChange(current, pageSize){
-                this.pagination.pageSize = pageSize;
-                this.pagination.current = 1;
-                this.searchFn();
-            },
-            //  切换分页页码
-            pageChange(current){
-                this.pagination.current = current;
-                this.searchFn();
-            },
-            //  删除管理
-            deleteScheme(sItem){
-                this.$confirm({
-                    title: `确定删除${sItem.disease}`,
-                    okText: '确认',
-                    okType: 'danger',
-                    cancelText: '取消',
-                    onOk: () => {
-                        return requestPrescriptionTemplateDelete(sItem.id)
-                            .then(v => {
-                                this.$message.success('操作成功');
-                                this.searchFn();
-                            })
-                            .catch(v => {
-                                this.$message.error('操作失败');
-                            });
-                    },
-                    onCancel(){
-                        console.log('取消');
-                    },
-                });
-            },
+
+            getSchemeListFn,
+            deleteSchemeFn,
+            pageChange,
+            onShowSizeChange,
         }
     };
 </script>

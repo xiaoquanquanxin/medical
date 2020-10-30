@@ -16,8 +16,8 @@
         >
             <a-form-item label="评估表名称">
                 <a-input class="add-form-input"
-                        v-decorator="assessNameDecorator"
-                        placeholder="请输入评估表名称"
+                         v-decorator="assessNameDecorator"
+                         placeholder="请输入评估表名称"
                 />
             </a-form-item>
             <a-form-item label="评估表内容">
@@ -78,42 +78,40 @@
                 requestAssessGet(this.questionnaireId)
                     .then(v => {
                         const { data } = v;
-                        console.log(data);
+                        const { assessName, questionnaireContent } = data;
                         this.form.setFieldsValue({
-                            assessName: data.assessName,
+                            assessName,
+                            questionnaireContent,
                         });
                     });
             },
             //  表单提交 保存
             handleSubmit(e){
                 e.preventDefault();
-                new Promise((resolve, reject) => {
-                    this.form.validateFields((err, values) => {
-                        if (err) {
-                            reject();
-                            return;
+                this.form.validateFields((err, values) => {
+                    if (err) {
+                        return;
+                    }
+                    console.table(values);
+                    (() => {
+                        //  如果是新增
+                        if (!this.questionnaireId) {
+                            return requestAssessInsert(values);
                         }
-                        console.table(values);
-                        (() => {
-                            //  如果是新增
-                            if (!this.questionnaireId) {
-                                return requestAssessInsert(values);
-                            }
-                            //  如果是编辑
-                            return requestAssessUpdate(Object.assign(
-                                { id: this.questionnaireId },
-                                values)
-                            );
-                        })()
-                            .then(v => {
-                                console.log(v);
-                                resolve();
-                            })
-                            .catch(err => {
-                                console.log(err);
-                                reject(err);
-                            });
-                    });
+                        //  如果是编辑
+                        return requestAssessUpdate(Object.assign(
+                            { id: this.questionnaireId },
+                            values)
+                        );
+                    })()
+                        .then(v => {
+                            this.$message.success('操作成功');
+                            this.$router.push({ name: 'questionnaire' });
+                        })
+                        .catch(err => {
+                            console.log(err);
+                            this.$message.error('操作失败');
+                        });
                 });
             },
         }
