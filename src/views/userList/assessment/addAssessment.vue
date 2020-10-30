@@ -1406,7 +1406,6 @@
                             console.log(JSON.stringify(Object.assign({
                                 age, bmi, height, name, sex, weight, patientId,
                             }, _threeData)));
-                            return Promise.reject();
                             return requestPatientAssessSavePgsga(Object.assign({
                                 age, bmi, height, name, sex, weight, patientId,
                             }, _threeData));
