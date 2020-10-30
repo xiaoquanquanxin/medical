@@ -628,7 +628,7 @@
                             <li class="radio-group-item radio-group-item-title">1、近2周来，患者有以下的问题，影响患者摄入足够的饮食（多选，累计计分）
                             </li>
                             <li class="radio-group-item">
-                                <b>❌❌️</b>
+                                <b>❌需要检查❌️</b>
                                 <a-checkbox-group class="radio-group" v-model="typeThreeList.symptom">
                                     <a-checkbox v-for="item in typeThreeListData.symptom"
                                                 :value="item.id"
@@ -677,7 +677,7 @@
                         <ul class="radio-group-list">
                             <li class="radio-group-item radio-group-item-title">1、相关诊断（特定，多选）
                             </li>
-                            ❌❌
+                            ❌需要检查❌
                             <li class="radio-group-item">
                                 <a-checkbox-group class="radio-group" v-model="typeThreeList.disease">
                                     <a-checkbox v-for="item in typeThreeListData.disease"
@@ -704,7 +704,7 @@
                             </li>
                             <li class="radio-group-item radio-group-item-title">3、原发疾病分期</li>
                             <li class="radio-group-item">
-                                ❌❌
+                                ❌需要检查❌
                                 <a-checkbox-group class="radio-group" v-model="typeThreeList.diseaseStage">
                                     <a-checkbox v-for="item in typeThreeListData.diseaseStage"
                                                 :value="item.id"
@@ -1355,6 +1355,7 @@
                             }
                             //  PG - SGA主观营养状况评估
                             if (weightCondition !== undefined) {
+                                this.setThreeData(data);
                                 this.tableTypeSelect = 3;
                                 return;
                             }
@@ -1422,6 +1423,7 @@
                         this.$message.error('操作失败');
                     });
             },
+
             //  微型营养评价表
             setOneData(data){
                 const { v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20 } = data;
@@ -1500,7 +1502,6 @@
                     v6: v6.id, totalScore,
                 };
             },
-
             //  一般评估表
             setTwoData(data){
                 const { v1, v2, v3, v4, v5, v6 } = data;
@@ -1516,6 +1517,7 @@
                 this.typeTwoList[4] = this.typeTwoListData[4].filter(item => v5Set.has(item.id));
                 console.log(this.typeTwoList[4]);
             },
+
             //  类型3转换 PG - SGA主观营养状况评估
             threeDataTransform(){
                 console.log('转换🍗');
@@ -1698,6 +1700,68 @@
                     muscleconditiontotalmusclewastingScore,
                     totalScore,
                 };
+            },
+            //  PG - SGA主观营养状况评估
+            setThreeData(data){
+                console.log(data);
+                //  我传的'4'，服务端返回的'4.0'
+                data.hot = (Math.trunc(data.hot || 0)).toString();
+                data.lastHottime = (Math.trunc(data.lastHottime || 0)).toString();
+                data.isuseHormone = (Math.trunc(data.isuseHormone || 0)).toString();
+                const {
+                    symptom,
+                    disease,
+                    diseaseStage,
+                } = data;
+                //  '13,14,13:23322,14:233232',
+                console.log(symptom);
+                //  '1,5,1:232'
+                console.log(disease);
+                //  '2,5,5:23'
+                console.log(diseaseStage);
+                delete data.symptom;
+                delete data.disease;
+                delete data.diseaseStage;
+                data.symptom = this.generalRecombination(symptom, this.typeThreeListData.symptom);
+                data.disease = this.generalRecombination(disease, this.typeThreeListData.disease);
+                data.diseaseStage = this.generalRecombination(diseaseStage, this.typeThreeListData.diseaseStage);
+                //  设置给这个对象
+                this.typeThreeList = data;
+                console.log(JSON.parse(JSON.stringify(this.typeThreeList)));
+            },
+
+            //  通用方法 用于处理字符串，分离勾选和input的复杂状态
+            generalRecombination(str, templateMapList){
+                const symptomPrimaryList = String(str || '').split(',');
+                let _list = [];
+                //  处理字符串，分离勾选和input的复杂状态
+                const _map = {};
+                symptomPrimaryList.forEach(item => {
+                    const index = item.indexOf(':');
+                    //  说明是普通数据
+                    if (index === -1) {
+                        _list.push(item);
+                        return;
+                    }
+                    const key = item.substr(0, index);
+                    const value = item.substr(index + 1);
+                    //  说明是有input数据
+                    _list.push(key);
+                    _map[key] = value;
+                });
+                //  console.log(_map);
+                //  设置input
+                templateMapList.forEach(item => {
+                    if (!item.hasInput) {
+                        return;
+                    }
+                    const inputValue = _map[item.id];
+                    if (inputValue) {
+                        item.input = inputValue;
+                    }
+                });
+                //  console.log(_list);
+                return _list;
             },
 
             aaa(value){
