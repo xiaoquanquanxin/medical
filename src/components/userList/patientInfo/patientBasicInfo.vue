@@ -330,7 +330,7 @@
                     .then(v => {
                         console.log(v);
                         this.ICDList = v.data || [];
-                    });
+                    });//  医院list
                 requestHospitalGetList()
                     .then(hospitalList => {
                         this.hospitalList = hospitalList;

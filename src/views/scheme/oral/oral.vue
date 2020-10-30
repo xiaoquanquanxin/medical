@@ -141,8 +141,8 @@
             }
         },
         created(){
-            console.log('create请求');
-            requestHospitalGetList()
+            console.log('create请求');//  医院list
+requestHospitalGetList()
                 .then(hospitalList => {
                     this.hospitalList = hospitalList;
                 });

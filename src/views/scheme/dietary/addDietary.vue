@@ -15,8 +15,9 @@
                           placeholder="请选择医院"
                           @change="selectHospitalChange"
                 >
-                    <a-select-option :value="item.id"
-                                     v-for="item in hospitalList"
+
+                    <a-select-option v-for="(item,index) in hospitalList"
+                                     :value="item.id"
                     >{{item.hospitalName}}
                     </a-select-option>
                 </a-select>
@@ -90,10 +91,14 @@
     import { twoRowSearch } from '@/utils/tableScroll';
     import { formItemLayout } from '@/utils/layout.ts';
     import GoBackButton from '@/components/goBackButton.vue';
-    import { prescriptionTypeList, liquidEnergyList, usageMethodList } from '../../../utils/constants';
+    import { liquidEnergyList, usageMethodList } from '../../../utils/constants';
     import { requestHospitalGetList } from '../../../api/hospital';
     import { requestGoodsListByHospital } from '../../../api/commodity/commodityList';
-    import { requestPrescriptionTemplateInsert, requestPrescriptionTemplateUpdate } from '../../../api/scheme/scheme';
+    import {
+        requestPrescriptionTemplateGet,
+        requestPrescriptionTemplateInsert,
+        requestPrescriptionTemplateUpdate
+    } from '../../../api/scheme/scheme';
 
     const columns = [
         {
@@ -130,8 +135,6 @@
             return {
                 //  医院下拉
                 hospitalList: [],
-                //  处方类型下拉
-                prescriptionTypeList,
                 //  能量下拉
                 liquidEnergyList,
                 //  食用方法下拉
@@ -161,7 +164,8 @@
 
                 //  表单中表格的数据 ：膳食营养计划
                 tableForm: {
-                    //  hospitalId          医院
+                    //  医院
+                    //  hospitalId: undefined,
                     //  hospitalName        医院名
                     //    处方名
                     prescriptionName: '膳食营养计划',
@@ -182,7 +186,7 @@
         },
         methods: {
             //  主要请求
-            searchFn(){
+            searchFn(){//  医院list
                 requestHospitalGetList()
                     .then(hospitalList => {
                         this.hospitalList = hospitalList;
@@ -192,17 +196,18 @@
                     return;
                 }
                 //  如果是编辑
-//                requestChannelBusinessPage(paginationEncode(this.pagination))
-//                    .then(v => {
-//                        const { data } = v;
-//                        console.log(data);
-//                data.records.forEach((item, index) => {
-//                    item.key = index;
-//                    item.createTime = item.createTime.substr(0, 10);
-//                });
-//                        this.data = data.records;
-//                        this.pagination = paginationDecode(this.pagination, data);
-//                    });
+                requestPrescriptionTemplateGet(this.dietaryId)
+                    .then(v => {
+                        const { data } = v;
+                        console.log(data);
+                        const tableForm = this.tableForm;
+                        const { prescriptionContent, prescriptionName, energy, hospitalId, } = data;
+                        tableForm.prescriptionName = prescriptionName;
+                        tableForm.energy = energy;
+                        tableForm.hospitalId = hospitalId;
+                        const { mealPlanTableData } = JSON.parse(prescriptionContent);
+                        console.log(mealPlanTableData);
+                    });
             },
             //  切换医院
             selectHospitalChange(value){

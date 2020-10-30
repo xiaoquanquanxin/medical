@@ -20,8 +20,8 @@
                           placeholder="请选择性别"
                           v-decorator="sexDecorator"
                 >
-                    <a-select-option value="1">1</a-select-option>
-                    <a-select-option value="2">2</a-select-option>
+                    <a-select-option value="1">男</a-select-option>
+                    <a-select-option value="2">女</a-select-option>
                 </a-select>
             </a-form-item>
             <a-form-item label="医院" has-feedback>
@@ -29,17 +29,19 @@
                           placeholder="请选择医院"
                           v-decorator="hospitalDecorator"
                 >
-                    <a-select-option value="1">1</a-select-option>
-                    <a-select-option value="3">2</a-select-option>
+                    <a-select-option v-for="item in hospitalList"
+                                     :value="item.id"
+                    >
+                        {{item.hospitalName}}
+                    </a-select-option>
                 </a-select>
             </a-form-item>
             <a-form-item label="科室" has-feedback>
                 <a-select class="add-form-input"
                           placeholder="请选择科室"
-                          v-decorator="departmentDecorator"
+                          v-decorator="deptIdDecorator"
                 >
-                    <a-select-option v-for="(item,index) in deptList"
-                                     :key="index"
+                    <a-select-option v-for="item in deptList"
                                      :value="item.id">
                         {{item.deptName}}
                     </a-select-option>
@@ -50,10 +52,9 @@
                           placeholder="请选择医生类型"
                           v-decorator="doctorTypeDecorator"
                 >
-                    <a-select-option :value="item.id"
-                                     :key="item.id"
-                                     v-for="item in doctorTypeList"
-                    >{{item.name}}
+                    <a-select-option v-for="item in doctorTypeList"
+                                     :value="item.value"
+                    >{{item.label}}
                     </a-select-option>
                 </a-select>
             </a-form-item>
@@ -62,10 +63,9 @@
                           placeholder="请选择医生职称"
                           v-decorator="doctorTitleDecorator"
                 >
-                    <a-select-option :value="item.id"
-                                     :key="item.id"
+                    <a-select-option :value="item.value"
                                      v-for="item in doctorTitleList"
-                    >{{item.name}}
+                    >{{item.label}}
                     </a-select-option>
                 </a-select>
             </a-form-item>
@@ -111,11 +111,12 @@
     import GoBackButton from '@/components/goBackButton.vue';
     import {
         requestDoctorDoctorTitle,
-        requestDoctorDoctorType,
+        requestDoctorDoctorType, requestDoctorGet,
         requestDoctorSave,
         requestDoctorUpdate
     } from '../../api/doctor';
     import { requestDeptList } from '../../api/department';
+    import { requestHospitalGetList } from '../../api/hospital';
 
     export default {
         components: {
@@ -126,6 +127,7 @@
         },
         data(){
             return {
+                hospitalList: [],
                 deptList: [],
                 doctorTypeList: [],
                 doctorTitleList: [],
@@ -148,14 +150,14 @@
                     },]
                 }],
                 //  医院
-                hospitalDecorator: ['hospital', {
+                hospitalDecorator: ['hospitalId', {
                     rules: [{
                         required: true,
                         message: '请选择医院'
                     },]
                 }],
                 //  科室
-                departmentDecorator: ['department', {
+                deptIdDecorator: ['deptId', {
                     rules: [{
                         required: true,
                         message: '请选择科室'
@@ -233,85 +235,77 @@
         methods: {
             //  主要请求
             searchFn(){
+                requestHospitalGetList()
+                    .then(hospitalList => {
+                        this.hospitalList = hospitalList;
+                    });
                 requestDoctorDoctorType()
                     .then(v => {
-                        alert('医生类型接口没数据，已处理');
                         v.data.forEach((item, index) => {
                             item.key = index;
                         });
                         this.doctorTypeList = v.data;
-                        console.log(v);
                     });
                 requestDoctorDoctorTitle()
                     .then(v => {
-                        alert('医生职称接口没数据，已处理');
+                        //  alert('医生职称接口没数据，已处理');
                         v.data.forEach((item, index) => {
                             item.key = index;
                         });
                         this.doctorTitleList = v.data;
-                        console.log(v);
                     });
-
                 requestDeptList()
                     .then(v => {
                         v.data.forEach(item => {
                             item.key = item.id;
                         });
-                        console.log(v.data);
                         this.deptList = v.data;
                     });
                 //  如果是新增
                 if (!this.doctorId) {
                     return;
                 }
-                alert('缺医生详情，已处理');
+                //  alert('医生详情接口没数据')
                 //  如果是编辑
-//                requestChannelBusinessPage(paginationEncode(this.pagination))
-//                    .then(v => {
-//                        const { data } = v;
-//                        console.log(data);
-//                data.records.forEach((item, index) => {
-//                    item.key = index;
-//                    item.createTime = item.createTime.substr(0, 10);
-//                });
-//                        this.data = data.records;
-//                        this.pagination = paginationDecode(this.pagination, data);
-//                    });
+                requestDoctorGet(this.doctorId)
+                    .then(v => {
+                        const { data } = v;
+                        console.log(data);
+                    });
             },
-            //  与第一密码比较，用于确认密码
-            compareToFirstPassword,
             //    表单提交
             handleSubmit(e){
                 e.preventDefault();
-                new Promise((resolve, reject) => {
-                    this.form.validateFields((err, values) => {
-                        if (err) {
-                            reject();
-                            return;
+                alert('接口报错')
+                this.form.validateFields((err, values) => {
+                    if (err) {
+                        return;
+                    }
+                    (() => {
+                        //  如果是新增
+                        if (!this.doctorId) {
+                            return requestDoctorSave(values);
                         }
-                        console.table(values);
-                        (() => {
-                            //  如果是新增
-                            if (!this.doctorId) {
-                                return requestDoctorSave(values);
-                            }
-                            //  如果是编辑
-                            return requestDoctorUpdate(Object.assign(
-                                { id: this.doctorId },
-                                values)
-                            );
-                        })()
-                            .then(v => {
-                                console.log(v);
-                                resolve();
-                            })
-                            .catch(err => {
-                                console.log(err);
-                                reject(err);
-                            });
-                    });
+                        //  如果是编辑
+                        return requestDoctorUpdate(Object.assign(
+                            { id: this.doctorId },
+                            values)
+                        );
+                    })()
+                        .then(v => {
+                            console.log(v);
+                            this.$message.success('操作成功');
+                            this.$router.push({ name: 'doctor' });
+                        })
+                        .catch(err => {
+                            console.log(err);
+                            this.$message.error('操作失败');
+                        });
                 });
             },
+
+            //  与第一密码比较，用于确认密码
+            compareToFirstPassword,
         }
     };
 </script>

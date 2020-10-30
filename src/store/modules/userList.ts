@@ -54,6 +54,8 @@ const mutations = {
 
 const actions = {
 	setPatientBasicInfo: ({commit}: COMMIT_INTERFACE<STATE>, patientBasicInfo: any) => {
+		//	修正数据type
+		patientBasicInfo.doctorId = patientBasicInfo.doctorId.toString() || '';
 		commit('SET_PATIENT_BASIC_INFO', patientBasicInfo);
 	},
 	setGroupChatMessage: ({commit}: COMMIT_INTERFACE<STATE>, groupChatMessage: any) => {

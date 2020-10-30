@@ -27,8 +27,6 @@ export function requestDoctorUpdate(data: any) {
 	});
 }
 
-//	缺少医生详情接口
-
 //	删除医生		⚠️原型无
 export function requestDoctorDelete(id: string | number) {
 	return request({
@@ -52,6 +50,14 @@ export function requestDoctorDoctorTitle() {
 	return request({
 		url: `/api/doctor/doctorTitle`,
 		method: 'get'
+	});
+}
+
+//	医生详情接口
+export function requestDoctorGet(id: string | number) {
+	return request({
+		url: `/api/doctor/get/${id}`,
+		method: 'get',
 	});
 }
 

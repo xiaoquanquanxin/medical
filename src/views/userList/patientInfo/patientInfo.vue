@@ -33,7 +33,6 @@
     import PatientBasicInfo from '@/components/userList/patientInfo/patientBasicInfo.vue';
     import { mapGetters, mapActions } from 'vuex';
     import { requestPatientSelectOnePatient, requestPatientUpdate } from '../../../api/userList/userList';
-    import { calcAgeByBirth } from '../../../utils/common';
 
     export default {
         components: {

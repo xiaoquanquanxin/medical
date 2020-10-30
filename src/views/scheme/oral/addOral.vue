@@ -377,47 +377,47 @@
                 requestHospitalGetList()
                     .then(hospitalList => {
                         this.hospitalList = hospitalList;
-                    })
+                    });
+                //  如果是新增
+                if (!this.oralId) {
+                    return;
+                }
+                //  如果是编辑
+                requestPrescriptionTemplateGet(this.oralId)
                     .then(v => {
-                        //  如果是新增
-                        if (!this.oralId) {
-                            return;
-                        }
-                        //  如果是编辑
-                        requestPrescriptionTemplateGet(this.oralId)
+                        const { data } = v;
+                        const tableForm = this.tableForm;
+                        tableForm.prescriptionName = data.prescriptionName;
+                        tableForm.energy = data.energy;
+                        tableForm.usageMethod = Number(data.usageMethod);
+                        tableForm.prescriptionType = data.prescriptionType;
+                        tableForm.hospitalId = data.hospitalId;
+                        console.log(data);
+                        console.log(JSON.parse(data.prescriptionContent));
+                        const prescriptionContent = JSON.parse(data.prescriptionContent);
+                        this.commodityTableData = prescriptionContent.commodityTableData;
+                        this.timeTableData = prescriptionContent.timeTableData;
+                        const { remark } = this.timeTableData[0];
+                        this.setRemark(remark);
+                        return data.hospitalId;
+                    })
+                    .then(hospitalId => {
+                        //  拿一次医院的商品
+                        requestGoodsListByHospital(hospitalId)
                             .then(v => {
-                                const { data } = v;
-                                const tableForm = this.tableForm;
-                                tableForm.prescriptionName = data.prescriptionName;
-                                tableForm.energy = data.energy;
-                                tableForm.usageMethod = Number(data.usageMethod);
-                                tableForm.prescriptionType = data.prescriptionType;
-                                tableForm.hospitalId = data.hospitalId;
-                                console.log(data);
-                                console.log(JSON.parse(data.prescriptionContent));
-                                const prescriptionContent = JSON.parse(data.prescriptionContent);
-                                this.commodityTableData = prescriptionContent.commodityTableData;
-                                this.timeTableData = prescriptionContent.timeTableData;
-                                const { remark } = this.timeTableData[0];
-                                this.setRemark(remark);
-                                //  拿一次医院的商品
-                                requestGoodsListByHospital(data.hospitalId)
-                                    .then(v => {
-                                        console.log('该医院下的商品：');
-                                        if (!v.data || !v.data) {
-                                            return;
-                                        }
-                                        v.data.forEach(item => {
-                                            item.key = item.id;
-                                        });
-                                        const originCommodityList = v.data;
-                                        //console.log(JSON.parse(JSON.stringify(v.data)));
-                                        //  编辑的数据
-                                        const _originCommodityList = Object.assign([], originCommodityList, prescriptionContent.commodityTableData);
-                                        console.log('编辑的数据');
-                                        console.log(JSON.parse(JSON.stringify(_originCommodityList)));
-                                        this.setOriginCommodityList(originCommodityList);
-                                    });
+                                console.log('该医院下的商品：');
+                                if (!v.data || !v.data) {
+                                    return;
+                                }
+                                v.data.forEach(item => {
+                                    item.key = item.id;
+                                });
+                                const originCommodityList = v.data;
+                                //  编辑的数据
+                                const _originCommodityList = Object.assign([], originCommodityList, this.commodityTableData);
+                                console.log('编辑的数据');
+                                console.log(JSON.parse(JSON.stringify(_originCommodityList)));
+                                this.setOriginCommodityList(originCommodityList);
                             });
                     });
             },

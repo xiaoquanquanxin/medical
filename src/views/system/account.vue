@@ -2,9 +2,11 @@
     <div class="layout-content-inner-main">
         <!--搜索相关-->
         <div class="a-input-group">
-            <a-input class="basic-input-width" v-model="searchData.commodityName"
+            <a-input class="basic-input-width" v-model="searchData.username"
                      placeholder="请输入账号名称"/>
             <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
+            <b>input参数不对</b>
+            <b>数据返回不全</b>
         </div>
         <div class="a-input-group">
             <a-button type="primary" @click="addAccountFn()">新建账号</a-button>
@@ -72,12 +74,12 @@
     const columns = [
         {
             title: '账号名称',
-            dataIndex: 'hospital',
+            dataIndex: 'username',
             width: 100,
         },
         {
             title: '创建时间',
-            dataIndex: 'status',
+            dataIndex: 'createTime',
             width: 200,
         },
         {
@@ -122,34 +124,18 @@
         methods: {
             //  主要请求
             searchFn(){
-                requestUserPage(paginationEncode(this.pagination))
+                requestUserPage(Object.assign({}, this.searchData, paginationEncode(this.pagination)))
                     .then(v => {
                         const { data } = v;
                         data.records.forEach((item, index) => {
                             item.key = index;
+                            console.log(JSON.parse(JSON.stringify(item)));
                         });
                         this.data = data.records;
                         this.pagination = paginationDecode(this.pagination, data);
                     });
             },
-            //  莫泰框方法
-            ...dialogMethods,
-            //  渠道商store
-            ...mapActions('system', [
-                'setSelectAccountId',
-                'setAccountOperationType',
-            ]),
-            //  展示的每一页数据变换
-            onShowSizeChange(current, pageSize){
-                this.pagination.pageSize = pageSize;
-                this.pagination.current = 1;
-                this.searchFn();
-            },
-            //  切换分页页码
-            pageChange(current){
-                this.pagination.current = current;
-                this.searchFn();
-            },
+
             //  新增账号
             addAccountFn(){
                 this.setSelectAccountId(0);
@@ -198,6 +184,16 @@
                     },
                 });
             },
+            //  莫泰框方法
+            ...dialogMethods,
+            //  渠道商store
+            ...mapActions('system', [
+                'setSelectAccountId',
+                'setAccountOperationType',
+            ]),
+
+            pageChange,
+            onShowSizeChange,
         }
     };
 </script>

@@ -7,16 +7,14 @@
             <a-select class="basic-select-width" placeholder="请选择医院" v-model="searchData.hospitalId"
                       @change="selectHospitalChange"
             >
-                <a-select-option v-for="(item,index) in hospitalList"
-                                 :key="index"
+                <a-select-option v-for="item in hospitalList"
                                  :value="item.id"
                 >
                     {{item.hospitalName}}
                 </a-select-option>
             </a-select>
             <a-select class="basic-select-width" placeholder="请选择科室" v-model="searchData.department">
-                <a-select-option v-for="(item,index) in deptList"
-                                 :key="index"
+                <a-select-option v-for="item in deptList"
                                  :value="item.id">
                     {{item.deptName}}
                 </a-select-option>
@@ -152,7 +150,7 @@
         },
 
         created(){
-            this.searchFn();
+            this.searchFn();//  医院list
             requestHospitalGetList()
                 .then(hospitalList => {
                     this.hospitalList = hospitalList;

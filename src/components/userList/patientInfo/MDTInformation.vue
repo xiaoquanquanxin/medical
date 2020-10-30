@@ -19,7 +19,8 @@
                               placeholder="请选择主管医生"
                               v-model="patientBasicInfo.doctorId"
                     >
-                        <a-select-option v-for="(item,index) in doctorList" :key="index" :value="Number(item.id)">
+                        <a-select-option v-for="item in doctorList"
+                                         :value="item.id">
                             {{item.doctorName}}
                         </a-select-option>
                     </a-select>
@@ -30,19 +31,11 @@
                               placeholder="请选择营养师"
                               v-model="patientBasicInfo.nutritionistId"
                     >
-                        <a-select-option v-for="(item,index) in doctorList" :key="index" :value="Number(item.id)">
-                            {{item.doctorName}}
+                        <a-select-option v-for="item in nutritionistList"
+                                         :value="item.id">
+                            {{item}}
                         </a-select-option>
                     </a-select>
-<!--                    <a-input placeholder="请输入营养师"-->
-<!--                             v-if="activeElementId === 1 ||!patientBasicInfo.nutritionistId"-->
-<!--                             v-model="patientBasicInfo.nutritionistId"-->
-<!--                             class="form-element"-->
-<!--                    />-->
-<!--                    <p v-else-->
-<!--                       @click="descriptionFormClickFn(1,$event)"-->
-<!--                       class="description-content"-->
-<!--                    >{{patientBasicInfo.nutritionistId}}</p>-->
                 </a-descriptions-item>
             </a-descriptions>
         </div>
@@ -65,6 +58,8 @@
                 activeElementId: null,
                 //  医生列表
                 doctorList: [],
+                //  营养师列表
+                nutritionistList: []
             };
         },
         created(){
@@ -73,18 +68,31 @@
         methods: {
             //  根据当前医院查询所有医生
             getDoctorList(){
-                requestPatientSelectDoctorByHospital()
+                requestPatientSelectDoctorByHospital(1)
                     .then(v => {
                         console.log('根据当前医院查询所有医生', v.data);
+                        if (!v.data[0]) {
+                            return;
+                        }
+                        console.log(typeof v.data[0].id);
                         v.data.forEach(item => {
-                            item.id = Number(item.id);
+                            item.key = item.id;
                         });
-                        //  console.log(typeof this.patientBasicInfo.doctorId, this.patientBasicInfo.doctorId);
                         this.doctorList = v.data;
                     });
+                requestPatientSelectDoctorByHospital(2)
+                    .then(v => {
+                        console.log('根据当前医院查询所有营养师', v.data);
+                        if (!v.data[0]) {
+                            return;
+                        }
+                        console.log(typeof v.data[0].id);
+                        v.data.forEach(item => {
+                            item.key = item.id;
+                        });
+                        this.nutritionistList = v.data;
+                    });
             },
-            //	病人信息、直接编辑用的 描述框的方法
-            ...descriptionsMethods,
 
             //  群聊
             groupChat(e){
@@ -123,6 +131,9 @@
                     }
                 });
             },
+
+            //	病人信息、直接编辑用的 描述框的方法
+            ...descriptionsMethods,
         }
     };
 </script>

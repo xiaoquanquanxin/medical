@@ -45,7 +45,7 @@
         >
             <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
                 <a-space size="small">
-                    <router-link :to="{name:'editDietary',params:{dietaryId:'123'}}">编辑</router-link>
+                    <router-link :to="{name:'editDietary',params:{dietaryId:sItem.id}}">编辑</router-link>
                     <a @click="deleteScheme(sItem,sIndex)">删除</a>
                 </a-space>
             </div>
@@ -135,8 +135,8 @@
             };
         },
         created(){
-            this.searchFn();
-            requestHospitalGetList()
+            this.searchFn();//  医院list
+requestHospitalGetList()
                 .then(hospitalList => {
                     this.hospitalList = hospitalList;
                 });

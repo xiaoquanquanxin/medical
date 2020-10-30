@@ -38,7 +38,6 @@
     import { mapGetters, mapActions } from 'vuex';
     import { requestDiseaseRecordPage } from '../../../api/userList/progressNote';
     import { noPaginationData } from '../../../utils/pagination';
-    import { requestPatientSelectDoctorByHospital } from '../../../api/userList/userList';
 
     const columns = [
         {
