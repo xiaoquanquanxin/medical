@@ -305,8 +305,8 @@
                         //  console.log(shuttleOriginTargetKey);
                         this.shuttleOriginList = shuttleOriginList;
                         this.shuttleOriginTargetKey = shuttleOriginTargetKey;
-                        this.showModal(DIALOG_TYPE.ASSOCIATED_DISEASE);
-                        this.setShuttleBoxType(SHUTTLE_BOX.ASSOCIATED_DISEASE);
+                        this.showModal(DIALOG_TYPE.QUESTIONNAIRE);
+                        this.setShuttleBoxType(SHUTTLE_BOX.QUESTIONNAIRE);
                     })
                     .catch(err => {
                         console.log(err);
@@ -316,6 +316,7 @@
 
             //  关联评估调查表确定
             questionnaireModalCheck(refQuestionnaire){
+                debugger
                 //  防止连点
                 this.setConfirmLoading(DIALOG_TYPE.QUESTIONNAIRE, true);
                 const promise = this.$refs[refQuestionnaire].handleSubmit();
