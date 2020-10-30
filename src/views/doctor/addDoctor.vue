@@ -248,7 +248,6 @@
                     });
                 requestDoctorDoctorTitle()
                     .then(v => {
-                        //  alert('医生职称接口没数据，已处理');
                         v.data.forEach((item, index) => {
                             item.key = index;
                         });
@@ -265,7 +264,7 @@
                 if (!this.doctorId) {
                     return;
                 }
-                //  alert('医生详情接口没数据')
+                alert('医生详情接口没数据')
                 //  如果是编辑
                 requestDoctorGet(this.doctorId)
                     .then(v => {
