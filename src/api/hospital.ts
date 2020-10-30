@@ -62,4 +62,36 @@ export function requestHospitalChangeStatus(id: string | number) {
 }
 
 
+//	医院-关联科室保存
+export function requestHospitalRelatedDepartments(data: {
+	"hospitalId": number
+	"deptIds": [],
+}) {
+	return request({
+		url: '/api/hospital/relatedDepartments',
+		method: 'post',
+		data,
+	});
+}
+
+
+//	根据医院id获取已经关联的渠道商
+export function requestHospitalListChannelBusiness(id: string | number) {
+	return request({
+		url: `/api/hospital/listChannelBusiness/${id}`,
+		method: 'get',
+	});
+}
+
+
+//	获取已经关联的科室
+export function requestDeptListDeptHospitalId(id: string | number) {
+	return request({
+		url: `/api/dept/listDeptHospitalId/${id}`,
+		method: 'get',
+	});
+}
+
+
+
 

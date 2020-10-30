@@ -37,17 +37,13 @@
             shuttleBoxType(){
                 return this.$store.state.shuttleBox.shuttleBoxType;
             },
-            //  原始数据
-//            originList(){
-//                return this.$store.state.shuttleBox.originList;
-//            }
         },
-        props: ['originList'],
+        props: ['originList', 'originTargetKey'],
         data(){
+            console.log(this.originTargetKey);
             return {
                 renderOriginList: [],
-                mockData: [],
-                targetKeys: [],
+                targetKeys: this.originTargetKey,
                 //  请求相关数据
                 shuttleBoxBasicData: {},
             };

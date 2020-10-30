@@ -78,7 +78,7 @@
         {
             title: '创建时间',
             dataIndex: 'status',
-            width: 100,
+            width: 200,
         },
         {
             title: '创建人',

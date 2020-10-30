@@ -4,17 +4,17 @@ import {COMMIT_INTERFACE} from "@/store"
 //	分类管理
 interface STATE {
 	//	渠道商id
-	distributorsId: number;
+	distributorsList: [];
 }
 
 const state: STATE = {
 	//	渠道商id
-	distributorsId: 0,
+	distributorsList: [],
 }
 
 const mutations = {
-	SET_DISTRIBUTORS_ID: (state: STATE, distributorsId: number) => {
-		state.distributorsId = distributorsId;
+	SET_DISTRIBUTORS_LIST: (state: STATE, distributorsList: []) => {
+		state.distributorsList = distributorsList;
 	},
 	SET_BRAND_ID: (state: STATE, brandId: number) => {
 		//	state.brandId = brandId;
@@ -25,8 +25,8 @@ const mutations = {
 }
 
 const actions = {
-	setDistributorsId: ({commit}: COMMIT_INTERFACE<STATE>, distributorsId: number) => {
-		commit('SET_DISTRIBUTORS_ID', distributorsId);
+	setDistributorsList: ({commit}: COMMIT_INTERFACE<STATE>, distributorsList: []) => {
+		commit('SET_DISTRIBUTORS_LIST', distributorsList);
 	},
 	setBrandId: ({commit}: COMMIT_INTERFACE<STATE>, brandId: number) => {
 		commit('SET_BRAND_ID', brandId);

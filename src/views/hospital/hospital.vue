@@ -82,6 +82,7 @@
                  @ok="relatedDepartmentsModalCheck('refShuttleBox')">
             <ShuttleBox ref="refShuttleBox"
                         :origin-list="shuttleOriginList"
+                        :origin-target-key="shuttleOriginTargetKey"
             />
         </a-modal>
         <!--关联渠道商-->
@@ -113,9 +114,14 @@
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
     import { twoRowSearch } from '@/utils/tableScroll';
     import { SHUTTLE_BOX } from '../../store/modules/shuttleBox';
-    import { requestHospitalChangeStatus, requestHospitalPage } from '../../api/hospital';
+    import {
+        requestHospitalChangeStatus, requestDeptListDeptHospitalId,
+        requestHospitalPage,
+        requestHospitalRelatedDepartments
+    } from '../../api/hospital';
     import { getProvinceList, provinceChange, cityChange, areaList } from '@/utils/areaList';
-    import { requestDeptList, requestHospitalRelatedDepartments } from '../../api/department';
+    import { requestDeptList } from '../../api/department';
+    import { requestChannelBusinessList } from '../../api/distributors';
 
     const columns = [
         {
@@ -170,17 +176,19 @@
 
                 //  穿梭框数据
                 shuttleOriginList: [],
+                //  穿梭框默认值
+                shuttleOriginTargetKey: [],
                 //  穿梭框操作的sItem
                 shuttleBoxData: {}
             };
         },
         created(){
+            this.getProvinceList(this);
             this.searchFn();
         },
         methods: {
             //  主要请求
             searchFn(){
-                this.getProvinceList(this);
                 requestHospitalPage(paginationEncode(this.pagination))
                     .then(v => {
                         const { data } = v;
@@ -203,7 +211,7 @@
             ]),
             ...mapActions('hospital', [
                 //  关联渠道商
-                'setDistributorsId',
+                'setDistributorsList',
             ]),
 
             //  展示的每一页数据变换
@@ -238,37 +246,45 @@
             //  关联科室操作
             relatedDepartments(sItem){
                 this.shuttleBoxData = sItem;
-                requestDeptList()
+                Promise.all([
+                    requestDeptList(),
+                    requestDeptListDeptHospitalId(sItem.id),
+                ])
                     .then(v => {
-                        this.showModal(DIALOG_TYPE.RELATED_DEPARTMENTS);
-                        this.setShuttleBoxType(SHUTTLE_BOX.RELATED_DEPARTMENTS);
-                        this.shuttleOriginList = [];
-                        v.data.forEach(item => {
+                        const list1 = v[0].data || [];
+                        const list2 = v[1].data || [];
+                        const shuttleOriginList = [];
+                        const shuttleOriginTargetKey = list2.map(String);
+                        list1.forEach(item => {
                             const data = {};
                             data.key = item.id.toString();
                             data.title = item.deptName;
                             data.description = item.deptName;
-                            this.shuttleOriginList.push(data);
+                            shuttleOriginList.push(data);
                         });
-                        //  console.log(JSON.parse(JSON.stringify(this.shuttleOriginList)));
+                        //  console.log(shuttleOriginList);
+                        //  console.log(shuttleOriginTargetKey);
+                        this.shuttleOriginList = shuttleOriginList;
+                        this.shuttleOriginTargetKey = shuttleOriginTargetKey;
+                        this.showModal(DIALOG_TYPE.RELATED_DEPARTMENTS);
+                        this.setShuttleBoxType(SHUTTLE_BOX.RELATED_DEPARTMENTS);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        alert('接口报错');
                     });
             },
             //  关联渠道商
             associatedChannelProvider(sItem){
                 this.shuttleBoxData = sItem;
-                alert('已处理');
-                requestDeptList()
+                requestChannelBusinessList()
                     .then(v => {
-                        return;
                         this.showModal(DIALOG_TYPE.ASSOCIATED_CHANNEL_PROVIDER);
-                        this.shuttleOriginList = [];
                         v.data.forEach(item => {
-                            const data = {};
-                            data.key = item.id.toString();
-                            data.title = item.deptName;
-                            data.description = item.deptName;
-                            this.shuttleOriginList.push(data);
+                            item.key = item.id;
                         });
+                        console.log(v.data[0]);
+                        this.setDistributorsList(v.data);
                     });
             },
             //  关联科室确定
@@ -304,8 +320,24 @@
                 //  防止连点
                 this.setConfirmLoading(DIALOG_TYPE.ASSOCIATED_CHANNEL_PROVIDER, true);
                 const promise = this.$refs[refChannelProviderBox].handleSubmit();
-                promise.then(v => {
-                    this.hideModal(DIALOG_TYPE.ASSOCIATED_CHANNEL_PROVIDER);
+                promise.then(targetKeys => {
+                    console.log(targetKeys);
+                    console.log(this.shuttleBoxData.id);
+                    alert('缺少医院关联渠道商接口');
+                    return;
+                    return aaa({
+                        hospitalId: this.shuttleBoxData.id,
+                        deptIds: targetKeys
+                    })
+                        .then(v => {
+                            this.$message.success('操作成功');
+                            this.hideModal(DIALOG_TYPE.ASSOCIATED_CHANNEL_PROVIDER);
+                            this.searchFn();
+                        })
+                        .catch(err => {
+                            console.log(err);
+                            this.$message.error('操作失败');
+                        });
                 }).catch(error => {
                     console.log(error);
                     console.log('有错');

@@ -1,7 +1,7 @@
 <template>
     <a-table
             :columns="columns"
-            :data-source="data"
+            :data-source="distributorsList"
             :scroll="modalTableScroll"
             :pagination="false"
             :row-selection="{
@@ -10,6 +10,15 @@
                 type:'radio'
             }"
     >
+        <!--渠道商地区-->
+        <div slot="area" slot-scope="scope,sItem,sIndex,extra">
+            {{scope.province}}-{{scope.city}}
+        </div>
+        <!--状态-->
+        <div slot="status" slot-scope="scope,sItem,sIndex,extra">
+            <span v-if="scope.status">开</span>
+            <span v-else>关</span>
+        </div>
     </a-table>
 </template>
 <script>
@@ -17,91 +26,54 @@
 
     const columns = [
         {
-            title: '医院名称',
-            dataIndex: 'hospital',
+            title: '渠道商名称',
+            dataIndex: 'channelBusinessName',
             width: 100,
         },
         {
             title: '渠道商地区',
-            dataIndex: 'index',
+            scopedSlots: { customRender: 'area' },
             width: 100,
         },
         {
             title: '状态',
             width: 100,
-            scopedSlots: { customRender: 'a-switch' },
+            scopedSlots: { customRender: 'status' },
         },
     ];
-    const data = [];
-    for (let i = 0; i < 10; i++) {
-        data.push({
-            index: i,
-            key: i,
-            hospital: `xx医院`,
-            city: '上海',
-            status: String(i % 2),
-            icon: '医院图标',
-        });
-    }
     export default {
         computed: {
-            distributorsId(){
-                return this.$store.state.hospital.distributorsId;
+            distributorsList(){
+                return this.$store.state.hospital.distributorsList;
             },
         },
         data(){
             return {
-                data,
                 columns,
                 //	弹框table的scroll
                 modalTableScroll,
                 //  默认被选中的值
-                selectedRowKeys: [3]
+                selectedRowKeys: []
             };
         },
         created(){
-            console.log(this.distributorsId);
-        },
-        created(){
-            this.searchFn();
+
         },
         methods: {
-            //  主要请求
-            searchFn(){
-//                requestChannelBusinessPage(paginationEncode(this.pagination))
-//                    .then(v => {
-//                        const { data } = v;
-//                        console.log(data);
-//                data.records.forEach((item, index) => {
-//                    item.key = index;
-//                    item.createTime = item.createTime.substr(0, 10);
-//                });
-//                        this.data = data.records;
-//                        this.pagination = paginationDecode(this.pagination, data);
-//                    });
-            },
             //  单选
             onSelectChange(e){
                 this.selectedRowKeys = e;
             },
             //  提交
             handleSubmit(){
-                return new Promise(((resolve, reject) => {
-                    console.log(this.selectedRowKeys);
+                return new Promise((resolve, reject) => {
                     if (this.selectedRowKeys.length) {
-                        resolve();
+                        resolve(this.selectedRowKeys);
                     } else {
+                        this.$message.error('请选择渠道商');
                         reject();
                     }
-                }))
-                    .then(v => {
-                        return new Promise(((resolve, reject) => {
-                            console.log('发请求吧');
-                            setTimeout(() => {
-                                resolve();
-                            }, 1000);
-                        }));
-                    });
+                });
             }
         }
     };

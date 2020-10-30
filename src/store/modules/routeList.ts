@@ -65,12 +65,12 @@ const actions = {
 		let map = {};
 		const loginInfo = getLoginInfo();
 		//	@ts-ignore
-		// loginInfo.type = -1;
+		loginInfo.type = -1;
 		//	@ts-ignore
 		switch (loginInfo.type) {
 			case -1:
 				//	开发级路由
-				// map = routeMap;
+				map = routeMap;
 				break;
 			case 1:
 				map = roleType1;
