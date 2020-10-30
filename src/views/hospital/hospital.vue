@@ -274,19 +274,6 @@
                         alert('接口报错');
                     });
             },
-            //  关联渠道商
-            associatedChannelProvider(sItem){
-                this.shuttleBoxData = sItem;
-                requestChannelBusinessList()
-                    .then(v => {
-                        this.showModal(DIALOG_TYPE.ASSOCIATED_CHANNEL_PROVIDER);
-                        v.data.forEach(item => {
-                            item.key = item.id;
-                        });
-                        console.log(v.data[0]);
-                        this.setDistributorsList(v.data);
-                    });
-            },
             //  关联科室确定
             relatedDepartmentsModalCheck(refShuttleBox){
                 //  防止连点
@@ -314,6 +301,21 @@
                     //  最后设置可以再次点击
                     this.setConfirmLoading(DIALOG_TYPE.RELATED_DEPARTMENTS, false);
                 });
+            },
+            
+            //  关联渠道商
+            associatedChannelProvider(sItem){
+                this.shuttleBoxData = sItem;
+                alert('缺医院关联渠道商、回显');
+                requestChannelBusinessList()
+                    .then(v => {
+                        this.showModal(DIALOG_TYPE.ASSOCIATED_CHANNEL_PROVIDER);
+                        v.data.forEach(item => {
+                            item.key = item.id;
+                        });
+                        console.log(v.data[0]);
+                        this.setDistributorsList(v.data);
+                    });
             },
             //  关联渠道商确定
             channelProviderBoxModalCheck(refChannelProviderBox){

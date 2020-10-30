@@ -291,6 +291,8 @@
 
                 //  穿梭框数据
                 shuttleOriginList: [],
+                //  穿梭框默认值
+                shuttleOriginTargetKey: [],
                 //  穿梭框操作的sItem
                 shuttleBoxData: {},
             };

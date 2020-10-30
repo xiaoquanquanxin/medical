@@ -44,6 +44,15 @@ export function requestDeptRelatedDiseases(data: any) {
 	});
 }
 
+//	关联评估调查表
+export function requestDeptRelatedRelatedAssess(data: any) {
+	return request({
+		url: '/api/dept/relatedAssess',
+		method: 'post',
+		data,
+	});
+}
+
 //	删除科室		⚠️原型无
 export function requestDeptDelete(id: string | number) {
 	return request({
@@ -69,6 +78,22 @@ export function requestDeptList() {
 	});
 }
 
+
+//	根据科室id获取已经关联的疾病
+export function requestDiseaseListDiseaseDeptId(id: string | number) {
+	return request({
+		url: `/api/disease/listDiseaseDeptId/${id}`,
+		method: 'get',
+	});
+}
+
+//	根据科室id获取已经关联的调查表
+export function requestAssessListDiseaseDeptId(id: string | number) {
+	return request({
+		url: `/api/assess/listAssessDeptId/${id}`,
+		method: 'get',
+	});
+}
 
 
 

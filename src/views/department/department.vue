@@ -72,6 +72,7 @@
                  @ok="associatedDiseaseModalCheck('refAssociatedDisease')">
             <ShuttleBox ref="refAssociatedDisease"
                         :origin-list="shuttleOriginList"
+                        :origin-target-key="shuttleOriginTargetKey"
             />
         </a-modal>
         <!--关联评估调查表-->
@@ -87,6 +88,7 @@
                  @ok="questionnaireModalCheck('refQuestionnaire')">
             <ShuttleBox ref="refQuestionnaire"
                         :origin-list="shuttleOriginList"
+                        :origin-target-key="shuttleOriginTargetKey"
             />
         </a-modal>
     </div>
@@ -105,7 +107,12 @@
     } from '@/utils/pagination.ts';
     import { twoRowSearch } from '@/utils/tableScroll';
     import { SHUTTLE_BOX } from '../../store/modules/shuttleBox';
-    import { requestDeptPage, requestDeptRelatedDiseases, requestDeptUpdate } from '../../api/department';
+    import {
+        requestDiseaseListDiseaseDeptId,
+        requestDeptPage,
+        requestDeptRelatedDiseases, requestDeptRelatedRelatedAssess,
+        requestDeptUpdate, requestAssessListDiseaseDeptId
+    } from '../../api/department';
     import { requestDiseaseList } from '../../api/disease';
     import { requestAssessList } from '../../api/questionnaire';
 
@@ -152,8 +159,10 @@
 
                 //  穿梭框数据
                 shuttleOriginList: [],
+                //  穿梭框默认值
+                shuttleOriginTargetKey: [],
                 //  穿梭框操作的sItem
-                shuttleBoxData: {}
+                shuttleBoxData: {},
             };
         },
 
@@ -212,39 +221,35 @@
             editDepartment(sItem){
                 this.$router.push({ name: 'editDepartment', params: { departmentId: sItem.id } });
             },
-
             //  关联疾病
             relatedDisease(sItem){
                 this.shuttleBoxData = sItem;
-                requestDiseaseList()
+                Promise.all([
+                    requestDiseaseList(),
+                    requestDiseaseListDiseaseDeptId(sItem.id),
+                ])
                     .then(v => {
-                        this.showModal(DIALOG_TYPE.ASSOCIATED_DISEASE);
-                        this.setShuttleBoxType(SHUTTLE_BOX.ASSOCIATED_DISEASE);
-                        this.shuttleOriginList = [];
-                        v.data.forEach(item => {
+                        const list1 = v[0].data || [];
+                        const list2 = v[1].data || [];
+                        const shuttleOriginList = [];
+                        const shuttleOriginTargetKey = list2.map(String);
+                        list1.forEach(item => {
                             const data = {};
                             data.key = item.id.toString();
                             data.title = item.diseaseName;
                             data.description = item.diseaseName;
-                            this.shuttleOriginList.push(data);
+                            shuttleOriginList.push(data);
                         });
-                    });
-            },
-            //  关联评估调查表
-            relatedQuestionnaire(sItem){
-                this.shuttleBoxData = sItem;
-                requestAssessList()
-                    .then(v => {
-                        this.showModal(DIALOG_TYPE.QUESTIONNAIRE);
-                        this.setShuttleBoxType(SHUTTLE_BOX.QUESTIONNAIRE);
-                        this.shuttleOriginList = [];
-                        v.data.forEach(item => {
-                            const data = {};
-                            data.key = item.id.toString();
-                            data.title = item.assessName;
-                            data.description = item.assessName;
-                            this.shuttleOriginList.push(data);
-                        });
+                        console.log(shuttleOriginList);
+                        console.log(shuttleOriginTargetKey);
+                        this.shuttleOriginList = shuttleOriginList;
+                        this.shuttleOriginTargetKey = shuttleOriginTargetKey;
+                        this.showModal(DIALOG_TYPE.ASSOCIATED_DISEASE);
+                        this.setShuttleBoxType(SHUTTLE_BOX.ASSOCIATED_DISEASE);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        alert('接口报错');
                     });
             },
             //  关联疾病确定
@@ -255,6 +260,7 @@
                 promise.then(targetKeys => {
                     console.log(targetKeys);
                     console.log(this.shuttleBoxData.id);
+                    alert('这个接口200但是没效果');
                     return requestDeptRelatedDiseases({
                         id: this.shuttleBoxData.id,
                         diseasesds: targetKeys
@@ -275,6 +281,39 @@
                     this.setConfirmLoading(DIALOG_TYPE.ASSOCIATED_DISEASE, false);
                 });
             },
+
+            //  关联评估调查表
+            relatedQuestionnaire(sItem){
+                this.shuttleBoxData = sItem;
+                Promise.all([
+                    requestAssessList(),
+                    requestAssessListDiseaseDeptId(sItem.id),
+                ])
+                    .then(v => {
+                        const list1 = v[0].data || [];
+                        const list2 = v[1].data || [];
+                        const shuttleOriginList = [];
+                        const shuttleOriginTargetKey = list2.map(String);
+                        list1.forEach(item => {
+                            const data = {};
+                            data.key = item.id.toString();
+                            data.title = item.assessName;
+                            data.description = item.assessName;
+                            shuttleOriginList.push(data);
+                        });
+                        //  console.log(shuttleOriginList);
+                        //  console.log(shuttleOriginTargetKey);
+                        this.shuttleOriginList = shuttleOriginList;
+                        this.shuttleOriginTargetKey = shuttleOriginTargetKey;
+                        this.showModal(DIALOG_TYPE.ASSOCIATED_DISEASE);
+                        this.setShuttleBoxType(SHUTTLE_BOX.ASSOCIATED_DISEASE);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        alert('接口报错');
+                    });
+            },
+
             //  关联评估调查表确定
             questionnaireModalCheck(refQuestionnaire){
                 //  防止连点
@@ -283,7 +322,8 @@
                 promise.then(targetKeys => {
                     console.log(targetKeys);
                     console.log(this.shuttleBoxData.id);
-                    return requestDeptRelatedDiseases({
+                    alert('文档参数不对');
+                    return requestDeptRelatedRelatedAssess({
                         id: this.shuttleBoxData.id,
                         diseasesds: targetKeys
                     })
