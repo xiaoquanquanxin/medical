@@ -332,9 +332,8 @@
                         this.ICDList = v.data || [];
                     });
                 requestHospitalGetList()
-                    .then(v => {
-                        this.hospitalList = v.data;
-                        //console.log(JSON.parse(JSON.stringify(v.data)));
+                    .then(hospitalList => {
+                        this.hospitalList = hospitalList;
                     });
             },
             //  切换医院

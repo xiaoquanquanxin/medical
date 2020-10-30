@@ -168,8 +168,8 @@
             //  主要请求
             searchFn(){
                 requestHospitalGetList()
-                    .then(v => {
-                        this.hospitalList = v.data;
+                    .then(hospitalList => {
+                        this.hospitalList = hospitalList;
                     });
                 //  如果是新增
                 if (!this.dietaryId) {
@@ -242,7 +242,7 @@
 //                    console.table(values);
 //                    console.log(!err);
 //                });
-                
+
                 console.log('备注🍌', this.remark);
 //                console.log(JSON.parse(JSON.stringify(this.timeTableData)));
                 const prescriptionContent = {

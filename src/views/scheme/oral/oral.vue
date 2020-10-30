@@ -85,7 +85,7 @@
         {
             title: '方案名称',
             dataIndex: 'prescriptionName',
-            width: 100,
+            width: 150,
         },
         {
             title: '能量',
@@ -151,9 +151,8 @@
             //  主要请求
             searchFn(){
                 requestHospitalGetList()
-                    .then(v => {
-                        this.hospitalList = v.data;
-                        //console.log(JSON.parse(JSON.stringify(v.data)));
+                    .then(hospitalList => {
+                        this.hospitalList = hospitalList;
                     });
 //                this.data.push({ key: 1 });
                 requestPrescriptionTemplatePage(Object.assign({},

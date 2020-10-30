@@ -143,9 +143,8 @@
             //  主要请求
             searchFn(){
                 requestHospitalGetList()
-                    .then(v => {
-                        this.hospitalList = v.data;
-                        //console.log(JSON.parse(JSON.stringify(v.data)));
+                    .then(hospitalList => {
+                        this.hospitalList = hospitalList;
                     });
 //                this.data.push({ key: 1 });
                 requestPrescriptionTemplatePage(Object.assign({},

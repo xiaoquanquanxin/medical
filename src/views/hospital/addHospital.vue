@@ -21,8 +21,7 @@
                           placeholder="请选择渠道商地区-省份"
                           @change="_provinceChange"
                 >
-                    <a-select-option :value="item.id"
-                                     :key="item.id"
+                    <a-select-option :value="item.id.toString()"
                                      v-for="item in areaList.provinceList"
                     >{{item.name}}
                     </a-select-option>
@@ -34,8 +33,7 @@
                           placeholder="请选择渠道商地区-市区"
                           @change="_cityChange"
                 >
-                    <a-select-option :value="item.id"
-                                     :key="item.id"
+                    <a-select-option :value="item.id.toString()"
                                      v-for="item in areaList.cityList"
                     >{{item.name}}
                     </a-select-option>
@@ -46,8 +44,7 @@
                           v-decorator="countyDecorator"
                           placeholder="请选择渠道商地区-县城"
                 >
-                    <a-select-option :value="item.id"
-                                     :key="item.id"
+                    <a-select-option :value="item.id.toString()"
                                      v-for="item in areaList.countyList"
                     >{{item.name}}
                     </a-select-option>
@@ -348,13 +345,45 @@
                 if (!this.hospitalId) {
                     return;
                 }
-                
-                alert('编辑接口没有了，已处理');
+                //  alert('编辑接口没有了，已处理');
                 //  如果是编辑
                 requestHospitalGet(this.hospitalId)
                     .then(v => {
                         const { data } = v;
                         console.log(data);
+                        //  alert('地区三级联动那块，如果是编辑，需要provinceId、cityId、countyId。');
+                        //  alert('在列表接口，仅仅是展示字段，所以可以只需要一个string表示名字就可以了。但是在编辑页面，我需要的是id，因为用户可能直接操作某个下拉，没有id我没法去取地区lsit');
+                        //  alert('涛哥的接口，比如列表里有科室，他会返回deptId和deptName');
+                        const {
+                            hospitalName,
+                            province,
+                            city,
+                            county,
+                            hospitalPic,
+                            isHospital,
+                            operationMode,
+                            displayQrCode,
+                            displayBarcode,
+                            isAuditRequired,
+                            rechargePayment,
+                        } = data;
+
+                        this._provinceChange(province);
+                        this._cityChange(city);
+                        this.hospitalPicThumbUrl = hospitalPic;
+                        this.form.setFieldsValue({
+                            hospitalName,
+                            province,
+                            city,
+                            county,
+                            hospitalPic,
+                            isHospital,
+                            operationMode,
+                            displayQrCode,
+                            displayBarcode,
+                            isAuditRequired,
+                            rechargePayment,
+                        });
                     });
             },
             //    表单提交
@@ -367,12 +396,11 @@
                             reject();
                             return;
                         }
-                        //  console.table(values);
+                        console.table(values);
                         const data = Object.assign({ status: this.status ? 0 : 1 }, values);
-                        console.log(data);
                         (() => {
                             //  如果是新增
-                            if (!this.manufacturerId) {
+                            if (!this.hospitalId) {
                                 return requestHospitalSave(data);
                             }
                             //  如果是编辑

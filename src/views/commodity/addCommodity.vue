@@ -589,6 +589,7 @@
             };
         },
         created(){
+            alert('编辑接口，可以成功但是，uintListVos没更新，别的字段可以更新');
             this.searchFn();
             console.log('是编辑？', !!this.commodityId);
         },

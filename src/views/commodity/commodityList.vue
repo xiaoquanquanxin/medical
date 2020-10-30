@@ -123,7 +123,7 @@
         {
             title: '商品名称',
             dataIndex: 'goodsName',
-            width: 100,
+            width: 150,
         },
         {
             title: '商品货号',
@@ -178,7 +178,7 @@
         {
             title: '操作',
             scopedSlots: { customRender: 'operation' },
-            width: 200,
+            width: 240,
         },
     ];
 

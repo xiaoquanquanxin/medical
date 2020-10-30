@@ -41,7 +41,14 @@ export function requestHospitalGetList() {
 	return request({
 		url: '/api/hospital/getList',
 		method: 'get',
-	});
+	})
+		.then(v => {
+			const list = v.data || [];
+			list.forEach((item: any) => {
+				item.key = item.id;
+			})
+			return list;
+		})
 }
 
 
@@ -49,7 +56,7 @@ export function requestHospitalGetList() {
 export function requestHospitalGet(id: string | number) {
 	return request({
 		url: `/api/hospital/get/${id}`,
-		method: 'post',
+		method: 'get',
 	});
 }
 

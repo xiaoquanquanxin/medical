@@ -12,9 +12,8 @@
                               placeholder="请选择医院"
                               @change="selectHospitalChange"
                     >
-                        <a-select-option :value="item.id"
-                                         :key="index"
-                                         v-for="(item,index) in hospitalList"
+                        <a-select-option v-for="(item,index) in hospitalList"
+                                         :value="item.id"
                         >{{item.hospitalName}}
                         </a-select-option>
                     </a-select>
@@ -23,9 +22,8 @@
                               placeholder="请选择处方类型"
                               @change="selectPrescriptionChange"
                     >
-                        <a-select-option :value="item.id"
-                                         :key="index"
-                                         v-for="(item,index) in prescriptionTypeList"
+                        <a-select-option v-for="(item,index) in prescriptionTypeList"
+                                         :value="item.id"
                         >{{item.name}}
                         </a-select-option>
                     </a-select>
@@ -44,7 +42,6 @@
                             class="basic-select-width"
                             v-model="tableForm.energy"
                             placeholder="请选择能量"
-                            @change="$forceUpdate()"
                     >
                         <a-select-option :value="item.id"
                                          :key="index"
@@ -57,7 +54,6 @@
                         class="lengthen-select-width"
                         v-model="tableForm.usageMethod"
                         placeholder="请选择食用方法"
-                        @change="$forceUpdate()"
                 >
                     <a-select-option :value="item.id"
                                      :key="index"
@@ -355,9 +351,12 @@
                     //  hospitalId          医院
                     //  hospitalName        医院名
                     //  prescriptionName    处方名
-                    //  prescriptionType    处方类型
-                    //  energy              能量
-                    //  usageMethod         食用方法
+                    //  处方类型
+                    prescriptionType: undefined,
+                    //  能量
+                    energy: undefined,
+                    //  食用方法
+                    usageMethod: undefined,
                 },
 
                 //  选择时间的值的对象
@@ -374,12 +373,10 @@
         methods: {
             //  主要请求
             searchFn(){
-                //  fixme   ❌❌❌，这里理论上是 requestGoodsListByHospital ，但是报错
-                this.requestGoodsPageAll();
                 //  医院list
                 requestHospitalGetList()
-                    .then(v => {
-                        this.hospitalList = v.data;
+                    .then(hospitalList => {
+                        this.hospitalList = hospitalList;
                     })
                     .then(v => {
                         //  如果是新增
@@ -444,55 +441,27 @@
             ]),
             //  切换医院
             selectHospitalChange(value){
-                //  计算医院名
+                //  组织医院名
                 this.hospitalList.forEach(item => {
                     if (item.id === value) {
-                        console.log(item);
+                        //  console.log(item);
                         this.tableForm.hospitalName = item.hospitalName;
                     }
                 });
-                console.log('🍎🍎🍎🍎发请求，🍉🍉🍉改造数据结构', '医院的id', value);
-                //  fixme   ❌❌❌，这里理论上是 requestGoodsListByHospital ，但是报错
+                console.log('根据医院获取商品，医院的id', value);
                 requestGoodsListByHospital(value)
                     .then(v => {
-                        console.log(v);
+                        console.log(v.data);
+                        const originCommodityList = [];
+                        v.data.forEach(item => {
+                            item.key = item.id;
+                            originCommodityList.push(item);
+                        });
+                        this.setOriginCommodityList(originCommodityList);
                     });
                 //  重置数据
                 this.commodityTableData = [];
                 this.timeTableData = [];
-            },
-            //  fixme   ❌❌❌，这里理论上是 requestGoodsListByHospital ，但是报错
-            requestGoodsPageAll(){
-
-                return;
-                requestGoodsPage(noPaginationData)
-                    .then(v => {
-                        console.log('该医院下的商品：');
-                        if (!v.data || !v.data) {
-                            return;
-                        }
-                        const { records } = v.data;
-//                        records.forEach(item => {
-//                            item.key = item.id;
-//                        });
-                        const promiseList = [];
-                        for (let i = 0; i < records.length; i++) {
-                            const { id } = records[i];
-                            promiseList.push(requestGoodsGet(id));
-                        }
-                        Promise.all(promiseList)
-                            .then(v => {
-                                const originCommodityList = [];
-                                v.forEach(item => {
-                                    item.data.key = item.data.id;
-                                    originCommodityList.push(item.data);
-                                });
-                                this.setOriginCommodityList(originCommodityList);
-                            })
-                            .catch(err => {
-
-                            });
-                    });
             },
             //  切换处方类型
             selectPrescriptionChange(value){
@@ -509,7 +478,6 @@
                         this.tableForm.prescriptionName = item.name;
                     }
                 });
-                this.$forceUpdate();
             },
             //  选择商品
             selectCommodity(){
@@ -574,10 +542,15 @@
                     return Object.assign(child[0], { goodsName: item.goodsName });
                 });
                 //  console.log(list);
+
+                //  console.log(JSON.parse(JSON.stringify(this.timeTableData)));
+                //  时间的最后一条数据
+                const timeTableDataLastItem = this.timeTableData[this.timeTableData.length - 1] || { key: 0 };
+                console.log(timeTableDataLastItem);
                 //  一条数据
                 const data = {
                     //  key
-                    key: this.timeTableData.length + 1,
+                    key: timeTableDataLastItem.key + 1,
                     //  时间
                     time: this.selectTimeValue,
                     //  温水
@@ -660,6 +633,10 @@
                 e.preventDefault();
                 //  console.log(JSON.parse(JSON.stringify(this.commodityTableData)));
                 //  console.log('备注🍌', this.remark);
+                //  至少要选择时间
+                if (!this.timeTableData.length) {
+                    this.$message.error('请选择时间');
+                }
                 this.timeTableData.forEach(item => {
                     item.remark = this.remark;
                 });
@@ -671,6 +648,8 @@
                 this.tableForm.prescriptionContent = JSON.stringify(prescriptionContent);
                 //  console.log(JSON.parse(JSON.stringify(this.tableForm)));
                 console.log(prescriptionContent);
+                console.log(JSON.stringify(prescriptionContent));
+                return;
                 (() => {
                     //  如果是新增
                     if (!this.oralId) {
@@ -712,8 +691,3 @@
         border-bottom: 1px solid #e8e8e8;
     }
 </style>
-<!--<a-time-picker-->
-<!--        :use12Hours="false"-->
-<!--        format="h:mm a"-->
-<!--        @change="onChange"-->
-<!--        placeholder="请新增时间"/>-->
