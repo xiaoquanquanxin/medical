@@ -18,3 +18,16 @@
 .custom-flex-right {
     flex: 1;
 }
+
+.custom-flex + .custom-flex > .custom-flex-left {
+    border-top: none;
+}
+
+.custom-flex + .custom-flex > .custom-flex-right {
+    border: 1px solid #e8e8e8;
+    border-top: none;
+}
+
+.custom-flex-right .ant-table-placeholder {
+    border-radius: 0;
+}
