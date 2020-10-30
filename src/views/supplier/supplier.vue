@@ -20,10 +20,12 @@
                 :scroll="scroll"
                 :pagination="false"
         >
-            <div
-                    slot="a-switch"
-                    slot-scope="scope,sItem,sIndex,extra"
-            >
+            <!--渠道商地区-->
+            <div slot="area" slot-scope="scope,sItem,sIndex,extra">
+                {{scope.province}}-{{scope.city}}
+            </div>
+            <!--切换状态-->
+            <div slot="a-switch" slot-scope="scope,sItem,sIndex,extra">
                 <a-switch checked-children="开" un-checked-children="关"
                           :checked="!!sItem.status"
                           @change="aSwitchChange(sItem,$event)"
@@ -78,8 +80,8 @@
         },
         {
             title: '供应商地区',
-            dataIndex: 'detailedAddress',
-            width: 120,
+            scopedSlots: { customRender: 'area' },
+            width: 150,
         },
         {
             title: '添加人',
