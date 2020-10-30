@@ -221,8 +221,7 @@
                               class="form-element"
                               @focus="descriptionFormFocusFn(18)"
                     >
-                        <a-select-option :value="item.id"
-                                         :key="item.id"
+                        <a-select-option :value="item.code"
                                          v-for="item in ICDList"
                         >{{item.name}}
                         </a-select-option>
@@ -329,6 +328,9 @@
                 requestPatientSelectICD()
                     .then(v => {
                         console.log(v);
+                        v.data.forEach((item, index) => {
+                            item.key = index;
+                        });
                         this.ICDList = v.data || [];
                     });//  医院list
                 requestHospitalGetList()
@@ -383,8 +385,6 @@
                     this.patientBasicInfo.doctorId = this.patientBasicInfo.doctorId || '1';
                     //  新增入院所以是1    1入院，2.出院，3.永久注销;
                     this.patientBasicInfo.patientStatus = '1';
-                    //  todo    等数据
-                    this.patientBasicInfo.icd = '1';
                     if (true) {
                         resolve();
                     } else {
