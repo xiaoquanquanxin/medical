@@ -72,11 +72,6 @@
             width: 100,
         },
         {
-            title: '日结部门',
-            dataIndex: '通用名',
-            width: 100,
-        },
-        {
             title: '操作人',
             dataIndex: 'unit',
             width: 100,

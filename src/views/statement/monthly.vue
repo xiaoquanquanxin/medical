@@ -74,11 +74,6 @@
             width: 200,
         },
         {
-            title: '月结部门',
-            dataIndex: 'settleDeptname',
-            width: 100,
-        },
-        {
             title: '操作人',
             dataIndex: 'optionName',
             width: 100,
