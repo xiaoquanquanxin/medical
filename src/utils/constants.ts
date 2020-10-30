@@ -24,8 +24,8 @@ export const usageMethodList = [
 	{id: 1, key: 1, name: '口服',},
 	{id: 2, key: 2, name: '经口',},
 	{id: 3, key: 3, name: '管饲',},
-	{id: 4, key: 4, name: '外周静脉',},
-	{id: 5, key: 5, name: '中心静脉',},
+	// {id: 4, key: 4, name: '外周静脉',},
+	// {id: 5, key: 5, name: '中心静脉',},
 	{id: 6, key: 6, name: '鼻胃管',},
 	{id: 7, key: 7, name: '肠胃管',}];
 

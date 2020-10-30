@@ -12,19 +12,6 @@
             <!--                    Option2-->
             <!--                </a-select-option>-->
             <!--            </a-select>-->
-            <!--            <a-select v-model="searchData.status" class="lengthen-select-width" placeholder="请选择会计部门">-->
-            <!--                <a-select-option value="">-->
-            <!--                    状态-->
-            <!--                </a-select-option>-->
-            <!--                <a-select-option value="Option2">-->
-            <!--                    Option2-->
-            <!--                </a-select-option>-->
-            <!--            </a-select>-->
-            <!--            <a-range-picker-->
-            <!--                    class="basic-range-picker-width"-->
-            <!--                    :placeholder="['开始日期','结束日期']"-->
-            <!--                    @change="onRangePickerChange"-->
-            <!--            />-->
         </div>
         <div class="a-input-group">
             <!--<a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>-->

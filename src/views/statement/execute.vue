@@ -6,14 +6,6 @@
             <GoBackButton/>
         </div>
         <div class="a-input-group">
-            <a-select class="lengthen-select-width" v-model="searchData.aaaa" placeholder="请选择会计部门">
-                <a-select-option value="1">
-                    这里有问题？这是什么列表
-                </a-select-option>
-                <a-select-option value="2">
-                    这里有问题？这是什么列表
-                </a-select-option>
-            </a-select>
             <a-range-picker class="basic-range-picker-width"
                             :placeholder="['开始日期','结束日期']"
                             @change="onRangePickerChange"

@@ -1016,7 +1016,7 @@
                     popTitle: '微型营养评价表',
                 },
                 //  表格类型
-                tableTypeSelect: 3,
+                tableTypeSelect: 1,
                 //  类型1
                 typeOneList: [],
 
@@ -1232,7 +1232,7 @@
                     this.typeTwoListData[1][0],
                     this.typeTwoListData[2][0],
                     this.typeTwoListData[3][0],
-                    [this.typeTwoListData[4][2]],
+                    [],
                     this.typeTwoListData[5][0],
                 ];
                 this.typeThreeList = {
@@ -1394,7 +1394,6 @@
                             }
                             const twoData = this.twoDataTransform();
                             console.log(twoData);
-                            return Promise.reject();
                             return requestPatientAssessSaveYbpgb(Object.assign({
                                 age, bmi, height, name, sex, weight, patientId,
                             }, twoData));
@@ -1403,10 +1402,10 @@
                             const _threeData = Object.assign({}, this.typeThreeList, threeData);
                             console.log(_threeData);
                             console.log(JSON.stringify(_threeData));
-                            console.log((JSON.stringify(Object.assign({
+                            console.log(JSON.stringify(Object.assign({
                                 age, bmi, height, name, sex, weight, patientId,
-                            }, _threeData))));
-//                            return Promise.reject();
+                            }, _threeData)));
+                            return Promise.reject();
                             return requestPatientAssessSavePgsga(Object.assign({
                                 age, bmi, height, name, sex, weight, patientId,
                             }, _threeData));

@@ -2,14 +2,6 @@
     <div class="layout-content-inner-main">
         <!--搜索相关-->
         <div class="a-input-group">
-            <a-select class="lengthen-select-width" v-model="searchData.status" placeholder="请选择会计部门">
-                <a-select-option value="">
-                    状态
-                </a-select-option>
-                <a-select-option value="Option2">
-                    Option2
-                </a-select-option>
-            </a-select>
             <a-date-picker class="lengthen-select-width"
                            placeholder="请选择开始日期"
                            v-model="searchData.settleStarttime"
