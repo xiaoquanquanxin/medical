@@ -63,10 +63,10 @@ const actions = {
 	generateRoutes({commit}: COMMIT_INTERFACE<null>) {
 		//	服务端数据
 		//	todo	难点！
-		// requestMenuUserMenu()
-		// 	.then(v => {
-		// 		console.log(v);
-		// 	});
+		requestMenuUserMenu()
+			.then	(v => {
+				console.log(v);
+			});
 		let map = {};
 		const loginInfo = getLoginInfo();
 		//	@ts-ignore

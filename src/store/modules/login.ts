@@ -42,11 +42,12 @@ const actions = {
 				username,
 			}).then(response => {
 				const {data} = response;
-				const {userInfo, token} = data;
+				const {userInfo, prefix, token} = data;
+				const Auth = prefix + token;
 				//	console.log(JSON.parse(JSON.stringify(userInfo)));
-				commit('SET_JWT', token);
+				commit('SET_JWT', Auth);
 				commit('SET_LOGIN_INFO', userInfo);
-				setJwt(token);
+				setJwt(Auth);
 				setLoginInfo(userInfo)
 				resolve();
 			}).catch((error: Error) => {

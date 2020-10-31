@@ -97,12 +97,12 @@
         {
             title: '角色名称',
             dataIndex: 'roleName',
-            width: 100,
+            width: 150,
         },
         {
             title: '角色描述',
             dataIndex: 'roleDesc',
-            width: 100,
+            width: 150,
         },
         {
             title: '创建时间',
@@ -253,7 +253,7 @@
                 requestMenuRoleTree(sItem.roleCode)
                     .then(v => {
                         const data = v.data || [];
-                        const RoleItem = Object.assign({}, sItem, { treeSelectValue: v.data });
+                        const RoleItem = Object.assign({}, sItem, { treeSelectValue: data });
                         this.setSelectRoleItem(RoleItem);
                         this.setDialogTitle(DIALOG_TYPE.ROLE_AUTHORITY, '编辑权限');
                         this.showModal(DIALOG_TYPE.ROLE_AUTHORITY);

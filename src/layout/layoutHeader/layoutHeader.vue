@@ -17,7 +17,7 @@
                                 {{ loginInfo&&loginInfo.username }}
                                 <a-icon type="down"/>
                             </a>
-                            <a-menu slot="overlay" @click="logoutFn1">
+                            <a-menu slot="overlay" @click="logoutFn">
                                 <a-menu-item key="1">退出登录</a-menu-item>
                             </a-menu>
                         </a-dropdown>
@@ -36,7 +36,8 @@
 </template>
 <script lang="ts">
 	import {Vue, Component} from 'vue-property-decorator';
-    import {authLogout} from '@/api/login';
+	import {authLogout} from '@/api/login';
+	import {clearStorage} from '@/utils/common';
 
 
 	@Component({})
@@ -56,8 +57,15 @@
 		}
 
 		//  登出
-		logoutFn1(e: Event) {
-			authLogout();
+		logoutFn(e: Event) {
+			clearStorage();
+			window.location.reload();
+			return;
+			authLogout()
+				.then(v => {
+					console.log(v);
+
+				});
 		}
 	}
 </script>
