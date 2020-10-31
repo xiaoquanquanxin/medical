@@ -38,10 +38,10 @@
                 <!--                <a-select-option :value="2">顶菜单</a-select-option>-->
             </a-select>
         </a-form-item>
-        <a-form-item label="菜单唯一key">
+        <a-form-item label="菜单唯一键">
             <a-input class="add-form-input"
                      v-decorator="pathDecorator"
-                     placeholder="菜单唯一key"/>
+                     placeholder="菜单唯一键"/>
         </a-form-item>
     </a-form>
 </template>
@@ -82,11 +82,11 @@
                         message: '请输菜单类型',
                     },]
                 }],
-                //  菜单唯一key
+                //  菜单唯一键
                 pathDecorator: ['path', {
                     rules: [{
                         required: true,
-                        message: '请输入菜单唯一key',
+                        message: '请输入菜单唯一键',
                     },]
                 }],
             };
