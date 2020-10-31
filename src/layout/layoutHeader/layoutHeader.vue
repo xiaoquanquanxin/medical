@@ -36,9 +36,7 @@
 </template>
 <script lang="ts">
 	import {Vue, Component} from 'vue-property-decorator';
-	import {clearStorage} from '@/utils/common';
-	import {authLogout} from '@/api/login';
-	import request from '@/utils/request';
+    import {authLogout} from '@/api/login';
 
 
 	@Component({})
