@@ -79,7 +79,7 @@
         {
             title: '仓库代码',
             dataIndex: 'warehouseNumber',
-            width: 100,
+            width: 150,
         },
         {
             title: '仓库地区',

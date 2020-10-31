@@ -21,6 +21,7 @@ import {
 	roleType7,
 	roleType8,
 } from "@/utils/roleConstant"
+import {requestMenuUserMenu} from "@/api/system/menu"
 
 interface STATE {
 	routeListLength: number;
@@ -61,7 +62,11 @@ const actions = {
 	//  生成路由权限，从服务端动态拉取
 	generateRoutes({commit}: COMMIT_INTERFACE<null>) {
 		//	服务端数据
-		// const map = routeMap;
+		//	todo	难点！
+		// requestMenuUserMenu()
+		// 	.then(v => {
+		// 		console.log(v);
+		// 	});
 		let map = {};
 		const loginInfo = getLoginInfo();
 		//	@ts-ignore

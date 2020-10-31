@@ -9,11 +9,9 @@
             <a-select class="add-form-input"
                       v-decorator="roleDecorator"
                       placeholder="请选择角色">
-                <a-select-option value="">
-                    状态
-                </a-select-option>
-                <a-select-option value="Option2">
-                    Option2
+                <a-select-option :value="item.id"
+                                 v-for="item in roleList"
+                >{{item.name}}
                 </a-select-option>
             </a-select>
         </a-form-item>
@@ -38,6 +36,7 @@
     import { formItemLayout } from '@/utils/layout.ts';
     import { compareToFirstPassword } from '@/utils/validate';
     import { requestUserInsert, requestUserUpdate } from '../../api/system/account';
+    import { requestRoleRoleAll } from '../../api/system';
 
     export default {
         beforeCreate(){
@@ -53,6 +52,7 @@
         },
         data(){
             return {
+                roleList: [],
                 //  表单大小
                 formItemLayout,
                 //  选择角色
@@ -90,24 +90,21 @@
             this.handleSubmit.bind(this);
             console.log('是编辑？', this.selectAccountId);
             console.log('类型', this.accountOperationType);
+            this.searchFn();
         },
         methods: {
             //  主要请求
             searchFn(){
-//                requestChannelBusinessPage(paginationEncode(this.pagination))
-//                    .then(v => {
-//                        const { data } = v;
-//                        console.log(data);
-//                data.records.forEach((item, index) => {
-//                    item.key = index;
-//                    item.createTime = item.createTime.substr(0, 10);
-//                });
-//                        this.data = data.records;
-//                        this.pagination = paginationDecode(this.pagination, data);
-//                    });
+                requestRoleRoleAll()
+                    .then(v => {
+                        v.data = v.data || [];
+                        v.data.forEach((item, index) => {
+                            item.key = index;
+                        });
+                        console.log(v.data);
+                        this.roleList = v.data;
+                    });
             },
-            //  与第一密码比较，用于确认密码
-            compareToFirstPassword,
             //    表单提交
             handleSubmit(){
                 return new Promise(((resolve, reject) => {
@@ -135,6 +132,8 @@
                     });
                 }));
             },
+            //  与第一密码比较，用于确认密码
+            compareToFirstPassword,
         }
     };
 </script>

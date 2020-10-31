@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 
-//	全部菜单			✅
+//	全部菜单					✅
 export function requestMenuAllTree() {
 	return request({
 		url: '/api/menu/allTree',
@@ -9,41 +9,66 @@ export function requestMenuAllTree() {
 		.then(v => {
 			const {data} = v;
 			data.forEach((item: any, index: number) => {
-				item.key = item.id.toString();
-				item.value = item.id;
-				item.title = item.name;
+				const {id, name, type} = item;
+				item.title = name;
+				item.key = id.toString();
+				item.value = id.toString();
+				//	console.log(JSON.parse(JSON.stringify(item)).type);
+				//	console.log(type);
+				item.typeText = (type === 0 ? '菜单' : '按钮');
 				const {children} = item;
+				if (!children.length) {
+					delete item.children;
+					return;
+				}
 				children.forEach((_item: any, _index: number) => {
-					_item.key = `${item.id}-${_item.id}`;
-					_item.value = _item.id;
-					console.log(_item.key);
-					//  筛掉自页面的路由
-					if (!_item.children) {
-						return;
-					}
-					if (!_item.children.length) {
-						delete _item.children;
-					}
+					const {id, type} = _item;
+					_item.key = id.toString();
+					_item.value = id.toString();
+					//	console.log(type);
+					_item.typeText = (type === 0 ? '菜单' : '按钮');
+					delete _item.children;
 				});
 			});
-			return data
+			return data;
 		});
 }
 
-//	新增菜单
-export function requestMenu() {
+//	新增菜单					✅
+export function requestMenuInsert(data: any) {
 	return request({
-		url: '/api/menu',
+		url: '/api/menu/insert',
+		method: 'post',
+		data,
+	})
+}
+
+//	通过ID查询菜单的详细信息	✅
+export function requestMenuGet(id: string) {
+	return request({
+		url: `/api/menu/get/${id}`,
 		method: 'get',
 	})
 }
 
-//	通过ID查询菜单的详细信息
-export function requestMenuDetail(id: string) {
+//	返回当前用户的树形菜单集合		❌等auth
+export function requestMenuUserMenu() {
+	return request({
+		url: '/api/menu/userMenu',
+		method: 'get',
+	})
+		.then(v => {
+			const {data} = v;
+
+		});
+}
+
+//	删除菜单
+export function requestMenu(id: string) {
 	return request({
 		url: `/api/menu/${id}`,
 		method: 'get',
-	})
+	});
 }
 
 

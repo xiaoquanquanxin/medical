@@ -115,13 +115,6 @@
                 }],
             };
         },
-        mounted(){
-            //  console.log(this.roleOperationType);
-            //  console.log(this.selectRoleId);
-            setTimeout(() => {
-                this.treeData = treeData;
-            }, 333);
-        },
         created(){
             this.searchFn();
         },

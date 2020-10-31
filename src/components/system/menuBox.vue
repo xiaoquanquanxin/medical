@@ -5,92 +5,120 @@
             @submit="handleSubmit"
             autocomplete="off"
     >
-        <a-form-item label="上级菜单">
-            <p>111</p>
+        <a-form-item label="上级菜单" required>
+            <div v-if="openData.parentName">
+                {{openData.parentName}}
+            </div>
+            <div v-else>
+                <a-tree-select
+                        class="add-form-input"
+                        v-if="treeData"
+                        v-model="treeSelectValue"
+                        :disabled="!treeData"
+                        :tree-data="treeData"
+                        :treeDefaultExpandAll="false"
+                        tree-checkable
+                        :show-checked-strategy="SHOW_PARENT"
+                        search-placeholder="Please select"
+                />
+            </div>
         </a-form-item>
         <a-form-item label="菜单名称">
             <a-input class="add-form-input"
-                     v-decorator="menuNameDecorator"
+                     v-decorator="nameDecorator"
                      placeholder="请输入菜单名称"/>
         </a-form-item>
         <a-form-item label="菜单类型">
-            <a-select v-decorator="menuTypeDecorator"
+            <a-select v-decorator="typeDecorator"
                       class="add-form-input"
                       placeholder="请选择菜单类型"
             >
-                <a-select-option value="1">左菜单</a-select-option>
-                <a-select-option value="2">按钮</a-select-option>
-                <a-select-option value="3">顶菜单</a-select-option>
+                <a-select-option :value="0">左菜单</a-select-option>
+                <a-select-option :value="1">按钮</a-select-option>
+                <!--                <a-select-option :value="2">顶菜单</a-select-option>-->
             </a-select>
         </a-form-item>
-        <a-form-item label="菜单key">
+        <a-form-item label="菜单唯一key">
             <a-input class="add-form-input"
-                     v-decorator="keyDecorator"
-                     placeholder="菜单key"/>
+                     v-decorator="pathDecorator"
+                     placeholder="菜单唯一key"/>
         </a-form-item>
     </a-form>
 </template>
 <script>
-    
+    import { TreeSelect } from 'ant-design-vue';
     import { formItemLayout } from '@/utils/layout.ts';
     import { requestRoleGet, requestRoleSave } from '../../api/system/role';
-    
+    import { requestMenuAllTree, requestMenuInsert } from '../../api/system/menu';
+
+    const SHOW_PARENT = TreeSelect.SHOW_PARENT;
+
     //  菜单框
     export default {
         beforeCreate(){
             this.form = this.$form.createForm(this);
         },
-        computed: {
-            //	菜单操作类型 , 1 新增、2 编辑、3 查看
-            roleOperationType(){
-                return this.$store.state.system.roleOperationType;
-            },
-            //  被选中的菜单的id
-            selectRoleId(){
-                return this.$store.state.system.selectRoleId;
-            }
-        },
+        props: ['openData'],
         data(){
             return {
+                treeSelectValue: [],
+                //  树的数据
+                treeData: null,
+                SHOW_PARENT,
                 //  表单大小
                 formItemLayout,
+
+                //  菜单名称
+                nameDecorator: ['name', {
+                    rules: [{
+                        required: true,
+                        message: '请输入活动小结'
+                    },]
+                }],
                 //  菜单类型
-                menuTypeDecorator: ['menuType', {
+                typeDecorator: ['type', {
                     rules: [{
                         required: true,
                         message: '请输菜单类型',
                     },]
                 }],
-                //  菜单名称
-                menuNameDecorator: ['menuName', {
+                //  菜单唯一key
+                pathDecorator: ['path', {
                     rules: [{
                         required: true,
-                        message: '请输菜单名称',
-                    },]
-                }],
-                //  菜单key
-                keyDecorator: ['key', {
-                    rules: [{
-                        required: true,
-                        message: '请输入菜单key',
+                        message: '请输入菜单唯一key',
                     },]
                 }],
             };
         },
         created(){
-            this.searchFn();
+            requestMenuAllTree()
+                .then(data => {
+                    this.treeData = data;
+                    this.searchFn();
+                });
         },
         methods: {
             searchFn(){
-                //  如果是新增
-                if (!this.selectRoleId) {
-                    return;
-                }
-                //  如果是编辑
-                requestRoleGet(this.selectRoleId)
-                    .then(v => {
-                        console.log(v);
+                console.log(JSON.parse(JSON.stringify(this.openData)));
+                const {
+                    parentName,
+                    parentId,
+                    operationType,
+                    name,
+                    path,
+                    type,
+                } = this.openData;
+                //  编辑
+                if (operationType === 2) {
+                    this.form.setFieldsValue({
+                        name,
+                        type,
+                        path,
                     });
+                    console.log(parentId);
+                    this.treeSelectValue = [parentId];
+                }
             },
             //    表单提交
             handleSubmit(){
@@ -101,16 +129,20 @@
                             reject();
                             return;
                         }
-                        console.table(values);
+                        console.log(JSON.parse(JSON.stringify(this.openData)));
+                        console.log(values);
+                        const data = Object.assign({}, this.openData, values);
+                        console.log(data);
                         (() => {
-                            //  1 新增、2 编辑、3 查看
-                            switch (this.roleOperationType) {
+                            //  1 新增、2 编辑
+                            switch (this.openData.operationType) {
                                 case 1:
-                                    return requestRoleSave(values);
+                                    //  新增
+                                    return requestMenuInsert(data);
                                 case 2:
-                                    return requestRoleSave(values);
-                                case 3:
-                                    return requestRoleSave(values);
+                                    alert('缺少编辑');
+                                    //  编辑
+                                    return requestMenuInsert(data);
                                 default :
                                     throw new Error('错误的类型');
                             }

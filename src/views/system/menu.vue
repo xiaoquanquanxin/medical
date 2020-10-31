@@ -1,8 +1,15 @@
 <template>
     <div class="layout-content-inner-main">
-        <a-table :columns="columns"
+        <div class="a-input-group">
+            <a-button type="primary" @click="addMenuFn()">新建菜单</a-button>
+        </div>
+        <div class="a-input-group" data-msg="占位"></div>
+        <a-table class="components-table-demo-nested"
+                 :columns="columns"
                  :data-source="data"
-                 class="components-table-demo-nested">
+                 :scroll="scroll"
+                 :pagination="false"
+        >
             <!--图标-->
             <img slot="icon" slot-scope="scope,sItem,sIndex,extra"
                  :src="scope.icon"/>
@@ -15,20 +22,35 @@
                 </a-space>
             </div>
         </a-table>
+        <!--莫泰框-->
+        <a-modal v-model="dialogMenu.visible"
+                 v-if="dialogMenu.visible"
+                 :confirm-loading="dialogMenu.confirmLoading"
+                 :title="dialogMenu.title"
+                 :maskClosable="false"
+                 :centered="true"
+                 :width="600"
+                 ok-text="确认"
+                 cancel-text="取消"
+                 @ok="menuBoxModalCheck('refMenuBox')">
+            <MenuBox ref="refMenuBox"
+                     :open-data="openData"
+            />
+        </a-modal>
     </div>
 </template>
 <script>
     const columns = [
         { title: '菜单名称', dataIndex: 'name', width: 150, },
-        { title: '图标', scopedSlots: { customRender: 'icon' }, width: 100, },
-        { title: '菜单类型', dataIndex: 'roleType', width: 150, },
+//        { title: '图标', scopedSlots: { customRender: 'icon' }, width: 100, },
+        { title: '菜单类型', dataIndex: 'typeText', width: 150, },
         { title: '操作', scopedSlots: { customRender: 'operation' }, width: 150, },
     ];
     import MenuBox from '@/components/system/menuBox.vue';
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
     import { twoRowSearch } from '@/utils/tableScroll';
     import { mapGetters, mapActions } from 'vuex';
-    import { requestMenuAllTree } from '../../api/system/menu';
+    import { requestMenu, requestMenuAllTree, requestMenuGet } from '../../api/system/menu';
 
     export default {
         components: {
@@ -41,7 +63,9 @@
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
                 scroll: twoRowSearch(columns),
                 //  新增、编辑、查看菜单
-                dialogDataRole: this.initModal(DIALOG_TYPE.MENU),
+                dialogMenu: this.initModal(DIALOG_TYPE.MENU),
+                //  向新增菜单组件传入的参数
+                openData: null,
             };
         },
         created(){
@@ -51,39 +75,33 @@
             //  主要请求
             searchFn(){
                 requestMenuAllTree()
-                    .then(v => {
-                        const { data } = v;
-                        data.forEach((item, index) => {
-                            item.key = index;
-                            const { children } = item;
-                            children.forEach((_item, _index) => {
-                                _item.key = `${index}-${_index}`;
-                                //  筛掉自页面的路由
-                                if (!_item.children) {
-                                    return;
-                                }
-                                if (!_item.children.length) {
-                                    delete _item.children;
-                                }
-                            });
-                        });
+                    .then(data => {
                         this.data = data;
-                        console.log(data[0].children);
                     });
             },
             //  新增菜单
-            addMenuFn(){
-                this.setSelectRoleId(0);
-                this.setRoleOperationType(1);
+            addMenuFn(sItem){
+                this.openData = {
+                    operationType: 1,
+                };
+                //  如果是新增
+                if (sItem) {
+                    this.openData.parentId = sItem.id;
+                    this.openData.parentName = sItem.name;
+                }
                 this.setDialogTitle(DIALOG_TYPE.MENU, '新增菜单');
                 this.showModal(DIALOG_TYPE.MENU);
             },
             //  编辑菜单
             editMenuFn(sItem){
-                this.setSelectRoleId(sItem.roleId);
-                this.setRoleOperationType(2);
-                this.setDialogTitle(DIALOG_TYPE.MENU, '编辑菜单');
-                this.showModal(DIALOG_TYPE.MENU);
+//                console.log(JSON.parse(JSON.stringify(sItem)));
+                const { id, } = sItem;
+                requestMenuGet(id)
+                    .then(v => {
+                        this.openData = Object.assign(v.data, { operationType: 2, });
+                        this.setDialogTitle(DIALOG_TYPE.MENU, '编辑菜单');
+                        this.showModal(DIALOG_TYPE.MENU);
+                    });
             },
             //  查看菜单
             toViewMenuFn(sItem){
@@ -93,12 +111,13 @@
                 this.showModal(DIALOG_TYPE.MENU);
             },
             //  检查莫泰框的值
-            roleBoxModalCheck(refMenuBox){
+            menuBoxModalCheck(refMenuBox){
                 //  防止连点
                 this.setConfirmLoading(DIALOG_TYPE.MENU, true);
                 const promise = this.$refs[refMenuBox].handleSubmit();
                 promise.then(v => {
                     this.hideModal(DIALOG_TYPE.MENU);
+                    this.searchFn();
                 }).catch(error => {
                     console.log('有错');
                 }).then(v => {
@@ -114,11 +133,10 @@
                     okType: 'danger',
                     cancelText: '取消',
                     onOk: () => {
-                        return;
-                        return requestSettlementMosSave(this.searchData)
+                        requestMenu(sItem.id)
                             .then(v => {
                                 this.$message.success('操作成功');
-                                this.$router.push({ name: 'monthly' });
+                                this.searchFn();
                             })
                             .catch(v => {
                                 this.$message.error('操作失败');

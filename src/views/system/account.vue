@@ -129,9 +129,9 @@
                         const { data } = v;
                         data.records.forEach((item, index) => {
                             item.key = index;
-                            console.log(JSON.parse(JSON.stringify(item)));
                         });
                         this.data = data.records;
+                        console.log(JSON.parse(JSON.stringify(this.data[2])));
                         this.pagination = paginationDecode(this.pagination, data);
                     });
             },
