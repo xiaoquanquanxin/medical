@@ -7,10 +7,12 @@
             style="min-height: 500px;"
     >
         <a-form-item label="权限">
-            <a-tree v-model="treeSelectValue"
+            <a-tree :checkedKeys="treeSelectValue"
+                    v-model="treeSelectValue"
                     :checkable="true"
                     :tree-data="treeData"
                     :autoExpandParent="true"
+                    @check="checkFn"
             />
             <!--            <a-tree-select-->
             <!--                    class="add-form-input"-->
@@ -32,53 +34,12 @@
     import { TreeSelect } from 'ant-design-vue';
     import { formItemLayout } from '@/utils/layout.ts';
     import {
-        requestRoleFindMenuByRole,
-        requestRoleGet,
         requestRoleRoleMenuUpdate,
-        requestRoleSave,
-        requestRoleUpdate
     } from '../../api/system/role';
     import { requestMenuAllTree } from '../../api/system/menu';
 
     const SHOW_PARENT = TreeSelect.SHOW_PARENT;
 
-    const treeData = [
-        {
-            title: 'Node1',
-            value: '0-0',
-            key: '0-0',
-            children: [
-                {
-                    title: 'Child Node1',
-                    value: '0-0-0',
-                    key: '0-0-0',
-                },
-            ],
-        },
-        {
-            title: 'Node2',
-            value: '0-1',
-            key: '0-1',
-            children: [
-                {
-                    title: 'Child Node3',
-                    value: '0-1-0',
-                    key: '0-1-0',
-                    disabled: true,
-                },
-                {
-                    title: 'Child Node4',
-                    value: '0-1-1',
-                    key: '0-1-1',
-                },
-                {
-                    title: 'Child Node5',
-                    value: '0-1-2',
-                    key: '0-1-2',
-                },
-            ],
-        },
-    ];
     //  角色框
     export default {
         beforeCreate(){
@@ -133,15 +94,19 @@
             handleSubmit(){
                 console.log(this.treeSelectValue);
                 const data = {
-                    menuIds: this.treeSelectValue.map(Number),
+                    menuIds: [...this.treeSelectValue.map(Number), 232],
                     roleId: this.selectRoleItem.roleId
                 };
-                console.log(data);
+                //  console.log(data);
+//                return Promise.reject();
                 return requestRoleRoleMenuUpdate(data)
                     .then(v => {
                         console.log(v);
                     });
             },
+            checkFn(e){
+                console.log(e);
+            }
         }
     };
 </script>

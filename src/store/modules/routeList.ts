@@ -10,7 +10,7 @@ import {setRouteListByMap} from "@/utils/routerBasicMap"
 import {asyncRoutesList} from "@/router/modules/asyncRoutes"
 import {routeMap} from '@/store/a.ts';
 import {COMMIT_INTERFACE} from "@/store"
-import {getLoginInfo} from "@/utils/auth"
+import {convertRouting, getLoginInfo} from "@/utils/auth"
 import {
 	roleType1,
 	roleType2,
@@ -21,7 +21,7 @@ import {
 	roleType7,
 	roleType8,
 } from "@/utils/roleConstant"
-import {requestMenuUserMenu} from "@/api/system/menu"
+import {requestMenuAllTree, requestMenuUserMenu} from "@/api/system/menu"
 
 interface STATE {
 	routeListLength: number;
@@ -63,9 +63,13 @@ const actions = {
 	generateRoutes({commit}: COMMIT_INTERFACE<null>) {
 		//	服务端数据
 		//	todo	难点！
-		requestMenuUserMenu()
-			.then	(v => {
-				console.log(v);
+		// requestMenuUserMenu()
+		requestMenuAllTree()
+			.then((list: any) => {
+				//	转换路由
+				const {routeMap, buttonMap} = convertRouting(list);
+				console.log(routeMap);
+				console.log(buttonMap);
 			});
 		let map = {};
 		const loginInfo = getLoginInfo();

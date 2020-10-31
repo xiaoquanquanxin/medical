@@ -9,8 +9,8 @@ export function requestMenuAllTree() {
 		.then(v => {
 			const {data} = v;
 			data.forEach((item: any, index: number) => {
-				const {id, name, type} = item;
-				item.title = name;
+				const {id, name, type, parentId} = item;
+				item.title = `${name} - id: ${id} - parentId : ${parentId}`;
 				item.key = id.toString();
 				item.value = id.toString();
 				//	console.log(JSON.parse(JSON.stringify(item)).type);
@@ -22,9 +22,10 @@ export function requestMenuAllTree() {
 					return;
 				}
 				children.forEach((_item: any, _index: number) => {
-					const {id, name, type} = _item;
+					const {id, name, type, parentId} = _item;
 					_item.key = id.toString();
-					_item.title = name;
+					// _item.title = name;
+					_item.title = `${name} - id: ${id} - parentId : ${parentId}`;
 					_item.value = id.toString();
 					//	console.log(type);
 					_item.typeText = (type === 0 ? '菜单' : '按钮');
@@ -69,7 +70,7 @@ export function requestMenu(id: string) {
 	});
 }
 
-//	返回当前用户的树形菜单集合		❌等auth
+//	返回当前用户的树形菜单集合		🌹🌹🌹🌹🌹🌹需要auth
 export function requestMenuUserMenu() {
 	return request({
 		url: '/api/menu/userMenu',
@@ -77,6 +78,6 @@ export function requestMenuUserMenu() {
 	})
 		.then(v => {
 			const {data} = v;
-			console.log(data);
+			return data;
 		});
 }
