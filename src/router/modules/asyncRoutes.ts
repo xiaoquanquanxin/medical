@@ -1089,6 +1089,17 @@ export const asyncRoutesList = [
 		children: [
 			{
 				meta: {
+					chName: '菜单管理',
+					selectRouteKey: 'menu',
+					openRouteKey: 'system',
+					// hidden: true,
+				},
+				name: 'menu',
+				path: '/system/menu',
+				component: () => import(/* webpackChunkName: "menu" */ '@/views/system/menu.vue'),
+			},
+			{
+				meta: {
 					chName: '角色管理',
 					selectRouteKey: 'role',
 					openRouteKey: 'system',
