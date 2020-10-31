@@ -253,7 +253,6 @@
             passFn(){
                 this.$confirm({
                     title: `确定领药${11}`,
-                    //  content: 'Bla bla ...',
                     okText: '确认',
                     cancelText: '取消',
                     onOk(){

@@ -199,7 +199,6 @@
                 console.log(sItem.doctor);
                 this.$confirm({
                     title: `确定删除${sItem.doctor}`,
-                    //  content: 'Bla bla ...',
                     okText: '确认',
                     okType: 'danger',
                     cancelText: '取消',

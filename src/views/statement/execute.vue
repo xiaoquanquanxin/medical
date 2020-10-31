@@ -172,7 +172,6 @@
             confirmExecute(){
                 this.$confirm({
                     title: `确认结算?`,
-                    //  content: 'Bla bla ...',
                     okText: '确认',
                     cancelText: '取消',
                     onOk: () => {

@@ -393,7 +393,6 @@
             offShelf(sItem){
                 this.$confirm({
                     title: `确定下架${sItem.disease}`,
-                    //  content: 'Bla bla ...',
                     //  content: (h)=>{h(test)},
                     okText: '确认',
                     okType: 'danger',

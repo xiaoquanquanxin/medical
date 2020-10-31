@@ -161,7 +161,6 @@
             pass(sItem){
                 this.$confirm({
                     title: `确定通过${sItem.disease}`,
-                    //  content: 'Bla bla ...',
                     okText: '确认',
                     cancelText: '取消',
                     onOk(){
@@ -179,7 +178,6 @@
             refuse(sItem){
                 this.$confirm({
                     title: `确定拒绝${sItem.disease}`,
-                    //  content: 'Bla bla ...',
                     okText: '确认',
                     okType: 'danger',
                     cancelText: '取消',

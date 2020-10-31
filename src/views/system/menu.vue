@@ -109,16 +109,20 @@
             //  删除菜单
             deleteMenuFn(sItem){
                 this.$confirm({
-                    title: `确定删除${sItem.disease}`,
-                    //  content: 'Bla bla ...',
+                    title: `确定删除${sItem.name}`,
                     okText: '确认',
                     okType: 'danger',
                     cancelText: '取消',
-                    onOk(){
-                        return new Promise((resolve, reject) => {
-                            console.log('发请求');
-                            setTimeout(Math.random() > 0.5 ? resolve : reject, 1111);
-                        }).catch(() => console.log('Oops errors!'));
+                    onOk: () => {
+                        return;
+                        return requestSettlementMosSave(this.searchData)
+                            .then(v => {
+                                this.$message.success('操作成功');
+                                this.$router.push({ name: 'monthly' });
+                            })
+                            .catch(v => {
+                                this.$message.error('操作失败');
+                            });
                     },
                     onCancel(){
                         console.log('取消');

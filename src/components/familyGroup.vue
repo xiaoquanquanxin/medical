@@ -112,7 +112,6 @@
             exitFamilyGroup(sItem){
                 this.$confirm({
                     title: `确定退出${sItem.disease}`,
-                    //  content: 'Bla bla ...',
                     okText: '确认',
                     okType: 'danger',
                     cancelText: '取消',

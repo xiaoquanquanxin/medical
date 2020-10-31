@@ -353,7 +353,6 @@
                 const { prescriptionType, prescriptionName } = this.basicInfoData[0];
                 this.$confirm({
                     title: `确定通过${prescriptionName}`,
-                    //  content: 'Bla bla ...',
                     okText: '确认',
                     cancelText: '取消',
                     onOk: () => {

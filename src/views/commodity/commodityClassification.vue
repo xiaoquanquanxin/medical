@@ -167,7 +167,6 @@
             deleteClassification(sItem){
                 this.$confirm({
                     title: `确定删除${sItem.categoryName}`,
-                    //  content: 'Bla bla ...',
                     okText: '确认',
                     okType: 'danger',
                     cancelText: '取消',

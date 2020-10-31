@@ -286,7 +286,6 @@
                 //  确认签收接口:orderStatus=2，确认配置，orderStatus=3,确认领药接口：orderStatus=5
                 this.$confirm({
                     title: `确定领药${sItem.prescriptionName}`,
-                    //  content: 'Bla bla ...',
                     okText: '确认',
                     cancelText: '取消',
                     onOk: () => {

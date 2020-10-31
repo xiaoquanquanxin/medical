@@ -186,7 +186,7 @@
 //            deleteManufacturer(sItem){
 //                this.$confirm({
 //                    title: `确定删除${sItem.disease}`,
-//                    //  content: 'Bla bla ...',
+//
 //                    okText: '确认',
 //                    okType: 'danger',
 //                    cancelText: '取消',
