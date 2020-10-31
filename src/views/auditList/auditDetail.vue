@@ -10,7 +10,7 @@
                     <a-button class="basic-button-width" type="primary">编辑</a-button>
                 </router-link>
                 <!--只有处方审核才有通过、驳回-->
-                <a-button v-if="detailType ===2 && (auditStatus === 1||auditStatus === 3)"
+                <a-button v-if="detailType ===2 && (auditStatus === 1)"
                           class="basic-button-width" type="primary" @click="passFn">通过
                 </a-button>
                 <a-button v-if="detailType ===2 && auditStatus === 2"

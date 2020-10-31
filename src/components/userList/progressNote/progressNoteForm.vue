@@ -75,7 +75,7 @@
                 formItemLayout,
                 //  是否能够按照方案执行
                 executionDecorator: ['execution', {
-                    initialValue: 'Y',
+                    initialValue: '1',
                 }],
                 executionContentDecorator: ['executionContent', {
                     rules: [{
@@ -86,7 +86,7 @@
 
                 //  是否能够耐受
                 toleranceDecorator: ['tolerance', {
-                    initialValue: 'Y',
+                    initialValue: '1',
                 }],
                 toleranceContentDecorator: ['toleranceContent', {
                     rules: [{
@@ -97,7 +97,7 @@
 
                 //  有无大便
                 shitDecorator: ['shit', {
-                    initialValue: 'Y',
+                    initialValue: '1',
                 }],
                 shitContentDecorator: ['shitContent', {
                     rules: [{
@@ -108,7 +108,7 @@
 
                 //  有无饥饿感
                 hungerDecorator: ['hunger', {
-                    initialValue: 'Y',
+                    initialValue: '1',
                 }],
                 hungerContentDecorator: ['hungerContent', {
                     rules: [{

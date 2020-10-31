@@ -32,6 +32,8 @@
         computed: {
             //  基础信息，请求来了就会出现数据
             patientBasicInfo(){
+                const patientBasicInfo = this.$store.state.userList.patientBasicInfo;
+                console.log(patientBasicInfo);
                 return this.$store.state.userList.patientBasicInfo;
             },
         },

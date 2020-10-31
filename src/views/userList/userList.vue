@@ -26,9 +26,7 @@
                 </a-card>
                 <a-card title="病人列表">
                     <div class="a-input-group">
-                        <router-link :to="{name:'addAdmittedHospital'}">
-                            <a-button type="primary">新增用户</a-button>
-                        </router-link>
+                        <a-button type="primary" @click="addAdmittedHospitalFn">新增用户</a-button>
                     </div>
                     <a-table
                             :columns="columns"
@@ -89,6 +87,9 @@
     </div>
 </template>
 <script>
+    import { mapGetters, mapActions } from 'vuex';
+    import { jumpTo } from '@/utils/routerMeta';
+    import { requestPatientPage } from '@/api/userList/userList';
     import {
         paginationInit,
         paginationDecode,
@@ -96,10 +97,6 @@
         pageChange,
         onShowSizeChange
     } from '@/utils/pagination.ts';
-    import { jumpTo } from '@/utils/routerMeta';
-    import { requestPatientPage } from '@/api/userList/userList';
-    import { calcAgeByBirth, getDateObject } from '@/utils/common';
-    import { noPaginationData } from '@/utils/pagination';
 
     const columns = [
         {
@@ -156,6 +153,10 @@
             };
         },
         methods: {
+            ...mapActions('userList', [
+                //  保存病人信息
+                'setPatientBasicInfo',
+            ]),
             //  主要请求
             searchFn(){
                 requestPatientPage(Object.assign({ param: this.searchData }, paginationEncode(this.pagination)))
@@ -169,18 +170,6 @@
                         this.pagination = paginationDecode(this.pagination, data);
                     });
             },
-            //  展示的每一页数据变换
-            onShowSizeChange(current, pageSize){
-                this.pagination.pageSize = pageSize;
-                this.pagination.current = 1;
-                this.searchFn();
-            },
-            //  切换分页页码
-            pageChange(current){
-                this.pagination.current = current;
-                this.searchFn();
-            },
-            jumpTo,
             //  自定义表格事件
             customRow(scope){
                 return {
@@ -215,7 +204,17 @@
                 //  console.log('路由是', name);
                 //  console.log('参数名是', meta.routerParamsKey);
                 this.$router.push({ name, params: { [meta.routerParamsKey]: id } });
-            }
+            },
+
+            //  新增用户
+            addAdmittedHospitalFn(){
+                this.setPatientBasicInfo(null);
+                this.$router.push({ name: 'addAdmittedHospital' });
+            },
+
+            jumpTo,
+            pageChange,
+            onShowSizeChange,
         }
     };
 </script>

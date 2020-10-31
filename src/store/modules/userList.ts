@@ -55,6 +55,7 @@ const mutations = {
 const actions = {
 	setPatientBasicInfo: ({commit}: COMMIT_INTERFACE<STATE>, patientBasicInfo: any) => {
 		if (!patientBasicInfo) {
+			commit('SET_PATIENT_BASIC_INFO', {});
 			return;
 		}
 		//	修正数据type
