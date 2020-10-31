@@ -11,7 +11,7 @@ export function requestRolePage(data: any) {
 	})
 }
 
-//	添加角色				❌，文档没提供RoleInsertParam是什么实体，没有任何返回信息，http状态吗200
+//	添加角色				❌
 export function requestRoleSave(data: any) {
 	return request({
 		url: '/api/role/save',
@@ -20,11 +20,22 @@ export function requestRoleSave(data: any) {
 	})
 }
 
-//	通过ID查询角色信息		❌，无论get还是post，都不正常
+//	修改角色
+export function requestRoleUpdate(data: any) {
+	//	roleId
+	return request({
+		url: '/api/role/update',
+		method: 'post',
+		data,
+	})
+}
+
+
+//	通过ID查询角色信息
 export function requestRoleGet(id: string | number) {
 	return request({
 		url: `/api/role/get/${id}`,
-		method: 'post',
+		method: 'get',
 	});
 }
 
@@ -32,7 +43,7 @@ export function requestRoleGet(id: string | number) {
 export function requestRoleRoleMenuUpdate(data: any) {
 	return request({
 		url: '/api/role/roleMenuUpdate',
-		method: 'put',
+		method: 'post',
 		data,
 	})
 }

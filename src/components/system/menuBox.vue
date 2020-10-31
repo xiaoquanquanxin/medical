@@ -11,13 +11,13 @@
             </div>
             <div v-else>
                 <a-tree-select
+                        :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
                         class="add-form-input"
                         v-if="treeData"
                         v-model="treeSelectValue"
                         :disabled="!treeData"
                         :tree-data="treeData"
-                        :treeDefaultExpandAll="false"
-                        tree-checkable
+                        :tree-default-expand-all="false"
                         :show-checked-strategy="SHOW_PARENT"
                         search-placeholder="Please select"
                 />
@@ -49,7 +49,7 @@
     import { TreeSelect } from 'ant-design-vue';
     import { formItemLayout } from '@/utils/layout.ts';
     import { requestRoleGet, requestRoleSave } from '../../api/system/role';
-    import { requestMenuAllTree, requestMenuInsert } from '../../api/system/menu';
+    import { requestMenuAllTree, requestMenuInsert, requestMenuUpdate } from '../../api/system/menu';
 
     const SHOW_PARENT = TreeSelect.SHOW_PARENT;
 
@@ -140,9 +140,9 @@
                                     //  新增
                                     return requestMenuInsert(data);
                                 case 2:
-                                    alert('缺少编辑');
+                                    data.parentId = this.treeSelectValue;
                                     //  编辑
-                                    return requestMenuInsert(data);
+                                    return requestMenuUpdate(data);
                                 default :
                                     throw new Error('错误的类型');
                             }

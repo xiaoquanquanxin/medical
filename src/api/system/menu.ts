@@ -43,6 +43,15 @@ export function requestMenuInsert(data: any) {
 	})
 }
 
+//	修改菜单
+export function requestMenuUpdate(data: any) {
+	return request({
+		url: '/api/menu/update',
+		method: 'post',
+		data,
+	})
+}
+
 //	通过ID查询菜单的详细信息	✅
 export function requestMenuGet(id: string) {
 	return request({

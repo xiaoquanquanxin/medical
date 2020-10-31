@@ -9,9 +9,14 @@
             <a-input class="add-form-input" v-decorator="roleNameDecorator" placeholder="请输入角色名称"/>
         </a-form-item>
         <a-form-item label="角色描述">
-            <a-input class="add-form-input" v-decorator="roleDescriptionDecorator" placeholder="请输入角色描述"/>
+            <a-input class="add-form-input" v-decorator="roleDescDecorator" placeholder="请输入角色描述"/>
         </a-form-item>
-        <a-form-item label="权限">
+        <a-form-item label="角色编码">
+            <a-input class="add-form-input"
+                     v-decorator="roleCodeDecorator"
+                     placeholder="请输入角色编码"/>
+        </a-form-item>
+        <a-form-item label="权限" v-if="false">
             <a-tree-select
                     class="add-form-input"
                     v-if="treeData"
@@ -32,7 +37,7 @@
 <script>
     import { TreeSelect } from 'ant-design-vue';
     import { formItemLayout } from '@/utils/layout.ts';
-    import { requestRoleGet, requestRoleSave } from '../../api/system/role';
+    import { requestRoleGet, requestRoleSave, requestRoleUpdate } from '../../api/system/role';
 
     const SHOW_PARENT = TreeSelect.SHOW_PARENT;
 
@@ -99,18 +104,23 @@
                 formItemLayout,
                 //  角色名称
                 roleNameDecorator: ['roleName', {
-                    initialValue: '角色名称',
                     rules: [{
                         required: true,
                         message: '请输角色名称',
                     },]
                 }],
                 //  角色描述
-                roleDescriptionDecorator: ['roleDescription', {
-                    initialValue: '角色描述',
+                roleDescDecorator: ['roleDesc', {
                     rules: [{
                         required: true,
                         message: '请输角色描述',
+                    },]
+                }],
+                //  角色描述
+                roleCodeDecorator: ['roleCode', {
+                    rules: [{
+                        required: true,
+                        message: '请输角色编码',
                     },]
                 }],
             };
@@ -124,10 +134,20 @@
                 if (!this.selectRoleId) {
                     return;
                 }
-                //  如果是编辑
+                //  如果是编辑、查看
                 requestRoleGet(this.selectRoleId)
                     .then(v => {
-                        console.log(v);
+                        const { data } = v;
+                        const {
+                            roleCode,
+                            roleDesc,
+                            roleName,
+                        } = data;
+                        this.form.setFieldsValue({
+                            roleCode,
+                            roleDesc,
+                            roleName,
+                        });
                     });
             },
             //    表单提交
@@ -139,23 +159,27 @@
                             reject();
                             return;
                         }
+                        console.log(this.roleOperationType);
                         console.table(values);
                         (() => {
+                            //	roleCode	角色编码
+                            //	roleDesc	角色描述
+                            //	roleName	角色名称
                             //  1 新增、2 编辑、3 查看
                             switch (this.roleOperationType) {
                                 case 1:
                                     return requestRoleSave(values);
                                 case 2:
-                                    return requestRoleSave(values);
+                                    const data = Object.assign({ roleId: this.selectRoleId }, values);
+                                    return requestRoleUpdate(data);
                                 case 3:
-                                    return requestRoleSave(values);
+                                    return Promise.resolve(false);
                                 default :
                                     throw new Error('错误的类型');
                             }
                         })()
                             .then(v => {
-                                console.log(v);
-                                resolve();
+                                resolve(v);
                             })
                             .catch(err => {
                                 console.log(err);

@@ -26,6 +26,7 @@
             </div>
             <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
                 <a-space size="small">
+                    <a @click="authFn(sItem)">权限</a>
                     <a @click="editRoleFn(sItem)">编辑</a>
                     <a @click="deleteRoleFn(sItem)">删除</a>
                 </a-space>
@@ -48,11 +49,11 @@
                 </template>
             </a-pagination>
         </a-row>
-        <!--莫泰框-->
-        <a-modal v-model="dialogDataRole.visible"
-                 v-if="dialogDataRole.visible"
-                 :confirm-loading="dialogDataRole.confirmLoading"
-                 :title="dialogDataRole.title"
+        <!--莫泰框新增、编辑-->
+        <a-modal v-model="dialogRole.visible"
+                 v-if="dialogRole.visible"
+                 :confirm-loading="dialogRole.confirmLoading"
+                 :title="dialogRole.title"
                  :maskClosable="false"
                  :centered="true"
                  :width="800"
@@ -61,10 +62,24 @@
                  @ok="roleBoxModalCheck('refRoleBox')">
             <RoleBox ref="refRoleBox"/>
         </a-modal>
+        <!--权限莫泰框-->
+        <a-modal v-model="dialogAuthority.visible"
+                 v-if="dialogAuthority.visible"
+                 :confirm-loading="dialogAuthority.confirmLoading"
+                 :title="dialogAuthority.title"
+                 :maskClosable="false"
+                 :centered="true"
+                 :width="800"
+                 ok-text="确认"
+                 cancel-text="取消"
+                 @ok="authBoxModalCheck('refAuthBox')">
+            <AuthBox ref="refAuthBox"/>
+        </a-modal>
     </div>
 </template>
 <script>
     import RoleBox from '@/components/system/roleBox.vue';
+    import AuthBox from '@/components/system/authBox.vue';
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
     import {
         paginationInit,
@@ -91,7 +106,7 @@
         {
             title: '创建时间',
             dataIndex: 'createTime',
-            width: 200,
+            width: 120,
         },
         {
             title: '创建人',
@@ -106,12 +121,13 @@
         {
             title: '操作',
             scopedSlots: { customRender: 'operation' },
-            width: 100,
+            width: 200,
         },
     ];
     export default {
         components: {
             RoleBox,
+            AuthBox,
         },
         data(){
             return {
@@ -125,7 +141,8 @@
                 searchData: {},
 
                 //  新增、编辑、查看角色
-                dialogDataRole: this.initModal(DIALOG_TYPE.ROLE),
+                dialogRole: this.initModal(DIALOG_TYPE.ROLE),
+                dialogAuthority: this.initModal(DIALOG_TYPE.ROLE_AUTHORITY),
             };
         },
         created(){
@@ -191,8 +208,13 @@
                 //  防止连点
                 this.setConfirmLoading(DIALOG_TYPE.ROLE, true);
                 const promise = this.$refs[refRoleBox].handleSubmit();
-                promise.then(v => {
+                promise.then(needUpdate => {
                     this.hideModal(DIALOG_TYPE.ROLE);
+                    if (!needUpdate) {
+                        return;
+                    }
+                    this.$message.success('操作成功');
+                    this.searchFn();
                 }).catch(error => {
                     console.log('有错');
                 }).then(v => {
@@ -219,6 +241,31 @@
                 });
             },
 
+            //  权限
+            authFn(sItem){
+                this.setSelectRoleId(sItem.roleId);
+                this.setDialogTitle(DIALOG_TYPE.ROLE_AUTHORITY, '编辑权限');
+                this.showModal(DIALOG_TYPE.ROLE_AUTHORITY);
+            },
+            //  权限确认莫泰框
+            authBoxModalCheck(refAuthBox){
+                //  防止连点
+                this.setConfirmLoading(DIALOG_TYPE.ROLE_AUTHORITY, true);
+                const promise = this.$refs[refAuthBox].handleSubmit();
+                promise.then(needUpdate => {
+                    this.hideModal(DIALOG_TYPE.ROLE_AUTHORITY);
+                    if (!needUpdate) {
+                        return;
+                    }
+                    this.$message.success('操作成功');
+                    this.searchFn();
+                }).catch(error => {
+                    console.log('有错');
+                }).then(v => {
+                    //  最后设置可以再次点击
+                    this.setConfirmLoading(DIALOG_TYPE.ROLE_AUTHORITY, false);
+                });
+            },
         }
     };
 </script>
