@@ -29,23 +29,23 @@
             <ul class="statement-detail-list">
                 <li class="statement-detail-item">
                     <div class="statement-detail-label">现金收入总计</div>
-                    <div class="statement-detail-content red">¥32</div>
+                    <div class="statement-detail-content red">¥{{mainDta.cashPayMoney}}</div>
                 </li>
                 <li class="statement-detail-item">
                     <div class="statement-detail-label">微信收入总计</div>
-                    <div class="statement-detail-content red">¥32</div>
+                    <div class="statement-detail-content red">¥</div>
                 </li>
                 <li class="statement-detail-item">
                     <div class="statement-detail-label">支付宝收入总计</div>
-                    <div class="statement-detail-content red">¥32</div>
+                    <div class="statement-detail-content red">¥</div>
                 </li>
                 <li class="statement-detail-item footing">
                     <div class="statement-detail-label">本页合计</div>
-                    <div class="statement-detail-content red">¥32</div>
+                    <div class="statement-detail-content red">¥</div>
                 </li>
                 <li class="statement-detail-item footing">
                     <div class="statement-detail-label">总合计</div>
-                    <div class="statement-detail-content red">¥32</div>
+                    <div class="statement-detail-content red">¥{{mainDta.totalMoney}}</div>
                 </li>
             </ul>
         </div>
@@ -73,11 +73,11 @@
         {
             title: '订单号',
             dataIndex: 'prescriptionCode',
-            width: 200,
+            width: 100,
         },
         {
             title: '姓名',
-            dataIndex: 'name',
+            dataIndex: 'natureName',
             width: 100,
         },
         {
@@ -87,27 +87,27 @@
         },
         {
             title: '类型',
-            dataIndex: 'prescriptionType',
+            dataIndex: 'isRefund',
             width: 100,
         },
         {
             title: '科室',
-            dataIndex: 'deptName',
+            dataIndex: 'marketPrice',
             width: 100,
         },
         {
             title: '缴费金额',
-            dataIndex: '222',
+            dataIndex: 'payMoney',
             width: 100,
         },
         {
             title: '退费金额',
-            dataIndex: '2222',
+            dataIndex: 'refundPrice',
             width: 100,
         },
         {
             title: '缴退方式',
-            dataIndex: '22222',
+            dataIndex: 'payWay',
             width: 100,
         },
     ];
@@ -131,6 +131,11 @@
                     'settleEndtime': '2020-10-25',
                     'settleStarttime': '2020-09-25'
                 },
+                //  主要对象
+                mainDta: {
+                    totalMoney: 0,
+                    cashPayMoney: 0,
+                }
             };
         },
         created(){
@@ -146,13 +151,20 @@
                     .then(v => {
                         const { data } = v;
                         console.log(data);
-                        data.records.forEach((item, index) => {
-                            item.key = index;
+                        const {
+                            totalMoney,
+                            cashPayMoney,
+                            settlementList,
+                        } = data;
+                        Object.assign(this.mainDta, {
+                            totalMoney,
+                            cashPayMoney
+                        });
+                        settlementList.forEach((item, index) => {
+                            item.key = item.id;
                             item.index = index + 1;
                         });
-                        this.data = data.records;
-                        console.log(JSON.parse(JSON.stringify(this.data[0])));
-                        this.pagination = paginationDecode(this.pagination, data);
+                        console.log(this.mainData);
                     });
             },
 
