@@ -15,6 +15,12 @@
                          placeholder="请输入医院名称"
                 />
             </a-form-item>
+            <a-form-item label="医院编码">
+                <a-input class="add-form-input"
+                         v-decorator="hospitalCodeNameDecorator"
+                         placeholder="请输入医院编码"
+                />
+            </a-form-item>
             <a-form-item label="渠道商地区-省份">
                 <a-select class="add-form-input"
                           v-decorator="provinceDecorator"
@@ -253,6 +259,12 @@
                         message: '请输入医院名称'
                     },]
                 }],
+                hospitalCodeNameDecorator: ['hospitalCodeName', {
+                    rules: [{
+                        required: true,
+                        message: '请输入医院编码'
+                    },]
+                }],
                 //  地址-省份
                 provinceDecorator: ['province', {
                     rules: [{
@@ -350,11 +362,12 @@
                     .then(v => {
                         const { data } = v;
                         console.log(data);
-                        alert('地区三级联动那块，如果是编辑，需要provinceId、cityId、countyId。');
-                        alert('在列表接口，仅仅是展示字段，所以可以只需要一个string表示名字就可以了。但是在编辑页面，我需要的是id，因为用户可能直接操作某个下拉，没有id我没法去取地区lsit');
-                        alert('涛哥的接口，比如列表里有科室，他会返回deptId和deptName');
+                        //  alert('地区三级联动那块，如果是编辑，需要provinceId、cityId、countyId。');
+                        //  alert('在列表接口，仅仅是展示字段，所以可以只需要一个string表示名字就可以了。但是在编辑页面，我需要的是id，因为用户可能直接操作某个下拉，没有id我没法去取地区lsit');
+                        //  alert('涛哥的接口，比如列表里有科室，他会返回deptId和deptName');
                         const {
                             hospitalName,
+                            hospitalCodeName,
                             province,
                             city,
                             county,
@@ -366,23 +379,27 @@
                             isAuditRequired,
                             rechargePayment,
                         } = data;
-
-                        this._provinceChange(province);
-                        this._cityChange(city);
                         this.hospitalPicThumbUrl = hospitalPic;
-                        this.form.setFieldsValue({
-                            hospitalName,
-                            province,
-                            city,
-                            county,
-                            hospitalPic,
-                            isHospital,
-                            operationMode,
-                            displayQrCode,
-                            displayBarcode,
-                            isAuditRequired,
-                            rechargePayment,
-                        });
+                        Promise.all([
+                            this._provinceChange(province),
+                            this._cityChange(city)
+                        ])
+                            .then(v => {
+                                this.form.setFieldsValue({
+                                    hospitalName,
+                                    hospitalCodeName,
+                                    province,
+                                    city,
+                                    county,
+                                    hospitalPic,
+                                    isHospital,
+                                    operationMode,
+                                    displayQrCode,
+                                    displayBarcode,
+                                    isAuditRequired,
+                                    rechargePayment,
+                                });
+                            });
                     });
             },
             //    表单提交
