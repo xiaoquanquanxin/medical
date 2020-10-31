@@ -34,17 +34,17 @@
                         <div class="statement-detail-label">现金收入总计</div>
                         <div class="statement-detail-content red">¥{{mainDta.cashPayMoney}}</div>
                     </li>
-                    <li class="statement-detail-item">
+                    <li class="statement-detail-item" v-if="false">
                         <div class="statement-detail-label">微信收入总计</div>
                         <div class="statement-detail-content red">¥</div>
                     </li>
-                    <li class="statement-detail-item">
+                    <li class="statement-detail-item" v-if="false">
                         <div class="statement-detail-label">支付宝收入总计</div>
                         <div class="statement-detail-content red">¥</div>
                     </li>
                     <li class="statement-detail-item footing">
                         <div class="statement-detail-label">本页合计</div>
-                        <div class="statement-detail-content red">¥</div>
+                        <div class="statement-detail-content red">¥{{mainDta.totalMoney}}</div>
                     </li>
                     <li class="statement-detail-item footing">
                         <div class="statement-detail-label">总合计</div>

@@ -97,11 +97,12 @@
                             reject();
                             return;
                         }
-                        console.table(values);
+                        //  console.table(values);
                         const data = {
                             id: this.selectCostData.id,
                             amountPaid: values.amountPaid,
                             isRefund: this.isRefund,
+                            payWay: values.payWay,
                         };
                         (() => {
                             switch (this.isRefund) {

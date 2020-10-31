@@ -8,6 +8,7 @@
         <div class="a-input-group">
             <a-range-picker class="basic-range-picker-width"
                             :placeholder="['开始日期','结束日期']"
+                            :disabledDate="disabledDateForMonthly"
                             @change="onRangePickerChange"
             />
             <a-space>
@@ -31,17 +32,17 @@
                     <div class="statement-detail-label">现金收入总计</div>
                     <div class="statement-detail-content red">¥{{mainDta.cashPayMoney}}</div>
                 </li>
-                <li class="statement-detail-item">
+                <li class="statement-detail-item" v-if="false">
                     <div class="statement-detail-label">微信收入总计</div>
                     <div class="statement-detail-content red">¥</div>
                 </li>
-                <li class="statement-detail-item">
+                <li class="statement-detail-item" v-if="false">
                     <div class="statement-detail-label">支付宝收入总计</div>
                     <div class="statement-detail-content red">¥</div>
                 </li>
                 <li class="statement-detail-item footing">
                     <div class="statement-detail-label">本页合计</div>
-                    <div class="statement-detail-content red">¥</div>
+                    <div class="statement-detail-content red">¥{{mainDta.totalMoney}}</div>
                 </li>
                 <li class="statement-detail-item footing">
                     <div class="statement-detail-label">总合计</div>
@@ -61,7 +62,7 @@
     } from '@/utils/pagination.ts';
     import { oneRowSearch } from '@/utils/tableScroll';
     import GoBackButton from '@/components/goBackButton.vue';
-    import { onRangePickerChange } from '../../utils/monthly';
+    import { onRangePickerChange ,disabledDateForMonthly} from '../../utils/monthly';
     import { requestSettlementMonthOverSelect, requestSettlementMosSave } from '../../api/statement/monthly';
 
     const columns = [
@@ -194,6 +195,7 @@
             pageChange,
             onShowSizeChange,
             onRangePickerChange,
+            disabledDateForMonthly,
         }
     };
 </script>

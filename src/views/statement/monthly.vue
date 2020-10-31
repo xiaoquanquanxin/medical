@@ -5,6 +5,7 @@
             <a-range-picker class="basic-range-picker-width"
                             :placeholder="['开始日期','结束日期']"
                             @change="onRangePickerChange"
+                            :disabledDate="disabledDateForMonthly"
             />
             <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
         </div>
@@ -60,7 +61,10 @@
     } from '@/utils/pagination.ts';
     import { oneRowSearch } from '@/utils/tableScroll';
     import { requestSettlementPage } from '../../api/statement/monthly';
-    import { onRangePickerChange } from '../../utils/monthly';
+    import {
+        onRangePickerChange,
+        disabledDateForMonthly,
+    } from '../../utils/monthly';
 
     const columns = [
         {
@@ -140,6 +144,7 @@
             pageChange,
             onShowSizeChange,
             onRangePickerChange,
+            disabledDateForMonthly,
         }
     };
 </script>

@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 //  选择日期范围
 export function onRangePickerChange(value: any, selectDateValue: []) {
 	//	@ts-ignore
@@ -6,3 +8,12 @@ export function onRangePickerChange(value: any, selectDateValue: []) {
 	this.searchData.settleEndtime = selectDateValue[1];
 }
 
+
+//	月结的禁止日期
+export function disabledDateForMonthly(current: any) {
+	//	console.log(current);
+	//	new Date().getMonth()
+	console.log(moment().endOf('day'))
+	return current && current > moment().endOf('day');
+
+}
