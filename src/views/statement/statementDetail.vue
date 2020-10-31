@@ -32,7 +32,7 @@
                 <ul class="statement-detail-list">
                     <li class="statement-detail-item">
                         <div class="statement-detail-label">现金收入总计</div>
-                        <div class="statement-detail-content red">¥{{mainDta.cashPayMoney}}</div>
+                        <div class="statement-detail-content red">¥{{mainData.cashPayMoney}}</div>
                     </li>
                     <li class="statement-detail-item" v-if="false">
                         <div class="statement-detail-label">微信收入总计</div>
@@ -44,11 +44,11 @@
                     </li>
                     <li class="statement-detail-item footing">
                         <div class="statement-detail-label">本页合计</div>
-                        <div class="statement-detail-content red">¥{{mainDta.totalMoney}}</div>
+                        <div class="statement-detail-content red">¥{{mainData.totalMoney}}</div>
                     </li>
                     <li class="statement-detail-item footing">
                         <div class="statement-detail-label">总合计</div>
-                        <div class="statement-detail-content red">¥{{mainDta.totalMoney}}</div>
+                        <div class="statement-detail-content red">¥{{mainData.totalMoney}}</div>
                     </li>
                 </ul>
             </div>
@@ -136,7 +136,7 @@
                 },
 
                 //  主要对象
-                mainDta: {
+                mainData: {
                     totalMoney: 0,
                     cashPayMoney: 0,
                 }
@@ -163,7 +163,7 @@
                             cashPayMoney,
                             settlementList,
                         } = data;
-                        Object.assign(this.mainDta, {
+                        Object.assign(this.mainData, {
                             totalMoney,
                             cashPayMoney
                         });
