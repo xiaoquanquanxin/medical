@@ -22,7 +22,7 @@ export function requestMenuAllTree() {
 					return;
 				}
 				children.forEach((_item: any, _index: number) => {
-					const {id,name, type} = _item;
+					const {id, name, type} = _item;
 					_item.key = id.toString();
 					_item.title = name;
 					_item.value = id.toString();
@@ -61,18 +61,6 @@ export function requestMenuGet(id: string) {
 	})
 }
 
-//	返回当前用户的树形菜单集合		❌等auth
-export function requestMenuUserMenu() {
-	return request({
-		url: '/api/menu/userMenu',
-		method: 'get',
-	})
-		.then(v => {
-			const {data} = v;
-
-		});
-}
-
 //	删除菜单
 export function requestMenu(id: string) {
 	return request({
@@ -81,4 +69,14 @@ export function requestMenu(id: string) {
 	});
 }
 
-
+//	返回当前用户的树形菜单集合		❌等auth
+export function requestMenuUserMenu() {
+	return request({
+		url: '/api/menu/userMenu',
+		method: 'get',
+	})
+		.then(v => {
+			const {data} = v;
+			console.log(data);
+		});
+}

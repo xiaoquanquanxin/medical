@@ -130,6 +130,11 @@
             width: 150,
         },
         {
+            title: '医院编码',
+            dataIndex: 'hospitalCode',
+            width: 150,
+        },
+        {
             title: '城市',
             dataIndex: 'city',
             width: 100,

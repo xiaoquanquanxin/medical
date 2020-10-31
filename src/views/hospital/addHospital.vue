@@ -17,7 +17,7 @@
             </a-form-item>
             <a-form-item label="医院编码">
                 <a-input class="add-form-input"
-                         v-decorator="hospitalCodeNameDecorator"
+                         v-decorator="hospitalCodeDecorator"
                          placeholder="请输入医院编码"
                 />
             </a-form-item>
@@ -259,7 +259,7 @@
                         message: '请输入医院名称'
                     },]
                 }],
-                hospitalCodeNameDecorator: ['hospitalCodeName', {
+                hospitalCodeDecorator: ['hospitalCode', {
                     rules: [{
                         required: true,
                         message: '请输入医院编码'
@@ -367,7 +367,7 @@
                         //  alert('涛哥的接口，比如列表里有科室，他会返回deptId和deptName');
                         const {
                             hospitalName,
-                            hospitalCodeName,
+                            hospitalCode,
                             province,
                             city,
                             county,
@@ -387,7 +387,7 @@
                             .then(v => {
                                 this.form.setFieldsValue({
                                     hospitalName,
-                                    hospitalCodeName,
+                                    hospitalCode,
                                     province,
                                     city,
                                     county,
