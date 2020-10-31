@@ -73,7 +73,7 @@
         {
             title: '订单号',
             dataIndex: 'prescriptionCode',
-            width: 100,
+            width: 200,
         },
         {
             title: '姓名',
@@ -163,7 +163,9 @@
                         settlementList.forEach((item, index) => {
                             item.key = item.id;
                             item.index = index + 1;
+                            item.refundPrice = item.refundPrice || 0;
                         });
+                        this.data = settlementList;
                         console.log(this.mainData);
                     });
             },
