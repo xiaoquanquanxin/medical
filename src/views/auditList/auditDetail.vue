@@ -18,7 +18,8 @@
                 </a-button>
             </div>
             <span data-msg="占位"></span>
-            <b>状态：
+            <b>
+                <span v-if="detailType !== 4">状态：</span>
                 <span v-if="detailType === 1" data-msg="营养干预方案详情">
                     <span v-if="auditStatus === 1 ">待审核</span>
                     <span v-if="auditStatus === 2 ">已审核</span>
@@ -135,6 +136,9 @@
                 case 'getDrugDetail':
                     //  领药任务详情
                     detailType = 3;
+                    break;
+                case  'costDetail':
+                    detailType = 4;
                     break;
                 default:
                     throw new Error(`这是什么页面？${name}`);
