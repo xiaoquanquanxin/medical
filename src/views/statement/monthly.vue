@@ -111,6 +111,7 @@
                     settleStarttime: null,
                     settleEndtime: null,
                 },
+                defaultPickerValueForMonthly,
             };
         },
         created(){
@@ -143,7 +144,7 @@
             onShowSizeChange,
             onRangePickerChange,
             disabledDateForMonthly,
-            defaultPickerValueForMonthly,
+
         }
     };
 </script>
