@@ -52,7 +52,15 @@ export function requestRoleRoleMenuUpdate(data: any) {
 export function requestRoleDelete(id: string | number) {
 	return request({
 		url: `/api/role/delete/${id}`,
-		method: 'delete',
+		method: 'get',
+	});
+}
+
+//	根据ID查询反馈记录	✅
+export function requestRoleFindMenuByRole(id: string | number) {
+	return request({
+		url: `/api/menu/findMenuByRole/${id}`,
+		method: 'get',
 	});
 }
 

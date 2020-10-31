@@ -90,7 +90,8 @@
     } from '@/utils/pagination.ts';
     import { twoRowSearch } from '@/utils/tableScroll';
     import { mapGetters, mapActions } from 'vuex';
-    import { requestRolePage } from '../../api/system/role';
+    import { requestRoleDelete, requestRolePage } from '../../api/system/role';
+    import { requestPrescriptionConfigConfirmSave } from '../../api/task/configuration';
 
     const columns = [
         {
@@ -168,6 +169,7 @@
             //  渠道商store
             ...mapActions('system', [
                 'setSelectRoleId',
+                'setSelectRoleItem',
                 'setRoleOperationType',
             ]),
 
@@ -224,16 +226,21 @@
             },
             //  删除角色
             deleteRoleFn(sItem){
+                //    console.log(JSON.parse(JSON.stringify(sItem)));
                 this.$confirm({
-                    title: `确定删除${sItem.disease}`,
+                    title: `确定删除${sItem.roleName}`,
                     okText: '确认',
                     okType: 'danger',
                     cancelText: '取消',
-                    onOk(){
-                        return new Promise((resolve, reject) => {
-                            console.log('发请求');
-                            setTimeout(Math.random() > 0.5 ? resolve : reject, 1111);
-                        }).catch(() => console.log('Oops errors!'));
+                    onOk: () => {
+                        return requestRoleDelete(sItem.roleId)
+                            .then(v => {
+                                this.$message.success('操作成功');
+                                this.searchFn();
+                            })
+                            .catch(err => {
+                                this.$message.error('操作失败');
+                            });
                     },
                     onCancel(){
                         console.log('取消');
@@ -243,7 +250,7 @@
 
             //  权限
             authFn(sItem){
-                this.setSelectRoleId(sItem.roleId);
+                this.setSelectRoleItem(sItem);
                 this.setDialogTitle(DIALOG_TYPE.ROLE_AUTHORITY, '编辑权限');
                 this.showModal(DIALOG_TYPE.ROLE_AUTHORITY);
             },

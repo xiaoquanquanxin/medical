@@ -22,8 +22,9 @@ export function requestMenuAllTree() {
 					return;
 				}
 				children.forEach((_item: any, _index: number) => {
-					const {id, type} = _item;
+					const {id,name, type} = _item;
 					_item.key = id.toString();
+					_item.title = name;
 					_item.value = id.toString();
 					//	console.log(type);
 					_item.typeText = (type === 0 ? '菜单' : '按钮');
