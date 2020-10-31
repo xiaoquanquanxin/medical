@@ -172,7 +172,7 @@
         },
         {
             title: '收费时间',
-            dataIndex: 'payTime',
+            dataIndex: 'orderTime',
             width: 100,
         },
         {
