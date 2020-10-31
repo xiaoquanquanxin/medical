@@ -671,22 +671,13 @@
     };
 </script>
 <style scoped>
+    @import "~@/css/table.css";
+    
     .layout-content-inner-main {
         min-width: 900px;
     }
     
     .col-right {
         border-left: 1px solid #e8e8e8;
-    }
-    
-    /*表组*/
-    .table-group {
-        border: 1px solid #e8e8e8;
-        border-bottom: none;
-    }
-    
-    
-    .table-group-row {
-        border-bottom: 1px solid #e8e8e8;
     }
 </style>

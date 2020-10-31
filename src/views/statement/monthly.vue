@@ -128,8 +128,8 @@
                             item.index = index + 1;
                         });
                         this.data = data.records;
-                        console.log(JSON.parse(JSON.stringify(this.data[0])));
                         this.pagination = paginationDecode(this.pagination, data);
+                        console.log(JSON.parse(JSON.stringify(this.data[0])));
                     });
             },
 

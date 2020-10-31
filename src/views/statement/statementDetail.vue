@@ -32,23 +32,23 @@
                 <ul class="statement-detail-list">
                     <li class="statement-detail-item">
                         <div class="statement-detail-label">现金收入总计</div>
-                        <div class="statement-detail-content red">¥32</div>
+                        <div class="statement-detail-content red">¥{{mainDta.cashPayMoney}}</div>
                     </li>
                     <li class="statement-detail-item">
                         <div class="statement-detail-label">微信收入总计</div>
-                        <div class="statement-detail-content red">¥32</div>
+                        <div class="statement-detail-content red">¥</div>
                     </li>
                     <li class="statement-detail-item">
                         <div class="statement-detail-label">支付宝收入总计</div>
-                        <div class="statement-detail-content red">¥32</div>
+                        <div class="statement-detail-content red">¥</div>
                     </li>
                     <li class="statement-detail-item footing">
                         <div class="statement-detail-label">本页合计</div>
-                        <div class="statement-detail-content red">¥32</div>
+                        <div class="statement-detail-content red">¥</div>
                     </li>
                     <li class="statement-detail-item footing">
                         <div class="statement-detail-label">总合计</div>
-                        <div class="statement-detail-content red">¥32</div>
+                        <div class="statement-detail-content red">¥{{mainDta.totalMoney}}</div>
                     </li>
                 </ul>
             </div>
@@ -59,31 +59,32 @@
     import { oneRowSearch } from '@/utils/tableScroll';
     import GoBackButton from '@/components/goBackButton.vue';
     import { requestSettlementyjxq } from '../../api/statement/monthly';
+    import { noPaginationData } from '../../utils/pagination';
 
     const columns = [
         {
             title: '序号',
-            dataIndex: 'commodity',
+            dataIndex: 'index',
             width: 100,
         },
         {
             title: '订单号',
-            dataIndex: 'aaa',
+            dataIndex: 'prescriptionCode',
             width: 100,
         },
         {
             title: '姓名',
-            dataIndex: '通用名',
+            dataIndex: 'natureName',
             width: 100,
         },
         {
             title: '住院号',
-            dataIndex: 'unit',
+            dataIndex: 'hospitalCode',
             width: 100,
         },
         {
             title: '类型',
-            dataIndex: 'specifications',
+            dataIndex: 'isRefund',
             width: 100,
         },
         {
@@ -93,17 +94,17 @@
         },
         {
             title: '缴费金额',
-            dataIndex: '222',
+            dataIndex: 'payMoney',
             width: 100,
         },
         {
             title: '退费金额',
-            dataIndex: '2222',
+            dataIndex: 'refundPrice',
             width: 100,
         },
         {
             title: '缴退方式',
-            dataIndex: '22222',
+            dataIndex: 'payWay',
             width: 100,
         },
     ];
@@ -133,6 +134,12 @@
                     id: '#printContent',
                     popTitle: '日结详情',
                 },
+
+                //  主要对象
+                mainDta: {
+                    totalMoney: 0,
+                    cashPayMoney: 0,
+                }
             };
         },
         created(){
@@ -143,11 +150,28 @@
         methods: {
             //  主要请求
             searchFn(){
-                return
-                requestSettlementyjxq()
+                requestSettlementyjxq(Object.assign({}, noPaginationData, {
+                    param: {
+                        statementId: this.monthlyDetailId
+                    },
+                }))
                     .then(v => {
                         const { data } = v;
                         console.log(data);
+                        const {
+                            totalMoney,
+                            cashPayMoney,
+                            settlementList,
+                        } = data;
+                        Object.assign(this.mainDta, {
+                            totalMoney,
+                            cashPayMoney
+                        });
+                        settlementList.forEach((item, index) => {
+                            item.key = item.id;
+                            item.index = index + 1;
+                        });
+                        console.log(this.mainData);
                     });
             },
             //  展示的每一页数据变换

@@ -91,6 +91,8 @@ export const routeMap = {
 	'role': true,
 	//  账号管理
 	'account': true,
+	//	菜单管理
+	'menu': true,
 
 
 	/**
