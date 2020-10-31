@@ -9,9 +9,9 @@
             <a-select class="add-form-input"
                       v-decorator="roleDecorator"
                       placeholder="请选择角色">
-                <a-select-option :value="item.id"
+                <a-select-option :value="item.roleId"
                                  v-for="item in roleList"
-                >{{item.name}}
+                >{{item.roleName}}
                 </a-select-option>
             </a-select>
         </a-form-item>
@@ -35,7 +35,7 @@
 <script>
     import { formItemLayout } from '@/utils/layout.ts';
     import { compareToFirstPassword } from '@/utils/validate';
-    import { requestUserInsert, requestUserUpdate } from '../../api/system/account';
+    import { requestUserGet, requestUserInsert, requestUserUpdate } from '../../api/system/account';
     import { requestRoleRoleAll } from '../../api/system';
 
     export default {
@@ -56,7 +56,7 @@
                 //  表单大小
                 formItemLayout,
                 //  选择角色
-                roleDecorator: ['role', {
+                roleDecorator: ['roleId', {
                     rules: [{
                         required: true,
                         message: '请选择角色'
@@ -104,6 +104,19 @@
                         console.log(v.data);
                         this.roleList = v.data;
                     });
+                //  如果是新增
+                if (!this.selectAccountId) {
+                    return;
+                }
+                requestUserGet(this.selectAccountId)
+                    .then(v => {
+                        const data = v.data || {};
+                        const { username, roleId } = data;
+                        this.form.setFieldsValue({
+                            username,
+                            roleId,
+                        });
+                    });
             },
             //    表单提交
             handleSubmit(){
@@ -114,13 +127,14 @@
                             return;
                         }
                         console.table(values);
+                        delete values.confirmPassword;
                         (() => {
                             //  如果是新增账号
                             if (!this.selectAccountId) {
                                 return requestUserInsert(values);
                             } else {
                                 //  编辑账号
-                                return requestUserUpdate(values);
+                                return requestUserUpdate(Object.assign({ userId: this.selectAccountId }, values));
                             }
                         })()
                             .then(v => {

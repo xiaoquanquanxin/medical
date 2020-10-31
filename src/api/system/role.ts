@@ -64,4 +64,15 @@ export function requestRoleFindMenuByRole(id: string | number) {
 	});
 }
 
+//	返回角色的菜单集合
+export function requestMenuRoleTree(roleName: string | number) {
+	return request({
+		url: `/api/menu/roleTree/${roleName}`,
+		method: 'get',
+	});
+}
+
+
+
+
 

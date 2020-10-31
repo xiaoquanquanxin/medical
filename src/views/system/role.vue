@@ -90,7 +90,7 @@
     } from '@/utils/pagination.ts';
     import { twoRowSearch } from '@/utils/tableScroll';
     import { mapGetters, mapActions } from 'vuex';
-    import { requestRoleDelete, requestRolePage } from '../../api/system/role';
+    import { requestMenuRoleTree, requestRoleDelete, requestRolePage } from '../../api/system/role';
     import { requestPrescriptionConfigConfirmSave } from '../../api/task/configuration';
 
     const columns = [
@@ -250,9 +250,14 @@
 
             //  权限
             authFn(sItem){
-                this.setSelectRoleItem(sItem);
-                this.setDialogTitle(DIALOG_TYPE.ROLE_AUTHORITY, '编辑权限');
-                this.showModal(DIALOG_TYPE.ROLE_AUTHORITY);
+                requestMenuRoleTree(sItem.roleCode)
+                    .then(v => {
+                        const data = v.data || [];
+                        const RoleItem = Object.assign({}, sItem, { treeSelectValue: v.data });
+                        this.setSelectRoleItem(RoleItem);
+                        this.setDialogTitle(DIALOG_TYPE.ROLE_AUTHORITY, '编辑权限');
+                        this.showModal(DIALOG_TYPE.ROLE_AUTHORITY);
+                    });
             },
             //  权限确认莫泰框
             authBoxModalCheck(refAuthBox){

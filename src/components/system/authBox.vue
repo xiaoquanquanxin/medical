@@ -122,7 +122,11 @@
                 requestMenuAllTree()
                     .then(data => {
                         this.treeData = data;
-                        //  console.log(JSON.parse(JSON.stringify(data)));
+                        console.log(JSON.parse(JSON.stringify(data)));
+                        this.$nextTick(() => {
+                            this.treeSelectValue = [...this.selectRoleItem.treeSelectValue].map(String);
+                            console.log(this.treeSelectValue);
+                        });
                     });
             },
             //    表单提交
@@ -130,8 +134,9 @@
                 console.log(this.treeSelectValue);
                 const data = {
                     menuIds: this.treeSelectValue.map(Number),
-                    roleId: this.selectRoleItem
+                    roleId: this.selectRoleItem.roleId
                 };
+                console.log(data);
                 return requestRoleRoleMenuUpdate(data)
                     .then(v => {
                         console.log(v);

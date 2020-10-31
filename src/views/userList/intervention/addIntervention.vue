@@ -9,38 +9,44 @@
         <br>
         <!--口腔肠内-->
         <OralEditTable
+                v-if="false"
                 :key="1"
                 :data-title="kqcnOralEditDataTitle"
                 ref="kqcnOralEditTableRef"
         />
-        <br>
-        <!--肠内-->
-        <OralEditTable
-                :key="2"
-                :data-title="cnyyzcOralEditDataTitle"
-                ref="cnyyzcOralEditTableRef"
-        />
+        <div v-if="false">
+            <br>
+            <!--肠内-->
+            <OralEditTable
+                    :key="2"
+                    :data-title="cnyyzcOralEditDataTitle"
+                    ref="cnyyzcOralEditTableRef"
+            />
+            <br>
+        </div>
+        <MealEditTable/>
         <br>
         <a-button type="primary" @click="saveIntervention">保存</a-button>
     </div>
 </template>
 <script>
+    import { requestPrescriptionSave } from '../../../api/userList/intervention';
+
     import { mapGetters, mapActions } from 'vuex';
     import GoBackButton from '@/components/goBackButton.vue';
     //  基础数据
     import BasicInfoEditTable from '@/components/detailsEditTable/basicInfoEditTable.vue';
     //  可编辑的主要表格
     import OralEditTable from '@/components/detailsEditTable/oralEditTable.vue';
-    import { requestPrescriptionSave } from '../../../api/userList/intervention';
-    //    //  膳食营养计划
-    //    import DietaryEditTable from '@/components/detailsEditTable/dietaryEditTable.vue';
-    //    //  能量
-    //    import EnergyEditTable from '@/components/detailsEditTable/energyEditTable.vue';
+    //  可编辑的膳食营养计划
+    import MealEditTable from '@/components/detailsEditTable/mealEditTable.vue';
+
     export default {
         components: {
             GoBackButton,
             BasicInfoEditTable,
             OralEditTable,
+            MealEditTable,
         },
         computed: {
             //	新增处方、编辑处方选择的头部数据
@@ -55,6 +61,10 @@
             cnyyzcData(){
                 return this.$store.state.intervention.cnyyzcData;
             },
+            //  被选中的处方-膳食营养计划
+            mealData(){
+                return this.$store.state.intervention.mealData;
+            }
         },
         data(){
             return {
@@ -68,12 +78,12 @@
                     prescriptionType: 1,
                     usageMethod: 1,
                 },
-                //
+                //  肠内营养支持
                 cnyyzcOralEditDataTitle: {
                     name: '肠内营养支持',
                     prescriptionType: 2,
                     usageMethod: 1,
-                }
+                },
             };
         },
         created(){

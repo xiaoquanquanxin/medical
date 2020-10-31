@@ -29,3 +29,11 @@ export function requestUserUpdate(data: any) {
 
 //	缺少删除
 //	缺少 系统管理-修改登陆人的密码页面的update接口
+
+//	获取用户信息
+export function requestUserGet(id: any) {
+	return request({
+		url: `/api/user/get/${id}`,
+		method: 'get',
+	})
+}

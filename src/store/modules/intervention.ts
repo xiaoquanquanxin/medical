@@ -9,7 +9,9 @@ interface STATE {
 
 	kqcnData: any,
 	//	肠内营养支持数据
-	cnyyzcData: any,
+	cnyyzcData: any;
+	//	膳食营养计划
+	mealData: any;
 }
 
 const state: STATE = {
@@ -22,6 +24,8 @@ const state: STATE = {
 	kqcnData: null,
 	//  被选中的处方-肠内营养支持数据
 	cnyyzcData: null,
+	//	膳食营养计划
+	mealData: null,
 }
 const mutations = {
 	SET_CHOOSE_INTERVENTION_DATA: (state: STATE, chooseInterventionData: any) => {
@@ -35,6 +39,9 @@ const mutations = {
 	},
 	SET_CNYYZC_DATA: (state: STATE, cnyyzcData: any) => {
 		state.cnyyzcData = cnyyzcData
+	},
+	SET_MEAL_DATA: (state: STATE, mealData: any) => {
+		state.mealData = mealData
 	},
 }
 
@@ -51,6 +58,9 @@ const actions = {
 	},
 	setCnyyzcData: ({commit}: COMMIT_INTERFACE<STATE>, cnyyzcData: any) => {
 		commit('SET_CNYYZC_DATA', cnyyzcData);
+	},
+	setMealData: ({commit}: COMMIT_INTERFACE<STATE>, mealData: any) => {
+		commit('SET_MEAL_DATA', mealData);
 	},
 
 }

@@ -122,17 +122,19 @@
             },
             //    表单提交
             handleSubmit(){
-                console.log(this.treeSelectValue);
+                //  console.log(this.treeSelectValue);
                 return new Promise((resolve, reject) => {
                     this.form.validateFields((err, values) => {
                         if (err) {
                             reject();
                             return;
                         }
-                        console.log(JSON.parse(JSON.stringify(this.openData)));
-                        console.log(values);
+                        //  console.log(JSON.parse(JSON.stringify(this.openData)));
+                        console.log(values, this.openData);
                         const data = Object.assign({}, this.openData, values);
+                        data.parentId = data.parentId || -1;
                         console.log(data);
+                        //  return Promise.resolve();
                         (() => {
                             //  1 新增、2 编辑
                             switch (this.openData.operationType) {
@@ -140,7 +142,6 @@
                                     //  新增
                                     return requestMenuInsert(data);
                                 case 2:
-                                    data.parentId = this.treeSelectValue;
                                     //  编辑
                                     return requestMenuUpdate(data);
                                 default :

@@ -131,7 +131,7 @@
                             item.key = index;
                         });
                         this.data = data.records;
-                        console.log(JSON.parse(JSON.stringify(this.data[2])));
+                        console.log(JSON.parse(JSON.stringify(this.data)));
                         this.pagination = paginationDecode(this.pagination, data);
                     });
             },
@@ -145,7 +145,7 @@
             },
             //  编辑账号
             editAccountFn(sItem){
-                this.setSelectAccountId(sItem.id);
+                this.setSelectAccountId(sItem.userId);
                 this.setAccountOperationType(2);
                 this.setDialogTitle(DIALOG_TYPE.ACCOUNT, '编辑账号');
                 this.showModal(DIALOG_TYPE.ACCOUNT);
@@ -167,6 +167,8 @@
             },
             //  删除账号
             deleteAccountFn(sItem){
+                alert('没有接口');
+                return;
                 this.$confirm({
                     title: `确定删除${sItem.disease}`,
                     okText: '确认',

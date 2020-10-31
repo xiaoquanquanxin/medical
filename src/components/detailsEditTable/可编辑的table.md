@@ -8,7 +8,7 @@
 [chooseCommodity](./chooseCommodity.vue) 
 
 膳食营养计划 ，膳食的那一类
-[dietaryEditTable](./dietaryEditTable.vue)
+[MealEditTable](./MealEditTable.vue)
 
 能量表格
 [energyEditTable](./energyEditTable.vue)
