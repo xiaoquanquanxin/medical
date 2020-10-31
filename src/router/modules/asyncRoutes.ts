@@ -994,6 +994,17 @@ export const asyncRoutesList = [
 				path: '/cost/paymentRecords',
 				component: () => import(/* webpackChunkName: "paymentRecords" */ '@/views/cost/paymentRecords.vue'),
 			},
+			{
+				meta: {
+					chName: '收计费详情',
+					selectRouteKey: 'costDetail',
+					openRouteKey: 'cost',
+					hidden: true,
+				},
+				name: 'costDetail',
+				path: '/cost/costDetail/:detailId',
+				component: () => import(/* webpackChunkName: "auditDetail" */ '@/views/auditList/auditDetail.vue'),
+			}
 		]
 	},
 	{

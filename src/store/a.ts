@@ -214,6 +214,8 @@ export const routeMap = {
 	'returnPremium': true,
 	//	缴费记录
 	'paymentRecords': true,
+	//	收计费详情
+	'costDetail': true,
 
 	//	日结、月结
 	'statement': true,
