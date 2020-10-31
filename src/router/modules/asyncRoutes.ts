@@ -974,30 +974,30 @@ export const asyncRoutesList = [
 				path: '/cost/costList',
 				component: () => import(/* webpackChunkName: "costList" */ '@/views/cost/costList.vue'),
 			},
-			{
-				meta: {
-					chName: '退费记录',
-					selectRouteKey: 'returnPremium',
-					openRouteKey: 'cost',
-				},
-				name: 'returnPremium',
-				path: '/cost/returnPremium',
-				component: () => import(/* webpackChunkName: "returnPremium" */ '@/views/cost/returnPremium.vue'),
-			},
-			{
-				meta: {
-					chName: '缴费记录',
-					selectRouteKey: 'paymentRecords',
-					openRouteKey: 'cost',
-				},
-				name: 'paymentRecords',
-				path: '/cost/paymentRecords',
-				component: () => import(/* webpackChunkName: "paymentRecords" */ '@/views/cost/paymentRecords.vue'),
-			},
+			// {
+			// 	meta: {
+			// 		chName: '退费记录',
+			// 		selectRouteKey: 'returnPremium',
+			// 		openRouteKey: 'cost',
+			// 	},
+			// 	name: 'returnPremium',
+			// 	path: '/cost/returnPremium',
+			// 	component: () => import(/* webpackChunkName: "returnPremium" */ '@/views/cost/returnPremium.vue'),
+			// },
+			// {
+			// 	meta: {
+			// 		chName: '缴费记录',
+			// 		selectRouteKey: 'paymentRecords',
+			// 		openRouteKey: 'cost',
+			// 	},
+			// 	name: 'paymentRecords',
+			// 	path: '/cost/paymentRecords',
+			// 	component: () => import(/* webpackChunkName: "paymentRecords" */ '@/views/cost/paymentRecords.vue'),
+			// },
 			{
 				meta: {
 					chName: '收计费详情',
-					selectRouteKey: 'costDetail',
+					selectRouteKey: 'costList',
 					openRouteKey: 'cost',
 					hidden: true,
 				},

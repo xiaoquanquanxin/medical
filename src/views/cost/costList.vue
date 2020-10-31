@@ -8,6 +8,10 @@
                 <a-select-option value="0">待支付</a-select-option>
                 <a-select-option value="1">已支付</a-select-option>
             </a-select>
+            <a-select class="lengthen-select-width" v-model="searchData.isRefund" placeholder="请选择缴退状态">
+                <a-select-option value="0">已缴费</a-select-option>
+                <a-select-option value="1">已退费</a-select-option>
+            </a-select>
             <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
         </div>
         <!--表格-->
@@ -17,6 +21,18 @@
                 :scroll="scroll"
                 :pagination="false"
         >
+            <!--缴退状态（0,缴费，1,退款）)-->
+            <div slot="isRefund" slot-scope="scope,sItem,sIndex,extra">
+                <span v-if="scope.payStatus == 0">
+                    <span v-if="scope.payStatus == 0">待缴费</span>
+                    <span v-if="scope.payStatus == 1">已缴费</span>
+                </span>
+                <span v-if="scope.payStatus == 1">
+                    <span v-if="scope.payStatus == 0">待退费</span>
+                    <span v-if="scope.payStatus == 1">已退费</span>
+                </span>
+            </div>
+            
             <!--支付状态(0,待支付,1,已支付)-->
             <div slot="payStatus" slot-scope="scope,sItem,sIndex,extra">
                 <span v-if="scope.payStatus == 0">待支付</span>
@@ -29,9 +45,7 @@
                 <a-space>
                     <router-link :to="{name:'costDetail',params:{detailId:sItem.id}}">详情</router-link>
                     <a @click="payCost(sItem)" v-if="scope.payStatus == 0">缴费</a>
-                    <span v-if="scope.isRefund == 0">
                     <a @click="returnCost(sItem)" v-if="scope.payStatus == 1">退费</a>
-                        </span>
                 </a-space>
             </div>
         </a-table>
@@ -142,8 +156,13 @@
             width: 100,
         },
         {
-            title: '缴费金额',
+            title: '缴退金额',
             dataIndex: 'amountPayable',
+            width: 100,
+        },
+        {
+            title: '缴退状态',
+            scopedSlots: { customRender: 'isRefund' },
             width: 100,
         },
         {
