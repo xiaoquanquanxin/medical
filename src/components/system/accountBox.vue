@@ -111,13 +111,8 @@
             //  主要请求
             searchFn(){
                 requestRoleRoleAll()
-                    .then(v => {
-                        v.data = v.data || [];
-                        v.data.forEach((item, index) => {
-                            item.key = index;
-                        });
-                        console.log(v.data);
-                        this.roleList = v.data;
+                    .then(roleList => {
+                        this.roleList = roleList;
                     });
                 //  如果是新增
                 if (!this.selectAccountId) {

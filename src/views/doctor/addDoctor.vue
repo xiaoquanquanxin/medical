@@ -58,6 +58,17 @@
                     </a-select-option>
                 </a-select>
             </a-form-item>
+            <a-form-item label="医生角色" has-feedback>
+                <a-select class="add-form-input"
+                          placeholder="医生角色"
+                          v-decorator="roleIdDecorator"
+                >
+                    <a-select-option :value="item.roleId"
+                                     v-for="item in roleList"
+                    >{{item.roleName}}
+                    </a-select-option>
+                </a-select>
+            </a-form-item>
             <a-form-item label="医生职称" has-feedback>
                 <a-select class="add-form-input"
                           placeholder="请选择医生职称"
@@ -69,7 +80,7 @@
                     </a-select-option>
                 </a-select>
             </a-form-item>
-            <a-form-item label="医生状态" has-feedback>
+            <a-form-item label="医生状态" has-feedback v-if="false">
                 <a-select class="add-form-input"
                           placeholder="请选择医生状态"
                           v-decorator="doctorStatusDecorator"
@@ -80,7 +91,7 @@
             </a-form-item>
             <a-form-item label="手机号" required>
                 <a-input class="add-form-input"
-                         v-decorator="phoneNumberDecorator"
+                         v-decorator="phoneDecorator"
                          placeholder="请输入手机号"
                 />
             </a-form-item>
@@ -107,7 +118,6 @@
 <script>
     import { formItemLayout } from '@/utils/layout.ts';
     import { compareToFirstPassword } from '@/utils/validate';
-    import { isPhoneNumber } from '@/utils/validate';
     import GoBackButton from '@/components/goBackButton.vue';
     import {
         requestDoctorDoctorTitle,
@@ -117,6 +127,8 @@
     } from '../../api/doctor';
     import { requestDeptList } from '../../api/department';
     import { requestHospitalGetList } from '../../api/hospital';
+    import { requestRoleRoleAll } from '../../api/system';
+    import { isPhoneNumber } from '../../utils/validate';
 
     export default {
         components: {
@@ -127,6 +139,7 @@
         },
         data(){
             return {
+                roleList: [],
                 hospitalList: [],
                 deptList: [],
                 doctorTypeList: [],
@@ -177,10 +190,17 @@
                         message: '请选择医生职称'
                     },]
                 }],
+                //  角色
+                roleIdDecorator: ['roleId', {
+                    rules: [{
+                        required: true,
+                        message: '请选择角色'
+                    },]
+                }],
                 //  医生状态
                 doctorStatusDecorator: ['doctorStatus', {
                     rules: [{
-                        required: true,
+                        //  required: true,
                         message: '请选择医生状态'
                     },]
                 }],
@@ -200,7 +220,7 @@
 //                }],
 
                 //  手机号
-                phoneNumberDecorator: ['phoneNumber', {
+                phoneDecorator: ['phone', {
                     rules: [{
                         validator: isPhoneNumber,
                     },]
@@ -235,6 +255,10 @@
         methods: {
             //  主要请求
             searchFn(){
+                requestRoleRoleAll()
+                    .then(roleList => {
+                        this.roleList = roleList;
+                    });
                 requestHospitalGetList()
                     .then(hospitalList => {
                         this.hospitalList = hospitalList;
@@ -272,7 +296,6 @@
             //    表单提交
             handleSubmit(e){
                 e.preventDefault();
-                alert('接口报错');
                 this.form.validateFields((err, values) => {
                     if (err) {
                         return;

@@ -45,8 +45,8 @@
             <!--操作-->
             <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
                 <a-space size="small">
-                    <router-link :to="{name:'editDoctor',params:{doctorId:item.id}}">编辑</router-link>
-                    <!--                    <a @click="deleteDoctor(sItem)">删除</a>-->
+                    <router-link :to="{name:'editDoctor',params:{doctorId:sItem.id}}">编辑</router-link>
+                    <a @click="deleteDoctor(sItem)">删除</a>
                 </a-space>
             </div>
         </a-table>
