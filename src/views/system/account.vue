@@ -78,16 +78,6 @@
             width: 100,
         },
         {
-            title: '创建时间',
-            dataIndex: 'createTime',
-            width: 200,
-        },
-        {
-            title: '创建人',
-            dataIndex: 'icon',
-            width: 100,
-        },
-        {
             title: '角色',
             dataIndex: 'role',
             width: 100,
