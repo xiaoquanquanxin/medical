@@ -3,7 +3,7 @@
         <div class="a-input-group">
             <!--返回按钮-->
             <GoBackButton/>
-            <a-button class="basic-button-width" type="primary" v-print="printObj" v-if="screeningDetailId">打印
+            <a-button class="basic-button-width" type="primary" v-print="printObj">打印
             </a-button>
             <a-button class="basic-button-width" type="primary" @click="saveScreening" v-if="!screeningDetailId">保存
             </a-button>
@@ -31,6 +31,7 @@
             >
                 <a-radio-group style="display: block;"
                                v-model="scope.value"
+                               :disabled="!!screeningDetailId"
                 >
                     <a-radio value="1">是</a-radio>
                     <a-radio value="0">否</a-radio>
@@ -50,7 +51,10 @@
                 <div class="" style="text-align: center">疾病评分</div>
             </div>
             <div class="radio-group-item-content">
-                <a-checkbox-group @change="riskSelectChange($event)" v-model="diseaseSelectList">
+                <a-checkbox-group @change="riskSelectChange($event)"
+                                  v-model="diseaseSelectList"
+                                  :disabled="!!screeningDetailId"
+                >
                     <ul class="check-group-list">
                         <li class="radio-group-item">
                             <a-checkbox value="1">髋骨折 (1分 )</a-checkbox>
@@ -97,7 +101,9 @@
             </div>
             <div class="radio-group-item-content">
                 <a-radio-group v-model="screeningDetailInfo.nutrition" style="width: 100%;"
-                               @change="nutritionChange">
+                               @change="nutritionChange"
+                               :disabled="!!screeningDetailId"
+                >
                     <ul class="check-group-list">
                         <li class="radio-group-item">
                             <a-radio value="1">3个月体重丢失 > 5%或食物摄入比正常需要量低25% ~ 50%(1分 )</a-radio>
@@ -334,8 +340,12 @@
             },
             //  计算总分
             totalScore(){
-                const { ageScore, diseaseScore, nutritionScore } = this.screeningDetailInfo;
-                return ageScore + diseaseScore + nutritionScore;
+                let { ageScore, diseaseScore, nutritionScore } = this.screeningDetailInfo;
+                ageScore = ageScore || 0;
+                diseaseScore = diseaseScore || 0;
+                nutritionScore = nutritionScore || 0;
+                console.log(ageScore, diseaseScore, nutritionScore);
+                return +ageScore + +diseaseScore + +nutritionScore;
             },
             //  基础信息，请求来了就会出现数据
             patientBasicInfo(){
@@ -356,17 +366,17 @@
                 {
                     key: 1,
                     label: '过去一周摄食是否有减少：',
-                    value: '1',
+                    value: '',
                 },
                 {
                     key: 2,
                     label: '过去三个月体重是否下降：',
-                    value: '1',
+                    value: '',
                 },
                 {
                     key: 3,
                     label: '有严重疾病吗？（如ICU治疗）：',
-                    value: '1',
+                    value: '',
                 }
             ];
             return {
@@ -418,7 +428,7 @@
                     diseaseScore: '0',
 
                     //  营养选项： 单选，选中第一项则用1来表示第一项被选中 ,示例值(1)
-                    nutrition: '1',
+                    nutrition: '0',
                     //  营养分数 ,示例值(3)
                     nutritionScore: '0',
 
@@ -486,6 +496,7 @@
                                 this.riskData[0].value = this.screeningDetailInfo.food;
                                 this.riskData[1].value = this.screeningDetailInfo.lose;
                                 this.riskData[2].value = this.screeningDetailInfo.icu;
+                                console.log(this.riskData);
                                 this.nutritionChange();
                                 this.calcDiseaseScore();
                                 //console.log(JSON.parse(JSON.stringify(v.data)));
@@ -526,7 +537,7 @@
             //  营养评分变化
             nutritionChange(){
                 const map = { 1: 1, 2: 2, 3: 3 };
-                this.screeningDetailInfo.nutritionScore = map[this.screeningDetailInfo.nutrition];
+                this.screeningDetailInfo.nutritionScore = map[this.screeningDetailInfo.nutrition] || 0;
             },
             //  删除
             deleteScreening(){

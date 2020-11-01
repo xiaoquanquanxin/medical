@@ -32,7 +32,10 @@
                         <div>1、 既往3个月内，是否因食欲下降、咀嚼或吞咽等消化问题导致食物摄入减少？</div>
                     </div>
                     <div class="radio-group-item-content">
-                        <a-radio-group v-model="typeOneList[0]" class="radio-group">
+                        <a-radio-group v-model="typeOneList[0]"
+                                       class="radio-group"
+                                       :disabled="!!assessmentDetailId"
+                        >
                             <ul class="radio-group-list">
                                 <li class="radio-group-item">
                                     <a-radio value="1">严重的食欲减退</a-radio>
@@ -53,7 +56,10 @@
                         <div>2、 最近三个月内体重是否减轻</div>
                     </div>
                     <div class="radio-group-item-content">
-                        <a-radio-group v-model="typeOneList[1]" class="radio-group">
+                        <a-radio-group v-model="typeOneList[1]"
+                                       class="radio-group"
+                                       :disabled="!!assessmentDetailId"
+                        >
                             <ul class="radio-group-list">
                                 <li class="radio-group-item">
                                     <a-radio value="1">体重减轻超过3千克</a-radio>
@@ -77,7 +83,10 @@
                         <div>3、活动情况如何</div>
                     </div>
                     <div class="radio-group-item-content">
-                        <a-radio-group v-model="typeOneList[2]" class="radio-group">
+                        <a-radio-group v-model="typeOneList[2]"
+                                       class="radio-group"
+                                       :disabled="!!assessmentDetailId"
+                        >
                             <ul class="radio-group-list">
                                 <li class="radio-group-item">
                                     <a-radio value="1">卧床或长期坐着</a-radio>
@@ -98,7 +107,10 @@
                         <div>4、在过去3个月内是否受过心里创伤或x患急性疾病？</div>
                     </div>
                     <div class="radio-group-item-content">
-                        <a-radio-group v-model="typeOneList[3]" class="radio-group">
+                        <a-radio-group v-model="typeOneList[3]"
+                                       class="radio-group"
+                                       :disabled="!!assessmentDetailId"
+                        >
                             <ul class="radio-group-list">
                                 <li class="radio-group-item">
                                     <a-radio value="1">是</a-radio>
@@ -116,7 +128,10 @@
                         <div>5、是否有神经心理问题</div>
                     </div>
                     <div class="radio-group-item-content">
-                        <a-radio-group v-model="typeOneList[4]" class="radio-group">
+                        <a-radio-group v-model="typeOneList[4]"
+                                       class="radio-group"
+                                       :disabled="!!assessmentDetailId"
+                        >
                             <ul class="radio-group-list">
                                 <li class="radio-group-item">
                                     <a-radio value="1">严重痴呆或抑郁</a-radio>
@@ -137,7 +152,10 @@
                         <div>6、BMI（kg/m2）是多少</div>
                     </div>
                     <div class="radio-group-item-content">
-                        <a-radio-group v-model="typeOneList[5]" class="radio-group">
+                        <a-radio-group v-model="typeOneList[5]"
+                                       class="radio-group"
+                                       :disabled="!!assessmentDetailId"
+                        >
                             <ul class="radio-group-list">
                                 <li class="radio-group-item">
                                     <a-radio value="1">小于19</a-radio>
@@ -161,7 +179,10 @@
                         <div>7、是独立生活吗（不住在养老机构或医院）？</div>
                     </div>
                     <div class="radio-group-item-content">
-                        <a-radio-group v-model="typeOneList[6]" class="radio-group">
+                        <a-radio-group v-model="typeOneList[6]"
+                                       class="radio-group"
+                                       :disabled="!!assessmentDetailId"
+                        >
                             <ul class="radio-group-list">
                                 <li class="radio-group-item">
                                     <a-radio value="1">是</a-radio>
@@ -179,7 +200,10 @@
                         <div>8、每日应用处方药超过三种？</div>
                     </div>
                     <div class="radio-group-item-content">
-                        <a-radio-group v-model="typeOneList[7]" class="radio-group">
+                        <a-radio-group v-model="typeOneList[7]"
+                                       class="radio-group"
+                                       :disabled="!!assessmentDetailId"
+                        >
                             <ul class="radio-group-list">
                                 <li class="radio-group-item">
                                     <a-radio value="1">是</a-radio>
@@ -197,7 +221,10 @@
                         <div>9、有压力性疼痛或皮肤性溃疡吗？</div>
                     </div>
                     <div class="radio-group-item-content">
-                        <a-radio-group v-model="typeOneList[8]" class="radio-group">
+                        <a-radio-group v-model="typeOneList[8]"
+                                       class="radio-group"
+                                       :disabled="!!assessmentDetailId"
+                        >
                             <ul class="radio-group-list">
                                 <li class="radio-group-item">
                                     <a-radio value="1">是</a-radio>
@@ -215,7 +242,10 @@
                         <div>10、患者每日完成几餐？</div>
                     </div>
                     <div class="radio-group-item-content">
-                        <a-radio-group v-model="typeOneList[9]" class="radio-group">
+                        <a-radio-group v-model="typeOneList[9]"
+                                       class="radio-group"
+                                       :disabled="!!assessmentDetailId"
+                        >
                             <ul class="radio-group-list">
                                 <li class="radio-group-item">
                                     <a-radio value="1">1餐</a-radio>
@@ -236,7 +266,10 @@
                         <div>11、每日至少一份奶制品（牛奶、奶酪、酸奶）？</div>
                     </div>
                     <div class="radio-group-item-content">
-                        <a-radio-group v-model="typeOneList[10]" class="radio-group">
+                        <a-radio-group v-model="typeOneList[10]"
+                                       class="radio-group"
+                                       :disabled="!!assessmentDetailId"
+                        >
                             <ul class="radio-group-list">
                                 <li class="radio-group-item">
                                     <a-radio value="1">是</a-radio>
@@ -254,7 +287,10 @@
                         <div>12、每周2 - 3份豆制品或鸡蛋</div>
                     </div>
                     <div class="radio-group-item-content">
-                        <a-radio-group v-model="typeOneList[11]" class="radio-group">
+                        <a-radio-group v-model="typeOneList[11]"
+                                       class="radio-group"
+                                       :disabled="!!assessmentDetailId"
+                        >
                             <ul class="radio-group-list">
                                 <li class="radio-group-item">
                                     <a-radio value="1">是</a-radio>
@@ -272,7 +308,10 @@
                         <div>13、每日吃肉、鱼或家禽</div>
                     </div>
                     <div class="radio-group-item-content">
-                        <a-radio-group v-model="typeOneList[12]" class="radio-group">
+                        <a-radio-group v-model="typeOneList[12]"
+                                       class="radio-group"
+                                       :disabled="!!assessmentDetailId"
+                        >
                             <ul class="radio-group-list">
                                 <li class="radio-group-item">
                                     <a-radio value="1">是</a-radio>
@@ -290,7 +329,10 @@
                         <div>14、每日能吃2份以上的水果或蔬菜吗？</div>
                     </div>
                     <div class="radio-group-item-content">
-                        <a-radio-group v-model="typeOneList[13]" class="radio-group">
+                        <a-radio-group v-model="typeOneList[13]"
+                                       class="radio-group"
+                                       :disabled="!!assessmentDetailId"
+                        >
                             <ul class="radio-group-list">
                                 <li class="radio-group-item">
                                     <a-radio value="1">是</a-radio>
@@ -308,7 +350,10 @@
                         <div>15、每日喝多少杯液体（水、果汁、咖啡、茶、奶等）？</div>
                     </div>
                     <div class="radio-group-item-content">
-                        <a-radio-group v-model="typeOneList[14]" class="radio-group">
+                        <a-radio-group v-model="typeOneList[14]"
+                                       class="radio-group"
+                                       :disabled="!!assessmentDetailId"
+                        >
                             <ul class="radio-group-list">
                                 <li class="radio-group-item">
                                     <a-radio value="1">小于3杯</a-radio>
@@ -329,7 +374,10 @@
                         <div>16、喂养方式</div>
                     </div>
                     <div class="radio-group-item-content">
-                        <a-radio-group v-model="typeOneList[15]" class="radio-group">
+                        <a-radio-group v-model="typeOneList[15]"
+                                       class="radio-group"
+                                       :disabled="!!assessmentDetailId"
+                        >
                             <ul class="radio-group-list">
                                 <li class="radio-group-item">
                                     <a-radio value="1">无法独立进食</a-radio>
@@ -350,7 +398,9 @@
                         <div>17、对营养状态的自我评价如何？</div>
                     </div>
                     <div class="radio-group-item-content">
-                        <a-radio-group v-model="typeOneList[16]" class="radio-group">
+                        <a-radio-group v-model="typeOneList[16]"
+                                       class="radio-group"
+                                       :disabled="!!assessmentDetailId">
                             <ul class="radio-group-list">
                                 <li class="radio-group-item">
                                     <a-radio value="1">营养不良</a-radio>
@@ -371,7 +421,10 @@
                         <div>18、与同龄人相比，你如何评价自己的健康状况？</div>
                     </div>
                     <div class="radio-group-item-content">
-                        <a-radio-group v-model="typeOneList[17]" class="radio-group">
+                        <a-radio-group v-model="typeOneList[17]"
+                                       class="radio-group"
+                                       :disabled="!!assessmentDetailId"
+                        >
                             <ul class="radio-group-list">
                                 <li class="radio-group-item">
                                     <a-radio value="1">不太好</a-radio>
@@ -395,7 +448,10 @@
                         <div>19、中臀围（AMC）是多少cm</div>
                     </div>
                     <div class="radio-group-item-content">
-                        <a-radio-group v-model="typeOneList[18]" class="radio-group">
+                        <a-radio-group v-model="typeOneList[18]"
+                                       class="radio-group"
+                                       :disabled="!!assessmentDetailId"
+                        >
                             <ul class="radio-group-list">
                                 <li class="radio-group-item">
                                     <a-radio value="1">小于21</a-radio>
@@ -416,7 +472,10 @@
                         <div>20、排肠肌围（cc）是多少？cm</div>
                     </div>
                     <div class="radio-group-item-content">
-                        <a-radio-group v-model="typeOneList[19]" class="radio-group">
+                        <a-radio-group v-model="typeOneList[19]"
+                                       class="radio-group"
+                                       :disabled="!!assessmentDetailId"
+                        >
                             <ul class="radio-group-list">
                                 <li class="radio-group-item">
                                     <a-radio value="1">小于31</a-radio>
@@ -437,7 +496,10 @@
                         <div>1、精神状况</div>
                     </div>
                     <div class="radio-group-item-content">
-                        <a-radio-group v-model="typeTwoList[0]" class="radio-group">
+                        <a-radio-group v-model="typeTwoList[0]"
+                                       class="radio-group"
+                                       :disabled="!!assessmentDetailId"
+                        >
                             <ul class="radio-group-list">
                                 <li class="radio-group-item"
                                     v-for="item in typeTwoListData[0]"
@@ -454,7 +516,10 @@
                         <div>2、 进食途径</div>
                     </div>
                     <div class="radio-group-item-content">
-                        <a-radio-group v-model="typeTwoList[1]" class="radio-group">
+                        <a-radio-group v-model="typeTwoList[1]"
+                                       class="radio-group"
+                                       :disabled="!!assessmentDetailId"
+                        >
                             <ul class="radio-group-list">
                                 <li class="radio-group-item"
                                     v-for="item in typeTwoListData[1]"
@@ -471,7 +536,10 @@
                         <div>3、大便次数</div>
                     </div>
                     <div class="radio-group-item-content">
-                        <a-radio-group v-model="typeTwoList[2]" class="radio-group">
+                        <a-radio-group v-model="typeTwoList[2]"
+                                       class="radio-group"
+                                       :disabled="!!assessmentDetailId"
+                        >
                             <ul class="radio-group-list">
                                 <li class="radio-group-item"
                                     v-for="item in typeTwoListData[2]"
@@ -488,7 +556,10 @@
                         <div>4、大便形状</div>
                     </div>
                     <div class="radio-group-item-content">
-                        <a-radio-group v-model="typeTwoList[3]" class="radio-group">
+                        <a-radio-group v-model="typeTwoList[3]"
+                                       class="radio-group"
+                                       :disabled="!!assessmentDetailId"
+                        >
                             <ul class="radio-group-list">
                                 <li class="radio-group-item"
                                     v-for="item in typeTwoListData[3]"
@@ -505,7 +576,10 @@
                         <div>5、腹痛、胀痛（可多选）</div>
                     </div>
                     <div class="radio-group-item-content">
-                        <a-checkbox-group v-model="typeTwoList[4]" class="radio-group" @change="aaa">
+                        <a-checkbox-group v-model="typeTwoList[4]"
+                                          class="radio-group"
+                                          :disabled="!!assessmentDetailId"
+                        >
                             <ul class="radio-group-list">
                                 <li class="radio-group-item"
                                     v-for="item in typeTwoListData[4]"
@@ -522,7 +596,10 @@
                         <div>6、膳食调查</div>
                     </div>
                     <div class="radio-group-item-content">
-                        <a-radio-group v-model="typeTwoList[5]" class="radio-group">
+                        <a-radio-group v-model="typeTwoList[5]"
+                                       class="radio-group"
+                                       :disabled="!!assessmentDetailId"
+                        >
                             <ul class="radio-group-list">
                                 <li class="radio-group-item"
                                     v-for="item in typeTwoListData[5]"
@@ -548,6 +625,7 @@
                                     <span>目前患者的体重约为</span>
                                     <a-input class="basic-input-width" placeholder="请输入体重" suffix="kg" size="small"
                                              v-model="typeThreeList.nowWeight"
+                                             :disabled="!!assessmentDetailId"
                                     />
                                 </a-space>
                             </li>
@@ -556,6 +634,7 @@
                                     <span>目前患者的身高约为</span>
                                     <a-input class="basic-input-width" placeholder="请输入身高" suffix="cm" size="small"
                                              v-model="typeThreeList.nowHeight"
+                                             :disabled="!!assessmentDetailId"
                                     />
                                 </a-space>
                             </li>
@@ -564,6 +643,7 @@
                                     <span>一个月前患者的体重约为</span>
                                     <a-input class="basic-input-width" placeholder="请输入体重" suffix="kg" size="small"
                                              v-model="typeThreeList.oneagoWeight"
+                                             :disabled="!!assessmentDetailId"
                                     />
                                 </a-space>
                             </li>
@@ -572,6 +652,7 @@
                                     <span>六个月前患者的体重约为</span>
                                     <a-input class="basic-input-width" placeholder="请输入身高" suffix="cm" size="small"
                                              v-model="typeThreeList.sixagoWeight"
+                                             :disabled="!!assessmentDetailId"
                                     />
                                 </a-space>
                             </li>
@@ -579,7 +660,9 @@
                                 <a-space>
                                     <span>在过去的两周，患者的体重</span>
                                 </a-space>
-                                <a-radio-group v-model="typeThreeList.weightCondition" class="radio-group">
+                                <a-radio-group v-model="typeThreeList.weightCondition"
+                                               :disabled="!!assessmentDetailId"
+                                               class="radio-group">
                                     <a-radio v-for="item in typeThreeListData.weightCondition"
                                              :value="item.id"
                                     >{{item.label}}
@@ -599,7 +682,10 @@
                             <li class="radio-group-item radio-group-item-title">1、过去的1个月以来，患者的进食情况与平时情况相比（以最高分选项为本项计分）
                             </li>
                             <li class="radio-group-item">
-                                <a-radio-group v-model="typeThreeList.eatingSituation" class="radio-group">
+                                <a-radio-group v-model="typeThreeList.eatingSituation"
+                                               class="radio-group"
+                                               :disabled="!!assessmentDetailId"
+                                >
                                     <a-radio v-for="item in typeThreeListData.eatingSituation"
                                              :value="item.id"
                                     >{{item.label}}
@@ -608,7 +694,10 @@
                             </li>
                             <li class="radio-group-item radio-group-item-title">2、患者目前进食</li>
                             <li class="radio-group-item">
-                                <a-radio-group v-model="typeThreeList.eatingNow" class="radio-group">
+                                <a-radio-group v-model="typeThreeList.eatingNow"
+                                               class="radio-group"
+                                               :disabled="!!assessmentDetailId"
+                                >
                                     <a-radio v-for="item in typeThreeListData.eatingNow"
                                              :value="item.id"
                                     >{{item.label}}
@@ -629,7 +718,9 @@
                             </li>
                             <li class="radio-group-item">
                                 <b>❌需要检查❌️</b>
-                                <a-checkbox-group class="radio-group" v-model="typeThreeList.symptom">
+                                <a-checkbox-group class="radio-group" v-model="typeThreeList.symptom"
+                                                  :disabled="!!assessmentDetailId"
+                                >
                                     <a-checkbox v-for="item in typeThreeListData.symptom"
                                                 :value="item.id"
                                     >
@@ -658,7 +749,9 @@
                         <ul class="radio-group-list">
                             <li class="radio-group-item radio-group-item-title">1、在过去的1个月，患者的活动（单选）</li>
                             <li class="radio-group-item">
-                                <a-radio-group v-model="typeThreeList.activityBodyfunction">
+                                <a-radio-group v-model="typeThreeList.activityBodyfunction"
+                                               :disabled="!!assessmentDetailId"
+                                >
                                     <a-radio v-for="item in typeThreeListData.activityBodyfunction"
                                              :value="item.id"
                                     >{{item.label}}
@@ -679,7 +772,9 @@
                             </li>
                             ❌需要检查❌
                             <li class="radio-group-item">
-                                <a-checkbox-group class="radio-group" v-model="typeThreeList.disease">
+                                <a-checkbox-group class="radio-group" v-model="typeThreeList.disease"
+                                                  :disabled="!!assessmentDetailId"
+                                >
                                     <a-checkbox v-for="item in typeThreeListData.disease"
                                                 :value="item.id"
                                     >
@@ -699,13 +794,20 @@
                             <li class="radio-group-item radio-group-item-title">2、年龄</li>
                             <li class="radio-group-item">
                                 <a-space>
-                                    <a-input placeholder="请输入年龄" size="small" v-model="typeThreeList.diseaseAge"/>
+                                    <a-input placeholder="请输入年龄"
+                                             size="small"
+                                             v-model="typeThreeList.diseaseAge"
+                                             :disabled="!!assessmentDetailId"
+                                    />
                                 </a-space>
                             </li>
                             <li class="radio-group-item radio-group-item-title">3、原发疾病分期</li>
                             <li class="radio-group-item">
                                 ❌需要检查❌
-                                <a-checkbox-group class="radio-group" v-model="typeThreeList.diseaseStage">
+                                <a-checkbox-group class="radio-group"
+                                                  v-model="typeThreeList.diseaseStage"
+                                                  :disabled="!!assessmentDetailId"
+                                >
                                     <a-checkbox v-for="item in typeThreeListData.diseaseStage"
                                                 :value="item.id"
                                     >
@@ -726,7 +828,9 @@
                             <li class="radio-group-item">
                                 <a-space>
                                     <a-input placeholder="请输入放疗次数" size="small"
-                                             v-model="typeThreeList.radiotherapyCount"/>
+                                             v-model="typeThreeList.radiotherapyCount"
+                                             :disabled="!!assessmentDetailId"
+                                    />
                                 </a-space>
                             </li>
                         </ul>
@@ -741,7 +845,9 @@
                         <ul class="radio-group-list">
                             <li class="radio-group-item radio-group-item-title">1、发热</li>
                             <li class="radio-group-item">
-                                <a-radio-group v-model="typeThreeList.hot">
+                                <a-radio-group v-model="typeThreeList.hot"
+                                               :disabled="!!assessmentDetailId"
+                                >
                                     <a-radio v-for="item in typeThreeListData.hot"
                                              :value="item.id"
                                     >{{item.label}}
@@ -750,7 +856,9 @@
                             </li>
                             <li class="radio-group-item radio-group-item-title">2、持续发热时间</li>
                             <li class="radio-group-item">
-                                <a-radio-group v-model="typeThreeList.lastHottime">
+                                <a-radio-group v-model="typeThreeList.lastHottime"
+                                               :disabled="!!assessmentDetailId"
+                                >
                                     <a-radio v-for="item in typeThreeListData.lastHottime"
                                              :value="item.id"
                                     >{{item.label}}
@@ -759,7 +867,9 @@
                             </li>
                             <li class="radio-group-item radio-group-item-title">3、是否使用激素（如波尼松或相当剂量的其他激素/天）</li>
                             <li class="radio-group-item">
-                                <a-radio-group v-model="typeThreeList.isuseHormone">
+                                <a-radio-group v-model="typeThreeList.isuseHormone"
+                                               :disabled="!!assessmentDetailId"
+                                >
                                     <a-radio v-for="item in typeThreeListData.isuseHormone"
                                              :value="item.id"
                                     >{{item.label}}
@@ -786,7 +896,9 @@
                                             <li class="radio-group-item radio-group-item-title">1、眼眶脂肪垫
                                             </li>
                                             <li class="radio-group-item">
-                                                <a-radio-group v-model="typeThreeList.fatreserveorbitalfatpad">
+                                                <a-radio-group v-model="typeThreeList.fatreserveorbitalfatpad"
+                                                               :disabled="!!assessmentDetailId"
+                                                >
                                                     <a-radio v-for="item in typeThreeListData.fourKindsOf"
                                                              :value="item.id"
                                                     >{{item.label}}
@@ -796,7 +908,9 @@
                                             <li class="radio-group-item radio-group-item-title">2、三头肌皮褶厚度
                                             </li>
                                             <li class="radio-group-item">
-                                                <a-radio-group v-model="typeThreeList.fatreservetricepsskinfold">
+                                                <a-radio-group v-model="typeThreeList.fatreservetricepsskinfold"
+                                                               :disabled="!!assessmentDetailId"
+                                                >
                                                     <a-radio v-for="item in typeThreeListData.fourKindsOf"
                                                              :value="item.id"
                                                     >{{item.label}}
@@ -806,7 +920,9 @@
                                             <li class="radio-group-item radio-group-item-title">3、下肋脂肪厚度
                                             </li>
                                             <li class="radio-group-item">
-                                                <a-radio-group v-model="typeThreeList.fatreservelowerribfatthickness">
+                                                <a-radio-group v-model="typeThreeList.fatreservelowerribfatthickness"
+                                                               :disabled="!!assessmentDetailId"
+                                                >
                                                     <a-radio v-for="item in typeThreeListData.fourKindsOf"
                                                              :value="item.id"
                                                     >{{item.label}}
@@ -816,7 +932,9 @@
                                             <li class="radio-group-item radio-group-item-title">4、总体脂肪缺乏程度
                                             </li>
                                             <li class="radio-group-item">
-                                                <a-radio-group v-model="typeThreeList.fatreservetotalfatdeficiency">
+                                                <a-radio-group v-model="typeThreeList.fatreservetotalfatdeficiency"
+                                                               :disabled="!!assessmentDetailId"
+                                                >
                                                     <a-radio v-for="item in typeThreeListData.fourKindsOf"
                                                              :value="item.id"
                                                     >{{item.label}}
@@ -836,7 +954,9 @@
                                             <li class="radio-group-item radio-group-item-title">1、颞部（颞肌）
                                             </li>
                                             <li class="radio-group-item">
-                                                <a-radio-group v-model="typeThreeList.muscleconditiontemporal">
+                                                <a-radio-group v-model="typeThreeList.muscleconditiontemporal"
+                                                               :disabled="!!assessmentDetailId"
+                                                >
                                                     <a-radio v-for="item in typeThreeListData.fourKindsOf"
                                                              :value="item.id"
                                                     >{{item.label}}
@@ -846,7 +966,9 @@
                                             <li class="radio-group-item radio-group-item-title">2、锁骨部位（胸部三角肌）
                                             </li>
                                             <li class="radio-group-item">
-                                                <a-radio-group v-model="typeThreeList.muscleconditioncollarbone">
+                                                <a-radio-group v-model="typeThreeList.muscleconditioncollarbone"
+                                                               :disabled="!!assessmentDetailId"
+                                                >
                                                     <a-radio v-for="item in typeThreeListData.fourKindsOf"
                                                              :value="item.id"
                                                     >{{item.label}}
@@ -856,7 +978,9 @@
                                             <li class="radio-group-item radio-group-item-title">3、肩部（三角肌）
                                             </li>
                                             <li class="radio-group-item">
-                                                <a-radio-group v-model="typeThreeList.muscleconditionshoulder">
+                                                <a-radio-group v-model="typeThreeList.muscleconditionshoulder"
+                                                               :disabled="!!assessmentDetailId"
+                                                >
                                                     <a-radio v-for="item in typeThreeListData.fourKindsOf"
                                                              :value="item.id"
                                                     >{{item.label}}
@@ -866,7 +990,9 @@
                                             <li class="radio-group-item radio-group-item-title">4、肩胛部（背阔肌、斜方肌、三角肌）
                                             </li>
                                             <li class="radio-group-item">
-                                                <a-radio-group v-model="typeThreeList.muscleconditionshoulderblade">
+                                                <a-radio-group v-model="typeThreeList.muscleconditionshoulderblade"
+                                                               :disabled="!!assessmentDetailId"
+                                                >
                                                     <a-radio v-for="item in typeThreeListData.fourKindsOf"
                                                              :value="item.id"
                                                     >{{item.label}}
@@ -877,7 +1003,9 @@
                                             </li>
                                             <li class="radio-group-item">
                                                 <a-radio-group
-                                                        v-model="typeThreeList.muscleconditiondorsalmuscleofTheBackOfTheHand">
+                                                        v-model="typeThreeList.muscleconditiondorsalmuscleofTheBackOfTheHand"
+                                                        :disabled="!!assessmentDetailId"
+                                                >
                                                     <a-radio v-for="item in typeThreeListData.threeKindsOf"
                                                              :value="item.id"
                                                     >{{item.label}}
@@ -887,7 +1015,9 @@
                                             <li class="radio-group-item radio-group-item-title">6、大腿（四头肌）
                                             </li>
                                             <li class="radio-group-item">
-                                                <a-radio-group v-model="typeThreeList.muscleconditionthigh">
+                                                <a-radio-group v-model="typeThreeList.muscleconditionthigh"
+                                                               :disabled="!!assessmentDetailId"
+                                                >
                                                     <a-radio v-for="item in typeThreeListData.twoKindsOf"
                                                              :value="item.id"
                                                     >{{item.label}}
@@ -898,7 +1028,9 @@
                                             </li>
                                             <li class="radio-group-item">
                                                 <a-radio-group
-                                                        v-model="typeThreeList.muscleconditionleg">
+                                                        v-model="typeThreeList.muscleconditionleg"
+                                                        :disabled="!!assessmentDetailId"
+                                                >
                                                     <a-radio v-for="item in typeThreeListData.twoKindsOf"
                                                              :value="item.id"
                                                     >{{item.label}}
@@ -919,7 +1051,9 @@
                                             </li>
                                             <li class="radio-group-item">
                                                 <a-radio-group
-                                                        v-model="typeThreeList.liquidstateankleedema">
+                                                        v-model="typeThreeList.liquidstateankleedema"
+                                                        :disabled="!!assessmentDetailId"
+                                                >
                                                     <a-radio v-for="item in typeThreeListData.threeKindsOf"
                                                              :value="item.id"
                                                     >{{item.label}}
@@ -930,7 +1064,9 @@
                                             </li>
                                             <li class="radio-group-item">
                                                 <a-radio-group
-                                                        v-model="typeThreeList.liquidstatesacraledema">
+                                                        v-model="typeThreeList.liquidstatesacraledema"
+                                                        :disabled="!!assessmentDetailId"
+                                                >
                                                     <a-radio v-for="item in typeThreeListData.twoKindsOf"
                                                              :value="item.id"
                                                     >{{item.label}}
@@ -941,7 +1077,9 @@
                                             </li>
                                             <li class="radio-group-item">
                                                 <a-radio-group
-                                                        v-model="typeThreeList.liquidstateascites">
+                                                        v-model="typeThreeList.liquidstateascites"
+                                                        :disabled="!!assessmentDetailId"
+                                                >
                                                     <a-radio v-for="item in typeThreeListData.twoKindsOf"
                                                              :value="item.id"
                                                     >{{item.label}}
@@ -957,7 +1095,9 @@
                                     </li>
                                     <li class="radio-group-item">
                                         <a-radio-group
-                                                v-model="typeThreeList.liquidstateoveralledemaacore">
+                                                v-model="typeThreeList.liquidstateoveralledemaacore"
+                                                :disabled="!!assessmentDetailId"
+                                        >
                                             <a-radio v-for="item in typeThreeListData.liquidstateoveralledemaacore"
                                                      :value="item.id"
                                             >{{item.label}}
@@ -1016,7 +1156,7 @@
                     popTitle: '微型营养评价表',
                 },
                 //  表格类型
-                tableTypeSelect: 1,
+                tableTypeSelect: 3,
                 //  类型1
                 typeOneList: [],
 
@@ -1226,15 +1366,8 @@
                 'setPatientBasicInfo',
             ]),
             initList(){
-                this.typeOneList = new Array(20).fill('1');
-                this.typeTwoList = [
-                    this.typeTwoListData[0][0],
-                    this.typeTwoListData[1][0],
-                    this.typeTwoListData[2][0],
-                    this.typeTwoListData[3][0],
-                    [],
-                    this.typeTwoListData[5][0],
-                ];
+                this.typeOneList = new Array(20).fill('');
+                this.typeTwoList = [{}, {}, {}, {}, [], {},];
                 this.typeThreeList = {
                     //  目前患者的身高约为
                     nowWeight: '',
@@ -1244,18 +1377,18 @@
                     //  六个月前患者的体重约为
                     sixagoWeight: '',
                     //  在过去的两周，患者的体重
-                    weightCondition: '1',
+                    weightCondition: '',
 
                     //  过去的1个月以来，患者的进食情况与平时情况相比（以最高分选项为本项计分）
-                    eatingSituation: '1',
+                    eatingSituation: '',
                     //  患者目前进食
-                    eatingNow: '1',
+                    eatingNow: '',
 
                     //  1、近2周来，患者有以下的问题，影响患者摄入足够的饮食（多选，累计计分）⚠️
                     symptom: undefined,
 
                     //  活动和身体功能情况评估
-                    activityBodyfunction: '1',
+                    activityBodyfunction: '',
 
                     //  相关诊断（特定，多选）⚠️初始化啥也不要
                     disease: undefined,
@@ -1267,46 +1400,46 @@
                     radiotherapyCount: '',
 
                     //  发热
-                    hot: '1',
+                    hot: '',
                     //  持续发热时间
-                    lastHottime: '1',
+                    lastHottime: '',
                     //  是否使用激素
-                    isuseHormone: '1',
+                    isuseHormone: '',
 
                     //  眼眶脂肪垫
-                    fatreserveorbitalfatpad: '1',
+                    fatreserveorbitalfatpad: '',
                     //  三头肌皮褶厚度
-                    fatreservetricepsskinfold: '1',
+                    fatreservetricepsskinfold: '',
                     //  下肋脂肪厚度
-                    fatreservelowerribfatthickness: '1',
+                    fatreservelowerribfatthickness: '',
                     //  总体脂肪缺乏程度
-                    fatreservetotalfatdeficiency: '1',
+                    fatreservetotalfatdeficiency: '',
 
                     //  颞部（颞肌）
-                    muscleconditiontemporal: '1',
+                    muscleconditiontemporal: '',
                     //  锁骨部位（胸部三角肌）
-                    muscleconditioncollarbone: '1',
+                    muscleconditioncollarbone: '',
                     //  肩部（三角肌）
-                    muscleconditionshoulder: '1',
+                    muscleconditionshoulder: '',
                     //  肩胛部（北阔肌、斜方肌、三角肌）
-                    muscleconditionshoulderblade: '1',
+                    muscleconditionshoulderblade: '',
 
                     //  手背骨间肌
-                    muscleconditiondorsalmuscleofTheBackOfTheHand: '1',
+                    muscleconditiondorsalmuscleofTheBackOfTheHand: '',
                     //  大腿（四头肌）
-                    muscleconditionthigh: '1',
+                    muscleconditionthigh: '',
                     //  小腿（腓肠肌）
-                    muscleconditionleg: '1',
+                    muscleconditionleg: '',
 
                     //  踝水肿
-                    liquidstateankleedema: '1',
+                    liquidstateankleedema: '',
                     //  骶部水肿
-                    liquidstatesacraledema: '1',
+                    liquidstatesacraledema: '',
                     //  腹水
-                    liquidstateascites: '1',
+                    liquidstateascites: '',
 
                     //  本项计分（以肌肉状况情况，主观计分）
-                    liquidstateoveralledemaacore: '1',
+                    liquidstateoveralledemaacore: '',
                 };
             },
             //  主要请求
@@ -1426,26 +1559,8 @@
             //  微型营养评价表
             setOneData(data){
                 const { v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20 } = data;
-                this.typeOneList[0] = v1;
-                this.typeOneList[1] = v2;
-                this.typeOneList[2] = v3;
-                this.typeOneList[3] = v4;
-                this.typeOneList[4] = v5;
-                this.typeOneList[5] = v6;
-                this.typeOneList[6] = v7;
-                this.typeOneList[7] = v8;
-                this.typeOneList[8] = v9;
-                this.typeOneList[9] = v10;
-                this.typeOneList[10] = v11;
-                this.typeOneList[11] = v12;
-                this.typeOneList[12] = v13;
-                this.typeOneList[13] = v14;
-                this.typeOneList[14] = v15;
-                this.typeOneList[15] = v16;
-                this.typeOneList[16] = v17;
-                this.typeOneList[17] = v18;
-                this.typeOneList[18] = v19;
-                this.typeOneList[19] = v20;
+                const typeOneList = [v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20];
+                this.typeOneList = typeOneList;
             },
             //  类型1转换 微型营养评价表
             oneDataTransform(){
@@ -1481,20 +1596,20 @@
                 const v4 = this.typeTwoList[3];
                 const v5List = this.typeTwoList[4];
                 const v6 = this.typeTwoList[5];
-                totalScore += +v1.score;
-                totalScore += +v2.score;
-                totalScore += +v3.score;
-                totalScore += +v4.score;
+                totalScore += +(v1.score || 0);
+                totalScore += +(v2.score || 0);
+                totalScore += +(v3.score || 0);
+                totalScore += +(v4.score || 0);
                 const v5IdList = [];
                 let v5Score = 0;
                 v5List.forEach(item => {
                     if (item.score > v5Score) {
-                        v5Score = item.score;
+                        v5Score = +item.score;
                     }
                     v5IdList.push(item.id);
                 });
                 totalScore += v5Score;
-                totalScore += v6.score;
+                totalScore += +(v6.score) || 0;
                 return {
                     v1: v1.id, v2: v2.id, v3: v3.id, v4: v4.id,
                     v5: v5IdList.join(','),
@@ -1762,10 +1877,6 @@
                 //  console.log(_list);
                 return _list;
             },
-
-            aaa(value){
-                console.log(value);
-            }
         },
     };
     '                                                                                                                                                                           con';

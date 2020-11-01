@@ -144,6 +144,7 @@
                         }
                         console.table(values);
                         delete values.confirmPassword;
+//                        return Promise.reject();
                         (() => {
                             //  如果是新增账号
                             if (!this.selectAccountId) {
