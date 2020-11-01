@@ -77,6 +77,7 @@
                 }],
                 //  菜单类型
                 typeDecorator: ['type', {
+                    initialValue: 0,
                     rules: [{
                         required: true,
                         message: '请输菜单类型',
@@ -122,19 +123,20 @@
             },
             //    表单提交
             handleSubmit(){
-                //  console.log(this.treeSelectValue);
                 return new Promise((resolve, reject) => {
                     this.form.validateFields((err, values) => {
                         if (err) {
                             reject();
                             return;
                         }
-                        //  console.log(JSON.parse(JSON.stringify(this.openData)));
-                        console.log(values, this.openData);
                         const data = Object.assign({}, this.openData, values);
-                        data.parentId = data.parentId || -1;
+                        let treeSelectValue = this.treeSelectValue;
+                        if (this.treeSelectValue && this.treeSelectValue.length === 0) {
+                            treeSelectValue = -1;
+                        }
+                        data.parentId = data.parentId || treeSelectValue || -1;
                         console.log(data);
-                        //  return Promise.resolve();
+                        //  return resolve();
                         (() => {
                             //  1 新增、2 编辑
                             switch (this.openData.operationType) {
@@ -149,12 +151,11 @@
                             }
                         })()
                             .then(v => {
-                                console.log(v);
                                 resolve();
                             })
                             .catch(err => {
                                 console.log(err);
-                                reject(err);
+                                reject();
                             });
                     });
                 });

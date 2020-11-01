@@ -41,9 +41,9 @@
 </template>
 <script>
     const columns = [
-        { title: '菜单名称', dataIndex: 'name', width: 150, },
+        { title: '菜单名称', dataIndex: 'name', width: 200, },
 //        { title: '图标', scopedSlots: { customRender: 'icon' }, width: 100, },
-        { title: '菜单类型', dataIndex: 'typeText', width: 150, },
+        { title: '菜单类型', dataIndex: 'typeText', width: 100, },
         { title: '操作', scopedSlots: { customRender: 'operation' }, width: 150, },
     ];
     import MenuBox from '@/components/system/menuBox.vue';

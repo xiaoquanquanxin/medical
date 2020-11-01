@@ -79,7 +79,7 @@
         },
         {
             title: '角色',
-            dataIndex: 'role',
+            dataIndex: 'roleName',
             width: 100,
         },
         {

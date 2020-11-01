@@ -276,7 +276,12 @@
     import { formItemLayout } from '@/utils/layout.ts';
     import VueQuillEditor from 'vue-quill-editor/src/editor';
     import GoBackButton from '@/components/goBackButton.vue';
-    import { requestGoodsGet, requestGoodsInsert, requestGoodsUpdate } from '../../api/commodity/commodityList';
+    import {
+        requestGoodsGet,
+        requestGoodsInsert,
+        requestGoodsUnitType,
+        requestGoodsUpdate
+    } from '../../api/commodity/commodityList';
     import { uploadHandleChange, beforeUploadFn, beforeUploadData } from '../../utils/upload';
     import { requestCategoryList } from '../../api/commodity/commodityClassification';
     import { requestBrandList } from '../../api/commodity/brand';
@@ -422,7 +427,6 @@
             }
         },
         data(){
-
             //  院内数据
             const uintParams1 = [
                 {
@@ -453,6 +457,8 @@
                 }
             ];
             return {
+                //  商品单位下拉
+                unitTypeList: [],
                 //  商品分类list
                 goodsCategoryList: [],
                 //  商品品牌list
@@ -589,13 +595,17 @@
             };
         },
         created(){
-            alert('编辑接口，可以成功但是，uintListVos没更新，别的字段可以更新');
+            //  alert('编辑接口，可以成功但是，uintListVos没更新，别的字段可以更新');
             this.searchFn();
             console.log('是编辑？', !!this.commodityId);
         },
         methods: {
             //  主要请求
             searchFn(){
+                requestGoodsUnitType()
+                    .then(unitTypeList => {
+                        this.unitTypeList = unitTypeList;
+                    });
                 requestCategoryList()
                     .then(v => {
                         //  商品分类list

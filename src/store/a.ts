@@ -64,9 +64,9 @@ export const routeMap = {
 	'editIntestinal': true,
 	//	膳食营养计划
 	'dietary': true,
-	//	新增
+	//	新增膳食营养计划
 	'addDietary': true,
-	//	编辑
+	//	编辑膳食营养计划
 	'editDietary': true,
 
 	//	评估调查表管理

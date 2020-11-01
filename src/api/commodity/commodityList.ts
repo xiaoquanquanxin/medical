@@ -61,3 +61,18 @@ export function requestGoodsListByHospital(hospitalId: string | number) {
 }
 
 //	缺少：市场价
+
+//	获取商品单位 下拉
+export function requestGoodsUnitType() {
+	return request({
+		url: '/api/goods/unitType',
+		method: 'get',
+	})
+		.then(v => {
+			const data = v.data || [];
+			data.forEach((item: any, index: number) => {
+				item.key = index
+			})
+			return data;
+		})
+}

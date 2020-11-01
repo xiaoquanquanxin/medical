@@ -102,18 +102,18 @@
         {
             title: '角色描述',
             dataIndex: 'roleDesc',
-            width: 150,
+            width: 250,
         },
-        {
-            title: '创建时间',
-            dataIndex: 'createTime',
-            width: 120,
-        },
-        {
-            title: '创建人',
-            dataIndex: 'icon',
-            width: 100,
-        },
+//        {
+//            title: '创建时间',
+//            dataIndex: 'createTime',
+//            width: 120,
+//        },
+//        {
+//            title: '创建人',
+//            dataIndex: 'icon',
+//            width: 100,
+//        },
         {
             title: '角色',
             width: 100,
