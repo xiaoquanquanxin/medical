@@ -13,18 +13,12 @@
                 <a-select default-value="1"
                           @change="selectChange"
                 >
-                    <a-select-option value="1">
-                        平台登录
-                    </a-select-option>
-                    <a-select-option value="2">
-                        供应商登录
-                    </a-select-option>
-                    <a-select-option value="3">
-                        渠道登录
-                    </a-select-option>
-                    <a-select-option value="-1">
-                        医院登录
-                    </a-select-option>
+                    <a-select-option value="1">医生登录</a-select-option>
+                    <a-select-option value="2">平台登录</a-select-option>
+                    <a-select-option value="3">渠道商登录</a-select-option>
+                    <!--                    <a-select-option value="-1">-->
+                    <!--                        医院登录-->
+                    <!--                    </a-select-option>-->
                 </a-select>
             </a-form-item>
             <div v-show="basicForm" data-msg="常规输入框">
@@ -111,11 +105,13 @@
         },
         data(){
             return {
+                //  用户类型  1 医生   2 系统管理员  3 渠道商
+                //  type: 1,
                 //  基础类型
-                basicForm: true,
+                basicForm: false,
                 //  外框的样式，主要是高度
                 loginWrapStyle: {
-                    height: '380px',
+                    height: '420px',
                 },
 
                 //  用户名
@@ -156,9 +152,10 @@
             ]),
             //  选择登录变化
             selectChange(e){
-                this.basicForm = e > 0;
-                this.loginWrapStyle.height = `${(e > 0) ? 380 : 420}px`;
-                this.loginWrapStyle.top = `${(e > 0) ? 0 : 40}px`;
+                //  this.type = e;
+                this.basicForm = e > 1;
+                this.loginWrapStyle.height = `${(e > 1) ? 380 : 420}px`;
+                this.loginWrapStyle.top = `${(e > 1) ? 0 : 40}px`;
                 this.form.resetFields(['username', 'password', 'phoneNumber', 'verification']);
             },
             //  获取短信验证码

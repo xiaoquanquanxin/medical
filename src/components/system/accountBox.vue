@@ -20,6 +20,15 @@
                      v-decorator="usernameDecorator"
                      placeholder="请输入账号名称"/>
         </a-form-item>
+        <a-form-item label="账号类型">
+            <a-select class="add-form-input"
+                      v-decorator="typeDecorator"
+                      placeholder="请选择账号类型">
+                <a-select-option value="1">医生</a-select-option>
+                <a-select-option value="2">系统管理员</a-select-option>
+                <a-select-option value="3">渠道商</a-select-option>
+            </a-select>
+        </a-form-item>
         <a-form-item label="账号密码">
             <a-input class="add-form-input"
                      v-decorator="accountPasswordDecorator"
@@ -74,6 +83,13 @@
                     rules: [{
                         required: true,
                         message: '请输入疾病名称'
+                    },]
+                }],
+                //  账号类型
+                typeDecorator: ['type', {
+                    rules: [{
+                        required: true,
+                        message: '请选择账号类型'
                     },]
                 }],
                 //  确认密码

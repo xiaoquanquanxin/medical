@@ -48,7 +48,7 @@
     ];
     import MenuBox from '@/components/system/menuBox.vue';
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
-    import { twoRowSearch } from '@/utils/tableScroll';
+    import { oneRowSearch } from '@/utils/tableScroll';
     import { mapGetters, mapActions } from 'vuex';
     import { requestMenu, requestMenuAllTree, requestMenuGet } from '../../api/system/menu';
 
@@ -61,7 +61,7 @@
                 data: [],
                 columns,
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
-                scroll: twoRowSearch(columns),
+                scroll: oneRowSearch(columns),
                 //  新增、编辑、查看菜单
                 dialogMenu: this.initModal(DIALOG_TYPE.MENU),
                 //  向新增菜单组件传入的参数
