@@ -20,8 +20,8 @@
                           placeholder="请选择性别"
                           v-decorator="sexDecorator"
                 >
-                    <a-select-option value="1">男</a-select-option>
-                    <a-select-option value="2">女</a-select-option>
+                    <a-select-option :value="1">男</a-select-option>
+                    <a-select-option :value="2">女</a-select-option>
                 </a-select>
             </a-form-item>
             <a-form-item label="医院" has-feedback>
@@ -58,17 +58,6 @@
                     </a-select-option>
                 </a-select>
             </a-form-item>
-            <a-form-item label="医生角色" has-feedback>
-                <a-select class="add-form-input"
-                          placeholder="医生角色"
-                          v-decorator="roleIdDecorator"
-                >
-                    <a-select-option :value="item.roleId"
-                                     v-for="item in roleList"
-                    >{{item.roleName}}
-                    </a-select-option>
-                </a-select>
-            </a-form-item>
             <a-form-item label="医生职称" has-feedback>
                 <a-select class="add-form-input"
                           placeholder="请选择医生职称"
@@ -89,19 +78,30 @@
                     <a-select-option value="0">不可用</a-select-option>
                 </a-select>
             </a-form-item>
-            <a-form-item label="手机号" required>
+            <a-form-item label="手机号" required v-if="!doctorId">
                 <a-input class="add-form-input"
                          v-decorator="phoneDecorator"
                          placeholder="请输入手机号"
                 />
             </a-form-item>
-            <a-form-item label="登录密码">
+            <a-form-item label="医生角色" has-feedback v-if="!doctorId">
+                <a-select class="add-form-input"
+                          placeholder="医生角色"
+                          v-decorator="roleIdDecorator"
+                >
+                    <a-select-option :value="item.roleId"
+                                     v-for="item in roleList"
+                    >{{item.roleName}}
+                    </a-select-option>
+                </a-select>
+            </a-form-item>
+            <a-form-item label="登录密码" v-if="!doctorId">
                 <a-input class="add-form-input"
                          v-decorator="passwordDecorator"
                          placeholder="请输入登录密码"
                 />
             </a-form-item>
-            <a-form-item label="确认密码">
+            <a-form-item label="确认密码" v-if="!doctorId">
                 <a-input class="add-form-input"
                          v-decorator="checkPasswordDecorator"
                          placeholder="请输入确认密码"
@@ -291,6 +291,22 @@
                     .then(v => {
                         const { data } = v;
                         console.log(data);
+                        const {
+                            deptId,
+                            doctorName,
+                            doctorTitle,
+                            doctorType,
+                            hospitalId,
+                            sex,
+                        } = data;
+                        this.form.setFieldsValue({
+                            deptId,
+                            doctorName,
+                            doctorTitle,
+                            doctorType,
+                            hospitalId,
+                            sex,
+                        });
                     });
             },
             //    表单提交

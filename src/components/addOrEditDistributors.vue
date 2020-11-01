@@ -54,6 +54,17 @@
                     </a-select-option>
                 </a-select>
             </a-form-item>
+            <a-form-item label="渠道商角色" has-feedback v-if="!channelId">
+                <a-select class="add-form-input"
+                          placeholder="渠道商角色"
+                          v-decorator="roleIdDecorator"
+                >
+                    <a-select-option :value="item.roleId"
+                                     v-for="item in roleList"
+                    >{{item.roleName}}
+                    </a-select-option>
+                </a-select>
+            </a-form-item>
             <a-form-item label="登录账户" v-if="!channelId">
                 <a-input class="add-form-input"
                          v-decorator="usernameDecorator"
@@ -86,6 +97,7 @@
     import { getProvinceList, provinceChange, areaList } from '@/utils/areaList';
     import { noPaginationData } from '../utils/pagination';
     import { requestWarehousePage } from '../api/entrepot';
+    import { requestRoleRoleAll } from '../api/system';
     //  新增或编辑渠道商
     export default {
         beforeCreate(){
@@ -100,6 +112,7 @@
         },
         data(){
             return {
+                roleList: [],
                 entrepotList: [],
                 //	地址对象
                 areaList,
@@ -161,10 +174,16 @@
                         }
                     ]
                 }],
+                //  角色
+                roleIdDecorator: ['roleId', {
+                    rules: [{
+                        required: true,
+                        message: '请选择角色'
+                    },]
+                }],
             };
         },
         created(){
-            this.handleSubmit.bind(this);
             console.log('是编辑？', !!this.channelId);
             this.searchFn();
         },
@@ -179,6 +198,10 @@
             },
             //  主要请求
             searchFn(){
+                requestRoleRoleAll()
+                    .then(roleList => {
+                        this.roleList = roleList;
+                    });
                 //  仓库list
                 requestWarehousePage(noPaginationData)
                     .then(v => {
