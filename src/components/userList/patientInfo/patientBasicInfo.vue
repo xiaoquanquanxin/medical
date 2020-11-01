@@ -158,7 +158,8 @@
                               @focus="descriptionFormFocusFn(14)"
                               @change="selectHospitalChange"
                     >
-                        <a-select-option v-for="(item,index) in hospitalList" :key="index" :value="item.id">
+                        <a-select-option v-for="item in hospitalList"
+                                         :value="item.id">
                             {{item.hospitalName}}
                         </a-select-option>
                     </a-select>
@@ -170,7 +171,8 @@
                               class="form-element"
                               @focus="descriptionFormFocusFn(14)"
                     >
-                        <a-select-option v-for="(item,index) in deptList" :key="index" :value="item.id">
+                        <a-select-option v-for="item in hospitalDeptList"
+                                         :value="item.id">
                             {{item.deptName}}
                         </a-select-option>
                     </a-select>
@@ -307,7 +309,10 @@
             //  基础信息，请求来了就会出现数据
             patientBasicInfo(){
                 const patientBasicInfo = this.$store.state.userList.patientBasicInfo;
-                console.log(patientBasicInfo);
+                const { departTreatment } = patientBasicInfo;
+                if (departTreatment) {
+                    this.getDepListByHospital(departTreatment);
+                }
                 return this.$store.state.userList.patientBasicInfo;
             },
             bmi(){
@@ -322,12 +327,14 @@
             return {
                 //  编辑的index
                 activeElementId: null,
-                //  科室列表
+                //  全部科室列表
                 deptList: [],
                 //  医院列表
                 hospitalList: [],
                 //  icd
-                ICDList: []
+                ICDList: [],
+                //  医院筛选后的科室
+                hospitalDeptList: [],
             };
         },
         created(){
@@ -342,34 +349,37 @@
                             item.key = index;
                         });
                         this.ICDList = v.data || [];
-                    });//  医院list
+                    });
+                //  医院list
                 requestHospitalGetList()
                     .then(hospitalList => {
                         this.hospitalList = hospitalList;
                     });
-
+                //  全部科室
+                requestDeptList()
+                    .then(deptList => {
+                        this.deptList = deptList;
+                    });
             },
             //  切换医院
             selectHospitalChange(value){
-                Promise.all([
-                    requestDeptList(),
-                    requestDeptListDeptHospitalId(value),
-                ])
+                this.patientBasicInfo.hospitalTreatment = undefined;
+            },
+            //  根据医院id获取科室
+            getDepListByHospital(departTreatment){
+                requestDeptListDeptHospitalId(departTreatment)
                     .then(v => {
-                        console.log(v);
-                    });
-                return;
-                requestDeptListDeptHospitalId(value)
-                    .then(v => {
-                        console.log('根据当前医院查询科室', v.data);
-                        v.data.forEach(item => {
-                            item.id = Number(item.id);
+                        const map = {};
+                        const mapList = v.data || [];
+                        mapList.forEach(item => {
+                            map[item] = true;
                         });
-                        this.deptList = v.data;
+                        console.log(map);
+                        this.hospitalDeptList = this.deptList.filter((item => {
+                            return map[item.id];
+                        }));
                     });
             },
-            //	病人信息、直接编辑用的 描述框的方法
-            ...descriptionsMethods,
             //  验证表单
             handleSubmit(){
                 return new Promise((resolve, reject) => {
@@ -412,7 +422,10 @@
                         reject();
                     }
                 });
-            }
+            },
+
+            //	病人信息、直接编辑用的 描述框的方法
+            ...descriptionsMethods,
         }
     };
     //  todo    医院下掉科室，需要调取木木掉接口

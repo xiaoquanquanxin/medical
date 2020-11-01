@@ -75,7 +75,14 @@ export function requestDeptList() {
 	return request({
 		url: '/api/dept/list',
 		method: 'get',
-	});
+	})
+		.then(v => {
+			const list = v.data || [];
+			list.forEach((item: any) => {
+				item.key = item.id;
+			});
+			return list;
+		})
 }
 
 

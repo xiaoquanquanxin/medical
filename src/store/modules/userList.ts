@@ -61,6 +61,7 @@ const actions = {
 		//	修正数据type
 		patientBasicInfo.doctorId = patientBasicInfo.doctorId.toString() || '';
 		patientBasicInfo.departTreatment = Number(patientBasicInfo.departTreatment) || undefined;
+		patientBasicInfo.hospitalTreatment = Number(patientBasicInfo.hospitalTreatment) || undefined;
 		commit('SET_PATIENT_BASIC_INFO', patientBasicInfo);
 	},
 	setGroupChatMessage: ({commit}: COMMIT_INTERFACE<STATE>, groupChatMessage: any) => {

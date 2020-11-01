@@ -184,11 +184,18 @@
                 //  穿梭框默认值
                 shuttleOriginTargetKey: [],
                 //  穿梭框操作的sItem
-                shuttleBoxData: {}
+                shuttleBoxData: {},
+                //  全部科室列表
+                deptList: [],
             };
         },
         created(){
             this.getProvinceList(this);
+            //  全部科室
+            requestDeptList()
+                .then(deptList => {
+                    this.deptList = deptList;
+                });
             this.searchFn();
         },
         methods: {
@@ -208,16 +215,6 @@
 //                        this.pagination = paginationDecode(this.pagination, data);
                     });
             },
-            //  莫泰框方法
-            ...dialogMethods,
-            ...mapActions('shuttleBox', [
-                //  设置穿梭框类型
-                'setShuttleBoxType',
-            ]),
-            ...mapActions('hospital', [
-                //  关联渠道商
-                'setDistributorsList',
-            ]),
 
             //  展示的每一页数据变换
             onShowSizeChange(current, pageSize){
@@ -251,24 +248,18 @@
             //  关联科室操作
             relatedDepartments(sItem){
                 this.shuttleBoxData = sItem;
-                Promise.all([
-                    requestDeptList(),
-                    requestDeptListDeptHospitalId(sItem.id),
-                ])
+                requestDeptListDeptHospitalId(sItem.id)
                     .then(v => {
-                        const list1 = v[0].data || [];
-                        const list2 = v[1].data || [];
+                        const list2 = v.data || [];
                         const shuttleOriginList = [];
                         const shuttleOriginTargetKey = list2.map(String);
-                        list1.forEach(item => {
+                        this.deptList.forEach(item => {
                             const data = {};
                             data.key = item.id.toString();
                             data.title = item.deptName;
                             data.description = item.deptName;
                             shuttleOriginList.push(data);
                         });
-                        //  console.log(shuttleOriginList);
-                        //  console.log(shuttleOriginTargetKey);
                         this.shuttleOriginList = shuttleOriginList;
                         this.shuttleOriginTargetKey = shuttleOriginTargetKey;
                         this.showModal(DIALOG_TYPE.RELATED_DEPARTMENTS);
@@ -276,7 +267,7 @@
                     })
                     .catch(err => {
                         console.log(err);
-                        alert('接口报错');
+                        //  alert('接口报错');
                     });
             },
             //  关联科室确定
@@ -307,7 +298,7 @@
                     this.setConfirmLoading(DIALOG_TYPE.RELATED_DEPARTMENTS, false);
                 });
             },
-            
+
             //  关联渠道商
             associatedChannelProvider(sItem){
                 this.shuttleBoxData = sItem;
@@ -366,6 +357,17 @@
             _cityChange(value){
                 this.cityChange(this, value);
             },
+
+            //  莫泰框方法
+            ...dialogMethods,
+            ...mapActions('shuttleBox', [
+                //  设置穿梭框类型
+                'setShuttleBoxType',
+            ]),
+            ...mapActions('hospital', [
+                //  关联渠道商
+                'setDistributorsList',
+            ]),
         },
     };
 </script>

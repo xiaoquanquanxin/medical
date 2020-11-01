@@ -142,7 +142,7 @@
 
                 //  搜索数据
                 searchData: {},
-                //  科室列表
+                //  全部科室列表
                 deptList: [],
                 //  医院列表
                 hospitalList: []

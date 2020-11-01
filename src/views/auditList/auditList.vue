@@ -147,13 +147,10 @@
         methods: {
             //  主要请求
             searchFn(){
+                //  全部科室
                 requestDeptList()
-                    .then(v => {
-                        v.data.forEach(item => {
-                            item.key = item.id;
-                        });
-                        console.log(v.data);
-                        this.deptList = v.data;
+                    .then(deptList => {
+                        this.deptList = deptList;
                     });
 
                 requestPrescriptionAuditPage(Object.assign({},

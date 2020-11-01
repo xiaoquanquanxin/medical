@@ -15,8 +15,8 @@
         <!--营养风险筛查-->
         <a-row type="flex" justify="start" align="middle" class="table-group-title no-border-bottom">
             <a-space>
-                <span>营养风险筛查：</span>
-                <span class="red">{{totalScore}}分</span>
+                <span>营养风险筛查</span>
+                <span class="red" v-if="false">{{totalScore}}分</span>
             </a-space>
         </a-row>
         <a-table
@@ -527,11 +527,14 @@
             //  计算疾病分数
             calcDiseaseScore(){
                 this.diseaseSelectList = this.screeningDetailInfo.disease.split(',');
-                const score = this.diseaseSelectList.reduce((a, b) => {
-                    return a + this.diseaseScoreMap[b];
-                }, 0) || 0;
-                //  console.log(score);
-                this.screeningDetailInfo.diseaseScore = score;
+                let maxScore = 0;
+                this.diseaseSelectList.forEach(item => {
+                    const score = this.diseaseScoreMap[item];
+                    if (score > maxScore) {
+                        maxScore = score;
+                    }
+                });
+                this.screeningDetailInfo.diseaseScore = maxScore;
             },
 
             //  营养评分变化

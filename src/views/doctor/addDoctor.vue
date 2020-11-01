@@ -253,18 +253,16 @@
                         });
                         this.doctorTitleList = v.data;
                     });
+                //  全部科室
                 requestDeptList()
-                    .then(v => {
-                        v.data.forEach(item => {
-                            item.key = item.id;
-                        });
-                        this.deptList = v.data;
+                    .then(deptList => {
+                        this.deptList = deptList;
                     });
                 //  如果是新增
                 if (!this.doctorId) {
                     return;
                 }
-                alert('医生详情接口没数据')
+                alert('医生详情接口没数据');
                 //  如果是编辑
                 requestDoctorGet(this.doctorId)
                     .then(v => {
@@ -275,7 +273,7 @@
             //    表单提交
             handleSubmit(e){
                 e.preventDefault();
-                alert('接口报错')
+                alert('接口报错');
                 this.form.validateFields((err, values) => {
                     if (err) {
                         return;
