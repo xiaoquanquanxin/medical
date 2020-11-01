@@ -103,16 +103,6 @@
             //  scopedSlots: { customRender: 'area' },
         },
         {
-            title: '添加人',
-            dataIndex: 'icon',
-            width: 100,
-        },
-        {
-            title: '添加时间',
-            dataIndex: 'time',
-            width: 120,
-        },
-        {
             title: '状态',
             scopedSlots: { customRender: 'a-switch' },
             width: 100,

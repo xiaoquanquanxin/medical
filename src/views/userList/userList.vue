@@ -25,14 +25,17 @@
                     </a-form>
                 </a-card>
                 <a-card title="病人列表">
+                    {{patientId}}
                     <div class="a-input-group">
                         <a-button type="primary" @click="addAdmittedHospitalFn">新增用户</a-button>
                     </div>
                     <a-table
+                            id="userListTable"
                             :columns="columns"
                             :data-source="data"
                             :pagination="false"
                             :scroll="{x: 'auto', y: 'calc(100vh - 550px)'}"
+                            :filtered="true"
                             :customRow="customRow"
                     >
                         <!--年龄/性别-->
@@ -129,6 +132,16 @@
                 this.transverseSubPaths2 = [currentMeta.transverseSubPaths2 || ''];
                 return currentMeta;
             },
+            //  页面参数 - 病人id
+            patientId(){
+                console.log(window.document.getElementById('userListTable'));
+                return Number(this.$route.params.patientId);
+            },
+        },
+        watch: {
+            $route(value){
+                console.log(value.params.patientId);
+            }
         },
         data(){
             return {

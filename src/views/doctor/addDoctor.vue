@@ -262,7 +262,6 @@
                 if (!this.doctorId) {
                     return;
                 }
-                alert('医生详情接口没数据');
                 //  如果是编辑
                 requestDoctorGet(this.doctorId)
                     .then(v => {

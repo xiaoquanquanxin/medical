@@ -87,16 +87,6 @@
             width: 100,
         },
         {
-            title: '添加人',
-            dataIndex: 'createBy',
-            width: 100,
-        },
-        {
-            title: '添加时间',
-            dataIndex: 'createTime',
-            width: 150,
-        },
-        {
             title: '操作',
             width: 100,
             scopedSlots: { customRender: 'operation' }

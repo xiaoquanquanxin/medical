@@ -313,7 +313,7 @@
                 if (departTreatment) {
                     this.getDepListByHospital(departTreatment);
                 }
-                return this.$store.state.userList.patientBasicInfo;
+                return patientBasicInfo;
             },
             bmi(){
                 if (!this.patientBasicInfo) {
