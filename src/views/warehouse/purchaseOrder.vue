@@ -47,7 +47,9 @@
                  ok-text="确认"
                  cancel-text="取消"
                  @ok="shipmentsModalCheck('refShipmentsForm')">
-            <ShipmentsForm ref="refShipmentsForm"/>
+            <ShipmentsForm ref="refShipmentsForm"
+                           :operation-data="operationData"
+            />
         </a-modal>
         <!--查看详情莫泰框-->
         <a-modal v-model="dialogDataProcurementDetails.visible"
@@ -76,6 +78,7 @@
     import { mapGetters, mapActions } from 'vuex';
     import ShipmentsForm from '@/components/warehouse/shipmentsForm';
     import ShipmentsDetail from '@/components/warehouse/shipmentsDetail';
+    import { requestGoodsGoodsStock11 } from '../../api/warehouse/purchaseOrder';
 
     const columns = [
         {
@@ -83,62 +86,52 @@
             dataIndex: 'commodityName1',
             width: 100,
         },
-        {
-            title: '商品名称',
-            dataIndex: 'commodityName',
-            width: 100,
-        },
-        {
-            title: '发货医院',
-            dataIndex: '11',
-            width: 100,
-        },
-        {
-            title: '商品条码',
-            dataIndex: 'barCode',
-            width: 100,
-        },
-        {
-            title: '单位',
-            dataIndex: 'unit',
-            width: 100,
-        },
-        {
-            title: '数量',
-            dataIndex: 'count',
-            width: 100,
-        },
-        {
-            title: '单价',
-            dataIndex: 'supplier',
-            width: 100,
-        },
-        {
-            title: '总金额',
-            dataIndex: 'brand',
-            width: 100,
-        },
-        {
-            title: '备注',
-            dataIndex: 'manufacturer',
-            width: 100,
-        },
+//        {
+//            title: '商品名称',
+//            dataIndex: 'commodityName',
+//            width: 100,
+//        },
+//        {
+//            title: '发货医院',
+//            dataIndex: '11',
+//            width: 100,
+//        },
+//        {
+//            title: '商品条码',
+//            dataIndex: 'barCode',
+//            width: 100,
+//        },
+//        {
+//            title: '单位',
+//            dataIndex: 'unit',
+//            width: 100,
+//        },
+//        {
+//            title: '数量',
+//            dataIndex: 'count',
+//            width: 100,
+//        },
+//        {
+//            title: '单价',
+//            dataIndex: 'supplier',
+//            width: 100,
+//        },
+//        {
+//            title: '总金额',
+//            dataIndex: 'brand',
+//            width: 100,
+//        },
+//        {
+//            title: '备注',
+//            dataIndex: 'manufacturer',
+//            width: 100,
+//        },
         {
             title: '操作',
             scopedSlots: { customRender: 'operation' },
             width: 100,
         },
     ];
-    const data = [];
-    for (let i = 0; i < 10; i++) {
-        data.push({
-            key: i,
-            hospital: `xx供应商`,
-            city: '上海',
-            status: String(i % 2),
-            totalInventory: 322,
-        });
-    }
 
     //  采购订单列表
     export default {
@@ -148,7 +141,7 @@
         },
         data(){
             return {
-                data,
+                data: [],
                 columns,
                 //  搜索数据
                 searchData: {},
@@ -162,6 +155,9 @@
                 dialogDataShipments: this.initModal(DIALOG_TYPE.SHIPMENTS),
                 //  采购详情
                 dialogDataProcurementDetails: this.initModal(DIALOG_TYPE.PROCUREMENT_DETAILS),
+
+                //  操作对象
+                operationData: null,
             };
         },
         created(){
@@ -170,42 +166,21 @@
         methods: {
             //  主要请求
             searchFn(){
-                alert('缺列表');
-//                requestChannelBusinessPage(paginationEncode(this.pagination))
-//                    .then(v => {
-//                        const { data } = v;
-//                        console.log(data);
-//                data.records.forEach((item, index) => {
-//                    item.key = index;
-//                    item.createTime = item.createTime.substr(0, 10);
-//                });
-//                        this.data = data.records;
-//                        this.pagination = paginationDecode(this.pagination, data);
-//                    });
-            },
-            //  莫泰框方法
-            ...dialogMethods,
-
-            ...mapActions('warehouse', [
-                //  被选中的采购订单id
-                'setProcurementId',
-            ]),
-
-            //  展示的每一页数据变换
-            onShowSizeChange(current, pageSize){
-                this.pagination.pageSize = pageSize;
-                this.pagination.current = 1;
-                this.searchFn();
-            },
-            //  切换分页页码
-            pageChange(current){
-                this.pagination.current = current;
-                this.searchFn();
+                requestGoodsGoodsStock11(paginationEncode(this.pagination))
+                    .then(v => {
+                        const { data } = v;
+                        console.log(data);
+                        data.records.forEach((item, index) => {
+                            item.key = index;
+                        });
+                        this.data = data.records;
+                        this.pagination = paginationDecode(this.pagination, data);
+                    });
             },
 
             //  发货
             shipments(sItem){
-                this.setProcurementId('766');
+                this.operationData = sItem;
                 this.showModal(DIALOG_TYPE.SHIPMENTS);
             },
             //  确认发货
@@ -232,6 +207,16 @@
             procurementDetailModalCheck(){
                 this.hideModal(DIALOG_TYPE.PROCUREMENT_DETAILS);
             },
+            //  莫泰框方法
+            ...dialogMethods,
+
+            ...mapActions('warehouse', [
+                //  被选中的采购订单id
+                'setProcurementId',
+            ]),
+
+            pageChange,
+            onShowSizeChange,
         }
     };
 </script>

@@ -10,7 +10,7 @@
             <a-form-item label="发货数量">
                 <a-row>
                     <a-input
-                            v-decorator="deliveryNumberDecorator"
+                            v-decorator="deliveryNumDecorator"
                             placeholder="请输入发货数量"
                             suffix="箱"
                     />
@@ -24,7 +24,7 @@
             </a-form-item>
             <a-form-item label="生成快递单号">
                 <a-input
-                        v-decorator="courierNumberDecorator"
+                        v-decorator="orderCodeDecorator"
                         placeholder="请输入快递单号"
                 />
             </a-form-item>
@@ -39,22 +39,18 @@
 </template>
 <script>
     import { formItemLayout } from '@/utils/layout.ts';
+    import { requestGoodsGoodsDelivery } from '../../api/warehouse/purchaseOrder';
     //  入库操作
     export default {
         beforeCreate(){
             this.form = this.$form.createForm(this);
         },
-        computed: {
-            //  发货id
-            procurementId(){
-                return this.$store.state.warehouse.procurementId;
-            }
-        },
+        props: ['operationData'],
         data(){
             return {
                 formItemLayout,
                 //  发货数量
-                deliveryNumberDecorator: ['deliveryNumber', {
+                deliveryNumDecorator: ['deliveryNum', {
                     rules: [{
                         required: true,
                         message: '请输入发货数量'
@@ -68,7 +64,7 @@
                     },]
                 }],
                 //  生成快递单号
-                courierNumberDecorator: ['courierNumber', {
+                orderCodeDecorator: ['orderCode', {
                     rules: [{
                         required: true,
                         message: '请输入快递单号'
@@ -76,6 +72,7 @@
                 }],
                 //  备注
                 remarkDecorator: ['remark', {
+                    initialValue: '备注2',
                     rules: [{
                         required: false,
                         message: '备注'
@@ -83,10 +80,9 @@
                 }],
             };
         },
+
         created(){
-            console.log(this.procurementId);
-        },
-        created(){
+            console.log(JSON.parse(JSON.stringify(this.operationData)));
             this.searchFn();
         },
         methods: {
@@ -109,22 +105,22 @@
                 return new Promise(((resolve, reject) => {
                     this.form.validateFields((err, values) => {
                         console.table(values);
-                        console.log(values.expirationTime);
-                        if (!err) {
-                            resolve();
-                        } else {
+                        if (err) {
                             reject();
                         }
-                    });
-                }))
-                    .then(v => {
-                        return new Promise(((resolve, reject) => {
-                            console.log('发请求吧');
-                            setTimeout(() => {
+                        const data = Object.assign({
+                            purchaseOrderId: this.operationData.id,
+                        }, values);
+                        console.log(data);
+                        alert('purchaseOrderId？？？');
+                        requestGoodsGoodsDelivery(data)
+                            .then(v => {
+                                //  todo
+                                console.log(v);
                                 resolve();
-                            }, 1000);
-                        }));
+                            });
                     });
+                }));
             },
         }
     };

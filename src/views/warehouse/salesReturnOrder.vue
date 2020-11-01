@@ -47,6 +47,7 @@
         onShowSizeChange
     } from '@/utils/pagination.ts';
     import { oneRowSearch } from '@/utils/tableScroll';
+    import { requestGoodsGoodsStock12 } from '../../api/warehouse/salesReturnOrder';
 
     const columns = [
         {
@@ -59,63 +60,53 @@
             dataIndex: 'commodityName',
             width: 100,
         },
-        {
-            title: '退货医院',
-            dataIndex: '11',
-            width: 100,
-        },
-        {
-            title: '商品条码',
-            dataIndex: 'barCode',
-            width: 100,
-        },
-        {
-            title: '单位',
-            dataIndex: 'unit',
-            width: 100,
-        },
-        {
-            title: '数量',
-            dataIndex: 'count',
-            width: 100,
-        },
-        {
-            title: '单价',
-            dataIndex: 'supplier',
-            width: 100,
-        },
-        {
-            title: '总金额',
-            dataIndex: 'brand',
-            width: 100,
-        },
-        {
-            title: '备注',
-            dataIndex: 'manufacturer',
-            width: 100,
-        },
+//        {
+//            title: '退货医院',
+//            dataIndex: '11',
+//            width: 100,
+//        },
+//        {
+//            title: '商品条码',
+//            dataIndex: 'barCode',
+//            width: 100,
+//        },
+//        {
+//            title: '单位',
+//            dataIndex: 'unit',
+//            width: 100,
+//        },
+//        {
+//            title: '数量',
+//            dataIndex: 'count',
+//            width: 100,
+//        },
+//        {
+//            title: '单价',
+//            dataIndex: 'supplier',
+//            width: 100,
+//        },
+//        {
+//            title: '总金额',
+//            dataIndex: 'brand',
+//            width: 100,
+//        },
+//        {
+//            title: '备注',
+//            dataIndex: 'manufacturer',
+//            width: 100,
+//        },
         {
             title: '操作',
             scopedSlots: { customRender: 'operation' },
             width: 100,
         },
     ];
-    const data = [];
-    for (let i = 0; i < 10; i++) {
-        data.push({
-            key: i,
-            hospital: `xx供应商`,
-            city: '上海',
-            status: String(i % 2),
-            totalInventory: 322,
-        });
-    }
 
     //  退货订单列表
     export default {
         data(){
             return {
-                data,
+                data: [],
                 columns,
                 //  搜索数据
                 searchData: {},
@@ -132,29 +123,16 @@
         methods: {
             //  主要请求
             searchFn(){
-//                requestChannelBusinessPage(paginationEncode(this.pagination))
-//                    .then(v => {
-//                        const { data } = v;
-//                        console.log(data);
-//                data.records.forEach((item, index) => {
-//                    item.key = index;
-//                    item.createTime = item.createTime.substr(0, 10);
-//                });
-//                        this.data = data.records;
-//                        this.pagination = paginationDecode(this.pagination, data);
-//                    });
-            },
-
-            //  展示的每一页数据变换
-            onShowSizeChange(current, pageSize){
-                this.pagination.pageSize = pageSize;
-                this.pagination.current = 1;
-                this.searchFn();
-            },
-            //  切换分页页码
-            pageChange(current){
-                this.pagination.current = current;
-                this.searchFn();
+                requestGoodsGoodsStock12(paginationEncode(this.pagination))
+                    .then(v => {
+                        const { data } = v;
+                        console.log(data);
+                        data.records.forEach((item, index) => {
+                            item.key = index;
+                        });
+                        this.data = data.records;
+                        this.pagination = paginationDecode(this.pagination, data);
+                    });
             },
 
             //  通过
@@ -192,6 +170,9 @@
                     },
                 });
             },
+
+            pageChange,
+            onShowSizeChange,
         }
     };
 </script>

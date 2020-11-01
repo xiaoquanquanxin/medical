@@ -64,6 +64,7 @@
     import { twoRowSearch } from '@/utils/tableScroll';
     import ShipmentReturnFormForm from '@/components/warehouse/shipmentReturnForm';
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
+    import { requestGoodsGoodsStock16 } from '../../api/warehouse/shipmentReturn';
 
     const columns = [
         {
@@ -87,13 +88,6 @@
             width: 150,
         },
     ];
-    const data = [];
-    for (let i = 0; i < 10; i++) {
-        data.push({
-            key: i,
-            commodityName: `xx供应商`,
-        });
-    }
 
     //  出货退货
     export default {
@@ -102,7 +96,7 @@
         },
         data(){
             return {
-                data,
+                data: [],
                 columns,
                 //  搜索数据
                 searchData: {},
@@ -122,31 +116,16 @@
         methods: {
             //  主要请求
             searchFn(){
-//                requestChannelBusinessPage(paginationEncode(this.pagination))
-//                    .then(v => {
-//                        const { data } = v;
-//                        console.log(data);
-//                data.records.forEach((item, index) => {
-//                    item.key = index;
-//                    item.createTime = item.createTime.substr(0, 10);
-//                });
-//                        this.data = data.records;
-//                        this.pagination = paginationDecode(this.pagination, data);
-//                    });
-            },
-            //  莫泰框方法
-            ...dialogMethods,
-
-            //  展示的每一页数据变换
-            onShowSizeChange(current, pageSize){
-                this.pagination.pageSize = pageSize;
-                this.pagination.current = 1;
-                this.searchFn();
-            },
-            //  切换分页页码
-            pageChange(current){
-                this.pagination.current = current;
-                this.searchFn();
+                requestGoodsGoodsStock16(paginationEncode(this.pagination))
+                    .then(v => {
+                        const { data } = v;
+                        console.log(data);
+                        data.records.forEach((item, index) => {
+                            item.key = index;
+                        });
+                        this.data = data.records;
+                        this.pagination = paginationDecode(this.pagination, data);
+                    });
             },
 
             //  出货退货
@@ -169,6 +148,10 @@
                 });
             },
 
+            //  莫泰框方法
+            ...dialogMethods,
+            pageChange,
+            onShowSizeChange,
         }
     };
 </script>

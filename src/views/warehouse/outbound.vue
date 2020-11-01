@@ -65,6 +65,7 @@
     import { twoRowSearch } from '@/utils/tableScroll';
     import OutboundForm from '@/components/warehouse/outboundForm';
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
+    import { requestGoodsGoodsStock13 } from '../../api/warehouse/outbound';
 
     const columns = [
         {
@@ -93,17 +94,6 @@
             width: 150,
         },
     ];
-    const data = [];
-    for (let i = 0; i < 10; i++) {
-        data.push({
-            key: i,
-            commodityName: `xx供应商`,
-            出库商品名称: '出库商品名称',
-            商品货号: '商品货号',
-            出库数量: '出库数量',
-            状态: '状态',
-        });
-    }
 
     //  出库
     export default {
@@ -112,7 +102,7 @@
         },
         data(){
             return {
-                data,
+                data: [],
                 columns,
                 //  搜索数据
                 searchData: {},
@@ -124,6 +114,7 @@
 
                 //  出库操作
                 dialogDataOutbound: this.initModal(DIALOG_TYPE.OUTBOUND),
+                
             };
         },
         created(){
@@ -132,41 +123,19 @@
         methods: {
             //  主要请求
             searchFn(){
-//                requestChannelBusinessPage(paginationEncode(this.pagination))
-//                    .then(v => {
-//                        const { data } = v;
-//                        console.log(data);
-//                data.records.forEach((item, index) => {
-//                    item.key = index;
-//                    item.createTime = item.createTime.substr(0, 10);
-//                });
-//                        this.data = data.records;
-//                        this.pagination = paginationDecode(this.pagination, data);
-//                    });
+                requestGoodsGoodsStock13(paginationEncode(this.pagination))
+                    .then(v => {
+                        const { data } = v;
+                        console.log(data);
+                        data.records.forEach((item, index) => {
+                            item.key = index;
+                        });
+                        this.data = data.records;
+                        this.pagination = paginationDecode(this.pagination, data);
+                    });
             },
-            //  莫泰框方法
-            ...dialogMethods,
-
-//            ...mapActions('warehouse', [
-//                //	被选中的出库id
-//                'setOutboundId',
-//            ]),
-
-            //  展示的每一页数据变换
-            onShowSizeChange(current, pageSize){
-                this.pagination.pageSize = pageSize;
-                this.pagination.current = 1;
-                this.searchFn();
-            },
-            //  切换分页页码
-            pageChange(current){
-                this.pagination.current = current;
-                this.searchFn();
-            },
-
             //  出库
             outboundClick(){
-                //  this.setOutboundId('123');
                 this.showModal(DIALOG_TYPE.OUTBOUND);
             },
 
@@ -184,6 +153,10 @@
                     this.setConfirmLoading(DIALOG_TYPE.OUTBOUND, false);
                 });
             },
+            //  莫泰框方法
+            ...dialogMethods,
+            pageChange,
+            onShowSizeChange,
 
         }
     };

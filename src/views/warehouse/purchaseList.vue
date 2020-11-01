@@ -83,6 +83,7 @@
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
     import { mapGetters, mapActions } from 'vuex';
     import ShipmentsDetail from '@/components/warehouse/shipmentsDetail';
+    import { requestGoodsGoodsStock15 } from '../../api/warehouse/purchaseList';
 
     const columns = [
         {
@@ -100,44 +101,37 @@
             dataIndex: 'unit',
             width: 100,
         },
-        {
-            title: '商品名称',
-            dataIndex: 'fea',
-            width: 100,
-        },
-        {
-            title: '商品供应商',
-            dataIndex: 'barCode',
-            width: 100,
-        },
-        {
-            title: '商品品牌',
-            dataIndex: 'fefewawa',
-            width: 100,
-        },
-        {
-            title: '采购数量（箱）',
-            dataIndex: 'fewa',
-            width: 150,
-        },
-        {
-            title: '状态',
-            dataIndex: 'supplier',
-            width: 100,
-        },
+//        {
+//            title: '商品名称',
+//            dataIndex: 'fea',
+//            width: 100,
+//        },
+//        {
+//            title: '商品供应商',
+//            dataIndex: 'barCode',
+//            width: 100,
+//        },
+//        {
+//            title: '商品品牌',
+//            dataIndex: 'fefewawa',
+//            width: 100,
+//        },
+//        {
+//            title: '采购数量（箱）',
+//            dataIndex: 'fewa',
+//            width: 150,
+//        },
+//        {
+//            title: '状态',
+//            dataIndex: 'supplier',
+//            width: 100,
+//        },
         {
             title: '操作',
             width: 150,
             scopedSlots: { customRender: 'operation' },
         },
     ];
-    const data = [];
-    for (let i = 0; i < 10; i++) {
-        data.push({
-            key: i,
-            commodityName: `xx供应商`,
-        });
-    }
 
     //  出库
     export default {
@@ -147,7 +141,7 @@
         },
         data(){
             return {
-                data,
+                data: [],
                 columns,
                 //  搜索数据
                 searchData: {},
@@ -169,38 +163,16 @@
         methods: {
             //  主要请求
             searchFn(){
-//                requestChannelBusinessPage(paginationEncode(this.pagination))
-//                    .then(v => {
-//                        const { data } = v;
-//                        console.log(data);
-//                data.records.forEach((item, index) => {
-//                    item.key = index;
-//                    item.createTime = item.createTime.substr(0, 10);
-//                });
-//                        this.data = data.records;
-//                        this.pagination = paginationDecode(this.pagination, data);
-//                    });
-            },
-            //  莫泰框方法
-            ...dialogMethods,
-
-            ...mapActions('warehouse', [
-                //	被选中的采购单的id
-                'setPurchaseId',
-                //  被选中的采购订单id - 这个是给查看详情用的
-                'setProcurementId',
-            ]),
-
-            //  展示的每一页数据变换
-            onShowSizeChange(current, pageSize){
-                this.pagination.pageSize = pageSize;
-                this.pagination.current = 1;
-                this.searchFn();
-            },
-            //  切换分页页码
-            pageChange(current){
-                this.pagination.current = current;
-                this.searchFn();
+                requestGoodsGoodsStock15(paginationEncode(this.pagination))
+                    .then(v => {
+                        const { data } = v;
+                        console.log(data);
+                        data.records.forEach((item, index) => {
+                            item.key = index;
+                        });
+                        this.data = data.records;
+                        this.pagination = paginationDecode(this.pagination, data);
+                    });
             },
 
             //  提醒返货
@@ -239,6 +211,17 @@
             procurementDetailModalCheck(){
                 this.hideModal(DIALOG_TYPE.PROCUREMENT_DETAILS);
             },
+            //  莫泰框方法
+            ...dialogMethods,
+
+            ...mapActions('warehouse', [
+                //	被选中的采购单的id
+                'setPurchaseId',
+                //  被选中的采购订单id - 这个是给查看详情用的
+                'setProcurementId',
+            ]),
+            pageChange,
+            onShowSizeChange,
         }
     };
 </script>
