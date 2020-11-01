@@ -73,23 +73,23 @@ const actions = {
 			return routesList;
 		}
 		//	服务端数据
-		//	todo	难点！
-		// return requestMenuUserMenu()
-		// return
 		// return requestMenuAllTree()
-		// 	.then((list: any) => {
-		// 		//	转换路由
-		// 		const {routeMap, buttonMap} = convertRouting(list);
-		// 		console.log(routeMap);
-		// 		console.log(buttonMap);
-		// 		const routesList = setRouteListByMap(routeMap, asyncRoutesList)
-		// 		routesList.push(NotFoundRoutes);
-		// 		commit('SET_ROUTE_LENGTH', routesList);
-		// 		console.log(routesList);
-		// 		return routesList;
-		// 	});
-		// return;
+		//	todo	难点！
+		return requestMenuUserMenu()
+			.then((list: any) => {
+				//	转换路由
+				const {routeMap, buttonMap} = convertRouting(list);
+				console.log(routeMap);
+				console.log(buttonMap);
+				const routesList = setRouteListByMap(routeMap, asyncRoutesList)
+				routesList.push(NotFoundRoutes);
+				commit('SET_ROUTE_LENGTH', routesList);
+				console.log(routesList);
+				return routesList;
+			});
 
+
+		//	⚠️开发者
 		const loginInfo = getLoginInfo();
 		//	@ts-ignore
 		loginInfo.type = -1;
