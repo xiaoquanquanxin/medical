@@ -61,17 +61,34 @@ const mutations = {
 const actions = {
 	//  生成路由权限，从服务端动态拉取
 	generateRoutes({commit}: COMMIT_INTERFACE<null>) {
+		// return;
+		let map = {};
+		//	@ts-ignore
+		const username = getLoginInfo().username;
+		console.log(username);
+		if (username === 'admin') {
+			const routesList = setRouteListByMap(routeMap, asyncRoutesList)
+			routesList.push(NotFoundRoutes);
+			commit('SET_ROUTE_LENGTH', routesList);
+			return routesList;
+		}
 		//	服务端数据
 		//	todo	难点！
-		// requestMenuUserMenu()
-		requestMenuAllTree()
+		return requestMenuUserMenu()
+		// return
+		// requestMenuAllTree()
 			.then((list: any) => {
 				//	转换路由
 				const {routeMap, buttonMap} = convertRouting(list);
 				console.log(routeMap);
 				console.log(buttonMap);
+				const routesList = setRouteListByMap(routeMap, asyncRoutesList)
+				routesList.push(NotFoundRoutes);
+				commit('SET_ROUTE_LENGTH', routesList);
+				return routesList;
 			});
-		let map = {};
+		return;
+
 		const loginInfo = getLoginInfo();
 		//	@ts-ignore
 		loginInfo.type = -1;
