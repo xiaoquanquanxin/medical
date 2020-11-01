@@ -84,16 +84,6 @@
             width: 150,
         },
         {
-            title: '添加人',
-            dataIndex: 'contacts',
-            width: 100,
-        },
-        {
-            title: '添加时间',
-            dataIndex: 'time',
-            width: 120,
-        },
-        {
             title: '状态',
             scopedSlots: { customRender: 'a-switch' },
             width: 100,
