@@ -13,7 +13,10 @@
                 :pagination="false"
         >
             <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
-                <a @click="activityBriefDetail(sItem)">详情</a>
+                <a-space>
+                    <a @click="activityBriefDetail(sItem)">详情</a>
+                    <a @click="activityBriefDelete(sItem)">删除</a>
+                </a-space>
             </div>
         </a-table>
         <!--活动小结莫泰框-->
@@ -42,7 +45,7 @@
         pageChange,
         onShowSizeChange
     } from '@/utils/pagination.ts';
-    import { requestBriefPage } from '../../../api/userList/activityBrief';
+    import { requestBriefDelete, requestBriefPage } from '../../../api/userList/activityBrief';
     import { noPaginationData } from '../../../utils/pagination';
 
     const columns = [
@@ -128,6 +131,28 @@
             activityBriefDetail(sItem){
                 this.setActivityBriefId(sItem.id);
                 this.showModal(DIALOG_TYPE.ACTIVITY_BRIEF);
+            },
+            //  删除
+            activityBriefDelete(sItem){
+                this.$confirm({
+                    title: `确定删除此数据？`,
+                    okText: '确认',
+                    okType: 'danger',
+                    cancelText: '取消',
+                    onOk: () => {
+                        return requestBriefDelete(sItem.id)
+                            .then(v => {
+                                this.$message.success('操作成功');
+                                this.searchFn();
+                            })
+                            .catch(v => {
+                                this.$message.error('操作失败');
+                            });
+                    },
+                    onCancel(){
+                        console.log('取消');
+                    },
+                });
             },
 
             //  确认详情

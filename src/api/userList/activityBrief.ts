@@ -40,7 +40,7 @@ export function requestBriefUpdate(data: any) {
 export function requestBriefDelete(id: string | number) {
 	return request({
 		url: `/api/brief/delete/${id}`,
-		method: 'post',
+		method: 'get',
 	});
 }
 
