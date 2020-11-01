@@ -80,7 +80,7 @@
                     >{{patientBasicInfo.weight}}</p>
                 </a-descriptions-item>
                 <a-descriptions-item label="BMI">
-                    <p class="description-content">{{patientBasicInfo.bmi}}</p>
+                    <p class="description-content">{{bmi}}</p>
                 </a-descriptions-item>
                 <a-descriptions-item label="身份证号">
                     <a-input
@@ -310,6 +310,13 @@
                 console.log(patientBasicInfo);
                 return this.$store.state.userList.patientBasicInfo;
             },
+            bmi(){
+                if (!this.patientBasicInfo) {
+                    return 0;
+                }
+                const bmi = this.patientBasicInfo.weight / (this.patientBasicInfo.height * this.patientBasicInfo.height) * 10000;
+                return isNaN(bmi) ? 0 : bmi.toFixed(1);
+            }
         },
         data(){
             return {
@@ -389,6 +396,8 @@
 //
 //                    }
 
+                    //  bmi赋值
+                    this.patientBasicInfo.bmi = this.bmi;
                     //  todo    就诊科室没有数据
                     this.patientBasicInfo.hospitalTreatment = this.patientBasicInfo.hospitalTreatment || 1;
                     //  todo    营养师需要接口
