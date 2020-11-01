@@ -170,6 +170,7 @@
         methods: {
             //  主要请求
             searchFn(){
+                alert('缺列表');
 //                requestChannelBusinessPage(paginationEncode(this.pagination))
 //                    .then(v => {
 //                        const { data } = v;

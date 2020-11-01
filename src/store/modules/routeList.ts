@@ -74,20 +74,21 @@ const actions = {
 		}
 		//	服务端数据
 		//	todo	难点！
-		return requestMenuUserMenu()
+		// return requestMenuUserMenu()
 		// return
-		// requestMenuAllTree()
-			.then((list: any) => {
-				//	转换路由
-				const {routeMap, buttonMap} = convertRouting(list);
-				console.log(routeMap);
-				console.log(buttonMap);
-				const routesList = setRouteListByMap(routeMap, asyncRoutesList)
-				routesList.push(NotFoundRoutes);
-				commit('SET_ROUTE_LENGTH', routesList);
-				return routesList;
-			});
-		return;
+		// return requestMenuAllTree()
+		// 	.then((list: any) => {
+		// 		//	转换路由
+		// 		const {routeMap, buttonMap} = convertRouting(list);
+		// 		console.log(routeMap);
+		// 		console.log(buttonMap);
+		// 		const routesList = setRouteListByMap(routeMap, asyncRoutesList)
+		// 		routesList.push(NotFoundRoutes);
+		// 		commit('SET_ROUTE_LENGTH', routesList);
+		// 		console.log(routesList);
+		// 		return routesList;
+		// 	});
+		// return;
 
 		const loginInfo = getLoginInfo();
 		//	@ts-ignore

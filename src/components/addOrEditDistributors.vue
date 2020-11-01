@@ -56,7 +56,7 @@
             </a-form-item>
             <a-form-item label="登录账户" v-if="!channelId">
                 <a-input class="add-form-input"
-                         v-decorator="loginAccountDecorator"
+                         v-decorator="usernameDecorator"
                          placeholder="请输入登录账户"
                 />
             </a-form-item>
@@ -140,7 +140,7 @@
                     },]
                 }],
                 //  登录账户
-                loginAccountDecorator: ['loginAccount', {
+                usernameDecorator: ['username', {
                     rules: [{
                         required: true,
                         message: '请输入登录账户'
@@ -193,7 +193,7 @@
                     return;
                 }
                 //  修改编辑的表单验证
-                this.form.validateFields(['loginAccount']);
+                this.form.validateFields(['username']);
                 this.form.validateFields(['password']);
                 this.form.validateFields(['confirmPassword']);
                 //  如果是编辑

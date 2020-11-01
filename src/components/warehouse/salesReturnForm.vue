@@ -32,11 +32,13 @@
 </template>
 <script>
     import { formItemLayout } from '@/utils/layout.ts';
+    import { requestGoodsGoodsPurchase } from '../../api/warehouse/inventory';
     //  出库操作
     export default {
         beforeCreate(){
             this.form = this.$form.createForm(this);
         },
+        props: ['procurementData'],
         data(){
             return {
                 formItemLayout,
@@ -79,21 +81,16 @@
                 return new Promise(((resolve, reject) => {
                     this.form.validateFields((err, values) => {
                         console.table(values);
-                        if (!err) {
-                            resolve();
-                        } else {
+                        if (err) {
                             reject();
                         }
+                        requestGoodsGoodsPurchase()
+                            .then(v => {
+
+                            });
+
                     });
-                }))
-                    .then(v => {
-                        return new Promise(((resolve, reject) => {
-                            console.log('发请求吧');
-                            setTimeout(() => {
-                                resolve();
-                            }, 1000);
-                        }));
-                    });
+                }));
             },
         }
     };

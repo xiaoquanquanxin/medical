@@ -186,7 +186,8 @@
         },
         methods: {
             //  主要请求
-            searchFn(){//  医院list
+            searchFn(){
+                //  医院list
                 requestHospitalGetList()
                     .then(hospitalList => {
                         this.hospitalList = hospitalList;

@@ -57,7 +57,8 @@
                  ok-text="确认"
                  cancel-text="取消"
                  @ok="viewInventoryModalCheck('refViewTotalInventory')">
-            <ViewTotalInventory ref="refViewTotalInventory"/>
+            <ViewTotalInventory ref="refViewTotalInventory"
+            />
         </a-modal>
         <!--采购操作莫泰框-->
         <a-modal v-model="dialogDataProcurement.visible"
@@ -70,7 +71,9 @@
                  ok-text="确认"
                  cancel-text="取消"
                  @ok="procurementModalCheck('refProcurementForm')">
-            <ProcurementForm ref="refProcurementForm"/>
+            <ProcurementForm ref="refProcurementForm"
+                             :procurement-data="procurementData"
+            />
         </a-modal>
         <!--退货操作莫泰框-->
         <a-modal v-model="dialogDataSalesReturn.visible"
@@ -101,6 +104,7 @@
     import SalesReturnForm from '@/components/warehouse/salesReturnForm';
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
     import { mapGetters, mapActions } from 'vuex';
+    import { requestGoodsGoodsStock } from '../../api/warehouse/inventory';
 
     const columns = [
         {
@@ -159,25 +163,6 @@
             scopedSlots: { customRender: 'operation' },
         },
     ];
-    const data = [];
-    for (let i = 0; i < 10; i++) {
-        data.push({
-            key: i,
-            hospital: `xx供应商`,
-            city: '上海',
-            status: String(i % 2),
-            totalInventory: 322,
-            commodityName: '商品名称',
-            remainingInventory: '剩余库存',
-            occupyInventory: '占用库存',
-            manufacturer: '厂家',
-            brand: '商品品牌',
-            supplier: '商品供应商',
-            barCode: '商品条码',
-            unit: '单位',
-            商品货号: '商品货号',
-        });
-    }
 
     //  商品库存列表
     export default {
@@ -188,7 +173,9 @@
         },
         data(){
             return {
-                data,
+                //  操作数据
+                procurementData: null,
+                data: [],
                 columns,
                 //  搜索数据
                 searchData: {},
@@ -212,17 +199,17 @@
         methods: {
             //  主要请求
             searchFn(){
-//                requestChannelBusinessPage(paginationEncode(this.pagination))
-//                    .then(v => {
-//                        const { data } = v;
-//                        console.log(data);
-//                data.records.forEach((item, index) => {
-//                    item.key = index;
-//                    item.createTime = item.createTime.substr(0, 10);
-//                });
-//                        this.data = data.records;
-//                        this.pagination = paginationDecode(this.pagination, data);
-//                    });
+                requestGoodsGoodsStock(paginationEncode(this.pagination))
+                    .then(v => {
+                        const { data } = v;
+                        console.log(data);
+                        data.records.forEach((item, index) => {
+                            item.key = index;
+                            //  item.createTime = item.createTime.substr(0, 10);
+                        });
+                        this.data = data.records;
+                        this.pagination = paginationDecode(this.pagination, data);
+                    });
             },
             //  莫泰框方法
             ...dialogMethods,
@@ -255,7 +242,10 @@
             },
             //  采购
             procurement(sItem){
-                this.setWarehouseId('123');
+                this.procurementData = sItem;
+                //  console.log(sItem.id);
+                //  console.log(JSON.parse(JSON.stringify(sItem)));
+                //  this.setWarehouseId('123');
                 this.showModal(DIALOG_TYPE.PROCUREMENT);
             },
             //  确认采购
@@ -265,6 +255,8 @@
                 const promise = this.$refs[refProcurementForm].handleSubmit();
                 promise.then(v => {
                     this.hideModal(DIALOG_TYPE.PROCUREMENT);
+                    this.$message.success('操作成功');
+                    this.searchFn();
                 }).catch(error => {
                     console.log('有错');
                 }).then(v => {
