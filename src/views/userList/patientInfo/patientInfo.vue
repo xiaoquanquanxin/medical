@@ -83,10 +83,6 @@
                         this.setPatientBasicInfo(this.patientInfo);
                     });
             },
-            ...mapActions('userList', [
-                //  保存病人信息，这是为了给组件用，而不是页面，所以要store
-                'setPatientBasicInfo',
-            ]),
             //  确认出院
             confirmOutHospital(){
                 this.$confirm({
@@ -143,6 +139,10 @@
                     });
 
             },
+            ...mapActions('userList', [
+                //  保存病人信息，这是为了给组件用，而不是页面，所以要store
+                'setPatientBasicInfo',
+            ]),
         }
     };
 </script>

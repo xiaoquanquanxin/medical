@@ -9,12 +9,12 @@
         <br>
         <!--口腔肠内-->
         <OralEditTable
-                v-if="false"
+                v-if="true"
                 :key="1"
                 :data-title="kqcnOralEditDataTitle"
                 ref="kqcnOralEditTableRef"
         />
-        <div v-if="false">
+        <div v-if="true">
             <br>
             <!--肠内-->
             <OralEditTable

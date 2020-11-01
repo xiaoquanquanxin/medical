@@ -299,7 +299,8 @@
 <script>
     import { descriptionsMethods } from '@/utils/patientInfo';
     import { requestPatientSelectDeptByHospital, requestPatientSelectICD } from '../../../api/userList/userList';
-    import { requestHospitalGetList } from '../../../api/hospital';
+    import { requestDeptListDeptHospitalId, requestHospitalGetList } from '../../../api/hospital';
+    import { requestDeptList } from '../../../api/department';
 
     export default {
         computed: {
@@ -339,10 +340,19 @@
                     .then(hospitalList => {
                         this.hospitalList = hospitalList;
                     });
+
             },
             //  切换医院
             selectHospitalChange(value){
-                requestPatientSelectDeptByHospital()
+                Promise.all([
+                    requestDeptList(),
+                    requestDeptListDeptHospitalId(value),
+                ])
+                    .then(v => {
+                        console.log(v);
+                    });
+                return;
+                requestDeptListDeptHospitalId(value)
                     .then(v => {
                         console.log('根据当前医院查询科室', v.data);
                         v.data.forEach(item => {
