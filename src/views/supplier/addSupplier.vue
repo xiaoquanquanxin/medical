@@ -259,8 +259,7 @@
                 //  邮箱
                 emailDecorator: ['email', {
                     rules: [{
-                        required: true,
-                        message: '请输入邮箱'
+                        message: '请输入正确的邮箱地址'
                     },]
                 }],
 
@@ -268,7 +267,6 @@
                 //  营业执照
                 businessLicenseDecorator: ['businessLicense', {
                     rules: [{
-                        required: true,
                         message: '请上传营业执照'
                     },]
                 }],
