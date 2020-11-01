@@ -75,44 +75,40 @@
                 formItemLayout,
                 //  是否能够按照方案执行
                 executionDecorator: ['execution', {
-                    initialValue: '1',
+                
                 }],
                 executionContentDecorator: ['executionContent', {
                     rules: [{
-                        required: true,
                         message: '请输入具体原因'
                     },]
                 }],
 
                 //  是否能够耐受
                 toleranceDecorator: ['tolerance', {
-                    initialValue: '1',
+                
                 }],
                 toleranceContentDecorator: ['toleranceContent', {
                     rules: [{
-                        required: true,
                         message: '请输入具体原因'
                     },]
                 }],
 
                 //  有无大便
                 shitDecorator: ['shit', {
-                    initialValue: '1',
+                
                 }],
                 shitContentDecorator: ['shitContent', {
                     rules: [{
-                        required: true,
                         message: '请输入具体原因'
                     },]
                 }],
 
                 //  有无饥饿感
                 hungerDecorator: ['hunger', {
-                    initialValue: '1',
+                
                 }],
                 hungerContentDecorator: ['hungerContent', {
                     rules: [{
-                        required: true,
                         message: '请输入具体原因'
                     },]
                 }],
