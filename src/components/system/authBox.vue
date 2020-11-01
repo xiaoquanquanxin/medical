@@ -1,34 +1,36 @@
 <template>
-    <a-form class="form"
-            :form="form"
-            v-bind="formItemLayout"
-            @submit="handleSubmit"
-            autocomplete="off"
-            style="min-height: 500px;"
-    >
-        <a-form-item label="权限">
-            <a-tree :checkedKeys="treeSelectValue"
-                    v-model="treeSelectValue"
-                    :checkable="true"
-                    :tree-data="treeData"
-                    :autoExpandParent="true"
-                    @check="checkFn"
-            />
-            <!--            <a-tree-select-->
-            <!--                    class="add-form-input"-->
-            <!--                    v-if="treeData"-->
-            <!--                    v-model="treeSelectValue"-->
-            <!--                    style="width: 100%"-->
-            <!--                    :disabled="!treeData"-->
-            <!--                    :tree-data="treeData"-->
-            <!--                    :treeDefaultExpandAll="true"-->
-            <!--                    tree-checkable-->
-            <!--                    :show-checked-strategy="SHOW_PARENT"-->
-            <!--                    search-placeholder="Please select"-->
-            <!--            />-->
-            <!--            @change="selectTreeChange"-->
-        </a-form-item>
-    </a-form>
+    <div class='table-in-box'>
+        <a-form class="form"
+                :form="form"
+                v-bind="formItemLayout"
+                @submit="handleSubmit"
+                autocomplete="off"
+                style="min-height: 500px;"
+        >
+            <a-form-item label="权限">
+                <a-tree :checkedKeys="treeSelectValue"
+                        v-model="treeSelectValue"
+                        :checkable="true"
+                        :tree-data="treeData"
+                        :autoExpandParent="true"
+                        @check="checkFn"
+                />
+                <!--            <a-tree-select-->
+                <!--                    class="add-form-input"-->
+                <!--                    v-if="treeData"-->
+                <!--                    v-model="treeSelectValue"-->
+                <!--                    style="width: 100%"-->
+                <!--                    :disabled="!treeData"-->
+                <!--                    :tree-data="treeData"-->
+                <!--                    :treeDefaultExpandAll="true"-->
+                <!--                    tree-checkable-->
+                <!--                    :show-checked-strategy="SHOW_PARENT"-->
+                <!--                    search-placeholder="Please select"-->
+                <!--            />-->
+                <!--            @change="selectTreeChange"-->
+            </a-form-item>
+        </a-form>
+    </div>
 </template>
 <script>
     import { TreeSelect } from 'ant-design-vue';
@@ -94,7 +96,7 @@
             handleSubmit(){
                 console.log(this.treeSelectValue);
                 const data = {
-                    menuIds: [...this.treeSelectValue.map(Number), 232],
+                    menuIds: [...this.treeSelectValue.map(Number)],
                     roleId: this.selectRoleItem.roleId
                 };
                 //  console.log(data);

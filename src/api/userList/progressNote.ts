@@ -30,6 +30,6 @@ export function requestDiseaseRecordGet(id: string | number) {
 export function requestDiseaseRecordDelete(id: string | number) {
 	return request({
 		url: `/api/diseaseRecord/delete/${id}`,
-		method: 'post',
+		method: 'get',
 	});
 }

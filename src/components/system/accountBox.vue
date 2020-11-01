@@ -24,9 +24,8 @@
             <a-select class="add-form-input"
                       v-decorator="typeDecorator"
                       placeholder="请选择账号类型">
-                <a-select-option value="1">医生</a-select-option>
-                <a-select-option value="2">系统管理员</a-select-option>
-                <a-select-option value="3">渠道商</a-select-option>
+                <a-select-option :value="2">系统管理员</a-select-option>
+                <a-select-option :value="3">渠道商</a-select-option>
             </a-select>
         </a-form-item>
         <a-form-item label="账号密码">
@@ -127,10 +126,11 @@
                 requestUserGet(this.selectAccountId)
                     .then(v => {
                         const data = v.data || {};
-                        const { username, roleId } = data;
+                        const { username, roleId, type } = data;
                         this.form.setFieldsValue({
                             username,
                             roleId,
+                            type,
                         });
                     });
             },

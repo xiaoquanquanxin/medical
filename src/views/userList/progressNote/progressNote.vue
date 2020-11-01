@@ -14,7 +14,10 @@
         >
             <!--操作-->
             <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
-                <a @click="progressNoteDetail(sItem)">详情</a>
+                <a-space>
+                    <a @click="progressNoteDetail(sItem)">详情</a>
+                    <a @click="deleteNote(sItem)">删除</a>
+                </a-space>
             </div>
         </a-table>
         <!--病程记录莫泰框-->
@@ -36,7 +39,7 @@
     import ProgressNoteForm from '@/components/userList/progressNote/progressNoteForm.vue';
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
     import { mapGetters, mapActions } from 'vuex';
-    import { requestDiseaseRecordPage } from '../../../api/userList/progressNote';
+    import { requestDiseaseRecordDelete, requestDiseaseRecordPage } from '../../../api/userList/progressNote';
     import { noPaginationData } from '../../../utils/pagination';
 
     const columns = [
@@ -106,12 +109,6 @@
                         this.data = data.records;
                     });
             },
-            //  莫泰框方法
-            ...dialogMethods,
-            ...mapActions('userList', [
-                //  弹框id
-                'setProgressNoteId',
-            ]),
 
             //  新增
             addProgressNote(){
@@ -137,6 +134,35 @@
                     console.log('有错');
                 });
             },
+            //  删除
+            deleteNote(sItem){
+                this.$confirm({
+                    title: `确定删除此数据？`,
+                    okText: '确认',
+                    okType: 'danger',
+                    cancelText: '取消',
+                    onOk: () => {
+                        return requestDiseaseRecordDelete(sItem.id)
+                            .then(v => {
+                                this.$message.success('操作成功');
+                                this.searchFn();
+                            })
+                            .catch(v => {
+                                this.$message.error('操作失败');
+                            });
+                    },
+                    onCancel(){
+                        console.log('取消');
+                    },
+                });
+            },
+            //  莫泰框方法
+            ...dialogMethods,
+            ...mapActions('userList', [
+                //  弹框id
+                'setProgressNoteId',
+            ]),
+
         }
     };
 </script>
