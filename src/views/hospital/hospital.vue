@@ -117,7 +117,7 @@
     import {
         requestHospitalChangeStatus, requestDeptListDeptHospitalId,
         requestHospitalPage,
-        requestHospitalRelatedDepartments
+        requestHospitalRelatedDepartments, requestHospitalListChannelBusiness
     } from '../../api/hospital';
     import { getProvinceList, provinceChange, cityChange, areaList } from '@/utils/areaList';
     import { requestDeptList } from '../../api/department';
@@ -301,16 +301,21 @@
 
             //  关联渠道商
             associatedChannelProvider(sItem){
+                //  alert('/api/hospital/listChannelBusiness/{hospitalId}不能用');
                 this.shuttleBoxData = sItem;
-                alert('缺医院关联渠道商、回显');
-                requestChannelBusinessList()
+                Promise.all([
+                    requestHospitalListChannelBusiness(sItem.id),
+                    requestChannelBusinessList(),
+                ])
                     .then(v => {
-                        this.showModal(DIALOG_TYPE.ASSOCIATED_CHANNEL_PROVIDER);
-                        v.data.forEach(item => {
+                        console.log(v[0].data);
+                        const list = v[1];
+                        list.forEach(item => {
                             item.key = item.id;
                         });
-                        console.log(v.data[0]);
-                        this.setDistributorsList(v.data);
+                        console.log(list[0]);
+                        this.setDistributorsList(list);
+                        this.showModal(DIALOG_TYPE.ASSOCIATED_CHANNEL_PROVIDER);
                     });
             },
             //  关联渠道商确定
