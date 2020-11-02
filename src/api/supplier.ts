@@ -1,5 +1,5 @@
 //	供应商列表
-import request from '@/utils/request';
+import request, {unifiedHandlingList} from '@/utils/request';
 
 //  供应商管理列表	✅
 export function requestSupplierPage(data: any) {
@@ -49,7 +49,8 @@ export function requestSupplierList() {
 	return request({
 		url: '/api/supplier/list',
 		method: 'get'
-	});
+	})
+		.then(unifiedHandlingList);
 }
 
 //	删除供应商信息

@@ -1,5 +1,5 @@
 //	生产厂家分页列表
-import request from "@/utils/request"
+import request, {unifiedHandlingList} from "@/utils/request"
 
 //	厂家分页列表		✅，缺少input
 export function requestManufactorPage(data: any) {
@@ -50,7 +50,8 @@ export function requestManufactorList() {
 	return request({
 		url: '/api/manufactor/list',
 		method: 'get',
-	});
+	})
+		.then(unifiedHandlingList);
 }
 
 

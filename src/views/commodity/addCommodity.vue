@@ -79,7 +79,6 @@
                               v-decorator="manufactorIdDecorator"
                     >
                         <a-select-option :value="item.id.toString()"
-                                         :key="item.id"
                                          v-for="item in manufactorList"
                         >{{item.manufactorName}}
                         </a-select-option>
@@ -606,29 +605,25 @@
                     .then(unitTypeList => {
                         this.unitTypeList = unitTypeList;
                     });
+                //  商品分类list
                 requestCategoryList()
-                    .then(v => {
-                        //  商品分类list
-//                        console.log(v.data);
-                        this.goodsCategoryList = v.data;
+                    .then(goodsCategoryList => {
+                        this.goodsCategoryList = goodsCategoryList;
                     });
+                //  商品品牌list
                 requestBrandList()
-                    .then(v => {
-                        //  商品品牌list
-//                        console.log(v.data);
-                        this.goodsBrandList = v.data;
+                    .then(goodsBrandList => {
+                        this.goodsBrandList = goodsBrandList;
                     });
+                //  供应商list
                 requestSupplierList()
-                    .then(v => {
-                        //  供应商list
-//                        console.log(v.data);
-                        this.supplierList = v.data;
+                    .then(supplierList => {
+                        this.supplierList = supplierList;
                     });
+                //  厂家list
                 requestManufactorList()
-                    .then(v => {
-                        //  厂家list
-//                        console.log(v.data);
-                        this.manufactorList = v.data;
+                    .then(manufactorList => {
+                        this.manufactorList = manufactorList;
                     });
                 //  如果是新增
                 if (!this.commodityId) {
