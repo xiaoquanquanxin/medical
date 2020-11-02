@@ -17,16 +17,6 @@
                         >{{item.hospitalName}}
                         </a-select-option>
                     </a-select>
-                    <!--                    <a-select class="add-form-input"-->
-                    <!--                              v-model="tableForm.prescriptionType"-->
-                    <!--                              placeholder="请选择处方模板类型"-->
-                    <!--                              @change="selectPrescriptionChange"-->
-                    <!--                    >-->
-                    <!--                        <a-select-option v-for="item in prescriptionTypeList"-->
-                    <!--                                         :value="item.id"-->
-                    <!--                        >{{item.name}}-->
-                    <!--                        </a-select-option>-->
-                    <!--                    </a-select>-->
                     <a-select class="lengthen-select-width"
                               v-model="tableForm.prescriptionType"
                               placeholder="请选择处方类型"
@@ -193,7 +183,9 @@
                  ok-text="确认"
                  cancel-text="取消"
                  @ok="selectCommodityModalCheck('refSelectCommodity')">
-            <SelectCommodity ref="refSelectCommodity"/>
+            <SelectCommodity ref="refSelectCommodity"
+                             :prescription-type="this.tableForm.prescriptionType"
+            />
         </a-modal>
         <!--选择时间莫泰框-->
         <a-modal v-model="dialogDataSelectTime.visible"
@@ -288,6 +280,7 @@
             return {
                 //  医院下拉
                 hospitalList: [],
+                hospitalMap: null,
                 //  处方类型下拉
                 //  prescriptionTypeList,
                 //  能量下拉
@@ -356,9 +349,12 @@
                 //  表单中表格的数据
                 tableForm: {
                     prescriptionName: '口服肠内营养补充',
-                    //  hospitalId          医院
-                    //  hospitalName        医院名
-                    //  prescriptionName    处方名
+                    //  医院
+                    hospitalId: undefined,
+                    //  医院名
+                    hospitalName: undefined,
+                    //  处方名
+                    prescriptionName: undefined,
                     //  处方类型
                     prescriptionType: undefined,
                     //  能量
@@ -385,6 +381,11 @@
                 requestHospitalGetList()
                     .then(hospitalList => {
                         this.hospitalList = hospitalList;
+                        const hospitalMap = {};
+                        hospitalList.forEach(item => {
+                            hospitalMap[item.id] = item;
+                        });
+                        this.hospitalMap = hospitalMap;
                     });
                 //  如果是新增
                 if (!this.oralId) {
@@ -450,27 +451,11 @@
             //  切换医院
             selectHospitalChange(value){
                 //  组织医院名
-                this.hospitalList.forEach(item => {
-                    if (item.id === value) {
-                        //  console.log(item);
-                        this.tableForm.hospitalName = item.hospitalName;
-                    }
-                });
-                console.log('根据医院获取商品，医院的id', value);
-                requestGoodsListByHospital(value)
-                    .then(v => {
-                        console.log(v.data);
-                        const originCommodityList = [];
-                        v.data.forEach(item => {
-                            item.key = item.id;
-                            originCommodityList.push(item);
-                        });
-                        this.setOriginCommodityList(originCommodityList);
-                    });
+                this.tableForm.hospitalName = this.hospitalMap[value];
                 this.resetMainData();
             },
             //  切换处方类型
-            selectPrescriptionChange(value){
+            selectPrescriptionChange(){
                 this.resetMainData();
             },
             //  重置主要数据
@@ -481,14 +466,30 @@
             },
             //  选择商品
             selectCommodity(){
-                //  必须选择能量方案
+                const {
+                    hospitalId,
+                    prescriptionType,
+                } = this.tableForm;
                 //  必须选择医院
-                if (!this.tableForm.hospitalId) {
-                    //  this.$message.error('请先选择能量');
+                if (!hospitalId) {
                     this.$message.error('请先选择医院');
                     return;
                 }
-                this.showModal(DIALOG_TYPE.TEMPLATE_SELECT_COMMODITY);
+                //  必须选择处方类型
+                if (!prescriptionType) {
+                    this.$message.error('请先选择处方类型');
+                    return;
+                }
+                requestGoodsListByHospital(hospitalId)
+                    .then(v => {
+                        const originCommodityList = [];
+                        v.data.forEach(item => {
+                            item.key = item.id;
+                            originCommodityList.push(item);
+                        });
+                        this.setOriginCommodityList(originCommodityList);
+                        this.showModal(DIALOG_TYPE.TEMPLATE_SELECT_COMMODITY);
+                    });
             },
             //  确认选择商品莫泰框
             selectCommodityModalCheck(refSelectCommodity){

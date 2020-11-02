@@ -66,6 +66,7 @@
                 //  return JSON.parse(JSON.stringify(this.$store.state.prescriptionTemplate.originCommodityList));
             },
         },
+        props: ['prescriptionType'],
         data(){
             return {
                 //	弹框table的scroll
@@ -82,6 +83,7 @@
             console.log('初始化打开选择商品');
             console.log('被选中的数据', this.selectedRowKeys);
             console.log('总数据', JSON.parse(JSON.stringify(this.originCommodityList)));
+            console.log(this.prescriptionType);
         },
         methods: {
             ...mapActions('prescriptionTemplate', [
