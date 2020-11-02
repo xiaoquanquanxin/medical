@@ -130,6 +130,14 @@
                     //  处方名称
                     prescriptionName,
                 } = basicInfoEditData;
+                if (prescriptionName.trim() === '') {
+                    this.$message.error('请填写处方名称');
+                    return;
+                }
+                if (!priod) {
+                    this.$message.error('请填写处方周期');
+                    return;
+                }
 
                 //  金额
                 let amountPayable = 0;
