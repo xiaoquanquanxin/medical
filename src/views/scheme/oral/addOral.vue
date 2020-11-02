@@ -78,16 +78,15 @@
                         <!--购买单位-->
                         <div slot="uintListVos" slot-scope="scope,sItem,sIndex,extra">
                             <p v-for="(item,index) in sItem.uintListVos"
-                               :key="index"
                                v-if="item.id === sItem.purchaseUnitCheckId"
-                            >{{item.unitPrice}}</p>
+                            >{{unitTypeMap[item.uname].label}}</p>
                         </div>
                         <!--单价-->
                         <div slot="unitPrice" slot-scope="scope,sItem,sIndex,extra">
                             <p v-for="(item , index) in sItem.uintListVos"
                                :key="index"
                                v-if="item.id === sItem.purchaseUnitCheckId"
-                            >{{item.unitPrice}}</p>
+                            >{{item.unitPrice}}元/{{unitTypeMap[item.uname].label}}</p>
                         </div>
                         <!--数量-->
                         <div slot="quantity" slot-scope="scope,sItem,sIndex,extra">
@@ -141,7 +140,12 @@
                             >
                                 <a-space size="small">
                                     <a-input placeholder="请输入使用量" v-model="item.dosage"/>
-                                    {{item.uname}}
+                                    <span v-if="+tableForm.prescriptionType===1" data-msg="院内配置">
+<!--                                        ⚠️⚠️⚠️-->
+                                        <!--                                        {{unitTypeMap[item.uname].label}}-->
+                                        {{unitTypeMap[scope.list[0].uname].label}}
+                                    </span>
+                                    <!--<span v-else>{{scope.list[0]}}</span>-->
                                 </a-space>
                             </div>
                         </div>
@@ -228,7 +232,7 @@
         {
             title: '商品名称',
             dataIndex: 'goodsName',
-            width: 100,
+            width: 150,
         },
         {
             title: '购买单位',
@@ -245,7 +249,7 @@
         {
             title: '数量',
             dataIndex: 'quantity',
-            width: 100,
+            width: 150,
             scopedSlots: { customRender: 'quantity' },
         },
         {
@@ -272,6 +276,10 @@
             //  区分编辑
             oralId(){
                 return this.$route.params.oralId;
+            },
+            //  单元map
+            unitTypeMap(){
+                return this.$store.state.constants.unitTypeMap;
             }
         },
         data(){

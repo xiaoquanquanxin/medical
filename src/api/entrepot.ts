@@ -1,4 +1,4 @@
-import request from '@/utils/request';
+import request, {unifiedHandlingList} from '@/utils/request';
 
 //  仓库管理列表	✅，⚠️input不好使，缺少地区
 export function requestWarehousePage(data: any) {
@@ -43,4 +43,11 @@ export function requestWarehouseDelete(id: string | number) {
 	});
 }
 
-//	⚠️ 缺少仓库不分页接口
+//	仓库不分页接口			⚠️编辑的，没仓库
+export function requestWarehouseList() {
+	return request({
+		url: '/api/warehouse/list',
+		method: 'get',
+	})
+		.then(unifiedHandlingList);
+}

@@ -43,7 +43,7 @@
                     </a-select-option>
                 </a-select>
             </a-form-item>
-            <a-form-item label="选择仓库">
+            <a-form-item label="选择仓库" v-if="!channelId">
                 <a-select class="add-form-input"
                           v-decorator="channelBusunessWarehouseIdDecorator"
                           placeholder="请选择仓库"
@@ -95,8 +95,7 @@
         requestChannelBusinessUpdate
     } from '../api/distributors';
     import { getProvinceList, provinceChange, areaList } from '@/utils/areaList';
-    import { noPaginationData } from '../utils/pagination';
-    import { requestWarehousePage } from '../api/entrepot';
+    import { requestWarehouseList, } from '../api/entrepot';
     import { requestRoleRoleAll } from '../api/system';
     //  新增或编辑渠道商
     export default {
@@ -203,12 +202,9 @@
                         this.roleList = roleList;
                     });
                 //  仓库list
-                requestWarehousePage(noPaginationData)
-                    .then(v => {
-                        v.data.records.forEach((item) => {
-                            item.key = item.id;
-                        });
-                        this.entrepotList = v.data.records;
+                requestWarehouseList()
+                    .then(entrepotList => {
+                        this.entrepotList = entrepotList;
                     });
                 this.getProvinceList(this);
                 //  如果是新增

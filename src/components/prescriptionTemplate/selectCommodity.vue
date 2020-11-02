@@ -34,7 +34,7 @@
                 <p v-for="(item,index) in scope.uintListVos"
                    :key="index"
                    class="negative-margin-item"
-                >{{item.unitPrice}}</p>
+                >{{item.unitPrice}}元</p>
             </div>
         </a-table>
     </div>
@@ -55,7 +55,7 @@
             scopedSlots: { customRender: 'purchaseUnit' },
         },
         {
-            title: '价格',
+            title: '购买单价',
             width: 100,
             scopedSlots: { customRender: 'price' },
         },
