@@ -999,6 +999,7 @@ export const asyncRoutesList = [
 					chName: '收计费详情',
 					selectRouteKey: 'costList',
 					openRouteKey: 'cost',
+					hiddenHistory: true,
 					hidden: true,
 				},
 				name: 'costDetail',
