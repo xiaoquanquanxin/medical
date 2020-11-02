@@ -22,8 +22,8 @@
                               placeholder="请选择处方类型"
                               @change="selectPrescriptionChange"
                     >
-                        <a-select-option value="1">院内配置</a-select-option>
-                        <a-select-option value="2">门诊领药</a-select-option>
+                        <a-select-option :value="1">院内配置</a-select-option>
+                        <a-select-option :value="2">门诊领药</a-select-option>
                     </a-select>
                 </a-space>
                 <a-button type="primary" @click="handleSubmit">保存</a-button>
@@ -84,13 +84,21 @@
                         <!--单价-->
                         <div slot="unitPrice" slot-scope="scope,sItem,sIndex,extra">
                             <p v-for="(item , index) in sItem.uintListVos"
-                               :key="index"
                                v-if="item.id === sItem.purchaseUnitCheckId"
                             >{{item.unitPrice}}元/{{unitTypeMap[item.uname].label}}</p>
                         </div>
                         <!--数量-->
                         <div slot="quantity" slot-scope="scope,sItem,sIndex,extra">
-                            <a-input v-model="sItem.quantity" placeholder="请输入数量"/>
+                            <a-input v-if="+tableForm.prescriptionType===1"
+                                     v-model="sItem.quantity"
+                                     placeholder="请输入数量"
+                                     data-msg="院内配置"
+                            />
+                            <a-input v-else
+                                     v-model="sItem.quantity"
+                                     placeholder="请输入数量"
+                                     data-msg="门诊领药"
+                            />
                         </div>
                         <!--操作-->
                         <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
@@ -141,8 +149,7 @@
                                 <a-space size="small">
                                     <a-input placeholder="请输入使用量" v-model="item.dosage"/>
                                     <span v-if="+tableForm.prescriptionType===1" data-msg="院内配置">
-                                        院内配置
-                                        {{unitTypeMap[scope.list[0].uname].label}}
+                                        {{unitTypeMap[item.basicUnitItem.unameType].label}}
                                     </span>
                                     <span v-else data-msg="门诊领药">{{item.unitUse}}</span>
                                 </a-space>
@@ -205,6 +212,19 @@
                     @change="selectTimeChange"
                     format="HH:mm"/>
         </a-modal>
+        <p>1.使用量的单位：</p>
+        <ol>
+            <li>门诊领药：使用量取使用单位</li>
+            <li>院内配置：使用量取这件商品的基本单位</li>
+        </ol>
+        <p>2.使用量的计算：</p>
+        <ol>
+            <li>门诊领药：使用量和数量随意填</li>
+            <li>院内配置：使用量输入影响数量，数量输入不影响使用量；使用量自身输入优先级高；数量计算 = (时间中的使用量合计) / 单位关系</li>
+        </ol>
+        <p>3.此计算逻辑繁琐，如有错误文档说明</p>
+        <p>4.处方模板列表接口区分templateType 有问题，处方模板现只保存 templateType = 1 的口服肠内营养补充</p>
+        <p>5.点击选择商品要调接口，会慢，将来优化</p>
     </div>
 </template>
 <script>
@@ -318,7 +338,7 @@
                     },
                     {
                         title: '温水/ml',
-                        width: 200,
+                        width: 150,
                         scopedSlots: { customRender: 'warmWater' }
                     },
                     {
@@ -360,13 +380,15 @@
                     hospitalName: undefined,
                     //  处方名
                     prescriptionName: undefined,
-                    //  处方类型
+                    //  处方类型-处方类型 (1.院内配置,2门诊领药)
                     prescriptionType: undefined,
-                    prescriptionType: '1',
+                    prescriptionType: 1,
                     //  能量
                     energy: undefined,
                     //  食用方法
                     usageMethod: undefined,
+                    //  处方模板类型 1 口服肠内 2 肠内营养 3 营养计划
+                    templateType: 1,
                 },
 
                 //  选择时间的值的对象
@@ -494,6 +516,20 @@
                     //  console.log('源数据', JSON.stringify(this.originCommodityList));
                     //  只展示被选中的
                     this.commodityTableData = this.originCommodityList.filter(item => item.isCheckboxChecked);
+                    //  JSON.parse(JSON.stringify(this.commodityTableData));
+                    //  区分，如果是，院内，就是有3条数据的，需要计算出来基本单位
+                    if (+this.tableForm.prescriptionType === 1) {
+                        this.commodityTableData.forEach(item => {
+                            //  基础数据
+                            const basicUnitItem = item.uintListVos.filter(_item => +_item.unameType === 1)[0];
+                            if (!basicUnitItem) {
+                                alert('检查脏数据，没有unameType===1的，这是不可能的');
+                            }
+                            //  console.log(JSON.parse(JSON.stringify(basicUnitItem)));
+                            item.basicUnitItem = basicUnitItem;
+                        });
+                    }
+                    //  console.log(JSON.parse(JSON.stringify(this.commodityTableData)))
                     //  重置时间表格数据
                     this.timeTableData = [];
                     //  清除备注
@@ -526,22 +562,28 @@
 
             //  确定选择的时间
             selectTimeModalCheck(){
+                const { prescriptionType } = this.tableForm;
                 const commodityTableData = JSON.parse(JSON.stringify(this.commodityTableData));
                 //  子列表数据
                 const list = commodityTableData.map(item => {
+                    const { basicUnitItem } = item;
+//                    //  区分，如果是，院内，就是有3条数据的，需要计算出来基本单位
+//                    if (+prescriptionType === 1) {
+//
+//                    }
                     const child = item.uintListVos.filter((_item) => {
                         //  console.log(_item.isRadioChecked);
                         return _item.isRadioChecked;
                     });
                     //  console.log(child);
-                    return Object.assign(child[0], { goodsName: item.goodsName });
+                    return Object.assign(child[0], { goodsName: item.goodsName, basicUnitItem });
                 });
                 //  console.log(list);
 
                 //  console.log(JSON.parse(JSON.stringify(this.timeTableData)));
                 //  时间的最后一条数据
                 const timeTableDataLastItem = this.timeTableData[this.timeTableData.length - 1] || { key: 0 };
-                console.log(timeTableDataLastItem);
+                console.log(JSON.parse(JSON.stringify(timeTableDataLastItem)));
                 //  一条数据
                 const data = {
                     //  key
@@ -552,6 +594,7 @@
                     warmWater: null,
                     //  子列表
                     list,
+                    //
                 };
                 //  新增一条数据
                 this.timeTableData.push(data);
@@ -666,6 +709,9 @@
                 //  console.log(JSON.parse(JSON.stringify(this.tableForm)));
                 console.log(prescriptionContent);
                 console.log(JSON.stringify(prescriptionContent));
+                console.clear();
+                console.log(JSON.stringify(this.tableForm));
+                
                 (() => {
                     //  如果是新增
                     if (!this.oralId) {

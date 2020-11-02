@@ -41,7 +41,7 @@
             <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
                 <a-space size="small">
                     <router-link :to="{name:'editOral',params:{oralId:sItem.id}}">编辑</router-link>
-                    <a @click="deleteScheme(sItem)">删除</a>
+                    <a @click="deleteSchemeFn(sItem)">删除</a>
                 </a-space>
             </div>
         </a-table>
