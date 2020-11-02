@@ -5,14 +5,12 @@
             <a-input class="lengthen-input-width" v-model="searchData.schemeName" placeholder="请输入方案名称"/>
             <a-select class="basic-select-width" v-model="searchData.energy" placeholder="请选择能量">
                 <a-select-option :value="item.id"
-                                 :key="item.id"
                                  v-for="item in energyList"
                 >{{item.name}}
                 </a-select-option>
             </a-select>
             <a-select class="lengthen-select-width" v-model="searchData.usageMethod" placeholder="请选择食用方法">
                 <a-select-option :value="item.id"
-                                 :key="item.id"
                                  v-for="item in usageMethodList"
                 >{{item.name}}
                 </a-select-option>
@@ -20,16 +18,14 @@
             <a-select class="basic-select-width" placeholder="请选择医院" v-model="searchData.hospitalId"
             >
                 <a-select-option v-for="(item,index) in hospitalList"
-                                 :key="index"
                                  :value="item.id"
-                >
-                    {{item.hospitalName}}
+                >{{item.hospitalName}}
                 </a-select-option>
             </a-select>
             <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
         </div>
         <div class="a-input-group">
-            <router-link :to="{name:'addOral'}">
+            <router-link :to="{name: typeData.addRouter}">
                 <a-button type="primary">
                     新增方案
                 </a-button>
@@ -108,7 +104,15 @@
     ];
 
     export default {
-        computed: {},
+        computed: {
+            typeData(){
+                const isOral = this.$route.name === 'oral';
+                return {
+                    prescriptionType: isOral ? 1 : 2,
+                    addRouter: isOral ? 'addOral' : 'addIntestinal',
+                };
+            }
+        },
         data(){
             return {
                 data: [],
@@ -123,7 +127,7 @@
                 pagination: paginationInit(),
                 //  搜索数据
                 searchData: {
-                    prescriptionType: this.$route.name === 'oral' ? 1 : 2
+                    prescriptionType: null,
                 },
                 //  处方类型下拉
                 prescriptionTypeList,
@@ -134,15 +138,14 @@
             };
         },
         watch: {
-            $route(value){
-                console.log('路由变化请求');
-                this.searchData.prescriptionType = this.$route.name === 'oral' ? 1 : 2;
+            $route(){
+                this.searchData.prescriptionType = this.typeData.prescriptionType;
                 this.searchFn();
             }
         },
         created(){
-            console.log('create请求');//  医院list
-requestHospitalGetList()
+            this.searchData.prescriptionType = this.typeData.prescriptionType;
+            requestHospitalGetList()
                 .then(hospitalList => {
                     this.hospitalList = hospitalList;
                 });
@@ -153,7 +156,6 @@ requestHospitalGetList()
             searchFn(){
                 this.getSchemeListFn();
             },
-
             getSchemeListFn,
             deleteSchemeFn,
             pageChange,
