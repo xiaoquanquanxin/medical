@@ -93,6 +93,7 @@
                  @ok="authorizationModalCheck('refShuttleBox')">
             <ShuttleBox ref="refShuttleBox"
                         :origin-list="shuttleOriginList"
+                        :origin-target-key="shuttleOriginTargetKey"
             />
         </a-modal>
     </div>
@@ -103,7 +104,7 @@
         paginationDecode,
         paginationEncode,
         pageChange,
-        onShowSizeChange
+        onShowSizeChange,
     } from '@/utils/pagination.ts';
     import { twoRowSearch } from '@/utils/tableScroll';
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
@@ -111,7 +112,12 @@
     import ShuttleBox from '@/components/shuttleBox.vue';
     import ViewPrice from '@/components/commodity/viewPrice.vue';
     import { SHUTTLE_BOX } from '../../store/modules/shuttleBox';
-    import { requestGoodsAuthorize, requestGoodsDelete, requestGoodsPage } from '../../api/commodity/commodityList';
+    import {
+        requestChannelBusinessListGoodsId,
+        requestGoodsAuthorize,
+        requestGoodsDelete,
+        requestGoodsPage
+    } from '../../api/commodity/commodityList';
     import { requestCategoryList } from '../../api/commodity/commodityClassification';
     import { requestBrandList } from '../../api/commodity/brand';
     import { requestDeptList } from '../../api/department';
@@ -322,24 +328,6 @@
                         this.pagination = paginationDecode(this.pagination, data);
                     });
             },
-            //  莫泰框方法
-            ...dialogMethods,
-            ...mapActions('shuttleBox', [
-                //  设置穿梭框类型
-                'setShuttleBoxType',
-            ]),
-            //  展示的每一页数据变换
-            onShowSizeChange(current, pageSize){
-                this.pagination.pageSize = pageSize;
-                this.pagination.current = 1;
-                this.searchFn();
-            },
-            //  切换分页页码
-            pageChange(current){
-                this.pagination.current = current;
-                this.searchFn();
-            },
-
             //  查看市场价
             viewMarketPrice(sItem){
                 //  console.log(sItem);
@@ -349,23 +337,28 @@
             editCommodity(sItem){
                 this.$router.push({ name: 'editCommodity', params: { commodityId: sItem.id } });
             },
-            //  授权
+            //  授权渠道商
             authorization(sItem){
                 this.shuttleBoxData = sItem;
-                //  换接口
-                requestChannelBusinessList()
+                Promise.all([
+                    requestChannelBusinessList(),
+                    requestChannelBusinessListGoodsId(sItem.id)
+                ])
                     .then(v => {
-                        this.showModal(DIALOG_TYPE.AUTHORIZATION);
-                        this.setShuttleBoxType(SHUTTLE_BOX.DIALOG_AUTHORIZATION);
+                        const shuttleOriginList = v[0] || [];
+                        const shuttleOriginTargetKey = v[1].data.map(String);
                         this.shuttleOriginList = [];
-                        v.data.forEach(item => {
+                        shuttleOriginList.forEach(item => {
                             const data = {};
                             data.key = item.id.toString();
                             data.title = item.channelBusinessName;
                             data.description = item.channelBusinessName;
                             this.shuttleOriginList.push(data);
                         });
-                        //  console.log(JSON.parse(JSON.stringify(this.shuttleOriginList)));
+                        //  console.table(shuttleOriginList);
+                        this.shuttleOriginTargetKey = shuttleOriginTargetKey;
+                        this.showModal(DIALOG_TYPE.AUTHORIZATION);
+                        this.setShuttleBoxType(SHUTTLE_BOX.DIALOG_AUTHORIZATION);
                     });
             },
             //  上架
@@ -448,7 +441,15 @@
                     //  最后设置可以再次点击
                     this.setConfirmLoading(DIALOG_TYPE.AUTHORIZATION, false);
                 });
-            }
+            },
+            //  莫泰框方法
+            ...dialogMethods,
+            ...mapActions('shuttleBox', [
+                //  设置穿梭框类型
+                'setShuttleBoxType',
+            ]),
+            pageChange,
+            onShowSizeChange,
         }
     };
 </script>

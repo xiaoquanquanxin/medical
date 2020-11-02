@@ -17,17 +17,17 @@
                         >{{item.hospitalName}}
                         </a-select-option>
                     </a-select>
-                    <a-select class="add-form-input"
-                              v-model="tableForm.prescriptionType"
-                              placeholder="请选择处方模板类型"
-                              @change="selectPrescriptionChange"
-                    >
-                        <a-select-option v-for="item in prescriptionTypeList"
-                                         :value="item.id"
-                        >{{item.name}}
-                        </a-select-option>
-                    </a-select>
-                    <a-select class="add-form-input"
+                    <!--                    <a-select class="add-form-input"-->
+                    <!--                              v-model="tableForm.prescriptionType"-->
+                    <!--                              placeholder="请选择处方模板类型"-->
+                    <!--                              @change="selectPrescriptionChange"-->
+                    <!--                    >-->
+                    <!--                        <a-select-option v-for="item in prescriptionTypeList"-->
+                    <!--                                         :value="item.id"-->
+                    <!--                        >{{item.name}}-->
+                    <!--                        </a-select-option>-->
+                    <!--                    </a-select>-->
+                    <a-select class="lengthen-select-width"
                               v-model="tableForm.prescriptionType"
                               placeholder="请选择处方类型"
                               @change="selectPrescriptionChange"
@@ -289,7 +289,7 @@
                 //  医院下拉
                 hospitalList: [],
                 //  处方类型下拉
-                prescriptionTypeList,
+                //  prescriptionTypeList,
                 //  能量下拉
                 energyList,
                 //  食用方法下拉
@@ -467,25 +467,17 @@
                         });
                         this.setOriginCommodityList(originCommodityList);
                     });
-                //  重置数据
-                this.commodityTableData = [];
-                this.timeTableData = [];
+                this.resetMainData();
             },
             //  切换处方类型
             selectPrescriptionChange(value){
-                console.log(value);
-                console.log(this.tableForm.prescriptionType);
-                //  如果去新增膳食营养计划
-                if (value === 3) {
-                    this.$router.push({ name: 'addDietary' });
-                    return;
-                }
-                //  组织处方类型名称
-                this.prescriptionTypeList.forEach(item => {
-                    if (item.id === value) {
-                        this.tableForm.prescriptionName = item.name;
-                    }
-                });
+                this.resetMainData();
+            },
+            //  重置主要数据
+            resetMainData(){
+                //  重置数据
+                this.commodityTableData = [];
+                this.timeTableData = [];
             },
             //  选择商品
             selectCommodity(){
@@ -538,7 +530,6 @@
 
             //  确定选择的时间
             selectTimeModalCheck(){
-                //  console.clear();
                 const commodityTableData = JSON.parse(JSON.stringify(this.commodityTableData));
                 //  子列表数据
                 const list = commodityTableData.map(item => {

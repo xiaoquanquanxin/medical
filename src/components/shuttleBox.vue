@@ -23,12 +23,7 @@
     </a-transfer>
 </template>
 <script>
-    import { mapGetters, mapActions } from 'vuex';
     import { SHUTTLE_BOX } from '../store/modules/shuttleBox';
-    import { requestDiseaseList } from '../api/disease';
-
-    //	穿梭框的基础数据
-    export const SHUTTLE_BOX_BASIC_DATA = {};
 
     //  穿梭框
     export default {

@@ -1,4 +1,4 @@
-import request from '@/utils/request';
+import request, {unifiedHandlingList} from '@/utils/request';
 
 //	渠道商分页列表		✅，⚠️input不好使，列表缺字段；
 //						⚠️有些东西，前端没法处理，比如地址，如果返回id，前端不可能去查完了比对，太麻烦，所以region这个字段就可以
@@ -57,5 +57,6 @@ export function requestChannelBusinessList() {
 	return request({
 		url: '/api/channelBusiness/list',
 		method: 'get',
-	});
+	})
+		.then(unifiedHandlingList)
 }

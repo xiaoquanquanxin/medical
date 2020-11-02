@@ -71,3 +71,11 @@ export function requestGoodsUnitType() {
 	})
 		.then(unifiedHandlingList)
 }
+
+//	根据商品id获取已有渠道商
+export function requestChannelBusinessListGoodsId(id: string | number) {
+	return request({
+		url: `/api/channelBusiness/listGoodsId/${id}`,
+		method: 'get',
+	});
+}
