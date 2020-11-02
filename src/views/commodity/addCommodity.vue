@@ -591,7 +591,6 @@
             };
         },
         created(){
-            //  alert('编辑接口，可以成功但是，uintListVos没更新，别的字段可以更新');
             this.searchFn();
             console.log('是编辑？', !!this.commodityId);
         },
@@ -600,8 +599,6 @@
             searchFn(){
                 requestGoodsUnitType()
                     .then(unitTypeList => {
-                        //  console.log(JSON.parse(JSON.stringify(unitTypeList)));
-                        //  alert('/api/goods/unitType没数据');
                         this.unitTypeList = unitTypeList;
                     });
                 //  商品分类list
@@ -667,7 +664,6 @@
                         });
                         //  关键字
                         this.goodsKeyWord = goodsKeyWord;
-                        debugger;
                         //  院内
                         const uintParams1 = data.uintListVos.filter(item => {
                             return item.type === 1;
