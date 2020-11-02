@@ -25,7 +25,6 @@
                     </a-form>
                 </a-card>
                 <a-card title="病人列表">
-                    {{patientId}}
                     <div class="a-input-group">
                         <a-button type="primary" @click="addAdmittedHospitalFn">新增用户</a-button>
                     </div>
@@ -37,6 +36,7 @@
                             :scroll="{x: 'auto', y: 'calc(100vh - 550px)'}"
                             :filtered="true"
                             :customRow="customRow"
+                            :rowClassName="rowClassNameFn"
                     >
                         <!--年龄/性别-->
                         <div slot="info" slot-scope="scope,sItem,sIndex,extra">
@@ -134,15 +134,15 @@
             },
             //  页面参数 - 病人id
             patientId(){
-                console.log(window.document.getElementById('userListTable'));
+                //  console.log(window.document.getElementById('userListTable'));
                 return Number(this.$route.params.patientId);
             },
         },
-        watch: {
-            $route(value){
-                console.log(value.params.patientId);
-            }
-        },
+//        watch: {
+//            $route(value){
+//                console.log(value.params.patientId);
+//            }
+//        },
         data(){
             return {
                 //  分页信息
@@ -166,10 +166,16 @@
             };
         },
         methods: {
-            ...mapActions('userList', [
-                //  保存病人信息
-                'setPatientBasicInfo',
-            ]),
+            rowClassNameFn(record, index){
+                if (this.patientId === record.id) {
+//                    console.log('🍉🍉🍉🍉🍉🍉');
+//                    console.log(this.patientId);
+//                    console.log(record.id);
+//                    console.log('🍉🍉🍉🍉🍉🍉');
+                    return 'user-list-high-light';
+                }
+            },
+
             //  主要请求
             searchFn(){
                 requestPatientPage(Object.assign({ param: this.searchData }, paginationEncode(this.pagination)))
@@ -224,7 +230,10 @@
                 this.setPatientBasicInfo(null);
                 this.$router.push({ name: 'addAdmittedHospital' });
             },
-
+            ...mapActions('userList', [
+                //  保存病人信息
+                'setPatientBasicInfo',
+            ]),
             jumpTo,
             pageChange,
             onShowSizeChange,
@@ -232,6 +241,8 @@
     };
 </script>
 <style scoped>
+    @import "~@/css/table.css";
+    
     .router-view {
         height: calc(100vh - 180px);
         overflow: auto;

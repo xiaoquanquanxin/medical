@@ -8,3 +8,9 @@
 .table-group-row {
     border-bottom: 1px solid #e8e8e8;
 }
+
+/*用户列表高亮度*/
+.user-list-high-light {
+    background-color: #e6f7ff;
+    font-weight: bold;
+}
