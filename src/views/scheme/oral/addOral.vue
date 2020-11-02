@@ -152,7 +152,7 @@
                                              @input="dosageChange(scope,item)"
                                     />
                                     <span v-if="+tableForm.prescriptionType===1" data-msg="院内配置">
-                                        {{unitTypeMap[item.basicUnitItem.unameType].label}}
+                                        {{unitTypeMap[item.basicUnitItem.uname].label}}
                                     </span>
                                     <span v-else data-msg="门诊领药">{{item.unitUse}}</span>
                                 </a-space>
