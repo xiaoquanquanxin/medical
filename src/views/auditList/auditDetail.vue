@@ -44,16 +44,6 @@
                 :data-source="basicInfoData"
         />
         <br>
-        <!--口服肠内营养补充-->
-        <OralLikeBasicTable
-                :data-title="kqcnyybcDataTitle" :data-source="kqcnyybcCommodity"
-        />
-        <br>
-        <!--复杂-->
-        <OralLikeComplexTable
-                :data-source="kqcnyybcTimeTableData"
-        />
-        <br>
         <!--肠内营养支持-->
         <OralLikeBasicTable
                 :data-title="cnyyzcDataTitle"
@@ -63,6 +53,16 @@
         <!--复杂-->
         <OralLikeComplexTable
                 :data-source="cnyyzcTimeTableData"
+        />
+        <br>
+        <!--口服肠内营养补充-->
+        <OralLikeBasicTable
+                :data-title="kqcnyybcDataTitle" :data-source="kqcnyybcCommodity"
+        />
+        <br>
+        <!--复杂-->
+        <OralLikeComplexTable
+                :data-source="kqcnyybcTimeTableData"
         />
         <br>
         <!--膳食营养计划-->

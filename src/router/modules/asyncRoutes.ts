@@ -305,19 +305,6 @@ export const asyncRoutesList = [
 		children: [
 			{
 				meta: {
-					chName: '口服肠内营养补充',
-					selectRouteKey: 'scheme',
-					//	是scheme路由的某一项子路由
-					transverseSubPaths1: 'oral',
-					infoForHistory: ['处方模板管理', 'scheme'],
-					hidden: true,
-				},
-				name: 'oral',
-				path: '/scheme/oral',
-				component: () => import(/* webpackChunkName: "oral" */ '@/views/scheme/oral/oral.vue'),
-			},
-			{
-				meta: {
 					chName: '肠内营养支持',
 					selectRouteKey: 'scheme',
 					//	是scheme路由的某一项子路由
@@ -328,6 +315,19 @@ export const asyncRoutesList = [
 				name: 'intestinal',
 				path: '/scheme/intestinal',
 				// component: () => import(/* webpackChunkName: "intestinal" */ '@/views/scheme/intestinal/intestinal.vue'),
+				component: () => import(/* webpackChunkName: "oral" */ '@/views/scheme/oral/oral.vue'),
+			},
+			{
+				meta: {
+					chName: '口服肠内营养补充',
+					selectRouteKey: 'scheme',
+					//	是scheme路由的某一项子路由
+					transverseSubPaths1: 'oral',
+					infoForHistory: ['处方模板管理', 'scheme'],
+					hidden: true,
+				},
+				name: 'oral',
+				path: '/scheme/oral',
 				component: () => import(/* webpackChunkName: "oral" */ '@/views/scheme/oral/oral.vue'),
 			},
 			{
@@ -344,7 +344,7 @@ export const asyncRoutesList = [
 				component: () => import(/* webpackChunkName: "dietary" */ '@/views/scheme/dietary/dietary.vue'),
 			}
 		],
-		redirect: '/scheme/oral',
+		redirect: '/scheme/intestinal',
 	},
 	{
 		meta: {

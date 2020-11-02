@@ -7,20 +7,20 @@
         <!--基础数据-->
         <BasicInfoEditTable/>
         <br>
-        <!--口腔肠内-->
+        <!--肠内-->
         <OralEditTable
-                v-if="true"
-                :key="1"
-                :data-title="kqcnOralEditDataTitle"
-                ref="kqcnOralEditTableRef"
+                :key="2"
+                :data-title="cnyyzcOralEditDataTitle"
+                ref="cnyyzcOralEditTableRef"
         />
         <div v-if="true">
             <br>
-            <!--肠内-->
+            <!--口腔肠内-->
             <OralEditTable
-                    :key="2"
-                    :data-title="cnyyzcOralEditDataTitle"
-                    ref="cnyyzcOralEditTableRef"
+                    v-if="true"
+                    :key="1"
+                    :data-title="kqcnOralEditDataTitle"
+                    ref="kqcnOralEditTableRef"
             />
             <br>
         </div>
