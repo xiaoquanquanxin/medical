@@ -146,7 +146,7 @@
                         data.records.forEach((item, index) => {
                             item.key = index;
                             //  状态需要布尔值
-                            item.statusBooleanFormat = item.status === 1;
+                            item.statusBooleanFormat = item.status === 0;
                         });
                         this.data = data.records;
                         console.log(JSON.parse(JSON.stringify(data.records[2])));
