@@ -67,3 +67,21 @@ request.interceptors.response.use(
 );
 
 export default request;
+
+//	统一处理常规列表，for下拉，为了加key字段
+export const unifiedHandlingList = (v: any): [] => {
+	const data = v.data || [];
+	data.forEach((item: any, index: number) => {
+		item.key = index;
+	});
+	return data
+}
+
+//	统一处理常规列表，for分页，为了加key字段
+export const unifiedHandlingPag = (v: any): [] => {
+	const {records} = v.data;
+	records.forEach((item: any, index: number) => {
+		item.key = index;
+	});
+	return v.data;
+}

@@ -1,4 +1,4 @@
-import request from "@/utils/request"
+import request, {unifiedHandlingList} from "@/utils/request"
 
 //	商品分类分页列表		✅，⚠️缺input
 export function requestCategoryPage(data: any) {
@@ -49,7 +49,8 @@ export function requestCategoryList() {
 	return request({
 		url: `/api/category/list`,
 		method: 'get',
-	});
+	})
+		.then(unifiedHandlingList)
 }
 
 

@@ -4,16 +4,14 @@
         <div class="a-input-group">
             <a-input class="basic-input-width" v-model="searchData.goodsName" placeholder="请输入商品名称"/>
             <a-input class="basic-input-width" v-model="searchData.goodsProductCode" placeholder="请输入商品货号"/>
-            <a-select class="basic-select-width" v-model="searchData.goodsBrandId" placeholder="请选择品牌">
+            <a-select class="basic-select-width" v-model="searchData.brandId" placeholder="请选择品牌">
                 <a-select-option :value="item.id"
-                                 :key="item.id"
                                  v-for="item in goodsBrandList"
                 >{{item.brandName}}
                 </a-select-option>
             </a-select>
-            <a-select class="basic-select-width" v-model="searchData.goodsCategoryId" placeholder="请选择分类">
+            <a-select class="basic-select-width" v-model="searchData.categoryId" placeholder="请选择分类">
                 <a-select-option :value="item.id"
-                                 :key="item.id"
                                  v-for="item in goodsCategoryList"
                 >{{item.categoryName}}
                 </a-select-option>
@@ -22,7 +20,7 @@
                 <a-select-option value="1">上架</a-select-option>
                 <a-select-option value="2">下架</a-select-option>
             </a-select>
-            <a-button class="basic-button-width" type="primary" @click="searchFn">搜索[缺查询细节]</a-button>
+            <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
         </div>
         <div class="a-input-group">
             <router-link :to="{name:'addCommodity'}">
@@ -128,27 +126,27 @@
         {
             title: '商品货号',
             dataIndex: 'goodsProductCode',
-            width: 100,
+            width: 150,
         },
         {
             title: '通用名',
             dataIndex: 'goodsTradeName',
-            width: 100,
+            width: 150,
         },
         {
             title: '商品分类',
-            dataIndex: 'goodsCategoryId',
-            width: 100,
+            dataIndex: 'goodsCategoryName',
+            width: 150,
         },
         {
             title: '基本单位',
             dataIndex: 'unit',
-            width: 100,
+            width: 150,
         },
         {
             title: '规格',
             dataIndex: 'goodsSpecifications',
-            width: 100,
+            width: 150,
         },
 //        {
 //            title: '市场价',
@@ -157,23 +155,23 @@
 //        },
         {
             title: '生产厂家',
-            dataIndex: 'manufactorId',
-            width: 100,
+            dataIndex: 'manufactorName',
+            width: 150,
         },
         {
             title: '品牌',
-            dataIndex: 'goodsBrandId',
-            width: 100,
+            dataIndex: 'goodsBrandName',
+            width: 150,
         },
         {
             title: '供应商',
-            dataIndex: 'supplierId',
-            width: 100,
+            dataIndex: 'supplierName',
+            width: 150,
         },
         {
             title: '更新时间',
             dataIndex: 'update',
-            width: 100,
+            width: 150,
         },
         {
             title: '操作',
@@ -300,16 +298,14 @@
         created(){
             this.searchFn();
             requestCategoryList()
-                .then(v => {
+                .then(goodsCategoryList => {
                     //  商品分类list
-//                        console.log(v.data);
-                    this.goodsCategoryList = v.data;
+                    this.goodsCategoryList = goodsCategoryList;
                 });
             requestBrandList()
-                .then(v => {
+                .then(goodsBrandList => {
                     //  商品品牌list
-//                        console.log(v.data);
-                    this.goodsBrandList = v.data;
+                    this.goodsBrandList = goodsBrandList;
                 });
         },
         methods: {

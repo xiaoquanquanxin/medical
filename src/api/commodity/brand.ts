@@ -1,4 +1,4 @@
-import request from "@/utils/request"
+import request, {unifiedHandlingList} from "@/utils/request"
 
 //	品牌分页列表			✅，⚠️缺input
 export function requestBrandPage(data: any) {
@@ -49,7 +49,8 @@ export function requestBrandList() {
 	return request({
 		url: '/api/brand/list',
 		method: 'get',
-	});
+	})
+		.then(unifiedHandlingList)
 }
 
 
