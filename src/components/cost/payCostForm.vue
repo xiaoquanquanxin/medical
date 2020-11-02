@@ -20,8 +20,8 @@
             </a-form-item>
             <a-form-item label="支付方式">
                 <a-radio-group v-decorator="payWayDecorator">
-                    <a-radio value="1">支付宝支付</a-radio>
-                    <a-radio value="2">微信支付</a-radio>
+<!--                    <a-radio value="1">支付宝支付</a-radio>-->
+<!--                    <a-radio value="2">微信支付</a-radio>-->
                     <a-radio value="3">现金支付</a-radio>
                 </a-radio-group>
             </a-form-item>
@@ -65,7 +65,7 @@
                 }],
                 //  支付方式(1支付宝，2微信,3现金缴费)
                 payWayDecorator: ['payWay', {
-                    initialValue: '1',
+                    initialValue: '3',
                     rules: [{
                         required: true,
                         message: '请输入金额',

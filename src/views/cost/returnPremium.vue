@@ -83,7 +83,7 @@
         {
             title: '收费时间',
             dataIndex: 'orderTime',
-            width: 100,
+            width: 150,
         },
         {
             title: '收费人',
