@@ -88,7 +88,7 @@
                             >{{item.unitPrice}}元/{{unitTypeMap[item.uname].label}}</p>
                         </div>
                         <!--数量-->
-                        <div slot="quantity" slot-scope="scope,sItem,sIndex,extra">
+                        <div slot="quantity" slot-scope="scope,sItem,sIndex,extra" v-if="commodityTableData.length">
                             <a-input v-if="+tableForm.prescriptionType===1"
                                      v-model="sItem.quantity"
                                      placeholder="请输入数量"
@@ -147,7 +147,10 @@
                                  class="negative-margin-item is-input"
                             >
                                 <a-space size="small">
-                                    <a-input placeholder="请输入使用量" v-model="item.dosage"/>
+                                    <a-input placeholder="请输入使用量"
+                                             v-model="item.dosage"
+                                             @input="dosageChange(scope,item)"
+                                    />
                                     <span v-if="+tableForm.prescriptionType===1" data-msg="院内配置">
                                         {{unitTypeMap[item.basicUnitItem.unameType].label}}
                                     </span>
@@ -267,7 +270,6 @@
         },
         {
             title: '数量',
-            dataIndex: 'quantity',
             width: 150,
             scopedSlots: { customRender: 'quantity' },
         },
@@ -401,6 +403,12 @@
             this.searchFn();
             console.log('是编辑？', !!this.oralId);
         },
+
+//        watch: {
+//            timeTableData(value){
+//                console.log(value);
+//            }
+//        },
         methods: {
             //  主要请求
             searchFn(){
@@ -515,11 +523,14 @@
                     this.hideModal(DIALOG_TYPE.TEMPLATE_SELECT_COMMODITY);
                     //  console.log('源数据', JSON.stringify(this.originCommodityList));
                     //  只展示被选中的
-                    this.commodityTableData = this.originCommodityList.filter(item => item.isCheckboxChecked);
+                    const commodityTableData = this.originCommodityList.filter(item => item.isCheckboxChecked);
+//                    commodityTableData.forEach(item => {
+//                        item.quantity = '9999999999';
+//                    });
                     //  JSON.parse(JSON.stringify(this.commodityTableData));
                     //  区分，如果是，院内，就是有3条数据的，需要计算出来基本单位
                     if (+this.tableForm.prescriptionType === 1) {
-                        this.commodityTableData.forEach(item => {
+                        commodityTableData.forEach(item => {
                             //  基础数据
                             const basicUnitItem = item.uintListVos.filter(_item => +_item.unameType === 1)[0];
                             if (!basicUnitItem) {
@@ -529,6 +540,7 @@
                             item.basicUnitItem = basicUnitItem;
                         });
                     }
+                    this.commodityTableData = commodityTableData;
                     //  console.log(JSON.parse(JSON.stringify(this.commodityTableData)))
                     //  重置时间表格数据
                     this.timeTableData = [];
@@ -711,7 +723,7 @@
                 console.log(JSON.stringify(prescriptionContent));
                 console.clear();
                 console.log(JSON.stringify(this.tableForm));
-                
+
                 (() => {
                     //  如果是新增
                     if (!this.oralId) {
@@ -729,6 +741,56 @@
                         console.log(err);
                     });
 
+            },
+
+            //  使用量
+            dosageChange(scope, item){
+//                console.log(JSON.parse(JSON.stringify(item)));
+//                //    被编辑的商品id
+//                const { goodsId } = item;
+//                this.commodityTableData.forEach(commodityItem => {
+//                    const { id, basicUnitItem } = commodityItem;
+//                    if (goodsId === id) {
+//                        //  console.log(commodityItem.quantity);
+//                        //  当前商品
+//                        //  console.log(JSON.parse(JSON.stringify(item)));
+//                        //  商品表格对应的商品数据
+//                        //  console.log(JSON.parse(JSON.stringify(commodityItem)));
+//                        //  基本单位
+//                        //  console.log(JSON.parse(JSON.stringify(basicUnitItem)));
+//                        //  单位关系
+//                        console.log(item.unitExchangeRate);
+//                        commodityItem.quantity = (item.dosage / item.unitExchangeRate).toFixed(2);
+//                    }
+//                });
+
+                //  console.log(JSON.parse(JSON.stringify(item)).goodsId);
+                //    被编辑的商品id
+                const { goodsId } = item;
+                const commodityItem = this.commodityTableData.filter(commodityItem => {
+                    const { id } = commodityItem;
+                    if (goodsId === id) {
+                        return commodityItem;
+                    }
+                })[0];
+                if (!commodityItem) {
+                    alert('数据组织问题');
+                }
+                //  console.log(JSON.parse(JSON.stringify(commodityItem)));
+                let quantity = 0;
+                this.timeTableData.forEach(timeItem => {
+                    //  被编辑的商品id
+                    const { list } = timeItem;
+                    list.forEach(_item => {
+                        //  console.log(quantity);
+                        if (goodsId === _item.goodsId) {
+                            quantity += (_item.dosage || 0) / item.unitExchangeRate;
+                        }
+                    });
+                });
+                //  console.log(quantity);
+                commodityItem.quantity = quantity.toFixed(2);
+                this.$forceUpdate();
             },
 
             //  时间选择器的方法
