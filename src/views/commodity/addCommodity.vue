@@ -9,7 +9,7 @@
                 @submit="handleSubmit"
                 autocomplete="off"
         >
-            <div v-if="true">
+            <div v-show="false">
                 <!--            <div style="display: none">-->
                 <a-form-item label="商品名称">
                     <a-input class="add-form-input"
@@ -121,6 +121,9 @@
                             :data-source="uintParams1"
                             :pagination="false"
                     >
+                        <div slot="unameType" slot-scope="scope,sItem,sIndex,extra">
+                            {{unameTypeMap[scope.unameType]}}
+                        </div>
                         <div slot="uname" slot-scope="scope,sItem,sIndex,extra">
                             <a-select v-model="sItem.uname"
                                       placeholder="请选择单位"
@@ -192,6 +195,9 @@
                             :data-source="uintParams2"
                             :pagination="false"
                     >
+                        <div slot="unameType" slot-scope="scope,sItem,sIndex,extra">
+                            {{unameTypeMap[scope.unameType]}}
+                        </div>
                         <div slot="uname" slot-scope="scope,sItem,sIndex,extra">
                             <a-select v-model="sItem.uname"
                                       placeholder="请选择单位"
@@ -302,12 +308,12 @@
         requestGoodsInsert,
         requestGoodsUpdate
     } from '../../api/commodity/addCommodity';
+    import { unameTypeMap } from '../../utils/constants';
 
     const columnsMap = {
-        name: {
+        unameType: {
             title: '',
-            key: '类型',
-            dataIndex: 'name',
+            scopedSlots: { customRender: 'unameType' },
             width: 100,
         },
         unitExchangeRate: {
@@ -350,7 +356,7 @@
     const auxiliaryUnitsData = {
         key: 3,
         type: 1,
-        name: '辅助单位',
+        unameType: 3,
         uname: undefined,
         unitExchangeRate: '',
         unitPrice: '',
@@ -361,7 +367,7 @@
     };
     //  院内列
     const columns1 = [
-        columnsMap.name,
+        columnsMap.unameType,
         columnsMap.uname,
         {
             title: '单位关系',
@@ -376,7 +382,7 @@
     ];
     //  院外列
     const columns2 = [
-        columnsMap.name,
+        columnsMap.unameType,
         columnsMap.uname,
         columnsMap.unitPrice,
         columnsMap.unitEnergy,
@@ -395,7 +401,7 @@
         {
             key: 1,
             type: 2,
-            name: '基本单位',
+            unameType: 1,
             uname: undefined,
             unitPrice: '',
             unitEnergy: '',
@@ -430,7 +436,7 @@
                 {
                     key: 1,
                     type: 1,
-                    name: '基本单位',
+                    unameType: 1,
                     uname: undefined,
                     unitExchangeRate: '',
                     unitPrice: '',
@@ -442,7 +448,7 @@
                 {
                     key: 2,
                     type: 1,
-                    name: '标准单位',
+                    unameType: 2,
                     uname: undefined,
                     unitExchangeRate: '',
                     unitPrice: '',
@@ -453,6 +459,8 @@
                 }
             ];
             return {
+                //	单位类型映射
+                unameTypeMap,
                 //  商品单位下拉
                 unitTypeList: [],
                 //  商品分类list
@@ -645,7 +653,6 @@
                             preservationMethod,
                             status,
                             supplierId,
-                            uintListVos,
                         } = data;
                         //  设置编辑值
                         this.form.setFieldsValue({
@@ -819,6 +826,7 @@
                         uintParams
                     };
                     console.log(data);
+                    return;
                     (() => {
                         //  如果是新增
                         if (!this.commodityId) {

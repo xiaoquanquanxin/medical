@@ -39,3 +39,10 @@ export const cnyyzcOralEditDataTitle = {
 	name: '肠内营养支持',
 	prescriptionType: 2,
 }
+
+//	单位类型映射
+export const unameTypeMap = {
+	1: '基本单位',
+	2: '标准单位',
+	3: '辅助单位',
+}

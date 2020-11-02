@@ -32,7 +32,7 @@ request.interceptors.request.use(
 		//	config.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 		config.headers.post['Content-Type'] = 'application/json';
 		const Authorization = getJwt();
-		//	console.log(`Authorization是 ：`, Authorization)
+		// 	console.log(`Authorization是 ：`, Authorization)
 		config.headers['Authorization'] = Authorization;
 		return config;
 	},

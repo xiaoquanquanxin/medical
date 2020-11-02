@@ -141,6 +141,12 @@
                                 <a-space size="small">
                                     <a-input placeholder="请输入使用量" v-model="item.dosage"/>
                                     <span v-if="+tableForm.prescriptionType===1" data-msg="院内配置">
+                                        {{scope}}
+                                        <br>
+                                        <br>
+                                        <br>
+                                        <br>
+                                        {{scope.list}}
 <!--                                        ⚠️⚠️⚠️-->
                                         <!--                                        {{unitTypeMap[item.uname].label}}-->
                                         {{unitTypeMap[scope.list[0].uname].label}}
@@ -324,13 +330,13 @@
                     },
                     {
                         title: '操作',
-                        width: 100,
+                        width: 80,
                         scopedSlots: { customRender: 'operation' },
                     },
                     {
                         title: '备注',
                         dataIndex: 'remark',
-                        width: 200,
+                        width: 100,
                         rowSpan: 100,
                         customRender: (text, row, index) => {
                             const obj = {
@@ -376,7 +382,6 @@
         },
         created(){
             this.searchFn();
-            console.clear();
             console.log('是编辑？', !!this.oralId);
         },
         methods: {
@@ -491,7 +496,7 @@
                 const promise = this.$refs[refSelectCommodity].handleSubmit();
                 promise.then(v => {
                     this.hideModal(DIALOG_TYPE.TEMPLATE_SELECT_COMMODITY);
-                    console.log('源数据', JSON.stringify(this.originCommodityList));
+                    //  console.log('源数据', JSON.stringify(this.originCommodityList));
                     //  只展示被选中的
                     this.commodityTableData = this.originCommodityList.filter(item => item.isCheckboxChecked);
                     //  重置时间表格数据
