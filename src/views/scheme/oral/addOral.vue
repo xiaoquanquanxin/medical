@@ -141,17 +141,10 @@
                                 <a-space size="small">
                                     <a-input placeholder="请输入使用量" v-model="item.dosage"/>
                                     <span v-if="+tableForm.prescriptionType===1" data-msg="院内配置">
-                                        {{scope}}
-                                        <br>
-                                        <br>
-                                        <br>
-                                        <br>
-                                        {{scope.list}}
-<!--                                        ⚠️⚠️⚠️-->
-                                        <!--                                        {{unitTypeMap[item.uname].label}}-->
+                                        院内配置
                                         {{unitTypeMap[scope.list[0].uname].label}}
                                     </span>
-                                    <!--<span v-else>{{scope.list[0]}}</span>-->
+                                    <span v-else data-msg="门诊领药">{{item.unitUse}}</span>
                                 </a-space>
                             </div>
                         </div>
@@ -362,12 +355,14 @@
                 tableForm: {
                     //  医院
                     hospitalId: undefined,
+                    hospitalId: 4,
                     //  医院名
                     hospitalName: undefined,
                     //  处方名
                     prescriptionName: undefined,
                     //  处方类型
                     prescriptionType: undefined,
+                    prescriptionType: '1',
                     //  能量
                     energy: undefined,
                     //  食用方法

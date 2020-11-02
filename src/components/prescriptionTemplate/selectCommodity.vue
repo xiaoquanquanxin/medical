@@ -24,7 +24,7 @@
                             {{unitTypeMap[item.uname].label}}
                         </span>
                         <span v-else>
-                            {{item}}
+                            {{item.unitUse}}
                         </span>
                     </a-radio>
                 </a-radio-group>
