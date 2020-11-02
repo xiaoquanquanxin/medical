@@ -314,7 +314,6 @@ export const asyncRoutesList = [
 				},
 				name: 'intestinal',
 				path: '/scheme/intestinal',
-				// component: () => import(/* webpackChunkName: "intestinal" */ '@/views/scheme/intestinal/intestinal.vue'),
 				component: () => import(/* webpackChunkName: "oral" */ '@/views/scheme/oral/oral.vue'),
 			},
 			{
@@ -377,7 +376,7 @@ export const asyncRoutesList = [
 		},
 		path: '/scheme/addIntestinal',
 		name: 'addIntestinal',
-		component: () => import(/* webpackChunkName: "addIntestinal" */ '@/views/scheme/intestinal/addIntestinal.vue'),
+		component: () => import(/* webpackChunkName: "addOral" */ '@/views/scheme/oral/addOral.vue'),
 	},
 	{
 		meta: {
@@ -388,7 +387,7 @@ export const asyncRoutesList = [
 		},
 		path: '/scheme/editIntestinal/:intestinalId',
 		name: 'editIntestinal',
-		component: () => import(/* webpackChunkName: "addIntestinal" */ '@/views/scheme/intestinal/addIntestinal.vue'),
+		component: () => import(/* webpackChunkName: "addOral" */ '@/views/scheme/oral/addOral.vue'),
 	},
 	{
 		meta: {
