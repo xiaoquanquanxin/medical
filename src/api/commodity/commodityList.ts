@@ -9,32 +9,6 @@ export function requestGoodsPage(data: any) {
 	});
 }
 
-//	新增商品		❌，404
-export function requestGoodsInsert(data: any) {
-	return request({
-		url: '/api/goods/insert',
-		method: 'post',
-		data,
-	});
-}
-
-//	编辑商品
-export function requestGoodsUpdate(data: any) {
-	return request({
-		url: '/api/goods/update',
-		method: 'post',
-		data,
-	});
-}
-
-//	获取商品信息
-export function requestGoodsGet(id: string | number) {
-	return request({
-		url: `/api/goods/get/${id}`,
-		method: 'get',
-	});
-}
-
 //	商品授权渠道商
 export function requestGoodsAuthorize(data: any) {
 	return request({
@@ -61,16 +35,6 @@ export function requestGoodsListByHospital(hospitalId: string | number) {
 }
 
 //	缺少：市场价
-
-
-//	获取商品单位 下拉
-export function requestGoodsUnitType() {
-	return request({
-		url: '/api/goods/unitType',
-		method: 'get',
-	})
-		.then(unifiedHandlingList)
-}
 
 //	根据商品id获取已有渠道商
 export function requestChannelBusinessListGoodsId(id: string | number) {

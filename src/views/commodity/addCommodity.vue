@@ -291,17 +291,17 @@
     import { formItemLayout } from '@/utils/layout.ts';
     import VueQuillEditor from 'vue-quill-editor/src/editor';
     import GoBackButton from '@/components/goBackButton.vue';
-    import {
-        requestGoodsGet,
-        requestGoodsInsert,
-        requestGoodsUnitType,
-        requestGoodsUpdate
-    } from '../../api/commodity/commodityList';
     import { uploadHandleChange, beforeUploadFn, beforeUploadData } from '../../utils/upload';
     import { requestCategoryList } from '../../api/commodity/commodityClassification';
     import { requestBrandList } from '../../api/commodity/brand';
     import { requestSupplierList } from '../../api/supplier';
     import { requestManufactorList } from '../../api/commodity/manufacturer';
+    import {
+        requestGoodsGet,
+        requestGoodsUnitType,
+        requestGoodsInsert,
+        requestGoodsUpdate
+    } from '../../api/commodity/addCommodity';
 
     const columnsMap = {
         name: {
@@ -597,6 +597,7 @@
         methods: {
             //  主要请求
             searchFn(){
+                //  单位下拉
                 requestGoodsUnitType()
                     .then(unitTypeList => {
                         this.unitTypeList = unitTypeList;

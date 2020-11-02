@@ -16,12 +16,16 @@
                                v-model="sItem.purchaseUnitCheckId"
                                @change="radioGroupChange(sItem)"
                 >
-                    <a-radio :key="index"
-                             v-for="(item,index) in scope.uintListVos"
+                    <a-radio v-for="(item,index) in scope.uintListVos"
                              :value="item.id"
                              class="negative-margin-item"
                     >
-                        {{item.uname}}
+                        <span v-if="+prescriptionType===1">
+                            {{unitTypeMap[item.uname].label}}
+                        </span>
+                        <span v-else>
+                            {{item}}
+                        </span>
                     </a-radio>
                 </a-radio-group>
             </div>
@@ -47,12 +51,12 @@
         },
         {
             title: '购买单位',
-            width: 200,
+            width: 100,
             scopedSlots: { customRender: 'purchaseUnit' },
         },
         {
             title: '价格',
-            width: 200,
+            width: 100,
             scopedSlots: { customRender: 'price' },
         },
     ];
@@ -63,8 +67,11 @@
             originCommodityList(){
                 //  💡修改，这地方不存了
                 return this.$store.state.prescriptionTemplate.originCommodityList;
-                //  return JSON.parse(JSON.stringify(this.$store.state.prescriptionTemplate.originCommodityList));
             },
+            //  单元map
+            unitTypeMap(){
+                return this.$store.state.constants.unitTypeMap;
+            }
         },
         props: ['prescriptionType'],
         data(){
@@ -83,7 +90,6 @@
             console.log('初始化打开选择商品');
             console.log('被选中的数据', this.selectedRowKeys);
             console.log('总数据', JSON.parse(JSON.stringify(this.originCommodityList)));
-            console.log(this.prescriptionType);
         },
         methods: {
             ...mapActions('prescriptionTemplate', [

@@ -41,5 +41,7 @@ const getters = {
 	addOral: (state: any) => state.app.addOral,
 
 	intervention: (state: any) => state.app.intervention,
+	//	常量
+	constants: (state: any) => state.app.constants,
 };
 export default getters;

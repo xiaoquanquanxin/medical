@@ -184,7 +184,7 @@
                  cancel-text="取消"
                  @ok="selectCommodityModalCheck('refSelectCommodity')">
             <SelectCommodity ref="refSelectCommodity"
-                             :prescription-type="this.tableForm.prescriptionType"
+                             :prescription-type="tableForm.prescriptionType"
             />
         </a-modal>
         <!--选择时间莫泰框-->
@@ -219,11 +219,9 @@
     import { prescriptionTypeList, energyList, usageMethodList } from '../../../utils/constants';
     import { requestHospitalGetList } from '../../../api/hospital';
     import {
-        requestGoodsGet,
         requestGoodsListByHospital,
-        requestGoodsPage
     } from '../../../api/commodity/commodityList';
-    import { noPaginationData } from '../../../utils/pagination';
+    import { requestGoodsUnitType } from '../../../api/commodity/addCommodity';
 
     //  选择商品表格列的意义
     const commodityTableColumns = [
@@ -348,7 +346,6 @@
 
                 //  表单中表格的数据
                 tableForm: {
-                    prescriptionName: '口服肠内营养补充',
                     //  医院
                     hospitalId: undefined,
                     //  医院名
@@ -377,6 +374,11 @@
         methods: {
             //  主要请求
             searchFn(){
+                //  单位下拉
+                requestGoodsUnitType()
+                    .then(unitTypeList => {
+                        this.setUnitTypeList(unitTypeList);
+                    });
                 //  医院list
                 requestHospitalGetList()
                     .then(hospitalList => {
@@ -430,24 +432,6 @@
                             });
                     });
             },
-            //  时间选择器的方法
-            moment,
-            //  莫泰框方法
-            ...dialogMethods,
-//            ...mapActions('addOral', [
-//                //  设置商品列表数据
-//                'setShoppingList',
-//            ]),
-            ...mapActions('prescriptionTemplate', [
-                //  处方模板，请求选择商品的源数据
-                'setOriginCommodityList',
-                //  设置remark的行数
-                'setRowForRemark',
-            ]),
-            ...mapActions('prescriptionTemplate', [
-                //  设置商品列表数据
-                'setRemark',
-            ]),
             //  切换医院
             selectHospitalChange(value){
                 //  组织医院名
@@ -485,6 +469,9 @@
                         const originCommodityList = [];
                         v.data.forEach(item => {
                             item.key = item.id;
+                            item.uintListVos = item.uintListVos.filter(_item => {
+                                return _item.type === +prescriptionType;
+                            });
                             originCommodityList.push(item);
                         });
                         this.setOriginCommodityList(originCommodityList);
@@ -628,14 +615,36 @@
                 }, 0);
                 this.setRowForRemark(rowCount);
             },
-            //  表单提交 保存
-            handleSubmit(e){
-                e.preventDefault();
-                //  console.log(JSON.parse(JSON.stringify(this.commodityTableData)));
-                //  console.log('备注🍌', this.remark);
+
+            //  表单验证
+            basicFormCheck(){
+                //  至少要选择商品
+                if (!this.commodityTableData.length) {
+                    this.$message.error('请选择商品');
+                    return false;
+                }
                 //  至少要选择时间
                 if (!this.timeTableData.length) {
                     this.$message.error('请选择时间');
+                    return false;
+                }
+                //  至少要选择能量
+                if (!this.tableForm.energy) {
+                    this.$message.error('请选择能量');
+                    return false;
+                }
+                //  至少要选择食用方法
+                if (!this.tableForm.usageMethod) {
+                    this.$message.error('请选择食用方法');
+                    return false;
+                }
+                return true;
+            },
+            //  表单提交 保存
+            handleSubmit(e){
+                e.preventDefault();
+                if (!this.basicFormCheck()) {
+                    return;
                 }
                 this.timeTableData.forEach(item => {
                     item.remark = this.remark;
@@ -667,6 +676,23 @@
                     });
 
             },
+
+            //  时间选择器的方法
+            moment,
+            //  莫泰框方法
+            ...dialogMethods,
+            ...mapActions('prescriptionTemplate', [
+                //  处方模板，请求选择商品的源数据
+                'setOriginCommodityList',
+                //  设置remark的行数
+                'setRowForRemark',
+                //  设置商品列表数据
+                'setRemark',
+            ]),
+            ...mapActions('constants', [
+                //  设置单元数据
+                'setUnitTypeList',
+            ]),
         }
     };
 </script>
