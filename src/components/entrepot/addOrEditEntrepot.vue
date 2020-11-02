@@ -99,13 +99,6 @@
             this.searchFn();
         },
         methods: {
-            //  获取省份
-            getProvinceList,
-            //  省份变化
-            provinceChange,
-            _provinceChange(value){
-                this.provinceChange(this, value);
-            },
             //  主要请求
             searchFn(){
                 this.getProvinceList(this);
@@ -118,10 +111,19 @@
                     .then(v => {
                         const { data } = v;
                         console.log(data);
+                        const {
+                            warehouseName,
+                            warehouseNumber,
+                            province,
+                            city,
+                        } = data;
                         this.form.setFieldsValue({
-                            warehouseName: data.warehouseName,
-                            warehouseNumber: data.warehouseNumber
+                            warehouseName,
+                            warehouseNumber,
+                            province,
+                            city,
                         });
+                        this._provinceChange(province);
                     });
             },
             //    表单提交
@@ -150,6 +152,13 @@
                             });
                     });
                 });
+            },
+            //  获取省份
+            getProvinceList,
+            //  省份变化
+            provinceChange,
+            _provinceChange(value){
+                this.provinceChange(this, value);
             },
         },
     };
