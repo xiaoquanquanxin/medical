@@ -1,4 +1,4 @@
-import request from '@/utils/request';
+import request, {unifiedHandlingList} from '@/utils/request';
 
 //  科室分页列表				✅
 export function requestDeptPage(data: any) {
@@ -76,13 +76,7 @@ export function requestDeptList() {
 		url: '/api/dept/list',
 		method: 'get',
 	})
-		.then(v => {
-			const list = v.data || [];
-			list.forEach((item: any) => {
-				item.key = item.id;
-			});
-			return list;
-		})
+		.then(unifiedHandlingList)
 }
 
 

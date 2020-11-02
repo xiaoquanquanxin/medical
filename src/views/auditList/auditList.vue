@@ -3,13 +3,11 @@
         <!--搜索相关-->
         <div class="a-input-group">
             <a-input class="basic-input-width" v-model="searchData.prescriptionCode" placeholder="请输入处方条码"/>
-            <a-select v-model="searchData.deptId" class="basic-select-width" placeholder="请选择科室">
-                <a-select-option v-for="(item,index) in deptList"
-                                 :key="index"
-                                 :value="item.id">
-                    {{item.deptName}}
-                </a-select-option>
-            </a-select>
+            <a-date-picker
+                    class="lengthen-select-width"
+                    placeholder="请选择开具日期"
+                    @change="onDatePickerChangeFn"
+            />
             <!--审核状态(1.待审核，2，已审核，3，已驳回)-->
             <a-select v-model="searchData.auditStatus" class="basic-select-width" placeholder="请选择状态">
                 <a-select-option value="1">待审核</a-select-option>
@@ -147,12 +145,6 @@
         methods: {
             //  主要请求
             searchFn(){
-                //  全部科室
-                requestDeptList()
-                    .then(deptList => {
-                        this.deptList = deptList;
-                    });
-
                 requestPrescriptionAuditPage(Object.assign({},
                     { param: this.searchData },
                     paginationEncode(this.pagination)
@@ -167,6 +159,11 @@
                         console.log(data.records);
                         this.pagination = paginationDecode(this.pagination, data);
                     });
+            },
+            //  选择开具日期
+            onDatePickerChangeFn(value, orderTime){
+                console.log(orderTime);
+                this.searchData.orderTime = orderTime;
             },
             //  展示的每一页数据变换
             onShowSizeChange(current, pageSize){

@@ -3,6 +3,7 @@
         <div v-if="true">
             <!--搜索相关-->
             <div class="a-input-group">
+                <a-input class="basic-input-width" v-model="searchData.name" placeholder="请输入患者姓名"/>
                 <a-input class="basic-input-width" v-model="searchData.commodityName" placeholder="请输入处方号"/>
                 <a-date-picker
                         class="lengthen-select-width"
@@ -10,23 +11,24 @@
                         v-model="selectDateMoment"
                         @change="onDateChange"
                 />
-                <a-select v-model="searchData.brand" class="basic-select-width" placeholder="请选择科室">
-                    <a-select-option value="">
-                        品牌
-                    </a-select-option>
-                    <a-select-option value="Option2">
-                        Option2
+                <a-select class="basic-select-width" placeholder="请选择科室" v-model="searchData.deptId">
+                    <a-select-option v-for="item in deptList"
+                                     :value="item.id">
+                        {{item.deptName}}
                     </a-select-option>
                 </a-select>
-                <a-select v-model="searchData.status" class="basic-select-width" placeholder="请选择状态">
-                    <a-select-option value="">
-                        状态
-                    </a-select-option>
-                    <a-select-option value="Option2">
-                        Option2
-                    </a-select-option>
+                <!--(1.待签收，2，待配置，3.已配置，4，待领取，5，已领取)-->
+                <a-select v-model="searchData.orderStatus" class="basic-select-width" placeholder="请选择状态">
+                    <a-select-option value="1">待签收</a-select-option>
+                    <a-select-option value="2">待配置</a-select-option>
+                    <a-select-option value="3">已配置</a-select-option>
+                    <a-select-option value="4">待领取</a-select-option>
+                    <a-select-option value="5">已领取</a-select-option>
                 </a-select>
                 <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
+                <b>没有时间参数 前端暂时叫orderTime</b>
+                <br>
+                <b>请选择状态不管用</b>
             </div>
             <div class="a-input-group" v-if="false" data-msg="暂时不做">
                 <a-space>
@@ -170,6 +172,8 @@
     import { oneRowSearch } from '@/utils/tableScroll';
     import { requestPrescriptionConfigCfly } from '../../api/task/getDrug';
     import { requestPrescriptionConfigConfirmSave } from '../../api/task/configuration';
+    import { requestDeptList } from '../../api/department';
+    import moment from 'moment';
 
     const columns = [
         {
@@ -221,6 +225,8 @@
     export default {
         data(){
             return {
+                //  全部科室列表
+                deptList: [],
                 data: [],
                 columns,
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
@@ -231,7 +237,7 @@
                 searchData: {},
 
                 //  选择日期的值的对象
-                selectDateMoment: null,
+                selectDateMoment: moment(new Date()),
 
                 //  打印处方
                 printBottle: {
@@ -247,6 +253,11 @@
         },
         created(){
             this.searchFn();
+            //  全部科室
+            requestDeptList()
+                .then(deptList => {
+                    this.deptList = deptList;
+                });
         },
         methods: {
             //  主要请求
@@ -266,20 +277,9 @@
                         this.pagination = paginationDecode(this.pagination, data);
                     });
             },
-            //  展示的每一页数据变换
-            onShowSizeChange(current, pageSize){
-                this.pagination.pageSize = pageSize;
-                this.pagination.current = 1;
-                this.searchFn();
-            },
-            //  切换分页页码
-            pageChange(current){
-                this.pagination.current = current;
-                this.searchFn();
-            },
             //  选择过期日期
-            onDateChange(value, selectDateValue){
-                console.log(selectDateValue);
+            onDateChange(value, orderTime){
+                this.searchData.orderTime = orderTime;
             },
             //  确定领药
             confirmGetDrug(sItem){
@@ -304,6 +304,9 @@
                     },
                 });
             },
+
+            pageChange,
+            onShowSizeChange,
         }
     };
 </script>

@@ -2,6 +2,7 @@
     <div class="layout-content-inner-main">
         <!--搜索相关-->
         <div class="a-input-group">
+            <a-input class="basic-input-width" v-model="searchData.name" placeholder="请输入患者姓名"/>
             <a-input class="basic-input-width" v-model="searchData.commodityName" placeholder="请输入处方号"/>
             <a-date-picker
                     class="lengthen-select-width"
@@ -9,7 +10,11 @@
                     v-model="selectDateMoment"
                     @change="onDateChange"
             />
-            <a-select v-model="searchData.brand" class="basic-select-width" placeholder="请选择科室">
+            <a-select class="basic-select-width" placeholder="请选择科室" v-model="searchData.deptId">
+                <a-select-option v-for="item in deptList"
+                                 :value="item.id">
+                    {{item.deptName}}
+                </a-select-option>
             </a-select>
             <!--(1.待签收，2，待配置，3.已配置，4，待领取，5，已领取)-->
             <a-select v-model="searchData.orderStatus" class="basic-select-width" placeholder="请选择状态">
@@ -20,7 +25,9 @@
                 <a-select-option value="5">已领取</a-select-option>
             </a-select>
             <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
-            <b>查询有问题，文档不对应</b>
+            <b>没有时间参数 前端暂时叫orderTime</b>
+            <br>
+            <b>请选择状态不管用</b>
         </div>
         <div class="a-input-group" v-if="false" data-msg="暂时不做">
             <a-space>
@@ -163,6 +170,8 @@
     } from '@/utils/pagination.ts';
     import { oneRowSearch } from '@/utils/tableScroll';
     import { requestPrescriptionConfigConfirmSave, requestPrescriptionConfigPzrw } from '../../api/task/configuration';
+    import { requestDeptList } from '../../api/department';
+    import moment from 'moment';
 
     const columns = [
         {
@@ -215,6 +224,8 @@
     export default {
         data(){
             return {
+                //  全部科室列表
+                deptList: [],
                 data: [],
                 columns,
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
@@ -225,7 +236,7 @@
                 searchData: {},
 
                 //  选择日期的值的对象
-                selectDateMoment: null,
+                selectDateMoment: moment(new Date()),
 
                 //  打印瓶贴
                 printBottle: {
@@ -241,6 +252,11 @@
         },
         created(){
             this.searchFn();
+            //  全部科室
+            requestDeptList()
+                .then(deptList => {
+                    this.deptList = deptList;
+                });
         },
         methods: {
             //  主要请求
@@ -257,23 +273,12 @@
                         });
                         this.data = data.records;
                         this.pagination = paginationDecode(this.pagination, data);
-                        console.log(JSON.parse(JSON.stringify(data.records[0])).patientId);
+                        console.log(JSON.parse(JSON.stringify(data.records[0])));
                     });
             },
-            //  展示的每一页数据变换
-            onShowSizeChange(current, pageSize){
-                this.pagination.pageSize = pageSize;
-                this.pagination.current = 1;
-                this.searchFn();
-            },
-            //  切换分页页码
-            pageChange(current){
-                this.pagination.current = current;
-                this.searchFn();
-            },
             //  选择过期日期
-            onDateChange(value, selectDateValue){
-                console.log(selectDateValue);
+            onDateChange(value, orderTime){
+                this.searchData.orderTime = orderTime;
             },
             //  确定签收
             confirmReceiving(sItem){
@@ -320,6 +325,9 @@
                     },
                 });
             },
+
+            pageChange,
+            onShowSizeChange,
         }
     };
 </script>
