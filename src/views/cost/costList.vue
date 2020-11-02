@@ -32,7 +32,6 @@
                     <span v-if="scope.payStatus == 1">已退费</span>
                 </span>
             </div>
-            
             <!--支付状态(0,待支付,1,已支付)-->
             <div slot="payStatus" slot-scope="scope,sItem,sIndex,extra">
                 <span v-if="scope.payStatus == 0">待支付</span>
@@ -79,19 +78,6 @@
                  @ok="payCostModalCheck('refPayCostForm')">
             <PayCostForm ref="refPayCostForm"/>
         </a-modal>
-        <!--退费莫泰框-->
-        <!--        <a-modal v-model="dialogReturnCost.visible"-->
-        <!--                 v-if="dialogReturnCost.visible"-->
-        <!--                 :confirm-loading="dialogReturnCost.confirmLoading"-->
-        <!--                 :maskClosable="false"-->
-        <!--                 centered-->
-        <!--                 :width="800"-->
-        <!--                 title="退费"-->
-        <!--                 ok-text="确认并打印票据"-->
-        <!--                 cancel-text="取消"-->
-        <!--                 @ok="returnCostModalCheck('refReturnCostForm')">-->
-        <!--            <PayCostForm ref="refReturnCostForm"/>-->
-        <!--        </a-modal>-->
         <div v-show="false">
             <a-button class="basic-button-width" type="primary" v-print="printObj" id="printButton">打印</a-button>
             <div id="paper">
@@ -210,6 +196,8 @@
                 //  退费莫泰框
 //                dialogReturnCost: this.initModal(DIALOG_TYPE.RETURN_COST),
 
+                //  缴费、退费弹框props
+                //  payCostData: null,
                 //  打印对象
                 printObj: {
                     id: '#paper',
@@ -245,17 +233,6 @@
                 //  操作类型	0,缴费，1退款
                 'setCostType',
             ]),
-            //  展示的每一页数据变换
-            onShowSizeChange(current, pageSize){
-                this.pagination.pageSize = pageSize;
-                this.pagination.current = 1;
-                this.searchFn();
-            },
-            //  切换分页页码
-            pageChange(current){
-                this.pagination.current = current;
-                this.searchFn();
-            },
             //  缴费
             payCost(sItem){
                 this.setSelectCostData(sItem);
@@ -288,20 +265,10 @@
                     this.setConfirmLoading(DIALOG_TYPE.PAY_COST, false);
                 });
             },
-            //  确认退费
-//            returnCostModalCheck(refReturnCostForm){
-//                //  防止连点
-//                this.setConfirmLoading(DIALOG_TYPE.RETURN_COST, true);
-//                const promise = this.$refs[refReturnCostForm].handleSubmit();
-//                promise.then(v => {
-//                    this.hideModal(DIALOG_TYPE.RETURN_COST);
-//                }).catch(error => {
-//                    console.log('有错');
-//                }).then(v => {
-//                    //  最后设置可以再次点击
-//                    this.setConfirmLoading(DIALOG_TYPE.RETURN_COST, false);
-//                });
-//            },
+            //  展示的每一页数据变换
+            onShowSizeChange,
+            //  切换分页页码
+            pageChange,
         }
     };
 </script>

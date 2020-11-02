@@ -6,13 +6,15 @@
                 @submit="handleSubmit"
                 autocomplete="off"
         >
-            <a-form-item label="缴费金额">
+            <a-form-item :label="!isRefund?'应缴金额':'应退金额'">
                 {{selectCostData.amountPayable}}
             </a-form-item>
-            <a-form-item label="缴费金额">
+            <a-form-item :label="!isRefund?'实际缴费金额':'实际退费金额'">
                 <a-input-number
-                        placeholder="请输入"
-                        :min="0"
+                        class="add-form-input"
+                        :placeholder="!isRefund?'请输入实际缴费金额':'请输入实际退费金额'"
+                        :min="0.1"
+                        :step="0.1"
                         :max="selectCostData.amountPayable"
                         v-decorator="amountPaidDecorator"
                         @pressEnter="preventDefault"
@@ -20,8 +22,8 @@
             </a-form-item>
             <a-form-item label="支付方式">
                 <a-radio-group v-decorator="payWayDecorator">
-<!--                    <a-radio value="1">支付宝支付</a-radio>-->
-<!--                    <a-radio value="2">微信支付</a-radio>-->
+                    <!--<a-radio value="1">支付宝支付</a-radio>-->
+                    <!--<a-radio value="2">微信支付</a-radio>-->
                     <a-radio value="3">现金支付</a-radio>
                 </a-radio-group>
             </a-form-item>
@@ -51,13 +53,13 @@
         created(){
             console.log('支付对象', JSON.parse(JSON.stringify(this.selectCostData)));
             console.log('支付类型', this.isRefund);
-            this.searchFn();
         },
         data(){
             return {
                 formItemLayout,
                 //  金额
                 amountPaidDecorator: ['amountPaid', {
+                    initialValue: 0.1,
                     rules: [{
                         required: true,
                         message: '请输入金额',
@@ -74,20 +76,6 @@
             };
         },
         methods: {
-            //  主要请求
-            searchFn(){
-//                requestChannelBusinessPage(paginationEncode(this.pagination))
-//                    .then(v => {
-//                        const { data } = v;
-//                        console.log(data);
-//                data.records.forEach((item, index) => {
-//                    item.key = index;
-//                    item.createTime = item.createTime.substr(0, 10);
-//                });
-//                        this.data = data.records;
-//                        this.pagination = paginationDecode(this.pagination, data);
-//                    });
-            },
             preventDefault,
             //  表单提交 保存
             handleSubmit(){
