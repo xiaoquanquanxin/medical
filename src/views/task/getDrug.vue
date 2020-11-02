@@ -26,10 +26,7 @@
                     <a-select-option value="5">已领取</a-select-option>
                 </a-select>
                 <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
-                <b>没有时间参数 前端暂时叫orderTime</b>
-                <br>
-                <b>请选择状态不管用</b>
-            </div>
+                </div>
             <div class="a-input-group" v-if="false" data-msg="暂时不做">
                 <a-space>
                     <!--<a-button type="primary" v-print="printBottle">打印处方</a-button>-->

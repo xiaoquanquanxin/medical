@@ -778,7 +778,6 @@
                 this.uintParams2.forEach(item => {
                     uintParams.push(item);
                 });
-                debugger;
                 this.form.validateFields((err, values) => {
                     console.log(err);
                     if (err) {
