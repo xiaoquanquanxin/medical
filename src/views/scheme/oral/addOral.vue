@@ -19,13 +19,21 @@
                     </a-select>
                     <a-select class="add-form-input"
                               v-model="tableForm.prescriptionType"
-                              placeholder="请选择处方类型"
+                              placeholder="请选择处方模板类型"
                               @change="selectPrescriptionChange"
                     >
-                        <a-select-option v-for="(item,index) in prescriptionTypeList"
+                        <a-select-option v-for="item in prescriptionTypeList"
                                          :value="item.id"
                         >{{item.name}}
                         </a-select-option>
+                    </a-select>
+                    <a-select class="add-form-input"
+                              v-model="tableForm.prescriptionType"
+                              placeholder="请选择处方类型"
+                              @change="selectPrescriptionChange"
+                    >
+                        <a-select-option value="1">院内配置</a-select-option>
+                        <a-select-option value="2">门诊领药</a-select-option>
                     </a-select>
                 </a-space>
                 <a-button type="primary" @click="handleSubmit">保存</a-button>
