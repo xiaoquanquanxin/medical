@@ -31,12 +31,13 @@ export function deleteSchemeFn(sItem: { id: string, prescriptionName: string }) 
 
 //	获取处方列表数据
 export function getSchemeListFn() {
-	requestPrescriptionTemplatePage(Object.assign({},
+	const searchDta = Object.assign({},
 		//	@ts-ignore
 		this.searchData,
 		//	@ts-ignore
-		paginationEncode(this.pagination))
-	)
+		paginationEncode(this.pagination));
+	console.log(JSON.parse(JSON.stringify(searchDta)));
+	requestPrescriptionTemplatePage(searchDta)
 		.then(v => {
 			const {data} = v;
 			data.records.forEach((item: any, index: number) => {
