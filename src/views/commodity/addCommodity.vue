@@ -9,7 +9,7 @@
                 @submit="handleSubmit"
                 autocomplete="off"
         >
-            <div v-if="true">
+            <div v-if="false">
                 <!--            <div style="display: none">-->
                 <a-form-item label="商品名称">
                     <a-input class="add-form-input"
@@ -122,7 +122,15 @@
                             :pagination="false"
                     >
                         <div slot="uname" slot-scope="scope,sItem,sIndex,extra">
-                            <a-input placeholder="请输入单位" v-model="sItem.uname"/>
+                            <a-select v-model="sItem.uname"
+                                      placeholder="请选择单位"
+                            >
+                                <a-select-option v-for="item in unitTypeList"
+                                                 :value="item.value"
+                                >
+                                    {{item.label}}
+                                </a-select-option>
+                            </a-select>
                         </div>
                         <div slot="unitExchangeRate" slot-scope="scope,sItem,sIndex,extra">
                             <a-input placeholder="请输入单位关系"
@@ -154,9 +162,9 @@
                                      v-model="sItem.unitCarbohydrate"
                             />
                         </div>
-                        <div slot="unitValue" slot-scope="scope,sItem,sIndex,extra">
+                        <div slot="unitUse" slot-scope="scope,sItem,sIndex,extra">
                             <a-input placeholder="请输入使用单位"
-                                     v-model="sItem.unitValue"
+                                     v-model="sItem.unitUse"
                             />
                         </div>
                     </a-table>
@@ -185,7 +193,15 @@
                             :pagination="false"
                     >
                         <div slot="uname" slot-scope="scope,sItem,sIndex,extra">
-                            <a-input placeholder="请输入单位" v-model="sItem.uname"/>
+                            <a-select v-model="sItem.uname"
+                                      placeholder="请选择单位"
+                            >
+                                <a-select-option v-for="item in unitTypeList"
+                                                 :value="item.value"
+                                >
+                                    {{item.label}}
+                                </a-select-option>
+                            </a-select>
                         </div>
                         <div slot="unitExchangeRate" slot-scope="scope,sItem,sIndex,extra">
                             <a-input placeholder="请输入单位关系"
@@ -217,9 +233,9 @@
                                      v-model="sItem.unitCarbohydrate"
                             />
                         </div>
-                        <div slot="unitValue" slot-scope="scope,sItem,sIndex,extra">
+                        <div slot="unitUse" slot-scope="scope,sItem,sIndex,extra">
                             <a-input placeholder="请输入使用单位"
-                                     v-model="sItem.unitValue"
+                                     v-model="sItem.unitUse"
                             />
                         </div>
                     </a-table>
@@ -287,13 +303,56 @@
     import { requestSupplierList } from '../../api/supplier';
     import { requestManufactorList } from '../../api/commodity/manufacturer';
 
+    const columnsMap = {
+        name: {
+            title: '',
+            key: '类型',
+            dataIndex: 'name',
+            width: 100,
+        },
+        unitExchangeRate: {
+            title: '单位关系',
+            width: 120,
+            scopedSlots: { customRender: 'unitExchangeRate' }
+        },
+        uname: {
+            title: '单位',
+            width: 120,
+            scopedSlots: { customRender: 'uname' }
+        },
+        unitPrice: {
+            title: '价格',
+            width: 100,
+            scopedSlots: { customRender: 'unitPrice' }
+        },
+        unitEnergy: {
+            title: '能量kcal',
+            width: 100,
+            scopedSlots: { customRender: 'unitEnergy' }
+        },
+        unitProtein: {
+            title: '蛋白质g',
+            width: 120,
+            scopedSlots: { customRender: 'unitProtein' }
+        },
+        unitFat: {
+            title: '脂肪g',
+            width: 100,
+            scopedSlots: { customRender: 'unitFat' }
+        },
+        unitCarbohydrate: {
+            title: '碳水化合物g',
+            width: 150,
+            scopedSlots: { customRender: 'unitCarbohydrate' }
+        },
+    };
     //  辅助单位
     const auxiliaryUnitsData = {
         sort: 3,
         key: 3,
         type: 1,
         name: '辅助单位',
-        uname: '',
+        uname: undefined,
         unitExchangeRate: '',
         unitPrice: '',
         unitEnergy: '',
@@ -303,90 +362,32 @@
     };
     //  院内列
     const columns1 = [
-        {
-            title: '',
-            key: '类型',
-            dataIndex: 'name',
-            width: 100,
-        },
-        {
-            title: '单位',
-            width: 100,
-            scopedSlots: { customRender: 'uname' }
-        },
+        columnsMap.name,
+        columnsMap.uname,
         {
             title: '单位关系',
             width: 120,
             scopedSlots: { customRender: 'unitExchangeRate' }
         },
-        {
-            title: '价格',
-            width: 100,
-            scopedSlots: { customRender: 'unitPrice' }
-        },
-        {
-            title: '能量kcal',
-            width: 100,
-            scopedSlots: { customRender: 'unitEnergy' }
-        },
-        {
-            title: '蛋白质g',
-            width: 120,
-            scopedSlots: { customRender: 'unitProtein' }
-        },
-        {
-            title: '脂肪g',
-            width: 100,
-            scopedSlots: { customRender: 'unitFat' }
-        },
-        {
-            title: '碳水化合物g',
-            width: 150,
-            scopedSlots: { customRender: 'unitCarbohydrate' }
-        }
+        columnsMap.unitPrice,
+        columnsMap.unitEnergy,
+        columnsMap.unitProtein,
+        columnsMap.unitFat,
+        columnsMap.unitCarbohydrate,
     ];
     //  院外列
     const columns2 = [
-        {
-            title: '',
-            key: '类型',
-            dataIndex: 'name',
-            width: 100,
-        },
-        {
-            title: '单位',
-            width: 100,
-            scopedSlots: { customRender: 'uname' }
-        },
-        {
-            title: '价格',
-            width: 100,
-            scopedSlots: { customRender: 'unitPrice' }
-        },
-        {
-            title: '能量kcal',
-            width: 100,
-            scopedSlots: { customRender: 'unitEnergy' }
-        },
-        {
-            title: '蛋白质g',
-            width: 120,
-            scopedSlots: { customRender: 'unitProtein' }
-        },
-        {
-            title: '脂肪g',
-            width: 100,
-            scopedSlots: { customRender: 'unitFat' }
-        },
-        {
-            title: '碳水化合物g',
-            width: 150,
-            scopedSlots: { customRender: 'unitCarbohydrate' }
-        },
+        columnsMap.name,
+        columnsMap.uname,
+        columnsMap.unitPrice,
+        columnsMap.unitEnergy,
+        columnsMap.unitProtein,
+        columnsMap.unitFat,
+        columnsMap.unitCarbohydrate,
         {
             title: '使用单位',
             width: 120,
-            scopedSlots: { customRender: 'unitValue' }
+            scopedSlots: { customRender: 'unitUse' }
         }
     ];
 
@@ -397,13 +398,13 @@
             key: 1,
             type: 2,
             name: '基本单位',
-            uname: '',
-            unitExchangeRate: '',
+            uname: undefined,
             unitPrice: '',
             unitEnergy: '',
             unitProtein: '',
             unitFat: '',
             unitCarbohydrate: '',
+            unitUse: '',
         },
     ];
 
@@ -433,7 +434,7 @@
                     key: 1,
                     type: 1,
                     name: '基本单位',
-                    uname: '',
+                    uname: undefined,
                     unitExchangeRate: '',
                     unitPrice: '',
                     unitEnergy: '',
@@ -446,7 +447,7 @@
                     key: 2,
                     type: 1,
                     name: '标准单位',
-                    uname: '',
+                    uname: undefined,
                     unitExchangeRate: '',
                     unitPrice: '',
                     unitEnergy: '',
@@ -603,6 +604,8 @@
             searchFn(){
                 requestGoodsUnitType()
                     .then(unitTypeList => {
+                        console.log(JSON.parse(JSON.stringify(unitTypeList)));
+                        //  alert('/api/goods/unitType没数据');
                         this.unitTypeList = unitTypeList;
                     });
                 //  商品分类list
@@ -730,7 +733,6 @@
                     goodsKeyWord: value.toString(),
                 });
             },
-
             //  第一种编辑好富文本
             onEditorChange(data){
                 this.goodsDetails = data.html;
@@ -750,7 +752,7 @@
                         unitProtein,
                         unitFat,
                         unitCarbohydrate,
-                        unitValue,
+                        unitUse,
                         unitExchangeRate,
                     } = this.uintParams[i];
                     if (uname === ''
@@ -764,7 +766,7 @@
                         break;
                     }
                     //  如果是院内
-                    if ((this.isLocalAreaNetwork && unitValue === '')
+                    if ((this.isLocalAreaNetwork && unitUse === '')
                         || (!this.isLocalAreaNetwork && unitExchangeRate === '')
                     ) {
                         basicUnit = '';
@@ -787,6 +789,7 @@
                 this.uintParams2.forEach(item => {
                     uintParams.push(item);
                 });
+                return;
                 this.$nextTick(() => {
                     this.form.validateFields((err, values) => {
                         console.log(err);

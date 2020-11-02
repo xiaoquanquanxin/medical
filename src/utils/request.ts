@@ -74,7 +74,7 @@ export const unifiedHandlingList = (v: any): [] => {
 	data.forEach((item: any, index: number) => {
 		item.key = index;
 	});
-	return data
+	return data;
 }
 
 //	统一处理常规列表，for分页，为了加key字段

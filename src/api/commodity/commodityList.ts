@@ -1,4 +1,4 @@
-import request from '@/utils/request';
+import request, {unifiedHandlingList} from '@/utils/request';
 
 //	商品分页列表	✅
 export function requestGoodsPage(data: any) {
@@ -62,17 +62,12 @@ export function requestGoodsListByHospital(hospitalId: string | number) {
 
 //	缺少：市场价
 
+
 //	获取商品单位 下拉
 export function requestGoodsUnitType() {
 	return request({
 		url: '/api/goods/unitType',
 		method: 'get',
 	})
-		.then(v => {
-			const data = v.data || [];
-			data.forEach((item: any, index: number) => {
-				item.key = index
-			})
-			return data;
-		})
+		.then(unifiedHandlingList)
 }
