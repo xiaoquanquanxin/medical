@@ -4,8 +4,8 @@
         <div class="a-input-group">
             <a-input class="lengthen-input-width" v-model="searchData.commodityName" placeholder="请输入商品名称"/>
             <a-select class="lengthen-select-width" v-model="searchData.status" placeholder="请选择商品状态">
-                <a-select-option value="1600">1600</a-select-option>
-                <a-select-option value="160">160</a-select-option>
+                <a-select-option value="0">启用</a-select-option>
+                <a-select-option value="1">停用</a-select-option>
             </a-select>
             <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
         </div>
@@ -199,7 +199,9 @@
         methods: {
             //  主要请求
             searchFn(){
-                requestGoodsGoodsStock(paginationEncode(this.pagination))
+                requestGoodsGoodsStock(Object.assign(
+                    {}, this.searchData, paginationEncode(this.pagination)
+                ))
                     .then(v => {
                         const { data } = v;
                         console.log(data);

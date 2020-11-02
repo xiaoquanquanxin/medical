@@ -5,6 +5,9 @@
             <a-input class="basic-input-width" v-model="searchData.warehouseName" placeholder="请输入仓库名称"/>
             <a-input class="basic-input-width" v-model="searchData.warehouseNumber" placeholder="请输入仓库代码"/>
             <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
+            <br>
+            <b>2020/11/02，请输入仓库代码不行，列表cityName没东西</b>
+            <br>
         </div>
         <div class="a-input-group">
             <a-button type="primary" @click="addEntrepot()">
@@ -83,7 +86,7 @@
         },
         {
             title: '仓库地区',
-            dataIndex: 'bbb',
+            dataIndex: 'cityName',
             width: 100,
         },
         {

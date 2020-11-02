@@ -22,10 +22,10 @@
             <a-form-item label="供应商">xxxx</a-form-item>
             <a-form-item label="商品品牌">xxxx</a-form-item>
             <a-form-item label="厂家">xxxx</a-form-item>
-            <a-form-item label="批次">
+            <a-form-item label="批次号">
                 <a-input
-                        v-decorator="batchDecorator"
-                        placeholder="请输入批次"
+                        v-decorator="batchNumberDecorator"
+                        placeholder="请输入批次号"
                 />
             </a-form-item>
             <a-form-item label="单位">xxxx</a-form-item>
@@ -37,7 +37,7 @@
                             placeholder="请选择过期日期"
                             @change="onDateChange"
                     />
-                    <a-input type="hidden" v-decorator="expirationTimeDecorator"/>
+                    <a-input type="hidden" v-decorator="expirationDateDecorator"/>
                     <span>剩余{{2323}}天</span>
                 </a-row>
             </a-form-item>
@@ -53,7 +53,7 @@
             </a-form-item>
             <a-form-item label="入库数量">
                 <a-input
-                        v-decorator="putInStoreQuantityDecorator"
+                        v-decorator="numDecorator"
                         placeholder="请输入入库数量"
                 />
             </a-form-item>
@@ -69,6 +69,19 @@
             this.form = this.$form.createForm(this);
         },
         data(){
+
+//	amountPrice	总金额		false
+//	goodsId	商品id		false
+//	goodsName	商品名称		false
+//	goodsSpecifications	商品规格		false
+//	goodsUnit	商品单位		false
+//	goodsUnitId	商品单位id		false
+//	price	单价		false
+//	supplierId	渠道商id		false
+//	supplierName	渠道商名称		false
+//	warehouseReceiptCode	入库单号
+            
+            
             return {
                 formItemLayout,
                 //  采购单号
@@ -78,15 +91,15 @@
                         message: '请选择采购单号'
                     },]
                 }],
-                //  批次
-                batchDecorator: ['batch', {
+                //  批次号
+                batchNumberDecorator: ['batchNumber', {
                     rules: [{
                         required: true,
-                        message: '请输入批次'
+                        message: '请输入批次号'
                     },]
                 }],
                 //  过期日期
-                expirationTimeDecorator: ['expirationTime', {
+                expirationDateDecorator: ['expirationDate', {
                     rules: [{
                         required: true,
                         message: '请选择过期日期'
@@ -100,7 +113,7 @@
                     },]
                 }],
                 //  入库数量
-                putInStoreQuantityDecorator: ['putInStoreQuantity', {
+                numDecorator: ['num', {
                     rules: [{
                         required: true,
                         message: '请输入入库数量'
@@ -132,7 +145,7 @@
             onDateChange(value, selectDateValue){
                 //  console.log(value.months());
                 this.form.setFieldsValue({
-                    expirationTime: selectDateValue,
+                    expirationDate: selectDateValue,
                 });
             },
             //  表单提交 保存

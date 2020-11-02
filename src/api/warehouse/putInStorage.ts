@@ -10,10 +10,10 @@ export function requestGoodsGoodsStock13(data: any) {
 	});
 }
 
-//	发货
-export function requestGoodsGoodsDelivery(data: any) {
+//	新增入库单
+export function requestWarehouseReceiptInsert(data: any) {
 	return request({
-		url: '/api/goods/goodsDelivery',
+		url: '/api/warehouse-receipt/insert',
 		method: 'post',
 		data,
 	});
