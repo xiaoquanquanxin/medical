@@ -9,7 +9,7 @@
                 @submit="handleSubmit"
                 autocomplete="off"
         >
-            <div v-show="false">
+            <div v-show="true">
                 <!--            <div style="display: none">-->
                 <a-form-item label="商品名称">
                     <a-input class="add-form-input"
@@ -826,7 +826,6 @@
                         uintParams
                     };
                     console.log(data);
-                    return;
                     (() => {
                         //  如果是新增
                         if (!this.commodityId) {
