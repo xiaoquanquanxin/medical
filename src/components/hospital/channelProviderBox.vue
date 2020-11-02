@@ -47,17 +47,19 @@
                 return this.$store.state.hospital.distributorsList;
             },
         },
+        props: ['selectedRowKey'],
         data(){
             return {
                 columns,
                 //	弹框table的scroll
                 modalTableScroll,
                 //  默认被选中的值
-                selectedRowKeys: []
+                selectedRowKeys: [this.selectedRowKey]
             };
         },
         created(){
-
+            console.log(this.selectedRowKey);
+            console.log(this.selectedRowKeys);
         },
         methods: {
             //  单选

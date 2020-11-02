@@ -68,6 +68,13 @@ export function requestHospitalChangeStatus(id: string | number) {
 	})
 }
 
+//	获取已经关联的科室
+export function requestDeptListDeptHospitalId(id: string | number) {
+	return request({
+		url: `/api/dept/listDeptHospitalId/${id}`,
+		method: 'get',
+	});
+}
 
 //	医院-关联科室保存
 export function requestHospitalRelatedDepartments(data: {
@@ -87,17 +94,26 @@ export function requestHospitalListChannelBusiness(id: string | number) {
 	return request({
 		url: `/api/hospital/listChannelBusiness/${id}`,
 		method: 'get',
-	});
+	})
+		.then(v => {
+			return v.data[0];
+		})
 }
 
 
-//	获取已经关联的科室
-export function requestDeptListDeptHospitalId(id: string | number) {
+//	医院-医院关联渠道商
+export function requestHospitalHospitalRelationChannelBusiness(data: {
+	"channelBusinessId": number
+	"hospitalId": [],
+}) {
 	return request({
-		url: `/api/dept/listDeptHospitalId/${id}`,
-		method: 'get',
+		url: '/api/hospital/hospitalRelationChannelBusiness',
+		method: 'post',
+		data,
 	});
 }
+
+
 
 
 

@@ -96,7 +96,9 @@
                  ok-text="确认"
                  cancel-text="取消"
                  @ok="channelProviderBoxModalCheck('refChannelProviderBox')">
-            <ChannelProviderBox ref="refChannelProviderBox"/>
+            <ChannelProviderBox ref="refChannelProviderBox"
+                                :selectedRowKey="channelProviderSelectedRowKey"
+            />
         </a-modal>
     </div>
 </template>
@@ -115,9 +117,12 @@
     import { twoRowSearch } from '@/utils/tableScroll';
     import { SHUTTLE_BOX } from '../../store/modules/shuttleBox';
     import {
-        requestHospitalChangeStatus, requestDeptListDeptHospitalId,
+        requestHospitalChangeStatus,
+        requestDeptListDeptHospitalId,
         requestHospitalPage,
-        requestHospitalRelatedDepartments, requestHospitalListChannelBusiness
+        requestHospitalRelatedDepartments,
+        requestHospitalListChannelBusiness,
+        requestHospitalHospitalRelationChannelBusiness
     } from '../../api/hospital';
     import { getProvinceList, provinceChange, cityChange, areaList } from '@/utils/areaList';
     import { requestDeptList } from '../../api/department';
@@ -187,6 +192,8 @@
                 shuttleBoxData: {},
                 //  全部科室列表
                 deptList: [],
+                //  渠道商关联key
+                channelProviderSelectedRowKey: null,
             };
         },
         created(){
@@ -216,18 +223,6 @@
                     });
             },
 
-            //  展示的每一页数据变换
-            onShowSizeChange(current, pageSize){
-                this.pagination.pageSize = pageSize;
-                this.pagination.current = 1;
-                this.searchFn();
-            },
-            //  切换分页页码
-            pageChange(current){
-                this.pagination.current = current;
-                this.searchFn();
-            },
-
             //  切换状态
             aSwitchChange(sItem, checked){
                 requestHospitalChangeStatus(sItem.id)
@@ -240,7 +235,6 @@
                         this.$message.error('操作失败');
                     });
             },
-
             //  编辑医院
             editHospital(sItem){
                 this.$router.push({ name: 'editHospital', params: { hospitalId: sItem.id } });
@@ -301,14 +295,13 @@
 
             //  关联渠道商
             associatedChannelProvider(sItem){
-                //  alert('/api/hospital/listChannelBusiness/{hospitalId}不能用');
                 this.shuttleBoxData = sItem;
                 Promise.all([
                     requestHospitalListChannelBusiness(sItem.id),
                     requestChannelBusinessList(),
                 ])
                     .then(v => {
-                        console.log(v[0].data);
+                        this.channelProviderSelectedRowKey = v[0];
                         const list = v[1];
                         list.forEach(item => {
                             item.key = item.id;
@@ -324,13 +317,12 @@
                 this.setConfirmLoading(DIALOG_TYPE.ASSOCIATED_CHANNEL_PROVIDER, true);
                 const promise = this.$refs[refChannelProviderBox].handleSubmit();
                 promise.then(targetKeys => {
-                    console.log(targetKeys);
-                    console.log(this.shuttleBoxData.id);
-                    alert('缺少医院关联渠道商接口');
-                    return;
-                    return aaa({
+                    //  console.log(targetKeys);
+                    //  console.log(this.shuttleBoxData.id);
+                    const channelBusinessId = targetKeys[0];
+                    requestHospitalHospitalRelationChannelBusiness({
                         hospitalId: this.shuttleBoxData.id,
-                        deptIds: targetKeys
+                        channelBusinessId,
                     })
                         .then(v => {
                             this.$message.success('操作成功');
@@ -373,6 +365,10 @@
                 //  关联渠道商
                 'setDistributorsList',
             ]),
+            //  展示的每一页数据变换
+            onShowSizeChange,
+            //  切换分页页码
+            pageChange,
         },
     };
 </script>
