@@ -180,6 +180,9 @@
                         message: '请选择角色'
                     },]
                 }],
+
+                //  渠道商详情数据
+                distributorsDetailData: null,
             };
         },
         created(){
@@ -219,21 +222,19 @@
                 requestChannelBusinessGet(this.channelId)
                     .then(v => {
                         const { data } = v;
-                        console.log(data);
                         const {
                             channelBusinessName,
                             channelBusinessNumber,
                             province,
                             city,
-                            channelBusunessWarehouseId,
                         } = data;
                         this.form.setFieldsValue({
                             channelBusinessName,
                             channelBusinessNumber,
                             province: Number(province),
                             city: Number(city),
-                            channelBusunessWarehouseId,
                         });
+                        this.distributorsDetailData = data;
                         this._provinceChange(province);
                     });
             },
@@ -253,11 +254,11 @@
                             if (!this.channelId) {
                                 return requestChannelBusinessInsert(values);
                             }
+                            const data = Object.assign({
+                                id: this.channelId,
+                            }, this.distributorsDetailData, values);
                             //  如果是编辑
-                            return requestChannelBusinessUpdate(Object.assign({
-                                    id: this.channelId,
-                                }, values
-                            ));
+                            return requestChannelBusinessUpdate(data);
                         })()
                             .then(v => {
                                 console.log(v);
