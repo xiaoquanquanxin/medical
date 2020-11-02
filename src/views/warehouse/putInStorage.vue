@@ -93,7 +93,6 @@
             width: 150,
         },
     ];
-    
 
     //  入库
     export default {
@@ -102,7 +101,7 @@
         },
         data(){
             return {
-                data,
+                data: [],
                 columns,
                 //  搜索数据
                 searchData: {},
