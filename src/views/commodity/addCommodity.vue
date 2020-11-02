@@ -9,7 +9,7 @@
                 @submit="handleSubmit"
                 autocomplete="off"
         >
-            <div v-if="false">
+            <div v-if="true">
                 <!--            <div style="display: none">-->
                 <a-form-item label="商品名称">
                     <a-input class="add-form-input"
@@ -348,7 +348,6 @@
     };
     //  辅助单位
     const auxiliaryUnitsData = {
-        sort: 3,
         key: 3,
         type: 1,
         name: '辅助单位',
@@ -394,7 +393,6 @@
     //  院外数据
     const uintParams2 = [
         {
-            sort: 1,
             key: 1,
             type: 2,
             name: '基本单位',
@@ -430,7 +428,6 @@
             //  院内数据
             const uintParams1 = [
                 {
-                    sort: 1,
                     key: 1,
                     type: 1,
                     name: '基本单位',
@@ -443,7 +440,6 @@
                     unitCarbohydrate: '',
                 },
                 {
-                    sort: 2,
                     key: 2,
                     type: 1,
                     name: '标准单位',
@@ -604,7 +600,7 @@
             searchFn(){
                 requestGoodsUnitType()
                     .then(unitTypeList => {
-                        console.log(JSON.parse(JSON.stringify(unitTypeList)));
+                        //  console.log(JSON.parse(JSON.stringify(unitTypeList)));
                         //  alert('/api/goods/unitType没数据');
                         this.unitTypeList = unitTypeList;
                     });
@@ -671,25 +667,23 @@
                         });
                         //  关键字
                         this.goodsKeyWord = goodsKeyWord;
+                        debugger;
                         //  院内
                         const uintParams1 = data.uintListVos.filter(item => {
                             return item.type === 1;
-                        }).sort((a, b) => {return a.sort - b.sort;});
+                        });
                         uintParams1.forEach((item, index) => {
                             switch (index) {
                                 case 0:
                                     item.key = item.id;
-                                    item.sort = 1;
                                     item.name = '基本单位';
                                     break;
                                 case 1:
                                     item.key = item.id;
-                                    item.sort = 2;
                                     item.name = '标准单位';
                                     break;
                                 case 2:
                                     item.key = item.id;
-                                    item.sort = 3;
                                     item.name = '辅助单位';
                                     break;
                             }
@@ -698,11 +692,9 @@
                         //  院外
                         const uintParams2 = data.uintListVos.filter(item => {
                             return item.type === 2;
-                        }).sort((a, b) => {return a.sort - b.sort;});
-
-                        uintParams2.forEach((item, index) => {
+                        });
+                        uintParams2.forEach((item) => {
                             item.key = item.id;
-                            item.sort = 1;
                             item.name = '基本单位';
                         });
                         this.uintParams2 = uintParams2;
@@ -789,66 +781,66 @@
                 this.uintParams2.forEach(item => {
                     uintParams.push(item);
                 });
-                return;
-                this.$nextTick(() => {
-                    this.form.validateFields((err, values) => {
-                        console.log(err);
-                        if (err) {
-                            return;
+                debugger;
+                this.form.validateFields((err, values) => {
+                    console.log(err);
+                    if (err) {
+                        return;
+                    }
+                    const goodsDetails = this.goodsDetails;
+                    const {
+                        goodsBarCode,
+                        goodsBrandId,
+                        goodsCategoryId,
+                        goodsImg,
+                        goodsKeyWord,
+                        goodsName,
+                        goodsProductCode,
+                        goodsSpecifications,
+                        goodsTradeName,
+                        id,
+                        manufactorId,
+                        preservationMethod,
+                        status,
+                        supplierId,
+                    } = values;
+                    const data = {
+                        goodsBarCode,
+                        goodsBrandId,
+                        goodsCategoryId,
+                        goodsDetails,
+                        goodsImg,
+                        goodsKeyWord,
+                        goodsName,
+                        goodsProductCode,
+                        goodsSpecifications,
+                        goodsTradeName,
+                        id,
+                        manufactorId,
+                        preservationMethod,
+                        status,
+                        supplierId,
+                        uintParams
+                    };
+                    console.log(data);
+                    (() => {
+                        //  如果是新增
+                        if (!this.commodityId) {
+                            return requestGoodsInsert(data);
                         }
-                        const goodsDetails = this.goodsDetails;
-                        const {
-                            goodsBarCode,
-                            goodsBrandId,
-                            goodsCategoryId,
-                            goodsImg,
-                            goodsKeyWord,
-                            goodsName,
-                            goodsProductCode,
-                            goodsSpecifications,
-                            goodsTradeName,
-                            id,
-                            manufactorId,
-                            preservationMethod,
-                            status,
-                            supplierId,
-                        } = values;
-                        const data = {
-                            goodsBarCode,
-                            goodsBrandId,
-                            goodsCategoryId,
-                            goodsDetails,
-                            goodsImg,
-                            goodsKeyWord,
-                            goodsName,
-                            goodsProductCode,
-                            goodsSpecifications,
-                            goodsTradeName,
-                            id,
-                            manufactorId,
-                            preservationMethod,
-                            status,
-                            supplierId,
-                            uintParams
-                        };
-                        console.log(data);
-                        (() => {
-                            //  如果是新增
-                            if (!this.commodityId) {
-                                return requestGoodsInsert(data);
-                            }
-                            data.id = this.commodityId;
-                            //  如果是编辑
-                            return requestGoodsUpdate(data);
-                        })()
-                            .then(v => {
-                                console.log(v);
-                                this.$router.push({ name: 'commodityList' });
-                            })
-                            .catch(err => {
-                                console.log(err);
-                            });
-                    });
+                        data.id = this.commodityId;
+                        //  如果是编辑
+                        return requestGoodsUpdate(data);
+                    })()
+                        .then(v => {
+                            console.log(v);
+                            this.$message.success('操作成功');
+                            this.$router.push({ name: 'commodityList' });
+                        })
+                        .catch(err => {
+                            console.log(err);
+                            this.$message.error('操作失败');
+                        });
                 });
             },
         }
