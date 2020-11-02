@@ -260,9 +260,8 @@
                 promise.then(targetKeys => {
                     console.log(targetKeys);
                     console.log(this.shuttleBoxData.id);
-                    alert('这个接口200但是没效果');
                     return requestDeptRelatedDiseases({
-                        id: this.shuttleBoxData.id,
+                        deptId: this.shuttleBoxData.id,
                         diseasesds: targetKeys
                     })
                         .then(v => {
@@ -316,7 +315,6 @@
 
             //  关联评估调查表确定
             questionnaireModalCheck(refQuestionnaire){
-                debugger
                 //  防止连点
                 this.setConfirmLoading(DIALOG_TYPE.QUESTIONNAIRE, true);
                 const promise = this.$refs[refQuestionnaire].handleSubmit();
@@ -325,8 +323,8 @@
                     console.log(this.shuttleBoxData.id);
                     alert('文档参数不对');
                     return requestDeptRelatedRelatedAssess({
-                        id: this.shuttleBoxData.id,
-                        diseasesds: targetKeys
+                        deptId: this.shuttleBoxData.id,
+                        assessId: targetKeys
                     })
                         .then(v => {
                             this.$message.success('操作成功');
