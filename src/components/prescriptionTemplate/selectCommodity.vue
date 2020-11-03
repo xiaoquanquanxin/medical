@@ -89,7 +89,7 @@
             this.selectedRowKeys = this.originCommodityList.filter(item => item.isCheckboxChecked).map(item => item.key);
             console.log('初始化打开选择商品');
             console.log('被选中的数据', this.selectedRowKeys);
-            console.log('总数据', JSON.parse(JSON.stringify(this.originCommodityList)));
+            console.log('输入弹框的全部数据', JSON.parse(JSON.stringify(this.originCommodityList)));
         },
         methods: {
             ...mapActions('prescriptionTemplate', [
