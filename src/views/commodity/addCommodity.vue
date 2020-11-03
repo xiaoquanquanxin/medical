@@ -409,7 +409,7 @@
             unitProtein: '',
             unitFat: '',
             unitCarbohydrate: '',
-            unitUse: '',
+            unitUse: undefined,
         },
     ];
 
