@@ -257,7 +257,10 @@
         <hr>
         <hr>
         <hr>
-        <p>1.购买单位下拉。门诊领药的不能下拉；院内配置下拉只可能有商品里填写的那2/3种。</p>
+        <p>1.切换门诊领药和院内配置，列表的数据重置。</p>
+        <p>2.购买单位下拉。门诊领药的不能下拉；院内配置下拉只可能有商品里填写的那2/3种。</p>
+        <p>3.购买单位下拉切换，右侧数量不变，因为右侧的数据总是根据基本单位计算出来的，或者手动填写。</p>
+        <p></p>
     </div>
 </template>
 <script>
@@ -540,7 +543,6 @@
                 }
                 requestGoodsListByHospital(hospitalId)
                     .then(v => {
-                        const originCommodityList = [];
                         v.data.forEach(item => {
                             item.key = item.id;
                             //  fixme   开发阶段把这些没用的删了
@@ -561,8 +563,10 @@
                             item.uintListVos = item.uintListVos.filter(_item => {
                                 return _item.type === +prescriptionType;
                             });
-                            originCommodityList.push(item);
                         });
+                        const originCommodityList = Object.assign(v.data, this.commodityTableData);
+                        //  console.log(JSON.parse(JSON.stringify(originCommodityList)));
+                        //  console.log(JSON.parse(JSON.stringify(this.commodityTableData)));
                         this.setOriginCommodityList(originCommodityList);
                         this.showModal(DIALOG_TYPE.TEMPLATE_SELECT_COMMODITY);
                     });
@@ -870,10 +874,10 @@
                 //  checked_uname           ✅   自动更新
                 //  purchaseUnitCheckId     ✅   手动组织
                 //  uintListVos里面的数据     ✅   手动遍历
-                
+
                 let purchaseUnitCheckId = null;
                 sItem.uintListVos.forEach(item => {
-                    console.log(item);
+                    //  console.log(item);
                     item.isRadioChecked = false;
                     if (item.uname === checked_uname) {
                         item.isRadioChecked = true;
@@ -881,7 +885,7 @@
                     }
                 });
                 sItem.purchaseUnitCheckId = purchaseUnitCheckId;
-                console.log(JSON.parse(JSON.stringify(sItem)));
+                //  console.log(JSON.parse(JSON.stringify(sItem)));
                 this.$forceUpdate();
             },
             //  时间选择器的方法
