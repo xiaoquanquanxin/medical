@@ -77,9 +77,26 @@
                              class="custom-select-title-table">
                         <!--购买单位-->
                         <div slot="uintListVos" slot-scope="scope,sItem,sIndex,extra">
-                            <p v-for="(item,index) in sItem.uintListVos"
-                               v-if="item.id === sItem.purchaseUnitCheckId"
-                            >{{unitTypeMap[item.uname].label}}</p>
+                            <a-select v-if="+tableForm.prescriptionType===1"
+                                      data-msg="院内配置"
+                                      placeholder="请选择单位"
+                                      style="width:100%;"
+                                      v-model="sItem.checked_uname"
+                                      @change="unameChangeFn(sItem,$event)"
+                            >
+                                <a-select-option v-for="item in sItem.uintListVos"
+                                                 :value="item.uname"
+                                                 :key="item.uname"
+                                >
+                                    {{unitTypeMap[item.uname].label}}
+                                </a-select-option>
+                            </a-select>
+                            <p v-else>
+                                <span v-for="(item,index) in sItem.uintListVos"
+                                      v-if="item.id === sItem.purchaseUnitCheckId">
+                                      {{unitTypeMap[item.uname].label}}
+                                </span>
+                            </p>
                         </div>
                         <!--单价-->
                         <div slot="unitPrice" slot-scope="scope,sItem,sIndex,extra">
@@ -228,6 +245,19 @@
         <p>3.此计算逻辑繁琐，如有错误文档说明</p>
         <p>4.处方模板列表接口区分templateType 有问题，故处方模板现只保存 templateType = 1 的口服肠内营养补充</p>
         <p>5.点击选择商品要调接口，会慢，将来优化</p>
+        <hr>
+        <hr>
+        <hr>
+        <hr>
+        <hr>
+        <hr>
+        <hr>
+        <hr>
+        <hr>
+        <hr>
+        <hr>
+        <hr>
+        <p>1.购买单位下拉。门诊领药的不能下拉；院内配置下拉只可能有商品里填写的那2/3种。</p>
     </div>
 </template>
 <script>
@@ -390,14 +420,14 @@
                 tableForm: {
                     //  医院
                     hospitalId: undefined,
-                    //  hospitalId: 4,
+                    hospitalId: 4,
                     //  医院名
                     hospitalName: undefined,
                     //  处方名
                     templateName: undefined,
                     //  处方类型-处方类型 (1.院内配置,2门诊领药)
                     prescriptionType: undefined,
-                    //  prescriptionType: 1,
+                    prescriptionType: 1,
                     //  能量
                     energy: undefined,
                     //  食用方法
@@ -492,7 +522,7 @@
                 this.commodityTableData = [];
                 this.timeTableData = [];
             },
-            //  选择商品
+            //  选择商品，晒出多余字段
             selectCommodity(){
                 const {
                     hospitalId,
@@ -513,6 +543,21 @@
                         const originCommodityList = [];
                         v.data.forEach(item => {
                             item.key = item.id;
+                            //  fixme   开发阶段把这些没用的删了
+                            delete item.goodsImg;
+                            delete item.delFlag;
+                            delete item.goodsBarCode;
+                            delete item.goodsBrandId;
+                            delete item.goodsCategoryId;
+                            delete item.goodsDetails;
+                            delete item.goodsKeyWord;
+                            delete item.goodsProductCode;
+                            delete item.goodsSpecifications;
+                            delete item.goodsTradeName;
+                            delete item.manufactorId;
+                            delete item.preservationMethod;
+                            delete item.status;
+                            delete item.supplierId;
                             item.uintListVos = item.uintListVos.filter(_item => {
                                 return _item.type === +prescriptionType;
                             });
@@ -537,6 +582,18 @@
                     //  区分，如果是，院内，就是有3条数据的，需要计算出来基本单位
                     if (+this.tableForm.prescriptionType === 1) {
                         commodityTableData.forEach(item => {
+                            //  console.log(item);
+                            //  被选中的对象
+                            const checkedList = item.uintListVos.filter(_item => _item.isRadioChecked);
+                            if (!checkedList.length) {
+                                alert('检查数据组织，不可能没有 isRadioChecked === 1的');
+                            }
+                            if (checkedList.length > 1) {
+                                alert('检查数据组织，不可能有多个 isRadioChecked === 1的');
+                            }
+                            const { uname } = checkedList[0];
+                            console.log(`被选中的类型是${uname}`);
+                            item.checked_uname = uname;
                             //  基础数据
                             const basicUnitItem = item.uintListVos.filter(_item => +_item.unameType === 1)[0];
                             if (!basicUnitItem) {
@@ -547,8 +604,8 @@
                         });
                     }
                     this.commodityTableData = commodityTableData;
-                    //  console.log(JSON.parse(JSON.stringify(this.commodityTableData)))
-                    //  重置时间表格数据
+                    console.log('输出数据', JSON.parse(JSON.stringify(this.commodityTableData)));
+                    //    重置时间表格数据
                     this.timeTableData = [];
                     //  清除备注
                     this.setRemark('');
@@ -733,6 +790,8 @@
                 const data = Object.assign({
                     templateType: this.templateType,
                 }, this.tableForm);
+                console.log(JSON.parse(JSON.stringify(data)));
+                return;
                 (() => {
                     //  如果是新增
                     if (!this.templateId) {
@@ -768,8 +827,8 @@
 //                        //  基本单位
 //                        //  console.log(JSON.parse(JSON.stringify(basicUnitItem)));
 //                        //  单位关系
-//                        console.log(item.unitExchangeRate);
-//                        commodityItem.quantity = (item.dosage / item.unitExchangeRate).toFixed(2);
+//                        console.log(item.unitRelations	);
+//                        commodityItem.quantity = (item.dosage / item.unitRelations	).toFixed(2);
 //                    }
 //                });
                 if (+this.tableForm.prescriptionType === 2) {
@@ -795,7 +854,7 @@
                     list.forEach(_item => {
                         //  console.log(quantity);
                         if (goodsId === _item.goodsId) {
-                            quantity += (_item.dosage || 0) / item.unitExchangeRate;
+                            quantity += (_item.dosage || 0) / item.unitRelations;
                         }
                     });
                 });
@@ -804,6 +863,27 @@
                 this.$forceUpdate();
             },
 
+            //  单位切换
+            unameChangeFn(sItem, checked_uname){
+                //  console.log(sItem, checked_uname);
+                //  我要更新的数据
+                //  checked_uname           ✅   自动更新
+                //  purchaseUnitCheckId     ✅   手动组织
+                //  uintListVos里面的数据     ✅   手动遍历
+                
+                let purchaseUnitCheckId = null;
+                sItem.uintListVos.forEach(item => {
+                    console.log(item);
+                    item.isRadioChecked = false;
+                    if (item.uname === checked_uname) {
+                        item.isRadioChecked = true;
+                        purchaseUnitCheckId = item.id;
+                    }
+                });
+                sItem.purchaseUnitCheckId = purchaseUnitCheckId;
+                console.log(JSON.parse(JSON.stringify(sItem)));
+                this.$forceUpdate();
+            },
             //  时间选择器的方法
             moment,
             //  莫泰框方法
