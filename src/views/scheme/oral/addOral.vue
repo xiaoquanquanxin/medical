@@ -257,9 +257,14 @@
         <hr>
         <hr>
         <hr>
+        <p>2020年11月3日</p>
         <p>1.切换门诊领药和院内配置，列表的数据重置。</p>
         <p>2.购买单位下拉。门诊领药的不能下拉；院内配置下拉只可能有商品里填写的那2/3种。</p>
         <p>3.购买单位下拉切换，右侧数量不变，因为右侧的数据总是根据基本单位计算出来的，或者手动填写。</p>
+        <hr>
+        <p>情景：</p>
+        <p>
+            1.我已经选择了2条商品并且选择了时间，我再次选择商品【左侧主按钮】，数据新增的部分，完全不影响时间列表；数据减少的部分，时间列表中相应的数量也减少；如果此时新增时间，那么单条数据中应该出现现在商品列表中出现的商品。</p>
         <p></p>
     </div>
 </template>
@@ -563,10 +568,17 @@
                             item.uintListVos = item.uintListVos.filter(_item => {
                                 return _item.type === +prescriptionType;
                             });
+                            this.commodityTableData.forEach(_item => {
+                                //  复制辅助数据【选择状态，数量等】
+                                if (item.id === _item.id) {
+                                    Object.assign(item, _item);
+                                }
+                            });
                         });
-                        const originCommodityList = Object.assign(v.data, this.commodityTableData);
-                        //  console.log(JSON.parse(JSON.stringify(originCommodityList)));
-                        //  console.log(JSON.parse(JSON.stringify(this.commodityTableData)));
+                        const httpData = v.data;
+                        console.log(JSON.parse(JSON.stringify(httpData)));
+                        console.log(JSON.parse(JSON.stringify(this.commodityTableData)));
+                        const originCommodityList = httpData;
                         this.setOriginCommodityList(originCommodityList);
                         this.showModal(DIALOG_TYPE.TEMPLATE_SELECT_COMMODITY);
                     });
@@ -609,10 +621,41 @@
                     }
                     this.commodityTableData = commodityTableData;
                     console.log('输出数据', JSON.parse(JSON.stringify(this.commodityTableData)));
-                    //    重置时间表格数据
-                    this.timeTableData = [];
-                    //  清除备注
-                    this.setRemark('');
+                    //  临时map用于筛查时间表格的多余数据
+                    const _tempMap = {};
+                    commodityTableData.forEach(item => {
+                        console.log(item.id);
+                        _tempMap[item.id] = true;
+                    });
+                    const timeTableData = [];
+                    console.log('筛查时间表格数据');
+                    console.log('时间源数据', JSON.parse(JSON.stringify(this.timeTableData)));
+                    //    重置时间表格数据，完全重新组织时间数据
+                    this.timeTableData.forEach(item => {
+                        const {
+                            key,
+                            time,
+                            warmWater,
+                            list,
+                        } = item;
+                        const data = {
+                            key,
+                            time,
+                            warmWater,
+                        };
+                        const newList = [];
+                        list.forEach(_item => {
+                            //  时间map里有的才留下，
+                            if (_tempMap[_item.goodsId]) {
+                                newList.push(_item);
+                            }
+                        });
+                        data.list = newList;
+                        timeTableData.push(data);
+                    });
+                    console.log('最新的时间数据');
+                    console.log(timeTableData);
+                    this.timeTableData = timeTableData;
                 }).catch(error => {
                     console.log(error);
                     console.log('有错');
