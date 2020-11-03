@@ -133,12 +133,13 @@
     import {
         requestChannelBusinessListGoodsId,
         requestGoodsAuthorize,
-        requestGoodsDelete, requestGoodsGetGoodsRelationHospital,
+        requestGoodsDelete,
+        requestGoodsGetGoodsRelationHospital,
+        requestGoodsGoodsRelationHospital,
         requestGoodsPage
     } from '../../api/commodity/commodityList';
     import { requestCategoryList } from '../../api/commodity/commodityClassification';
     import { requestBrandList } from '../../api/commodity/brand';
-    import { requestDeptList } from '../../api/department';
     import { requestChannelBusinessList } from '../../api/distributors';
     import { requestHospitalGetList } from '../../api/hospital';
 
@@ -495,7 +496,7 @@
                 promise.then(targetKeys => {
                     console.log(targetKeys);
                     console.log(this.shuttleBoxData.id);
-                    return requestGoodsGetGoodsRelationHospital({
+                    return requestGoodsGoodsRelationHospital({
                         goodsId: this.shuttleBoxData.id,
                         hospitalId: targetKeys
                     })
