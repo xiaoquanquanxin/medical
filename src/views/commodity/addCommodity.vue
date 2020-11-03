@@ -135,9 +135,9 @@
                                 </a-select-option>
                             </a-select>
                         </div>
-                        <div slot="unitExchangeRate" slot-scope="scope,sItem,sIndex,extra">
+                        <div slot="unitRelations" slot-scope="scope,sItem,sIndex,extra">
                             <a-input placeholder="请输入单位关系"
-                                     v-model="scope.unitExchangeRate"
+                                     v-model="scope.unitRelations"
                             />
                         </div>
                         <div slot="unitPrice" slot-scope="scope,sItem,sIndex,extra">
@@ -204,9 +204,9 @@
                                 </a-select-option>
                             </a-select>
                         </div>
-                        <div slot="unitExchangeRate" slot-scope="scope,sItem,sIndex,extra">
+                        <div slot="unitRelations" slot-scope="scope,sItem,sIndex,extra">
                             <a-input placeholder="请输入单位关系"
-                                     v-model="sItem.unitExchangeRate"
+                                     v-model="sItem.unitRelations"
                             />
                         </div>
                         <div slot="unitPrice" slot-scope="scope,sItem,sIndex,extra">
@@ -317,10 +317,10 @@
             scopedSlots: { customRender: 'unameType' },
             width: 100,
         },
-        unitExchangeRate: {
+        unitRelations: {
             title: '单位关系',
             width: 120,
-            scopedSlots: { customRender: 'unitExchangeRate' }
+            scopedSlots: { customRender: 'unitRelations' }
         },
         uname: {
             title: '单位',
@@ -359,7 +359,7 @@
         type: 1,
         unameType: 3,
         uname: undefined,
-        unitExchangeRate: '',
+        unitRelations: '',
         unitPrice: '',
         unitEnergy: '',
         unitProtein: '',
@@ -373,7 +373,7 @@
         {
             title: '单位关系',
             width: 120,
-            scopedSlots: { customRender: 'unitExchangeRate' }
+            scopedSlots: { customRender: 'unitRelations' }
         },
         columnsMap.unitPrice,
         columnsMap.unitEnergy,
@@ -439,7 +439,7 @@
                     type: 1,
                     unameType: 1,
                     uname: undefined,
-                    unitExchangeRate: '',
+                    unitRelations: '',
                     unitPrice: '',
                     unitEnergy: '',
                     unitProtein: '',
@@ -451,7 +451,7 @@
                     type: 1,
                     unameType: 2,
                     uname: undefined,
-                    unitExchangeRate: '',
+                    unitRelations: '',
                     unitPrice: '',
                     unitEnergy: '',
                     unitProtein: '',
@@ -750,7 +750,7 @@
                         unitFat,
                         unitCarbohydrate,
                         unitUse,
-                        unitExchangeRate,
+                        unitRelations,
                     } = this.uintParams[i];
                     if (uname === ''
                         || unitPrice === ''
@@ -764,7 +764,7 @@
                     }
                     //  如果是院内
                     if ((this.isLocalAreaNetwork && unitUse === '')
-                        || (!this.isLocalAreaNetwork && unitExchangeRate === '')
+                        || (!this.isLocalAreaNetwork && unitRelations === '')
                     ) {
                         basicUnit = '';
                         break;
