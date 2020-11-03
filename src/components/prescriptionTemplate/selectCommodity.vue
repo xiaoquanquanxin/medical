@@ -3,7 +3,7 @@
         <a-table
                 :row-selection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                 :columns="countTableColumns"
-                :data-source="originCommodityList"
+                :data-source="data"
                 :scroll="modalTableScroll"
                 :pagination="false"
                 bordered
@@ -41,7 +41,6 @@
 </template>
 <script>
     import { modalTableScroll } from '@/utils/tableScroll';
-    import { mapGetters, mapActions } from 'vuex';
 
     const countTableColumns = [
         {
@@ -60,6 +59,7 @@
             scopedSlots: { customRender: 'price' },
         },
     ];
+
     //  选择商品
     export default {
         computed: {
@@ -73,9 +73,10 @@
                 return this.$store.state.constants.unitTypeMap;
             }
         },
-        props: ['prescriptionType'],
+        props: ['prescriptionType', 'timeOriginList'],
         data(){
             return {
+                data: [],
                 //	弹框table的scroll
                 modalTableScroll,
                 //  列的意义
@@ -85,17 +86,20 @@
             };
         },
         created(){
+            //  如果是时间框
+            if (this.timeOriginList) {
+                this.data = this.timeOriginList;
+                console.log('输入弹框的全部数据', JSON.parse(JSON.stringify(this.timeOriginList)));
+            } else {
+                this.data = this.originCommodityList;
+                console.log('输入弹框的全部数据', JSON.parse(JSON.stringify(this.originCommodityList)));
+            }
             //  被选中的列 === 数据 被选中的 id
-            this.selectedRowKeys = this.originCommodityList.filter(item => item.isCheckboxChecked).map(item => item.key);
+            this.selectedRowKeys = this.data.filter(item => item.isCheckboxChecked).map(item => item.key);
             console.log('初始化打开选择商品');
             console.log('被选中的数据', this.selectedRowKeys);
-            console.log('输入弹框的全部数据', JSON.parse(JSON.stringify(this.originCommodityList)));
         },
         methods: {
-            ...mapActions('prescriptionTemplate', [
-                //  商品源的数据
-                'setOriginCommodityList',
-            ]),
             //  多选
             onSelectChange(selectedRowKeys){
                 console.log('执行多选');
@@ -106,7 +110,7 @@
                 });
                 //  console.log(map);
                 //  没选择的数据，右侧数据的单选状态需要清空
-                this.originCommodityList.forEach(item => {
+                this.data.forEach(item => {
                     //  如果在map中没有，说明不是多选的勾选态
                     if (!map[item.key]) {
                         //  去掉单选的勾选状态
@@ -140,7 +144,7 @@
             },
             //  完成选择
             handleSubmit(){
-                //  console.log('源数据', this.originCommodityList);
+                //  console.log('源数据', this.data);
                 //  console.log('别选择的多选', this.selectedRowKeys);
                 return new Promise(((resolve, reject) => {
                     if (!this.selectedRowKeys.length) {
@@ -149,8 +153,7 @@
                     }
                     //  ⚠️这时候我能不能直接改源数据？能，因为在外面的操作可以直接修改源数据
                     //  删除是操作的selectList，【删除】按钮删除的是选中的状态
-                    this.setOriginCommodityList(this.originCommodityList);
-                    resolve();
+                    resolve(this.data);
                 }));
             }
         }
