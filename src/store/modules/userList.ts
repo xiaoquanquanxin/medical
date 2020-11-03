@@ -21,7 +21,9 @@ interface STATE {
 //	有id，就是编辑了
 const state: STATE = {
 	//	必须是对象，否则麻烦
-	patientBasicInfo: {},
+	patientBasicInfo: {
+		hospitalTreatment: undefined,
+	},
 	groupChatMessage: null,
 
 	screeningInfo: {},
