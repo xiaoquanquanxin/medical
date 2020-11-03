@@ -47,8 +47,7 @@
     </div>
 </template>
 <script>
-    import { prescriptionTypeList, liquidEnergyList, usageMethodList } from '../../utils/constants';
-    import { mapGetters, mapActions } from 'vuex';
+    import { liquidEnergyList, usageMethodList } from '../../utils/constants';
     import { oneRowSearch } from '../../utils/tableScroll';
     import ChoosePlanBox from './choosePlanBox';
     import { requestPrescriptionPrescriptionTpl } from '../../api/userList/intervention';

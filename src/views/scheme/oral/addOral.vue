@@ -242,7 +242,7 @@
         requestPrescriptionTemplateInsert,
         requestPrescriptionTemplateUpdate
     } from '../../../api/scheme/scheme';
-    import { prescriptionTypeList, energyList, usageMethodList } from '../../../utils/constants';
+    import {  energyList, usageMethodList } from '../../../utils/constants';
     import { requestHospitalGetList } from '../../../api/hospital';
     import {
         requestGoodsListByHospital,
@@ -322,8 +322,6 @@
                 //  医院下拉
                 hospitalList: [],
                 hospitalMap: null,
-                //  处方类型下拉
-                //  prescriptionTypeList,
                 //  能量下拉
                 energyList,
                 //  食用方法下拉

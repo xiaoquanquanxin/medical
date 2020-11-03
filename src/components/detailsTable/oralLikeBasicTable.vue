@@ -20,7 +20,7 @@
     </div>
 </template>
 <script>
-    import { prescriptionTypeList, liquidEnergyList, usageMethodList } from '../../utils/constants';
+    import { usageMethodList } from '../../utils/constants';
     //  口服肠内营养支持 表格 列的意义
     const oralColumns = [
         {

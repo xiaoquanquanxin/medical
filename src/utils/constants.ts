@@ -1,5 +1,5 @@
-//  处方类型下拉
-export const prescriptionTypeList = [
+//  处方模板类型下拉
+export const templateTypeList = [
 	{id: 1, key: 1, name: '口服肠内营养补充'},
 	{id: 2, key: 2, name: '肠内营养支持'},
 	{id: 3, key: 3, name: '膳食营养计划'}

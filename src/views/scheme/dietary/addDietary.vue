@@ -15,7 +15,6 @@
                           placeholder="请选择医院"
                           @change="selectHospitalChange"
                 >
-
                     <a-select-option v-for="(item,index) in hospitalList"
                                      :value="item.id"
                     >{{item.hospitalName}}
@@ -168,16 +167,14 @@
                     //  hospitalId: undefined,
                     //  hospitalName        医院名
                     //    处方名
-                    prescriptionName: '膳食营养计划',
+//                    prescriptionName: '膳食营养计划',
                     //  处方类型
-                    prescriptionType: 3,
-                    //  energy              能量
-                    //  usageMethod         食用方法
+                    templateType: 3,
+                    //  能量
+                    energy: undefined,
                 },
-
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
                 scroll: twoRowSearch(columns),
-
             };
         },
         created(){
@@ -203,11 +200,17 @@
                         console.log(data);
                         const tableForm = this.tableForm;
                         const { prescriptionContent, prescriptionName, energy, hospitalId, } = data;
-                        tableForm.prescriptionName = prescriptionName;
+                        //  tableForm.prescriptionName = prescriptionName;
                         tableForm.energy = energy;
                         tableForm.hospitalId = hospitalId;
                         const { mealPlanTableData } = JSON.parse(prescriptionContent);
-                        console.log(mealPlanTableData);
+                        //  console.log(mealPlanTableData);
+                        mealPlanTableData.forEach(item => {
+                            //  console.log(item);
+                            item.moment = moment(item.moment);
+                        });
+                        this.data = mealPlanTableData;
+                        //  this.$forceUpdate();
                     });
             },
             //  切换医院
@@ -252,7 +255,7 @@
                 this.mealPlanCheck();
                 this.data.forEach(item => {
                     const time = new Date(item.moment);
-                    item.time = `${time.getHours()}-${time.getMinutes()}`;
+                    item.time = `${time.getHours()}:${time.getMinutes()}`;
                 });
                 console.log(JSON.parse(JSON.stringify(this.data)));
                 const prescriptionContent = {
@@ -262,12 +265,14 @@
                 console.log(JSON.parse(JSON.stringify(this.tableForm)));
                 (() => {
                     //  如果是新增
-                    if (!this.oralId) {
+                    if (!this.dietaryId) {
                         return requestPrescriptionTemplateInsert(this.tableForm);
                     }
-                    data.id = this.oralId;
+                    const data = Object.assign({
+                        id: this.dietaryId
+                    }, this.tableForm);
                     //  如果是编辑
-                    return requestPrescriptionTemplateUpdate(this.tableForm);
+                    return requestPrescriptionTemplateUpdate(data);
                 })()
                     .then(v => {
                         console.log(v);

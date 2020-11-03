@@ -76,7 +76,7 @@
         onShowSizeChange,
     } from '@/utils/pagination.ts';
     import { threeRowSearch } from '@/utils/tableScroll';
-    import { prescriptionTypeList, energyList, usageMethodList } from '../../../utils/constants';
+    import { templateTypeList, energyList, usageMethodList } from '../../../utils/constants';
     import { requestHospitalGetList } from '../../../api/hospital';
     import { deleteSchemeFn, getSchemeListFn } from '../../../utils/scheme';
 
@@ -113,7 +113,7 @@
         data(){
             return {
                 //  处方类型下拉
-                prescriptionTypeList,
+                templateTypeList,
                 //  能量下拉
                 energyList,
 
@@ -130,7 +130,7 @@
                 pagination: paginationInit(),
                 //  搜索数据,
                 searchData: {
-                    prescriptionType: 3,
+                    templateType: 3,
                 },
             };
         },

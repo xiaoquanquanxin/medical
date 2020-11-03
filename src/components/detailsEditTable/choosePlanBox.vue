@@ -25,7 +25,7 @@
 </template>
 <script>
     import { requestPrescriptionPrescriptionTpl } from '../../api/userList/intervention';
-    import { prescriptionTypeList, energyList, usageMethodList } from '../../utils/constants';
+    import { energyList, } from '../../utils/constants';
     import { mapGetters, mapActions } from 'vuex';
 
     const columns = [
