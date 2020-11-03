@@ -65,7 +65,7 @@
                 <a-col :span="3">
                     <a-row type="flex" justify="center" align="middle">
                         <a-space size="small">
-                            <a @click="selectCommodity()">选择商品</a>
+                            <a @click="selectCommodity(true)">选择商品</a>
                         </a-space>
                     </a-row>
                 </a-col>
@@ -153,6 +153,11 @@
                             >
                                 {{item.goodsName}}
                             </div>
+                            <div class="negative-margin-item">
+                                <a-space size="small">
+                                    <a @click="selectCommodity(false,scope.list)">选择商品</a>
+                                </a-space>
+                            </div>
                         </div>
                         <!--使用量-->
                         <div slot="dosage"
@@ -174,6 +179,7 @@
                                     <span v-else data-msg="门诊领药">{{item.unitUse}}</span>
                                 </a-space>
                             </div>
+                            <div class="negative-margin-item" style="height:50px;"></div>
                         </div>
                         <!--温水-->
                         <div slot="warmWater"
@@ -198,6 +204,7 @@
                                     <a @click="deleteTimeTable(scope,index,sItem,sIndex)">删除</a>
                                 </a-space>
                             </div>
+                            <div class="negative-margin-item" style="height:50px;"></div>
                         </div>
                     </a-table>
                 </a-col>
@@ -215,6 +222,8 @@
                  @ok="selectCommodityModalCheck('refSelectCommodity')">
             <SelectCommodity ref="refSelectCommodity"
                              :prescription-type="tableForm.prescriptionType"
+                             :time-origin-list="timeOriginList"
+                             :is-main-button="isMainButton"
             />
         </a-modal>
         <!--选择时间莫泰框-->
@@ -232,40 +241,43 @@
                     @change="selectTimeChange"
                     format="HH:mm"/>
         </a-modal>
-        <p>1.使用量的单位：</p>
-        <ol>
-            <li>门诊领药：使用量单位取使用单位</li>
-            <li>院内配置：使用量单位取这件商品的基本单位</li>
-        </ol>
-        <p>2.使用量的计算：</p>
-        <ol>
-            <li>门诊领药：使用量和数量随意填</li>
-            <li>院内配置：使用量输入影响数量，数量输入不影响使用量；使用量自身输入优先级高；数量计算 = (时间中的使用量合计) / 单位关系</li>
-        </ol>
-        <p>3.此计算逻辑繁琐，如有错误文档说明</p>
-        <p>4.处方模板列表接口区分templateType 有问题，故处方模板现只保存 templateType = 1 的口服肠内营养补充</p>
-        <p>5.点击选择商品要调接口，会慢，将来优化</p>
-        <hr>
-        <hr>
-        <hr>
-        <hr>
-        <hr>
-        <hr>
-        <hr>
-        <hr>
-        <hr>
-        <hr>
-        <hr>
-        <hr>
-        <p>2020年11月3日</p>
-        <p>1.切换门诊领药和院内配置，列表的数据重置。</p>
-        <p>2.购买单位下拉。门诊领药的不能下拉；院内配置下拉只可能有商品里填写的那2/3种。</p>
-        <p>3.购买单位下拉切换，右侧数量不变，因为右侧的数据总是根据基本单位计算出来的，或者手动填写。</p>
-        <hr>
-        <p>情景：</p>
-        <p>
-            1.我已经选择了2条商品并且选择了时间，我再次选择商品【左侧主按钮】，数据新增的部分，完全不影响时间列表；数据减少的部分，时间列表中相应的数量也减少；如果此时新增时间，那么单条数据中应该出现现在商品列表中出现的商品。</p>
-        <p></p>
+        <div>
+            <p>1.使用量的单位：</p>
+            <ol>
+                <li>门诊领药：使用量单位取使用单位</li>
+                <li>院内配置：使用量单位取这件商品的基本单位</li>
+            </ol>
+            <p>2.使用量的计算：</p>
+            <ol>
+                <li>门诊领药：使用量和数量随意填</li>
+                <li>院内配置：使用量输入影响数量，数量输入不影响使用量；使用量自身输入优先级高；数量计算 = (时间中的使用量合计) / 单位关系</li>
+            </ol>
+            <p>3.此计算逻辑繁琐，如有错误文档说明</p>
+            <p>4.处方模板列表接口区分templateType 有问题，故处方模板现只保存 templateType = 1 的口服肠内营养补充</p>
+            <p>5.点击选择商品要调接口，会慢，将来优化</p>
+            <hr>
+            <hr>
+            <hr>
+            <hr>
+            <hr>
+            <hr>
+            <hr>
+            <hr>
+            <hr>
+            <hr>
+            <hr>
+            <hr>
+            <p>2020年11月3日</p>
+            <p>1.切换门诊领药和院内配置，列表的数据重置。</p>
+            <p>2.购买单位下拉。门诊领药的不能下拉；院内配置下拉只可能有商品里填写的那2/3种。</p>
+            <p>3.购买单位下拉切换，右侧数量不变，因为右侧的数据总是根据基本单位计算出来的，或者手动填写。</p>
+            <hr>
+            <p>情景：</p>
+            <p>
+                1.我已经选择了2条商品并且选择了时间，我再次选择商品【左侧主按钮】，数据新增的部分，完全不影响时间列表；数据减少的部分，时间列表中相应的数量也减少；如果此时新增时间，那么单条数据中应该出现现在商品列表中出现的商品。</p>
+            <p>
+                2.我选择了一些商品和一些时间数据，我的商品种类非常多，我只想给某个特定的时间新增某件商品。如果这件商品在商品列表里已存在自然不必说，相当于只给这个时间增加数据；如果上面的商品列表里没有，那就给他新增一条数据</p>
+        </div>
     </div>
 </template>
 <script>
@@ -357,6 +369,10 @@
         },
         data(){
             return {
+                //  选择时间
+                timeOriginList: null,
+                //  选择弹框是来自于主按钮
+                isMainButton: true,
                 templateTypeList,
                 //  医院下拉
                 hospitalList: [],
@@ -531,7 +547,8 @@
                 this.timeTableData = [];
             },
             //  选择商品，晒出多余字段
-            selectCommodity(){
+            selectCommodity(isMainButton, timeDataList){
+                this.isMainButton = isMainButton;
                 const {
                     hospitalId,
                     prescriptionType,
@@ -568,65 +585,99 @@
                             item.uintListVos = item.uintListVos.filter(_item => {
                                 return _item.type === +prescriptionType;
                             });
-                            this.commodityTableData.forEach(_item => {
-                                //  复制辅助数据【选择状态，数量等】
-                                if (item.id === _item.id) {
-                                    Object.assign(item, _item);
-                                }
-                            });
+                            //  如果是主按钮
+                            if (isMainButton) {
+                                this.commodityTableData.forEach(_item => {
+                                    //  复制辅助数据【选择状态，数量等】
+                                    if (item.id === _item.id) {
+                                        Object.assign(item, _item);
+                                    }
+                                });
+                            } else {
+                                timeDataList.forEach(_item => {
+                                    //  如果http数据的商品id === 时间列表的商品id
+                                    //  那么他是被选择的，且被选中的id是 _item.id【在时间数据里组织的数据是按uintListVos的】
+                                    if (item.id === _item.goodsId) {
+                                        item.purchaseUnitCheckId = _item.id;
+                                        item.isCheckboxChecked = true;
+                                        item.uintListVos.forEach(__item => {
+                                            //  debugger
+                                            //  console.log(JSON.parse(JSON.stringify(__item)));
+                                            if (_item.id === __item.id) {
+                                                __item.isRadioChecked = true;
+                                            }
+                                        });
+                                    }
+                                });
+//                                console.log(JSON.parse(JSON.stringify(timeDataList)));
+//                                console.log(JSON.parse(JSON.stringify(v.data)));
+                            }
                         });
                         const httpData = v.data;
                         console.log(JSON.parse(JSON.stringify(httpData)));
-                        console.log(JSON.parse(JSON.stringify(this.commodityTableData)));
-                        const originCommodityList = httpData;
-                        this.setOriginCommodityList(originCommodityList);
-                        this.showModal(DIALOG_TYPE.TEMPLATE_SELECT_COMMODITY);
+                        //  如果是主按钮
+                        if (isMainButton) {
+                            this.timeOriginList = null;
+                            this.setOriginCommodityList(httpData);
+                            this.showModal(DIALOG_TYPE.TEMPLATE_SELECT_COMMODITY);
+                        } else {
+                            //  如果时间按钮
+                            this.timeOriginList = httpData;
+                            this.showModal(DIALOG_TYPE.TEMPLATE_SELECT_COMMODITY);
+                        }
                     });
             },
             //  确认选择商品莫泰框
             selectCommodityModalCheck(refSelectCommodity){
                 const promise = this.$refs[refSelectCommodity].handleSubmit();
-                promise.then(v => {
-                    this.hideModal(DIALOG_TYPE.TEMPLATE_SELECT_COMMODITY);
-                    //  console.log('源数据', JSON.stringify(this.originCommodityList));
-                    //  只展示被选中的
-                    const commodityTableData = this.originCommodityList.filter(item => item.isCheckboxChecked);
-//                    commodityTableData.forEach(item => {
-//                        item.quantity = '9999999999';
-//                    });
-                    //  JSON.parse(JSON.stringify(this.commodityTableData));
-                    //  区分，如果是，院内，就是有3条数据的，需要计算出来基本单位
-                    if (+this.tableForm.prescriptionType === 1) {
+                promise.then(originCommodityList => {
+                    console.log(JSON.parse(JSON.stringify(originCommodityList)));
+                    console.log((JSON.stringify(originCommodityList)));
+                    //  如果是主要按钮
+                    if (this.isMainButton) {
+                        //  只展示被选中的
+                        const commodityTableData = originCommodityList.filter(item => item.isCheckboxChecked);
+                        //  JSON.parse(JSON.stringify(this.commodityTableData));
+                        //  区分，如果是，院内，就是有3条数据的，需要计算出来基本单位
+                        if (+this.tableForm.prescriptionType === 1) {
+                            commodityTableData.forEach(item => {
+                                //  console.log(item);
+                                //  被选中的对象
+                                const checkedList = item.uintListVos.filter(_item => _item.isRadioChecked);
+                                if (!checkedList.length) {
+                                    alert('检查数据组织，不可能没有 isRadioChecked === 1的');
+                                }
+                                if (checkedList.length > 1) {
+                                    alert('检查数据组织，不可能有多个 isRadioChecked === 1的');
+                                }
+                                const { uname } = checkedList[0];
+                                console.log(`被选中的类型是${uname}`);
+                                item.checked_uname = uname;
+                                //  基础数据
+                                const basicUnitItem = item.uintListVos.filter(_item => +_item.unameType === 1)[0];
+                                if (!basicUnitItem) {
+                                    alert('检查脏数据，没有unameType===1的，这是不可能的');
+                                }
+                                //  console.log(JSON.parse(JSON.stringify(basicUnitItem)));
+                                item.basicUnitItem = basicUnitItem;
+                            });
+                        }
+                        this.commodityTableData = commodityTableData;
+                        console.log('输出数据', JSON.parse(JSON.stringify(this.commodityTableData)));
+                        //  临时map用于筛查时间表格的多余数据
+                        const _tempMap = {};
                         commodityTableData.forEach(item => {
-                            //  console.log(item);
-                            //  被选中的对象
-                            const checkedList = item.uintListVos.filter(_item => _item.isRadioChecked);
-                            if (!checkedList.length) {
-                                alert('检查数据组织，不可能没有 isRadioChecked === 1的');
-                            }
-                            if (checkedList.length > 1) {
-                                alert('检查数据组织，不可能有多个 isRadioChecked === 1的');
-                            }
-                            const { uname } = checkedList[0];
-                            console.log(`被选中的类型是${uname}`);
-                            item.checked_uname = uname;
-                            //  基础数据
-                            const basicUnitItem = item.uintListVos.filter(_item => +_item.unameType === 1)[0];
-                            if (!basicUnitItem) {
-                                alert('检查脏数据，没有unameType===1的，这是不可能的');
-                            }
-                            //  console.log(JSON.parse(JSON.stringify(basicUnitItem)));
-                            item.basicUnitItem = basicUnitItem;
+                            console.log(item.id);
+                            _tempMap[item.id] = true;
                         });
+                    } else {
+                        //  如果是时间按钮
+                        //  只展示被选中的
+                        const commodityTableData = originCommodityList.filter(item => item.isCheckboxChecked);
+                        console.log(JSON.parse(JSON.stringify(this.commodityTableData)));
+                        console.log(JSON.parse(JSON.stringify(commodityTableData)));
+                        debugger
                     }
-                    this.commodityTableData = commodityTableData;
-                    console.log('输出数据', JSON.parse(JSON.stringify(this.commodityTableData)));
-                    //  临时map用于筛查时间表格的多余数据
-                    const _tempMap = {};
-                    commodityTableData.forEach(item => {
-                        console.log(item.id);
-                        _tempMap[item.id] = true;
-                    });
                     const timeTableData = [];
                     console.log('筛查时间表格数据');
                     console.log('时间源数据', JSON.parse(JSON.stringify(this.timeTableData)));
@@ -656,6 +707,7 @@
                     console.log('最新的时间数据');
                     console.log(timeTableData);
                     this.timeTableData = timeTableData;
+                    this.hideModal(DIALOG_TYPE.TEMPLATE_SELECT_COMMODITY);
                     this.$nextTick(() => {
                         this.rowCount();
                     });
@@ -765,6 +817,7 @@
                 if (!scope.list.length) {
                     this.clearTimeTableData();
                 }
+                this.rowCount();
             },
             //  清洗时间表格数据
             clearTimeTableData(){
