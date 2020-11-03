@@ -708,9 +708,11 @@
                             //  如果最新的数据里是和以前的数据有重的，那么merge一下 使用量、温水、备注
                             const _item = addCommodityTimeMap[item.id];
                             if (_item) {
-                                const { dosage, warmWater } = _item;
+                                const { dosage, warmWater, unitRelations } = _item;
                                 item.dosage = dosage;
                                 item.warmWater = warmWater;
+//                                console.log(item.unitRelations);
+//                                console.log(unitRelations);
                             }
                         });
                         //  查询一下this.addCommodityTimeList在时间数据里是第几个
@@ -1012,7 +1014,7 @@
                     list.forEach(_item => {
                         //  console.log(quantity);
                         if (goodsId === _item.goodsId) {
-                            quantity += (_item.dosage || 0) / item.unitRelations;
+                            quantity += (_item.dosage || 0) / item.basicUnitItem.unitRelations;
                         }
                     });
                 });
