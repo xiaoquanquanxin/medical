@@ -217,8 +217,8 @@
         </a-modal>
         <p>1.使用量的单位：</p>
         <ol>
-            <li>门诊领药：使用量取使用单位</li>
-            <li>院内配置：使用量取这件商品的基本单位</li>
+            <li>门诊领药：使用量单位取使用单位</li>
+            <li>院内配置：使用量单位取这件商品的基本单位</li>
         </ol>
         <p>2.使用量的计算：</p>
         <ol>
@@ -226,7 +226,7 @@
             <li>院内配置：使用量输入影响数量，数量输入不影响使用量；使用量自身输入优先级高；数量计算 = (时间中的使用量合计) / 单位关系</li>
         </ol>
         <p>3.此计算逻辑繁琐，如有错误文档说明</p>
-        <p>4.处方模板列表接口区分templateType 有问题，处方模板现只保存 templateType = 1 的口服肠内营养补充</p>
+        <p>4.处方模板列表接口区分templateType 有问题，故处方模板现只保存 templateType = 1 的口服肠内营养补充</p>
         <p>5.点击选择商品要调接口，会慢，将来优化</p>
     </div>
 </template>
@@ -301,6 +301,20 @@
             //  单元map
             unitTypeMap(){
                 return this.$store.state.constants.unitTypeMap;
+            },
+            //  处方模板类型 1 口服肠内 2 肠内营养 3 营养计划
+            templateType(){
+                const { name } = this.$route;
+                switch (name) {
+                    case 'addOral':
+                    case 'editOral':
+                        return 1;
+                    case 'addIntestinal':
+                    case 'editIntestinal':
+                        return 2;
+                    default:
+                        throw new Error(`错误的路由${name}`);
+                }
             }
         },
         data(){
@@ -377,20 +391,18 @@
                 tableForm: {
                     //  医院
                     hospitalId: undefined,
-                    hospitalId: 4,
+                    //  hospitalId: 4,
                     //  医院名
                     hospitalName: undefined,
                     //  处方名
                     prescriptionName: undefined,
                     //  处方类型-处方类型 (1.院内配置,2门诊领药)
                     prescriptionType: undefined,
-                    prescriptionType: 1,
+                    //  prescriptionType: 1,
                     //  能量
                     energy: undefined,
                     //  食用方法
                     usageMethod: undefined,
-                    //  处方模板类型 1 口服肠内 2 肠内营养 3 营养计划
-                    templateType: 1,
                 },
 
                 //  选择时间的值的对象
@@ -403,12 +415,6 @@
             this.searchFn();
             console.log('是编辑？', !!this.oralId);
         },
-
-//        watch: {
-//            timeTableData(value){
-//                console.log(value);
-//            }
-//        },
         methods: {
             //  主要请求
             searchFn(){
@@ -722,15 +728,19 @@
                 console.log(prescriptionContent);
                 console.log(JSON.stringify(prescriptionContent));
                 console.clear();
-                console.log(JSON.stringify(this.tableForm));
-
+                //  console.log(JSON.stringify(this.tableForm));
+                //  console.log(this.templateType);
+                const data = Object.assign({
+                    templateType: this.templateType,
+                }, this.tableForm);
                 (() => {
                     //  如果是新增
                     if (!this.oralId) {
-                        return requestPrescriptionTemplateInsert(this.tableForm);
+                        return requestPrescriptionTemplateInsert(data);
                     }
+                    data.id = this.oralId;
                     //  如果是编辑
-                    return requestPrescriptionTemplateUpdate(Object.assign({}, this.tableForm, { id: this.oralId }));
+                    return requestPrescriptionTemplateUpdate(data);
                 })()
                     .then(v => {
                         console.log(v);
@@ -740,7 +750,6 @@
                     .catch(err => {
                         console.log(err);
                     });
-
             },
 
             //  使用量
@@ -763,7 +772,9 @@
 //                        commodityItem.quantity = (item.dosage / item.unitExchangeRate).toFixed(2);
 //                    }
 //                });
-
+                if (+this.tableForm.prescriptionType === 2) {
+                    return;
+                }
                 //  console.log(JSON.parse(JSON.stringify(item)).goodsId);
                 //    被编辑的商品id
                 const { goodsId } = item;
