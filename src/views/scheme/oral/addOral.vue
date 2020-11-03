@@ -679,9 +679,9 @@
                             updateMap[item.id] = item;
                         });
                         //  重写这个完事了
-//                        const addCommodityTimeList = [];
+                        const addCommodityTimeList = [];
                         console.log(commodityTableData.length);
-                        this.addCommodityTimeList.length = 0;
+//                        this.addCommodityTimeList.length = 0;
                         commodityTableData.forEach(item => {
                             //  这是新增的
                             if (!updateMap[item.id]) {
@@ -696,22 +696,37 @@
                                     timeItem = Object.assign({}, _item, { goodsName, basicUnitItem });
                                 }
                             });
-                            this.addCommodityTimeList.push(timeItem);
+                            addCommodityTimeList.push(timeItem);
                         });
 //                        this.addCommodityTimeList = addCommodityTimeList;
-                        console.log(JSON.parse(JSON.stringify(this.addCommodityTimeList)));
+                        console.log(JSON.parse(JSON.stringify(addCommodityTimeList)));
+                        const addCommodityTimeMap = {};
+                        this.addCommodityTimeList.forEach(item => {
+                            addCommodityTimeMap[item.id] = item;
+                        });
+                        addCommodityTimeList.forEach(item => {
+                            //  如果最新的数据里是和以前的数据有重的，那么merge一下 使用量、温水、备注
+                            const _item = addCommodityTimeMap[item.id];
+                            if (_item) {
+                                const { dosage, warmWater } = _item;
+                                item.dosage = dosage;
+                                item.warmWater = warmWater;
+                            }
+                        });
+                        //  查询一下this.addCommodityTimeList在时间数据里是第几个
+                        let timeListIndex = -1;
+                        for (let i = 0; i < this.timeTableData.length; i++) {
+                            const item = this.timeTableData[i];
+                            if (item.list === this.addCommodityTimeList) {
+                                timeListIndex = i;
+                                break;
+                            }
+                        }
+                        if (timeListIndex === -1) {
+                            alert('组织错误');
+                        }
+                        this.timeTableData[timeListIndex].list = addCommodityTimeList;
                         console.log(JSON.parse(JSON.stringify(this.timeTableData)));
-
-//                        const list = commodityTableData.map(item => {
-//                            const { basicUnitItem } = item;
-//                            const child = item.uintListVos.filter((_item) => {
-//                                //  console.log(_item.isRadioChecked);
-//                                return _item.isRadioChecked;
-//                            });
-//                            //  console.log(child);
-//                            return Object.assign(child[0], { goodsName: item.goodsName, basicUnitItem });
-//                        });
-                    
                     }
                     //  临时map用于筛查时间表格的多余数据
                     const _tempMap = {};
