@@ -272,7 +272,7 @@
                     .then(v => {
                         console.log(v);
                         this.$message.success('操作成功');
-                        this.$router.push({ name: 'scheme' });
+                        this.$router.push({ name: 'dietary' });
                     })
                     .catch(err => {
                         console.log(err);

@@ -9,6 +9,8 @@ import UserList from '@/views/userList/userList.vue';
  * 🍌🍌meta中的:
  * chName				:	中文名
  * selectRouteKey		:	被选中的菜单的key，不区分一级二级，只要是蓝色的就是
+ * parentPath			:	父级路由，用于提交完成的跳转【暂无】
+ * parentName			:	父级路由，用于提交完成的跳转
  * openRouteKey			:	展开的菜单的key
  * hasTransverseSubPaths1:	有页面内的横向子路由，模板
  * hasTransverseSubPaths2:	有页面内的横向子路由，用户list
@@ -349,6 +351,7 @@ export const asyncRoutesList = [
 		meta: {
 			chName: '新增口服肠内补充方案',
 			selectRouteKey: 'scheme',
+			parentName: 'oral',
 			hiddenHistory: true,
 			hidden: true,
 		},
@@ -360,10 +363,11 @@ export const asyncRoutesList = [
 		meta: {
 			chName: '编辑口服肠内补充方案',
 			selectRouteKey: 'scheme',
+			parentName: 'oral',
 			hiddenHistory: true,
 			hidden: true,
 		},
-		path: '/scheme/editOral/:oralId',
+		path: '/scheme/editOral/:templateId',
 		name: 'editOral',
 		component: () => import(/* webpackChunkName: "addOral" */ '@/views/scheme/oral/addOral.vue'),
 	},
@@ -371,8 +375,10 @@ export const asyncRoutesList = [
 		meta: {
 			chName: '新增肠内营养支持',
 			selectRouteKey: 'scheme',
+			parentName: 'intestinal',
 			hiddenHistory: true,
 			hidden: true,
+
 		},
 		path: '/scheme/addIntestinal',
 		name: 'addIntestinal',
@@ -382,10 +388,11 @@ export const asyncRoutesList = [
 		meta: {
 			chName: '编辑肠内营养支持',
 			selectRouteKey: 'scheme',
+			parentName: 'intestinal',
 			hiddenHistory: true,
 			hidden: true,
 		},
-		path: '/scheme/editIntestinal/:intestinalId',
+		path: '/scheme/editIntestinal/:templateId',
 		name: 'editIntestinal',
 		component: () => import(/* webpackChunkName: "addOral" */ '@/views/scheme/oral/addOral.vue'),
 	},

@@ -39,7 +39,7 @@
             <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
                 <a-space size="small">
                     <a @click="editCommodity(sItem)">编辑</a>
-                    <a @click="authorization(sItem)">授权</a>
+                    <a @click="authorization(sItem)">授权渠道商</a>
                     <a @click="onShelf(sItem)">上架</a>
                     <a @click="offShelf(sItem)">下架</a>
                     <a @click="deleteFn(sItem)">删除</a>
@@ -182,7 +182,7 @@
         {
             title: '操作',
             scopedSlots: { customRender: 'operation' },
-            width: 240,
+            width: 300,
         },
     ];
 

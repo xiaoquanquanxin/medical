@@ -295,8 +295,8 @@
                 return this.$store.state.prescriptionTemplate.remark;
             },
             //  区分编辑
-            oralId(){
-                return this.$route.params.oralId;
+            templateId(){
+                return this.$route.params.templateId;
             },
             //  单元map
             unitTypeMap(){
@@ -412,8 +412,9 @@
             };
         },
         created(){
+            console.log(this.$route.meta.parentName);
             this.searchFn();
-            console.log('是编辑？', !!this.oralId);
+            console.log('是编辑？', !!this.templateId);
         },
         methods: {
             //  主要请求
@@ -434,11 +435,11 @@
                         this.hospitalMap = hospitalMap;
                     });
                 //  如果是新增
-                if (!this.oralId) {
+                if (!this.templateId) {
                     return;
                 }
                 //  如果是编辑
-                requestPrescriptionTemplateGet(this.oralId)
+                requestPrescriptionTemplateGet(this.templateId)
                     .then(v => {
                         const { data } = v;
                         const tableForm = this.tableForm;
@@ -735,17 +736,17 @@
                 }, this.tableForm);
                 (() => {
                     //  如果是新增
-                    if (!this.oralId) {
+                    if (!this.templateId) {
                         return requestPrescriptionTemplateInsert(data);
                     }
-                    data.id = this.oralId;
+                    data.id = this.templateId;
                     //  如果是编辑
                     return requestPrescriptionTemplateUpdate(data);
                 })()
                     .then(v => {
                         console.log(v);
                         this.$message.success('操作成功');
-                        this.$router.push({ name: 'scheme' });
+                        this.$router.push({ name: this.$route.meta.parentName });
                     })
                     .catch(err => {
                         console.log(err);

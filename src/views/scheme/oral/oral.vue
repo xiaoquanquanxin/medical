@@ -40,7 +40,7 @@
         >
             <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
                 <a-space size="small">
-                    <router-link :to="{name:'editOral',params:{oralId:sItem.id}}">编辑</router-link>
+                    <a @click="editSchemeFn(sItem)">编辑</a>
                     <a @click="deleteSchemeFn(sItem)">删除</a>
                 </a-space>
             </div>
@@ -155,6 +155,19 @@
             //  主要请求
             searchFn(){
                 this.getSchemeListFn();
+            },
+            //  编辑
+            editSchemeFn(sItem){
+                console.log(this.typeData.prescriptionType);
+                let name;
+                switch (this.typeData.prescriptionType) {
+                    case 1:
+                        name = 'editOral';
+                        break;
+                    case 2:
+                        name = 'editIntestinal';
+                }
+                this.$router.push({ name, params: { templateId: sItem.id } });
             },
             getSchemeListFn,
             deleteSchemeFn,

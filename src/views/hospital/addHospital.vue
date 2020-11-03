@@ -56,6 +56,17 @@
                     </a-select-option>
                 </a-select>
             </a-form-item>
+            <a-form-item label="选择仓库" v-if="!hospitalId">
+                <a-select class="add-form-input"
+                          v-decorator="warehouseIdDecorator"
+                          placeholder="请选择仓库"
+                >
+                    <a-select-option :value="item.id"
+                                     v-for="item in entrepotList"
+                    >{{item.warehouseName}}
+                    </a-select-option>
+                </a-select>
+            </a-form-item>
             <a-form-item label="医院图标" required>
                 <div class="add-form-input">
                     <a-upload-dragger
@@ -231,6 +242,7 @@
     import { uploadHandleChange, beforeUploadFn, beforeUploadData } from '../../utils/upload';
     import { requestHospitalGet, requestHospitalSave, requestHospitalUpdate } from '../../api/hospital';
     import { getProvinceList, provinceChange, cityChange, areaList } from '@/utils/areaList';
+    import { requestWarehouseList } from '../../api/entrepot';
 
     export default {
         components: {
@@ -239,8 +251,15 @@
         beforeCreate(){
             this.form = this.$form.createForm(this);
         },
+        computed: {
+            //  医院id
+            hospitalId(){
+                return this.$route.params.hospitalId;
+            }
+        },
         data(){
             return {
+                entrepotList: [],
                 //	地址对象
                 areaList,
                 //	上传文件的数据，这样的对象只需要一个
@@ -249,8 +268,6 @@
                     labelCol: { span: 7 },
                     wrapperCol: { offset: 1, span: 15 },
                 },
-                //  医院id
-                hospitalId: this.$route.params.hospitalId,
 
                 //  医院名称
                 hospitalNameDecorator: ['hospitalName', {
@@ -352,6 +369,11 @@
             beforeUploadFn,
             //  主要请求
             searchFn(){
+                //  仓库list
+                requestWarehouseList()
+                    .then(entrepotList => {
+                        this.entrepotList = entrepotList;
+                    });
                 this.getProvinceList(this);
                 //  如果是新增
                 if (!this.hospitalId) {
@@ -402,7 +424,7 @@
                             });
                     });
             },
-            //    表单提交
+            //    表单提交，保存
             handleSubmit(e){
                 console.log(this.status ? 0 : 1);
                 e.preventDefault();
@@ -414,6 +436,7 @@
                         }
                         console.table(values);
                         const data = Object.assign({ status: this.status ? 0 : 1 }, values);
+                        return;
                         (() => {
                             //  如果是新增
                             if (!this.hospitalId) {
