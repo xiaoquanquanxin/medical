@@ -81,7 +81,7 @@
                 accountPasswordDecorator: ['password', {
                     rules: [{
                         required: true,
-                        message: '请输入疾病名称'
+                        message: '请输入账号密码'
                     },]
                 }],
 //                //  账号类型
