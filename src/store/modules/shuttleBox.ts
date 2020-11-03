@@ -3,8 +3,10 @@ import {COMMIT_INTERFACE} from "@/store"
 
 //	穿梭框区分类型，每个用到穿梭框的都要有引入
 export const SHUTTLE_BOX = {
-	//	商品列表 - 授权
-	DIALOG_AUTHORIZATION: 'DIALOG_AUTHORIZATION',
+	//	商品列表 - 授权渠道商
+	DIALOG_AUTHORIZATION_DISTRIBUTORS: 'DIALOG_AUTHORIZATION_DISTRIBUTORS',
+	//	商品列表 - 授权医院
+	AUTHORIZATION_HOSPITAL: 'AUTHORIZATION_HOSPITAL',
 	//	医院管理 - 关联科室
 	RELATED_DEPARTMENTS: 'RELATED_DEPARTMENTS',
 	//	科室管理 - 关联疾病

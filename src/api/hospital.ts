@@ -1,4 +1,4 @@
-import request from '@/utils/request';
+import request, {unifiedHandlingList} from '@/utils/request';
 
 //	医院管理列表、医院列表	✅
 export function requestHospitalPage(data: any) {
@@ -42,13 +42,7 @@ export function requestHospitalGetList() {
 		url: '/api/hospital/getList',
 		method: 'get',
 	})
-		.then(v => {
-			const list = v.data || [];
-			list.forEach((item: any) => {
-				item.key = item.id;
-			})
-			return list;
-		})
+		.then(unifiedHandlingList)
 }
 
 

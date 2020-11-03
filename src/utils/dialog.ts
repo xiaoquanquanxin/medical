@@ -31,10 +31,12 @@ export const DIALOG_TYPE: DialogType = {
 	//	编辑患者用户
 	PATIENTS_USER: 'PATIENTS_USER',
 
-	//	查看市场价格弹框
+	//	商品-查看市场价格弹框
 	VIEW_MARKET_PRICE: 'VIEW_MARKET_PRICE',
-	//  查看市场价格弹框
-	AUTHORIZATION: 'AUTHORIZATION',
+	//  商品-授权渠道商
+	AUTHORIZATION_DISTRIBUTORS: 'AUTHORIZATION_DISTRIBUTORS',
+	//  商品-授权医院
+	AUTHORIZATION_HOSPITAL: 'AUTHORIZATION_HOSPITAL',
 	//  新增、编辑分类管理莫泰框
 	ADD_CLASSIFICATION: 'ADD_CLASSIFICATION',
 	//	新增、编辑品牌管理莫泰框

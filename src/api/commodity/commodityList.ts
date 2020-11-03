@@ -43,3 +43,12 @@ export function requestChannelBusinessListGoodsId(id: string | number) {
 		method: 'get',
 	});
 }
+
+//	获取商品已经授权的医院
+export function requestGoodsGetGoodsRelationHospital(id: string | number) {
+	return request({
+		url: `/api/goods/getGoodsRelationHospital/${id}`,
+		method: 'get',
+	});
+}
+

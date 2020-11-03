@@ -36,10 +36,12 @@
                 :scroll="scroll"
                 :pagination="false"
         >
+            <!--操作-->
             <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
                 <a-space size="small">
                     <a @click="editCommodity(sItem)">编辑</a>
-                    <a @click="authorization(sItem)">授权渠道商</a>
+                    <a @click="authorizationDistributors(sItem)">授权渠道商</a>
+                    <a @click="authorizationHospital(sItem)">授权医院</a>
                     <a @click="onShelf(sItem)">上架</a>
                     <a @click="offShelf(sItem)">下架</a>
                     <a @click="deleteFn(sItem)">删除</a>
@@ -80,17 +82,33 @@
                  @ok="viewMarketPriceModalCheck('refViewPrice')">
             <ViewPrice ref="refViewPrice"/>
         </a-modal>
-        <!--授权莫泰框-->
+        <!--授权渠道商莫泰框-->
         <a-modal v-model="dialogDataAuthorization.visible"
                  v-if="dialogDataAuthorization.visible"
                  :confirm-loading="dialogDataAuthorization.confirmLoading"
                  :maskClosable="false"
                  centered
                  :width="800"
-                 title="授权"
+                 title="授权渠道商"
                  ok-text="确认"
                  cancel-text="取消"
-                 @ok="authorizationModalCheck('refShuttleBox')">
+                 @ok="authorizationDistributorsModalCheck('refShuttleBox')">
+            <ShuttleBox ref="refShuttleBox"
+                        :origin-list="shuttleOriginList"
+                        :origin-target-key="shuttleOriginTargetKey"
+            />
+        </a-modal>
+        <!--授权医院莫泰框-->
+        <a-modal v-model="dialogHospital.visible"
+                 v-if="dialogHospital.visible"
+                 :confirm-loading="dialogHospital.confirmLoading"
+                 :maskClosable="false"
+                 centered
+                 :width="800"
+                 title="授权医院"
+                 ok-text="确认"
+                 cancel-text="取消"
+                 @ok="authorizationHospitalModalCheck('refShuttleBox')">
             <ShuttleBox ref="refShuttleBox"
                         :origin-list="shuttleOriginList"
                         :origin-target-key="shuttleOriginTargetKey"
@@ -115,13 +133,14 @@
     import {
         requestChannelBusinessListGoodsId,
         requestGoodsAuthorize,
-        requestGoodsDelete,
+        requestGoodsDelete, requestGoodsGetGoodsRelationHospital,
         requestGoodsPage
     } from '../../api/commodity/commodityList';
     import { requestCategoryList } from '../../api/commodity/commodityClassification';
     import { requestBrandList } from '../../api/commodity/brand';
     import { requestDeptList } from '../../api/department';
     import { requestChannelBusinessList } from '../../api/distributors';
+    import { requestHospitalGetList } from '../../api/hospital';
 
     const columns = [
         {
@@ -285,7 +304,9 @@
                 //  价格莫泰框
                 dialogDataViewMarketPrice: this.initModal(DIALOG_TYPE.VIEW_MARKET_PRICE),
                 //  授权莫泰框
-                dialogDataAuthorization: this.initModal(DIALOG_TYPE.AUTHORIZATION),
+                dialogDataAuthorization: this.initModal(DIALOG_TYPE.AUTHORIZATION_DISTRIBUTORS),
+                //  授权医院莫泰框
+                dialogHospital: this.initModal(DIALOG_TYPE.AUTHORIZATION_HOSPITAL),
                 //  弹框表格的数据
                 countTableColumns,
                 countTableData,
@@ -338,7 +359,7 @@
                 this.$router.push({ name: 'editCommodity', params: { commodityId: sItem.id } });
             },
             //  授权渠道商
-            authorization(sItem){
+            authorizationDistributors(sItem){
                 this.shuttleBoxData = sItem;
                 Promise.all([
                     requestChannelBusinessList(),
@@ -357,8 +378,32 @@
                         });
                         //  console.table(shuttleOriginList);
                         this.shuttleOriginTargetKey = shuttleOriginTargetKey;
-                        this.showModal(DIALOG_TYPE.AUTHORIZATION);
-                        this.setShuttleBoxType(SHUTTLE_BOX.DIALOG_AUTHORIZATION);
+                        this.showModal(DIALOG_TYPE.AUTHORIZATION_DISTRIBUTORS);
+                        this.setShuttleBoxType(SHUTTLE_BOX.DIALOG_AUTHORIZATION_DISTRIBUTORS);
+                    });
+            },
+            //  授权医院
+            authorizationHospital(sItem){
+                this.shuttleBoxData = sItem;
+                Promise.all([
+                    requestHospitalGetList(),
+                    requestGoodsGetGoodsRelationHospital(sItem.id)
+                ])
+                    .then(v => {
+                        const shuttleOriginList = v[0] || [];
+                        const shuttleOriginTargetKey = v[1].data.map(String);
+                        this.shuttleOriginList = [];
+                        shuttleOriginList.forEach(item => {
+                            const data = {};
+                            data.key = item.id.toString();
+                            data.title = item.hospitalName;
+                            data.description = item.hospitalName;
+                            this.shuttleOriginList.push(data);
+                        });
+                        //  console.table(shuttleOriginList);
+                        this.shuttleOriginTargetKey = shuttleOriginTargetKey;
+                        this.showModal(DIALOG_TYPE.AUTHORIZATION_HOSPITAL);
+                        this.setShuttleBoxType(SHUTTLE_BOX.AUTHORIZATION_HOSPITAL);
                     });
             },
             //  上架
@@ -414,10 +459,10 @@
                     console.log('有错');
                 });
             },
-            //  确认授权
-            authorizationModalCheck(refShuttleBox){
+            //  确认授权渠道商
+            authorizationDistributorsModalCheck(refShuttleBox){
                 //  防止连点
-                this.setConfirmLoading(DIALOG_TYPE.AUTHORIZATION, true);
+                this.setConfirmLoading(DIALOG_TYPE.AUTHORIZATION_DISTRIBUTORS, true);
                 const promise = this.$refs[refShuttleBox].handleSubmit();
                 promise.then(targetKeys => {
                     console.log(targetKeys);
@@ -428,7 +473,7 @@
                     })
                         .then(v => {
                             this.$message.success('操作成功');
-                            this.hideModal(DIALOG_TYPE.AUTHORIZATION);
+                            this.hideModal(DIALOG_TYPE.AUTHORIZATION_DISTRIBUTORS);
                             this.searchFn();
                         })
                         .catch(err => {
@@ -439,7 +484,35 @@
                     console.log('有错');
                 }).then(v => {
                     //  最后设置可以再次点击
-                    this.setConfirmLoading(DIALOG_TYPE.AUTHORIZATION, false);
+                    this.setConfirmLoading(DIALOG_TYPE.AUTHORIZATION_DISTRIBUTORS, false);
+                });
+            },
+            //  确认授权医院
+            authorizationHospitalModalCheck(refShuttleBox){
+                //  防止连点
+                this.setConfirmLoading(DIALOG_TYPE.AUTHORIZATION_HOSPITAL, true);
+                const promise = this.$refs[refShuttleBox].handleSubmit();
+                promise.then(targetKeys => {
+                    console.log(targetKeys);
+                    console.log(this.shuttleBoxData.id);
+                    return requestGoodsAuthorize({
+                        goodsId: this.shuttleBoxData.id,
+                        channelBusinessId: targetKeys
+                    })
+                        .then(v => {
+                            this.$message.success('操作成功');
+                            this.hideModal(DIALOG_TYPE.AUTHORIZATION_HOSPITAL);
+                            this.searchFn();
+                        })
+                        .catch(err => {
+                            console.log(err);
+                            this.$message.error('操作失败');
+                        });
+                }).catch(error => {
+                    console.log('有错');
+                }).then(v => {
+                    //  最后设置可以再次点击
+                    this.setConfirmLoading(DIALOG_TYPE.AUTHORIZATION_HOSPITAL, false);
                 });
             },
             //  莫泰框方法
