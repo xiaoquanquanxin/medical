@@ -108,7 +108,7 @@
         },
         {
             title: '科室',
-            dataIndex: 'department',
+            dataIndex: 'deptId',
             width: 100,
         },
         {
