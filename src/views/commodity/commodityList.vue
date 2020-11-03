@@ -495,9 +495,9 @@
                 promise.then(targetKeys => {
                     console.log(targetKeys);
                     console.log(this.shuttleBoxData.id);
-                    return requestGoodsAuthorize({
+                    return requestGoodsGetGoodsRelationHospital({
                         goodsId: this.shuttleBoxData.id,
-                        channelBusinessId: targetKeys
+                        hospitalId: targetKeys
                     })
                         .then(v => {
                             this.$message.success('操作成功');

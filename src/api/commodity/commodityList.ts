@@ -52,3 +52,14 @@ export function requestGoodsGetGoodsRelationHospital(id: string | number) {
 	});
 }
 
+//	商品授权医院
+export function requestGoodsGoodsRelationHospital(data: any) {
+	return request({
+		url: '/api/goods/goodsRelationHospital',
+		method: 'post',
+		data,
+	});
+}
+
+
+
