@@ -6,13 +6,9 @@
             <a-button type="primary" @click="handleCheck">保存</a-button>
         </div>
         <PatientBasicInfo ref="refPatientBasicInfo"/>
-        <br>
-        <!--群聊-->
-        <MDTInformation ref="refMDTInformation"/>
     </div>
 </template>
 <script>
-    import MDTInformation from '@/components/userList/patientInfo/MDTInformation.vue';
     import PatientBasicInfo from '@/components/userList/patientInfo/patientBasicInfo.vue';
     import { mapGetters, mapActions } from 'vuex';
     import GoBackButton from '@/components/goBackButton.vue';
@@ -26,7 +22,6 @@
     export default {
         components: {
             GoBackButton,
-            MDTInformation,
             PatientBasicInfo,
         },
         computed: {
@@ -69,7 +64,7 @@
                 requestPatientSelectOnePatient(this.patientId)
                     .then(v => {
                         const { data } = v;
-                        console.log(data);
+                        console.log(JSON.parse(JSON.stringify(data)));
                         this.patientInfo = data;
                         //  保存到store里，基础信息、群聊信息 ⚠️这里暂时一个，看够不够了
                         this.setPatientBasicInfo(this.patientInfo);
@@ -77,19 +72,74 @@
             },
             //  保存按钮
             handleCheck(){
-                const p1 = this.$refs.refPatientBasicInfo.handleSubmit();
-                const p2 = this.$refs.refMDTInformation.handleSubmit();
-                Promise.all([
-                    p1,
-                    p2,
-                ])
+                this.$refs.refPatientBasicInfo
+                    .handleSubmit()
                     .then(v => {
                         console.log('发请求');
                         console.log(JSON.stringify(this.patientBasicInfo));
                         console.table(JSON.parse(JSON.stringify(this.patientBasicInfo)));
+                        const {
+                            //  string
+                            address,
+                            allergy,
+                            bedCode,
+                            birth,
+                            bmi,
+                            departTreatment,
+                            doctorId,
+                            family,
+                            hospitalCode,
+                            hospitalTreatment,
+                            icd,
+                            idCard,
+                            idSocial,
+                            name,
+                            nation,
+                            now,
+                            nutritionistId,
+                            past,
+                            patientStatus,
+                            phone,
+                            professional,
+                            treatCode,
+
+                            //  数字
+                            height,
+                            sex,
+                            weight,
+                        } = this.patientBasicInfo;
+                        const data = {
+                            address: address.toString(),
+                            allergy: allergy.toString(),
+                            bedCode: bedCode.toString(),
+                            birth: birth.toString(),
+                            bmi: bmi.toString(),
+                            departTreatment: departTreatment.toString(),
+                            doctorId: doctorId.toString(),
+                            family: family.toString(),
+                            hospitalCode: hospitalCode.toString(),
+                            hospitalTreatment: hospitalTreatment.toString(),
+                            icd: icd.toString(),
+                            idCard: idCard.toString(),
+                            idSocial: idSocial.toString(),
+                            name: name.toString(),
+                            nation: nation.toString(),
+                            now: now.toString(),
+                            nutritionistId: nutritionistId.toString(),
+                            past: past.toString(),
+                            patientStatus: patientStatus.toString(),
+                            phone: phone.toString(),
+                            professional: professional.toString(),
+                            treatCode: treatCode.toString(),
+
+                            height: Number(height),
+                            sex: Number(sex),
+                            weight: Number(weight),
+                        };
+                        console.log(data);
                         //  如果是新增
                         if (!this.patientId) {
-                            requestPatientSave(this.patientBasicInfo)
+                            requestPatientSave(data)
                                 .then(v => {
                                     console.log(v);
                                     this.$success({
@@ -100,8 +150,8 @@
                             return;
                         }
                         //  如果是编辑
-                        this.patientBasicInfo.id = this.patientId;
-                        requestPatientUpdate(this.patientBasicInfo)
+                        data.id = this.patientId;
+                        requestPatientUpdate(data)
                             .then(v => {
                                 console.log(v);
                                 this.$success({
@@ -111,6 +161,7 @@
                             });
                     })
                     .catch(error => {
+                        console.log(error);
                         console.log('有错');
                     });
 

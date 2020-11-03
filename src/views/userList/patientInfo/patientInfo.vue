@@ -23,20 +23,15 @@
             </a-row>
         </div>
         <PatientBasicInfo ref="refPatientBasicInfo"/>
-        <br>
-        <!--群聊-->
-        <MDTInformation ref="refMDTInformation"/>
     </div>
 </template>
 <script>
-    import MDTInformation from '@/components/userList/patientInfo/MDTInformation.vue';
-    import PatientBasicInfo from '/components/userList/patientInfo/patientBasicInfo.vue';
+    import PatientBasicInfo from '@/components/userList/patientInfo/patientBasicInfo.vue';
     import { mapGetters, mapActions } from 'vuex';
     import { requestPatientSelectOnePatient, requestPatientUpdate } from '../../../api/userList/userList';
 
     export default {
         components: {
-            MDTInformation,
             PatientBasicInfo,
         },
         computed: {
@@ -76,9 +71,13 @@
                 requestPatientSelectOnePatient(this.patientId)
                     .then(v => {
                         const { data } = v;
-                        //  console.log(JSON.parse(JSON.stringify(data)));
-                        //  this.patientInfo.patientStatus
+                        console.log(JSON.parse(JSON.stringify(data)));
+                        console.log(data.hospitalTreatment);
                         this.patientInfo = data;
+                        this.$refs.refPatientBasicInfo
+                            .getDeptListDeptHospitalId(data.hospitalTreatment);
+                        this.$refs.refPatientBasicInfo
+                            .getDoctorNutritionistListFn(data.hospitalTreatment);
                         //  保存到store里，基础信息、群聊信息 ⚠️这里暂时一个，看够不够了
                         this.setPatientBasicInfo(this.patientInfo);
                     });
@@ -114,12 +113,8 @@
             },
             //  保存按钮
             handleCheck(){
-                const p1 = this.$refs.refPatientBasicInfo.handleSubmit();
-                const p2 = this.$refs.refMDTInformation.handleSubmit();
-                Promise.all([
-                    p1,
-                    p2,
-                ])
+                this.$refs.refPatientBasicInfo
+                    .handleSubmit()
                     .then(v => {
                         console.log('发请求');
                         requestPatientUpdate(Object.assign({ id: this.patientId }, this.patientBasicInfo))

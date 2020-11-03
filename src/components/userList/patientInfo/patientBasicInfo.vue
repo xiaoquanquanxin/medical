@@ -169,6 +169,7 @@
                               placeholder="请选择就诊科室"
                               v-model="patientBasicInfo.hospitalTreatment"
                               class="form-element"
+                              @change="hospitalTreatmentChange"
                               @focus="descriptionFormFocusFn(14)"
                     >
                         <a-select-option v-for="item in hospitalDeptList"
@@ -296,23 +297,73 @@
                 </a-descriptions-item>
             </a-descriptions>
         </div>
+        <br>
+        <a-row type="flex" justify="space-between" align="middle" class="table-group-title no-border-bottom">
+            <a-col>MDT信息</a-col>
+            <a-col>
+                <a-button type="primary" @click="groupChat">群聊</a-button>
+            </a-col>
+        </a-row>
+        <div class="item-2">
+            <a-descriptions
+                    :title="null"
+                    bordered
+                    :column="3"
+                    size="small"
+            >
+                <!--主管医生-->
+                <a-descriptions-item label="主管医生">
+                    <a-select style="width:100%;"
+                              placeholder="请选择主管医生"
+                              v-model="patientBasicInfo.doctorId"
+                              @change="doctorChange"
+                    >
+                        <a-select-option v-for="item in doctorList"
+                                         :key="item.id"
+                                         :value="item.id">
+                            {{item.doctorName}}
+                        </a-select-option>
+                    </a-select>
+                </a-descriptions-item>
+                <!--主管医生-->
+                <a-descriptions-item label="营养师">
+                    <a-select style="width:100%;"
+                              placeholder="请选择营养师"
+                              v-model="patientBasicInfo.nutritionistId"
+                              @change="nutritionistChange"
+                    >
+                        <a-select-option v-for="item in nutritionistList"
+                                         :key="item.id"
+                                         :value="item.id">
+                            {{item.doctorName}}
+                        </a-select-option>
+                    </a-select>
+                </a-descriptions-item>
+            </a-descriptions>
+        </div>
     </div>
 </template>
 <script>
-    import { descriptionsMethods } from '@/utils/patientInfo';
     import { requestPatientSelectDeptByHospital, requestPatientSelectICD } from '../../../api/userList/userList';
     import { requestDeptListDeptHospitalId, requestHospitalGetList } from '../../../api/hospital';
     import { requestDeptList } from '../../../api/department';
+    import { descriptionsMethods } from '@/utils/patientInfo';
+    import { requestPatientSelectDoctorByHospital } from '../../../api/userList/userList';
 
     export default {
         computed: {
             //  基础信息，请求来了就会出现数据
-            patientBasicInfo(){
+            patientBasicInfo(prev){
                 const patientBasicInfo = this.$store.state.userList.patientBasicInfo;
-                const { departTreatment } = patientBasicInfo;
-                if (departTreatment) {
-                    this.getDepListByHospital(departTreatment);
-                }
+//                const { departTreatment } = patientBasicInfo;
+//                console.log('变化');
+//                console.log(value, prev);
+//                if (departTreatment) {
+//                    this.getDepListByHospital(departTreatment);
+//                }
+                //  console.log(prev.$store.state.userList.patientBasicInfo.patientId);
+//                console.log(JSON.parse(JSON.stringify(value)));
+//                console.log(JSON.parse(JSON.stringify(prev)));
                 return patientBasicInfo;
             },
             bmi(){
@@ -335,14 +386,18 @@
                 ICDList: [],
                 //  医院筛选后的科室
                 hospitalDeptList: [],
+                //  医生列表
+                doctorList: [],
+                //  营养师列表
+                nutritionistList: []
             };
         },
         created(){
             this.searchFn();
         },
-        inject: ['userList_searchFn'],
         methods: {
             searchFn(){
+                //  ICD
                 requestPatientSelectICD()
                     .then(v => {
                         //  console.log(v);
@@ -365,25 +420,79 @@
             //  切换医院
             selectHospitalChange(value){
                 this.patientBasicInfo.hospitalTreatment = undefined;
-            },
-            //  根据医院id获取科室
-            getDepListByHospital(departTreatment){
-                console.log('医院变化🍎🍎🍎');
-                //  this.MDTInformation_resetDoctorNutritionistListFn();
                 //  清空科室
                 this.hospitalDeptList = [];
-                requestDeptListDeptHospitalId(departTreatment)
+                this.getDeptListDeptHospitalId(value);
+            },
+            //  查询科室下的医院
+            getDeptListDeptHospitalId(value){
+                requestDeptListDeptHospitalId(value)
                     .then(v => {
                         const map = {};
                         const mapList = v.data || [];
                         mapList.forEach(item => {
                             map[item] = true;
                         });
-                        console.log(map);
+                        //  console.log(map);
                         this.hospitalDeptList = this.deptList.filter((item => {
                             return map[item.id];
                         }));
+                        console.log(this.hospitalDeptList);
+                        this.$forceUpdate();
+                        //  清空医生和营养师
+                        this.resetDoctorNutritionistListFn();
                     });
+            },
+            //  切换科室
+            hospitalTreatmentChange(value){
+                console.log(value);
+                //  设置科室id
+                this.patientBasicInfo.hospitalTreatment = value;
+                //  强制更新
+                this.$forceUpdate();
+                //  拿医生、营养师list
+                this.getDoctorNutritionistListFn(value);
+            },
+            //  根据当前医院查询所有医生
+            getDoctorNutritionistListFn(deptId){
+                const data = {
+                    deptId,
+                    hospitalId: this.patientBasicInfo.departTreatment,
+                };
+                console.log('根据当前医院查询所有医生');
+                requestPatientSelectDoctorByHospital(Object.assign({
+                    doctorType: 1,
+                }, data))
+                    .then(doctorList => {
+                        this.doctorList = doctorList;
+                    });
+                console.log('根据当前医院查询所有营养师');
+                requestPatientSelectDoctorByHospital(Object.assign({
+                    doctorType: 2,
+                }, data))
+                    .then(nutritionistList => {
+                        this.nutritionistList = nutritionistList;
+                    });
+            },
+            //  清空医生和营养师list
+            resetDoctorNutritionistListFn(){
+                this.patientBasicInfo.doctorId = undefined;
+                this.patientBasicInfo.nutritionistId = undefined;
+                this.doctorList = [];
+                this.nutritionistList = [];
+            },
+            //  医生营养师切花
+            doctorChange(doctorId){
+                this.patientBasicInfo.doctorId = doctorId;
+                this.$forceUpdate();
+            },
+            nutritionistChange(doctorId){
+                this.patientBasicInfo.nutritionistId = doctorId;
+                this.$forceUpdate();
+            },
+            //  群聊
+            groupChat(e){
+                console.log(e);
             },
             //  验证表单
             handleSubmit(){
@@ -414,18 +523,15 @@
                     //  bmi赋值
                     this.patientBasicInfo.bmi = this.bmi;
                     //  todo    就诊科室没有数据
-                    this.patientBasicInfo.hospitalTreatment = this.patientBasicInfo.hospitalTreatment || 1;
+                    //  this.patientBasicInfo.hospitalTreatment = this.patientBasicInfo.hospitalTreatment || 1;
                     //  todo    营养师需要接口
-                    this.patientBasicInfo.nutritionistId = this.patientBasicInfo.nutritionistId || 1;
-                    //  医生
-                    this.patientBasicInfo.doctorId = this.patientBasicInfo.doctorId || '1';
+                    //  this.patientBasicInfo.nutritionistId = this.patientBasicInfo.nutritionistId || 1;
+
+                    //  医生  ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️ string ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
+                    //  this.patientBasicInfo.doctorId = this.patientBasicInfo.doctorId.toString();
                     //  新增入院所以是1    1入院，2.出院，3.永久注销;
                     this.patientBasicInfo.patientStatus = '1';
-                    if (true) {
-                        resolve();
-                    } else {
-                        reject();
-                    }
+                    resolve();
                 });
             },
 
@@ -435,5 +541,6 @@
     };
     //  todo    医院下掉科室，需要调取木木掉接口
 </script>
+
 
 

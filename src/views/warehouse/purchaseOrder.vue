@@ -78,7 +78,6 @@
     import { mapGetters, mapActions } from 'vuex';
     import ShipmentsForm from '@/components/warehouse/shipmentsForm';
     import ShipmentsDetail from '@/components/warehouse/shipmentsDetail';
-    import { requestGoodsGoodsStock11 } from '../../api/warehouse/purchaseOrder';
 
     const columns = [
         {

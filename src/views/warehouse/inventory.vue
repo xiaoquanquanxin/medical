@@ -2,7 +2,7 @@
     <div class="layout-content-inner-main">
         <!--搜索相关-->
         <div class="a-input-group">
-            <a-input class="lengthen-input-width" v-model="searchData.commodityName" placeholder="请输入商品名称"/>
+            <a-input class="lengthen-input-width" v-model="searchData.goodsName" placeholder="请输入商品名称"/>
             <a-select class="lengthen-select-width" v-model="searchData.status" placeholder="请选择商品状态">
                 <a-select-option value="0">启用</a-select-option>
                 <a-select-option value="1">停用</a-select-option>
@@ -109,12 +109,12 @@
     const columns = [
         {
             title: '商品名称',
-            dataIndex: 'commodityName',
+            dataIndex: 'goodsName',
             width: 120,
         },
         {
             title: '商品货号',
-            dataIndex: '商品货号',
+            dataIndex: 'goodsProductCode',
             width: 120,
         },
         {
@@ -124,22 +124,22 @@
         },
         {
             title: '商品条码',
-            dataIndex: 'barCode',
+            dataIndex: 'goodsBarCode',
             width: 120,
         },
         {
             title: '商品供应商',
-            dataIndex: 'supplier',
+            dataIndex: 'supplierName',
             width: 120,
         },
         {
             title: '商品品牌',
-            dataIndex: 'brand',
+            dataIndex: 'brandName',
             width: 120,
         },
         {
             title: '厂家',
-            dataIndex: 'manufacturer',
+            dataIndex: 'manufactorName',
             width: 120,
         },
         {
@@ -204,12 +204,12 @@
                 ))
                     .then(v => {
                         const { data } = v;
-                        console.log(data);
                         data.records.forEach((item, index) => {
                             item.key = index;
                             //  item.createTime = item.createTime.substr(0, 10);
                         });
                         this.data = data.records;
+                        console.log(JSON.parse(JSON.stringify(data.records[0])));
                         this.pagination = paginationDecode(this.pagination, data);
                     });
             },
@@ -271,8 +271,7 @@
                 this.setWarehouseId('123');
                 this.showModal(DIALOG_TYPE.SALES_RETURN);
             },
-
-            //  确认采购
+            //  确认退货
             salesReturnModalCheck(refSalesReturnForm){
                 //  防止连点
                 this.setConfirmLoading(DIALOG_TYPE.SALES_RETURN, true);
