@@ -71,7 +71,7 @@
         onShowSizeChange
     } from '@/utils/pagination.ts';
     import { threeRowSearch } from '@/utils/tableScroll';
-    import { prescriptionTypeList, energyList, usageMethodList } from '../../../utils/constants';
+    import { templateTypeList, energyList, usageMethodList } from '../../../utils/constants';
     import { requestHospitalGetList } from '../../../api/hospital';
     import { deleteSchemeFn, getSchemeListFn } from '../../../utils/scheme';
 
@@ -108,7 +108,7 @@
             typeData(){
                 const isOral = this.$route.name === 'oral';
                 return {
-                    prescriptionType: isOral ? 1 : 2,
+                    templateType: isOral ? 1 : 2,
                     addRouter: isOral ? 'addOral' : 'addIntestinal',
                 };
             }
@@ -127,10 +127,10 @@
                 pagination: paginationInit(),
                 //  搜索数据
                 searchData: {
-                    prescriptionType: null,
+                    templateType: null,
                 },
                 //  处方类型下拉
-                prescriptionTypeList,
+                templateTypeList,
                 //  能量下拉
                 energyList,
                 //  食用方法下拉
@@ -139,12 +139,12 @@
         },
         watch: {
             $route(){
-                this.searchData.prescriptionType = this.typeData.prescriptionType;
+                this.searchData.templateType = this.typeData.templateType;
                 this.searchFn();
             }
         },
         created(){
-            this.searchData.prescriptionType = this.typeData.prescriptionType;
+            this.searchData.templateType = this.typeData.templateType;
             requestHospitalGetList()
                 .then(hospitalList => {
                     this.hospitalList = hospitalList;
@@ -158,9 +158,9 @@
             },
             //  编辑
             editSchemeFn(sItem){
-                console.log(this.typeData.prescriptionType);
+                console.log(this.typeData.templateType);
                 let name;
-                switch (this.typeData.prescriptionType) {
+                switch (this.typeData.templateType) {
                     case 1:
                         name = 'editOral';
                         break;

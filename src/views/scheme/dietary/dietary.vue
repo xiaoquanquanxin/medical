@@ -136,7 +136,7 @@
         },
         created(){
             this.searchFn();//  医院list
-requestHospitalGetList()
+            requestHospitalGetList()
                 .then(hospitalList => {
                     this.hospitalList = hospitalList;
                 });
