@@ -371,8 +371,10 @@
             return {
                 //  选择时间
                 timeOriginList: null,
-                //  选择弹框是来自于主按钮
+                //  选择弹框是来自于主按钮？
                 isMainButton: true,
+                //  时间按钮操作的数据行
+                addCommodityTimeList: null,
                 templateTypeList,
                 //  医院下拉
                 hospitalList: [],
@@ -547,8 +549,9 @@
                 this.timeTableData = [];
             },
             //  选择商品，晒出多余字段
-            selectCommodity(isMainButton, timeDataList){
+            selectCommodity(isMainButton, addCommodityTimeList){
                 this.isMainButton = isMainButton;
+                this.addCommodityTimeList = addCommodityTimeList;
                 const {
                     hospitalId,
                     prescriptionType,
@@ -594,7 +597,7 @@
                                     }
                                 });
                             } else {
-                                timeDataList.forEach(_item => {
+                                addCommodityTimeList.forEach(_item => {
                                     //  如果http数据的商品id === 时间列表的商品id
                                     //  那么他是被选择的，且被选中的id是 _item.id【在时间数据里组织的数据是按uintListVos的】
                                     if (item.id === _item.goodsId) {
@@ -609,7 +612,7 @@
                                         });
                                     }
                                 });
-//                                console.log(JSON.parse(JSON.stringify(timeDataList)));
+//                                console.log(JSON.parse(JSON.stringify(addCommodityTimeList)));
 //                                console.log(JSON.parse(JSON.stringify(v.data)));
                             }
                         });
@@ -631,53 +634,90 @@
             selectCommodityModalCheck(refSelectCommodity){
                 const promise = this.$refs[refSelectCommodity].handleSubmit();
                 promise.then(originCommodityList => {
-                    console.log(JSON.parse(JSON.stringify(originCommodityList)));
-                    console.log((JSON.stringify(originCommodityList)));
+                    //  console.log(JSON.parse(JSON.stringify(originCommodityList)));
+                    //  console.log((JSON.stringify(originCommodityList)));
+                    //  只展示被选中的
+                    const commodityTableData = originCommodityList.filter(item => item.isCheckboxChecked);
+                    //  JSON.parse(JSON.stringify(this.commodityTableData));
+                    //  区分，如果是，院内，就是有3条数据的，需要计算出来基本单位
+                    if (+this.tableForm.prescriptionType === 1) {
+                        commodityTableData.forEach(item => {
+                            //  console.log(item);
+                            //  被选中的对象
+                            const checkedList = item.uintListVos.filter(_item => _item.isRadioChecked);
+                            if (!checkedList.length) {
+                                alert('检查数据组织，不可能没有 isRadioChecked === 1的');
+                            }
+                            if (checkedList.length > 1) {
+                                alert('检查数据组织，不可能有多个 isRadioChecked === 1的');
+                            }
+                            const { uname } = checkedList[0];
+                            console.log(`被选中的类型是${uname}`);
+                            item.checked_uname = uname;
+                            //  基础数据
+                            const basicUnitItem = item.uintListVos.filter(_item => +_item.unameType === 1)[0];
+                            if (!basicUnitItem) {
+                                alert('检查脏数据，没有unameType===1的，这是不可能的');
+                            }
+                            //  console.log(JSON.parse(JSON.stringify(basicUnitItem)));
+                            item.basicUnitItem = basicUnitItem;
+                        });
+                    }
                     //  如果是主要按钮
                     if (this.isMainButton) {
-                        //  只展示被选中的
-                        const commodityTableData = originCommodityList.filter(item => item.isCheckboxChecked);
-                        //  JSON.parse(JSON.stringify(this.commodityTableData));
-                        //  区分，如果是，院内，就是有3条数据的，需要计算出来基本单位
-                        if (+this.tableForm.prescriptionType === 1) {
-                            commodityTableData.forEach(item => {
-                                //  console.log(item);
-                                //  被选中的对象
-                                const checkedList = item.uintListVos.filter(_item => _item.isRadioChecked);
-                                if (!checkedList.length) {
-                                    alert('检查数据组织，不可能没有 isRadioChecked === 1的');
-                                }
-                                if (checkedList.length > 1) {
-                                    alert('检查数据组织，不可能有多个 isRadioChecked === 1的');
-                                }
-                                const { uname } = checkedList[0];
-                                console.log(`被选中的类型是${uname}`);
-                                item.checked_uname = uname;
-                                //  基础数据
-                                const basicUnitItem = item.uintListVos.filter(_item => +_item.unameType === 1)[0];
-                                if (!basicUnitItem) {
-                                    alert('检查脏数据，没有unameType===1的，这是不可能的');
-                                }
-                                //  console.log(JSON.parse(JSON.stringify(basicUnitItem)));
-                                item.basicUnitItem = basicUnitItem;
-                            });
-                        }
                         this.commodityTableData = commodityTableData;
                         console.log('输出数据', JSON.parse(JSON.stringify(this.commodityTableData)));
-                        //  临时map用于筛查时间表格的多余数据
-                        const _tempMap = {};
-                        commodityTableData.forEach(item => {
-                            console.log(item.id);
-                            _tempMap[item.id] = true;
-                        });
                     } else {
                         //  如果是时间按钮
-                        //  只展示被选中的
-                        const commodityTableData = originCommodityList.filter(item => item.isCheckboxChecked);
-                        console.log(JSON.parse(JSON.stringify(this.commodityTableData)));
+                        //  被选中的
                         console.log(JSON.parse(JSON.stringify(commodityTableData)));
-                        debugger
+                        //  已有的数据
+                        console.log(JSON.parse(JSON.stringify(this.commodityTableData)));
+                        //  对比，如果新时间选择了已有数据，那么，要更新this.commodityTableData
+                        const updateMap = {};
+                        this.commodityTableData.forEach(item => {
+                            updateMap[item.id] = item;
+                        });
+                        //  重写这个完事了
+//                        const addCommodityTimeList = [];
+                        console.log(commodityTableData.length);
+                        this.addCommodityTimeList.length = 0;
+                        commodityTableData.forEach(item => {
+                            //  这是新增的
+                            if (!updateMap[item.id]) {
+                                //  装到this.commodityTableData
+                                this.commodityTableData.push(item);
+                            }
+                            const { uintListVos, purchaseUnitCheckId } = item;
+                            let timeItem = null;
+                            uintListVos.forEach(_item => {
+                                if (purchaseUnitCheckId === _item.id) {
+                                    const { basicUnitItem, goodsName } = item;
+                                    timeItem = Object.assign({}, _item, { goodsName, basicUnitItem });
+                                }
+                            });
+                            this.addCommodityTimeList.push(timeItem);
+                        });
+//                        this.addCommodityTimeList = addCommodityTimeList;
+                        console.log(JSON.parse(JSON.stringify(this.addCommodityTimeList)));
+                        console.log(JSON.parse(JSON.stringify(this.timeTableData)));
+
+//                        const list = commodityTableData.map(item => {
+//                            const { basicUnitItem } = item;
+//                            const child = item.uintListVos.filter((_item) => {
+//                                //  console.log(_item.isRadioChecked);
+//                                return _item.isRadioChecked;
+//                            });
+//                            //  console.log(child);
+//                            return Object.assign(child[0], { goodsName: item.goodsName, basicUnitItem });
+//                        });
+                    
                     }
+                    //  临时map用于筛查时间表格的多余数据
+                    const _tempMap = {};
+                    this.commodityTableData.forEach(item => {
+                        _tempMap[item.id] = true;
+                    });
                     const timeTableData = [];
                     console.log('筛查时间表格数据');
                     console.log('时间源数据', JSON.parse(JSON.stringify(this.timeTableData)));

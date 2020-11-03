@@ -7,6 +7,8 @@ interface STATE {
 	// selectedEnergyId: number;
 	//	肠内营养支持 - 商品源的数据，⚠️⚠️⚠️⚠️⚠️⚠️️这个总是新的【纯的】，其他数据修改要做JSON.parse(JSON.stringify())
 	originCommodityList: [];
+	//	勾选的时间数据，用于选择时间按钮传
+	timeOriginList: [],
 	//	肠内营养支持 - 被选中的数据
 	// selectedCommodityList: [];
 
@@ -23,6 +25,8 @@ const state: STATE = {
 	originCommodityList: [],
 	//	肠内营养支持 - 被选中的数据
 	// selectedCommodityList: [],
+	//	勾选的时间数据
+	timeOriginList: [],
 
 	//	备注
 	remark: '',
@@ -35,6 +39,9 @@ const mutations = {
 	// },
 	SET_ORIGIN_COMMODITY_LIST: (state: STATE, originCommodityList: []) => {
 		state.originCommodityList = originCommodityList;
+	},
+	SET_TIME_ORIGIN_LIST: (state: STATE, timeOriginList: []) => {
+		state.timeOriginList = timeOriginList;
 	},
 	// SET_SELECTED_COMMODITY_LIST: (state: STATE, selectedCommodityList: []) => {
 	// 	state.selectedCommodityList = selectedCommodityList;
@@ -55,6 +62,9 @@ const actions = {
 	// },
 	setOriginCommodityList: ({commit}: COMMIT_INTERFACE<STATE>, originCommodityList: number) => {
 		commit('SET_ORIGIN_COMMODITY_LIST', originCommodityList);
+	},
+	setTimeOriginList: ({commit}: COMMIT_INTERFACE<STATE>, timeOriginList: number) => {
+		commit('SET_TIME_ORIGIN_LIST', timeOriginList);
 	},
 	// setSelectedCommodityList: ({commit}: COMMIT_INTERFACE<STATE>, selectedCommodityList: number) => {
 	// 	commit('SET_SELECTED_COMMODITY_LIST', selectedCommodityList);
