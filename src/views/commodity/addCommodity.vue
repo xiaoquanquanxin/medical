@@ -165,11 +165,6 @@
                                      v-model="sItem.unitCarbohydrate"
                             />
                         </div>
-                        <div slot="unitUse" slot-scope="scope,sItem,sIndex,extra">
-                            <a-input placeholder="请输入使用单位"
-                                     v-model="sItem.unitUse"
-                            />
-                        </div>
                     </a-table>
                 </div>
             </a-form-item>
@@ -240,9 +235,15 @@
                             />
                         </div>
                         <div slot="unitUse" slot-scope="scope,sItem,sIndex,extra">
-                            <a-input placeholder="请输入使用单位"
-                                     v-model="sItem.unitUse"
-                            />
+                            <a-select v-model="sItem.unitUse"
+                                      placeholder="请选择使用单位"
+                            >
+                                <a-select-option v-for="item in unitTypeList"
+                                                 :value="item.value"
+                                >
+                                    {{item.label}}
+                                </a-select-option>
+                            </a-select>
                         </div>
                     </a-table>
                 </div>
@@ -849,3 +850,4 @@
         }
     };
 </script>
+
