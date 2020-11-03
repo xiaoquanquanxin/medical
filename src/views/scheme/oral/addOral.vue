@@ -656,6 +656,9 @@
                     console.log('最新的时间数据');
                     console.log(timeTableData);
                     this.timeTableData = timeTableData;
+                    this.$nextTick(() => {
+                        this.rowCount();
+                    });
                 }).catch(error => {
                     console.log(error);
                     console.log('有错');
