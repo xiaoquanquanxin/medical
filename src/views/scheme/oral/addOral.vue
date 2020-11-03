@@ -604,7 +604,6 @@
                                         item.purchaseUnitCheckId = _item.id;
                                         item.isCheckboxChecked = true;
                                         item.uintListVos.forEach(__item => {
-                                            //  debugger
                                             //  console.log(JSON.parse(JSON.stringify(__item)));
                                             if (_item.id === __item.id) {
                                                 __item.isRadioChecked = true;
@@ -1006,15 +1005,27 @@
                 if (!commodityItem) {
                     alert('数据组织问题');
                 }
-                //  console.log(JSON.parse(JSON.stringify(commodityItem)));
                 let quantity = 0;
+                console.log(JSON.parse(JSON.stringify(commodityItem)));
+                let unitRelations;
+                //  找单位关系
+                commodityItem.uintListVos.forEach(item => {
+                    if (item.isRadioChecked) {
+                        unitRelations = item.unitRelations;
+                    }
+                });
+                console.log('单位关系');
+                console.log(unitRelations);
                 this.timeTableData.forEach(timeItem => {
                     //  被编辑的商品id
                     const { list } = timeItem;
+                    //  console.log(item.basicUnitItem.unitRelations);
                     list.forEach(_item => {
-                        //  console.log(quantity);
+                        //  console.log(_item);
                         if (goodsId === _item.goodsId) {
-                            quantity += (_item.dosage || 0) / item.basicUnitItem.unitRelations;
+                            //  console.log(item.unitRelations);
+                            //  console.log(_item.unitRelations);
+                            quantity += (_item.dosage || 0) / unitRelations;
                         }
                     });
                 });
