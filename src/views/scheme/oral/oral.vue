@@ -2,7 +2,7 @@
     <div class="layout-content-inner-main">
         <!--搜索相关-->
         <div class="a-input-group">
-            <a-input class="lengthen-input-width" v-model="searchData.schemeName" placeholder="请输入方案名称"/>
+            <a-input class="lengthen-input-width" v-model="searchData.templateName" placeholder="请输入方案名称"/>
             <a-select class="basic-select-width" v-model="searchData.energy" placeholder="请选择能量">
                 <a-select-option :value="item.id"
                                  v-for="item in energyList"

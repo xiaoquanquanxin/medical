@@ -479,7 +479,7 @@
             //  切换医院
             selectHospitalChange(value){
                 //  组织医院名
-                this.tableForm.hospitalName = this.hospitalMap[value];
+                this.tableForm.hospitalName = this.hospitalMap[value].hospitalName;
                 this.resetMainData();
             },
             //  切换处方类型
