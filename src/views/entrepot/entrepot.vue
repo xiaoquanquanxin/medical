@@ -84,7 +84,7 @@
         {
             title: '仓库地区',
             dataIndex: 'area',
-            width: 100,
+            width: 150,
         },
         {
             title: '操作',

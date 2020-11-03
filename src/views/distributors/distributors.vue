@@ -18,9 +18,6 @@
                 :scroll="scroll"
                 :pagination="false"
         >
-            <div slot="area" slot-scope="scope,sItem,sIndex,extra">
-                {{scope.province}}-{{scope.city}}
-            </div>
             <!--状态选项-->
             <div slot="a-switch"
                  slot-scope="scope,sItem,sIndex,extra"
@@ -98,8 +95,8 @@
         },
         {
             title: '渠道商地区',
-            width: 120,
-            dataIndex: 'region',
+            width: 150,
+            dataIndex: 'area',
             //  scopedSlots: { customRender: 'area' },
         },
         {
@@ -147,6 +144,7 @@
                             item.key = index;
                             //  状态需要布尔值
                             item.statusBooleanFormat = item.status === 0;
+                            item.area = `${item.province}-${item.city}`;
                         });
                         this.data = data.records;
                         console.log(JSON.parse(JSON.stringify(data.records[2])));
