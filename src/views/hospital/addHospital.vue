@@ -254,6 +254,7 @@
         computed: {
             //  医院id
             hospitalId(){
+                console.log(this.$route.params.hospitalId);
                 return this.$route.params.hospitalId;
             }
         },
@@ -301,6 +302,13 @@
                     rules: [{
                         required: true,
                         message: '请选择地址-县城'
+                    },]
+                }],
+                //  选择仓库
+                warehouseIdDecorator: ['warehouseId', {
+                    rules: [{
+                        required: true,
+                        message: '请选择仓库'
                     },]
                 }],
 
@@ -436,7 +444,6 @@
                         }
                         console.table(values);
                         const data = Object.assign({ status: this.status ? 0 : 1 }, values);
-                        return;
                         (() => {
                             //  如果是新增
                             if (!this.hospitalId) {
