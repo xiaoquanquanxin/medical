@@ -167,7 +167,7 @@
                     //  hospitalId: undefined,
                     //  hospitalName        医院名
                     //    处方名
-//                    prescriptionName: '膳食营养计划',
+//                    templateName: '膳食营养计划',
                     //  处方类型
                     templateType: 3,
                     //  能量
@@ -199,8 +199,8 @@
                         const { data } = v;
                         console.log(data);
                         const tableForm = this.tableForm;
-                        const { prescriptionContent, prescriptionName, energy, hospitalId, } = data;
-                        //  tableForm.prescriptionName = prescriptionName;
+                        const { prescriptionContent, templateName, energy, hospitalId, } = data;
+                        //  tableForm.templateName = templateName;
                         tableForm.energy = energy;
                         tableForm.hospitalId = hospitalId;
                         const { mealPlanTableData } = JSON.parse(prescriptionContent);

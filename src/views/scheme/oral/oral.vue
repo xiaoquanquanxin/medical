@@ -78,7 +78,7 @@
     const columns = [
         {
             title: '方案名称',
-            dataIndex: 'prescriptionName',
+            dataIndex: 'templateName',
             width: 150,
         },
         {

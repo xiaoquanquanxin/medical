@@ -34,7 +34,7 @@
             <!--表头-->
             <a-row type="flex" justify="space-between" align="middle" class="table-group-title">
                 <a-space>
-                    <span>肠内营养支持</span>
+                    <span v-for="item in templateTypeList" v-if="+templateType === item.id">{{item.name}}</span>
                     <!--@change="selectEnergyChange"-->
                     <a-select
                             class="basic-select-width"
@@ -242,7 +242,7 @@
         requestPrescriptionTemplateInsert,
         requestPrescriptionTemplateUpdate
     } from '../../../api/scheme/scheme';
-    import {  energyList, usageMethodList } from '../../../utils/constants';
+    import { energyList, templateTypeList, usageMethodList } from '../../../utils/constants';
     import { requestHospitalGetList } from '../../../api/hospital';
     import {
         requestGoodsListByHospital,
@@ -319,6 +319,7 @@
         },
         data(){
             return {
+                templateTypeList,
                 //  医院下拉
                 hospitalList: [],
                 hospitalMap: null,
@@ -393,7 +394,7 @@
                     //  医院名
                     hospitalName: undefined,
                     //  处方名
-                    prescriptionName: undefined,
+                    templateName: undefined,
                     //  处方类型-处方类型 (1.院内配置,2门诊领药)
                     prescriptionType: undefined,
                     //  prescriptionType: 1,
@@ -441,7 +442,7 @@
                     .then(v => {
                         const { data } = v;
                         const tableForm = this.tableForm;
-                        tableForm.prescriptionName = data.prescriptionName;
+                        tableForm.templateName = data.templateName;
                         tableForm.energy = data.energy;
                         tableForm.usageMethod = Number(data.usageMethod);
                         tableForm.prescriptionType = data.prescriptionType;
