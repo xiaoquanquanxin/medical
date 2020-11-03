@@ -30,7 +30,7 @@
 </template>
 <script>
     import MDTInformation from '@/components/userList/patientInfo/MDTInformation.vue';
-    import PatientBasicInfo from '@/components/userList/patientInfo/patientBasicInfo.vue';
+    import PatientBasicInfo from '/components/userList/patientInfo/patientBasicInfo.vue';
     import { mapGetters, mapActions } from 'vuex';
     import { requestPatientSelectOnePatient, requestPatientUpdate } from '../../../api/userList/userList';
 
@@ -76,7 +76,7 @@
                 requestPatientSelectOnePatient(this.patientId)
                     .then(v => {
                         const { data } = v;
-                        console.log(JSON.parse(JSON.stringify(data)));
+                        //  console.log(JSON.parse(JSON.stringify(data)));
                         //  this.patientInfo.patientStatus
                         this.patientInfo = data;
                         //  保存到store里，基础信息、群聊信息 ⚠️这里暂时一个，看够不够了

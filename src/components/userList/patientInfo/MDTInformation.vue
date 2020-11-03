@@ -33,7 +33,7 @@
                     >
                         <a-select-option v-for="item in nutritionistList"
                                          :value="item.id">
-                            {{item}}
+                            {{item.doctorName}}
                         </a-select-option>
                     </a-select>
                 </a-descriptions-item>
@@ -57,43 +57,43 @@
                 //  编辑的index
                 activeElementId: null,
                 //  医生列表
-                doctorList: [],
+                doctorList: [{key:1,id:1,doctorName:1}],
                 //  营养师列表
                 nutritionistList: []
             };
         },
-        created(){
-            this.getDoctorList();
+        provide(){
+            return {
+                MDTInformation_getDoctorNutritionistListFn: this.MDTInformation_getDoctorNutritionistListFn,
+                MDTInformation_resetDoctorNutritionistListFn: this.MDTInformation_resetDoctorNutritionistListFn,
+            };
         },
         methods: {
             //  根据当前医院查询所有医生
-            getDoctorList(){
-                requestPatientSelectDoctorByHospital(1)
+            MDTInformation_getDoctorNutritionistListFn(data){
+                console.log('根据当前医院查询所有医生');
+                return;
+                requestPatientSelectDoctorByHospital(data)
                     .then(v => {
-                        console.log('根据当前医院查询所有医生', v.data);
-                        if (!v.data[0]) {
-                            return;
-                        }
-                        console.log(typeof v.data[0].id);
-                        v.data.forEach(item => {
-                            item.key = item.id;
-                        });
+                        console.log(v);
+                        return;
                         this.doctorList = v.data;
                     });
-                requestPatientSelectDoctorByHospital(2)
+                console.log('根据当前医院查询所有营养师');
+                requestPatientSelectDoctorByHospital(data)
                     .then(v => {
-                        console.log('根据当前医院查询所有营养师', v.data);
-                        if (!v.data[0]) {
-                            return;
-                        }
-                        console.log(typeof v.data[0].id);
-                        v.data.forEach(item => {
-                            item.key = item.id;
-                        });
+                        console.log(v);
+                        return;
                         this.nutritionistList = v.data;
                     });
             },
-
+            //  清空医生和营养师
+            MDTInformation_resetDoctorNutritionistListFn(){
+                this.patientBasicInfo.doctorId = null;
+                this.patientBasicInfo.nutritionistId = null;
+                this.doctorList = [];
+                this.nutritionistList = [];
+            },
             //  群聊
             groupChat(e){
                 console.log(e);

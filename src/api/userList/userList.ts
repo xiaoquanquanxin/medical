@@ -1,4 +1,4 @@
-import request from '@/utils/request';
+import request, {unifiedHandlingList} from '@/utils/request';
 
 //	病人列表分页		✅
 export function requestPatientPage(data: any) {
@@ -46,13 +46,20 @@ export function requestPatientSelectDeptByHospital() {
 }
 
 //	根据当前医院查询所有医生	 ✅
-export function requestPatientSelectDoctorByHospital(type: string | number) {
+export function requestPatientSelectDoctorByHospital(data: {
+	"deptId": string,
+	"doctorType": string,
+	"hospitalId": string
+}) {
 	//	type1 医生，type2，营养师
 	return request({
-		url: `/api/patient/selectDoctorByHospital/${type}`,
-		method: 'get',
-	});
+		url: `/api/patient/selectDoctorByHospital`,
+		method: 'post',
+		data,
+	})
+		.then(unifiedHandlingList);
 }
+
 
 //	id的格式不统一，联动存在隐患：doctorId是 1 还是 '1'，为什么要字符串'1'？但目前没问题
 

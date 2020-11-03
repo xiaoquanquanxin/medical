@@ -340,6 +340,7 @@
         created(){
             this.searchFn();
         },
+        inject: ['userList_searchFn'],
         methods: {
             searchFn(){
                 requestPatientSelectICD()
@@ -367,6 +368,10 @@
             },
             //  根据医院id获取科室
             getDepListByHospital(departTreatment){
+                console.log('医院变化🍎🍎🍎');
+                //  this.MDTInformation_resetDoctorNutritionistListFn();
+                //  清空科室
+                this.hospitalDeptList = [];
                 requestDeptListDeptHospitalId(departTreatment)
                     .then(v => {
                         const map = {};
