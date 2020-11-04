@@ -65,9 +65,9 @@
                 return this.$store.state.warehouse.warehouseId;
             }
         },
-        props: ['procurementData'],
         data(){
             return {
+                procurementData: {},
                 //  商品单位下拉
                 unitTypeList: [],
                 //  医院下拉
@@ -106,12 +106,12 @@
             };
         },
         created(){
-            console.log(JSON.parse(JSON.stringify(this.procurementData)));
             this.searchFn();
         },
         methods: {
             //  主要请求
             searchFn(){
+                //  todo    查询  warehouseId
                 //  商品单位
                 requestGoodsUnitType()
                     .then(unitTypeList => {
@@ -156,7 +156,7 @@
                         console.log(data);
                         requestGoodsGoodsPurchase(data)
                             .then(v => {
-                                
+
                                 console.log(v);
                                 resolve();
                             });

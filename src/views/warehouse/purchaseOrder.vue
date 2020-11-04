@@ -2,8 +2,12 @@
     <div class="layout-content-inner-main">
         <!--搜索相关-->
         <div class="a-input-group">
-            <a-input class="lengthen-input-width" v-model="searchData.purchaseOrderNumber" placeholder="请输入采购单号"/>
+            <a-input class="lengthen-input-width" v-model="searchData.purchaseOrderCode" placeholder="请输入采购单号"/>
             <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
+            <br>
+            <b>列表数据没id，字段对应？</b>
+            <br>
+            <br>
         </div>
         <!--表格-->
         <a-table
@@ -78,53 +82,54 @@
     import { mapGetters, mapActions } from 'vuex';
     import ShipmentsForm from '@/components/warehouse/shipmentsForm';
     import ShipmentsDetail from '@/components/warehouse/shipmentsDetail';
+    import { requestPurchaseOrderPages } from '../../api/warehouse/purchaseOrder';
 
     const columns = [
         {
             title: '发货单号',
-            dataIndex: 'commodityName1',
+            dataIndex: 'purchaseOrderCode',
             width: 100,
         },
-//        {
-//            title: '商品名称',
-//            dataIndex: 'commodityName',
-//            width: 100,
-//        },
-//        {
-//            title: '发货医院',
-//            dataIndex: '11',
-//            width: 100,
-//        },
-//        {
-//            title: '商品条码',
-//            dataIndex: 'barCode',
-//            width: 100,
-//        },
-//        {
-//            title: '单位',
-//            dataIndex: 'unit',
-//            width: 100,
-//        },
-//        {
-//            title: '数量',
-//            dataIndex: 'count',
-//            width: 100,
-//        },
-//        {
-//            title: '单价',
-//            dataIndex: 'supplier',
-//            width: 100,
-//        },
-//        {
-//            title: '总金额',
-//            dataIndex: 'brand',
-//            width: 100,
-//        },
-//        {
-//            title: '备注',
-//            dataIndex: 'manufacturer',
-//            width: 100,
-//        },
+        {
+            title: '商品名称',
+            dataIndex: 'goodsName',
+            width: 100,
+        },
+        {
+            title: '发货医院',
+            dataIndex: 'hospitalName',
+            width: 150,
+        },
+        {
+            title: '商品条码',
+            dataIndex: 'goodsBarCode',
+            width: 100,
+        },
+        {
+            title: '单位',
+            dataIndex: 'unit',
+            width: 100,
+        },
+        {
+            title: '数量',
+            dataIndex: 'purchaseOrderNum',
+            width: 100,
+        },
+        {
+            title: '单价',
+            dataIndex: 'supplier',
+            width: 100,
+        },
+        {
+            title: '总金额',
+            dataIndex: 'brand',
+            width: 100,
+        },
+        {
+            title: '备注',
+            dataIndex: 'remark',
+            width: 100,
+        },
         {
             title: '操作',
             scopedSlots: { customRender: 'operation' },
@@ -165,14 +170,16 @@
         methods: {
             //  主要请求
             searchFn(){
-                requestGoodsGoodsStock11(paginationEncode(this.pagination))
+                requestPurchaseOrderPages(Object.assign(
+                    {}, this.searchData, paginationEncode(this.pagination)
+                ))
                     .then(v => {
                         const { data } = v;
-                        console.log(data);
                         data.records.forEach((item, index) => {
                             item.key = index;
                         });
                         this.data = data.records;
+                        console.log(JSON.parse(JSON.stringify(data.records[0])));
                         this.pagination = paginationDecode(this.pagination, data);
                     });
             },
@@ -199,7 +206,7 @@
 
             //  采购详情
             procurementDetails(sItem){
-                this.setProcurementId('4323543');
+                this.setProcurementId(sItem.id);
                 this.showModal(DIALOG_TYPE.PROCUREMENT_DETAILS);
             },
             //  确认详情

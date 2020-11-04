@@ -23,7 +23,11 @@
                     </a-select-option>
                 </a-select>
             </a-form-item>
-            <a-form-item label="批次">xxxx</a-form-item>
+            <a-input class="add-form-input"
+                     v-decorator="batchNumberDecorator"
+                     placeholder="请输入批次号"
+            />
+            
             <a-form-item label="生产时间">xxxx</a-form-item>
             <a-form-item label="过期时间">xxxx</a-form-item>
             <a-form-item label="出库数量">
@@ -50,9 +54,9 @@
         beforeCreate(){
             this.form = this.$form.createForm(this);
         },
-        props: ['procurementData'],
         data(){
             return {
+                procurementData:{},
                 //  商品单位下拉
                 unitTypeList: [],
                 formItemLayout,
@@ -61,6 +65,13 @@
                     rules: [{
                         required: true,
                         message: '请选择单位'
+                    },]
+                }],
+                //  批次号
+                batchNumberDecorator: ['batchNumber', {
+                    rules: [{
+                        required: true,
+                        message: '请输入批次号'
                     },]
                 }],
                 //  出库数量
@@ -85,6 +96,7 @@
         methods: {
             //  主要请求
             searchFn(){
+                //  todo    查询  warehouseId
                 //  商品单位
                 requestGoodsUnitType()
                     .then(unitTypeList => {

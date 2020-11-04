@@ -14,6 +14,7 @@
 </template>
 <script>
     import { formItemLayout } from '@/utils/layout.ts';
+    import { requestPurchaseOrderGet } from '../../api/warehouse/purchaseOrder';
 
     export default {
         computed: {
@@ -29,6 +30,15 @@
         },
         created(){
             console.log(this.procurementId);
+            this.searchFn();
         },
+        methods: {
+            searchFn(){
+                requestPurchaseOrderGet(this.procurementId)
+                    .then(v => {
+                        console.log(v);
+                    });
+            }
+        }
     };
 </script>

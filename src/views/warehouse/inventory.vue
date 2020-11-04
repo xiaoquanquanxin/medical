@@ -4,8 +4,8 @@
         <div class="a-input-group">
             <a-input class="lengthen-input-width" v-model="searchData.goodsName" placeholder="请输入商品名称"/>
             <a-select class="lengthen-select-width" v-model="searchData.status" placeholder="请选择商品状态">
-                <a-select-option value="0">启用</a-select-option>
-                <a-select-option value="1">停用</a-select-option>
+                <a-select-option :value="0">启用</a-select-option>
+                <a-select-option :value="1">停用</a-select-option>
             </a-select>
             <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
         </div>
@@ -71,9 +71,7 @@
                  ok-text="确认"
                  cancel-text="取消"
                  @ok="procurementModalCheck('refProcurementForm')">
-            <ProcurementForm ref="refProcurementForm"
-                             :procurement-data="procurementData"
-            />
+            <ProcurementForm ref="refProcurementForm"/>
         </a-modal>
         <!--退货操作莫泰框-->
         <a-modal v-model="dialogDataSalesReturn.visible"
@@ -86,9 +84,7 @@
                  ok-text="确认"
                  cancel-text="取消"
                  @ok="salesReturnModalCheck('refSalesReturnForm')">
-            <SalesReturnForm ref="refSalesReturnForm"
-                             :procurement-data="procurementData"
-            />
+            <SalesReturnForm ref="refSalesReturnForm"/>
         </a-modal>
     </div>
 </template>
@@ -175,8 +171,6 @@
         },
         data(){
             return {
-                //  操作数据
-                procurementData: null,
                 data: [],
                 columns,
                 //  搜索数据
@@ -215,26 +209,6 @@
                         this.pagination = paginationDecode(this.pagination, data);
                     });
             },
-            //  莫泰框方法
-            ...dialogMethods,
-
-            ...mapActions('warehouse', [
-                //  被选中的库存的id
-                'setWarehouseId',
-            ]),
-
-            //  展示的每一页数据变换
-            onShowSizeChange(current, pageSize){
-                this.pagination.pageSize = pageSize;
-                this.pagination.current = 1;
-                this.searchFn();
-            },
-            //  切换分页页码
-            pageChange(current){
-                this.pagination.current = current;
-                this.searchFn();
-            },
-
             //  查看总库存
             viewInventory(sItem){
                 this.setWarehouseId('123');
@@ -246,7 +220,7 @@
             },
             //  采购
             procurement(sItem){
-                this.procurementData = sItem;
+                this.setWarehouseId(sItem.id);
                 this.showModal(DIALOG_TYPE.PROCUREMENT);
             },
             //  确认采购
@@ -267,8 +241,7 @@
             },
             //  退货
             salesReturn(sItem){
-                console.log(JSON.parse(JSON.stringify(sItem)));
-                this.procurementData = sItem;
+                this.setWarehouseId(sItem.id);
                 this.showModal(DIALOG_TYPE.SALES_RETURN);
             },
             //  确认退货
@@ -285,6 +258,16 @@
                     this.setConfirmLoading(DIALOG_TYPE.SALES_RETURN, false);
                 });
             },
+            //  莫泰框方法
+            ...dialogMethods,
+
+            ...mapActions('warehouse', [
+                //  被选中的库存的id
+                'setWarehouseId',
+            ]),
+            onShowSizeChange,
+            pageChange,
+
         }
     };
 </script>

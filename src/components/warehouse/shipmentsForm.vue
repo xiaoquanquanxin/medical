@@ -6,7 +6,7 @@
                 @submit="handleSubmit"
                 autocomplete="off"
         >
-            <a-form-item label="采购数量">xxxx</a-form-item>
+            <a-form-item label="采购数量">xxx111x</a-form-item>
             <a-form-item label="发货数量">
                 <a-row>
                     <a-input
@@ -39,7 +39,7 @@
 </template>
 <script>
     import { formItemLayout } from '@/utils/layout.ts';
-    import { requestGoodsGoodsDelivery } from '../../api/warehouse/purchaseOrder';
+    import { requestDeliveryRecordDelivery, requestGoodsGoodsDelivery } from '../../api/warehouse/purchaseOrder';
     //  入库操作
     export default {
         beforeCreate(){
@@ -113,7 +113,7 @@
                         }, values);
                         console.log(data);
                         alert('purchaseOrderId？？？');
-                        requestGoodsGoodsDelivery(data)
+                        requestDeliveryRecordDelivery(data)
                             .then(v => {
                                 //  todo
                                 console.log(v);

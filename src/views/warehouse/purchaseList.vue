@@ -2,7 +2,7 @@
     <div class="layout-content-inner-main">
         <!--搜索相关-->
         <div class="a-input-group">
-            <a-input class="lengthen-input-width" v-model="searchData.purchaseOrderNumber" placeholder="请输入采购单号"/>
+            <a-input class="lengthen-input-width" v-model="searchData.purchaseOrderCode" placeholder="请输入采购单号"/>
             <a-select class="basic-select-width" v-model="searchData.status" placeholder="请选择状态">
                 <a-select-option value="全部">全部</a-select-option>
                 <a-select-option value="待发货">待发货</a-select-option>
@@ -11,6 +11,13 @@
             </a-select>
             <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
         </div>
+        <br>
+        <b>这个【请选择状态】具体的对应关系0:xx，1：xxx?</b>
+        <br>
+        <b>列表返回需要采购单位吧？</b>
+        <br>
+        <b>医院采购订单 和 采购单都是一个详情接口？/api/purchaseOrder/get</b>
+        <br>
         <!--表格-->
         <a-table
                 :columns="columns"
@@ -83,13 +90,13 @@
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
     import { mapGetters, mapActions } from 'vuex';
     import ShipmentsDetail from '@/components/warehouse/shipmentsDetail';
-    import { requestGoodsGoodsStock15 } from '../../api/warehouse/purchaseList';
+    import { requestPurchaseOrderPagesOrder } from '../../api/warehouse/purchaseList';
 
     const columns = [
         {
             title: '采购单号',
-            dataIndex: 'commodityName',
-            width: 100,
+            dataIndex: 'purchaseOrderCode',
+            width: 150,
         },
         {
             title: '采购人',
@@ -99,36 +106,36 @@
         {
             title: '采购时间',
             dataIndex: 'unit',
+            width: 150,
+        },
+        {
+            title: '商品名称',
+            dataIndex: 'goodsName',
+            width: 150,
+        },
+        {
+            title: '商品供应商',
+            dataIndex: 'supplierName',
+            width: 150,
+        },
+        {
+            title: '商品品牌',
+            dataIndex: 'brandName',
+            width: 150,
+        },
+        {
+            title: '采购数量（箱）',
+            dataIndex: 'purchaseOrderNum',
+            width: 150,
+        },
+        {
+            title: '状态',
+            dataIndex: 'status',
             width: 100,
         },
-//        {
-//            title: '商品名称',
-//            dataIndex: 'fea',
-//            width: 100,
-//        },
-//        {
-//            title: '商品供应商',
-//            dataIndex: 'barCode',
-//            width: 100,
-//        },
-//        {
-//            title: '商品品牌',
-//            dataIndex: 'fefewawa',
-//            width: 100,
-//        },
-//        {
-//            title: '采购数量（箱）',
-//            dataIndex: 'fewa',
-//            width: 150,
-//        },
-//        {
-//            title: '状态',
-//            dataIndex: 'supplier',
-//            width: 100,
-//        },
         {
             title: '操作',
-            width: 150,
+            width: 200,
             scopedSlots: { customRender: 'operation' },
         },
     ];
@@ -163,14 +170,16 @@
         methods: {
             //  主要请求
             searchFn(){
-                requestGoodsGoodsStock15(paginationEncode(this.pagination))
+                requestPurchaseOrderPagesOrder(Object.assign(
+                    {}, this.searchData, paginationEncode(this.pagination)
+                ))
                     .then(v => {
                         const { data } = v;
-                        console.log(data);
                         data.records.forEach((item, index) => {
                             item.key = index;
                         });
                         this.data = data.records;
+                        console.log(JSON.parse(JSON.stringify(data.records[0])));
                         this.pagination = paginationDecode(this.pagination, data);
                     });
             },
@@ -225,3 +234,5 @@
         }
     };
 </script>
+
+

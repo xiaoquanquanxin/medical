@@ -23,7 +23,7 @@
             <a-form-item label="商品品牌">xxxx</a-form-item>
             <a-form-item label="厂家">xxxx</a-form-item>
             <a-form-item label="批次号">
-                <a-input
+                <a-input class="add-form-input"
                         v-decorator="batchNumberDecorator"
                         placeholder="请输入批次号"
                 />

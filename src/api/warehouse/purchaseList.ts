@@ -2,9 +2,9 @@
 import request from '@/utils/request';
 
 //  商品库存
-export function requestGoodsGoodsStock15(data: any) {
+export function requestPurchaseOrderPagesOrder(data: any) {
 	return request({
-		url: '/api/goods/goodsStock',
+		url: '/api/purchaseOrder/pagesOrder',
 		method: 'post',
 		data,
 	});
