@@ -65,13 +65,13 @@ const actions = {
 		let map = {};
 		//	@ts-ignore
 		const username = getLoginInfo().username;
-		console.log(username);
-		if (username === 'admin') {
-			const routesList = setRouteListByMap(routeMap, asyncRoutesList)
-			routesList.push(NotFoundRoutes);
-			commit('SET_ROUTE_LENGTH', routesList);
-			return routesList;
-		}
+		console.log('开发者在这里配置', username);
+		// if (username === 'admin') {
+		// 	const routesList = setRouteListByMap(routeMap, asyncRoutesList)
+		// 	routesList.push(NotFoundRoutes);
+		// 	commit('SET_ROUTE_LENGTH', routesList);
+		// 	return routesList;
+		// }
 		//	服务端数据
 		// return requestMenuAllTree()
 		//	todo	难点！
