@@ -874,8 +874,10 @@
 
             //  删除选择商品表格的一行
             deleteTypeTable(sItem, sIndex){
-                //  内部的id，单选id
-                const { purchaseUnitCheckId } = sItem;
+                //  内部的id，单选id，    id === 商品id
+                const { purchaseUnitCheckId, id } = sItem;
+                console.log(JSON.parse(JSON.stringify(sItem)));
+                //  debugger;
                 //  洗主数据
                 delete sItem.purchaseUnitCheckId;
                 delete sItem.isCheckboxChecked;
@@ -886,9 +888,10 @@
                 }));
                 //  清洗时间表格数据，只删除一行
                 this.timeTableData.forEach(item => {
+                    //  debugger
                     for (let i = 0; i < item.list.length; i++) {
                         //  要被删除的商品类型
-                        if (item.list[i].id === purchaseUnitCheckId) {
+                        if (item.list[i].goodsId === id) {
                             item.list.splice(i, 1);
                             break;
                         }
