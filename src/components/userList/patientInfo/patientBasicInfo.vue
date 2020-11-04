@@ -17,6 +17,7 @@
                             v-model="patientBasicInfo.name"
                             class="form-element"
                             @focus="descriptionFormFocusFn(0)"
+                            @blur="descriptionFormBlurFn('name')"
                     />
                     <p v-else
                        @click="descriptionFormClickFn(0,$event)"
@@ -47,6 +48,7 @@
                             v-model="patientBasicInfo.birth"
                             class="form-element"
                             @focus="descriptionFormFocusFn(3)"
+                            @blur="descriptionFormBlurFn('birth')"
                     />
                     <p v-else
                        @click="descriptionFormClickFn(3,$event)"
@@ -60,6 +62,7 @@
                             v-model="patientBasicInfo.height"
                             class="form-element"
                             @focus="descriptionFormFocusFn(4)"
+                            @blur="descriptionFormBlurFn('height')"
                     />
                     <p v-else
                        @click="descriptionFormClickFn(4,$event)"
@@ -73,9 +76,10 @@
                             v-model="patientBasicInfo.weight"
                             class="form-element"
                             @focus="descriptionFormFocusFn(5)"
+                            @blur="descriptionFormBlurFn('weight')"
                     />
                     <p v-else
-                       @click="descriptionFormFocusFn(5)"
+                       @click="descriptionFormClickFn(5,$event)"
                        class="description-content"
                     >{{patientBasicInfo.weight}}</p>
                 </a-descriptions-item>
@@ -89,6 +93,7 @@
                             v-model="patientBasicInfo.idCard"
                             class="form-element"
                             @focus="descriptionFormFocusFn(7)"
+                            @blur="descriptionFormBlurFn('idCard')"
                     />
                     <p v-else
                        @click="descriptionFormClickFn(7,$event)"
@@ -102,6 +107,7 @@
                             v-model="patientBasicInfo.idSocial"
                             class="form-element"
                             @focus="descriptionFormFocusFn(8)"
+                            @blur="descriptionFormBlurFn('idSocial')"
                     />
                     <p v-else
                        @click="descriptionFormClickFn(8,$event)"
@@ -115,6 +121,7 @@
                             v-model="patientBasicInfo.address"
                             class="form-element"
                             @focus="descriptionFormFocusFn(9)"
+                            @blur="descriptionFormBlurFn('address')"
                     />
                     <p v-else
                        @click="descriptionFormClickFn(9,$event)"
@@ -128,6 +135,7 @@
                             v-model="patientBasicInfo.phone"
                             class="form-element"
                             @focus="descriptionFormFocusFn(10)"
+                            @blur="descriptionFormBlurFn('phone')"
                     />
                     <p v-else
                        @click="descriptionFormClickFn(10,$event)"
@@ -141,6 +149,7 @@
                             v-model="patientBasicInfo.professional"
                             class="form-element"
                             @focus="descriptionFormFocusFn(11)"
+                            @blur="descriptionFormBlurFn('professional')"
                     />
                     <p v-else
                        @click="descriptionFormClickFn(11,$event)"
@@ -159,7 +168,7 @@
                               @change="selectHospitalChange"
                     >
                         <a-select-option v-for="item in hospitalList"
-                                         :value="item.id">
+                                         :value="item.id.toString()">
                             {{item.hospitalName}}
                         </a-select-option>
                     </a-select>
@@ -185,6 +194,7 @@
                             v-model="patientBasicInfo.treatCode"
                             class="form-element"
                             @focus="descriptionFormFocusFn(15)"
+                            @blur="descriptionFormBlurFn('treatCode')"
                     />
                     <p v-else
                        @click="descriptionFormClickFn(15,$event)"
@@ -198,6 +208,7 @@
                             v-model="patientBasicInfo.hospitalCode"
                             class="form-element"
                             @focus="descriptionFormFocusFn(16)"
+                            @blur="descriptionFormBlurFn('hospitalCode')"
                     />
                     <p v-else
                        @click="descriptionFormClickFn(16,$event)"
@@ -211,6 +222,7 @@
                             v-model="patientBasicInfo.bedCode"
                             class="form-element"
                             @focus="descriptionFormFocusFn(17)"
+                            @blur="descriptionFormBlurFn('bedCode')"
                     />
                     <p v-else
                        @click="descriptionFormClickFn(17,$event)"
@@ -237,6 +249,7 @@
                             v-model="patientBasicInfo.nation"
                             class="form-element"
                             @focus="descriptionFormFocusFn(19)"
+                            @blur="descriptionFormBlurFn('nation')"
                     />
                     <p v-else
                        @click="descriptionFormClickFn(19,$event)"
@@ -250,6 +263,7 @@
                             v-model="patientBasicInfo.now"
                             class="form-element"
                             @focus="descriptionFormFocusFn(20)"
+                            @blur="descriptionFormBlurFn('now')"
                     />
                     <p v-else
                        @click="descriptionFormClickFn(20,$event)"
@@ -263,6 +277,7 @@
                             v-model="patientBasicInfo.allergy"
                             class="form-element"
                             @focus="descriptionFormFocusFn(21)"
+                            @blur="descriptionFormBlurFn('allergy')"
                     />
                     <p v-else
                        @click="descriptionFormClickFn(21,$event)"
@@ -276,6 +291,7 @@
                             v-model="patientBasicInfo.past"
                             class="form-element"
                             @focus="descriptionFormFocusFn(22)"
+                            @blur="descriptionFormBlurFn('past')"
                     />
                     <p v-else
                        @click="descriptionFormClickFn(22,$event)"
@@ -289,6 +305,7 @@
                             v-model="patientBasicInfo.family"
                             class="form-element"
                             @focus="descriptionFormFocusFn(23)"
+                            @blur="descriptionFormBlurFn('family')"
                     />
                     <p v-else
                        @click="descriptionFormClickFn(23,$event)"
@@ -344,7 +361,7 @@
     </div>
 </template>
 <script>
-    import { requestPatientSelectDeptByHospital, requestPatientSelectICD } from '../../../api/userList/userList';
+    import { requestPatientSelectICD } from '../../../api/userList/userList';
     import { requestDeptListDeptHospitalId, requestHospitalGetList } from '../../../api/hospital';
     import { requestDeptList } from '../../../api/department';
     import { descriptionsMethods } from '@/utils/patientInfo';
@@ -353,25 +370,17 @@
     export default {
         computed: {
             //  基础信息，请求来了就会出现数据
-            patientBasicInfo(prev){
-                const patientBasicInfo = this.$store.state.userList.patientBasicInfo;
-//                const { departTreatment } = patientBasicInfo;
-//                console.log('变化');
-//                console.log(value, prev);
-//                if (departTreatment) {
-//                    this.getDepListByHospital(departTreatment);
-//                }
-                //  console.log(prev.$store.state.userList.patientBasicInfo.patientId);
-//                console.log(JSON.parse(JSON.stringify(value)));
-//                console.log(JSON.parse(JSON.stringify(prev)));
+            patientBasicInfo(){
+                const { patientBasicInfo } = this.$store.state.userList;
                 return patientBasicInfo;
             },
             bmi(){
+                console.log('计算');
                 if (!this.patientBasicInfo) {
                     return 0;
                 }
-                const bmi = this.patientBasicInfo.weight / (this.patientBasicInfo.height * this.patientBasicInfo.height) * 10000;
-                return isNaN(bmi) ? 0 : bmi.toFixed(1);
+                const bmi = this.patientBasicInfo.weight / this.patientBasicInfo.height / this.patientBasicInfo.height * 10000;
+                return isNaN(bmi) ? '' : bmi.toFixed(1);
             }
         },
         data(){
@@ -399,12 +408,8 @@
             searchFn(){
                 //  ICD
                 requestPatientSelectICD()
-                    .then(v => {
-                        //  console.log(v);
-                        v.data.forEach((item, index) => {
-                            item.key = index;
-                        });
-                        this.ICDList = v.data || [];
+                    .then(ICDList => {
+                        this.ICDList = ICDList;
                     });
                 //  医院list
                 requestHospitalGetList()
@@ -494,7 +499,7 @@
             groupChat(e){
                 console.log(e);
             },
-            //  验证表单
+            //  保存
             handleSubmit(){
                 return new Promise((resolve, reject) => {
                     //  console.table(JSON.parse(JSON.stringify(this.patientBasicInfo)));
@@ -520,19 +525,76 @@
 //
 //                    }
 
+                    console.log('发请求');
+                    const patientBasicInfo = this.patientBasicInfo;
+                    //  规范数据
+                    const {
+                        address,
+                        allergy,
+                        bedCode,
+                        birth,
+                        bmi,
+                        departTreatment,
+                        doctorId,
+                        family,
+                        hospitalCode,
+                        hospitalTreatment,
+                        icd,
+                        idCard,
+                        idSocial,
+                        name,
+                        nation,
+                        now,
+                        nutritionistId,
+                        past,
+                        patientStatus,
+                        phone,
+                        professional,
+                        treatCode,
+
+                        //  数字
+                        height,
+                        sex,
+                        weight,
+                    } = patientBasicInfo;
+                    patientBasicInfo.address = String(address || '') || undefined;
+                    patientBasicInfo.allergy = String(allergy || '') || undefined;
+                    patientBasicInfo.bedCode = String(bedCode || '') || undefined;
+                    patientBasicInfo.birth = String(birth || '') || undefined;
+                    patientBasicInfo.bmi = String(bmi || '') || undefined;
+                    patientBasicInfo.departTreatment = String(departTreatment || '') || undefined;
+                    patientBasicInfo.doctorId = String(doctorId || '') || undefined;
+                    patientBasicInfo.family = String(family || '') || undefined;
+                    patientBasicInfo.hospitalCode = String(hospitalCode || '') || undefined;
+                    patientBasicInfo.hospitalTreatment = String(hospitalTreatment || '') || undefined;
+                    patientBasicInfo.icd = String(icd || '') || undefined;
+                    patientBasicInfo.idCard = String(idCard || '') || undefined;
+                    patientBasicInfo.idSocial = String(idSocial || '') || undefined;
+                    patientBasicInfo.name = String(name || '') || undefined;
+                    patientBasicInfo.nation = String(nation || '') || undefined;
+                    patientBasicInfo.now = String(now || '') || undefined;
+                    patientBasicInfo.nutritionistId = String(nutritionistId || '') || undefined;
+                    patientBasicInfo.past = String(past || '') || undefined;
+                    patientBasicInfo.patientStatus = String(patientStatus || '') || undefined;
+                    patientBasicInfo.phone = String(phone || '') || undefined;
+                    patientBasicInfo.professional = String(professional || '') || undefined;
+                    patientBasicInfo.treatCode = String(treatCode || '') || undefined;
+
+                    patientBasicInfo.height = Number(height) || undefined;
+                    patientBasicInfo.sex = Number(sex) || undefined;
+                    patientBasicInfo.weight = Number(weight) || undefined;
+
+                    console.log('调用病人组件');
+                    console.log(JSON.stringify(this.patientBasicInfo));
+                    console.table(JSON.parse(JSON.stringify(this.patientBasicInfo)));
                     //  bmi赋值
                     this.patientBasicInfo.bmi = this.bmi;
-                    //  todo    就诊科室没有数据
-                    //  this.patientBasicInfo.hospitalTreatment = this.patientBasicInfo.hospitalTreatment || 1;
-                    //  todo    营养师需要接口
-                    //  this.patientBasicInfo.nutritionistId = this.patientBasicInfo.nutritionistId || 1;
-
-                    //  医生  ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️ string ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
-                    //  this.patientBasicInfo.doctorId = this.patientBasicInfo.doctorId.toString();
-                    //  新增入院所以是1    1入院，2.出院，3.永久注销;
-                    this.patientBasicInfo.patientStatus = '1';
                     resolve();
-                });
+                })
+                    .catch(err => {
+                        console.log('数据组织异常');
+                        console.log(err);
+                    });
             },
 
             //	病人信息、直接编辑用的 描述框的方法
