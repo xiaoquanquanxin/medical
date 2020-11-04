@@ -84,7 +84,7 @@ const actions = {
 				const routesList = setRouteListByMap(routeMap, asyncRoutesList)
 				routesList.push(NotFoundRoutes);
 				commit('SET_ROUTE_LENGTH', routesList);
-				console.log(routesList);
+				console.log(JSON.parse(JSON.stringify(routesList)));
 				return routesList;
 			});
 
