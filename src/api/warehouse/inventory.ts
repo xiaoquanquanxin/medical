@@ -19,3 +19,13 @@ export function requestGoodsGoodsPurchase(data: any) {
 }
 
 
+//	退货
+export function requestGoodsReturnOrder(data: any) {
+	return request({
+		url: '/api/goods/returnOrder',
+		method: 'post',
+		data,
+	});
+}
+//	productionTime 生产时间
+//	validUntil 有效期至

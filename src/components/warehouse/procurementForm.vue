@@ -6,7 +6,7 @@
                 @submit="handleSubmit"
                 autocomplete="off"
         >
-            <a-form-item label="商家名称">{{procurementData.goodsName}}</a-form-item>
+            <a-form-item label="商品名称">{{procurementData.goodsName}}</a-form-item>
             <a-form-item label="商品货号">{{procurementData.goodsProductCode}}</a-form-item>
             <a-form-item label="供应商">{{procurementData.supplierName}}</a-form-item>
             <a-form-item label="商品品牌">{{procurementData.brandName}}</a-form-item>

@@ -82,11 +82,13 @@
                  :maskClosable="false"
                  centered
                  :width="800"
-                 title="采购"
+                 title="退货"
                  ok-text="确认"
                  cancel-text="取消"
                  @ok="salesReturnModalCheck('refSalesReturnForm')">
-            <SalesReturnForm ref="refSalesReturnForm"/>
+            <SalesReturnForm ref="refSalesReturnForm"
+                             :procurement-data="procurementData"
+            />
         </a-modal>
     </div>
 </template>
@@ -110,7 +112,7 @@
         {
             title: '商品名称',
             dataIndex: 'goodsName',
-            width: 120,
+            width: 150,
         },
         {
             title: '商品货号',
@@ -245,9 +247,6 @@
             //  采购
             procurement(sItem){
                 this.procurementData = sItem;
-                //  console.log(sItem.id);
-                //  console.log(JSON.parse(JSON.stringify(sItem)));
-                //  this.setWarehouseId('123');
                 this.showModal(DIALOG_TYPE.PROCUREMENT);
             },
             //  确认采购
@@ -268,7 +267,8 @@
             },
             //  退货
             salesReturn(sItem){
-                this.setWarehouseId('123');
+                console.log(JSON.parse(JSON.stringify(sItem)));
+                this.procurementData = sItem;
                 this.showModal(DIALOG_TYPE.SALES_RETURN);
             },
             //  确认退货
