@@ -16,6 +16,9 @@
                 <a-button v-if="detailType ===2 && auditStatus === 2"
                           class="basic-button-width" type="primary" @click="rejectFn">驳回
                 </a-button>
+                <a-button v-if="detailType ===5"
+                          class="basic-button-width" type="primary" v-print="printObj">打印
+                </a-button>
             </div>
             <span data-msg="占位"></span>
             <b>
@@ -30,7 +33,7 @@
                     <span v-if="auditStatus === 2 ">已审核</span>
                     <span v-if="auditStatus === 3 ">已驳回</span>
                 </span>
-                <span v-if="detailType === 3" data-msg="配置任务详情">
+                <span v-if="detailType === 3 || detailType === 5" data-msg="配置任务详情">
                     <span v-if="orderStatus === 1 ">待签收</span>
                     <span v-if="orderStatus === 2 ">待配置</span>
                     <span v-if="orderStatus === 3 ">已配置</span>
@@ -39,41 +42,43 @@
                 </span>
             </b>
         </a-row>
-        <!--基础表格-->
-        <BasicInfoTable
-                :data-source="basicInfoData"
-        />
-        <br>
-        <!--肠内营养支持-->
-        <OralLikeBasicTable
-                :data-title="cnyyzcDataTitle"
-                :data-source="cnyyzcCommodity"
-        />
-        <br>
-        <!--复杂-->
-        <OralLikeComplexTable
-                :data-source="cnyyzcTimeTableData"
-        />
-        <br>
-        <!--口服肠内营养补充-->
-        <OralLikeBasicTable
-                :data-title="kqcnyybcDataTitle" :data-source="kqcnyybcCommodity"
-        />
-        <br>
-        <!--复杂-->
-        <OralLikeComplexTable
-                :data-source="kqcnyybcTimeTableData"
-        />
-        <br>
-        <!--膳食营养计划-->
-        <DietaryTable v-if="false"
-                      :data-source="dietaryData"
-        />
-        <br>
-        <!--能量表-->
-        <EnergyTable
-                :data-source="energyData"
-        />
+        <div id="printContent">
+            <!--基础表格-->
+            <BasicInfoTable
+                    :data-source="basicInfoData"
+            />
+            <br>
+            <!--肠内营养支持-->
+            <OralLikeBasicTable
+                    :data-title="cnyyzcDataTitle"
+                    :data-source="cnyyzcCommodity"
+            />
+            <br>
+            <!--复杂-->
+            <OralLikeComplexTable
+                    :data-source="cnyyzcTimeTableData"
+            />
+            <br>
+            <!--口服肠内营养补充-->
+            <OralLikeBasicTable
+                    :data-title="kqcnyybcDataTitle" :data-source="kqcnyybcCommodity"
+            />
+            <br>
+            <!--复杂-->
+            <OralLikeComplexTable
+                    :data-source="kqcnyybcTimeTableData"
+            />
+            <br>
+            <!--膳食营养计划-->
+            <DietaryTable v-if="false"
+                          :data-source="dietaryData"
+            />
+            <br>
+            <!--能量表-->
+            <EnergyTable
+                    :data-source="energyData"
+            />
+        </div>
         <!--驳回莫泰框-->
         <a-modal v-model="dialogReject.visible"
                  v-if="dialogReject.visible"
@@ -106,6 +111,7 @@
     import GoBackButton from '@/components/goBackButton.vue';
     import { requestPrescriptionDetail } from '../../api/userList/intervention';
     import { requestPrescriptionAuditUpdate } from '../../api/auditList';
+    import { requestOrderDetails } from '../../api/order/order';
 
     export default {
         components: {
@@ -120,6 +126,7 @@
         data(){
             const { name } = this.$route;
             let detailType;
+            console.log('页面name', name);
             switch (name) {
                 case 'interventionDetail':
                     //  营养干预方案详情
@@ -138,7 +145,12 @@
                     detailType = 3;
                     break;
                 case  'costDetail':
+                    //  收计费详情
                     detailType = 4;
+                    break;
+                case 'orderDetail':
+                    //  订单详情
+                    detailType = 5;
                     break;
                 default:
                     throw new Error(`这是什么页面？${name}`);
@@ -297,6 +309,12 @@
                 }],
                 //  拒绝的莫泰框
                 dialogReject: this.initModal(DIALOG_TYPE.REJECT),
+
+                //  打印对象
+                printObj: {
+                    id: '#printContent',
+                    popTitle: 'xxxxxxx详情',
+                },
             };
         },
         created(){
@@ -306,9 +324,12 @@
         methods: {
             //  主要请求
             searchFn(){
-                requestPrescriptionDetail(this.detailId)
+                alert('涛哥的 /api/prescription/detail 和木木的 /api/order/details/ 有区别吗');
+                //  requestPrescriptionDetail(this.detailId);
+                requestOrderDetails(this.detailId)
                     .then(v => {
                         const { data } = v;
+                        console.log(JSON.parse(JSON.stringify(data)));
                         this.auditStatus = data.auditStatus;
                         this.orderStatus = data.orderStatus;
                         this.patientId = data.patientId;
