@@ -1,7 +1,13 @@
 <template>
-    <div style="min-width: 1000px;width:100%;">
-        <a-row type="flex" justify="start" align="top">
-            <a-col style="width:300px;" v-if="true">
+    <div>
+        <a-row type="flex" justify="start" align="top" v-if="false">
+            <a-col style="width:300px;">
+            </a-col>
+            <a-col style="width:calc(100vw - 500px);min-width: 900px;">
+            </a-col>
+        </a-row>
+        <div class="wrap">
+            <div class="left-info">
                 <a-card title="就诊信息">
                     <a-form class="form"
                             v-bind="{
@@ -67,8 +73,8 @@
                         </a-pagination>
                     </a-row>
                 </a-card>
-            </a-col>
-            <a-col style="width:calc(100vw - 500px);min-width: 700px;">
+            </div>
+            <div class="tab-info">
                 <a-menu v-if="currentMeta"
                         v-model="transverseSubPaths2"
                         mode="horizontal">
@@ -85,8 +91,8 @@
                         <router-view/>
                     </div>
                 </div>
-            </a-col>
-        </a-row>
+            </div>
+        </div>
     </div>
 </template>
 <script>
@@ -246,5 +252,27 @@
     .router-view {
         height: calc(100vh - 180px);
         overflow: auto;
+    }
+    
+    /*Firefox*/
+    /*-moz-calc(expression);*/
+    /*chrome safari*/
+    /*-webkit-calc(expression);*/
+    /*calc*/
+    
+    .wrap {
+        display: flex;
+        justify-content: space-between;
+    }
+    
+    
+    .left-info {
+        min-width: 300px;
+        /*background-color: lightyellow;*/
+    }
+    
+    .tab-info {
+        flex: 1 auto auto;
+        /*background-color: lightblue;*/
     }
 </style>
