@@ -565,9 +565,9 @@ export const asyncRoutesList = [
 			hiddenHistory: true,
 			hidden: true,
 		},
-		path: '/orderDetail/:orderDetailId',
+		path: '/orderDetail/:detailId',
 		name: 'orderDetail',
-		component: () => import(/* webpackChunkName: "orderDetail" */ '@/views/order/orderDetail.vue'),
+		component: () => import(/* webpackChunkName: "auditDetail" */ '@/views/auditList/auditDetail.vue'),
 	},
 	//	库房管理
 	{
