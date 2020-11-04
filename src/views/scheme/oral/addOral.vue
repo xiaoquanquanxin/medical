@@ -25,6 +25,10 @@
                         <a-select-option :value="1">院内配置</a-select-option>
                         <a-select-option :value="2">门诊领药</a-select-option>
                     </a-select>
+                    <a-input class="add-form-input"
+                             v-model="tableForm.templateName"
+                             placeholder="请输入处方模板名称"
+                    />
                 </a-space>
                 <a-button type="primary" @click="handleSubmit">保存</a-button>
             </a-row>
@@ -482,14 +486,14 @@
                 tableForm: {
                     //  医院
                     hospitalId: undefined,
-                    hospitalId: 4,
+                    //  hospitalId: 4,
                     //  医院名
                     hospitalName: undefined,
                     //  处方名
                     templateName: undefined,
                     //  处方类型-处方类型 (1.院内配置,2门诊领药)
                     prescriptionType: undefined,
-                    prescriptionType: 1,
+                    //  prescriptionType: 1,
                     //  能量
                     energy: undefined,
                     //  食用方法
@@ -962,6 +966,11 @@
                     this.$message.error('请选择食用方法');
                     return false;
                 }
+                //  至少要输入处方模板名称
+                if (!this.tableForm.templateName) {
+                    this.$message.error('请输入处方模板名称');
+                    return false;
+                }
                 return true;
             },
             //  表单提交 保存
@@ -989,7 +998,6 @@
                     templateType: this.templateType,
                 }, this.tableForm);
                 console.log(JSON.parse(JSON.stringify(data)));
-                return;
                 (() => {
                     //  如果是新增
                     if (!this.templateId) {
