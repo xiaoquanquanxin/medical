@@ -104,14 +104,13 @@
                                     }
                                 });
                             });
-
                     },
                     onCancel(){
                         console.log('取消');
                     },
                 });
             },
-            //  保存按钮
+            //  修改病人保存
             handleCheck(){
                 this.$refs.refPatientBasicInfo
                     .handleSubmit()
