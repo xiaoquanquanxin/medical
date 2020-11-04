@@ -19,7 +19,7 @@ export function requestPatientSelectOnePatient(patientId: string | number) {
 	});
 }
 
-//	病人修改			✅，❌接口可以通，但问题同上
+//	病人修改			✅
 export function requestPatientUpdate(data: any) {
 	return request({
 		url: '/api/patient/update',
@@ -28,7 +28,7 @@ export function requestPatientUpdate(data: any) {
 	});
 }
 
-//	病人新增			✅，❌同上
+//	病人新增			✅
 export function requestPatientSave(data: any) {
 	return request({
 		url: '/api/patient/save',
@@ -37,7 +37,7 @@ export function requestPatientSave(data: any) {
 	});
 }
 
-//	根据当前医院查询科室	 ❌
+//	根据当前医院查询科室	 ✅
 export function requestPatientSelectDeptByHospital() {
 	return request({
 		url: '/api/patient/selectDeptByHospital',
@@ -70,7 +70,8 @@ export function requestPatientSelectICD() {
 	return request({
 		url: `/api/patient/selectICD`,
 		method: 'get',
-	});
+	})
+		.then(unifiedHandlingList);
 }
 
 
