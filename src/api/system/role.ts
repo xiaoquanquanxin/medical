@@ -1,7 +1,5 @@
 import request from '@/utils/request';
 
-//	⚠️⚠️	系统管理这部分，swagger提供的接口超级多，所以下面的接口我不确定具体调用哪个
-
 //	分页查询角色信息		✅
 export function requestRolePage(data: any) {
 	return request({
@@ -11,7 +9,7 @@ export function requestRolePage(data: any) {
 	})
 }
 
-//	添加角色				❌
+//	添加角色				✅
 export function requestRoleSave(data: any) {
 	return request({
 		url: '/api/role/save',
@@ -20,7 +18,7 @@ export function requestRoleSave(data: any) {
 	})
 }
 
-//	修改角色
+//	修改角色				✅
 export function requestRoleUpdate(data: any) {
 	//	roleId
 	return request({
@@ -29,7 +27,6 @@ export function requestRoleUpdate(data: any) {
 		data,
 	})
 }
-
 
 //	通过ID查询角色信息
 export function requestRoleGet(id: string | number) {
@@ -56,7 +53,7 @@ export function requestRoleDelete(id: string | number) {
 	});
 }
 
-//	根据ID查询反馈记录	✅
+//	通过角色名称查询用户菜单		废弃❓❓
 export function requestRoleFindMenuByRole(id: string | number) {
 	return request({
 		url: `/api/menu/findMenuByRole/${id}`,
