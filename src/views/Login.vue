@@ -104,16 +104,22 @@
         beforeCreate(){
             this.form = this.$form.createForm(this);
         },
+        computed: {
+            //  外框的样式，主要是高度
+            loginWrapStyle(){
+                const basicForm = this.basicForm;
+                return {
+                    height: `${basicForm ? 380 : 420}px`,
+                    top: `${basicForm ? -60 : 40}px`,
+                };
+            }
+        },
         data(){
             return {
                 //  用户类型  1 医生   2 系统管理员  3 渠道商
                 //  type: 1,
                 //  基础类型
-                basicForm: false,
-                //  外框的样式，主要是高度
-                loginWrapStyle: {
-                    height: '420px',
-                },
+                basicForm: true,
 
                 //  用户名
                 usernameDecorator: ['username', {
@@ -153,10 +159,10 @@
             ]),
             //  选择登录变化
             selectChange(e){
+                //  fixme   这里，暂时不开发短信的功能
+                return;
                 //  this.type = e;
                 this.basicForm = e > 1;
-                this.loginWrapStyle.height = `${(e > 1) ? 380 : 420}px`;
-                this.loginWrapStyle.top = `${(e > 1) ? 0 : 40}px`;
                 this.form.resetFields(['username', 'password', 'phoneNumber', 'verification']);
             },
             //  获取短信验证码

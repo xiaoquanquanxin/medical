@@ -62,7 +62,7 @@ export function requestHospitalChangeStatus(id: string | number) {
 	})
 }
 
-//	获取已经关联的科室
+//	获取已经关联的科室，根据id获取医院关联科室
 export function requestDeptListDeptHospitalId(id: string | number) {
 	return request({
 		url: `/api/dept/listDeptHospitalId/${id}`,

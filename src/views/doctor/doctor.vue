@@ -14,7 +14,7 @@
                 </a-select-option>
             </a-select>
             <a-select class="basic-select-width" placeholder="请选择科室" v-model="searchData.department">
-                <a-select-option v-for="item in deptList"
+                <a-select-option v-for="item in deptInHospitalList"
                                  :value="item.id">
                     {{item.deptName}}
                 </a-select-option>
@@ -83,8 +83,8 @@
     } from '@/utils/pagination.ts';
     import { twoRowSearch } from '@/utils/tableScroll';
     import { requestDoctorPage } from '../../api/doctor';
-    import { requestHospitalGetList } from '../../api/hospital';
-    import { requestPatientSelectDeptByHospital } from '../../api/userList/userList';
+    import { requestDeptListDeptHospitalId, requestHospitalGetList } from '../../api/hospital';
+    import { requestDeptList } from '../../api/department';
 
     const columns = [
         {
@@ -141,19 +141,29 @@
                 pagination: paginationInit(),
 
                 //  搜索数据
-                searchData: {},
+                searchData: {
+                    department: undefined,
+                },
                 //  全部科室列表
                 deptList: [],
+                //  关联科室列表
+                deptInHospitalList: [],
                 //  医院列表
                 hospitalList: []
             };
         },
 
         created(){
-            this.searchFn();//  医院list
+            this.searchFn();
+            //  全部医院list
             requestHospitalGetList()
                 .then(hospitalList => {
                     this.hospitalList = hospitalList;
+                });
+            //  全部科室
+            requestDeptList()
+                .then(deptList => {
+                    this.deptList = deptList;
                 });
         },
         methods: {
@@ -166,44 +176,49 @@
                             item.key = index;
                         });
                         this.data = data.records;
-                        console.log(data.records[0]);
+                        console.log(JSON.parse(JSON.stringify(data.records[0])));
                         this.pagination = paginationDecode(this.pagination, data);
                     });
             },
             //  切换医院
             selectHospitalChange(value){
-                requestPatientSelectDeptByHospital()
+                this.searchData.department = undefined;
+                requestDeptListDeptHospitalId(value)
                     .then(v => {
-                        console.log('根据当前医院查询科室', v.data);
+                        const map = {};
                         v.data.forEach(item => {
-                            item.id = Number(item.id);
+                            map[item] = true;
                         });
-                        this.deptList = v.data;
+                        const deptInHospitalList = [];
+                        this.deptList.forEach(item => {
+                            if (map[item.id]) {
+                                deptInHospitalList.push(item);
+                            }
+                        });
+                        this.deptInHospitalList = deptInHospitalList;
                     });
             },
-            //  莫泰框方法
-            ...dialogMethods,
-               onShowSizeChange,
-            pageChange,
             //  删除医生
             deleteDoctor(sItem){
-                console.log(sItem.doctor);
+                alert('没删除医生接口');
+                console.log(sItem.doctorName);
                 this.$confirm({
-                    title: `确定删除${sItem.doctor}`,
+                    title: `确定删除${sItem.doctorName}`,
                     okText: '确认',
                     okType: 'danger',
                     cancelText: '取消',
                     onOk(){
-                        return new Promise((resolve, reject) => {
-                            console.log('发请求');
-                            setTimeout(Math.random() > 0.5 ? resolve : reject, 1111);
-                        }).catch(() => console.log('Oops errors!'));
+
                     },
                     onCancel(){
                         console.log('取消');
                     },
                 });
             },
+            //  莫泰框方法
+            ...dialogMethods,
+            onShowSizeChange,
+            pageChange,
         }
     };
 </script>
