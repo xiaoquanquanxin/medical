@@ -13,21 +13,8 @@
                         :checkable="true"
                         :tree-data="treeData"
                         :autoExpandParent="true"
-                        @check="checkFn"
                 />
-                <!--            <a-tree-select-->
-                <!--                    class="add-form-input"-->
-                <!--                    v-if="treeData"-->
-                <!--                    v-model="treeSelectValue"-->
-                <!--                    style="width: 100%"-->
-                <!--                    :disabled="!treeData"-->
-                <!--                    :tree-data="treeData"-->
-                <!--                    :treeDefaultExpandAll="true"-->
-                <!--                    tree-checkable-->
-                <!--                    :show-checked-strategy="SHOW_PARENT"-->
-                <!--                    search-placeholder="Please select"-->
-                <!--            />-->
-                <!--            @change="selectTreeChange"-->
+                <!--@check="checkFn"-->
             </a-form-item>
         </a-form>
     </div>
@@ -76,20 +63,13 @@
         },
         methods: {
             searchFn(){
-                console.log(JSON.parse(JSON.stringify(this.selectRoleItem)));
-                //  todo    报错
-//                requestRoleFindMenuByRole(this.selectRoleItem.roleId)
-//                    .then(v => {
-//                        console.log(v);
-//                    });
+                //  console.log(JSON.parse(JSON.stringify(this.selectRoleItem)));
                 requestMenuAllTree()
                     .then(data => {
                         this.treeData = data;
-                        console.log(JSON.parse(JSON.stringify(data)));
-                        this.$nextTick(() => {
-                            this.treeSelectValue = [...this.selectRoleItem.treeSelectValue].map(String);
-                            console.log(this.treeSelectValue);
-                        });
+                        //  console.log(JSON.parse(JSON.stringify(data)));
+                        this.treeSelectValue = [...this.selectRoleItem.treeSelectValue].map(String);
+                        //  console.log(this.treeSelectValue);
                     });
             },
             //    表单提交
@@ -106,9 +86,9 @@
                         console.log(v);
                     });
             },
-            checkFn(e){
-                console.log(e);
-            }
+//            checkFn(e){
+//
+//            }
         }
     };
 </script>

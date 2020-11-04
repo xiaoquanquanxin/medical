@@ -11,6 +11,7 @@ export function requestMenuAllTree() {
 			data.forEach((item: any, index: number) => {
 				const {id, name, type, parentId} = item;
 				item.title = `${name} - id: ${id} - parentId : ${parentId}`;
+				item.title = `${name}`;
 				item.key = id.toString();
 				item.value = id.toString();
 				//	console.log(JSON.parse(JSON.stringify(item)).type);
