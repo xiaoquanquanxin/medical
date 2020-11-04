@@ -141,7 +141,7 @@
         },
         {
             title: '城市',
-            dataIndex: 'city',
+            dataIndex: 'cityName',
             width: 100,
         },
         {
