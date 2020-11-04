@@ -12,9 +12,9 @@
                               placeholder="请选择医院"
                               @change="selectHospitalChange"
                     >
-                        <a-select-option v-for="(item,index) in hospitalList"
-                                         :value="item.id"
-                        >{{item.hospitalName}}
+                        <a-select-option v-for="item in hospitalList"
+                                         :value="item.id">
+                            {{item.hospitalName}}
                         </a-select-option>
                     </a-select>
                     <a-select class="lengthen-select-width"
