@@ -17,7 +17,6 @@
         requestPatientSelectOnePatient,
         requestPatientUpdate
     } from '../../../api/userList/userList';
-    import { calcAgeByBirth } from '../../../utils/common';
 
     export default {
         components: {
@@ -27,9 +26,8 @@
         computed: {
             //  基础信息，请求来了就会出现数据
             patientBasicInfo(){
-                const patientBasicInfo = this.$store.state.userList.patientBasicInfo;
-                //  console.log(patientBasicInfo);
-                return this.$store.state.userList.patientBasicInfo;
+                const { patientBasicInfo } = this.$store.state.userList;
+                return patientBasicInfo;
             },
         },
         watch: {
@@ -65,78 +63,20 @@
                     .then(v => {
                         const { data } = v;
                         console.log(JSON.parse(JSON.stringify(data)));
-                        this.patientInfo = data;
                         //  保存到store里，基础信息、群聊信息 ⚠️这里暂时一个，看够不够了
-                        this.setPatientBasicInfo(this.patientInfo);
+                        this.setPatientBasicInfo(data);
                     });
             },
-            //  保存按钮
+            //  新增病人保存
             handleCheck(){
                 this.$refs.refPatientBasicInfo
                     .handleSubmit()
                     .then(v => {
-                        console.log('发请求');
-                        console.log(JSON.stringify(this.patientBasicInfo));
-                        console.table(JSON.parse(JSON.stringify(this.patientBasicInfo)));
-                        const {
-                            //  string
-                            address,
-                            allergy,
-                            bedCode,
-                            birth,
-                            bmi,
-                            departTreatment,
-                            doctorId,
-                            family,
-                            hospitalCode,
-                            hospitalTreatment,
-                            icd,
-                            idCard,
-                            idSocial,
-                            name,
-                            nation,
-                            now,
-                            nutritionistId,
-                            past,
-                            patientStatus,
-                            phone,
-                            professional,
-                            treatCode,
-
-                            //  数字
-                            height,
-                            sex,
-                            weight,
-                        } = this.patientBasicInfo;
-                        const data = {
-                            address: address.toString(),
-                            allergy: allergy.toString(),
-                            bedCode: bedCode.toString(),
-                            birth: birth.toString(),
-                            bmi: bmi.toString(),
-                            departTreatment: departTreatment.toString(),
-                            doctorId: doctorId.toString(),
-                            family: family.toString(),
-                            hospitalCode: hospitalCode.toString(),
-                            hospitalTreatment: hospitalTreatment.toString(),
-                            icd: icd.toString(),
-                            idCard: idCard.toString(),
-                            idSocial: idSocial.toString(),
-                            name: name.toString(),
-                            nation: nation.toString(),
-                            now: now.toString(),
-                            nutritionistId: nutritionistId.toString(),
-                            past: past.toString(),
-                            patientStatus: patientStatus.toString(),
-                            phone: phone.toString(),
-                            professional: professional.toString(),
-                            treatCode: treatCode.toString(),
-
-                            height: Number(height),
-                            sex: Number(sex),
-                            weight: Number(weight),
-                        };
+                        //  新增入院所以是1    1入院，2.出院，3.永久注销;
+                        const data = Object.assign({}, this.patientBasicInfo, { patientStatus: '1' });
+                        //  console.log(this.patientBasicInfo);
                         console.log(data);
+                        return;
                         //  如果是新增
                         if (!this.patientId) {
                             requestPatientSave(data)

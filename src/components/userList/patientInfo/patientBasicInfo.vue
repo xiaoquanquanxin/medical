@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style="min-width: 900px;">
         <a-row type="flex" justify="space-between" align="middle" class="table-group-title no-border-bottom">
             基础信息
         </a-row>
@@ -161,7 +161,8 @@
                     {{patientBasicInfo.jzbh}}
                 </a-descriptions-item>
                 <a-descriptions-item label="就诊医院">
-                    <a-select placeholder="请输入就诊医院"
+                    <a-select style="min-width: 100%;"
+                              placeholder="请输入就诊医院"
                               v-model="patientBasicInfo.departTreatment"
                               class="form-element basic-select-width"
                               @focus="descriptionFormFocusFn(14)"
@@ -174,10 +175,10 @@
                     </a-select>
                 </a-descriptions-item>
                 <a-descriptions-item label="就诊科室">
-                    <a-select style="width: 100%;"
+                    <a-select style="min-width: 100%;"
                               placeholder="请选择就诊科室"
                               v-model="patientBasicInfo.hospitalTreatment"
-                              class="form-element"
+                              class="form-element basic-select-width"
                               @change="hospitalTreatmentChange"
                               @focus="descriptionFormFocusFn(14)"
                     >
@@ -230,10 +231,10 @@
                     >{{patientBasicInfo.bedCode}}</p>
                 </a-descriptions-item>
                 <a-descriptions-item label="ICD诊断">
-                    <a-select style="width: 100%;"
+                    <a-select style="min-width: 100%;"
                               placeholder="请输入ICD诊断"
                               v-model="patientBasicInfo.icd"
-                              class="form-element"
+                              class="form-element basic-select-width"
                               @focus="descriptionFormFocusFn(18)"
                     >
                         <a-select-option :value="item.code"
@@ -330,7 +331,7 @@
             >
                 <!--主管医生-->
                 <a-descriptions-item label="主管医生">
-                    <a-select style="width:100%;"
+                    <a-select style="min-width: 100%;"
                               placeholder="请选择主管医生"
                               v-model="patientBasicInfo.doctorId"
                               @change="doctorChange"
@@ -344,7 +345,7 @@
                 </a-descriptions-item>
                 <!--主管医生-->
                 <a-descriptions-item label="营养师">
-                    <a-select style="width:100%;"
+                    <a-select style="min-width: 100%;"
                               placeholder="请选择营养师"
                               v-model="patientBasicInfo.nutritionistId"
                               @change="nutritionistChange"
@@ -585,8 +586,8 @@
                     patientBasicInfo.weight = Number(weight) || undefined;
 
                     console.log('调用病人组件');
-                    console.log(JSON.stringify(this.patientBasicInfo));
-                    console.table(JSON.parse(JSON.stringify(this.patientBasicInfo)));
+                    //  console.log(JSON.stringify(this.patientBasicInfo));
+                    //  console.table(JSON.parse(JSON.stringify(this.patientBasicInfo)));
                     //  bmi赋值
                     this.patientBasicInfo.bmi = this.bmi;
                     resolve();
