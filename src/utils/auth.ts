@@ -26,7 +26,7 @@ export function setLoginInfo(loginInfo: string) {
 
 //	转换路由格式
 export const convertRouting = (list: [any]) => {
-	console.log(list);
+	console.log(JSON.parse(JSON.stringify(list)));
 	//	路由
 	const routeMap: any = {};
 	//	按钮
