@@ -1,98 +1,99 @@
 <template>
-    <div class="login-form">
-        背景图可+
-        <a-form class="login-wrap"
-                @submit="handleSubmit"
-                :form="form"
-                :style="loginWrapStyle"
-        >
-            <a-form-item>
-                <p class="login-title">综合管理平台</p>
-            </a-form-item>
-            <a-form-item>
-                <a-select default-value="1"
-                          @change="selectChange"
-                >
-                    <a-select-option value="1">医生登录</a-select-option>
-                    <a-select-option value="2">平台登录</a-select-option>
-                    <a-select-option value="3">渠道商登录</a-select-option>
-                    <!--                    <a-select-option value="-1">-->
-                    <!--                        医院登录-->
-                    <!--                    </a-select-option>-->
-                </a-select>
-            </a-form-item>
-            <div v-show="basicForm" data-msg="常规输入框">
+    <div class="login-container">
+        <div class="login-form">
+            <a-form class="login-wrap"
+                    @submit="handleSubmit"
+                    :form="form"
+                    :style="loginWrapStyle"
+            >
                 <a-form-item>
-                    <a-input
-                            placeholder="请输入用户名"
-                            v-decorator="usernameDecorator"
-                    >
-                        <a-icon slot="prefix" type="user" class="icon-color"/>
-                    </a-input>
+                    <p class="login-title">综合管理平台</p>
                 </a-form-item>
                 <a-form-item>
-                    <a-input
-                            type="password"
-                            placeholder="请输入密码"
-                            v-decorator="passwordDecorator"
+                    <a-select default-value="1"
+                              @change="selectChange"
                     >
-                        <a-icon slot="prefix" type="lock" class="icon-color"/>
-                    </a-input>
+                        <a-select-option value="1">医生登录</a-select-option>
+                        <a-select-option value="2">平台登录</a-select-option>
+                        <a-select-option value="3">渠道商登录</a-select-option>
+                        <!--                    <a-select-option value="-1">-->
+                        <!--                        医院登录-->
+                        <!--                    </a-select-option>-->
+                    </a-select>
                 </a-form-item>
-            </div>
-            <div v-show="!basicForm" data-msg="医院登录输入框">
-                <a-tabs default-active-key="1" tabPosition="top" style="margin-top:-20px;">
-                    <a-tab-pane key="1" tab="账号登录">
-                        <a-form-item>
-                            <a-input
-                                    placeholder="请输入用户名"
-                                    v-decorator="usernameDecorator"
-                            >
-                                <a-icon slot="prefix" type="user" class="icon-color"/>
-                            </a-input>
-                        </a-form-item>
-                        <a-form-item>
-                            <a-input
-                                    type="password"
-                                    placeholder="请输入密码"
-                                    v-decorator="passwordDecorator"
-                            >
-                                <a-icon slot="prefix" type="lock" class="icon-color"/>
-                            </a-input>
-                        </a-form-item>
-                    </a-tab-pane>
-                    <a-tab-pane key="-1" tab="验证码登录">
-                        <a-form-item>
-                            <a-input-group compact>
+                <div v-show="basicForm" data-msg="常规输入框">
+                    <a-form-item>
+                        <a-input
+                                placeholder="请输入用户名"
+                                v-decorator="usernameDecorator"
+                        >
+                            <a-icon slot="prefix" type="user" class="icon-color"/>
+                        </a-input>
+                    </a-form-item>
+                    <a-form-item>
+                        <a-input
+                                type="password"
+                                placeholder="请输入密码"
+                                v-decorator="passwordDecorator"
+                        >
+                            <a-icon slot="prefix" type="lock" class="icon-color"/>
+                        </a-input>
+                    </a-form-item>
+                </div>
+                <div v-show="!basicForm" data-msg="医院登录输入框">
+                    <a-tabs default-active-key="1" tabPosition="top" style="margin-top:-20px;">
+                        <a-tab-pane key="1" tab="账号登录">
+                            <a-form-item>
                                 <a-input
-                                        style="width:179px;"
-                                        placeholder="请输入手机号"
-                                        v-decorator="phoneNumberDecorator"
+                                        placeholder="请输入用户名"
+                                        v-decorator="usernameDecorator"
                                 >
                                     <a-icon slot="prefix" type="user" class="icon-color"/>
                                 </a-input>
-                                <a-button type="primary" @click="getMessage">获取验证码</a-button>
-                            </a-input-group>
-                        </a-form-item>
-                        <a-form-item>
-                            <a-input
-                                    placeholder="请输入验证码"
-                                    v-decorator="verificationDecorator"
-                            >
-                                <a-icon slot="prefix" type="lock" class="icon-color"/>
-                            </a-input>
-                        </a-form-item>
-                    </a-tab-pane>
-                </a-tabs>
-            </div>
-            <a-form-item>
-                <a-button type="primary"
-                          block
-                          @click="handleSubmit"
-                >登录
-                </a-button>
-            </a-form-item>
-        </a-form>
+                            </a-form-item>
+                            <a-form-item>
+                                <a-input
+                                        type="password"
+                                        placeholder="请输入密码"
+                                        v-decorator="passwordDecorator"
+                                >
+                                    <a-icon slot="prefix" type="lock" class="icon-color"/>
+                                </a-input>
+                            </a-form-item>
+                        </a-tab-pane>
+                        <a-tab-pane key="-1" tab="验证码登录">
+                            <a-form-item>
+                                <a-input-group compact>
+                                    <a-input
+                                            style="width:179px;"
+                                            placeholder="请输入手机号"
+                                            v-decorator="phoneNumberDecorator"
+                                    >
+                                        <a-icon slot="prefix" type="user" class="icon-color"/>
+                                    </a-input>
+                                    <a-button type="primary" @click="getMessage">获取验证码</a-button>
+                                </a-input-group>
+                            </a-form-item>
+                            <a-form-item>
+                                <a-input
+                                        placeholder="请输入验证码"
+                                        v-decorator="verificationDecorator"
+                                >
+                                    <a-icon slot="prefix" type="lock" class="icon-color"/>
+                                </a-input>
+                            </a-form-item>
+                        </a-tab-pane>
+                    </a-tabs>
+                </div>
+                <a-form-item>
+                    <a-button type="primary"
+                              block
+                              @click="handleSubmit"
+                    >登录
+                    </a-button>
+                </a-form-item>
+            </a-form>
+        </div>
     </div>
 </template>
 <script>
@@ -198,7 +199,19 @@
     };
 </script>
 <style scoped>
+    .login-container {
+        background-color: white;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+    }
+    
     .login-form {
+        /*width: 1278px;*/
+        /*height: 768px;*/
         /*max-width: 300px;*/
         position: fixed;
         top: 0;
@@ -206,9 +219,9 @@
         left: 0;
         right: 0;
         margin: auto;
-        /*background-image: url(http://172.16.1.236/IotBg.jpg);*/
-        background-color: lightgrey;
+        background-image: url(/bg.jpg);
         background-size: cover;
+        /*background-size: contain;*/
         background-repeat: no-repeat;
         background-position: center center;
         z-index: +1;
@@ -222,8 +235,9 @@
         top: 0;
         bottom: 0;
         left: 0;
-        right: 0;
+        right: -50%;
         margin: auto;
+        margin-right: 57%;
         z-index: +1;
         background: white;
     }
@@ -232,7 +246,6 @@
         text-align: center;
         font-size: 30px;
     }
-    
     
     .icon-color {
         color: rgba(0, 0, 0, .25);
