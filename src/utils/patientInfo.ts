@@ -6,6 +6,13 @@ export const descriptionsMethods = {
 		this.activeElementId = activeElementId;
 		//	console.log(activeElementId);
 	},
+	//	失焦事件
+	descriptionFormBlurFn(key: string) {
+		//	@ts-ignore
+		this.activeElementId = null;
+		//	@ts-ignore
+		this.patientBasicInfo[key] = (this.patientBasicInfo[key] || '').trim();
+	},
 	//	点击事件
 	descriptionFormClickFn(activeElementId: number, event: any) {
 		//	@ts-ignore
