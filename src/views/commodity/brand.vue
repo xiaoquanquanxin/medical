@@ -152,17 +152,8 @@
                 //  设置被选中的商品列表
                 'setBrandId',
             ]),
-            //  展示的每一页数据变换
-            onShowSizeChange(current, pageSize){
-                this.pagination.pageSize = pageSize;
-                this.pagination.current = 1;
-                this.searchFn();
-            },
-            //  切换分页页码
-            pageChange(current){
-                this.pagination.current = current;
-                this.searchFn();
-            },
+               onShowSizeChange,
+            pageChange,
 
             //  新增品牌
             addBrand(){

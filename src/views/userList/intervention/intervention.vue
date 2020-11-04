@@ -181,17 +181,8 @@
                         this.data = data.records;
                     });
             },
-            //  展示的每一页数据变换
-            onShowSizeChange(current, pageSize){
-                this.pagination.pageSize = pageSize;
-                this.pagination.current = 1;
-                this.searchFn();
-            },
-            //  切换分页页码
-            pageChange(current){
-                this.pagination.current = current;
-                this.searchFn();
-            },
+               onShowSizeChange,
+            pageChange,
             //  选择日期范围
             onRangePickerChange(value, selectDateValue){
                 console.log(selectDateValue);

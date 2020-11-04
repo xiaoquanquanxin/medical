@@ -145,17 +145,8 @@
             searchFn(){
                 console.log(this.name);
             },
-            //  展示的每一页数据变换
-            onShowSizeChange(current, pageSize){
-                this.pagination.pageSize = pageSize;
-                this.pagination.current = 1;
-                this.searchFn();
-            },
-            //  切换分页页码
-            pageChange(current){
-                this.pagination.current = current;
-                this.searchFn();
-            },
+               onShowSizeChange,
+            pageChange,
             //  查看家庭组
             viewFamilyGroup(sItem){
                 console.log(sItem);
