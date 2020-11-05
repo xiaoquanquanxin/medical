@@ -182,7 +182,8 @@
                                     <span v-if="prescriptionType===1" data-msg="院内配置" class="nowrap">
                                         {{unitTypeMap[item.basicUnitItem.uname].label}}
                                     </span>
-                                    <span v-else data-msg="门诊领药">{{item.unitUse}}</span>
+                                    <span v-else data-msg="门诊领药" class="nowrap"
+                                    >{{unitTypeMap[item.unitUse].label}}</span>
                                 </a-space>
                             </div>
                             <div class="negative-margin-item" style="height:50px;"></div>
@@ -469,7 +470,7 @@
                     },
                     {
                         title: '商品名称',
-                        width: 200,
+                        width: 150,
                         scopedSlots: { customRender: 'goodsName' },
                     },
                     {
@@ -637,7 +638,6 @@
                 }
                 this.getGoodsListByHospital(hospitalId, isMainButton, addCommodityTimeList);
             },
-            
 
             //  表单验证
             basicFormCheck(){
@@ -711,8 +711,7 @@
                         console.log(err);
                     });
             },
-            
-            
+
             //  确认选择商品莫泰框
             selectCommodityModalCheck,
             //  获取该医院下的商品
