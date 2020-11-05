@@ -83,7 +83,7 @@
                              class="custom-select-title-table">
                         <!--购买单位-->
                         <div slot="uintListVos" slot-scope="scope,sItem,sIndex,extra">
-                            <a-select v-if="+tableForm.prescriptionType===1"
+                            <a-select v-if="prescriptionType===1"
                                       data-msg="院内配置"
                                       placeholder="请选择单位"
                                       style="width:100%;"
@@ -112,7 +112,7 @@
                         </div>
                         <!--数量-->
                         <div slot="quantity" slot-scope="scope,sItem,sIndex,extra" v-if="commodityTableData.length">
-                            <a-input v-if="+tableForm.prescriptionType===1"
+                            <a-input v-if="prescriptionType===1"
                                      v-model="sItem.quantity"
                                      placeholder="请输入数量"
                                      data-msg="院内配置"
@@ -179,7 +179,7 @@
                                              v-model="item.dosage"
                                              @input="dosageChange(scope,item)"
                                     />
-                                    <span v-if="+tableForm.prescriptionType===1" data-msg="院内配置" class="nowrap">
+                                    <span v-if="prescriptionType===1" data-msg="院内配置" class="nowrap">
                                         {{unitTypeMap[item.basicUnitItem.uname].label}}
                                     </span>
                                     <span v-else data-msg="门诊领药">{{item.unitUse}}</span>
@@ -227,7 +227,7 @@
                  cancel-text="取消"
                  @ok="selectCommodityModalCheck('refSelectCommodity')">
             <SelectCommodity ref="refSelectCommodity"
-                             :prescription-type="tableForm.prescriptionType"
+                             :prescription-type="prescriptionType"
                              :time-origin-list="timeOriginList"
                              :is-main-button="isMainButton"
             />
@@ -407,7 +407,12 @@
                     default:
                         throw new Error(`错误的路由${name}`);
                 }
-            }
+            },
+            //  处方类型-处方类型 (1.院内配置,2门诊领药)
+            prescriptionType(){
+                const { prescriptionType } = this.$store.state.intervention;
+                return prescriptionType;
+            },
         },
         data(){
             return {
@@ -497,7 +502,6 @@
                     templateName: undefined,
                     //  处方类型-处方类型 (1.院内配置,2门诊领药)
                     prescriptionType: undefined,
-                    //  prescriptionType: 1,
                     //  能量
                     energy: undefined,
                     //  食用方法
@@ -548,7 +552,8 @@
                                 tableForm.templateName = data.templateName;
                                 tableForm.energy = data.energy;
                                 tableForm.usageMethod = Number(data.usageMethod);
-                                tableForm.prescriptionType = data.prescriptionType;
+                                tableForm.prescriptionType = Number(data.prescriptionType);
+                                this.setPrescriptionType(data.prescriptionType);
                                 tableForm.hospitalId = data.hospitalId;
                                 console.log(data);
                                 console.log(JSON.parse(data.prescriptionContent));
@@ -581,7 +586,9 @@
                 this.resetMainData();
             },
             //  切换处方类型
-            selectPrescriptionChange(){
+            selectPrescriptionChange(value){
+                console.log(value);
+                this.setPrescriptionType(value);
                 this.resetMainData();
             },
             //  重置主要数据
@@ -596,7 +603,6 @@
                 this.addCommodityTimeList = addCommodityTimeList;
                 const {
                     hospitalId,
-                    prescriptionType,
                 } = this.tableForm;
                 //  必须选择医院
                 if (!hospitalId) {
@@ -604,7 +610,7 @@
                     return;
                 }
                 //  必须选择处方类型
-                if (!prescriptionType) {
+                if (!this.prescriptionType) {
                     this.$message.error('请先选择处方类型');
                     return;
                 }
@@ -612,7 +618,7 @@
                     .then(goodsListByHospital => {
                         goodsListByHospital.forEach(item => {
                             item.uintListVos = item.uintListVos.filter(_item => {
-                                return _item.type === +prescriptionType;
+                                return _item.type === this.prescriptionType;
                             });
                             //  如果是主按钮
                             if (isMainButton) {
@@ -665,7 +671,7 @@
                     const commodityTableData = originCommodityList.filter(item => item.isCheckboxChecked);
                     //  JSON.parse(JSON.stringify(this.commodityTableData));
                     //  区分，如果是，院内，就是有3条数据的，需要计算出来基本单位
-                    if (+this.tableForm.prescriptionType === 1) {
+                    if (this.prescriptionType === 1) {
                         commodityTableData.forEach(item => {
                             //  console.log(item);
                             //  被选中的对象
@@ -825,10 +831,6 @@
                 //  子列表数据
                 const list = commodityTableData.map(item => {
                     const { basicUnitItem } = item;
-//                    //  区分，如果是，院内，就是有3条数据的，需要计算出来基本单位
-//                    if (+prescriptionType === 1) {
-//
-//                    }
                     const child = item.uintListVos.filter((_item) => {
                         //  console.log(_item.isRadioChecked);
                         return _item.isRadioChecked;
@@ -1004,7 +1006,7 @@
 
             //  使用量
             dosageChange(scope, item){
-                if (+this.tableForm.prescriptionType === 2) {
+                if (this.prescriptionType === 2) {
                     return;
                 }
                 //  console.log(JSON.parse(JSON.stringify(item)).goodsId);
@@ -1085,6 +1087,11 @@
                 //  设置单元数据
                 'setUnitTypeList',
             ]),
+            ...mapActions('intervention', [
+                //  更换处方类型
+                'setPrescriptionType',
+            ]),
+
         }
     };
 </script>
