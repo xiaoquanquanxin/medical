@@ -340,6 +340,8 @@
     } from '../../../api/commodity/commodityList';
     import { requestGoodsUnitType } from '../../../api/commodity/addCommodity';
     import {
+        //  删除选择商品表格的一行
+        deleteTypeTable,
         //  确定选择的时间
         selectTimeModalCheck,
         //  选择时间
@@ -820,35 +822,7 @@
                 });
             },
 
-            //  删除选择商品表格的一行
-            deleteTypeTable(sItem, sIndex){
-                //  内部的id，单选id，    id === 商品id
-                const { id } = sItem;
-                console.log(JSON.parse(JSON.stringify(sItem)));
-                //  debugger;
-                //  洗主数据
-                delete sItem.purchaseUnitCheckId;
-                delete sItem.isCheckboxChecked;
-                sItem.uintListVos.forEach((item => {
-                    if (item.isRadioChecked) {
-                        delete item.isRadioChecked;
-                    }
-                }));
-                //  清洗时间表格数据，只删除一行
-                this.timeTableData.forEach(item => {
-                    //  debugger
-                    for (let i = 0; i < item.list.length; i++) {
-                        //  要被删除的商品类型
-                        if (item.list[i].goodsId === id) {
-                            item.list.splice(i, 1);
-                            break;
-                        }
-                    }
-                });
-                this.clearTimeTableData();
-                //  清除选择商品表格的该行，只删除一行
-                this.commodityTableData.splice(sIndex, 1);
-            },
+            
 
             //  表单验证
             basicFormCheck(){
@@ -923,6 +897,8 @@
                     });
             },
 
+            //  删除选择商品表格的一行
+            deleteTypeTable,
             //  确定选择的时间
             selectTimeModalCheck,
             //  选择时间
