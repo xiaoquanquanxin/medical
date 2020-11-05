@@ -206,7 +206,7 @@
                         console.log(data);
                         const tableForm = this.tableForm;
                         const { prescriptionContent, templateName, energy, hospitalId, } = data;
-                        //  tableForm.templateName = templateName;
+                        tableForm.templateName = templateName;
                         tableForm.energy = energy;
                         tableForm.hospitalId = hospitalId;
                         const { mealPlanTableData } = JSON.parse(prescriptionContent);
