@@ -2,8 +2,6 @@
 import {autoLogin} from '@/api/login';
 import {getJwt, getLoginInfo, setJwt, setLoginInfo} from '@/utils/auth';
 import {COMMIT_INTERFACE} from "@/store"
-//	@ts-ignore
-import {decode} from 'jsonwebtoken';
 
 interface STATE {
 	//	jwt
