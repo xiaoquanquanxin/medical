@@ -582,7 +582,7 @@
                                 return data.hospitalId;
                             })
                             .then(hospitalId => {
-                                //  拿一次医院的商品
+                                //  编辑的话需要拿一次医院的商品
                                 requestGoodsListByHospital(hospitalId)
                                     .then(goodsListByHospital => {
                                         console.log('该医院下的商品：');
