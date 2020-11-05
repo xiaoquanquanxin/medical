@@ -821,7 +821,6 @@
 
             //  确定选择的时间
             selectTimeModalCheck(){
-                const { prescriptionType } = this.tableForm;
                 const commodityTableData = JSON.parse(JSON.stringify(this.commodityTableData));
                 //  子列表数据
                 const list = commodityTableData.map(item => {
@@ -1005,24 +1004,6 @@
 
             //  使用量
             dosageChange(scope, item){
-//                console.log(JSON.parse(JSON.stringify(item)));
-//                //    被编辑的商品id
-//                const { goodsId } = item;
-//                this.commodityTableData.forEach(commodityItem => {
-//                    const { id, basicUnitItem } = commodityItem;
-//                    if (goodsId === id) {
-//                        //  console.log(commodityItem.quantity);
-//                        //  当前商品
-//                        //  console.log(JSON.parse(JSON.stringify(item)));
-//                        //  商品表格对应的商品数据
-//                        //  console.log(JSON.parse(JSON.stringify(commodityItem)));
-//                        //  基本单位
-//                        //  console.log(JSON.parse(JSON.stringify(basicUnitItem)));
-//                        //  单位关系
-//                        console.log(item.unitRelations	);
-//                        commodityItem.quantity = (item.dosage / item.unitRelations	).toFixed(2);
-//                    }
-//                });
                 if (+this.tableForm.prescriptionType === 2) {
                     return;
                 }
