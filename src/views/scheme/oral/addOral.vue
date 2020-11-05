@@ -341,6 +341,8 @@
     } from '../../../api/commodity/commodityList';
     import { requestGoodsUnitType } from '../../../api/commodity/addCommodity';
     import {
+        //  选择时间
+        chooseTime,
         //  选择时间的变换
         selectTimeChange,
         //  删除时间表格的一行
@@ -502,8 +504,6 @@
 
                 //	处方模板管理 - 增加口服肠内补充方案 - 选择商品
                 dialogDataSelectCommodity: this.initModal(DIALOG_TYPE.TEMPLATE_SELECT_COMMODITY),
-                //  处方模板管理 - 增加口服肠内补充方案 - 选择时间
-                templateSelectModal: false,
 
                 //  操作数据
                 tableForm: {
@@ -522,6 +522,8 @@
                     usageMethod: undefined,
                 },
 
+                //  处方模板管理 - 增加口服肠内补充方案 - 选择时间
+                templateSelectModal: false,
                 //  选择时间的值的对象
                 selectTimeMoment: null,
                 //  选择时间的值
@@ -820,20 +822,6 @@
                 });
             },
 
-            //  选择时间
-            chooseTime(){
-                //  如果没有选择商品数据，先添加选择商品数据
-                if (!this.commodityTableData.length) {
-                    this.$message.error('请先选择商品');
-                    return;
-                }
-                console.log('实际是新增一条时间');
-                this.selectTimeValue = '00:00';
-                //  初始化时间
-                this.selectTimeMoment = this.moment(this.selectTimeValue, 'HH:mm');
-                this.templateSelectModal = true;
-            },
-
             //  确定选择的时间
             selectTimeModalCheck(){
                 const commodityTableData = JSON.parse(JSON.stringify(this.commodityTableData));
@@ -978,6 +966,8 @@
                     });
             },
 
+            //  选择时间
+            chooseTime,
             //  选择时间的变换
             selectTimeChange,
             //  删除时间表格的一行
