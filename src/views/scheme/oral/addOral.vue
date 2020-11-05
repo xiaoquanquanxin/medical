@@ -106,7 +106,7 @@
                         </div>
                         <!--单价-->
                         <div slot="unitPrice" slot-scope="scope,sItem,sIndex,extra">
-                            <p v-for="(item , index) in sItem.uintListVos"
+                            <p v-for="item in sItem.uintListVos"
                                v-if="item.id === sItem.purchaseUnitCheckId"
                             >{{item.unitPrice}}元/{{unitTypeMap[item.uname].label}}</p>
                         </div>
@@ -559,6 +559,7 @@
                                 console.log(JSON.parse(data.prescriptionContent));
                                 const prescriptionContent = JSON.parse(data.prescriptionContent);
                                 this.commodityTableData = prescriptionContent.commodityTableData;
+                                console.log((JSON.stringify(prescriptionContent.commodityTableData)));
                                 this.timeTableData = prescriptionContent.timeTableData;
                                 const { remark } = this.timeTableData[0];
                                 this.setRemark(remark);
