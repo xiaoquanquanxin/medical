@@ -177,7 +177,7 @@
                                 <a-space size="small">
                                     <a-input placeholder="请输入使用量"
                                              v-model="item.dosage"
-                                             @input="dosageChange(scope,item)"
+                                             @input="dosageChangeFn(scope,item)"
                                     />
                                     <span v-if="prescriptionType===1" data-msg="院内配置" class="nowrap">
                                         {{unitTypeMap[item.basicUnitItem.uname].label}}
@@ -340,7 +340,7 @@
         requestGoodsListByHospital,
     } from '../../../api/commodity/commodityList';
     import { requestGoodsUnitType } from '../../../api/commodity/addCommodity';
-    import { dosageChange } from '../../../utils/prescription';
+    import { dosageChangeFn, unameChangeFn } from '../../../utils/prescription';
 
     //  选择商品表格列的意义
     const commodityTableColumns = [
@@ -1006,30 +1006,11 @@
                     });
             },
 
-            //  使用量
-            dosageChange,
-
             //  单位切换
-            unameChangeFn(sItem, checked_uname){
-                //  console.log(sItem, checked_uname);
-                //  我要更新的数据
-                //  checked_uname           ✅   自动更新
-                //  purchaseUnitCheckId     ✅   手动组织
-                //  uintListVos里面的数据     ✅   手动遍历
+            unameChangeFn,
+            //  使用量
+            dosageChangeFn,
 
-                let purchaseUnitCheckId = null;
-                sItem.uintListVos.forEach(item => {
-                    //  console.log(item);
-                    item.isRadioChecked = false;
-                    if (item.uname === checked_uname) {
-                        item.isRadioChecked = true;
-                        purchaseUnitCheckId = item.id;
-                    }
-                });
-                sItem.purchaseUnitCheckId = purchaseUnitCheckId;
-                //  console.log(JSON.parse(JSON.stringify(sItem)));
-                this.$forceUpdate();
-            },
             //  时间选择器的方法
             moment,
             //  莫泰框方法
