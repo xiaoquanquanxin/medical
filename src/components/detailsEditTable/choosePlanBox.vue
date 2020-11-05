@@ -40,7 +40,7 @@
     //  选择计划
     export default {
         computed: {
-            //  处方模板类型
+            //  处方类型-处方类型 (1.院内配置,2门诊领药)
             prescriptionType(){
                 const { prescriptionType } = this.$store.state.intervention;
                 return prescriptionType;
@@ -155,6 +155,7 @@
                         reject('请选择方案');
                     } else {
                         //  console.log(this.dataTitle.templateType);
+                        //  console.log(JSON.parse(JSON.stringify(this.selectTemplateData)));
                         const { templateType } = this.dataTitle;
                         //  根据模板储存不同的
                         switch (templateType) {
