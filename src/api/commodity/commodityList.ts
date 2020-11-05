@@ -31,7 +31,28 @@ export function requestGoodsListByHospital(hospitalId: string | number) {
 	return request({
 		url: `/api/goods/list/${hospitalId}`,
 		method: 'get',
-	});
+	})
+		.then(unifiedHandlingList)
+		.then(goodsListByHospital => {
+			goodsListByHospital.forEach((item: any) => {
+				//  fixme   开发阶段把这些没用的删了
+				delete item.goodsImg;
+				delete item.delFlag;
+				delete item.goodsBarCode;
+				delete item.goodsBrandId;
+				delete item.goodsCategoryId;
+				delete item.goodsDetails;
+				delete item.goodsKeyWord;
+				delete item.goodsProductCode;
+				delete item.goodsSpecifications;
+				delete item.goodsTradeName;
+				delete item.manufactorId;
+				delete item.preservationMethod;
+				delete item.status;
+				delete item.supplierId;
+			});
+			return goodsListByHospital;
+		})
 }
 
 //	缺少：市场价
