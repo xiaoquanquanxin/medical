@@ -9,7 +9,7 @@
                 @submit="handleSubmit"
                 autocomplete="off"
         >
-            <a-form-item label="医院">
+            <a-form-item label="医院" required>
                 <a-select class="add-form-input"
                           v-model="tableForm.hospitalId"
                           placeholder="请选择医院"
@@ -21,11 +21,13 @@
                     </a-select-option>
                 </a-select>
             </a-form-item>
-            <a-input class="add-form-input"
-                     v-model="tableForm.templateName"
-                     placeholder="请输入处方模板名称"
-            />
-            <a-form-item label="膳食营养计划">
+            <a-form-item label="处方模板名称" required>
+                <a-input class="add-form-input"
+                         v-model="tableForm.templateName"
+                         placeholder="请输入处方模板名称"
+                />
+            </a-form-item>
+            <a-form-item label="膳食营养计划" required>
                 <div style="width:calc((100vw - 200px)*.65)">
                     <!--表头-->
                     <a-row type="flex" justify="space-between" align="middle" class="table-group-title">
@@ -226,11 +228,8 @@
                     }
                 });
                 requestGoodsListByHospital(value)
-                    .then(v => {
-                        v.data.forEach((item, index) => {
-                            item.key = index;
-                        });
-                        this.data = v.data;
+                    .then(data => {
+                        this.data = data;
                     });
             },
             //  删除营养计划
