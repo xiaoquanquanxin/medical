@@ -32,6 +32,17 @@ export const energyList = [
 	{id: '600kcal', key: 6, name: '600kcal',},
 	{id: '400kcal', key: 7, name: '400kcal',},
 	{id: '200kcal', key: 8, name: '200kcal',}];
+//	能量Map
+export const energyMap = {
+	'1600kcal': {id: '1600kcal', key: 1, name: '1600kcal',},
+	'1400kcal': {id: '1400kcal', key: 2, name: '1400kcal',},
+	'1200kcal': {id: '1200kcal', key: 3, name: '1200kcal',},
+	'1000kcal': {id: '1000kcal', key: 4, name: '1000kcal',},
+	'800kcal': {id: '800kcal', key: 5, name: '800kcal',},
+	'600kcal': {id: '600kcal', key: 6, name: '600kcal',},
+	'400kcal': {id: '400kcal', key: 7, name: '400kcal',},
+	'200kcal': {id: '200kcal', key: 8, name: '200kcal',},
+}
 //	流食能量
 export const liquidEnergyList = [
 	{id: '流食【300kcal】', key: 1, name: '流食【300kcal】',},
