@@ -76,7 +76,6 @@
                         const data = Object.assign({}, this.patientBasicInfo, { patientStatus: '1' });
                         //  console.log(this.patientBasicInfo);
                         console.log(data);
-                        return;
                         //  如果是新增
                         if (!this.patientId) {
                             requestPatientSave(data)
