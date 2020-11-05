@@ -382,7 +382,7 @@
                     },
                     {
                         title: '商品名称',
-                        width: 200,
+                        width: 150,
                         scopedSlots: { customRender: 'goodsName' },
                     },
                     {
