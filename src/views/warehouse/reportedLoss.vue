@@ -23,7 +23,7 @@
         >
             <!--操作-->
             <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
-                <a-space>
+                <a-space v-if="!sItem.status">
                     <a @click="reportedDeleteFn(sItem)">删除</a>
                     <a @click="reportSendFn(sItem)">发送报损单</a>
                 </a-space>
