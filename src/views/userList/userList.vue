@@ -262,7 +262,7 @@
     
     .wrap {
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-start;
     }
     
     
