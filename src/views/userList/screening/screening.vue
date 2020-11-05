@@ -42,7 +42,13 @@
 <script>
     import { oneRowSearch } from '@/utils/tableScroll';
     import { requestScreenPage } from '../../../api/userList/screening';
-    import { noPaginationData, paginationDecode, paginationEncode, paginationInit } from '../../../utils/pagination';
+    import {
+        paginationDecode,
+        paginationEncode,
+        paginationInit,
+        onShowSizeChange,
+        pageChange,
+    } from '../../../utils/pagination';
 
     const columns = [
         {
@@ -122,9 +128,10 @@
                         });
                         this.data = data.records;
                         this.pagination = paginationDecode(this.pagination, data);
+                        console.log(JSON.parse(JSON.stringify(data.records)));
                     });
             },
-               onShowSizeChange,
+            onShowSizeChange,
             pageChange,
         }
     };
