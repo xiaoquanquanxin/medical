@@ -465,7 +465,7 @@
                     {
                         title: '时间',
                         dataIndex: 'time',
-                        width: 100,
+                        width: 80,
                     },
                     {
                         title: '商品名称',
