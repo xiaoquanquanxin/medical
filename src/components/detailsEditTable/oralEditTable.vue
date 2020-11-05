@@ -356,13 +356,7 @@
             prescriptionType(value){
                 console.log(value);
                 this.resetTableData();
-//                //  选择方案数据
-//                this.choosePlanData = {
-//                    //  选择的能量
-//                    energyId: null,
-//                    //  选择的具体的方案，是一个结果。如果是编辑，需要反向设计到planMap里
-//                    planId: null,
-//                };
+                this.setPrescriptionType(value);
             }
         },
         created(){
@@ -524,6 +518,10 @@
             ...mapActions('prescriptionTemplate', [
                 //  设置商品列表数据
                 'setRemark',
+            ]),
+            ...mapActions('intervention', [
+                //  设置商品列表数据
+                'setPrescriptionType',
             ]),
             //  时间选择器的方法
             moment,
