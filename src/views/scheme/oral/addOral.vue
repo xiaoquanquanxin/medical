@@ -868,7 +868,6 @@
             //  删除选择商品表格的一行
             deleteTypeTable(sItem, sIndex){
                 //  内部的id，单选id，    id === 商品id
-                const { purchaseUnitCheckId, id } = sItem;
                 console.log(JSON.parse(JSON.stringify(sItem)));
                 //  debugger;
                 //  洗主数据
