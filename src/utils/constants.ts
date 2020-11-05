@@ -4,6 +4,7 @@ export const templateTypeList = [
 	{id: 2, key: 2, name: '肠内营养支持'},
 	{id: 3, key: 3, name: '膳食营养计划'}
 ];
+//  处方模板类型map
 export const templateTypeMap = {
 	1: {id: 1, key: 1, name: '口服肠内营养补充'},
 	2: {id: 2, key: 2, name: '肠内营养支持'},
