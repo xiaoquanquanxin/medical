@@ -121,6 +121,7 @@
                             :data-source="uintParams1"
                             :pagination="false"
                     >
+                        <!--单位类型 1 基本单位 2 标准单位 3 辅助单位-->
                         <div slot="unameType" slot-scope="scope,sItem,sIndex,extra">
                             {{unameTypeMap[scope.unameType]}}
                         </div>
