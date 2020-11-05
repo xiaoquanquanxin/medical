@@ -79,12 +79,12 @@ const actions = {
 			.then((list: any) => {
 				//	转换路由
 				const {routeMap, buttonMap} = convertRouting(list);
-				console.log(routeMap);
-				console.log(buttonMap);
+				//	console.log(routeMap);
+				//	console.log(buttonMap);
 				const routesList = setRouteListByMap(routeMap, asyncRoutesList)
 				routesList.push(NotFoundRoutes);
 				commit('SET_ROUTE_LENGTH', routesList);
-				console.log(JSON.parse(JSON.stringify(routesList)));
+				//	console.log(JSON.parse(JSON.stringify(routesList)));
 				return routesList;
 			});
 
