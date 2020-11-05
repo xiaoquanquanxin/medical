@@ -31,7 +31,7 @@
     const columns = [
         {
             title: '方案名',
-            dataIndex: 'prescriptionName',
+            dataIndex: 'templateName',
         },
         {
             title: '方案名内容',
@@ -43,11 +43,9 @@
         computed: {
             //  处方模板类型
             prescriptionType(){
-                const { basicInfoEditData } = this.$store.state.intervention;
-                if (!basicInfoEditData) {
-                    return;
-                }
-                return basicInfoEditData[0].prescriptionType;
+                const { prescriptionType } = this.$store.state.intervention;
+                console.log(prescriptionType);
+                return prescriptionType;
             },
         },
         //  todo    choosePlanData就是 chooseInterventionData
@@ -146,10 +144,11 @@
             //  切换能量
             energyChange(energy){
                 console.log(this.energyId);
-                const { usageMethod, prescriptionType } = this.dataTitle;
+                const prescriptionType = this.prescriptionType;
+                const { usageMethod, prescriptionType: templateType } = this.dataTitle;
                 console.log('选择的食用方法', usageMethod);
                 console.log('处方类型', prescriptionType);
-                requestPrescriptionPrescriptionTpl({ energy, prescriptionType: prescriptionType, usageMethod })
+                requestPrescriptionPrescriptionTpl({ energy, prescriptionType, templateType, usageMethod })
                     .then(v => {
                         //console.log(JSON.parse(JSON.stringify(v.data)));
                         console.log('打开弹框时候默认选择的单选', this.rowSelection.selectedRowKeys);
