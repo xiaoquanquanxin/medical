@@ -63,7 +63,7 @@
                 //  表格配置
                 rowSelection: {
                     type: 'radio',
-                    selectedRowKeys: [this.dataTitle.planId],
+                    selectedRowKeys: [],
                     onChange: this.onSelectChange,
                 },
                 columns,
@@ -73,7 +73,6 @@
             };
         },
         created(){
-            console.clear();
             this.searchFn();
         },
         methods: {
@@ -84,24 +83,18 @@
                 'setCnyyzcData',
             ]),
             searchFn(){
-                if (!this.energyId) {
+                console.clear();
+                console.log(JSON.parse(JSON.stringify(this.dataTitle)));
+                const { energyId, planId } = this.dataTitle;
+                if (!planId) {
                     return;
                 }
-                this.energyChange(this.energyId);
+                const operationDataTitle = this.operationDataTitle;
+                operationDataTitle.energyId = energyId;
+                operationDataTitle.planId = planId;
+                this.rowSelection.selectedRowKeys = [this.dataTitle.planId];
+                this.energyChange(energyId, true);
             },
-//            //  下拉
-//            choosePlanChange(value){
-//                const planList = this.planMap[value];
-//                //  先置空
-//                this.planId = null;
-//                //  在判断设置为第一个值
-//                if (planList && planList.length) {
-//                    this.planId = planList[0].key;
-//                }
-//                //  console.log(this.planId);
-//                this.rowSelection.selectedRowKeys = [this.planId];
-//            },
-            //  单选
             onSelectChange(selectedRowKeys, value){
                 this.rowSelection.selectedRowKeys = selectedRowKeys;
                 //  选择的计划
@@ -109,18 +102,16 @@
                 //  暂时保存
                 this.selectTemplateData = value[0];
             },
-
-            //  切换能量
-            energyChange(energy){
-                //  被选中的状态重置
-                this.operationDataTitle.planId = undefined;
-                this.rowSelection.selectedRowKeys = [];
-                this.selectTemplateData = null;
+            //  切换能量           isFirstAndEdit：如果是第一次进入，并且是编辑
+            energyChange(energy, isFirstAndEdit){
+                if (isFirstAndEdit !== true) {
+                    this.resetStatus();
+                }
                 const prescriptionType = this.prescriptionType;
                 const { usageMethod, templateType } = this.dataTitle;
                 //  请求参数
                 const data = { energy, prescriptionType, templateType, usageMethod };
-                console.log(data);
+                console.log('请求参数', data);
                 requestPrescriptionPrescriptionTpl(data)
                     .then(v => {
                         console.log('打开弹框时候默认选择的单选', this.rowSelection.selectedRowKeys);
@@ -140,9 +131,20 @@
                             item.planContent = `${str}温水：${_timeTableData.warmWater}ml`;
                         });
                         this.data = data;
+                        //  如果是第一次进入，并且是编辑
+                        if (isFirstAndEdit === true) {
+                            this.selectTemplateData = data[0];
+                        }
                     });
             },
 
+            resetStatus(){
+                console.log('重置');
+                //  被选中的状态重置
+                this.operationDataTitle.planId = undefined;
+                this.rowSelection.selectedRowKeys = [];
+                this.selectTemplateData = null;
+            },
             //  确认数据
             handleSubmit(){
                 const { planId } = this.operationDataTitle;
