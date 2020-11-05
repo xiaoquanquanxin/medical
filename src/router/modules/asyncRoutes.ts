@@ -634,7 +634,6 @@ export const asyncRoutesList = [
 					chName: '报损',
 					selectRouteKey: 'reportedLoss',
 					openRouteKey: 'warehouse',
-					hidden: true,
 				},
 				path: '/warehouse/reportedLoss',
 				name: 'reportedLoss',
@@ -642,7 +641,7 @@ export const asyncRoutesList = [
 			},
 			{
 				meta: {
-					chName: '采购单',
+					chName: '采购单管理',
 					selectRouteKey: 'purchaseList',
 					openRouteKey: 'warehouse',
 				},
@@ -948,17 +947,17 @@ export const asyncRoutesList = [
 				path: '/task/getDrugDetail/:detailId',
 				component: () => import(/* webpackChunkName: "auditDetail" */ '@/views/auditList/auditDetail.vue'),
 			},
-			{
-				meta: {
-					chName: '报损',
-					selectRouteKey: 'taskReportedLoss',
-					openRouteKey: 'task',
-					hidden: true,
-				},
-				path: '/task/reportedLoss',
-				name: 'taskReportedLoss',
-				component: () => import(/* webpackChunkName: "reportedLoss" */ '@/views/warehouse/reportedLoss.vue'),
-			},
+			// {
+			// 	meta: {
+			// 		chName: '报损',
+			// 		selectRouteKey: 'taskReportedLoss',
+			// 		openRouteKey: 'task',
+			// 		hidden: true,
+			// 	},
+			// 	path: '/task/reportedLoss',
+			// 	name: 'taskReportedLoss',
+			// 	component: () => import(/* webpackChunkName: "reportedLoss" */ '@/views/warehouse/reportedLoss.vue'),
+			// },
 		],
 	},
 	{
