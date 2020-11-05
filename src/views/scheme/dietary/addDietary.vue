@@ -15,12 +15,16 @@
                           placeholder="请选择医院"
                           @change="selectHospitalChange"
                 >
-                    <a-select-option v-for="(item,index) in hospitalList"
+                    <a-select-option v-for="item in hospitalList"
                                      :value="item.id"
                     >{{item.hospitalName}}
                     </a-select-option>
                 </a-select>
             </a-form-item>
+            <a-input class="add-form-input"
+                     v-model="tableForm.templateName"
+                     placeholder="请输入处方模板名称"
+            />
             <a-form-item label="膳食营养计划">
                 <div style="width:calc((100vw - 200px)*.65)">
                     <!--表头-->
