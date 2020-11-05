@@ -1156,7 +1156,7 @@
                     popTitle: '微型营养评价表',
                 },
                 //  表格类型
-                tableTypeSelect: 3,
+                tableTypeSelect: 1,
                 //  类型1
                 typeOneList: [],
 
