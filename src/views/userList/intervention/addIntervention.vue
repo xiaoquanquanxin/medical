@@ -5,7 +5,7 @@
             <GoBackButton/>
         </div>
         <!--基础数据-->
-        <BasicInfoEditTable v-if="false"/>
+        <BasicInfoEditTable/>
         <br>
         <!--肠内-->
         <OralEditTable
@@ -44,6 +44,11 @@
             MealEditTable,
         },
         computed: {
+            //  单元map
+            unitTypeMap(){
+                console.log('单元map');
+                return this.$store.state.constants.unitTypeMap;
+            },
             //  处方类型-处方类型 (1.院内配置,2门诊领药)
             prescriptionType(){
                 const { prescriptionType } = this.$store.state.intervention;
@@ -107,8 +112,8 @@
             }
             this.setBasicInfoEditData([{
                 key: 1,
-                prescriptionName: '',
-                priod: '',
+                prescriptionName: '处方02',
+                priod: '1',
                 prescriptionType: 1,
             }]);
             this.searchFn();
@@ -144,7 +149,6 @@
                     this.$message.error('请填写处方周期');
                     return;
                 }
-
                 //  金额
                 let amountPayable = 0;
                 //  碳水化合物
@@ -179,19 +183,113 @@
                         });
                     });
                 };
-                //  口服肠内
-                const kqcnyybcCommodity = [];
-                calc(this.kqcnData.commodityTableData, kqcnyybcCommodity);
+
+                //  商品数据
+                const getDetailGoods = (commodity) => {
+                    //  console.log(JSON.parse(JSON.stringify(commodity)));
+                    return commodity.map(item => {
+                        const {
+                            id: goodsId,
+                            quantity,
+                            goodsName,
+                            subtotal,
+                            purchaseUnitCheckId,
+                            uintListVos,
+                        } = item;
+                        const checkedItem = uintListVos.find(_item => {
+                            return _item.id === purchaseUnitCheckId;
+                        });
+                        const { type, uname, unitPrice: price } = checkedItem;
+                        let goodsUnit;
+                        //  如果是院内，取单位
+                        if (type === 1) {
+                            goodsUnit = this.unitTypeMap[uname].label;
+                        } else {
+                            //  如果是院外，取使用单位
+                            goodsUnit = this.unitTypeMap[unitUse].label;
+                        }
+                        return {
+                            goodsId,
+                            goodsName,
+                            quantity: Number(quantity) || 0,
+                            subtotal,
+                            goodsUnit,
+                            price,
+                        };
+                    });
+                };
+                //  时间数据
+                const getPlain = (timeData) => {
+                    //  console.log(JSON.parse(JSON.stringify(timeData)));
+                    return timeData.map(item => {
+                        const { time: usageTime, warmWater: configWater, list } = item;
+                        const nutritionPlain = list.map(_item => {
+                            const { type, goodsId, goodsName, dosage, uname, unitUse } = _item;
+                            let configUnit;
+                            //  如果是院内，取单位
+                            if (type === 1) {
+                                configUnit = this.unitTypeMap[uname].label;
+                            } else {
+                                //  如果是院外，取使用单位
+                                configUnit = this.unitTypeMap[unitUse].label;
+                            }
+                            return {
+                                configWater,
+                                goodsId,
+                                goodsName,
+                                configNum: Number(dosage) || 0,
+                                configUnit,
+                            };
+                        });
+                        return {
+                            nutritionPlain,
+                            usageTime,
+                        };
+                    });
+                };
+                //  详情对象
+                const detail = [];
                 //  肠内营养
+                const cnyyzcData = this.$refs.cnyyzcOralEditTableRef;
                 const cnyyzcCommodity = [];
-                calc(this.cnyyzcData.commodityTableData, cnyyzcCommodity);
+                if (cnyyzcData.commodityTableData.length) {
+                    const { commodityTableData, timeTableData } = cnyyzcData;
+                    calc(commodityTableData, cnyyzcCommodity);
+                    const detailGoods = getDetailGoods(commodityTableData);
+                    const plain = getPlain(timeTableData);
+                    //  console.log(plain);
+                    //  return;
+                    detail.push({
+                        detailGoods,
+                        plain,
+                        remark: '',
+                        templateType: 2,
+                    });
+                }
+
+                //  口服肠内
+                const kqcnData = this.$refs.kqcnOralEditTableRef;
+                const kqcnyybcCommodity = [];
+                if (kqcnData.commodityTableData.length) {
+                    const { commodityTableData, timeTableData } = kqcnData;
+                    calc(commodityTableData, kqcnyybcCommodity);
+                    const detailGoods = getDetailGoods(commodityTableData);
+                    const plain = getPlain(timeTableData);
+                    //  console.log(detailGoods);
+                    detail.push({
+                        detailGoods,
+                        plain,
+                        remark: '',
+                        templateType: 1,
+                    });
+                }
                 //  详情json
                 const prescriptionDetail = {
                     //  口服肠内
                     kqcnyybc: {
                         commodity: kqcnyybcCommodity,
                         dataTitle: this.kqcnOralEditDataTitle,
-                        timeTableData: this.kqcnData.timeTableData
+                        timeTableData: kqcnData.timeTableData
                     },
                     cnyyzc: {
                         commodity: cnyyzcCommodity,
@@ -199,7 +297,9 @@
                         timeTableData: this.cnyyzcData.timeTableData
                     },
                 };
-                console.log(JSON.parse(JSON.stringify(prescriptionDetail)));
+
+                console.log(cnyyzcData.commodityTableData);
+                console.log(kqcnData.commodityTableData);
                 const saveData = {
                     patientId,
                     priod,
@@ -210,10 +310,11 @@
                     energy,
                     fat,
                     protein,
-                    prescriptionDetail: JSON.stringify(prescriptionDetail)
+                    detail,
+                    //  prescriptionDetail: JSON.stringify(prescriptionDetail)
                 };
+                console.log(JSON.stringify(saveData));
                 console.log(saveData);
-                return;
                 requestPrescriptionSave(saveData)
                     .then(v => {
                         console.log(v);
