@@ -340,6 +340,8 @@
     } from '../../../api/commodity/commodityList';
     import { requestGoodsUnitType } from '../../../api/commodity/addCommodity';
     import {
+        //  获取该医院下的商品
+        getGoodsListByHospital,
         //  删除选择商品表格的一行
         deleteTypeTable,
         //  确定选择的时间
@@ -631,52 +633,7 @@
                     this.$message.error('请先选择处方类型');
                     return;
                 }
-                requestGoodsListByHospital(hospitalId)
-                    .then(goodsListByHospital => {
-                        goodsListByHospital.forEach(item => {
-                            item.uintListVos = item.uintListVos.filter(_item => {
-                                return _item.type === this.prescriptionType;
-                            });
-                            //  如果是主按钮
-                            if (isMainButton) {
-                                this.commodityTableData.forEach(_item => {
-                                    //  复制辅助数据【选择状态，数量等】
-                                    if (item.id === _item.id) {
-                                        Object.assign(item, _item);
-                                    }
-                                });
-                            } else {
-                                addCommodityTimeList.forEach(_item => {
-                                    //  如果http数据的商品id === 时间列表的商品id
-                                    //  那么他是被选择的，且被选中的id是 _item.id【在时间数据里组织的数据是按uintListVos的】
-                                    if (item.id === _item.goodsId) {
-                                        item.purchaseUnitCheckId = _item.id;
-                                        item.isCheckboxChecked = true;
-                                        item.uintListVos.forEach(__item => {
-                                            //  console.log(JSON.parse(JSON.stringify(__item)));
-                                            if (_item.id === __item.id) {
-                                                __item.isRadioChecked = true;
-                                            }
-                                        });
-                                    }
-                                });
-//                                console.log(JSON.parse(JSON.stringify(addCommodityTimeList)));
-//                                console.log(JSON.parse(JSON.stringify(goodsListByHospital)));
-                            }
-                        });
-                        const httpData = goodsListByHospital;
-                        console.log(JSON.parse(JSON.stringify(httpData)));
-                        //  如果是主按钮
-                        if (isMainButton) {
-                            this.timeOriginList = null;
-                            this.originCommodityList = httpData;
-                            this.commoditySelectModal = true;
-                        } else {
-                            //  如果时间按钮
-                            this.timeOriginList = httpData;
-                            this.commoditySelectModal = true;
-                        }
-                    });
+                this.getGoodsListByHospital(hospitalId, isMainButton, addCommodityTimeList);
             },
             //  确认选择商品莫泰框
             selectCommodityModalCheck(refSelectCommodity){
@@ -822,8 +779,6 @@
                 });
             },
 
-            
-
             //  表单验证
             basicFormCheck(){
                 //  至少要选择商品
@@ -897,6 +852,10 @@
                     });
             },
 
+
+
+            //  获取该医院下的商品
+            getGoodsListByHospital,
             //  删除选择商品表格的一行
             deleteTypeTable,
             //  确定选择的时间
