@@ -98,7 +98,7 @@
                                 </a-select-option>
                             </a-select>
                             <p v-else>
-                                <span v-for="(item,index) in sItem.uintListVos"
+                                <span v-for="item in sItem.uintListVos"
                                       v-if="item.id === sItem.purchaseUnitCheckId">
                                       {{unitTypeMap[item.uname].label}}
                                 </span>
