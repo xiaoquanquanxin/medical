@@ -1099,11 +1099,6 @@
 <style scoped>
     @import "~@/css/table.css";
     
-    .layout-content-inner-main {
-        min-width: 900px;
-    }
-    
-    
     .maybe {
         color: grey;
     }
