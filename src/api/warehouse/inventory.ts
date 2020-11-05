@@ -3,9 +3,17 @@ import request from '@/utils/request';
 //  商品库存
 export function requestGoodsGoodsStock(data: any) {
 	return request({
-		url: '/api/goods/goodsStock',
+		url: '/api/goods-stock/goodsStock',
 		method: 'post',
 		data,
+	});
+}
+
+//	获取医院库存
+export function requestGoodsStockGetHospitalStock(id: string | number) {
+	return request({
+		url: `/api/goods-stock/getHospitalStock/${id}`,
+		method: 'post',
 	});
 }
 
@@ -18,7 +26,6 @@ export function requestGoodsGoodsPurchase(data: any) {
 	});
 }
 
-
 //	退货
 export function requestGoodsReturnOrder(data: any) {
 	return request({
@@ -27,5 +34,9 @@ export function requestGoodsReturnOrder(data: any) {
 		data,
 	});
 }
+
 //	productionTime 生产时间
 //	validUntil 有效期至
+
+
+//	/api/purchaseOrder/get/{id}
