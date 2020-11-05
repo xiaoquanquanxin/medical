@@ -247,7 +247,7 @@
                     @change="selectTimeChange"
                     format="HH:mm"/>
         </a-modal>
-        <div>
+        <div data-msg="说明">
             <p>1.使用量的单位：</p>
             <ol>
                 <li>门诊领药：使用量单位取使用单位</li>
