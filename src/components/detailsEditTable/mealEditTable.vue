@@ -76,6 +76,14 @@
     ];
     export default {
         components: { ChoosePlanBox },
+        computed: {
+            //  处方模板类型
+            prescriptionType(){
+                const { prescriptionType } = this.$store.state.intervention;
+                console.log(prescriptionType);
+                return prescriptionType;
+            },
+        },
         data(){
             return {
                 //  选择方案数据
@@ -98,8 +106,9 @@
         methods: {
             //  切换能量
             energyChangeFn(energy){
+                const { prescriptionType } = this.prescriptionType;
                 //  console.log(JSON.parse(JSON.stringify(this.choosePlanData)));
-                requestPrescriptionPrescriptionTpl({ energy, prescriptionType: 3 })
+                requestPrescriptionPrescriptionTpl({ energy, prescriptionType, templateType: 3 })
                     .then(v => {
                         const { data } = v;
                         const { mealPlanTableData } = JSON.parse(item.prescriptionContent);
