@@ -11,16 +11,6 @@ import {asyncRoutesList} from "@/router/modules/asyncRoutes"
 import {routeMap} from '@/store/a.ts';
 import {COMMIT_INTERFACE} from "@/store"
 import {convertRouting, getLoginInfo} from "@/utils/auth"
-import {
-	roleType1,
-	roleType2,
-	roleType3,
-	roleType4,
-	roleType5,
-	roleType6,
-	roleType7,
-	roleType8,
-} from "@/utils/roleConstant"
 import {requestMenuAllTree, requestMenuUserMenu} from "@/api/system/menu"
 
 interface STATE {
@@ -87,43 +77,11 @@ const actions = {
 				//	console.log(JSON.parse(JSON.stringify(routesList)));
 				return routesList;
 			});
-
-
 		//	⚠️开发者
 		const loginInfo = getLoginInfo();
 		//	@ts-ignore
 		loginInfo.type = -1;
-		//	@ts-ignore
-		switch (loginInfo.type) {
-			case -1:
-				//	开发级路由
-				map = routeMap;
-				break;
-			case 1:
-				map = roleType1;
-				break;
-			case 2:
-				map = roleType2;
-				break;
-			case 3:
-			case 8:
-				map = roleType3;
-				break;
-			case 4:
-				map = roleType4;
-				break;
-			case 5:
-				map = roleType5;
-				break;
-			case 6:
-				map = roleType6;
-				break;
-			case 7:
-				map = roleType7;
-				break;
-			default:
-				throw new Error('错误的类型');
-		}
+		map = routeMap;
 		return new Promise(resolve => {
 			setTimeout(() => {
 				resolve(map);
