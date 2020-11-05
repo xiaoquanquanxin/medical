@@ -71,7 +71,7 @@
             basicInfoEditData(){
                 return this.$store.state.intervention.basicInfoEditData;
             },
-            //  处方模板类型
+            //  处方类型-处方类型 (1.院内配置,2门诊领药)
             prescriptionType(){
                 const { prescriptionType } = this.$store.state.intervention;
                 return prescriptionType;
