@@ -227,9 +227,10 @@
                  cancel-text="取消"
                  @ok="selectCommodityModalCheck('refSelectCommodity')">
             <SelectCommodity ref="refSelectCommodity"
-                             :prescription-type="prescriptionType"
-                             :time-origin-list="timeOriginList"
-                             :is-main-button="isMainButton"
+                             :prescriptionType="prescriptionType"
+                             :timeOriginList="timeOriginList"
+                             :isMainButton="isMainButton"
+                             :originCommodityList="originCommodityList"
             />
         </a-modal>
         <!--选择时间莫泰框-->
@@ -323,7 +324,6 @@
     </div>
 </template>
 <script>
-    
     import { mapGetters, mapActions } from 'vuex';
     import SelectCommodity from '@/components/prescriptionTemplate/selectCommodity.vue';
     import GoBackButton from '@/components/goBackButton.vue';
@@ -395,10 +395,6 @@
             SelectCommodity,
         },
         computed: {
-            //  商品源的数据
-            originCommodityList(){
-                return this.$store.state.prescriptionTemplate.originCommodityList;
-            },
             //  备注
             remark(){
                 return this.$store.state.prescriptionTemplate.remark;
@@ -433,7 +429,9 @@
         },
         data(){
             return {
-                //  选择时间
+                //  商品源的数据
+                originCommodityList: null,
+                //  选择时间表格里的选择商品按钮写入的数据
                 timeOriginList: null,
                 //  选择弹框是来自于主按钮？
                 isMainButton: true,
@@ -591,7 +589,7 @@
                                         const _originCommodityList = Object.assign([], goodsListByHospital, this.commodityTableData);
                                         console.log('编辑的数据');
                                         console.log(JSON.parse(JSON.stringify(_originCommodityList)));
-                                        this.setOriginCommodityList(_originCommodityList);
+                                        this.originCommodityList = _originCommodityList;
                                     });
                             });
                     });
@@ -669,7 +667,7 @@
                         //  如果是主按钮
                         if (isMainButton) {
                             this.timeOriginList = null;
-                            this.setOriginCommodityList(httpData);
+                            this.originCommodityList = httpData;
                             this.commoditySelectModal = true;
                         } else {
                             //  如果时间按钮
@@ -822,7 +820,6 @@
                 });
             },
 
-
             //  删除选择商品表格的一行
             deleteTypeTable(sItem, sIndex){
                 //  内部的id，单选id，    id === 商品id
@@ -851,9 +848,6 @@
                 this.clearTimeTableData();
                 //  清除选择商品表格的该行，只删除一行
                 this.commodityTableData.splice(sIndex, 1);
-                //  这里要存store
-                this.setOriginCommodityList(this.originCommodityList);
-                //  console.table(JSON.parse(JSON.stringify(this.originCommodityList)));
             },
 
             //  表单验证
@@ -929,8 +923,6 @@
                     });
             },
 
-
-
             //  确定选择的时间
             selectTimeModalCheck,
             //  选择时间
@@ -947,10 +939,8 @@
             unameChangeFn,
             //  使用量
             dosageChangeFn,
-            
+
             ...mapActions('prescriptionTemplate', [
-                //  处方模板，请求选择商品的源数据
-                'setOriginCommodityList',
                 //  设置remark的行数
                 'setRowForRemark',
                 //  设置商品列表数据
