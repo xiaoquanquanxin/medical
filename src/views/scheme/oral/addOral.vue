@@ -340,6 +340,8 @@
     } from '../../../api/commodity/commodityList';
     import { requestGoodsUnitType } from '../../../api/commodity/addCommodity';
     import {
+        //  确定选择的时间
+        selectTimeModalCheck,
         //  选择时间
         chooseTime,
         //  选择时间的变换
@@ -820,43 +822,6 @@
                 });
             },
 
-            //  确定选择的时间
-            selectTimeModalCheck(){
-                const commodityTableData = JSON.parse(JSON.stringify(this.commodityTableData));
-                //  子列表数据
-                const list = commodityTableData.map(item => {
-                    const { basicUnitItem } = item;
-                    const child = item.uintListVos.filter((_item) => {
-                        //  console.log(_item.isRadioChecked);
-                        return _item.isRadioChecked;
-                    });
-                    //  console.log(child);
-                    return Object.assign(child[0], { goodsName: item.goodsName, basicUnitItem });
-                });
-                //  console.log(list);
-
-                //  console.log(JSON.parse(JSON.stringify(this.timeTableData)));
-                //  时间的最后一条数据
-                const timeTableDataLastItem = this.timeTableData[this.timeTableData.length - 1] || { key: 0 };
-                console.log(JSON.parse(JSON.stringify(timeTableDataLastItem)));
-                //  一条数据
-                const data = {
-                    //  key
-                    key: timeTableDataLastItem.key + 1,
-                    //  时间
-                    time: this.selectTimeValue,
-                    //  温水
-                    warmWater: null,
-                    //  子列表
-                    list,
-                    //
-                };
-                //  新增一条数据
-                this.timeTableData.push(data);
-                //  关闭时间选择
-                this.timeSelectModal = false;
-                this.rowCount();
-            },
 
             //  删除选择商品表格的一行
             deleteTypeTable(sItem, sIndex){
@@ -964,6 +929,10 @@
                     });
             },
 
+
+
+            //  确定选择的时间
+            selectTimeModalCheck,
             //  选择时间
             chooseTime,
             //  选择时间的变换
