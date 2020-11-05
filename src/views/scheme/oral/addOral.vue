@@ -597,7 +597,7 @@
                 this.commodityTableData = [];
                 this.timeTableData = [];
             },
-            //  选择商品，晒出多余字段
+            //  选择商品，筛出多余字段
             selectCommodity(isMainButton, addCommodityTimeList){
                 this.isMainButton = isMainButton;
                 this.addCommodityTimeList = addCommodityTimeList;
