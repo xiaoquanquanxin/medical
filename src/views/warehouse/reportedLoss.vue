@@ -21,6 +21,13 @@
                 :scroll="scroll"
                 :pagination="false"
         >
+            <!--操作-->
+            <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
+                <a-space>
+                    <a @click="reportedDeleteFn(sItem)">删除</a>
+                    <a @click="reportSendFn(sItem)">发送报损单</a>
+                </a-space>
+            </div>
         </a-table>
         <!--分页-->
         <a-row type="flex" justify="end" class="a-pagination">
@@ -64,39 +71,44 @@
     import { twoRowSearch } from '@/utils/tableScroll';
     import ReportedLossForm from '@/components/warehouse/reportedLossForm';
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
+    import {
+        requestLossReportDelete,
+        requestLossReportPages,
+        requestLossReportSend
+    } from '../../api/warehouse/reportedLoss';
 
     const columns = [
         {
             title: '报损单号',
-            dataIndex: 'commodityName',
-            width: 100,
+            dataIndex: 'lossReportCode',
+            width: 200,
         },
         {
             title: '报损商品名称',
-            dataIndex: '报损商品名称',
-            width: 100,
+            dataIndex: 'goodsName',
+            width: 150,
         },
         {
             title: '商品货号',
-            dataIndex: '商品货号',
+            dataIndex: 'goodsProductCode',
             width: 100,
         },
         {
             title: '报损数量',
-            dataIndex: '报损数量',
+            dataIndex: 'num',
             width: 100,
         },
+        {
+            title: '报损单位',
+            dataIndex: 'unitName',
+            width: 100,
+        },
+        {
+            title: '操作',
+            width: 150,
+            scopedSlots: { customRender: 'operation' },
+        }
     ];
-    const data = [];
-    for (let i = 0; i < 10; i++) {
-        data.push({
-            key: i,
-            commodityName: `报损单号`,
-            报损数量: '报损数量',
-            商品货号: '商品货号',
-            报损商品名称: '报损商品名称',
-        });
-    }
 
     //  报损
     export default {
@@ -105,7 +117,7 @@
         },
         data(){
             return {
-                data,
+                data: [],
                 columns,
                 //  搜索数据
                 searchData: {},
@@ -125,39 +137,86 @@
         methods: {
             //  主要请求
             searchFn(){
-//                requestChannelBusinessPage(paginationEncode(this.pagination))
-//                    .then(v => {
-//                        const { data } = v;
-//                        console.log(data);
-//                data.records.forEach((item, index) => {
-//                    item.key = index;
-//                    item.createTime = item.createTime.substr(0, 10);
-//                });
-//                        this.data = data.records;
-//                        this.pagination = paginationDecode(this.pagination, data);
-//                    });
+                requestLossReportPages(Object.assign(
+                    {}, this.searchData, paginationEncode(this.pagination)
+                ))
+                    .then(v => {
+                        const { data } = v;
+                        data.records.forEach((item, index) => {
+                            item.key = index;
+                            //  item.createTime = item.createTime.substr(0, 10);
+                        });
+                        this.data = data.records;
+                        this.pagination = paginationDecode(this.pagination, data);
+                        console.log(JSON.parse(JSON.stringify(data.records[0])));
+                    });
             },
-            //  莫泰框方法
-            ...dialogMethods,
-
-               onShowSizeChange,
-            pageChange,
-
-            //  报损
+            //  新增报损
             reportedLostClick(){
-
                 this.showModal(DIALOG_TYPE.REPORTED_LOST);
             },
-
-            //  确认市场价格
+            //  确认报损
             reportedLostModalCheck(refReportedLossForm){
                 const promise = this.$refs[refReportedLossForm].handleSubmit();
                 promise.then(v => {
+                    this.searchFn();
+                    this.$message.success('操作成功');
                     this.hideModal(DIALOG_TYPE.REPORTED_LOST);
                 }).catch(error => {
                     console.log('有错');
                 });
             },
+            //  删除此报损
+            reportedDeleteFn(sItem){
+                JSON.parse(JSON.stringify(sItem));
+                this.$confirm({
+                    title: `确定删除${sItem.goodsName}？`,
+                    okText: '确认',
+                    okType: 'danger',
+                    cancelText: '取消',
+                    onOk: () => {
+                        return requestLossReportDelete(sItem.id)
+                            .then(v => {
+                                this.$message.success('操作成功');
+                                this.searchFn();
+                            })
+                            .catch(v => {
+                                this.$message.error('操作失败');
+                            });
+                    },
+                    onCancel(){
+                        console.log('取消');
+                    },
+                });
+            },
+            //  发送报损单
+            reportSendFn(sItem){
+                JSON.parse(JSON.stringify(sItem));
+                this.$confirm({
+                    title: `确定发送${sItem.goodsName}？`,
+                    okText: '确认',
+                    okType: 'danger',
+                    cancelText: '取消',
+                    onOk: () => {
+                        return requestLossReportSend(sItem.id)
+                            .then(v => {
+                                this.$message.success('操作成功');
+                                this.searchFn();
+                            })
+                            .catch(v => {
+                                this.$message.error('操作失败');
+                            });
+                    },
+                    onCancel(){
+                        console.log('取消');
+                    },
+                });
+            },
+            //  莫泰框方法
+            ...dialogMethods,
+
+            onShowSizeChange,
+            pageChange,
         }
     };
 </script>
