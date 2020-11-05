@@ -559,7 +559,7 @@
                                 console.log(JSON.parse(data.prescriptionContent));
                                 const prescriptionContent = JSON.parse(data.prescriptionContent);
                                 this.commodityTableData = prescriptionContent.commodityTableData;
-                                console.log((JSON.stringify(prescriptionContent.commodityTableData)));
+                                //  console.log((JSON.stringify(prescriptionContent.commodityTableData)));
                                 this.timeTableData = prescriptionContent.timeTableData;
                                 const { remark } = this.timeTableData[0];
                                 this.setRemark(remark);
