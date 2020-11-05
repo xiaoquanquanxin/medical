@@ -518,61 +518,59 @@
         methods: {
             //  主要请求
             searchFn(){
-                //  单位下拉
-                requestGoodsUnitType()
-                    .then(unitTypeList => {
-                        this.setUnitTypeList(unitTypeList);
-                    });
-                //  医院list
-                requestHospitalGetList()
-                    .then(hospitalList => {
-                        this.hospitalList = hospitalList;
-                        const hospitalMap = {};
-                        hospitalList.forEach(item => {
-                            hospitalMap[item.id] = item;
-                        });
-                        this.hospitalMap = hospitalMap;
-                    });
-                //  如果是新增
-                if (!this.templateId) {
-                    return;
-                }
-                //  如果是编辑
-                requestPrescriptionTemplateGet(this.templateId)
+                Promise.all([
+                    //  单位下拉
+                    requestGoodsUnitType()
+                        .then(unitTypeList => {
+                            this.setUnitTypeList(unitTypeList);
+                        }),
+                    //  医院list
+                    requestHospitalGetList()
+                        .then(hospitalList => {
+                            this.hospitalList = hospitalList;
+                            const hospitalMap = {};
+                            hospitalList.forEach(item => {
+                                hospitalMap[item.id] = item;
+                            });
+                            this.hospitalMap = hospitalMap;
+                        })
+                ])
                     .then(v => {
-                        const { data } = v;
-                        const tableForm = this.tableForm;
-                        tableForm.templateName = data.templateName;
-                        tableForm.energy = data.energy;
-                        tableForm.usageMethod = Number(data.usageMethod);
-                        tableForm.prescriptionType = data.prescriptionType;
-                        tableForm.hospitalId = data.hospitalId;
-                        console.log(data);
-                        console.log(JSON.parse(data.prescriptionContent));
-                        const prescriptionContent = JSON.parse(data.prescriptionContent);
-                        this.commodityTableData = prescriptionContent.commodityTableData;
-                        this.timeTableData = prescriptionContent.timeTableData;
-                        const { remark } = this.timeTableData[0];
-                        this.setRemark(remark);
-                        return data.hospitalId;
-                    })
-                    .then(hospitalId => {
-                        //  拿一次医院的商品
-                        requestGoodsListByHospital(hospitalId)
+                        //  如果是新增
+                        if (!this.templateId) {
+                            return;
+                        }
+                        //  如果是编辑
+                        requestPrescriptionTemplateGet(this.templateId)
                             .then(v => {
-                                console.log('该医院下的商品：');
-                                if (!v.data || !v.data) {
-                                    return;
-                                }
-                                v.data.forEach(item => {
-                                    item.key = item.id;
-                                });
-                                const originCommodityList = v.data;
-                                //  编辑的数据
-                                const _originCommodityList = Object.assign([], originCommodityList, this.commodityTableData);
-                                console.log('编辑的数据');
-                                console.log(JSON.parse(JSON.stringify(_originCommodityList)));
-                                this.setOriginCommodityList(originCommodityList);
+                                const { data } = v;
+                                const tableForm = this.tableForm;
+                                tableForm.templateName = data.templateName;
+                                tableForm.energy = data.energy;
+                                tableForm.usageMethod = Number(data.usageMethod);
+                                tableForm.prescriptionType = data.prescriptionType;
+                                tableForm.hospitalId = data.hospitalId;
+                                console.log(data);
+                                console.log(JSON.parse(data.prescriptionContent));
+                                const prescriptionContent = JSON.parse(data.prescriptionContent);
+                                this.commodityTableData = prescriptionContent.commodityTableData;
+                                this.timeTableData = prescriptionContent.timeTableData;
+                                const { remark } = this.timeTableData[0];
+                                this.setRemark(remark);
+                                return data.hospitalId;
+                            })
+                            .then(hospitalId => {
+                                //  拿一次医院的商品
+                                requestGoodsListByHospital(hospitalId)
+                                    .then(goodsListByHospital => {
+                                        console.log('该医院下的商品：');
+                                        console.log(goodsListByHospital);
+                                        //  编辑的数据
+                                        const _originCommodityList = Object.assign([], goodsListByHospital, this.commodityTableData);
+                                        console.log('编辑的数据');
+                                        console.log(JSON.parse(JSON.stringify(_originCommodityList)));
+                                        this.setOriginCommodityList(_originCommodityList);
+                                    });
                             });
                     });
             },
@@ -611,24 +609,8 @@
                     return;
                 }
                 requestGoodsListByHospital(hospitalId)
-                    .then(v => {
-                        v.data.forEach(item => {
-                            item.key = item.id;
-                            //  fixme   开发阶段把这些没用的删了
-                            delete item.goodsImg;
-                            delete item.delFlag;
-                            delete item.goodsBarCode;
-                            delete item.goodsBrandId;
-                            delete item.goodsCategoryId;
-                            delete item.goodsDetails;
-                            delete item.goodsKeyWord;
-                            delete item.goodsProductCode;
-                            delete item.goodsSpecifications;
-                            delete item.goodsTradeName;
-                            delete item.manufactorId;
-                            delete item.preservationMethod;
-                            delete item.status;
-                            delete item.supplierId;
+                    .then(goodsListByHospital => {
+                        goodsListByHospital.forEach(item => {
                             item.uintListVos = item.uintListVos.filter(_item => {
                                 return _item.type === +prescriptionType;
                             });
@@ -656,10 +638,10 @@
                                     }
                                 });
 //                                console.log(JSON.parse(JSON.stringify(addCommodityTimeList)));
-//                                console.log(JSON.parse(JSON.stringify(v.data)));
+//                                console.log(JSON.parse(JSON.stringify(goodsListByHospital)));
                             }
                         });
-                        const httpData = v.data;
+                        const httpData = goodsListByHospital;
                         console.log(JSON.parse(JSON.stringify(httpData)));
                         //  如果是主按钮
                         if (isMainButton) {
