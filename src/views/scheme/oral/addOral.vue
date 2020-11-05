@@ -486,7 +486,7 @@
                 //  处方模板管理 - 增加口服肠内补充方案 - 选择时间
                 dialogDataSelectTime: this.initModal(DIALOG_TYPE.TEMPLATE_SELECT_TIME),
 
-                //  表单中表格的数据
+                //  操作数据
                 tableForm: {
                     //  医院
                     hospitalId: undefined,
@@ -1114,9 +1114,6 @@
         min-width: 900px;
     }
     
-    .col-right {
-        border-left: 1px solid #e8e8e8;
-    }
     
     .maybe {
         color: grey;
