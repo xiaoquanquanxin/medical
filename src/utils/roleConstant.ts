@@ -65,7 +65,7 @@ export const roleType2 = {
 	'putInStorage': true,
 	//	报损
 	'reportedLoss': true,
-	//	采购单
+	//	采购单管理
 	'purchaseList': true,
 	//	出货退货单
 	'shipmentReturn': true,

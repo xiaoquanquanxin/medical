@@ -12,6 +12,8 @@ interface STATE {
 	cnyyzcData: any;
 	//	膳食营养计划
 	mealData: any;
+
+	prescriptionType: number,
 }
 
 const state: STATE = {
@@ -26,6 +28,7 @@ const state: STATE = {
 	cnyyzcData: null,
 	//	膳食营养计划
 	mealData: null,
+	prescriptionType: 1,
 }
 const mutations = {
 	SET_CHOOSE_INTERVENTION_DATA: (state: STATE, chooseInterventionData: any) => {
@@ -42,6 +45,9 @@ const mutations = {
 	},
 	SET_MEAL_DATA: (state: STATE, mealData: any) => {
 		state.mealData = mealData
+	},
+	SET_PRESCRIPTION_TYPE: (state: STATE, prescriptionType: number) => {
+		state.prescriptionType = prescriptionType
 	},
 }
 
@@ -61,6 +67,9 @@ const actions = {
 	},
 	setMealData: ({commit}: COMMIT_INTERFACE<STATE>, mealData: any) => {
 		commit('SET_MEAL_DATA', mealData);
+	},
+	setPrescriptionType: ({commit}: COMMIT_INTERFACE<STATE>, prescriptionType: number) => {
+		commit('SET_PRESCRIPTION_TYPE', prescriptionType);
 	},
 
 }
