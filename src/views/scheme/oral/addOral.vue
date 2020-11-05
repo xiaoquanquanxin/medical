@@ -340,7 +340,18 @@
         requestGoodsListByHospital,
     } from '../../../api/commodity/commodityList';
     import { requestGoodsUnitType } from '../../../api/commodity/addCommodity';
-    import { dosageChangeFn, unameChangeFn } from '../../../utils/prescription';
+    import {
+        //  删除时间表格的一行
+        deleteTimeTable,
+        //  清洗时间表格数据
+        clearTimeTableData,
+        //  计算时间框的总行数
+        rowCount,
+        //  单位切换
+        unameChangeFn,
+        //  使用量
+        dosageChangeFn,
+    } from '../../../utils/prescription';
 
     //  选择商品表格列的意义
     const commodityTableColumns = [
@@ -868,6 +879,7 @@
             //  删除选择商品表格的一行
             deleteTypeTable(sItem, sIndex){
                 //  内部的id，单选id，    id === 商品id
+                const { id } = sItem;
                 console.log(JSON.parse(JSON.stringify(sItem)));
                 //  debugger;
                 //  洗主数据
@@ -895,41 +907,6 @@
                 //  这里要存store
                 this.setOriginCommodityList(this.originCommodityList);
                 //  console.table(JSON.parse(JSON.stringify(this.originCommodityList)));
-            },
-            //  删除时间表格的一行
-            deleteTimeTable(scope, index){
-                //  操作的是 timeTableData，只删除一行
-                scope.list.splice(index, 1);
-                //  如果删除了某个时间下的所有数据，需要删除这一行
-                if (!scope.list.length) {
-                    this.clearTimeTableData();
-                }
-                this.rowCount();
-            },
-            //  清洗时间表格数据
-            clearTimeTableData(){
-                for (let i = 0; i < this.timeTableData.length; i++) {
-                    const item = this.timeTableData[i];
-                    //  在时间列表里删除这个项，这是被删除完了
-                    if (!item.list.length) {
-                        this.timeTableData.splice(i, 1);
-                        //  ⚠️可能删除多行
-                        i--;
-                    }
-                }
-                console.table(JSON.parse(JSON.stringify(this.timeTableData)));
-                //  计算时间框的总行数
-                this.rowCount();
-            },
-            //  计算时间框的总行数
-            rowCount(){
-                if (!this.timeTableData || !this.timeTableData.length) {
-                    return 0;
-                }
-                const rowCount = this.timeTableData.reduce((a, b) => {
-                    return a + b.list.length;
-                }, 0);
-                this.setRowForRemark(rowCount);
             },
 
             //  表单验证
@@ -1004,7 +981,15 @@
                         console.log(err);
                     });
             },
-
+            
+            
+            
+            //  删除时间表格的一行
+            deleteTimeTable,
+            //  清洗时间表格数据
+            clearTimeTableData,
+            //  计算时间框的总行数
+            rowCount,
             //  单位切换
             unameChangeFn,
             //  使用量
