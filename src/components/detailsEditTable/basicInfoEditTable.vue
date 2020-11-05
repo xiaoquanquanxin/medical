@@ -34,8 +34,10 @@
                           placeholder="请选择处方类型"
                           @change="changeFn"
                 >
-                    <a-select-option :value="1">院内配置</a-select-option>
-                    <a-select-option :value="2">门诊领药</a-select-option>
+                    <a-select-option v-for="item in prescriptionTypeList"
+                                     :value="item.id"
+                    >{{item.name}}
+                    </a-select-option>
                 </a-select>
             </div>
         </a-table>
@@ -43,6 +45,7 @@
 </template>
 <script>
     import { mapGetters, mapActions } from 'vuex';
+    import { prescriptionTypeList } from '../../utils/constants';
     //  基本信息 表格 列的意义
     const basicInfoColumns = [
         {
@@ -68,20 +71,29 @@
             basicInfoEditData(){
                 return this.$store.state.intervention.basicInfoEditData;
             },
+            //  处方模板类型
+            prescriptionType(){
+                const { prescriptionType } = this.$store.state.intervention;
+                return prescriptionType;
+            },
         },
         data(){
             return {
                 basicInfoColumns,
+                //  处方类型下拉
+                prescriptionTypeList,
             };
         },
         methods: {
             ...mapActions('intervention', [
                 //  处方头部信息
                 'setBasicInfoEditData',
+                //  更换处方类型
+                'setPrescriptionType',
             ]),
             //  切换处方类型
-            changeFn(){
-                this.setBasicInfoEditData(this.basicInfoEditData);
+            changeFn(value){
+                this.setPrescriptionType(value);
             }
         }
     };
