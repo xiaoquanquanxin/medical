@@ -51,7 +51,7 @@
 </template>
 <script>
     import { formItemLayout } from '@/utils/layout.ts';
-    import { requestGoodsGoodsPurchase } from '../../api/warehouse/inventory';
+    import { requestGoodsGoodsPurchase, requestGoodsStockGetHospitalStock } from '../../api/warehouse/inventory';
     import { requestHospitalGetList } from '../../api/hospital';
     import { requestGoodsUnitType } from '../../api/commodity/addCommodity';
     //  采购操作
@@ -111,8 +111,13 @@
         methods: {
             //  主要请求
             searchFn(){
-                //  todo    查询  warehouseId
-                //  商品单位
+//                //  todo    查询  warehouseId
+                console.log(this.warehouseId);
+                requestGoodsStockGetHospitalStock(this.warehouseId)
+                    .then(v => {
+                        console.log(v);
+                    });
+                  //    商品单位
                 requestGoodsUnitType()
                     .then(unitTypeList => {
                         this.unitTypeList = unitTypeList;
