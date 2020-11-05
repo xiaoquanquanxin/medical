@@ -2,12 +2,11 @@
     <div class="custom-flex">
         <div class="custom-flex-left">
             <a-select class="basic-select-width"
-                      v-model="energyId"
+                      v-model="operationDataTitle.energyId"
                       placeholder="请选择能量"
                       @change="energyChange"
             >
                 <a-select-option :value="item.id"
-                                 :key="item.id"
                                  v-for="item in energyList"
                 >{{item.name}}
                 </a-select-option>
@@ -25,7 +24,7 @@
 </template>
 <script>
     import { requestPrescriptionPrescriptionTpl } from '../../api/userList/intervention';
-    import { energyList, } from '../../utils/constants';
+    import { energyList, templateTypeMap, usageMethodList, } from '../../utils/constants';
     import { mapGetters, mapActions } from 'vuex';
 
     const columns = [
@@ -44,40 +43,37 @@
             //  处方模板类型
             prescriptionType(){
                 const { prescriptionType } = this.$store.state.intervention;
-                console.log(prescriptionType);
                 return prescriptionType;
             },
         },
-        //  todo    choosePlanData就是 chooseInterventionData
-        props: ['choosePlanData', 'planMap', 'dataTitle'],
+        props: ['dataTitle'],
         data(){
-            let { energyId, planId, } = this.choosePlanData;
-            console.log(JSON.parse(JSON.stringify(this.dataTitle)));
-            console.log(energyId, planId);
-            //  如果没有planId
-            if (!planId) {
-                this.energyId = energyList[0];
-            }
             return {
                 //  能量下拉
                 energyList,
-                //  能量id
-                energyId: energyId || undefined,
-                //  单选的id
-                planId,
+                //  处方模板类型map
+                templateTypeMap,
+                //  操作数据
+                operationDataTitle: {
+                    //  能量id
+                    energyId: undefined,
+                    //  单选的id
+                    planId: undefined
+                },
                 //  表格配置
                 rowSelection: {
                     type: 'radio',
-                    selectedRowKeys: [planId],
+                    selectedRowKeys: [this.dataTitle.planId],
                     onChange: this.onSelectChange,
                 },
                 columns,
                 data: [],
-                chooseInterventionData: null,
+                //  被选中的模板
+                selectTemplateData: null,
             };
         },
         created(){
-            console.log('打开弹框时候默认选择的单选', this.rowSelection.selectedRowKeys);
+            console.clear();
             this.searchFn();
         },
         methods: {
@@ -93,66 +89,44 @@
                 }
                 this.energyChange(this.energyId);
             },
-            //  下拉
-            choosePlanChange(value){
-                const planList = this.planMap[value];
-                //  先置空
-                this.planId = null;
-                //  在判断设置为第一个值
-                if (planList && planList.length) {
-                    this.planId = planList[0].key;
-                }
-                //  console.log(this.planId);
-                this.rowSelection.selectedRowKeys = [this.planId];
-            },
+//            //  下拉
+//            choosePlanChange(value){
+//                const planList = this.planMap[value];
+//                //  先置空
+//                this.planId = null;
+//                //  在判断设置为第一个值
+//                if (planList && planList.length) {
+//                    this.planId = planList[0].key;
+//                }
+//                //  console.log(this.planId);
+//                this.rowSelection.selectedRowKeys = [this.planId];
+//            },
             //  单选
             onSelectChange(selectedRowKeys, value){
-                //  console.log(selectedRowKeys);
                 this.rowSelection.selectedRowKeys = selectedRowKeys;
-                this.planId = selectedRowKeys[0];
-                //  console.log(this.planId);
+                //  选择的计划
+                this.operationDataTitle.planId = selectedRowKeys[0];
                 //  暂时保存
-                this.chooseInterventionData = value[0];
+                this.selectTemplateData = value[0];
             },
 
-            //  确认数据
-            handleSubmit(){
-                const { energyId, planId } = this;
-                //  console.log(energyId, planId);
-                return new Promise(((resolve, reject) => {
-                    //  如果没有选择
-                    if (!energyId || !planId) {
-                        this.$message.error('请选择方案');
-                        reject();
-                    } else {
-                        console.log(this.dataTitle.prescriptionType);
-                        //  储存
-                        switch (this.dataTitle.prescriptionType) {
-                            case 1:
-                                this.setKqcnData(this.chooseInterventionData);
-                                break;
-                            case 2:
-                                this.setCnyyzcData(this.chooseInterventionData);
-                                break;
-                            default :
-                                throw new Error('错误');
-                        }
-                        resolve({ energyId, planId });
-                    }
-                }));
-            },
             //  切换能量
             energyChange(energy){
-                console.log(this.energyId);
+                //  被选中的状态重置
+                this.operationDataTitle.planId = undefined;
+                this.rowSelection.selectedRowKeys = [];
+                this.selectTemplateData = null;
                 const prescriptionType = this.prescriptionType;
-                const { usageMethod, prescriptionType: templateType } = this.dataTitle;
-                console.log('选择的食用方法', usageMethod);
-                console.log('处方类型', prescriptionType);
-                requestPrescriptionPrescriptionTpl({ energy, prescriptionType, templateType, usageMethod })
+                const { usageMethod, templateType } = this.dataTitle;
+                //  请求参数
+                const data = { energy, prescriptionType, templateType, usageMethod };
+                console.log(data);
+                requestPrescriptionPrescriptionTpl(data)
                     .then(v => {
-                        //console.log(JSON.parse(JSON.stringify(v.data)));
                         console.log('打开弹框时候默认选择的单选', this.rowSelection.selectedRowKeys);
-                        v.data.forEach((item) => {
+                        const { data } = v;
+                        //  console.log(JSON.parse(JSON.stringify(data)));
+                        data.forEach((item) => {
                             item.key = item.id;
                             const prescriptionContentData = JSON.parse(item.prescriptionContent);
                             item.commodityTableData = prescriptionContentData.commodityTableData;
@@ -165,9 +139,38 @@
                             });
                             item.planContent = `${str}温水：${_timeTableData.warmWater}ml`;
                         });
-                        this.data = v.data;
+                        this.data = data;
                     });
-            }
+            },
+
+            //  确认数据
+            handleSubmit(){
+                const { planId } = this.operationDataTitle;
+                return new Promise(((resolve, reject) => {
+                    //  如果没有选择
+                    if (!planId || !this.selectTemplateData) {
+                        this.$message.error('请选择方案');
+                        reject('请选择方案');
+                    } else {
+                        //  console.log(this.dataTitle.templateType);
+                        const { templateType } = this.dataTitle;
+                        //  根据模板储存不同的
+                        switch (templateType) {
+                            case 1:
+                                //  口服肠内营养补充数据
+                                this.setKqcnData(this.selectTemplateData);
+                                break;
+                            case 2:
+                                //  肠内营养补充数据
+                                this.setCnyyzcData(this.selectTemplateData);
+                                break;
+                            default :
+                                throw new Error('错误');
+                        }
+                        resolve(this.operationDataTitle);
+                    }
+                }));
+            },
         }
     };
 </script>
