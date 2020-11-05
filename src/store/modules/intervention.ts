@@ -28,6 +28,7 @@ const state: STATE = {
 	cnyyzcData: null,
 	//	膳食营养计划
 	mealData: null,
+	//	处方类型
 	prescriptionType: 1,
 }
 const mutations = {
