@@ -4,6 +4,23 @@ export const templateTypeList = [
 	{id: 2, key: 2, name: '肠内营养支持'},
 	{id: 3, key: 3, name: '膳食营养计划'}
 ];
+export const templateTypeMap = {
+	1: {id: 1, key: 1, name: '口服肠内营养补充'},
+	2: {id: 2, key: 2, name: '肠内营养支持'},
+	3: {id: 3, key: 3, name: '膳食营养计划'}
+}
+
+//  处方类型下拉
+export const prescriptionTypeList = [
+	{id: 1, key: 1, name: '院内配置'},
+	{id: 2, key: 2, name: '门诊领药'},
+];
+export const prescriptionTypeMap = {
+	1: {id: 1, key: 1, name: '院内配置'},
+	2: {id: 2, key: 2, name: '门诊领药'},
+}
+
+
 //	能量下拉
 export const energyList = [
 	{id: '1600kcal', key: 1, name: '1600kcal',},
@@ -29,20 +46,10 @@ export const usageMethodList = [
 	{id: 6, key: 6, name: '鼻胃管',},
 	{id: 7, key: 7, name: '肠胃管',}];
 
-
-//	处方模板类型
-export const kqcnOralEditDataTitle = {
-	name: '口服肠内营养补充',
-	prescriptionType: 1,
-};
-export const cnyyzcOralEditDataTitle = {
-	name: '肠内营养支持',
-	prescriptionType: 2,
-}
-
 //	单位类型映射
 export const unameTypeMap = {
 	1: '基本单位',
 	2: '标准单位',
 	3: '辅助单位',
 }
+
