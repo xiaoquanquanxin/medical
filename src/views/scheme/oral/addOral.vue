@@ -363,12 +363,12 @@
         },
         {
             title: '数量',
-            width: 150,
+            width: 100,
             scopedSlots: { customRender: 'quantity' },
         },
         {
             title: '操作',
-            width: 150,
+            width: 50,
             scopedSlots: { customRender: 'operation' },
         },
     ];
@@ -454,7 +454,7 @@
                     },
                     {
                         title: '使用量',
-                        width: 200,
+                        width: 120,
                         scopedSlots: { customRender: 'dosage' }
                     },
                     {
