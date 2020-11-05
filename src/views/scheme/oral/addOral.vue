@@ -22,8 +22,10 @@
                               placeholder="请选择处方类型"
                               @change="selectPrescriptionChange"
                     >
-                        <a-select-option :value="1">院内配置</a-select-option>
-                        <a-select-option :value="2">门诊领药</a-select-option>
+                        <a-select-option v-for="item in prescriptionTypeList"
+                                         :value="item.id"
+                        >{{item.name}}
+                        </a-select-option>
                     </a-select>
                     <a-input class="add-form-input"
                              v-model="tableForm.templateName"
@@ -332,7 +334,7 @@
         requestPrescriptionTemplateInsert,
         requestPrescriptionTemplateUpdate
     } from '../../../api/scheme/scheme';
-    import { energyList, templateTypeList, usageMethodList } from '../../../utils/constants';
+    import { energyList, templateTypeList, usageMethodList, prescriptionTypeList } from '../../../utils/constants';
     import { requestHospitalGetList } from '../../../api/hospital';
     import {
         requestGoodsListByHospital,
@@ -423,6 +425,8 @@
                 energyList,
                 //  食用方法下拉
                 usageMethodList,
+                //  处方类型下拉
+                prescriptionTypeList,
 
                 //  选择商品表格数据
                 commodityTableData: [],
