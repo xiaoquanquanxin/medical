@@ -211,8 +211,9 @@
                         tableForm.hospitalId = hospitalId;
                         const { mealPlanTableData } = JSON.parse(prescriptionContent);
                         //  console.log(mealPlanTableData);
-                        mealPlanTableData.forEach(item => {
+                        mealPlanTableData.forEach((item, index) => {
                             //  console.log(item);
+                            item.index = index + 1;
                             item.moment = moment(item.moment);
                         });
                         this.data = mealPlanTableData;
