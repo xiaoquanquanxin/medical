@@ -11,6 +11,9 @@
             </a-select>
             <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
         </div>
+        <div class="a-input-group">
+            <a-button type="primary" @click="insertFn">新增</a-button>
+        </div>
         <br>
         <b>这个【请选择状态】具体的对应关系0:xx，1：xxx?</b>
         <br>
@@ -29,7 +32,7 @@
                 <a-space size="small">
                     <a @click="remindDelivery(sItem)">提醒发货</a>
                     <a @click="determineSign(sItem)">确定签收</a>
-                    <a @click="procurementDetails(sItem)">详情</a>
+                    <a @click="deliveryRecordDetails(sItem)">发货详情</a>
                 </a-space>
             </div>
         </a-table>
@@ -75,6 +78,18 @@
                  @ok="procurementDetailModalCheck()">
             <ShipmentsDetail/>
         </a-modal>
+        <!--查看详情莫泰框-->
+        <a-modal v-model="dialogInsert.visible"
+                 v-if="dialogInsert.visible"
+                 :maskClosable="false"
+                 centered
+                 :width="800"
+                 title="新增采购单"
+                 ok-text="确认"
+                 cancel-text="取消"
+                 @ok="procurementInsertModalCheck('refInsertPurchaseOrder')">
+            <InsertPurchaseOrder ref="refInsertPurchaseOrder"/>
+        </a-modal>
     </div>
 </template>
 <script>
@@ -90,7 +105,8 @@
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
     import { mapGetters, mapActions } from 'vuex';
     import ShipmentsDetail from '@/components/warehouse/shipmentsDetail';
-    import { requestPurchaseOrderPagesOrder } from '../../api/warehouse/purchaseList';
+    import InsertPurchaseOrder from '@/components/warehouse/insertPurchaseOrder';
+    import { requestDeliveryRecordGet, requestPurchaseOrderPages } from '../../api/warehouse/purchaseList';
 
     const columns = [
         {
@@ -98,36 +114,36 @@
             dataIndex: 'purchaseOrderCode',
             width: 150,
         },
-        {
-            title: '采购人',
-            dataIndex: '11',
-            width: 100,
-        },
-        {
-            title: '采购时间',
-            dataIndex: 'unit',
-            width: 150,
-        },
-        {
-            title: '商品名称',
-            dataIndex: 'goodsName',
-            width: 150,
-        },
-        {
-            title: '商品供应商',
-            dataIndex: 'supplierName',
-            width: 150,
-        },
-        {
-            title: '商品品牌',
-            dataIndex: 'brandName',
-            width: 150,
-        },
-        {
-            title: '采购数量（箱）',
-            dataIndex: 'purchaseOrderNum',
-            width: 150,
-        },
+//        {
+//            title: '采购人',
+//            dataIndex: '11',
+//            width: 100,
+//        },
+//        {
+//            title: '采购时间',
+//            dataIndex: 'unit',
+//            width: 150,
+//        },
+//        {
+//            title: '商品名称',
+//            dataIndex: 'goodsName',
+//            width: 150,
+//        },
+//        {
+//            title: '商品供应商',
+//            dataIndex: 'supplierName',
+//            width: 150,
+//        },
+//        {
+//            title: '商品品牌',
+//            dataIndex: 'brandName',
+//            width: 150,
+//        },
+//        {
+//            title: '采购数量（箱）',
+//            dataIndex: 'purchaseOrderNum',
+//            width: 150,
+//        },
         {
             title: '状态',
             dataIndex: 'status',
@@ -145,6 +161,7 @@
         components: {
             DetermineSign,
             ShipmentsDetail,
+            InsertPurchaseOrder,
         },
         data(){
             return {
@@ -162,6 +179,8 @@
                 dialogDataDetermineSign: this.initModal(DIALOG_TYPE.DETERMINE_SIGN),
                 //  采购详情
                 dialogDataProcurementDetails: this.initModal(DIALOG_TYPE.PROCUREMENT_DETAILS),
+                //  新增采购单
+                dialogInsert: this.initModal(DIALOG_TYPE.PROCUREMENT_INSERT),
             };
         },
         created(){
@@ -170,7 +189,7 @@
         methods: {
             //  主要请求
             searchFn(){
-                requestPurchaseOrderPagesOrder(Object.assign(
+                requestPurchaseOrderPages(Object.assign(
                     {}, this.searchData, paginationEncode(this.pagination)
                 ))
                     .then(v => {
@@ -211,9 +230,26 @@
                 });
             },
 
-            //  采购详情
-            procurementDetails(sItem){
-                this.setProcurementId('4323543');
+            //  新增采购单
+            insertFn(){
+                this.showModal(DIALOG_TYPE.PROCUREMENT_INSERT);
+            },
+            procurementInsertModalCheck(refInsertPurchaseOrder){
+                //  防止连点
+                this.setConfirmLoading(DIALOG_TYPE.PROCUREMENT_INSERT, true);
+                const promise = this.$refs[refInsertPurchaseOrder].handleSubmit();
+                promise.then(v => {
+                    this.hideModal(DIALOG_TYPE.PROCUREMENT_INSERT);
+                }).catch(error => {
+                    console.log('有错');
+                }).then(v => {
+                    //  最后设置可以再次点击
+                    this.setConfirmLoading(DIALOG_TYPE.PROCUREMENT_INSERT, false);
+                });
+            },
+            //  发货详情
+            deliveryRecordDetails(sItem){
+                this.setProcurementId(sItem.id);
                 this.showModal(DIALOG_TYPE.PROCUREMENT_DETAILS);
             },
             //  确认详情

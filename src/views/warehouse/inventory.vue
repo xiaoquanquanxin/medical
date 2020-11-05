@@ -71,7 +71,9 @@
                  ok-text="确认"
                  cancel-text="取消"
                  @ok="procurementModalCheck('refProcurementForm')">
-            <ProcurementForm ref="refProcurementForm"/>
+            <ProcurementForm ref="refProcurementForm"
+                             :procurement-data="procurementData"
+            />
         </a-modal>
         <!--退货操作莫泰框-->
         <a-modal v-model="dialogDataSalesReturn.visible"
@@ -187,6 +189,9 @@
                 dialogDataProcurement: this.initModal(DIALOG_TYPE.PROCUREMENT),
                 //  退货
                 dialogDataSalesReturn: this.initModal(DIALOG_TYPE.SALES_RETURN),
+
+                //  操作数据
+                procurementData:null,
             };
         },
         created(){
@@ -211,7 +216,7 @@
             },
             //  查看总库存
             viewInventory(sItem){
-                this.setWarehouseId('123');
+                this.setWarehouseId(sItem);
                 this.showModal(DIALOG_TYPE.VIEW_TOTAL_INVENTORY);
             },
             //  确认市场价格
@@ -221,6 +226,7 @@
             //  采购
             procurement(sItem){
                 this.setWarehouseId(sItem.id);
+                this.procurementData = sItem;
                 this.showModal(DIALOG_TYPE.PROCUREMENT);
             },
             //  确认采购
