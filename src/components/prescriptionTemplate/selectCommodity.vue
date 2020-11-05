@@ -63,17 +63,12 @@
     //  选择商品
     export default {
         computed: {
-            //  选择商品弹框列表源数据
-            originCommodityList(){
-                //  💡修改，这地方不存了
-                return this.$store.state.prescriptionTemplate.originCommodityList;
-            },
             //  单元map
             unitTypeMap(){
                 return this.$store.state.constants.unitTypeMap;
             }
         },
-        props: ['prescriptionType', 'timeOriginList'],
+        props: ['prescriptionType', 'timeOriginList', 'originCommodityList'],
         data(){
             return {
                 data: [],
