@@ -5,25 +5,20 @@
             <GoBackButton/>
         </div>
         <!--基础数据-->
-        <BasicInfoEditTable/>
+        <BasicInfoEditTable v-if="false"/>
         <br>
         <!--肠内-->
         <OralEditTable
-                :key="2"
-                :data-title="cnyyzcOralEditDataTitle"
+                :dataTitle="cnyyzcOralEditDataTitle"
                 ref="cnyyzcOralEditTableRef"
         />
-        <div v-if="true">
-            <br>
-            <!--口腔肠内-->
-            <OralEditTable
-                    v-if="true"
-                    :key="1"
-                    :data-title="kqcnOralEditDataTitle"
-                    ref="kqcnOralEditTableRef"
-            />
-            <br>
-        </div>
+        <br>
+        <!--口腔肠内-->
+        <OralEditTable
+                :dataTitle="kqcnOralEditDataTitle"
+                ref="kqcnOralEditTableRef"
+        />
+        <br>
         <MealEditTable/>
         <br>
         <a-button type="primary" @click="saveIntervention">保存</a-button>
@@ -49,6 +44,11 @@
             MealEditTable,
         },
         computed: {
+            //  处方类型-处方类型 (1.院内配置,2门诊领药)
+            prescriptionType(){
+                const { prescriptionType } = this.$store.state.intervention;
+                return prescriptionType;
+            },
             //	新增处方、编辑处方选择的头部数据
             basicInfoEditData(){
                 return this.$store.state.intervention.basicInfoEditData;
@@ -72,16 +72,22 @@
                 interventionDetailId: this.$route.params.interventionDetailId,
                 //  病人的id
                 patientId: this.$route.params.patientId,
-                //  口腔肠内数据
-                kqcnOralEditDataTitle: {
-                    name: '口服肠内营养补充',
-                    prescriptionType: 1,
-                    usageMethod: 1,
-                },
                 //  肠内营养支持
                 cnyyzcOralEditDataTitle: {
-                    name: '肠内营养支持',
-                    prescriptionType: 2,
+                    //  选择的能量
+                    energy: undefined,
+                    //  选择的具体的方案，是一个结果。如果是编辑，需要反向设计到planMap里
+                    planId: undefined,
+                    templateType: 2,
+                    usageMethod: 1,
+                },
+                //  口腔肠内数据
+                kqcnOralEditDataTitle: {
+                    //  选择的能量
+                    energy: undefined,
+                    //  选择的具体的方案，是一个结果。如果是编辑，需要反向设计到planMap里
+                    planId: undefined,
+                    templateType: 1,
                     usageMethod: 1,
                 },
             };
@@ -207,6 +213,7 @@
                     prescriptionDetail: JSON.stringify(prescriptionDetail)
                 };
                 console.log(saveData);
+                return;
                 requestPrescriptionSave(saveData)
                     .then(v => {
                         console.log(v);
