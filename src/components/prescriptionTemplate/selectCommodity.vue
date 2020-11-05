@@ -86,11 +86,12 @@
             };
         },
         created(){
-            //  如果是时间框
+            //  如果是时间框里的选择商品
             if (this.timeOriginList) {
                 this.data = this.timeOriginList;
                 console.log('输入弹框的全部数据', JSON.parse(JSON.stringify(this.timeOriginList)));
             } else {
+                //  选择商品主按钮
                 this.data = this.originCommodityList;
                 console.log('输入弹框的全部数据', JSON.parse(JSON.stringify(this.originCommodityList)));
             }
