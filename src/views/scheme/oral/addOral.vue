@@ -340,6 +340,7 @@
         requestGoodsListByHospital,
     } from '../../../api/commodity/commodityList';
     import { requestGoodsUnitType } from '../../../api/commodity/addCommodity';
+    import { dosageChange } from '../../../utils/prescription';
 
     //  选择商品表格列的意义
     const commodityTableColumns = [
@@ -1006,50 +1007,7 @@
             },
 
             //  使用量
-            dosageChange(scope, item){
-                if (this.prescriptionType === 2) {
-                    return;
-                }
-                //  console.log(JSON.parse(JSON.stringify(item)).goodsId);
-                //    被编辑的商品id
-                const { goodsId } = item;
-                const commodityItem = this.commodityTableData.filter(commodityItem => {
-                    const { id } = commodityItem;
-                    if (goodsId === id) {
-                        return commodityItem;
-                    }
-                })[0];
-                if (!commodityItem) {
-                    alert('数据组织问题');
-                }
-                let quantity = 0;
-                console.log(JSON.parse(JSON.stringify(commodityItem)));
-                let unitRelations;
-                //  找单位关系
-                commodityItem.uintListVos.forEach(item => {
-                    if (item.isRadioChecked) {
-                        unitRelations = item.unitRelations;
-                    }
-                });
-                console.log('单位关系');
-                console.log(unitRelations);
-                this.timeTableData.forEach(timeItem => {
-                    //  被编辑的商品id
-                    const { list } = timeItem;
-                    //  console.log(item.basicUnitItem.unitRelations);
-                    list.forEach(_item => {
-                        //  console.log(_item);
-                        if (goodsId === _item.goodsId) {
-                            //  console.log(item.unitRelations);
-                            //  console.log(_item.unitRelations);
-                            quantity += (_item.dosage || 0) / unitRelations;
-                        }
-                    });
-                });
-                //  console.log(quantity);
-                commodityItem.quantity = quantity.toFixed(2);
-                this.$forceUpdate();
-            },
+            dosageChange,
 
             //  单位切换
             unameChangeFn(sItem, checked_uname){
