@@ -233,8 +233,8 @@
             />
         </a-modal>
         <!--选择时间莫泰框-->
-        <a-modal v-model="dialogDataSelectTime.visible"
-                 v-if="dialogDataSelectTime.visible"
+        <a-modal v-model="templateSelectModal"
+                 v-if="templateSelectModal"
                  :maskClosable="false"
                  centered
                  :width="200"
@@ -341,6 +341,8 @@
     } from '../../../api/commodity/commodityList';
     import { requestGoodsUnitType } from '../../../api/commodity/addCommodity';
     import {
+        //  选择时间的变换
+        selectTimeChange,
         //  删除时间表格的一行
         deleteTimeTable,
         //  清洗时间表格数据
@@ -501,7 +503,7 @@
                 //	处方模板管理 - 增加口服肠内补充方案 - 选择商品
                 dialogDataSelectCommodity: this.initModal(DIALOG_TYPE.TEMPLATE_SELECT_COMMODITY),
                 //  处方模板管理 - 增加口服肠内补充方案 - 选择时间
-                dialogDataSelectTime: this.initModal(DIALOG_TYPE.TEMPLATE_SELECT_TIME),
+                templateSelectModal: false,
 
                 //  操作数据
                 tableForm: {
@@ -829,13 +831,7 @@
                 this.selectTimeValue = '00:00';
                 //  初始化时间
                 this.selectTimeMoment = this.moment(this.selectTimeValue, 'HH:mm');
-                //  弹框
-                this.showModal(DIALOG_TYPE.TEMPLATE_SELECT_TIME);
-            },
-
-            //  选择时间的变换
-            selectTimeChange(value, selectTimeValue){
-                this.selectTimeValue = selectTimeValue;
+                this.templateSelectModal = true;
             },
 
             //  确定选择的时间
@@ -872,7 +868,7 @@
                 //  新增一条数据
                 this.timeTableData.push(data);
                 //  关闭时间选择
-                this.hideModal(DIALOG_TYPE.TEMPLATE_SELECT_TIME);
+                this.templateSelectModal = false;
                 this.rowCount();
             },
 
@@ -981,9 +977,9 @@
                         console.log(err);
                     });
             },
-            
-            
-            
+
+            //  选择时间的变换
+            selectTimeChange,
             //  删除时间表格的一行
             deleteTimeTable,
             //  清洗时间表格数据
