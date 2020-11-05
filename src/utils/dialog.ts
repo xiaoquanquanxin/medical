@@ -52,10 +52,6 @@ export const DIALOG_TYPE: DialogType = {
 	//	科室管理 - 关联评估调查表
 	QUESTIONNAIRE: 'QUESTIONNAIRE',
 
-	//	处方模板管理 - 增加口服肠内补充方案 - 选择商品
-	TEMPLATE_SELECT_COMMODITY: 'TEMPLATE_SELECT_COMMODITY',
-	//	处方模板管理 - 增加口服肠内补充方案 - 选择时间
-	TEMPLATE_SELECT_TIME: 'TEMPLATE_SELECT_TIME',
 
 	//	查看总库存
 	VIEW_TOTAL_INVENTORY: 'VIEW_TOTAL_INVENTORY',

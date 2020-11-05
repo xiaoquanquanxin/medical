@@ -217,8 +217,8 @@
             </a-row>
         </div>
         <!--选择商品莫泰框-->
-        <a-modal v-model="dialogDataSelectCommodity.visible"
-                 v-if="dialogDataSelectCommodity.visible"
+        <a-modal v-model="commoditySelectModal"
+                 v-if="commoditySelectModal"
                  :maskClosable="false"
                  centered
                  :width="800"
@@ -233,8 +233,8 @@
             />
         </a-modal>
         <!--选择时间莫泰框-->
-        <a-modal v-model="templateSelectModal"
-                 v-if="templateSelectModal"
+        <a-modal v-model="timeSelectModal"
+                 v-if="timeSelectModal"
                  :maskClosable="false"
                  centered
                  :width="200"
@@ -323,8 +323,7 @@
     </div>
 </template>
 <script>
-    import moment from 'moment';
-    import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
+    
     import { mapGetters, mapActions } from 'vuex';
     import SelectCommodity from '@/components/prescriptionTemplate/selectCommodity.vue';
     import GoBackButton from '@/components/goBackButton.vue';
@@ -503,8 +502,7 @@
                 ],
 
                 //	处方模板管理 - 增加口服肠内补充方案 - 选择商品
-                dialogDataSelectCommodity: this.initModal(DIALOG_TYPE.TEMPLATE_SELECT_COMMODITY),
-
+                commoditySelectModal: false,
                 //  操作数据
                 tableForm: {
                     //  医院
@@ -523,7 +521,7 @@
                 },
 
                 //  处方模板管理 - 增加口服肠内补充方案 - 选择时间
-                templateSelectModal: false,
+                timeSelectModal: false,
                 //  选择时间的值的对象
                 selectTimeMoment: null,
                 //  选择时间的值
@@ -670,11 +668,11 @@
                         if (isMainButton) {
                             this.timeOriginList = null;
                             this.setOriginCommodityList(httpData);
-                            this.showModal(DIALOG_TYPE.TEMPLATE_SELECT_COMMODITY);
+                            this.commoditySelectModal = true;
                         } else {
                             //  如果时间按钮
                             this.timeOriginList = httpData;
-                            this.showModal(DIALOG_TYPE.TEMPLATE_SELECT_COMMODITY);
+                            this.commoditySelectModal = true;
                         }
                     });
             },
@@ -812,7 +810,7 @@
                     console.log('最新的时间数据');
                     console.log(timeTableData);
                     this.timeTableData = timeTableData;
-                    this.hideModal(DIALOG_TYPE.TEMPLATE_SELECT_COMMODITY);
+                    this.commoditySelectModal = false;
                     this.$nextTick(() => {
                         this.rowCount();
                     });
@@ -856,7 +854,7 @@
                 //  新增一条数据
                 this.timeTableData.push(data);
                 //  关闭时间选择
-                this.templateSelectModal = false;
+                this.timeSelectModal = false;
                 this.rowCount();
             },
 
@@ -980,11 +978,7 @@
             unameChangeFn,
             //  使用量
             dosageChangeFn,
-
-            //  时间选择器的方法
-            moment,
-            //  莫泰框方法
-            ...dialogMethods,
+            
             ...mapActions('prescriptionTemplate', [
                 //  处方模板，请求选择商品的源数据
                 'setOriginCommodityList',
