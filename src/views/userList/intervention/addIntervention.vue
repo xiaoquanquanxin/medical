@@ -19,6 +19,7 @@
                 ref="kqcnOralEditTableRef"
         />
         <br>
+        <!--膳食营养计划-->
         <MealEditTable
                 ref="refMealEditTable"
         />
@@ -37,7 +38,7 @@
     import OralEditTable from '@/components/detailsEditTable/oralEditTable.vue';
     //  可编辑的膳食营养计划
     import MealEditTable from '@/components/detailsEditTable/mealEditTable.vue';
-    import moment from 'moment';
+    import momentFn from 'moment';
 
     export default {
         components: {
@@ -109,7 +110,7 @@
                 priod: '',
                 prescriptionType: 1,
                 executionTime: '2020-11-06',
-                executionTimeMoment: moment(new Date()),
+                executionTimeMoment: momentFn(new Date()),
             }]);
         },
 
@@ -308,12 +309,12 @@
                     const {
                         entryName,
                         quantityUsed,
-                        usageTime
+                        moment,
                     } = item;
                     return {
                         entryName,
                         quantityUsed: quantityUsed || '',
-                        usageTime
+                        usageTime: momentFn(moment).format('YYYY-MM-DD'),
                     };
                 });
                 console.log(JSON.parse(JSON.stringify(nutrition)));
