@@ -48,7 +48,7 @@
                     :data-source="basicInfoData"
             />
             <br>
-            <div v-for="item in detail" v-if="false">
+            <div v-for="item in detail" v-if="true">
                 <!--商品表格-->
                 <OralLikeBasicTable
                         :dataSource="item"
