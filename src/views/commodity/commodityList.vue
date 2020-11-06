@@ -16,7 +16,7 @@
                 >{{item.categoryName}}
                 </a-select-option>
             </a-select>
-            <a-select class="basic-select-width" v-model="searchData.status" placeholder="请选择状态">
+            <a-select class="basic-select-width" v-model="searchData.status" placeholder="请选择状态" v-if="false">
                 <a-select-option value="1">上架</a-select-option>
                 <a-select-option value="2">下架</a-select-option>
             </a-select>
@@ -42,8 +42,8 @@
                     <a @click="editCommodity(sItem)">编辑</a>
                     <a @click="authorizationDistributors(sItem)">授权渠道商</a>
                     <a @click="authorizationHospital(sItem)">授权医院</a>
-                    <a @click="onShelf(sItem)">上架</a>
-                    <a @click="offShelf(sItem)">下架</a>
+                    <a @click="onShelf(sItem)" v-if="false">上架</a>
+                    <a @click="offShelf(sItem)" v-if="false">下架</a>
                     <a @click="deleteFn(sItem)">删除</a>
                 </a-space>
             </div>
