@@ -140,7 +140,7 @@
             ...mapActions('entrepot', [
                 'setEntrepotId',
             ]),
-               onShowSizeChange,
+            onShowSizeChange,
             pageChange,
             //  新增仓库
             addEntrepot(){
@@ -161,9 +161,11 @@
                 const promise = this.$refs.refAddOrEditEntrepot.handleSubmit();
                 promise.then(v => {
                     this.hideModal(DIALOG_TYPE.ENTREPOT);
+                    this.$message.success('操作成功');
                     this.searchFn();
                 }).catch(error => {
-                    console.log('有错');
+                    console.log(error);
+                    this.$message.error('操作失败');
                 }).then(v => {
                     //  最后设置可以再次点击
                     this.setConfirmLoading(DIALOG_TYPE.ENTREPOT, false);
