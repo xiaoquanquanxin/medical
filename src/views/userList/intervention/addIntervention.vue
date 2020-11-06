@@ -5,7 +5,7 @@
             <GoBackButton/>
         </div>
         <!--基础数据-->
-        <BasicInfoEditTable/>
+        <BasicInfoEditTable v-if="true"/>
         <br>
         <!--肠内-->
         <OralEditTable
@@ -24,6 +24,9 @@
                 ref="refMealEditTable"
         />
         <br>
+        <!--能量表-->
+        <EnergyTable/>
+        <br>
         <a-button type="primary" @click="saveIntervention">保存</a-button>
     </div>
 </template>
@@ -38,6 +41,9 @@
     import OralEditTable from '@/components/detailsEditTable/oralEditTable.vue';
     //  可编辑的膳食营养计划
     import MealEditTable from '@/components/detailsEditTable/mealEditTable.vue';
+    //  能量
+    import EnergyTable from '@/components/detailsTable/energyTable.vue';
+
     import momentFn from 'moment';
 
     export default {
@@ -46,6 +52,7 @@
             BasicInfoEditTable,
             OralEditTable,
             MealEditTable,
+            EnergyTable,
         },
         computed: {
             //  全部单位map
@@ -73,7 +80,7 @@
             //  被选中的处方-膳食营养计划
             mealData(){
                 return this.$store.state.intervention.mealData;
-            }
+            },
         },
         data(){
             return {
@@ -112,6 +119,8 @@
                 executionTime: '2020-11-06',
                 executionTimeMoment: momentFn(new Date()),
             }]);
+            //  清空能量
+            this.setEnergyData(null);
         },
 
         methods: {
@@ -296,6 +305,7 @@
                         timeTableData: cnyyzcData.timeTableData
                     },
                 };
+                return;
 
                 console.log(cnyyzcData.commodityTableData);
                 console.log(kqcnData.commodityTableData);
@@ -349,6 +359,8 @@
             ...mapActions('intervention', [
                 //  处方头部信息
                 'setBasicInfoEditData',
+                //  设置能量数据
+                'setEnergyData',
             ]),
         }
     };

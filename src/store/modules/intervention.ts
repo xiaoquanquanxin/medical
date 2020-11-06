@@ -17,6 +17,9 @@ interface STATE {
 
 	//	能量表格数据
 	energyData: any,
+
+	//	根据templateType区分的能量数据
+	energyDataByTemplateType: any,
 }
 
 const state: STATE = {
@@ -35,6 +38,8 @@ const state: STATE = {
 	prescriptionType: 1,
 	//	能量表格数据
 	energyData: null,
+	//	根据templateType区分的能量数据
+	energyDataByTemplateType: {1: {}, 2: {}},
 }
 const mutations = {
 	SET_CHOOSE_INTERVENTION_DATA: (state: STATE, chooseInterventionData: any) => {
@@ -59,7 +64,6 @@ const mutations = {
 		state.energyData = energyData
 	},
 }
-
 const actions = {
 	//	设置被选中的营养干预方案
 	setChooseInterventionData: ({commit}: COMMIT_INTERFACE<STATE>, chooseInterventionData: any) => {
@@ -84,9 +88,52 @@ const actions = {
 		commit('SET_PRESCRIPTION_TYPE', prescriptionType);
 	},
 	setEnergyData: ({commit}: COMMIT_INTERFACE<STATE>, energyData: any) => {
-		commit('SET_ENERGY_DATA', energyData);
+		commit('SET_ENERGY_DATA', [Object.assign({
+			key: 1,
+			energy: 0,
+			protein: 0,
+			fat: 0,
+			carbohydrates: 0,
+		}, energyData,)]);
 	},
-
+	//	根据templateType，分别设置肠内、口腔的数据
+	setEnergyDataByTemplateType: ({commit}: COMMIT_INTERFACE<STATE>, data: any) => {
+		console.log('store🍎')
+		console.log(data);
+		const {templateType} = data;
+		const {energyDataByTemplateType} = state
+		energyDataByTemplateType[templateType] = data;
+		//  碳水化合物
+		let carbohydrates = 0;
+		//  能量
+		let energy = 0;
+		//  脂肪
+		let fat = 0;
+		//  蛋白质
+		let protein = 0;
+		//	@ts-ignore
+		const calc = ({unitCarbohydrate, unitEnergy, unitFat, unitProtein}) => {
+			carbohydrates += +unitCarbohydrate || 0;
+			energy += +unitEnergy || 0;
+			fat += +unitFat || 0;
+			protein += +unitProtein || 0;
+		}
+		//	console.log(JSON.parse(JSON.stringify(energyDataByTemplateType[1])))
+		//	console.log(JSON.parse(JSON.stringify(energyDataByTemplateType[2])))
+		calc(energyDataByTemplateType[1])
+		calc(energyDataByTemplateType[2])
+		//	console.log(carbohydrates);
+		//	console.log(energy);
+		//	console.log(fat);
+		//	console.log(protein);
+		commit('SET_ENERGY_DATA', [Object.assign({
+			key: 1,
+			energy,
+			protein,
+			fat,
+			carbohydrates,
+		})]);
+	}
 }
 
 
