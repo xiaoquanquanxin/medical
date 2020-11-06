@@ -115,6 +115,13 @@
         requestPrescriptionTemplateUpdate
     } from '../../../api/scheme/scheme';
 
+    import {
+        //  删除营养计划
+        deleteNutritionPlan,
+        //  新增营养计划
+        addNewLine,
+    } from '../../../utils/mealPlan';
+
     const columns = [
         {
             title: '序号',
@@ -260,19 +267,6 @@
                     }
                 });
             },
-            //  新增营养计划
-            addNewLine(){
-                this.data.push({
-                    key: this.data.length + 1,
-                    entryName: '',
-                    quantityUsed: '',
-                    usageTime: ''
-                });
-            },
-            //  删除营养计划
-            deleteNutritionPlan(sItem, sIndex){
-                this.data.splice(sIndex, 1);
-            },
             //  验证膳食计划表格变化
             mealPlanCheck(){
                 let mealPlanTable = this.data.length ? 1 : '';
@@ -351,6 +345,10 @@
             },
             //  时间选择器的方法
             moment,
+            //  删除营养计划
+            deleteNutritionPlan,
+            //  新增营养计划
+            addNewLine,
         }
     };
 </script>
