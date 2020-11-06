@@ -211,7 +211,7 @@
                 //  供应商名称
                 supplierNameDecorator: ['supplierName', {
                     rules: [{
-                        required: true,
+                        required: false,
                         message: '请输入供应商名称'
                     },]
                 }],
