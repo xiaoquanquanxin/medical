@@ -28,13 +28,18 @@
         },
         {
             title: '周期/天',
-            width: 100,
+            width: 80,
             dataIndex: 'priod',
         },
         {
             title: '处方类型',
             width: 100,
             scopedSlots: { customRender: 'prescriptionType' },
+        },
+        {
+            title: '执行日期',
+            width: 100,
+            dataIndex: 'executionTime',
         },
     ];
 
