@@ -3,22 +3,16 @@
         <!--搜索相关-->
         <div class="a-input-group">
             <a-input class="lengthen-input-width" v-model="searchData.templateName" placeholder="请输入方案名称"/>
-            <a-select class="basic-select-width" v-model="searchData.energy" placeholder="请选择能量">
+            <a-select class="lengthen-select-width" v-model="searchData.energy" placeholder="请选择能量">
                 <a-select-option :value="item.id"
-                                 :key="item.id"
-                                 v-for="item in energyList"
+                                 v-for="item in energyListForDietarySearch"
                 >{{item.name}}
                 </a-select-option>
             </a-select>
-            <a-select class="lengthen-select-width" v-model="searchData.method" placeholder="请选择食物类型">
-                <a-select-option value="1">
-                    流食
-                </a-select-option>
-                <a-select-option value="2">
-                    普食
-                </a-select-option>
-            </a-select>
-            <a-select class="basic-select-width" placeholder="请选择医院" v-model="searchData.hospitalId"
+<!--            <a-select class="lengthen-select-width" v-model="searchData.method" placeholder="请选择食物类型">-->
+<!--                -->
+<!--            </a-select>-->
+            <a-select class="longer-select-width" placeholder="请选择医院" v-model="searchData.hospitalId"
             >
                 <a-select-option v-for="(item,index) in hospitalList"
                                  :key="index"
@@ -76,7 +70,7 @@
         onShowSizeChange,
     } from '@/utils/pagination.ts';
     import { threeRowSearch } from '@/utils/tableScroll';
-    import { templateTypeList, energyList, usageMethodList } from '../../../utils/constants';
+    import { templateTypeList, energyListForDietarySearch, usageMethodList } from '../../../utils/constants';
     import { requestHospitalGetList } from '../../../api/hospital';
     import { deleteSchemeFn, getSchemeListFn } from '../../../utils/scheme';
 
@@ -91,11 +85,11 @@
             dataIndex: 'energy',
             width: 150,
         },
-        {
-            title: '食物类型',
-            dataIndex: 'usageMethod',
-            width: 100,
-        },
+//        {
+//            title: '食物类型',
+//            dataIndex: 'usageMethod',
+//            width: 100,
+//        },
         {
             title: '疾病',
             dataIndex: 'icon',
@@ -114,8 +108,8 @@
             return {
                 //  处方类型下拉
                 templateTypeList,
-                //  能量下拉
-                energyList,
+                //	膳食的能量查询
+                energyListForDietarySearch,
 
                 //  医院列表
                 hospitalList: [],
