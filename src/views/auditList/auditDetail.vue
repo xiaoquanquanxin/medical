@@ -70,7 +70,7 @@
             </div>
             <!--能量表-->
             <EnergyTable
-                    :data-source="energyData"
+                    :dataSource="energyData"
             />
         </div>
         <!--驳回莫泰框-->
