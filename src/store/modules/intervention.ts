@@ -14,6 +14,9 @@ interface STATE {
 	mealData: any;
 
 	prescriptionType: number,
+
+	//	能量表格数据
+	energyData: any,
 }
 
 const state: STATE = {
@@ -30,6 +33,8 @@ const state: STATE = {
 	mealData: null,
 	//	处方类型
 	prescriptionType: 1,
+	//	能量表格数据
+	energyData: null,
 }
 const mutations = {
 	SET_CHOOSE_INTERVENTION_DATA: (state: STATE, chooseInterventionData: any) => {
@@ -49,6 +54,9 @@ const mutations = {
 	},
 	SET_PRESCRIPTION_TYPE: (state: STATE, prescriptionType: number) => {
 		state.prescriptionType = prescriptionType
+	},
+	SET_ENERGY_DATA: (state: STATE, energyData: number) => {
+		state.energyData = energyData
 	},
 }
 
@@ -74,6 +82,9 @@ const actions = {
 	},
 	setPrescriptionType: ({commit}: COMMIT_INTERFACE<STATE>, prescriptionType: number) => {
 		commit('SET_PRESCRIPTION_TYPE', prescriptionType);
+	},
+	setEnergyData: ({commit}: COMMIT_INTERFACE<STATE>, energyData: any) => {
+		commit('SET_ENERGY_DATA', energyData);
 	},
 
 }
