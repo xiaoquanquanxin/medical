@@ -253,12 +253,13 @@
                     const detailGoods = getDetailGoods(commodityTableData);
                     const plain = getPlain(timeTableData);
                     //  console.log(plain);
-                    //  return;
+                    const { usageMethod } = this.cnyyzcOralEditDataTitle;
                     detail.push({
                         detailGoods,
                         plain,
                         remark: '',
                         templateType: 2,
+                        usageMethod,
                     });
                 }
 
@@ -271,11 +272,13 @@
                     const detailGoods = getDetailGoods(commodityTableData);
                     const plain = getPlain(timeTableData);
                     //  console.log(detailGoods);
+                    const { usageMethod } = this.kqcnOralEditDataTitle;
                     detail.push({
                         detailGoods,
                         plain,
                         remark: '',
                         templateType: 1,
+                        usageMethod,
                     });
                 }
                 //  详情json，这是最早涛哥的版本
