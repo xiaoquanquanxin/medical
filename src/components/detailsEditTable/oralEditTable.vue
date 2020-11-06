@@ -335,7 +335,7 @@
             cnyyzcData(){
                 return this.$store.state.intervention.cnyyzcData;
             },
-            //  单元map
+            //  全部单位map
             unitTypeMap(){
                 return this.$store.state.constants.unitTypeMap;
             },
