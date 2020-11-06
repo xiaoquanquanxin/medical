@@ -8,9 +8,9 @@
                 :hover="false"
         >
             <!--商品名称-->
-            <div slot="commodityName" slot-scope="scope,sItem,sIndex,extra">
+            <div slot="goodsName" slot-scope="scope,sItem,sIndex,extra">
                 <div class="negative-margin-16">
-                    <div v-for="(item , index) in scope.list"
+                    <div v-for="(item , index) in scope.nutritionPlain"
                          class="negative-margin-item">
                         {{item.goodsName}}
                     </div>
@@ -19,9 +19,9 @@
             <!--配置量-->
             <div slot="quality" slot-scope="scope,sItem,sIndex,extra">
                 <div class="negative-margin-16">
-                    <div v-for="(item , index) in scope.list"
+                    <div v-for="(item , index) in scope.nutritionPlain"
                          class="negative-margin-item">
-                        {{item.dosage}}/{{item.uname}}
+                        {{item.configNum}}/{{item.configUnit}}
                     </div>
                 </div>
             </div>
@@ -49,8 +49,8 @@
                     scopedSlots: { customRender: 'quality' },
                 },
                 {
-                    title: '温水',
-                    dataIndex: 'warmWater',
+                    title: '温水/ml',
+                    dataIndex: 'configWater',
                     width: 100,
                 },
                 {
@@ -80,11 +80,20 @@
                 plain,
                 remark
             } = this.dataSource;
+            if (!plain.length) {
+                throw new Error('缺少数据');
+            }
+            const { nutritionPlain } = plain[0];
+            if (!nutritionPlain || !nutritionPlain.length) {
+                throw new Error('缺少数据');
+            }
+            const { configWater } = nutritionPlain[0];
             plain.forEach((item, index) => {
                 item.key = index;
+                item.configWater = configWater;
             });
             console.log(`备注是：${remark}`);
-            console.log(JSON.parse(JSON.stringify(this.dataSource.plain)));
+            console.log(JSON.parse(JSON.stringify(this.dataSource.plain[0].nutritionPlain[0])));
         }
     };
 </script>
