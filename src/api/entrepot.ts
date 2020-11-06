@@ -9,7 +9,7 @@ export function requestWarehousePage(data: any) {
 	});
 }
 
-//  新增仓库		✅，⚠️地区待检测
+//  新增仓库		✅
 export function requestWarehouseInsert(data: any) {
 	return request({
 		url: '/api/warehouse/insert',
@@ -18,7 +18,7 @@ export function requestWarehouseInsert(data: any) {
 	});
 }
 
-//  修改仓库信息	✅，⚠️同上
+//  修改仓库信息	✅
 export function requestWarehouseUpdate(data: any) {
 	return request({
 		url: '/api/warehouse/update',
