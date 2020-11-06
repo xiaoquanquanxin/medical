@@ -12,7 +12,7 @@
                 >
                     <a-select-option :value="item.id"
                                      v-for="item in mealPlanList"
-                    >{{item.name}}
+                    >{{item.energy}}
                     </a-select-option>
                 </a-select>
             </a-space>
@@ -25,14 +25,13 @@
                 :pagination="false"
         >
             <!--用餐内容-->
-            <div slot="goodsName" slot-scope="scope,sItem,sIndex,extra">
-                {{sItem.goodsName}}
+            <div slot="entryName" slot-scope="scope,sItem,sIndex,extra">
                 <a-input placeholder="请输入用餐内容"
-                         v-model="sItem.goodsName"
+                         v-model="sItem.entryName"
                 />
             </div>
             <!--用餐时间-->
-            <div slot="time" slot-scope="scope,sItem,sIndex,extra">
+            <div slot="usageTime" slot-scope="scope,sItem,sIndex,extra">
                 <a-time-picker
                         v-model="sItem.moment"
                         format="HH:mm"/>
@@ -44,9 +43,17 @@
                 </a-space>
             </div>
         </a-table>
+        <div class="a-input-group">
+            <br>
+            <a-space><a @click="addNewLine()">+新增</a></a-space>
+            <br>
+            <br>
+        </div>
     </div>
 </template>
 <script>
+    import moment from 'moment';
+    import { mapGetters, mapActions } from 'vuex';
     import { oneRowSearch } from '../../utils/tableScroll';
     import { requestPrescriptionPrescriptionTpl } from '../../api/userList/intervention';
     import {
@@ -93,6 +100,7 @@
 
                 //  营养计划下拉
                 mealPlanList: [],
+                mealPlanMap: {},
                 columns,
                 data: [],
             };
@@ -106,11 +114,21 @@
                 requestPrescriptionPrescriptionTpl(data)
                     .then(v => {
                         const { data } = v;
-                        console.log(data);
+                        data.forEach((item, index) => {
+                            item.key = item.id;
+                            item.list = JSON.parse(item.prescriptionContent);
+                            this.mealPlanMap[item.id] = item.list;
+                        });
+                        this.mealPlanList = data;
                     });
             },
             //  切换能量
-            energyChangeFn(value){
+            energyChangeFn(id){
+                const data = JSON.parse(JSON.stringify(this.mealPlanMap[id]));
+                data.forEach(item => {
+                    item.moment = moment(item.moment);
+                });
+                this.data = data;
 
             },
             //  删除营养计划
