@@ -324,11 +324,8 @@
         computed: {
             //  处方类型-处方类型 (1.院内配置,2门诊领药)
             prescriptionType(){
-                const { basicInfoEditData } = this.$store.state.intervention;
-                if (!basicInfoEditData) {
-                    return;
-                }
-                return basicInfoEditData[0].prescriptionType;
+                const { prescriptionType } = this.$store.state.intervention;
+                return prescriptionType;
             },
             //  被选中的处方-口服肠内营养补充数据
             kqcnData(){
