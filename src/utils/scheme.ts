@@ -36,7 +36,7 @@ export function getSchemeListFn() {
 		this.searchData,
 		//	@ts-ignore
 		paginationEncode(this.pagination));
-	console.log(JSON.parse(JSON.stringify(searchDta)));
+	//	console.log(JSON.parse(JSON.stringify(searchDta)));
 	requestPrescriptionTemplatePage(searchDta)
 		.then(v => {
 			const {data} = v;
