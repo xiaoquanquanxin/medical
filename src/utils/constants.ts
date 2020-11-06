@@ -45,9 +45,23 @@ export const energyMap = {
 }
 //	流食能量
 export const liquidEnergyList = [
-	{id: '流食【300kcal】', key: 1, name: '流食【300kcal】',},
-	{id: '流食【500kcal】', key: 2, name: '流食【500kcal】',},
+	{id: '300kcal', key: 1, name: '300kcal',},
+	{id: '500kcal', key: 2, name: '500kcal',},
 ]
+//	流食、普食下拉
+export const foodTypeList = [
+	{id: '流食', key: 1, name: '流食'},
+	{id: '普食', key: 2, name: '普食'},
+]
+//	膳食的能量查询
+export const energyListForDietarySearch = [
+	{id: '流食【300kcal】', key: 1, name: '流食【300kcal】'},
+	{id: '流食【500kcal】', key: 2, name: '流食【500kcal】'},
+	{id: '普食【300kcal】', key: 3, name: '普食【300kcal】'},
+	{id: '普食【500kcal】', key: 4, name: '普食【500kcal】'},
+]
+
+
 //	食用方法下拉
 export const usageMethodList = [
 	{id: 1, key: 1, name: '口服',},
