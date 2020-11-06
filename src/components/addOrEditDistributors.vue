@@ -54,7 +54,7 @@
                     </a-select-option>
                 </a-select>
             </a-form-item>
-            <a-form-item label="渠道商角色" has-feedback v-if="!channelId">
+            <a-form-item label="渠道商角色" v-if="!channelId">
                 <a-select class="add-form-input"
                           placeholder="渠道商角色"
                           v-decorator="roleIdDecorator"
@@ -245,6 +245,7 @@
                 return new Promise((resolve, reject) => {
                     this.form.validateFields((err, values) => {
                         if (err) {
+                            console.log(err);
                             reject();
                             return;
                         }
