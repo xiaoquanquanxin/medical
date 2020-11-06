@@ -72,10 +72,19 @@
             ];
             return {
                 columns,
+
             };
         },
         created(){
-            console.log(JSON.parse(JSON.stringify(this.dataSource)));
+            const {
+                plain,
+                remark
+            } = this.dataSource;
+            plain.forEach((item, index) => {
+                item.key = index;
+            });
+            console.log(`备注是：${remark}`);
+            console.log(JSON.parse(JSON.stringify(this.dataSource.plain)));
         }
     };
 </script>
