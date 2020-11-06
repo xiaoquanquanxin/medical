@@ -62,7 +62,10 @@
         },
         created(){
             console.log('🍉');
-            const { templateType, usageMethod } = this.dataSource;
+            const { templateType, usageMethod, detailGoods } = this.dataSource;
+            detailGoods.forEach((item, index) => {
+                item.key = index;
+            });
             //  console.log(JSON.parse(JSON.stringify(this.dataSource)));
             this.templateName = this.templateTypeMap[templateType].name;
             this.usageMethod = this.usageMethodMap[usageMethod || 1].name;
