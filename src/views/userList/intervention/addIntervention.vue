@@ -19,7 +19,9 @@
                 ref="kqcnOralEditTableRef"
         />
         <br>
-        <MealEditTable/>
+        <MealEditTable
+                ref="refMealEditTable"
+        />
         <br>
         <a-button type="primary" @click="saveIntervention">保存</a-button>
     </div>
@@ -35,6 +37,7 @@
     import OralEditTable from '@/components/detailsEditTable/oralEditTable.vue';
     //  可编辑的膳食营养计划
     import MealEditTable from '@/components/detailsEditTable/mealEditTable.vue';
+    import moment from 'moment';
 
     export default {
         components: {
@@ -59,13 +62,13 @@
                 return this.$store.state.intervention.basicInfoEditData;
             },
             //  被选中的处方-口服肠内营养补充数据
-            kqcnData(){
-                return this.$store.state.intervention.kqcnData;
-            },
+//            kqcnData(){
+//                return this.$store.state.intervention.kqcnData;
+//            },
             //  被选中的处方-肠内营养支持数据
-            cnyyzcData(){
-                return this.$store.state.intervention.cnyyzcData;
-            },
+//            cnyyzcData(){
+//                return this.$store.state.intervention.cnyyzcData;
+//            },
             //  被选中的处方-膳食营养计划
             mealData(){
                 return this.$store.state.intervention.mealData;
@@ -99,35 +102,18 @@
         },
         created(){
             console.log('参数', this.$route.params);
-            //  如果是编辑
-            if (this.$route.params.interventionDetailId) {
-//                //  设置能量表数据
-//                this.setEnergyDetail([{
-//                    key: 1,
-//                    energy: 123,
-//                    protein: 234,
-//                    fat: 345,
-//                    carbohydrates: 456,
-//                }]);
-            }
+            //  没有编辑
             this.setBasicInfoEditData([{
                 key: 1,
-                prescriptionName: '处方02',
-                priod: '1',
+                prescriptionName: '',
+                priod: '',
                 prescriptionType: 1,
+                executionTime: '2020-11-06',
+                executionTimeMoment: moment(new Date()),
             }]);
-            this.searchFn();
         },
 
         methods: {
-            ...mapActions('intervention', [
-                //  处方头部信息
-                'setBasicInfoEditData',
-            ]),
-            //  主要请求
-            searchFn(){
-
-            },
             //  保存
             saveIntervention(){
                 //  病人id
@@ -140,13 +126,22 @@
                     prescriptionType,
                     //  处方名称
                     prescriptionName,
+                    //  执行日期的时间格式
+                    executionTimeMoment,
                 } = basicInfoEditData;
+                //  执行日期
+                const executionTime = executionTimeMoment.format('YYYY-MM-DD');
+                console.log(prescriptionName, priod, executionTime);
                 if (prescriptionName.trim() === '') {
                     this.$message.error('请填写处方名称');
                     return;
                 }
                 if (!priod) {
                     this.$message.error('请填写处方周期');
+                    return;
+                }
+                if (executionTime.trim() === '') {
+                    this.$message.error('请填写执行日期');
                     return;
                 }
                 //  金额
@@ -283,7 +278,7 @@
                         templateType: 1,
                     });
                 }
-                //  详情json
+                //  详情json，这是最早涛哥的版本
                 const prescriptionDetail = {
                     //  口服肠内
                     kqcnyybc: {
@@ -304,12 +299,28 @@
                     this.$message.error('请填写方案');
                     return;
                 }
-                const nutrition = [];
+
+                //  膳食营养方案
+                const nutrition = this.$refs.refMealEditTable.data.map(item => {
+                    const {
+                        entryName,
+                        quantityUsed,
+                        usageTime
+                    } = item;
+                    return {
+                        entryName,
+                        quantityUsed: quantityUsed || '',
+                        usageTime
+                    };
+                });
+                console.log(JSON.parse(JSON.stringify(nutrition)));
+
                 const saveData = {
                     patientId,
                     priod,
                     prescriptionType,
                     prescriptionName,
+                    executionTime,
                     amountPayable,
                     carbohydrates,
                     energy,
@@ -330,7 +341,11 @@
                     .catch(err => {
                         console.log(err);
                     });
-            }
+            },
+            ...mapActions('intervention', [
+                //  处方头部信息
+                'setBasicInfoEditData',
+            ]),
         }
     };
 </script>
