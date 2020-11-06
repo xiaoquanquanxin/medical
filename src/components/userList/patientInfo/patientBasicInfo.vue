@@ -10,7 +10,8 @@
                     :column="3"
                     size="small"
             >
-                <a-descriptions-item label="姓名">
+                <a-descriptions-item>
+                    <div slot="label" class="descriptions-require require-left-34">姓名</div>
                     <a-input
                             v-if="activeElementId === 0 ||!patientBasicInfo.name"
                             placeholder="请输入姓名"
@@ -24,7 +25,8 @@
                        class="description-content"
                     >{{patientBasicInfo.name}}</p>
                 </a-descriptions-item>
-                <a-descriptions-item label="性别">
+                <a-descriptions-item>
+                    <div slot="label" class="descriptions-require require-left-34">性别</div>
                     <a-select
                             style="width:100%"
                             v-if="activeElementId === 1 ||!patientBasicInfo.sex"
@@ -41,7 +43,8 @@
                        class="description-content"
                     >{{patientBasicInfo.sex===1?'男':'女'}}</p>
                 </a-descriptions-item>
-                <a-descriptions-item label="年龄">
+                <a-descriptions-item>
+                    <div slot="label" class="descriptions-require require-left-34">年龄</div>
                     <a-input
                             v-if="activeElementId === 3 ||!patientBasicInfo.birth"
                             placeholder="请输入年龄"
@@ -55,7 +58,8 @@
                        class="description-content"
                     >{{patientBasicInfo.birth}}</p>
                 </a-descriptions-item>
-                <a-descriptions-item label="身高">
+                <a-descriptions-item>
+                    <div slot="label" class="descriptions-require require-left-34">身高</div>
                     <a-input
                             v-if="activeElementId === 4 ||!patientBasicInfo.height"
                             placeholder="请输入身高"
@@ -69,7 +73,8 @@
                        class="description-content"
                     >{{patientBasicInfo.height}}</p>
                 </a-descriptions-item>
-                <a-descriptions-item label="体重">
+                <a-descriptions-item>
+                    <div slot="label" class="descriptions-require require-left-34">身高</div>
                     <a-input
                             v-if="activeElementId === 5 ||!patientBasicInfo.weight"
                             placeholder="请输入体重"
@@ -83,10 +88,12 @@
                        class="description-content"
                     >{{patientBasicInfo.weight}}</p>
                 </a-descriptions-item>
-                <a-descriptions-item label="BMI">
+                <a-descriptions-item>
+                    <div slot="label" class="descriptions-require require-left-34">BMI</div>
                     <p class="description-content">{{bmi}}</p>
                 </a-descriptions-item>
-                <a-descriptions-item label="身份证号">
+                <a-descriptions-item>
+                    <div slot="label" class="descriptions-require require-left-64">身份证号</div>
                     <a-input
                             v-if="activeElementId === 7 ||!patientBasicInfo.idCard"
                             placeholder="请输入身份证号"
@@ -128,7 +135,8 @@
                        class="description-content"
                     >{{patientBasicInfo.address}}</p>
                 </a-descriptions-item>
-                <a-descriptions-item label="电话">
+                <a-descriptions-item>
+                    <div slot="label" class="descriptions-require require-left-34">电话</div>
                     <a-input
                             v-if="activeElementId === 10 ||!patientBasicInfo.phone"
                             placeholder="请输入电话"
@@ -160,7 +168,8 @@
                 <a-descriptions-item label="就诊号">
                     {{patientBasicInfo.jzbh}}
                 </a-descriptions-item>
-                <a-descriptions-item label="就诊医院">
+                <a-descriptions-item>
+                    <div slot="label" class="descriptions-require require-left-64">就诊医院</div>
                     <a-select style="min-width: 100%;"
                               placeholder="请输入就诊医院"
                               v-model="patientBasicInfo.departTreatment"
@@ -174,7 +183,8 @@
                         </a-select-option>
                     </a-select>
                 </a-descriptions-item>
-                <a-descriptions-item label="就诊科室">
+                <a-descriptions-item>
+                    <div slot="label" class="descriptions-require require-left-64">就诊科室</div>
                     <a-select style="min-width: 100%;"
                               placeholder="请选择就诊科室"
                               v-model="patientBasicInfo.hospitalTreatment"
@@ -330,7 +340,8 @@
                     size="small"
             >
                 <!--主管医生-->
-                <a-descriptions-item label="主管医生">
+                <a-descriptions-item>
+                    <div slot="label" class="descriptions-require require-left-64">主管医生</div>
                     <a-select style="min-width: 100%;"
                               placeholder="请选择主管医生"
                               v-model="patientBasicInfo.doctorId"
@@ -344,7 +355,8 @@
                     </a-select>
                 </a-descriptions-item>
                 <!--主管医生-->
-                <a-descriptions-item label="营养师">
+                <a-descriptions-item>
+                    <div slot="label" class="descriptions-require require-left-50">营养师</div>
                     <a-select style="min-width: 100%;"
                               placeholder="请选择营养师"
                               v-model="patientBasicInfo.nutritionistId"
@@ -368,7 +380,14 @@
     import { descriptionsMethods } from '@/utils/patientInfo';
     import { requestPatientSelectDoctorByHospital } from '../../../api/userList/userList';
 
+    //  import PatientInfoLabel from '@/components/userList/patientInfo/patientInfoLabel.vue';
+
+    //  医院下掉科室，需要调取木木掉接口
+    //  病人信息组件
     export default {
+        components: {
+//            PatientInfoLabel,
+        },
         computed: {
             //  基础信息，请求来了就会出现数据
             patientBasicInfo(){
@@ -386,6 +405,7 @@
         },
         data(){
             return {
+//                patientInfoLabel: PatientInfoLabel,
                 //  编辑的index
                 activeElementId: null,
                 //  全部科室列表
@@ -602,8 +622,32 @@
             ...descriptionsMethods,
         }
     };
-    //  todo    医院下掉科室，需要调取木木掉接口
 </script>
+<style scoped>
+    .descriptions-require {
+        position: relative;
+    }
+    
+    .descriptions-require::after {
+        content: '*';
+        display: block;
+        color: red;
+        position: absolute;
+        top: -2px;
+    }
+    
+    .descriptions-require.require-left-34::after {
+        left: 34px;
+    }
+    
+    .descriptions-require.require-left-50::after {
+        left: 50px;
+    }
+    
+    .descriptions-require.require-left-64::after {
+        left: 64px;
+    }
+</style>
 
 
 
