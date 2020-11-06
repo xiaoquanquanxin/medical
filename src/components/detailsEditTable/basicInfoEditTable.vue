@@ -44,11 +44,12 @@
             <!--执行日期-->
             <div slot="executionTime" slot-scope="scope,sItem,sIndex,extra">
                 <a-date-picker
+                        v-model="scope.executionTimeMoment"
                         class="lengthen-select-width"
                         placeholder="请选择执行日期"
                         :disabledDate="disabledDateForExecutionTime"
-                        @change="executionTimeChangeFn"
                 />
+                <!--                @change="executionTimeChangeFn"-->
             </div>
         </a-table>
     </div>
@@ -111,16 +112,16 @@
             changeFn(value){
                 this.setPrescriptionType(value);
             },
-
             //  执行日期切换
-            executionTimeChangeFn(value, executionTime){
-                const data = Object.assign({}, this.basicInfoEditData[0], { executionTime });
-                this.setBasicInfoEditData([data]);
-            },
+//            executionTimeChangeFn(value, executionTime){
+//                const data = Object.assign({}, this.basicInfoEditData[0], { executionTime });
+//                this.setBasicInfoEditData([data]);
+//            },
             //  执行日期选择规则
             disabledDateForExecutionTime(current){
                 return current && current <= moment(new Date(new Date().getTime() - 60 * 60 * 24));
-            }
+            },
+            moment,
         }
     };
 </script>
