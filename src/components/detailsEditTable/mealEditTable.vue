@@ -11,7 +11,7 @@
                         @change="energyChangeFn"
                 >
                     <a-select-option :value="item.id"
-                                     v-for="item in liquidEnergyList"
+                                     v-for="item in mealPlanList"
                     >{{item.name}}
                     </a-select-option>
                 </a-select>
@@ -47,10 +47,14 @@
     </div>
 </template>
 <script>
-    import { liquidEnergyList, usageMethodList } from '../../utils/constants';
     import { oneRowSearch } from '../../utils/tableScroll';
-    import ChoosePlanBox from './choosePlanBox';
     import { requestPrescriptionPrescriptionTpl } from '../../api/userList/intervention';
+    import {
+        //  删除营养计划
+        deleteNutritionPlan,
+        //  新增营养计划
+        addNewLine,
+    } from '../../utils/mealPlan';
 
     const columns = [
         {
@@ -61,11 +65,11 @@
         {
             title: '用餐内容',
             width: 200,
-            scopedSlots: { customRender: 'goodsName' },
+            scopedSlots: { customRender: 'entryName' },
         },
         {
             title: '用餐时间',
-            scopedSlots: { customRender: 'time' },
+            scopedSlots: { customRender: 'usageTime' },
             width: 200,
         },
         {
@@ -75,15 +79,6 @@
         },
     ];
     export default {
-        components: { ChoosePlanBox },
-        computed: {
-            //  处方类型-处方类型 (1.院内配置,2门诊领药)
-            prescriptionType(){
-                const { prescriptionType } = this.$store.state.intervention;
-                console.log(prescriptionType);
-                return prescriptionType;
-            },
-        },
         data(){
             return {
                 //  选择方案数据
@@ -95,27 +90,33 @@
                 },
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
                 scroll: oneRowSearch(columns),
+
+                //  营养计划下拉
+                mealPlanList: [],
                 columns,
                 data: [],
-                //  能量下拉
-                liquidEnergyList,
-                //  食用方法下拉
-                usageMethodList,
             };
         },
+        created(){
+            this.searchFn();
+        },
         methods: {
-            //  切换能量
-            energyChangeFn(energy){
-                const { prescriptionType } = this.prescriptionType;
-                //  console.log(JSON.parse(JSON.stringify(this.choosePlanData)));
-                requestPrescriptionPrescriptionTpl({ energy, prescriptionType, templateType: 3 })
+            searchFn(){
+                const data = { templateType: 3 };
+                requestPrescriptionPrescriptionTpl(data)
                     .then(v => {
                         const { data } = v;
-                        const { mealPlanTableData } = JSON.parse(item.prescriptionContent);
-                        console.log(JSON.parse(JSON.stringify(mealPlanTableData)));
-                        this.data = mealPlanTableData;
+                        console.log(data);
                     });
-            }
+            },
+            //  切换能量
+            energyChangeFn(value){
+
+            },
+            //  删除营养计划
+            deleteNutritionPlan,
+            //  新增营养计划
+            addNewLine,
         }
     };
 </script>
