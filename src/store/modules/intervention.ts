@@ -57,7 +57,10 @@ const actions = {
 	setChooseInterventionData: ({commit}: COMMIT_INTERFACE<STATE>, chooseInterventionData: any) => {
 		commit('SET_CHOOSE_INTERVENTION_DATA', chooseInterventionData);
 	},
-	setBasicInfoEditData: ({commit}: COMMIT_INTERFACE<STATE>, basicInfoEditData: any) => {
+	setBasicInfoEditData: ({commit}: COMMIT_INTERFACE<STATE>, basicInfoEditData: [any]) => {
+		if (!Array.prototype.isPrototypeOf(basicInfoEditData)) {
+			throw new Error(`录入错误的类型:basicInfoEditData`)
+		}
 		commit('SET_BASIC_INFO_EDIT_TABLE', basicInfoEditData);
 	},
 	setKqcnData: ({commit}: COMMIT_INTERFACE<STATE>, kqcnData: any) => {
