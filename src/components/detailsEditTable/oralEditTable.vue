@@ -73,6 +73,13 @@
                                      data-msg="门诊领药"
                             />
                         </div>
+                        <!--小计-->
+                        <div slot="subtotal" slot-scope="scope,sItem,sIndex,extra" v-if="commodityTableData.length">
+                            <span v-for="item in sItem.uintListVos"
+                                  v-if="item.id === sItem.purchaseUnitCheckId">
+                                {{sItem.subtotal = (sItem.quantity * item.unitPrice || 0).toFixed(2)}}
+                            </span>
+                        </div>
                         <!--操作-->
                         <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
                             <a-space size="small">
@@ -275,43 +282,15 @@
             scopedSlots: { customRender: 'quantity' },
         },
         {
-            title: '操作',
-            width: 150,
-            scopedSlots: { customRender: 'operation' },
-        },
-    ];
-
-    const basicColumns2 = [
-        {
-            title: '商品名称',
-            width: 100,
-            dataIndex: 'goodsName'
-        },
-        {
-            title: '购买单位',
-            width: 100,
-            scopedSlots: { customRender: 'buyUnit' }
-        },
-        {
-            title: '商品单价',
-            width: 100,
-            scopedSlots: { customRender: 'price' }
-        },
-        {
-            title: '数量',
-            width: 100,
-            scopedSlots: { customRender: 'count' }
-        },
-        {
             title: '小计',
             width: 100,
             scopedSlots: { customRender: 'subtotal' }
         },
         {
             title: '操作',
-            width: 100,
-            scopedSlots: { customRender: 'operation' }
-        }
+            width: 150,
+            scopedSlots: { customRender: 'operation' },
+        },
     ];
     //  可编辑的第一组数据
     export default {
@@ -365,7 +344,6 @@
                 //  食用方法下拉
                 usageMethodList,
                 commodityTableColumns,
-                basicColumns2,
                 //  基础表格数据
                 commodityTableData: [],
                 //  选择时间表格数据
@@ -453,7 +431,7 @@
             choosePlanFn(){
                 this.modal1 = true;
             },
-            //  关闭选择方案
+            //  关闭选择方案                  ✅私有
             choosePlanModalCheck(refChoosePlanBox){
                 //  去弹框组件中拿数据
                 const promise = this.$refs[refChoosePlanBox].handleSubmit();
@@ -464,7 +442,7 @@
                     //  1.口服；2.肠内
                     const { commodityTableData, timeTableData } = (templateType === 1 ? this.kqcnData : this.cnyyzcData);
                     console.log('被选中的方案');
-                    //  console.log((JSON.stringify(commodityTableData)));
+                    console.log(JSON.parse(JSON.stringify(commodityTableData))[0]);
                     this.commodityTableData = commodityTableData;
                     //  console.log(JSON.parse(JSON.stringify(timeTableData)));
                     this.timeTableData = timeTableData;
