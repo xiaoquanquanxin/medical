@@ -189,6 +189,8 @@
         },
         created(){
             console.log('编辑detailId', this.detailId);
+            //  清空能量
+            this.setEnergyData(null);
             this.searchFn();
         },
         methods: {
@@ -227,13 +229,12 @@
                         //  合计
                         const { energy, protein, fat, carbohydrates } = data;
                         //  设置能量数据
-                        this.setEnergyData([{
-                            key: 1,
+                        this.setEnergyData({
                             energy,
                             protein,
                             fat,
                             carbohydrates,
-                        }]);
+                        });
                         console.log(JSON.parse(JSON.stringify(data)));
                     });
             },
