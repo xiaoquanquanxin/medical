@@ -35,7 +35,17 @@
                             <span>膳食营养计划</span>
                             <a-select
                                     class="lengthen-select-width"
-                                    v-model="tableForm.energy"
+                                    v-model="tableForm.customFoodType"
+                                    placeholder="请选择食物类型"
+                            >
+                                <a-select-option :value="item.id"
+                                                 v-for="item in foodTypeList"
+                                >{{item.name}}
+                                </a-select-option>
+                            </a-select>
+                            <a-select
+                                    class="lengthen-select-width"
+                                    v-model="tableForm.customEnergy"
                                     placeholder="请选择能量"
                             >
                                 <a-select-option :value="item.id"
@@ -53,13 +63,13 @@
                             :pagination="false"
                     >
                         <!--用餐内容-->
-                        <div slot="goodsName" slot-scope="scope,sItem,sIndex,extra">
+                        <div slot="entryName" slot-scope="scope,sItem,sIndex,extra">
                             <a-input placeholder="请输入用餐内容"
-                                     v-model="sItem.goodsName"
+                                     v-model="sItem.entryName"
                             />
                         </div>
                         <!--用餐时间-->
-                        <div slot="time" slot-scope="scope,sItem,sIndex,extra">
+                        <div slot="usageTime" slot-scope="scope,sItem,sIndex,extra">
                             <a-time-picker
                                     v-model="sItem.moment"
                                     format="HH:mm"/>
@@ -71,6 +81,7 @@
                             </a-space>
                         </div>
                     </a-table>
+                    <a-space><a @click="addNewLine()">新增</a></a-space>
                 </div>
             </a-form-item>
             <a-row style="margin-top: -20px;margin-bottom:20px;">
@@ -96,9 +107,8 @@
     import { twoRowSearch } from '@/utils/tableScroll';
     import { formItemLayout } from '@/utils/layout.ts';
     import GoBackButton from '@/components/goBackButton.vue';
-    import { liquidEnergyList, usageMethodList } from '../../../utils/constants';
+    import { liquidEnergyList, usageMethodList, foodTypeList } from '../../../utils/constants';
     import { requestHospitalGetList } from '../../../api/hospital';
-    import { requestGoodsListByHospital } from '../../../api/commodity/commodityList';
     import {
         requestPrescriptionTemplateGet,
         requestPrescriptionTemplateInsert,
@@ -114,11 +124,11 @@
         {
             title: '用餐内容',
             width: 200,
-            scopedSlots: { customRender: 'goodsName' },
+            scopedSlots: { customRender: 'entryName' },
         },
         {
             title: '用餐时间',
-            scopedSlots: { customRender: 'time' },
+            scopedSlots: { customRender: 'usageTime' },
             width: 200,
         },
         {
@@ -137,6 +147,20 @@
             this.form = this.$form.createForm(this);
         },
         data(){
+            const data = [
+                {
+                    key: 1,
+                    entryName: '',
+                    entryName: '',
+                    usageTime: ''
+                },
+                {
+                    key: 2,
+                    entryName: '',
+                    entryName: '',
+                    usageTime: ''
+                }
+            ];
             return {
                 //  医院下拉
                 hospitalList: [],
@@ -144,6 +168,8 @@
                 liquidEnergyList,
                 //  食用方法下拉
                 usageMethodList,
+                //	流食、普食下拉
+                foodTypeList,
 
                 dietaryId: this.$route.params.dietaryId,
 
@@ -164,20 +190,19 @@
                     },]
                 }],
 
-                data: [],
+                data,
                 columns,
 
                 //  表单中表格的数据 ：膳食营养计划
                 tableForm: {
-                    //  医院
-                    //  hospitalId: undefined,
-                    //  hospitalName        医院名
-                    //    处方名
-//                    templateName: '膳食营养计划',
+                    //  处方名
+                    templateName: undefined,
+                    //  食物类型
+                    customFoodType: undefined,
+                    //  能量
+                    customEnergy: undefined,
                     //  处方类型
                     templateType: 3,
-                    //  能量
-                    energy: undefined,
                 },
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
                 scroll: twoRowSearch(columns),
@@ -205,10 +230,15 @@
                         const { data } = v;
                         console.log(data);
                         const tableForm = this.tableForm;
-                        const { prescriptionContent, templateName, energy, hospitalId, } = data;
+                        const { prescriptionContent, energy, templateName, hospitalId, } = data;
+                        const list = energy.split('【');
+                        //  食物类型
+                        tableForm.customFoodType = list[0];
+                        //  能量
+                        tableForm.customEnergy = list[1].split('】')[0];
                         tableForm.templateName = templateName;
-                        tableForm.energy = energy;
                         tableForm.hospitalId = hospitalId;
+                        console.log(data);
                         const { mealPlanTableData } = JSON.parse(prescriptionContent);
                         //  console.log(mealPlanTableData);
                         mealPlanTableData.forEach((item, index) => {
@@ -228,10 +258,15 @@
                         this.tableForm.hospitalName = item.hospitalName;
                     }
                 });
-                requestGoodsListByHospital(value)
-                    .then(data => {
-                        this.data = data;
-                    });
+            },
+            //  新增营养计划
+            addNewLine(){
+                this.data.push({
+                    key: this.data.length + 1,
+                    entryName: '',
+                    quantityUsed: '',
+                    usageTime: ''
+                });
             },
             //  删除营养计划
             deleteNutritionPlan(sItem, sIndex){
@@ -242,9 +277,9 @@
                 let mealPlanTable = this.data.length ? 1 : '';
                 for (let i = 0; i < this.data.length; i++) {
                     const {
-                        goodsName
+                        entryName
                     } = this.data[i];
-                    if (!goodsName) {
+                    if (!entryName) {
                         mealPlanTable = '';
                         break;
                     }
@@ -256,25 +291,51 @@
             //  表单提交 保存
             handleSubmit(e){
                 e.preventDefault();
+                const {
+                    hospitalId,
+                } = this.tableForm;
+                //  必须选择医院
+                if (!hospitalId) {
+                    this.$message.error('请先选择医院');
+                    return;
+                }
+                //  至少要输入处方模板名称
+                if (!this.tableForm.templateName) {
+                    this.$message.error('请输入处方模板名称');
+                    return false;
+                }
+                //  至少要选择食物类型
+                if (!this.tableForm.customFoodType) {
+                    this.$message.error('请选择食物类型');
+                    return false;
+                }
+                //  至少要选择能量
+                if (!this.tableForm.customEnergy) {
+                    this.$message.error('请选择能量');
+                    return false;
+                }
                 this.mealPlanCheck();
                 this.data.forEach(item => {
                     const time = new Date(item.moment);
-                    item.time = `${time.getHours()}:${time.getMinutes()}`;
+                    item.usageTime = `${time.getHours()}:${time.getMinutes()}`;
                 });
-                console.log(JSON.parse(JSON.stringify(this.data)));
-                const prescriptionContent = {
-                    mealPlanTableData: this.data,
-                };
-                this.tableForm.prescriptionContent = JSON.stringify(prescriptionContent);
-                console.log(JSON.parse(JSON.stringify(this.tableForm)));
+                //  console.log(JSON.stringify(this.data));
+                const prescriptionContent = JSON.stringify(this.data);
+                console.log(JSON.parse(prescriptionContent));
+                const data = Object.assign({}, this.tableForm,
+                    {
+                        prescriptionContent,
+                        energy: `${this.tableForm.customFoodType}【${this.tableForm.customEnergy}】`,
+                        customEnergy: undefined,
+                        customFoodType: undefined
+                    });
+                console.log(JSON.parse(JSON.stringify(data)));
                 (() => {
                     //  如果是新增
                     if (!this.dietaryId) {
-                        return requestPrescriptionTemplateInsert(this.tableForm);
+                        return requestPrescriptionTemplateInsert(data);
                     }
-                    const data = Object.assign({
-                        id: this.dietaryId
-                    }, this.tableForm);
+                    data.id = this.dietaryId;
                     //  如果是编辑
                     return requestPrescriptionTemplateUpdate(data);
                 })()
