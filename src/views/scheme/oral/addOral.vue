@@ -410,7 +410,7 @@
             templateId(){
                 return this.$route.params.templateId;
             },
-            //  单元map
+            //  全部单位map
             unitTypeMap(){
                 return this.$store.state.constants.unitTypeMap;
             },
