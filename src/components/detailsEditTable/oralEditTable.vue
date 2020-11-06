@@ -278,7 +278,7 @@
         },
         {
             title: '数量',
-            width: 150,
+            width: 120,
             scopedSlots: { customRender: 'quantity' },
         },
         {
@@ -318,6 +318,30 @@
             unitTypeMap(){
                 return this.$store.state.constants.unitTypeMap;
             },
+            //  计算能量
+            calcEnergy(){
+                let unitCarbohydrate = 0;
+                let unitEnergy = 0;
+                let unitFat = 0;
+                let unitProtein = 0;
+                this.commodityTableData.forEach(item => {
+                    const { purchaseUnitCheckId, quantity } = item;
+                    item.uintListVos.forEach(_item => {
+                        if (purchaseUnitCheckId === _item.id) {
+                            unitCarbohydrate += quantity * _item.unitCarbohydrate;
+                            unitEnergy += quantity * _item.unitEnergy;
+                            unitFat += quantity * _item.unitFat;
+                            unitProtein += quantity * _item.unitProtein;
+                        }
+                    });
+                });
+                return {
+                    unitCarbohydrate,
+                    unitEnergy,
+                    unitFat,
+                    unitProtein,
+                };
+            }
         },
         data(){
             const loginInfo = getLoginInfo();
@@ -412,6 +436,12 @@
                 console.log(value);
                 this.resetTableData();
                 this.setPrescriptionType(value);
+            },
+            //  计算能量
+            calcEnergy(value){
+                console.log('计算能量');
+                const { templateType } = this.dataTitle;
+                this.setEnergyDataByTemplateType(Object.assign({templateType},value))
             }
         },
         created(){
@@ -521,6 +551,8 @@
             ...mapActions('intervention', [
                 //  更换处方类型
                 'setPrescriptionType',
+                //	根据templateType，分别设置肠内、口腔的数据
+                'setEnergyDataByTemplateType',
             ]),
         },
     };
