@@ -2,7 +2,7 @@
     <div>
         <a-table
                 :columns="columns"
-                :data-source="dataSource"
+                :data-source="dataSource.plain"
                 :pagination="false"
                 bordered
                 :hover="false"
@@ -35,13 +35,13 @@
             const columns = [
                 {
                     title: '时间',
-                    dataIndex: 'time',
+                    dataIndex: 'usageTime',
                     width: 100,
                 },
                 {
                     title: '商品名称',
                     width: 100,
-                    scopedSlots: { customRender: 'commodityName' },
+                    scopedSlots: { customRender: 'goodsName' },
                 },
                 {
                     title: '配置量',
@@ -74,11 +74,9 @@
                 columns,
             };
         },
-//        created(){
-//            setTimeout(() => {
-//                console.log(JSON.parse(JSON.stringify(this.dataSource[0].list)));
-//            }, 1000);
-//        }
+        created(){
+            console.log(JSON.parse(JSON.stringify(this.dataSource)));
+        }
     };
 </script>
 <style scoped>
