@@ -16,8 +16,8 @@
         </div>
         <!--状态-->
         <div slot="status" slot-scope="scope,sItem,sIndex,extra">
-            <span v-if="scope.status">开</span>
-            <span v-else>关</span>
+            <span v-if="+scope.status === 1">关</span>
+            <span v-else>开</span>
         </div>
     </a-table>
 </template>
