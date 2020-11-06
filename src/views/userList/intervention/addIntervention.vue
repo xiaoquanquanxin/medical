@@ -294,12 +294,17 @@
                     cnyyzc: {
                         commodity: cnyyzcCommodity,
                         dataTitle: this.cnyyzcOralEditDataTitle,
-                        timeTableData: this.cnyyzcData.timeTableData
+                        timeTableData: cnyyzcData.timeTableData
                     },
                 };
 
                 console.log(cnyyzcData.commodityTableData);
                 console.log(kqcnData.commodityTableData);
+                if (detail.length === 0) {
+                    this.$message.error('请填写方案');
+                    return;
+                }
+                const nutrition = [];
                 const saveData = {
                     patientId,
                     priod,
@@ -311,6 +316,7 @@
                     fat,
                     protein,
                     detail,
+                    nutrition,
                     //  prescriptionDetail: JSON.stringify(prescriptionDetail)
                 };
                 console.log(JSON.stringify(saveData));
