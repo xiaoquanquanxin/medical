@@ -11,7 +11,7 @@
                     size="small"
             >
                 <a-descriptions-item>
-                    <div slot="label" class="descriptions-require require-left-34">姓名</div>
+                    <div slot="label" class="descriptions-label require-left-34">姓名</div>
                     <a-input
                             v-if="activeElementId === 0 ||!patientBasicInfo.name"
                             placeholder="请输入姓名"
@@ -26,7 +26,7 @@
                     >{{patientBasicInfo.name}}</p>
                 </a-descriptions-item>
                 <a-descriptions-item>
-                    <div slot="label" class="descriptions-require require-left-34">性别</div>
+                    <div slot="label" class="descriptions-label require-left-34">性别:</div>
                     <a-select
                             style="width:100%"
                             v-if="activeElementId === 1 ||!patientBasicInfo.sex"
@@ -44,7 +44,7 @@
                     >{{patientBasicInfo.sex===1?'男':'女'}}</p>
                 </a-descriptions-item>
                 <a-descriptions-item>
-                    <div slot="label" class="descriptions-require require-left-34">年龄</div>
+                    <div slot="label" class="descriptions-label require-left-34">年龄:</div>
                     <a-input
                             v-if="activeElementId === 3 ||!patientBasicInfo.birth"
                             placeholder="请输入年龄"
@@ -59,7 +59,7 @@
                     >{{patientBasicInfo.birth}}</p>
                 </a-descriptions-item>
                 <a-descriptions-item>
-                    <div slot="label" class="descriptions-require require-left-34">身高</div>
+                    <div slot="label" class="descriptions-label require-left-34">身高:</div>
                     <a-input
                             v-if="activeElementId === 4 ||!patientBasicInfo.height"
                             placeholder="请输入身高"
@@ -74,7 +74,7 @@
                     >{{patientBasicInfo.height}}</p>
                 </a-descriptions-item>
                 <a-descriptions-item>
-                    <div slot="label" class="descriptions-require require-left-34">身高</div>
+                    <div slot="label" class="descriptions-label require-left-34">体重</div>
                     <a-input
                             v-if="activeElementId === 5 ||!patientBasicInfo.weight"
                             placeholder="请输入体重"
@@ -89,11 +89,11 @@
                     >{{patientBasicInfo.weight}}</p>
                 </a-descriptions-item>
                 <a-descriptions-item>
-                    <div slot="label" class="descriptions-require require-left-34">BMI</div>
+                    <div slot="label" class="descriptions-label require-left-34">BMI</div>
                     <p class="description-content">{{bmi}}</p>
                 </a-descriptions-item>
                 <a-descriptions-item>
-                    <div slot="label" class="descriptions-require require-left-64">身份证号</div>
+                    <div slot="label" class="descriptions-label require-left-64">身份证号</div>
                     <a-input
                             v-if="activeElementId === 7 ||!patientBasicInfo.idCard"
                             placeholder="请输入身份证号"
@@ -107,7 +107,8 @@
                        class="description-content"
                     >{{patientBasicInfo.idCard}}</p>
                 </a-descriptions-item>
-                <a-descriptions-item label="社保账号">
+                <a-descriptions-item>
+                    <div slot="label" class="descriptions-label">社保账号:</div>
                     <a-input
                             v-if="activeElementId === 8 ||!patientBasicInfo.idSocial"
                             placeholder="请输入社保账号"
@@ -121,7 +122,8 @@
                        class="description-content"
                     >{{patientBasicInfo.idSocial}}</p>
                 </a-descriptions-item>
-                <a-descriptions-item label="家庭住址">
+                <a-descriptions-item>
+                    <div slot="label" class="descriptions-label">家庭住址:</div>
                     <a-input
                             v-if="activeElementId === 9 ||!patientBasicInfo.address"
                             placeholder="请输入家庭住址"
@@ -136,7 +138,7 @@
                     >{{patientBasicInfo.address}}</p>
                 </a-descriptions-item>
                 <a-descriptions-item>
-                    <div slot="label" class="descriptions-require require-left-34">电话</div>
+                    <div slot="label" class="descriptions-label require-left-34">电话</div>
                     <a-input
                             v-if="activeElementId === 10 ||!patientBasicInfo.phone"
                             placeholder="请输入电话"
@@ -150,7 +152,8 @@
                        class="description-content"
                     >{{patientBasicInfo.phone}}</p>
                 </a-descriptions-item>
-                <a-descriptions-item label="职业">
+                <a-descriptions-item>
+                    <div slot="label" class="descriptions-label">职业:</div>
                     <a-input
                             v-if="activeElementId === 11 ||!patientBasicInfo.professional"
                             placeholder="请输入职业"
@@ -169,7 +172,7 @@
                     {{patientBasicInfo.jzbh}}
                 </a-descriptions-item>
                 <a-descriptions-item>
-                    <div slot="label" class="descriptions-require require-left-64">就诊医院</div>
+                    <div slot="label" class="descriptions-label require-left-64">就诊医院</div>
                     <a-select style="min-width: 100%;"
                               placeholder="请输入就诊医院"
                               v-model="patientBasicInfo.departTreatment"
@@ -184,7 +187,7 @@
                     </a-select>
                 </a-descriptions-item>
                 <a-descriptions-item>
-                    <div slot="label" class="descriptions-require require-left-64">就诊科室</div>
+                    <div slot="label" class="descriptions-label require-left-64">就诊科室</div>
                     <a-select style="min-width: 100%;"
                               placeholder="请选择就诊科室"
                               v-model="patientBasicInfo.hospitalTreatment"
@@ -341,7 +344,7 @@
             >
                 <!--主管医生-->
                 <a-descriptions-item>
-                    <div slot="label" class="descriptions-require require-left-64">主管医生</div>
+                    <div slot="label" class="descriptions-label require-left-64">主管医生</div>
                     <a-select style="min-width: 100%;"
                               placeholder="请选择主管医生"
                               v-model="patientBasicInfo.doctorId"
@@ -356,7 +359,7 @@
                 </a-descriptions-item>
                 <!--主管医生-->
                 <a-descriptions-item>
-                    <div slot="label" class="descriptions-require require-left-50">营养师</div>
+                    <div slot="label" class="descriptions-label require-left-50">营养师</div>
                     <a-select style="min-width: 100%;"
                               placeholder="请选择营养师"
                               v-model="patientBasicInfo.nutritionistId"
@@ -487,6 +490,7 @@
                         this.doctorList = doctorList;
                     });
                 console.log('根据当前医院查询所有营养师');
+                data.deptId = 1;
                 requestPatientSelectDoctorByHospital(Object.assign({
                     doctorType: 2,
                 }, data))
@@ -514,34 +518,16 @@
             groupChat(e){
                 console.log(e);
             },
+            patientBasicInfoCheck(){
+
+            },
             //  保存
             handleSubmit(){
                 return new Promise((resolve, reject) => {
                     //  console.table(JSON.parse(JSON.stringify(this.patientBasicInfo)));
-
-                    //  todo    缺少验证
-//                    const {
-//                        unit,
-//                        unitRelations,
-//                        price,
-//                        energy,
-//                        protein,
-//                        fat,
-//                        carbohydrate,
-//                    } = this.basicTableData[i];
-//                    if (unit === undefined
-//                        || unitRelations === null
-//                        || price === null
-//                        || energy === null
-//                        || protein === null
-//                        || fat === null
-//                        || carbohydrate === null
-//                    ) {
-//
-//                    }
-
-                    console.log('发请求');
                     const patientBasicInfo = this.patientBasicInfo;
+                    //  设置bmi
+                    patientBasicInfo.bmi = this.bmi;
                     //  规范数据
                     const {
                         address,
@@ -572,6 +558,9 @@
                         sex,
                         weight,
                     } = patientBasicInfo;
+
+                    console.log(name, sex, birth, height, weight, bmi, phone, departTreatment, hospitalTreatment);
+                    return;
                     patientBasicInfo.address = String(address || '') || undefined;
                     patientBasicInfo.allergy = String(allergy || '') || undefined;
                     patientBasicInfo.bedCode = String(bedCode || '') || undefined;
@@ -603,7 +592,7 @@
                     //  console.log(JSON.stringify(this.patientBasicInfo));
                     //  console.table(JSON.parse(JSON.stringify(this.patientBasicInfo)));
                     //  bmi赋值
-                    this.patientBasicInfo.bmi = this.bmi;
+
                     resolve();
                 })
                     .catch(err => {
@@ -618,11 +607,12 @@
     };
 </script>
 <style scoped>
-    .descriptions-require {
+    .descriptions-label {
         position: relative;
+        float: right;
     }
     
-    .descriptions-require::after {
+    .descriptions-label::after {
         content: '*';
         display: block;
         color: red;
@@ -630,16 +620,16 @@
         top: -2px;
     }
     
-    .descriptions-require.require-left-34::after {
-        left: 34px;
+    .descriptions-label.require-left-34::after {
+        right: 34px;
     }
     
-    .descriptions-require.require-left-50::after {
-        left: 50px;
+    .descriptions-label.require-left-50::after {
+        right: 50px;
     }
     
-    .descriptions-require.require-left-64::after {
-        left: 64px;
+    .descriptions-label.require-left-64::after {
+        right: 64px;
     }
 </style>
 
