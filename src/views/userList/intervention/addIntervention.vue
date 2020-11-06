@@ -47,9 +47,9 @@
             MealEditTable,
         },
         computed: {
-            //  单元map
+            //  全部单位map
             unitTypeMap(){
-                console.log('单元map');
+                console.log('全部单位map');
                 return this.$store.state.constants.unitTypeMap;
             },
             //  处方类型-处方类型 (1.院内配置,2门诊领药)
