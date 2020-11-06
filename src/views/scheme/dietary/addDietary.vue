@@ -150,14 +150,16 @@
             const data = [
                 {
                     key: 1,
+                    index: 1,
                     entryName: '',
-                    entryName: '',
+                    quantityUsed: '',
                     usageTime: ''
                 },
                 {
                     key: 2,
+                    index: 2,
                     entryName: '',
-                    entryName: '',
+                    quantityUsed: '',
                     usageTime: ''
                 }
             ];
