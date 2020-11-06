@@ -58,7 +58,7 @@
                          placeholder="请输入联系人"
                 />
             </a-form-item>
-            <a-form-item label="手机号" required>
+            <a-form-item label="手机号">
                 <a-input class="add-form-input"
                          v-decorator="phoneDecorator"
                          placeholder="请输入手机号"
@@ -246,7 +246,7 @@
                 //  联系人
                 contactsDecorator: ['contacts', {
                     rules: [{
-                        required: true,
+                        required: false,
                         message: '请输入联系人'
                     },]
                 }],
