@@ -63,7 +63,7 @@
     //  选择商品
     export default {
         computed: {
-            //  单元map
+            //  全部单位map
             unitTypeMap(){
                 return this.$store.state.constants.unitTypeMap;
             }
