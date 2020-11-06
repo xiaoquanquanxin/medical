@@ -81,7 +81,9 @@
                             </a-space>
                         </div>
                     </a-table>
-                    <a-space><a @click="addNewLine()">新增</a></a-space>
+                    <div class="a-input-group">
+                        <a-space><a @click="addNewLine()">+新增</a></a-space>
+                    </div>
                 </div>
             </a-form-item>
             <a-row style="margin-top: -20px;margin-bottom:20px;">
