@@ -48,32 +48,26 @@
                     :data-source="basicInfoData"
             />
             <br>
-            <!--肠内营养支持-->
-            <OralLikeBasicTable
-                    :data-title="cnyyzcDataTitle"
-                    :data-source="cnyyzcCommodity"
-            />
-            <br>
-            <!--复杂-->
-            <OralLikeComplexTable
-                    :data-source="cnyyzcTimeTableData"
-            />
-            <br>
-            <!--口服肠内营养补充-->
-            <OralLikeBasicTable
-                    :data-title="kqcnyybcDataTitle" :data-source="kqcnyybcCommodity"
-            />
-            <br>
-            <!--复杂-->
-            <OralLikeComplexTable
-                    :data-source="kqcnyybcTimeTableData"
-            />
-            <br>
-            <!--膳食营养计划-->
-            <DietaryTable v-if="false"
-                          :data-source="dietaryData"
-            />
-            <br>
+            <div v-for="item in detail" v-if="false">
+                <!--商品表格-->
+                <OralLikeBasicTable
+                        :dataSource="item"
+                />
+                <br>
+                <!--时间表格-->
+                <OralLikeComplexTable
+                        :dataSource="item"
+                />
+                <br>
+            </div>
+            <!--营养干预详情和处方审核详情，才有膳食的表格-->
+            <div v-if="detailType === 1 || detailType === 2">
+                <!--膳食营养计划-->
+                <DietaryTable
+                        :dataSource="nutrition"
+                />
+                <br>
+            </div>
             <!--能量表-->
             <EnergyTable
                     :data-source="energyData"
@@ -95,6 +89,7 @@
     </div>
 </template>
 <script>
+    import { mapGetters, mapActions } from 'vuex';
     //  基础数据
     import BasicInfoTable from '@/components/detailsTable/basicInfoTable.vue';
     //  类似于口服的基础数据table
@@ -111,7 +106,6 @@
     import GoBackButton from '@/components/goBackButton.vue';
     import { requestPrescriptionDetail } from '../../api/userList/intervention';
     import { requestPrescriptionAuditUpdate } from '../../api/auditList';
-    import { requestOrderDetails } from '../../api/order/order';
 
     export default {
         components: {
@@ -176,128 +170,8 @@
                     priod: '',
                     prescriptionType: '',
                 }],
-
-                //  口服数据
-                kqcnyybcDataTitle: {},
-                kqcnyybcCommodity: [
-//                    {
-//                        key: 1,
-//                        commodityName: '许晓飞123',
-//                        buyer: '年',
-//                        unitPrice: '吃',
-//                        quantity: '¥20',
-//                        subtotal: 43,
-//                    }, {
-//                        key: 2,
-//                        commodityName: '许晓飞123',
-//                        buyer: '年',
-//                        unitPrice: '吃',
-//                        quantity: '¥20',
-//                        subtotal: 433,
-//                    }
-                ],
-                kqcnyybcTimeTableData: [
-//                    {
-//                        key: 1,
-//                        time: '4:00',
-//                        water: 11,
-//                        remark: '备注',
-//                        childrenList: [
-//                            {
-//                                quality: 1,
-//                                commodity: 'commodity1',
-//                            },
-//                            {
-//                                quality: 2,
-//                                commodity: 'commodity2',
-//                            }
-//                        ]
-//                    },
-//                    {
-//                        key: 2,
-//                        time: '12:00',
-//                        water: 23,
-//                        remark: '备注',
-//                        childrenList: [
-//                            {
-//                                quality: 3,
-//                                commodity: 'commodity3',
-//                            },
-//                            {
-//                                quality: 4,
-//                                commodity: 'commodity4',
-//                            }
-//                        ]
-//                    },
-                ],
-
-                //  肠内数据
-                cnyyzcDataTitle: {},
-                cnyyzcCommodity: [
-//                    {
-//                        key: 1,
-//                        commodityName: '许晓飞123',
-//                        buyer: '年',
-//                        unitPrice: '吃',
-//                        quantity: '¥20',
-//                        subtotal: 433,
-//                    }, {
-//                        key: 2,
-//                        commodityName: '许晓飞123',
-//                        buyer: '年',
-//                        unitPrice: '吃',
-//                        quantity: '¥20',
-//                        subtotal: 433,
-//                    }
-                ],
-                cnyyzcTimeTableData: [
-//                    {
-//                        key: 1,
-//                        time: '4:00',
-//                        water: 11,
-//                        remark: '备注',
-//                        childrenList: [
-//                            {
-//                                quality: 1,
-//                                commodity: 'commodity1',
-//                            },
-//                            {
-//                                quality: 2,
-//                                commodity: 'commodity2',
-//                            }
-//                        ]
-//                    },
-//                    {
-//                        key: 2,
-//                        time: '12:00',
-//                        water: 23,
-//                        remark: '备注',
-//                        childrenList: [
-//                            {
-//                                quality: 3,
-//                                commodity: 'commodity3',
-//                            },
-//                            {
-//                                quality: 4,
-//                                commodity: 'commodity4',
-//                            }
-//                        ]
-//                    },
-                ],
-
                 //  膳食营养计划数据
-                dietaryData: [
-                    {
-                        key: 1,
-                        time: '3:10',
-                        content: 'xxx',
-                    },
-                    {
-                        key: 2,
-                        time: '4:10',
-                        content: 'xxx',
-                    }
-                ],
+                nutrition: [],
 
                 //  能量数据
                 energyData: [{
@@ -315,6 +189,12 @@
                     id: '#printContent',
                     popTitle: 'xxxxxxx详情',
                 },
+
+                //  主要详情
+                detail: [],
+
+                //  商品单位下拉
+                unitTypeList: [],
             };
         },
         created(){
@@ -324,24 +204,36 @@
         methods: {
             //  主要请求
             searchFn(){
-                alert('涛哥的 /api/prescription/detail 和木木的 /api/order/details/ 有区别吗');
-                //  requestPrescriptionDetail(this.detailId);
-                requestOrderDetails(this.detailId)
+                requestPrescriptionDetail(this.detailId)
                     .then(v => {
                         const { data } = v;
-                        console.log(JSON.parse(JSON.stringify(data)));
-                        this.auditStatus = data.auditStatus;
-                        this.orderStatus = data.orderStatus;
-                        this.patientId = data.patientId;
-                        const prescriptionDetail = JSON.parse(data.prescriptionDetail);
-                        const { prescriptionName, priod, prescriptionType, } = data;
+                        const {
+                            prescriptionName,
+                            priod,
+                            prescriptionType,
+                            executionTime,
+                        } = data;
                         //  头部
                         this.basicInfoData = [{
                             key: 1,
                             prescriptionName,
                             priod,
                             prescriptionType,
+                            executionTime,
                         }];
+                        this.auditStatus = data.auditStatus;
+                        this.orderStatus = data.orderStatus;
+                        this.patientId = data.patientId;
+                        const {
+                            detail,
+                            nutrition
+                        } = data;
+                        this.detail = detail;
+                        nutrition.forEach((item, index) => {
+                            item.key = index;
+                        });
+                        console.log(JSON.parse(JSON.stringify(nutrition)));
+                        this.nutrition = nutrition;
                         //  合计
                         const { energy, protein, fat, carbohydrates } = data;
                         this.energyData = [{
@@ -351,28 +243,9 @@
                             fat,
                             carbohydrates,
                         }];
-                        const { cnyyzc, kqcnyybc } = prescriptionDetail;
-                        const { dataTitle: kqcnyybcDataTitle, commodity: kqcnyybcCommodity, timeTableData: kqcnyybcTimeTableData } = kqcnyybc;
-                        const { dataTitle: cnyyzcDataTitle, commodity: cnyyzcCommodity, timeTableData: cnyyzcTimeTableData } = cnyyzc;
-                        console.log(data);
-                        console.log('结果');
-//                        console.log(kqcnyybcDataTitle);
-//                        console.log(kqcnyybcCommodity);
-//                        console.log(cnyyzcDataTitle);
-//                        console.log(cnyyzcCommodity);
-                        this.kqcnyybcDataTitle = kqcnyybcDataTitle;
-                        this.kqcnyybcCommodity = kqcnyybcCommodity;
-                        this.kqcnyybcTimeTableData = kqcnyybcTimeTableData;
-                        this.cnyyzcDataTitle = cnyyzcDataTitle;
-                        this.cnyyzcCommodity = cnyyzcCommodity;
-                        this.cnyyzcTimeTableData = cnyyzcTimeTableData;
-                        console.log(this.kqcnyybcTimeTableData);
-                        console.log(this.cnyyzcTimeTableData);
+                        console.log(JSON.parse(JSON.stringify(data)));
                     });
             },
-            //  莫泰框方法
-            ...dialogMethods,
-
             //  通过
             passFn(){
                 const { prescriptionType, prescriptionName } = this.basicInfoData[0];
@@ -434,7 +307,14 @@
                     //  最后设置可以再次点击
                     this.setConfirmLoading(DIALOG_TYPE.REJECT, false);
                 });
-            }
+            },
+            ...mapActions('constants', [
+                //  设置单元数据
+                'setUnitTypeList',
+            ]),
+            //  莫泰框方法
+            ...dialogMethods,
+
         }
     };
 </script>
