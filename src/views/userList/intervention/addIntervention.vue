@@ -212,7 +212,7 @@
                             goodsId,
                             goodsName,
                             quantity: Number(quantity) || 0,
-                            subtotal,
+                            subtotal: Number(subtotal) || 0,
                             goodsUnit,
                             price,
                         };
