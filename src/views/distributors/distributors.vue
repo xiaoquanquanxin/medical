@@ -52,7 +52,7 @@
                 </template>
             </a-pagination>
         </a-row>
-        <!--莫泰框-->
+        <!--新增渠道商莫泰框-->
         <a-modal v-model="dialogDataDistributors.visible"
                  v-if="dialogDataDistributors.visible"
                  :confirm-loading="dialogDataDistributors.confirmLoading"
@@ -147,8 +147,8 @@
                             item.area = `${item.province}-${item.city}`;
                         });
                         this.data = data.records;
-                        console.log(JSON.parse(JSON.stringify(data.records[2])));
                         this.pagination = paginationDecode(this.pagination, data);
+                        console.log(JSON.parse(JSON.stringify(data.records[0])));
                     });
             },
             //  莫泰框方法
