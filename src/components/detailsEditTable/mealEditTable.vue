@@ -53,7 +53,6 @@
 </template>
 <script>
     import moment from 'moment';
-    import { mapGetters, mapActions } from 'vuex';
     import { oneRowSearch } from '../../utils/tableScroll';
     import { requestPrescriptionPrescriptionTpl } from '../../api/userList/intervention';
     import {
