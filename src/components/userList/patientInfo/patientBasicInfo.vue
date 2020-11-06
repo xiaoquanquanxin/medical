@@ -328,7 +328,7 @@
         <br>
         <a-row type="flex" justify="space-between" align="middle" class="table-group-title no-border-bottom">
             <a-col>MDT信息</a-col>
-            <a-col>
+            <a-col v-if="false">
                 <a-button type="primary" @click="groupChat">群聊</a-button>
             </a-col>
         </a-row>
