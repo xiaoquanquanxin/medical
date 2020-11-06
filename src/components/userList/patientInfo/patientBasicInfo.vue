@@ -379,15 +379,9 @@
     import { requestDeptList } from '../../../api/department';
     import { descriptionsMethods } from '@/utils/patientInfo';
     import { requestPatientSelectDoctorByHospital } from '../../../api/userList/userList';
-
-    //  import PatientInfoLabel from '@/components/userList/patientInfo/patientInfoLabel.vue';
-
     //  医院下掉科室，需要调取木木掉接口
     //  病人信息组件
     export default {
-        components: {
-//            PatientInfoLabel,
-        },
         computed: {
             //  基础信息，请求来了就会出现数据
             patientBasicInfo(){
