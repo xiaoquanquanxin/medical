@@ -228,7 +228,6 @@
                 requestPrescriptionTemplateGet(this.dietaryId)
                     .then(v => {
                         const { data } = v;
-                        console.log(data);
                         const tableForm = this.tableForm;
                         const { prescriptionContent, energy, templateName, hospitalId, } = data;
                         const list = energy.split('【');
@@ -238,8 +237,8 @@
                         tableForm.customEnergy = list[1].split('】')[0];
                         tableForm.templateName = templateName;
                         tableForm.hospitalId = hospitalId;
-                        console.log(data);
-                        const { mealPlanTableData } = JSON.parse(prescriptionContent);
+                        const mealPlanTableData = JSON.parse(prescriptionContent);
+                        console.log(mealPlanTableData);
                         //  console.log(mealPlanTableData);
                         mealPlanTableData.forEach((item, index) => {
                             //  console.log(item);
