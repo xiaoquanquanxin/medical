@@ -7,7 +7,7 @@
         </a-row>
         <a-table
                 :columns="oralColumns"
-                :data-source="dataDetail.detailGoods"
+                :data-source="dataSource.detailGoods"
                 :pagination="false"
                 bordered
         >
@@ -45,7 +45,7 @@
         },
     ];
     export default {
-        props: ['dataDetail'],
+        props: ['dataSource'],
         data(){
             return {
                 //  食用方法
@@ -63,13 +63,13 @@
         },
         created(){
             console.log('🍉');
-            const { templateType, usageMethod } = this.dataDetail;
-            //  console.log(JSON.parse(JSON.stringify(this.dataDetail)));
+            const { templateType, usageMethod } = this.dataSource;
+            //  console.log(JSON.parse(JSON.stringify(this.dataSource)));
             this.templateName = this.templateTypeMap[templateType].name;
             this.usageMethod = this.usageMethodMap[usageMethod].name;
             //  console.log(this.templateName);
             //  食用方法
-            //  console.log(this.dataDetail.usageMethod);
+            //  console.log(this.dataSource.usageMethod);
         }
     };
 </script>
