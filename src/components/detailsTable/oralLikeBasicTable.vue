@@ -54,7 +54,6 @@
                 templateTypeMap,
 
                 oralColumns,
-
                 //  模板类型
                 templateName: undefined,
                 //  食用方法
@@ -66,7 +65,7 @@
             const { templateType, usageMethod } = this.dataSource;
             //  console.log(JSON.parse(JSON.stringify(this.dataSource)));
             this.templateName = this.templateTypeMap[templateType].name;
-            this.usageMethod = this.usageMethodMap[usageMethod].name;
+            this.usageMethod = this.usageMethodMap[usageMethod || 1].name;
             //  console.log(this.templateName);
             //  食用方法
             //  console.log(this.dataSource.usageMethod);
