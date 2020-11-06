@@ -2,17 +2,12 @@
     <div>
         <!--口服肠内营养补充-->
         <a-row type="flex" justify="space-between" align="middle" class="table-group-title no-border-bottom">
-            <span>{{dataTitle.name}}</span>
-            <span v-for="(item,index) in usageMethodList"
-                  :key="index"
-                  v-if="dataTitle.usageMethod === item.id"
-            >
-                {{item.name }}
-            </span>
+            <span>{{templateName}}</span>
+            <span>{{usageMethod}}</span>
         </a-row>
         <a-table
                 :columns="oralColumns"
-                :data-source="dataSource"
+                :data-source="dataDetail.detailGoods"
                 :pagination="false"
                 bordered
         >
@@ -20,7 +15,7 @@
     </div>
 </template>
 <script>
-    import { usageMethodList } from '../../utils/constants';
+    import { usageMethodMap, templateTypeMap } from '../../utils/constants';
     //  口服肠内营养支持 表格 列的意义
     const oralColumns = [
         {
@@ -31,12 +26,12 @@
         {
             title: '购买单位',
             width: 100,
-            dataIndex: 'purchaseUnit',
+            dataIndex: 'goodsUnit',
         },
         {
             title: '商品单价',
             width: 100,
-            dataIndex: 'unitPrice',
+            dataIndex: 'price',
         },
         {
             title: '数量',
@@ -50,16 +45,31 @@
         },
     ];
     export default {
-        props: ['dataSource', 'dataTitle'],
+        props: ['dataDetail'],
         data(){
             return {
-                //  能量下拉
-                usageMethodList,
+                //  食用方法
+                usageMethodMap,
+                //  模板类型
+                templateTypeMap,
+
                 oralColumns,
+
+                //  模板类型
+                templateName: undefined,
+                //  食用方法
+                usageMethod: undefined,
             };
         },
         created(){
-//            console.log(JSON.parse(JSON.stringify(this.dataSource)));
+            console.log('🍉');
+            const { templateType, usageMethod } = this.dataDetail;
+            //  console.log(JSON.parse(JSON.stringify(this.dataDetail)));
+            this.templateName = this.templateTypeMap[templateType].name;
+            this.usageMethod = this.usageMethodMap[usageMethod].name;
+            //  console.log(this.templateName);
+            //  食用方法
+            //  console.log(this.dataDetail.usageMethod);
         }
     };
 </script>
