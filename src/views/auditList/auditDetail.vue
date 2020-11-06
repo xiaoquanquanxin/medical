@@ -69,9 +69,7 @@
                 <br>
             </div>
             <!--能量表-->
-            <EnergyTable
-                    :dataSource="energyData"
-            />
+            <EnergyTable/>
         </div>
         <!--驳回莫泰框-->
         <a-modal v-model="dialogReject.visible"
@@ -173,14 +171,6 @@
                 //  膳食营养计划数据
                 nutrition: [],
 
-                //  能量数据
-                energyData: [{
-                    key: 1,
-                    energy: null,
-                    protein: null,
-                    fat: null,
-                    carbohydrates: null,
-                }],
                 //  拒绝的莫泰框
                 dialogReject: this.initModal(DIALOG_TYPE.REJECT),
 
@@ -236,13 +226,14 @@
                         this.nutrition = nutrition;
                         //  合计
                         const { energy, protein, fat, carbohydrates } = data;
-                        this.energyData = [{
+                        //  设置能量数据
+                        this.setEnergyData([{
                             key: 1,
                             energy,
                             protein,
                             fat,
                             carbohydrates,
-                        }];
+                        }]);
                         console.log(JSON.parse(JSON.stringify(data)));
                     });
             },
@@ -311,6 +302,10 @@
             ...mapActions('constants', [
                 //  设置单元数据
                 'setUnitTypeList',
+            ]),
+            ...mapActions('intervention', [
+                //  设置能量数据
+                'setEnergyData',
             ]),
             //  莫泰框方法
             ...dialogMethods,
