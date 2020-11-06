@@ -21,6 +21,7 @@
             <!--周期-->
             <div slot="priod" slot-scope="scope,sItem,sIndex,extra">
                 <a-input-number
+                        :min="0"
                         placeholder="请输入周期"
                         v-model="scope.priod"
                         class="basic-input-width"
@@ -40,10 +41,20 @@
                     </a-select-option>
                 </a-select>
             </div>
+            <!--执行日期-->
+            <div slot="executionTime" slot-scope="scope,sItem,sIndex,extra">
+                <a-date-picker
+                        class="lengthen-select-width"
+                        placeholder="请选择执行日期"
+                        :disabledDate="disabledDateForExecutionTime"
+                        @change="executionTimeChangeFn"
+                />
+            </div>
         </a-table>
     </div>
 </template>
 <script>
+    import moment from 'moment';
     import { mapGetters, mapActions } from 'vuex';
     import { prescriptionTypeList } from '../../utils/constants';
     //  基本信息 表格 列的意义
@@ -63,6 +74,11 @@
             width: 100,
             scopedSlots: { customRender: 'prescriptionType' },
         },
+        {
+            title: '执行日期',
+            width: 10,
+            scopedSlots: { customRender: 'executionTime' },
+        }
     ];
 
     export default {
@@ -94,6 +110,16 @@
             //  切换处方类型
             changeFn(value){
                 this.setPrescriptionType(value);
+            },
+
+            //  执行日期切换
+            executionTimeChangeFn(value, executionTime){
+                const data = Object.assign({}, this.basicInfoEditData[0], { executionTime });
+                this.setBasicInfoEditData([data]);
+            },
+            //  执行日期选择规则
+            disabledDateForExecutionTime(current){
+                return current && current <= moment(new Date(new Date().getTime() - 60 * 60 * 24));
             }
         }
     };
