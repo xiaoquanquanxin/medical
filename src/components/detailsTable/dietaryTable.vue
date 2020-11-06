@@ -18,24 +18,21 @@
         {
             title: '时间',
             width: 100,
-            dataIndex: 'time'
+            dataIndex: 'usageTime'
         },
         {
             title: '用餐内容',
             width: 100,
-            dataIndex: 'content'
+            dataIndex: 'entryName'
         }
     ];
     //  膳食
     export default {
-        props: ['data-source'],
+        props: ['dataSource'],
         data(){
             return {
                 oralColumns,
             };
         },
-        created(){
-            //  console.log(this.dataSource);
-        }
     };
 </script>
