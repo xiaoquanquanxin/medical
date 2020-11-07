@@ -11,6 +11,11 @@ export const descriptionsMethods = {
 		//	@ts-ignore
 		this.activeElementId = null;
 		//	@ts-ignore
+		const value = this.patientBasicInfo[key];
+		if (typeof value === "number") {
+			return
+		}
+		//	@ts-ignore
 		this.patientBasicInfo[key] = (this.patientBasicInfo[key] || '').trim();
 	},
 	//	点击事件
@@ -21,7 +26,14 @@ export const descriptionsMethods = {
 		//	@ts-ignore
 		this.$nextTick(() => {
 			const el = td.querySelector('.form-element');
-			el.focus();
+			if (!el.classList.contains('ant-input-number')) {
+				el.focus();
+				return
+			}
+			//	是数字类型
+			el.querySelector('.ant-input-number-input').focus();
 		});
 	},
 }
+
+
