@@ -153,20 +153,6 @@
                             </div>
                             <div class="negative-margin-item" style="height:50px;"></div>
                         </div>
-                        <!--温水-->
-                        <div slot="warmWater"
-                             slot-scope="scope,sItem,sIndex,extra"
-                             class="negative-margin-16"
-                        >
-                            <div class="negative-margin-item is-input">
-                                <a-space size="small">
-                                    <a-input-number style='width:100%;'
-                                                    :precision="0"
-                                                    :min="1"
-                                                    placeholder="请输入温水" v-model="scope.warmWater"/>
-                                </a-space>
-                            </div>
-                        </div>
                         <!--操作-->
                         <div slot="operation" slot-scope="scope,sItem,sIndex,extra"
                              class="negative-margin-16"
@@ -180,6 +166,18 @@
                                 </a-space>
                             </div>
                             <div class="negative-margin-item" style="height:50px;"></div>
+                        </div>
+                        <!--温水-->
+                        <div slot="warmWater"
+                             slot-scope="scope,sItem,sIndex,extra"
+                             class="negative-margin-16"
+                        >
+                            <div class="negative-margin-item is-input">
+                                <a-input-number style='width:100%;'
+                                                :precision="0"
+                                                :min="1"
+                                                placeholder="请输入温水" v-model="scope.warmWater"/>
+                            </div>
                         </div>
                     </a-table>
                 </a-col>
@@ -240,7 +238,12 @@
     import ChoosePlanBox from '@/components/detailsEditTable/choosePlanBox.vue';
     //  选择商品弹框
     import ChooseCommodityBox from '@/components/detailsEditTable/chooseCommodityBox.vue';
-    import TemplateRemarkInput from '@/components/prescriptionTemplate/templateRemarkInput';
+
+    //  肠内的备注
+    import RemarkForIntestinal from './remarkForIntestinal.vue';
+    //  肠内的备注
+    import RemarkForOral from './remarkForOral.vue';
+
     import { templateTypeMap, usageMethodList, energyMap } from '../../utils/constants';
     import { mapGetters, mapActions } from 'vuex';
     import { requestGoodsUnitType } from '../../api/commodity/addCommodity';
@@ -307,6 +310,8 @@
     //  可编辑的第一组数据
     export default {
         components: {
+            RemarkForIntestinal,
+            RemarkForOral,
             SelectCommodity,
             ChoosePlanBox,
             ChooseCommodityBox,
@@ -413,12 +418,24 @@
                     },
                     {
                         title: '备注',
-                        dataIndex: 'remark',
                         width: 100,
-                        rowSpan: 100,
                         customRender: (text, row, index) => {
+                            console.log('备注是', text.remark);
+                            const { templateType } = this.dataTitle;
+                            console.log(' templateType是', templateType);
+                            let remarkSlot = null;
+                            switch (templateType) {
+                                case 2:
+                                    remarkSlot = RemarkForIntestinal;
+                                    break;
+                                case 1:
+                                    remarkSlot = RemarkForOral;
+                                    break;
+                                default:
+                                    throw new Error(`错误的templateType:${templateType}`);
+                            }
                             const obj = {
-                                children: this.$createElement(TemplateRemarkInput),
+                                children: this.$createElement(remarkSlot),
                                 attrs: {},
                             };
                             if (index === 0) {
@@ -489,6 +506,18 @@
                     //  console.log(JSON.parse(JSON.stringify(timeTableData)));
                     this.timeTableData = timeTableData;
                     //  console.log(JSON.parse(JSON.stringify(this.dataTitle)));
+                    const { remark } = timeTableData[0];
+                    console.log(remark);
+                    switch (templateType) {
+                        case 2:
+                            this.setIntestinalRemark(remark);
+                            break;
+                        case 1:
+                            this.setOralRemark(remark);
+                            break;
+                        default:
+                            throw new Error(`错误的templateType:${templateType}`);
+                    }
                     Object.assign(this.dataTitle, dataTitle);
                 })
                     .catch(err => {
@@ -565,6 +594,10 @@
                 'setPrescriptionType',
                 //	根据templateType，分别设置肠内、口腔的数据
                 'setEnergyDataByTemplateType',
+                //  肠内备注
+                'setIntestinalRemark',
+                //  口腔备注
+                'setOralRemark',
             ]),
         },
     };
