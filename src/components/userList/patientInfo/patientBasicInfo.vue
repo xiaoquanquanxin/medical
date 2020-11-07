@@ -36,9 +36,7 @@
                             @focus="descriptionFormFocusFn(1)"
                             @dropdownVisibleChange="dropdownVisibleChange($event,1)"
                     >
-                        <span slot="suffixIcon" style="color:black;"
-                              :class="selectSuffixIconMap[1]?'suffix-icon':'suffix-icon suffix-icon-down'"
-                        >⬇️</span>
+                        <SuffixIcon :iconNum="1" slot="suffixIcon"></SuffixIcon>
                         <a-select-option :value="1">男</a-select-option>
                         <a-select-option :value="2">女</a-select-option>
                     </a-select>
@@ -63,7 +61,8 @@
                     >{{patientBasicInfo.birth}}</p>
                 </a-descriptions-item>
                 <a-descriptions-item>
-                    <div slot="label" class="descriptions-label descriptions-label-require require-left-64">身高(cm):</div>
+                    <div slot="label" class="descriptions-label descriptions-label-require require-left-64">身高(cm):
+                    </div>
                     <a-input
                             v-if="activeElementId === 4 ||!patientBasicInfo.height"
                             placeholder="请输入身高"
@@ -78,7 +77,8 @@
                     >{{patientBasicInfo.height}}</p>
                 </a-descriptions-item>
                 <a-descriptions-item>
-                    <div slot="label" class="descriptions-label descriptions-label-require require-left-64">体重(kg):</div>
+                    <div slot="label" class="descriptions-label descriptions-label-require require-left-64">体重(kg):
+                    </div>
                     <a-input
                             v-if="activeElementId === 5 ||!patientBasicInfo.weight"
                             placeholder="请输入体重"
@@ -186,9 +186,7 @@
                               @change="selectHospitalChange"
                               @dropdownVisibleChange="dropdownVisibleChange($event,5)"
                     >
-                        <span slot="suffixIcon" style="color:black;"
-                              :class="selectSuffixIconMap[5]?'suffix-icon':'suffix-icon suffix-icon-down'"
-                        >⬇️</span>
+                        <SuffixIcon :iconNum="5" slot="suffixIcon"></SuffixIcon>
                         <a-select-option v-for="item in hospitalList"
                                          :value="item.id.toString()">
                             {{item.hospitalName}}
@@ -205,9 +203,7 @@
                               @focus="descriptionFormFocusFn(14)"
                               @dropdownVisibleChange="dropdownVisibleChange($event,2)"
                     >
-                        <span slot="suffixIcon" style="color:black;"
-                              :class="selectSuffixIconMap[2]?'suffix-icon':'suffix-icon suffix-icon-down'"
-                        >⬇️</span>
+                        <SuffixIcon :iconNum="2" slot="suffixIcon"></SuffixIcon>
                         <a-select-option v-for="item in hospitalDeptList"
                                          :value="item.id">
                             {{item.deptName}}
@@ -268,9 +264,7 @@
                               @focus="descriptionFormFocusFn(18)"
                               @dropdownVisibleChange="dropdownVisibleChange($event,6)"
                     >
-                        <span slot="suffixIcon" style="color:black;"
-                              :class="selectSuffixIconMap[6]?'suffix-icon':'suffix-icon suffix-icon-down'"
-                        >⬇️</span>
+                        <SuffixIcon :iconNum="6" slot="suffixIcon"></SuffixIcon>
                         <a-select-option :value="item.code"
                                          v-for="item in ICDList"
                         >{{item.name}}
@@ -377,9 +371,7 @@
                               @change="doctorChange"
                               @dropdownVisibleChange="dropdownVisibleChange($event,3)"
                     >
-                        <span slot="suffixIcon" style="color:black;"
-                              :class="selectSuffixIconMap[3]?'suffix-icon':'suffix-icon suffix-icon-down'"
-                        >⬇️</span>
+                        <SuffixIcon :iconNum="3" slot="suffixIcon"></SuffixIcon>
                         <a-select-option v-for="item in doctorList"
                                          :key="item.id"
                                          :value="item.id">
@@ -396,9 +388,7 @@
                               @change="nutritionistChange"
                               @dropdownVisibleChange="dropdownVisibleChange($event,4)"
                     >
-                        <span slot="suffixIcon" style="color:black;"
-                              :class="selectSuffixIconMap[4]?'suffix-icon':'suffix-icon suffix-icon-down'"
-                        >⬇️</span>
+                        <SuffixIcon :iconNum="4" slot="suffixIcon"></SuffixIcon>
                         <a-select-option v-for="item in nutritionistList"
                                          :key="item.id"
                                          :value="item.id">
@@ -411,16 +401,21 @@
     </div>
 </template>
 <script>
-    import { dropdownVisibleChange, selectSuffixIconMap } from '../../../utils/select';
+    //  ⚠️医院下掉科室，需要调取木木掉接口
 
+    import { dropdownVisibleChange, selectSuffixIconMap } from '../../../utils/select';
     import { requestPatientSelectICD } from '../../../api/userList/userList';
     import { requestDeptListDeptHospitalId, requestHospitalGetList } from '../../../api/hospital';
     import { requestDeptList } from '../../../api/department';
     import { descriptionsMethods } from '@/utils/patientInfo';
     import { requestPatientSelectDoctorByHospital } from '../../../api/userList/userList';
-    //  医院下掉科室，需要调取木木掉接口
+    import SuffixIcon from '@/components/suffixIcon.vue';
+
     //  病人信息组件
     export default {
+        components: {
+            SuffixIcon,
+        },
         computed: {
             //  基础信息，请求来了就会出现数据
             patientBasicInfo(){
@@ -439,7 +434,6 @@
         data(){
             return {
                 selectSuffixIconMap,
-//                patientInfoLabel: PatientInfoLabel,
                 //  编辑的index
                 activeElementId: null,
                 //  全部科室列表
