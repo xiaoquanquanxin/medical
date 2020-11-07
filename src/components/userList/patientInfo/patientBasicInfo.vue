@@ -105,6 +105,7 @@
                             class="form-element"
                             @focus="descriptionFormFocusFn(7)"
                             @blur="descriptionFormBlurFn('idCard')"
+                            @change="idCardChangeFn"
                     />
                     <p v-else
                        @click="descriptionFormClickFn(7,$event)"
@@ -410,6 +411,7 @@
     import { descriptionsMethods } from '@/utils/patientInfo';
     import { requestPatientSelectDoctorByHospital } from '../../../api/userList/userList';
     import SuffixIcon from '@/components/suffixIcon.vue';
+    import { getAgeByIdCard, getSexByIdCard, isIdCard } from '../../../utils/validate';
 
     //  病人信息组件
     export default {
@@ -549,12 +551,34 @@
             groupChat(e){
                 console.log(e);
             },
+
+            //  输入身份证号码
+            idCardChangeFn(event){
+                const { value } = event.target;
+                if (!isIdCard(value)) {
+                    return;
+                }
+                const age = getAgeByIdCard(value);
+                const sex = getSexByIdCard(value);
+                console.log(age, sex);
+                const patientBasicInfo = this.patientBasicInfo;
+                patientBasicInfo.birth = age;
+                patientBasicInfo.sex = sex;
+            },
             //  验证
             patientBasicInfoCheck(checkList){
                 for (let item of checkList) {
-                    if (item.name === '' || item.name === undefined || item.name === null) {
+                    if (item.value === '' || item.value === undefined || item.value === null) {
                         this.$message.error(item.message);
                         return false;
+                    }
+                    if (item.label === 'idCard') {
+                        const res = isIdCard(item.value);
+                        console.log(res);
+                        if (!res) {
+                            this.$message.error(item.message);
+                            return false;
+                        }
                     }
                 }
                 return true;
@@ -597,52 +621,64 @@
                         weight,
                     } = patientBasicInfo;
                     const isValidated = this.patientBasicInfoCheck([
+//                        {
+//                            value: name,
+//                            label: 'name',
+//                            message: '请输入姓名'
+//                        },
+//                        {
+//                            value: sex,
+//                            label: 'sex',
+//                            message: '请选择年龄'
+//                        },
+//                        {
+//                            value: birth,
+//                            label: 'birth',
+//                            message: '请输入生日'
+//                        },
+//                        {
+//                            value: height,
+//                            label: 'height',
+//                            message: '请输入身高'
+//                        },
+//                        {
+//                            value: weight,
+//                            label: 'weight',
+//                            message: '请输入体重'
+//                        },
+//                        {
+//                            value: bmi,
+//                            label: 'bmi',
+//                            message: '请输入BMI'
+//                        },
                         {
-                            name: name,
-                            message: '请输入姓名'
+                            value: idCard,
+                            label: 'idCard',
+                            message: '请输入正确身份证号'
                         },
                         {
-                            name: sex,
-                            message: '请选择年龄'
-                        },
-                        {
-                            name: birth,
-                            message: '请输入生日'
-                        },
-                        {
-                            name: height,
-                            message: '请输入身高'
-                        },
-                        {
-                            name: weight,
-                            message: '请输入体重'
-                        },
-                        {
-                            name: bmi,
-                            message: '请输入BMI'
-                        },
-                        {
-                            name: idCard,
-                            message: '请输入身份证号'
-                        },
-                        {
-                            name: phone,
+                            value: phone,
+                            label: 'phone',
                             message: '请输入电话'
                         },
                         {
-                            name: departTreatment,
+                            value: departTreatment,
+                            label: 'departTreatment',
                             message: '请选择就诊医院'
                         },
                         {
-                            name: hospitalTreatment,
+                            value: hospitalTreatment,
+                            label: 'hospitalTreatment',
                             message: '请选择就诊科室'
                         },
                         {
-                            name: doctorId,
+                            value: doctorId,
+                            label: 'doctorId',
                             message: '请选择医生'
                         },
                         {
-                            name: nutritionistId,
+                            value: nutritionistId,
+                            label: 'nutritionistId',
                             message: '请选择营养师'
                         },
                     ]);
