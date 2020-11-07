@@ -1,3 +1,74 @@
 .red {
     color: red
 }
+
+
+:root {
+    /*用户列表【病人列表】*/
+    /*用户列表，顶部菜单，常规背景色*/
+    --user-list-ant-menu-item-bgc: #dadce8;
+    /*用户列表，顶部菜单，被激活的背景色*/
+    --user-list-ant-menu-item-active-bgc: #ebedf5;
+    /*用户列表，顶部菜单，被激活的文字颜色*/
+    --user-list-ant-menu-item-active-c: #576fcb;
+
+    /*用户列表，住院的高亮背景色*/
+    --user-list-is-in-hospital-bgc: #f9fbff;
+    /*住院的文字*/
+    --user-list-is-in-hospital-c: #4b66d2;
+
+
+    /*基础边框颜色*/
+    --basic-border-color: #e8e8e8;
+    /*基础a标签*/
+    --basic-a:#576fcb;
+    /*基础input*/
+    --basic-input:#576fcb;
+}
+
+/*基础按钮*/
+.ant-btn-primary,
+.ant-btn-primary:active, .ant-btn-primary.active,
+.ant-btn-primary:hover, .ant-btn-primary:focus {
+    background-color: #576fdc;
+    border-color: #5e7aef;
+}
+
+
+/*横向路由*/
+/*被激活的文字*/
+.ant-menu-horizontal > .ant-menu-item:hover .router-link-span,
+.ant-menu-horizontal > .ant-menu-submenu:hover .router-link-span,
+.ant-menu-horizontal > .ant-menu-item-active .router-link-span,
+.ant-menu-horizontal > .ant-menu-submenu-active .router-link-span,
+.ant-menu-horizontal > .ant-menu-item-open .router-link-span,
+.ant-menu-horizontal > .ant-menu-submenu-open .router-link-span,
+.ant-menu-horizontal > .ant-menu-item-selected .router-link-span,
+.ant-menu-horizontal > .ant-menu-submenu-selected .router-link-span {
+    color: var(--user-list-ant-menu-item-active-c) !important;
+}
+
+.ant-menu-horizontal > .ant-menu-item:hover,
+.ant-menu-horizontal > .ant-menu-submenu:hover,
+.ant-menu-horizontal > .ant-menu-item-active,
+.ant-menu-horizontal > .ant-menu-submenu-active,
+.ant-menu-horizontal > .ant-menu-item-open,
+.ant-menu-horizontal > .ant-menu-submenu-open,
+.ant-menu-horizontal > .ant-menu-item-selected,
+.ant-menu-horizontal > .ant-menu-submenu-selected {
+    border-bottom: 2px solid var(--user-list-ant-menu-item-active-c) !important;
+}
+
+
+/*基础input*/
+.ant-input:hover, .ant-input:focus {
+    border-color: var(--basic-input);
+}
+
+.ant-input:focus {
+    outline: var(--basic-input);;
+}
+
+a {
+    color: var(--basic-a);
+}

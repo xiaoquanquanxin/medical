@@ -117,7 +117,7 @@
     .history-list {
         height: 50px;
         line-height: 40px;
-        background-color: white;
+        background-color: whitesmoke;
         /*border-top: none;*/
         /*border-bottom: 1px solid #e8e8e8;*/
         overflow-x: auto;
@@ -139,18 +139,6 @@
         align-items: center;
     }
     
-    .ant-menu-horizontal > .ant-menu-item:hover .history-item,
-    .ant-menu-horizontal > .ant-menu-submenu:hover .history-item,
-    .ant-menu-horizontal > .ant-menu-item-active .history-item,
-    .ant-menu-horizontal > .ant-menu-submenu-active .history-item,
-    .ant-menu-horizontal > .ant-menu-item-open .history-item,
-    .ant-menu-horizontal > .ant-menu-submenu-open .history-item,
-    .ant-menu-horizontal > .ant-menu-item-selected .history-item,
-    .ant-menu-horizontal > .ant-menu-submenu-selected .history-item {
-        border-color: rgba(24, 144, 255, 0.49);
-    }
-    
-    
     .router-link-item {
         flex: auto;
     }
@@ -169,16 +157,5 @@
         vertical-align: middle;
         margin: 0 -4px 0 4px;
         flex: 1;
-    }
-    
-    .ant-menu-horizontal > .ant-menu-item:hover .router-link-span,
-    .ant-menu-horizontal > .ant-menu-submenu:hover .router-link-span,
-    .ant-menu-horizontal > .ant-menu-item-active .router-link-span,
-    .ant-menu-horizontal > .ant-menu-submenu-active .router-link-span,
-    .ant-menu-horizontal > .ant-menu-item-open .router-link-span,
-    .ant-menu-horizontal > .ant-menu-submenu-open .router-link-span,
-    .ant-menu-horizontal > .ant-menu-item-selected .router-link-span,
-    .ant-menu-horizontal > .ant-menu-submenu-selected .router-link-span {
-        color: #1890ff;
     }
 </style>
