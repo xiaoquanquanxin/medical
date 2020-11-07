@@ -4,13 +4,14 @@
         <div class="a-input-group" data-msg="空"></div>
         <div class="a-input-group">
             <a-row type="flex" justify="space-between" align="middle">
-                <a-col v-if="patientInfo">
+                {{!!patientBasicInfo}}
+                <a-col v-if="patientBasicInfo">
                     <a-button type="primary" @click="confirmOutHospital"
-                              v-if="patientInfo.patientStatus == 1"
+                              v-if="patientBasicInfo.patientStatus == 1"
                     >确认出院
                     </a-button>
                     <router-link :to="{name:'admittedHospital',params:{patientId}}"
-                                 v-if="patientInfo.patientStatus == 2"
+                                 v-if="patientBasicInfo.patientStatus == 2"
                     >
                         <a-button type="primary">
                             确认入院
@@ -22,13 +23,13 @@
                 </a-col>
             </a-row>
         </div>
-        <PatientBasicInfo ref="refPatientBasicInfo"/>
+        <PatientBasicInfo ref="refPatientBasicInfo" id=""/>
     </div>
 </template>
 <script>
     import PatientBasicInfo from '@/components/userList/patientInfo/patientBasicInfo.vue';
     import { mapGetters, mapActions } from 'vuex';
-    import { requestPatientSelectOnePatient, requestPatientUpdate } from '../../../api/userList/userList';
+    import {  requestPatientUpdate } from '../../../api/userList/userList';
 
     export default {
         components: {
@@ -67,20 +68,7 @@
         methods: {
             //  主要请求
             searchFn(){
-                //  console.log('病人信息tab-病人id', this.patientId);
-                requestPatientSelectOnePatient(this.patientId)
-                    .then(v => {
-                        const { data } = v;
-                        console.log(JSON.parse(JSON.stringify(data)));
-                        console.log(data.hospitalTreatment);
-                        this.patientInfo = data;
-                        this.$refs.refPatientBasicInfo
-                            .getDeptListDeptHospitalId(data.hospitalTreatment);
-                        this.$refs.refPatientBasicInfo
-                            .getDoctorNutritionistListFn(data.hospitalTreatment);
-                        //  保存到store里，基础信息、群聊信息 ⚠️这里暂时一个，看够不够了
-                        this.setPatientBasicInfo(this.patientInfo);
-                    });
+            
             },
             //  确认出院
             confirmOutHospital(){
@@ -134,15 +122,12 @@
                     });
 
             },
-            ...mapActions('userList', [
-                //  保存病人信息，这是为了给组件用，而不是页面，所以要store
-                'setPatientBasicInfo',
-            ]),
+           
         }
     };
 </script>
 <style>
-    .out-of-hospital-info .ant-modal{
+    .out-of-hospital-info .ant-modal {
         top: 260px;
     }
 </style>
