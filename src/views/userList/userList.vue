@@ -263,6 +263,7 @@
     .router-view {
         height: calc(100vh - 180px);
         overflow: auto;
+        width: 900px;
     }
     
     
@@ -270,10 +271,12 @@
     .wrap {
         display: flex;
         justify-content: flex-start;
+        min-width: 1200px;
     }
     
     .left-info {
         min-width: 300px;
+        max-width: 300px;
         /*background-color: lightyellow;*/
     }
     
@@ -283,7 +286,7 @@
     }
     
     .user-list-menu {
-        padding-top: 10px;
+        padding-top: 4px;
         background-color: #eaecf1;;
     }
     
@@ -291,7 +294,10 @@
     /*未激活的*/
     .ant-menu-horizontal > .ant-menu-item {
         background-color: var(--user-list-ant-menu-item-bgc);
-        height: 43px;
+        width: 100px;
+        text-align: center;
+        height: 40px;
+        line-height: 40px;
         box-sizing: border-box;
         transition: background, color .3s;
     }
@@ -303,16 +309,7 @@
     .ant-menu-horizontal > .ant-menu-submenu-open {
         background-color: var(--user-list-ant-menu-item-active-bgc) !important;;
         color: var(--user-list-ant-menu-item-active-c) !important;
-        /*height: 55px;*/
-        /*line-height: 70px;*/
     }
-    
-    /*!*.ant-menu-horizontal > .ant-menu-item-active,*!*/
-    /*!*.ant-menu-horizontal > .ant-menu-submenu-active,*!*/
-    /*!*.ant-menu-horizontal > .ant-menu-item-open,*!*/
-    /*!*.ant-menu-horizontal > .ant-menu-submenu-open {*!*/
-    /*!*    color: var(--user-list-ant-menu-item-active-c);*!*/
-    /*}*/
     
     
     /*被选中的*/
@@ -320,8 +317,8 @@
     .ant-menu-horizontal > .ant-menu-submenu-selected {
         color: var(--user-list-ant-menu-item-active-c) !important;;
         background-color: white !important;;
-        height: 55px;
-        line-height: 55px;
+        height: 60px;
+        line-height: 60px;
     }
     
     .ant-menu-horizontal > .ant-menu-item:hover,
