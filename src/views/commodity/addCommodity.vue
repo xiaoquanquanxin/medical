@@ -9,8 +9,7 @@
                 @submit="handleSubmit"
                 autocomplete="off"
         >
-            <div v-show="true">
-                <!--            <div style="display: none">-->
+            <div v-show="false">
                 <a-form-item label="商品名称">
                     <a-input class="add-form-input"
                              v-decorator="goodsNameDecorator"
@@ -137,33 +136,59 @@
                             </a-select>
                         </div>
                         <div slot="unitRelations" slot-scope="scope,sItem,sIndex,extra">
-                            <a-input placeholder="请输入单位关系"
-                                     v-model="scope.unitRelations"
+                            <a-input-number
+                                    :min="1"
+                                    :step="1"
+                                    :precision="0"
+                                    style="width:100%;"
+                                    placeholder="请输入单位关系"
+                                    v-model="scope.unitRelations"
                             />
                         </div>
                         <div slot="unitPrice" slot-scope="scope,sItem,sIndex,extra">
-                            <a-input placeholder="请输入价格"
-                                     v-model="sItem.unitPrice"
+                            <a-input-number
+                                    style="width:100%;"
+                                    :min="0.01"
+                                    :step="0.01"
+                                    :precision="2"
+                                    placeholder="请输入价格"
+                                    v-model="sItem.unitPrice"
                             />
                         </div>
                         <div slot="unitEnergy" slot-scope="scope,sItem,sIndex,extra">
-                            <a-input placeholder="请输入能量"
-                                     v-model="sItem.unitEnergy"
+                            <a-input-number style="width:100%;"
+                                            :min="0.1"
+                                            :step="0.1"
+                                            :precision="1"
+                                            placeholder="请输入能量"
+                                            v-model="sItem.unitEnergy"
                             />
                         </div>
                         <div slot="unitProtein" slot-scope="scope,sItem,sIndex,extra">
-                            <a-input placeholder="请输入蛋白质"
-                                     v-model="sItem.unitProtein"
+                            <a-input-number style="width:100%;"
+                                            :min="0.1"
+                                            :step="0.1"
+                                            :precision="1"
+                                            placeholder="请输入蛋白质"
+                                            v-model="sItem.unitProtein"
                             />
                         </div>
                         <div slot="unitFat" slot-scope="scope,sItem,sIndex,extra">
-                            <a-input placeholder="请输入脂肪"
-                                     v-model="sItem.unitFat"
+                            <a-input-number style="width:100%;"
+                                            :min="0.1"
+                                            :step="0.1"
+                                            :precision="1"
+                                            placeholder="请输入脂肪"
+                                            v-model="sItem.unitFat"
                             />
                         </div>
                         <div slot="unitCarbohydrate" slot-scope="scope,sItem,sIndex,extra">
-                            <a-input placeholder="请输入碳水化合物"
-                                     v-model="sItem.unitCarbohydrate"
+                            <a-input-number style="width:100%;"
+                                            :min="0.1"
+                                            :step="0.1"
+                                            :precision="1"
+                                            placeholder="请输入碳水化合物"
+                                            v-model="sItem.unitCarbohydrate"
                             />
                         </div>
                     </a-table>
@@ -211,28 +236,49 @@
                             />
                         </div>
                         <div slot="unitPrice" slot-scope="scope,sItem,sIndex,extra">
-                            <a-input placeholder="请输入价格"
-                                     v-model="sItem.unitPrice"
+                            <a-input-number
+                                    style="width:100%;"
+                                    :min="0.01"
+                                    :step="0.01"
+                                    :precision="2"
+                                    placeholder="请输入价格"
+                                    v-model="sItem.unitPrice"
                             />
                         </div>
                         <div slot="unitEnergy" slot-scope="scope,sItem,sIndex,extra">
-                            <a-input placeholder="请输入能量"
-                                     v-model="sItem.unitEnergy"
+                            <a-input-number style="width:100%;"
+                                            :min="0.1"
+                                            :step="0.1"
+                                            :precision="1"
+                                            placeholder="请输入能量"
+                                            v-model="sItem.unitEnergy"
                             />
                         </div>
                         <div slot="unitProtein" slot-scope="scope,sItem,sIndex,extra">
-                            <a-input placeholder="请输入蛋白质"
-                                     v-model="sItem.unitProtein"
+                            <a-input-number style="width:100%;"
+                                            :min="0.1"
+                                            :step="0.1"
+                                            :precision="1"
+                                            placeholder="请输入蛋白质"
+                                            v-model="sItem.unitProtein"
                             />
                         </div>
                         <div slot="unitFat" slot-scope="scope,sItem,sIndex,extra">
-                            <a-input placeholder="请输入脂肪"
-                                     v-model="sItem.unitFat"
+                            <a-input-number style="width:100%;"
+                                            :min="0.1"
+                                            :step="0.1"
+                                            :precision="1"
+                                            placeholder="请输入脂肪"
+                                            v-model="sItem.unitFat"
                             />
                         </div>
                         <div slot="unitCarbohydrate" slot-scope="scope,sItem,sIndex,extra">
-                            <a-input placeholder="请输入碳水化合物"
-                                     v-model="sItem.unitCarbohydrate"
+                            <a-input-number style="width:100%;"
+                                            :min="0.1"
+                                            :step="0.1"
+                                            :precision="1"
+                                            placeholder="请输入碳水化合物"
+                                            v-model="sItem.unitCarbohydrate"
                             />
                         </div>
                         <div slot="unitUse" slot-scope="scope,sItem,sIndex,extra">
@@ -316,7 +362,7 @@
         unameType: {
             title: '',
             scopedSlots: { customRender: 'unameType' },
-            width: 100,
+            width: 70,
         },
         unitRelations: {
             title: '单位关系',
@@ -325,7 +371,7 @@
         },
         uname: {
             title: '单位',
-            width: 120,
+            width: 110,
             scopedSlots: { customRender: 'uname' }
         },
         unitPrice: {
@@ -340,7 +386,7 @@
         },
         unitProtein: {
             title: '蛋白质g',
-            width: 120,
+            width: 110,
             scopedSlots: { customRender: 'unitProtein' }
         },
         unitFat: {
@@ -350,7 +396,7 @@
         },
         unitCarbohydrate: {
             title: '碳水化合物g',
-            width: 150,
+            width: 130,
             scopedSlots: { customRender: 'unitCarbohydrate' }
         },
     };
