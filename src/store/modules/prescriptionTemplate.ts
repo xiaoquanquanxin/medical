@@ -71,7 +71,7 @@ const actions = {
 	// },
 
 	setRemark: ({commit}: COMMIT_INTERFACE<STATE>, remark: number) => {
-		commit('SET_REMARK', remark);
+		commit('SET_REMARK', remark || '');
 	},
 	setRowForRemark: ({commit}: COMMIT_INTERFACE<STATE>, rowForRemark: number) => {
 		commit('SET_ROW_FOR_REMARK', rowForRemark);
