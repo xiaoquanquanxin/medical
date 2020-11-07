@@ -1,17 +1,17 @@
 /*表组，处方模板*/
 .table-group {
-    border: 1px solid #e8e8e8;
+    border: 1px solid var(--basic-border-color);
     border-bottom: none;
 }
 
-
 .table-group-row {
-    border-bottom: 1px solid #e8e8e8;
+    border-bottom: 1px solid var(--basic-border-color);
 }
 
 /*用户列表高亮度*/
 .user-list-high-light {
-    background-color: #e6f7ff;
+    background-color: var(--user-list-is-in-hospital-bgc);
+    color: var(--user-list-is-in-hospital-c);
     font-weight: bold;
 }
 
@@ -20,5 +20,5 @@
 }
 
 .col-right {
-    border-left: 1px solid #e8e8e8;
+    border-left: 1px solid var(--basic-border-color);
 }

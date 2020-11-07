@@ -50,8 +50,8 @@
                         </div>
                         <!--状态-->
                         <div slot="patientStatus" slot-scope="scope,sItem,sIndex,extra">
-                            <span v-if="scope.patientStatus==='1'">入院</span>
-                            <span v-if="scope.patientStatus==='2'">出院</span>
+                            <span v-if="scope.patientStatus==='1'" style="color:">住院</span>
+                            <span v-if="scope.patientStatus==='2'">院外</span>
                             <span v-if="scope.patientStatus==='3'">永久注销</span>
                         </div>
                     </a-table>
@@ -76,6 +76,7 @@
             </div>
             <div class="tab-info">
                 <a-menu v-if="currentMeta"
+                        class="user-list-menu"
                         v-model="transverseSubPaths2"
                         mode="horizontal">
                     <a-menu-item
@@ -264,17 +265,12 @@
         overflow: auto;
     }
     
-    /*Firefox*/
-    /*-moz-calc(expression);*/
-    /*chrome safari*/
-    /*-webkit-calc(expression);*/
-    /*calc*/
     
+    /*页面左右分块*/
     .wrap {
         display: flex;
         justify-content: flex-start;
     }
-    
     
     .left-info {
         min-width: 300px;
@@ -284,5 +280,51 @@
     .tab-info {
         flex: 1 auto auto;
         /*background-color: lightblue;*/
+    }
+    
+    .user-list-menu {
+        padding-top: 10px;
+        background-color: whitesmoke;
+    }
+    
+    
+    /*未激活的*/
+    .ant-menu-horizontal > .ant-menu-item {
+        background-color: var(--user-list-ant-menu-item-bgc);
+        height: 43px;
+        box-sizing: border-box;
+        transition: background, color .3s;
+    }
+    
+    /*鼠标敷于浮于*/
+    .ant-menu-horizontal > .ant-menu-item-active,
+    .ant-menu-horizontal > .ant-menu-submenu-active,
+    .ant-menu-horizontal > .ant-menu-item-open,
+    .ant-menu-horizontal > .ant-menu-submenu-open {
+        background-color: var(--user-list-ant-menu-item-active-bgc) !important;;
+        color: var(--user-list-ant-menu-item-active-c) !important;
+        /*height: 55px;*/
+        /*line-height: 70px;*/
+    }
+    
+    /*!*.ant-menu-horizontal > .ant-menu-item-active,*!*/
+    /*!*.ant-menu-horizontal > .ant-menu-submenu-active,*!*/
+    /*!*.ant-menu-horizontal > .ant-menu-item-open,*!*/
+    /*!*.ant-menu-horizontal > .ant-menu-submenu-open {*!*/
+    /*!*    color: var(--user-list-ant-menu-item-active-c);*!*/
+    /*}*/
+    
+    
+    /*被选中的*/
+    .ant-menu-horizontal > .ant-menu-item-selected,
+    .ant-menu-horizontal > .ant-menu-submenu-selected {
+        color: var(--user-list-ant-menu-item-active-c) !important;;
+        background-color: white !important;;
+        height: 55px;
+        line-height: 55px;
+    }
+    
+    .ant-menu-horizontal > .ant-menu-item:hover,
+    .ant-menu-horizontal > .ant-menu-submenu:hover {
     }
 </style>
