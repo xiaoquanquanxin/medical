@@ -9,7 +9,7 @@
                 @submit="handleSubmit"
                 autocomplete="off"
         >
-            <div v-show="false">
+            <div v-show="true">
                 <a-form-item label="商品名称">
                     <a-input class="add-form-input"
                              v-decorator="goodsNameDecorator"
