@@ -28,7 +28,7 @@
             <br>
             <!--能量表-->
             <EnergyTable
-                    :data-source="energyData"
+                    :data-source="totalEnergyData"
             />
         </div>
     </div>
@@ -118,7 +118,7 @@
                 ],
 
                 //  能量数据
-                energyData: [{
+                totalEnergyData: [{
                     key: 1,
                     energy: 123,
                     protein: 234,
