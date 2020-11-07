@@ -24,17 +24,23 @@
                 :scroll="scroll"
                 :pagination="false"
         >
+            <!--用餐时间-->
+            <div slot="usageTime" slot-scope="scope,sItem,sIndex,extra">
+                <a-time-picker
+                        v-model="sItem.moment"
+                        format="HH:mm"/>
+            </div>
             <!--用餐内容-->
             <div slot="entryName" slot-scope="scope,sItem,sIndex,extra">
                 <a-input placeholder="请输入用餐内容"
                          v-model="sItem.entryName"
                 />
             </div>
-            <!--用餐时间-->
-            <div slot="usageTime" slot-scope="scope,sItem,sIndex,extra">
-                <a-time-picker
-                        v-model="sItem.moment"
-                        format="HH:mm"/>
+            <!--用量-->
+            <div slot="quantityUsed" slot-scope="scope,sItem,sIndex,extra">
+                <a-input placeholder="请输入用量"
+                         v-model="sItem.quantityUsed"
+                />
             </div>
             <!--操作-->
             <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
@@ -69,14 +75,19 @@
             width: 100,
         },
         {
+            title: '用餐时间',
+            scopedSlots: { customRender: 'usageTime' },
+            width: 200,
+        },
+        {
             title: '用餐内容',
             width: 200,
             scopedSlots: { customRender: 'entryName' },
         },
         {
-            title: '用餐时间',
-            scopedSlots: { customRender: 'usageTime' },
+            title: '用量',
             width: 200,
+            scopedSlots: { customRender: 'quantityUsed' },
         },
         {
             title: '操作',
