@@ -63,13 +63,13 @@
                 <a-descriptions-item>
                     <div slot="label" class="descriptions-label descriptions-label-require require-left-64">身高(cm):
                     </div>
-                    <a-input
-                            v-if="activeElementId === 4 ||!patientBasicInfo.height"
-                            placeholder="请输入身高"
-                            v-model="patientBasicInfo.height"
-                            class="form-element"
-                            @focus="descriptionFormFocusFn(4)"
-                            @blur="descriptionFormBlurFn('height')"
+                    <a-input-number style='width:100%;'
+                                    v-if="activeElementId === 4 ||!patientBasicInfo.height"
+                                    placeholder="请输入身高"
+                                    v-model="patientBasicInfo.height"
+                                    class="form-element"
+                                    @focus="descriptionFormFocusFn(4)"
+                                    @blur="descriptionFormBlurFn('height')"
                     />
                     <p v-else
                        @click="descriptionFormClickFn(4,$event)"
@@ -79,7 +79,7 @@
                 <a-descriptions-item>
                     <div slot="label" class="descriptions-label descriptions-label-require require-left-64">体重(kg):
                     </div>
-                    <a-input
+                    <a-input-number style='width:100%;'
                             v-if="activeElementId === 5 ||!patientBasicInfo.weight"
                             placeholder="请输入体重"
                             v-model="patientBasicInfo.weight"
@@ -621,36 +621,36 @@
                         weight,
                     } = patientBasicInfo;
                     const isValidated = this.patientBasicInfoCheck([
-//                        {
-//                            value: name,
-//                            label: 'name',
-//                            message: '请输入姓名'
-//                        },
-//                        {
-//                            value: sex,
-//                            label: 'sex',
-//                            message: '请选择年龄'
-//                        },
-//                        {
-//                            value: birth,
-//                            label: 'birth',
-//                            message: '请输入生日'
-//                        },
-//                        {
-//                            value: height,
-//                            label: 'height',
-//                            message: '请输入身高'
-//                        },
-//                        {
-//                            value: weight,
-//                            label: 'weight',
-//                            message: '请输入体重'
-//                        },
-//                        {
-//                            value: bmi,
-//                            label: 'bmi',
-//                            message: '请输入BMI'
-//                        },
+                        {
+                            value: name,
+                            label: 'name',
+                            message: '请输入姓名'
+                        },
+                        {
+                            value: sex,
+                            label: 'sex',
+                            message: '请选择年龄'
+                        },
+                        {
+                            value: birth,
+                            label: 'birth',
+                            message: '请输入生日'
+                        },
+                        {
+                            value: height,
+                            label: 'height',
+                            message: '请输入身高'
+                        },
+                        {
+                            value: weight,
+                            label: 'weight',
+                            message: '请输入体重'
+                        },
+                        {
+                            value: bmi,
+                            label: 'bmi',
+                            message: '请输入BMI'
+                        },
                         {
                             value: idCard,
                             label: 'idCard',
