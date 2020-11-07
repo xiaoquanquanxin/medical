@@ -34,7 +34,7 @@
                             v-model="patientBasicInfo.sex"
                             class="form-element"
                             @focus="descriptionFormFocusFn(1)"
-                            @dropdownVisibleChange="dropdownVisibleChange($event,1)"
+                            @dropdownVisibleChange="dropdownVisibleChangeFn($event,1)"
                     >
                         <SuffixIcon :iconNum="1" slot="suffixIcon"></SuffixIcon>
                         <a-select-option :value="1">男</a-select-option>
@@ -184,7 +184,7 @@
                               class="form-element basic-select-width"
                               @focus="descriptionFormFocusFn(14)"
                               @change="selectHospitalChange"
-                              @dropdownVisibleChange="dropdownVisibleChange($event,5)"
+                              @dropdownVisibleChange="dropdownVisibleChangeFn($event,5)"
                     >
                         <SuffixIcon :iconNum="5" slot="suffixIcon"></SuffixIcon>
                         <a-select-option v-for="item in hospitalList"
@@ -201,7 +201,7 @@
                               class="form-element basic-select-width"
                               @change="hospitalTreatmentChange"
                               @focus="descriptionFormFocusFn(14)"
-                              @dropdownVisibleChange="dropdownVisibleChange($event,2)"
+                              @dropdownVisibleChange="dropdownVisibleChangeFn($event,2)"
                     >
                         <SuffixIcon :iconNum="2" slot="suffixIcon"></SuffixIcon>
                         <a-select-option v-for="item in hospitalDeptList"
@@ -262,7 +262,7 @@
                               v-model="patientBasicInfo.icd"
                               class="form-element basic-select-width"
                               @focus="descriptionFormFocusFn(18)"
-                              @dropdownVisibleChange="dropdownVisibleChange($event,6)"
+                              @dropdownVisibleChange="dropdownVisibleChangeFn($event,6)"
                     >
                         <SuffixIcon :iconNum="6" slot="suffixIcon"></SuffixIcon>
                         <a-select-option :value="item.code"
@@ -369,7 +369,7 @@
                               placeholder="请选择主管医生"
                               v-model="patientBasicInfo.doctorId"
                               @change="doctorChange"
-                              @dropdownVisibleChange="dropdownVisibleChange($event,3)"
+                              @dropdownVisibleChange="dropdownVisibleChangeFn($event,3)"
                     >
                         <SuffixIcon :iconNum="3" slot="suffixIcon"></SuffixIcon>
                         <a-select-option v-for="item in doctorList"
@@ -386,7 +386,7 @@
                               placeholder="请选择营养师"
                               v-model="patientBasicInfo.nutritionistId"
                               @change="nutritionistChange"
-                              @dropdownVisibleChange="dropdownVisibleChange($event,4)"
+                              @dropdownVisibleChange="dropdownVisibleChangeFn($event,4)"
                     >
                         <SuffixIcon :iconNum="4" slot="suffixIcon"></SuffixIcon>
                         <a-select-option v-for="item in nutritionistList"
@@ -403,7 +403,7 @@
 <script>
     //  ⚠️医院下掉科室，需要调取木木掉接口
 
-    import { dropdownVisibleChange, selectSuffixIconMap } from '../../../utils/select';
+    import { dropdownVisibleChangeFn, selectSuffixIconMap } from '../../../utils/select';
     import { requestPatientSelectICD } from '../../../api/userList/userList';
     import { requestDeptListDeptHospitalId, requestHospitalGetList } from '../../../api/hospital';
     import { requestDeptList } from '../../../api/department';
@@ -688,7 +688,7 @@
                 });
             },
 
-            dropdownVisibleChange,
+            dropdownVisibleChangeFn,
             //	病人信息、直接编辑用的 描述框的方法
             ...descriptionsMethods,
         }
