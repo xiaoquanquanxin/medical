@@ -1,7 +1,7 @@
 <template>
     <a-layout-sider v-model="collapsed" :trigger="null" class="slider">
         <div class="logo">
-            <img :src="menuLogo" alt="">
+            <img :src="menuLogo" alt="" class="logo-img">
         </div>
         <div class="menu-wrapper">
             <a-menu v-if="(currentMeta)"
@@ -121,8 +121,13 @@
         text-align: center;
         color: white;
         vertical-align: middle;
-        background: rgba(255, 255, 255, 0.2);
         margin: 16px;
         padding: 4px 0;
+    }
+    
+    .logo-img {
+        display: block;
+        margin: auto;
+        width: 60%;
     }
 </style>
