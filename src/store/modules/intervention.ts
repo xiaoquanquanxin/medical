@@ -15,8 +15,8 @@ interface STATE {
 
 	prescriptionType: number,
 
-	//	能量表格数据
-	energyData: any,
+	//	总的能量表格数据
+	totalEnergyData: any,
 
 	//	根据templateType区分的能量数据
 	energyDataByTemplateType: any,
@@ -41,8 +41,8 @@ const state: STATE = {
 	mealData: null,
 	//	处方类型
 	prescriptionType: 1,
-	//	能量表格数据
-	energyData: null,
+	//	总的能量表格数据
+	totalEnergyData: null,
 	//	根据templateType区分的能量数据
 	energyDataByTemplateType: {1: {}, 2: {}},
 
@@ -70,8 +70,8 @@ const mutations = {
 	SET_PRESCRIPTION_TYPE: (state: STATE, prescriptionType: number) => {
 		state.prescriptionType = prescriptionType
 	},
-	SET_ENERGY_DATA: (state: STATE, energyData: number) => {
-		state.energyData = energyData
+	SET_ENERGY_DATA: (state: STATE, totalEnergyData: number) => {
+		state.totalEnergyData = totalEnergyData
 	},
 	SET_INTESTINAL_REMARK: (state: STATE, intestinalRemark: string) => {
 		state.intestinalRemark = intestinalRemark
@@ -103,14 +103,14 @@ const actions = {
 	setPrescriptionType: ({commit}: COMMIT_INTERFACE<STATE>, prescriptionType: number) => {
 		commit('SET_PRESCRIPTION_TYPE', prescriptionType);
 	},
-	setEnergyData: ({commit}: COMMIT_INTERFACE<STATE>, energyData: any) => {
+	setEnergyData: ({commit}: COMMIT_INTERFACE<STATE>, totalEnergyData: any) => {
 		commit('SET_ENERGY_DATA', [Object.assign({
 			key: 1,
 			energy: 0,
 			protein: 0,
 			fat: 0,
 			carbohydrates: 0,
-		}, energyData,)]);
+		}, totalEnergyData,)]);
 	},
 	//	根据templateType，分别设置肠内、口腔的数据
 	setEnergyDataByTemplateType: ({commit}: COMMIT_INTERFACE<STATE>, data: any) => {
