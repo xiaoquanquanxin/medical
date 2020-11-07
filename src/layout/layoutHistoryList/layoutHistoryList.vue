@@ -115,9 +115,9 @@
 <style scoped>
     /*历史记录*/
     .history-list {
-        height: 50px;
+        height: 40px;
         line-height: 40px;
-        background-color: #eaecf1;
+        /*background-color: #eaecf1;*/
         /*border-top: none;*/
         /*border-bottom: 1px solid #e8e8e8;*/
         overflow-x: auto;
