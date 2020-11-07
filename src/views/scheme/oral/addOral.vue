@@ -112,10 +112,13 @@
                         </div>
                         <!--数量-->
                         <div slot="quantity" slot-scope="scope,sItem,sIndex,extra" v-if="commodityTableData.length">
-                            <a-input v-if="prescriptionType===1"
-                                     v-model="sItem.quantity"
-                                     placeholder="请输入数量"
-                                     data-msg="院内配置"
+                            <a-input-number style='width:100%;'
+                                            :precision="0"
+                                            :min="1"
+                                            v-if="prescriptionType===1"
+                                            v-model="sItem.quantity"
+                                            placeholder="请输入数量"
+                                            data-msg="院内配置"
                             />
                             <a-input v-else
                                      v-model="sItem.quantity"
@@ -175,9 +178,12 @@
                                  class="negative-margin-item is-input"
                             >
                                 <a-space size="small">
-                                    <a-input placeholder="请输入使用量"
-                                             v-model="item.dosage"
-                                             @input="dosageChangeFn(scope,item)"
+                                    <a-input-number style='width:100%;'
+                                                    :precision="0"
+                                                    :min="1"
+                                                    placeholder="请输入使用量"
+                                                    v-model="item.dosage"
+                                                    @input="dosageChangeFn(scope,item)"
                                     />
                                     <span v-if="prescriptionType===1" data-msg="院内配置" class="nowrap">
                                         {{unitTypeMap[item.basicUnitItem.uname].label}}
@@ -195,7 +201,10 @@
                         >
                             <div class="negative-margin-item is-input">
                                 <a-space size="small">
-                                    <a-input placeholder="请输入温水" v-model="scope.warmWater"/>
+                                    <a-input-number style='width:100%;'
+                                                    :precision="0"
+                                                    :min="1"
+                                                    placeholder="请输入温水" v-model="scope.warmWater"/>
                                 </a-space>
                             </div>
                         </div>
@@ -386,12 +395,12 @@
         },
         {
             title: '数量',
-            width: 100,
+            width: 80,
             scopedSlots: { customRender: 'quantity' },
         },
         {
             title: '操作',
-            width: 50,
+            width: 100,
             scopedSlots: { customRender: 'operation' },
         },
     ];
@@ -475,12 +484,12 @@
                     },
                     {
                         title: '使用量',
-                        width: 120,
+                        width: 100,
                         scopedSlots: { customRender: 'dosage' }
                     },
                     {
                         title: '温水/ml',
-                        width: 150,
+                        width: 120,
                         scopedSlots: { customRender: 'warmWater' }
                     },
                     {
@@ -491,7 +500,7 @@
                     {
                         title: '备注',
                         dataIndex: 'remark',
-                        width: 100,
+                        width: 120,
                         rowSpan: 100,
                         customRender: (text, row, index) => {
                             const obj = {
