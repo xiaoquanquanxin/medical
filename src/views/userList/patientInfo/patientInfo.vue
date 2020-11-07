@@ -88,6 +88,7 @@
                     title: `确定${this.patientInfo.name}出院`,
                     okText: '确认',
                     cancelText: '取消',
+                    class: 'out-of-hospital-info',
                     onOk: () => {
                         console.log(this.patientBasicInfo);
                         this.patientBasicInfo.id = this.patientId;
@@ -140,3 +141,8 @@
         }
     };
 </script>
+<style>
+    .out-of-hospital-info .ant-modal{
+        top: 260px;
+    }
+</style>
