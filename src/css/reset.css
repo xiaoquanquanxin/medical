@@ -18,6 +18,11 @@ hr {
     margin: 0;
 }
 
+/*横向滚动条的行高*/
+.ant-menu-horizontal {
+    line-height: 40px;
+}
+
 /*!*滚动条*!*/
 /**::-webkit-scrollbar {*/
 /*    !*display: none;*!*/
