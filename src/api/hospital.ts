@@ -67,8 +67,8 @@ export function requestDeptListDeptHospitalId(id: string | number) {
 	return request({
 		url: `/api/dept/listDeptHospitalId/${id}`,
 		method: 'get',
-	})
-		.then(unifiedHandlingList);
+	});
+	//	⚠️这里面只有纯id，不要 【unifiedHandlingList】
 }
 
 //	医院-关联科室保存
