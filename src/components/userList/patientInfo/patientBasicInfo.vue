@@ -47,13 +47,14 @@
                 </a-descriptions-item>
                 <a-descriptions-item>
                     <div slot="label" class="descriptions-label descriptions-label-require require-left-34">年龄:</div>
-                    <a-input
-                            v-if="activeElementId === 3 ||!patientBasicInfo.birth"
-                            placeholder="请输入年龄"
-                            v-model="patientBasicInfo.birth"
-                            class="form-element"
-                            @focus="descriptionFormFocusFn(3)"
-                            @blur="descriptionFormBlurFn('birth')"
+                    <a-input-number style='width:100%;'
+                                    :precision="0"
+                                    v-if="activeElementId === 3 ||!patientBasicInfo.birth"
+                                    placeholder="请输入年龄"
+                                    v-model="patientBasicInfo.birth"
+                                    class="form-element"
+                                    @focus="descriptionFormFocusFn(3)"
+                                    @blur="descriptionFormBlurFn('birth')"
                     />
                     <p v-else
                        @click="descriptionFormClickFn(3,$event)"
@@ -64,6 +65,7 @@
                     <div slot="label" class="descriptions-label descriptions-label-require require-left-64">身高(cm):
                     </div>
                     <a-input-number style='width:100%;'
+                                    :precision="0"
                                     v-if="activeElementId === 4 ||!patientBasicInfo.height"
                                     placeholder="请输入身高"
                                     v-model="patientBasicInfo.height"
@@ -80,12 +82,13 @@
                     <div slot="label" class="descriptions-label descriptions-label-require require-left-64">体重(kg):
                     </div>
                     <a-input-number style='width:100%;'
-                            v-if="activeElementId === 5 ||!patientBasicInfo.weight"
-                            placeholder="请输入体重"
-                            v-model="patientBasicInfo.weight"
-                            class="form-element"
-                            @focus="descriptionFormFocusFn(5)"
-                            @blur="descriptionFormBlurFn('weight')"
+                                    :precision="0"
+                                    v-if="activeElementId === 5 ||!patientBasicInfo.weight"
+                                    placeholder="请输入体重"
+                                    v-model="patientBasicInfo.weight"
+                                    class="form-element"
+                                    @focus="descriptionFormFocusFn(5)"
+                                    @blur="descriptionFormBlurFn('weight')"
                     />
                     <p v-else
                        @click="descriptionFormClickFn(5,$event)"
