@@ -1,4 +1,4 @@
-//	库房管理
+//	营养干预，intervention
 import {COMMIT_INTERFACE} from "@/store";
 
 interface STATE {
@@ -20,6 +20,11 @@ interface STATE {
 
 	//	根据templateType区分的能量数据
 	energyDataByTemplateType: any,
+
+	//	肠内备注	templateType:2
+	intestinalRemark: string,
+	//	口腔备注	templateType:1
+	oralRemark: string,
 }
 
 const state: STATE = {
@@ -40,6 +45,11 @@ const state: STATE = {
 	energyData: null,
 	//	根据templateType区分的能量数据
 	energyDataByTemplateType: {1: {}, 2: {}},
+
+	//	肠内备注
+	intestinalRemark: '',
+	//	口腔备注
+	oralRemark: '',
 }
 const mutations = {
 	SET_CHOOSE_INTERVENTION_DATA: (state: STATE, chooseInterventionData: any) => {
@@ -62,6 +72,12 @@ const mutations = {
 	},
 	SET_ENERGY_DATA: (state: STATE, energyData: number) => {
 		state.energyData = energyData
+	},
+	SET_INTESTINAL_REMARK: (state: STATE, intestinalRemark: string) => {
+		state.intestinalRemark = intestinalRemark
+	},
+	SET_ORAL_REMARK: (state: STATE, oralRemark: string) => {
+		state.oralRemark = oralRemark
 	},
 }
 const actions = {
@@ -133,7 +149,15 @@ const actions = {
 			fat,
 			carbohydrates,
 		})]);
-	}
+	},
+	//	肠内备注
+	setIntestinalRemark: ({commit}: COMMIT_INTERFACE<STATE>, intestinalRemark: any) => {
+		commit('SET_INTESTINAL_REMARK', intestinalRemark);
+	},
+	//	口腔备注
+	setOralRemark: ({commit}: COMMIT_INTERFACE<STATE>, oralRemark: any) => {
+		commit('SET_ORAL_REMARK', oralRemark);
+	},
 }
 
 
@@ -143,3 +167,4 @@ export default {
 	mutations,
 	actions
 }
+//	intervention
