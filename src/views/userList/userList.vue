@@ -317,8 +317,8 @@
     .ant-menu-horizontal > .ant-menu-submenu-selected {
         color: var(--user-list-ant-menu-item-active-c) !important;;
         background-color: white !important;;
-        height: 60px;
-        line-height: 60px;
+        height: 58px;
+        line-height: 58px;
     }
     
     .ant-menu-horizontal > .ant-menu-item:hover,
