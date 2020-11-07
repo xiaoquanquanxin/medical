@@ -255,34 +255,36 @@
                 requestHospitalGetList()
                     .then(hospitalList => {
                         this.hospitalList = hospitalList;
-                    });
-                //  如果是新增
-                if (!this.dietaryId) {
-                    return;
-                }
-                //  如果是编辑
-                requestPrescriptionTemplateGet(this.dietaryId)
-                    .then(v => {
-                        const { data } = v;
-                        const tableForm = this.tableForm;
-                        const { prescriptionContent, energy, templateName, hospitalId, } = data;
-                        const list = energy.split('【');
-                        //  食物类型
-                        tableForm.customFoodType = list[0];
-                        //  能量
-                        tableForm.customEnergy = list[1].split('】')[0];
-                        tableForm.templateName = templateName;
-                        tableForm.hospitalId = hospitalId;
-                        const prescriptionContentData = JSON.parse(prescriptionContent);
-                        const { mealPlanTableData, energyTableData } = prescriptionContentData;
-                        mealPlanTableData.forEach((item, index) => {
-                            //  console.log(item);
-                            item.index = index + 1;
-                            item.moment = moment(item.moment);
-                        });
-                        this.data = mealPlanTableData;
-                        this.energyTableData = energyTableData;
-                        //  this.$forceUpdate();
+                    })
+                    .then(() => {
+                        //  如果是新增
+                        if (!this.dietaryId) {
+                            return;
+                        }
+                        //  如果是编辑
+                        requestPrescriptionTemplateGet(this.dietaryId)
+                            .then(v => {
+                                const { data } = v;
+                                const tableForm = this.tableForm;
+                                const { prescriptionContent, energy, templateName, hospitalId, } = data;
+                                const list = energy.split('【');
+                                //  食物类型
+                                tableForm.customFoodType = list[0];
+                                //  能量
+                                tableForm.customEnergy = list[1].split('】')[0];
+                                tableForm.templateName = templateName;
+                                tableForm.hospitalId = hospitalId;
+                                const prescriptionContentData = JSON.parse(prescriptionContent);
+                                const { mealPlanTableData, energyTableData } = prescriptionContentData;
+                                mealPlanTableData.forEach((item, index) => {
+                                    //  console.log(item);
+                                    item.index = index + 1;
+                                    item.moment = moment(item.moment);
+                                });
+                                this.data = mealPlanTableData;
+                                this.energyTableData = energyTableData;
+                                //  this.$forceUpdate();
+                            });
                     });
             },
             //  切换医院
