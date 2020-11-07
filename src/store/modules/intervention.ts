@@ -142,6 +142,10 @@ const actions = {
 		//	console.log(energy);
 		//	console.log(fat);
 		//	console.log(protein);
+		energy = Math.trunc(energy);
+		protein = Math.trunc(protein);
+		fat = Math.trunc(fat);
+		carbohydrates = Math.trunc(carbohydrates);
 		commit('SET_ENERGY_DATA', [Object.assign({
 			key: 1,
 			energy,
