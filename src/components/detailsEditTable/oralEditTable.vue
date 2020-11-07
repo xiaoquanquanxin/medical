@@ -62,15 +62,21 @@
                         </div>
                         <!--数量-->
                         <div slot="quantity" slot-scope="scope,sItem,sIndex,extra" v-if="commodityTableData.length">
-                            <a-input v-if="prescriptionType===1"
-                                     v-model="sItem.quantity"
-                                     placeholder="请输入数量"
-                                     data-msg="院内配置"
+                            <a-input-number style='width:100%;'
+                                            :precision="0"
+                                            :min="1"
+                                            v-if="prescriptionType===1"
+                                            v-model="sItem.quantity"
+                                            placeholder="请输入数量"
+                                            data-msg="院内配置"
                             />
-                            <a-input v-else
-                                     v-model="sItem.quantity"
-                                     placeholder="请输入数量"
-                                     data-msg="门诊领药"
+                            <a-input-number style='width:100%;'
+                                            :precision="0"
+                                            :min="1"
+                                            v-else
+                                            v-model="sItem.quantity"
+                                            placeholder="请输入数量"
+                                            data-msg="门诊领药"
                             />
                         </div>
                         <!--小计-->
@@ -132,9 +138,12 @@
                                  class="negative-margin-item is-input"
                             >
                                 <a-space size="small">
-                                    <a-input placeholder="请输入使用量"
-                                             v-model="item.dosage"
-                                             @input="dosageChangeFn(scope,item)"
+                                    <a-input-number style='width:100%;'
+                                                    :precision="0"
+                                                    :min="1"
+                                                    placeholder="请输入使用量"
+                                                    v-model="item.dosage"
+                                                    @input="dosageChangeFn(scope,item)"
                                     />
                                     <span v-if="prescriptionType===1" data-msg="院内配置" class="nowrap">
                                         {{unitTypeMap[item.basicUnitItem.uname].label}}
@@ -151,7 +160,10 @@
                         >
                             <div class="negative-margin-item is-input">
                                 <a-space size="small">
-                                    <a-input placeholder="请输入温水" v-model="scope.warmWater"/>
+                                    <a-input-number style='width:100%;'
+                                                    :precision="0"
+                                                    :min="1"
+                                                    placeholder="请输入温水" v-model="scope.warmWater"/>
                                 </a-space>
                             </div>
                         </div>
@@ -278,7 +290,7 @@
         },
         {
             title: '数量',
-            width: 120,
+            width: 100,
             scopedSlots: { customRender: 'quantity' },
         },
         {
@@ -386,12 +398,12 @@
                     },
                     {
                         title: '使用量',
-                        width: 120,
+                        width: 100,
                         scopedSlots: { customRender: 'dosage' }
                     },
                     {
                         title: '温水/ml',
-                        width: 150,
+                        width: 120,
                         scopedSlots: { customRender: 'warmWater' }
                     },
                     {
@@ -441,7 +453,7 @@
             calcEnergy(value){
                 console.log('计算能量');
                 const { templateType } = this.dataTitle;
-                this.setEnergyDataByTemplateType(Object.assign({templateType},value))
+                this.setEnergyDataByTemplateType(Object.assign({ templateType }, value));
             }
         },
         created(){
