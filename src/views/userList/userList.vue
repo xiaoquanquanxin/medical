@@ -207,10 +207,18 @@
                 userList_searchFn: this.searchFn
             };
         },
+        watch: {
+            $route(value){
+                console.log('🍎', value.name);
+                if (value.name === 'userList') {
+                    this.getFirstPatient();
+                }
+            }
+        },
         methods: {
             //  主要请求
             searchFn(){
-                requestPatientPage(Object.assign({ param: this.searchData }, paginationEncode(this.pagination)))
+                return requestPatientPage(Object.assign({ param: this.searchData }, paginationEncode(this.pagination)))
                     .then(v => {
                         console.log('病人列表');
                         const { data } = v;
@@ -224,18 +232,26 @@
                         this.data = data.records;
                         this.pagination = paginationDecode(this.pagination, data);
                         console.log(JSON.parse(JSON.stringify(data.records))[0]);
-                        //  如果没有病人
-                        if (!data.records.length) {
-                            return;
-                        }
                         //  如果当前是在userList路由下，那么应该进入第一个病人列表的路由
                         if (this.$route.name === 'userList') {
-                            //  第一个病人的id
-                            const { id } = data.records[0];
-                            this.$router.push({ name: 'patientInfo', params: { patientId: id.toString() } });
+                            this.getFirstPatient();
                         }
-                        console.log(this.$route.name);
+                        //  console.log(this.$route.name);
                     });
+            },
+            //  进入第一个病人的路由
+            getFirstPatient(){
+                const data = this.data;
+                if (!data || !data.length) {
+                    return;
+                }
+                //  如果没有病人
+                if (!data.length) {
+                    return;
+                }
+                //  第一个病人的id
+                const { id } = data[0];
+                this.$router.push({ name: 'patientInfo', params: { patientId: id.toString() } });
             },
             //  自定义表格事件
             customRow(scope){
