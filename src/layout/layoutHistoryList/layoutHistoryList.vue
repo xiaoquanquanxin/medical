@@ -119,7 +119,8 @@
         line-height: 40px;
         /*background-color: #eaecf1;*/
         /*border-top: none;*/
-        /*border-bottom: 1px solid #e8e8e8;*/
+        /*不能去掉border-bottom*/
+        border-bottom: 1px solid #e8e8e8;
         overflow-x: auto;
         overflow-y: hidden;
         width: 100%;
