@@ -114,7 +114,7 @@
             this.setBasicInfoEditData([{
                 key: 1,
                 prescriptionName: '',
-                priod: '',
+                priod: '1',
                 prescriptionType: 1,
                 executionTime: '2020-11-06',
                 executionTimeMoment: momentFn(new Date()),
