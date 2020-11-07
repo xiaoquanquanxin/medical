@@ -565,7 +565,7 @@
                 patientBasicInfo.birth = age;
                 patientBasicInfo.sex = sex;
             },
-            //  验证
+            //  必填验证
             patientBasicInfoCheck(checkList){
                 for (let item of checkList) {
                     if (item.value === '' || item.value === undefined || item.value === null) {
