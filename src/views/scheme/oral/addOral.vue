@@ -546,6 +546,8 @@
         },
         created(){
             console.log(this.$route.meta.parentName);
+            //  重置备注
+            this.setRemark();
             this.searchFn();
             console.log('是编辑？', !!this.templateId);
         },
