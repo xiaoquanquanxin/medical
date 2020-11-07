@@ -33,8 +33,15 @@
     ];
 
     export default {
-        //  能量数据
-        props: ['totalEnergyData'],
+        computed: {
+            //  能量数据
+            totalEnergyData(){
+                const { totalEnergyData } = this.$store.state.intervention;
+                console.log('输出');
+                console.log(JSON.parse(JSON.stringify(totalEnergyData[0])));
+                return totalEnergyData;
+            }
+        },
         data(){
             return {
                 energyColumns,
