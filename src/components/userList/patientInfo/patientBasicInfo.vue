@@ -418,7 +418,7 @@
     import { requestPatientSelectDoctorByHospital } from '../../../api/userList/userList';
     import SuffixIcon from '@/components/suffixIcon.vue';
     import { getAgeByIdCard, getSexByIdCard, isIdCard } from '../../../utils/validate';
-
+    import { mapGetters, mapActions } from 'vuex';
     //  病人信息组件
     export default {
         components: {
@@ -477,6 +477,7 @@
                 requestDeptList()
                     .then(deptList => {
                         this.deptList = deptList;
+                        this.setDeptList(deptList);
                     });
             },
             //  切换医院
@@ -733,6 +734,11 @@
             dropdownVisibleChangeFn,
             //	病人信息、直接编辑用的 描述框的方法
             ...descriptionsMethods,
+
+            ...mapActions('constants', [
+                //  弹框id
+                'setDeptList',
+            ]),
         }
     };
 </script>
