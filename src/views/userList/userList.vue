@@ -80,6 +80,7 @@
                         v-model="transverseSubPaths2"
                         mode="horizontal">
                     <a-menu-item
+                            style="margin-right: 6px;"
                             v-for="(item , index) in userRouteList"
                             :key="item.name"
                             @click="userListJumpTo(item)"
