@@ -484,12 +484,12 @@
                     },
                     {
                         title: '使用量',
-                        width: 100,
+                        width: 110,
                         scopedSlots: { customRender: 'dosage' }
                     },
                     {
                         title: '操作',
-                        width: 80,
+                        width: 60,
                         scopedSlots: { customRender: 'operation' },
                     },
                     {
