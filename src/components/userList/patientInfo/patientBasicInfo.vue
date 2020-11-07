@@ -1,5 +1,5 @@
 <template>
-    <div style="min-width: 900px;">
+    <div style="min-width: 860px;">
         <a-row type="flex" justify="space-between" align="middle" class="table-group-title no-border-bottom">
             基础信息
         </a-row>

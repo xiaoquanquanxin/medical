@@ -1,6 +1,6 @@
 <template>
     <a-layout-sider v-model="collapsed" :trigger="null" class="slider">
-        <div class="logo"></div>
+        <div class="logo">铭方营养</div>
         <div class="menu-wrapper">
             <a-menu v-if="(currentMeta)"
                     :default-open-keys="[currentMeta.openRouteKey||'']"
@@ -110,5 +110,13 @@
     
     .menu-list {
         width: calc(100% - 20px);
+    }
+    
+    /*菜单logo*/
+    .logo {
+        text-align: center;
+        color: white;
+        vertical-align: middle;
+        line-height: 49px;
     }
 </style>
