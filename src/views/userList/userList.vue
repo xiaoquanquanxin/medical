@@ -284,7 +284,7 @@
     
     .user-list-menu {
         padding-top: 10px;
-        background-color: whitesmoke;
+        background-color: #eaecf1;;
     }
     
     

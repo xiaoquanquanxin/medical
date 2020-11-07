@@ -2,7 +2,6 @@
     color: red
 }
 
-
 :root {
     /*用户列表【病人列表】*/
     /*用户列表，顶部菜单，常规背景色*/
@@ -20,10 +19,11 @@
 
     /*基础边框颜色*/
     --basic-border-color: #e8e8e8;
+
     /*基础a标签*/
-    --basic-a:#576fcb;
+    --basic-a: #576fcb;
     /*基础input*/
-    --basic-input:#576fcb;
+    --basic-input: #576fcb;
 }
 
 /*基础按钮*/
@@ -35,7 +35,7 @@
 }
 
 
-/*横向路由*/
+/*****横向路由*****/
 /*被激活的文字*/
 .ant-menu-horizontal > .ant-menu-item:hover .router-link-span,
 .ant-menu-horizontal > .ant-menu-submenu:hover .router-link-span,
@@ -60,15 +60,43 @@
 }
 
 
-/*基础input*/
+/*****基础input*****/
+/*鼠标浮于，聚焦*/
 .ant-input:hover, .ant-input:focus {
     border-color: var(--basic-input);
 }
 
+/*被激活*/
 .ant-input:focus {
     outline: var(--basic-input);;
 }
 
+/*****基础表格*****/
+.ant-table-thead > tr.ant-table-row-hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td,
+.ant-table-tbody > tr.ant-table-row-hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td,
+.ant-table-thead > tr:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td,
+.ant-table-tbody > tr:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td {
+    background-color: var(--user-list-is-in-hospital-bgc);
+}
+
+/*****基础a标签*****/
 a {
     color: var(--basic-a);
+}
+
+
+/*****基础分页*****/
+/*被激活的分页*/
+.ant-pagination-item-active {
+    border-color: var(--basic-a);
+}
+
+.ant-pagination-item-active a {
+    color: var(--basic-a);
+}
+
+
+/*****基础状态选择a-switch*****/
+.ant-switch-checked {
+    background-color: var(--basic-a);
 }

@@ -117,7 +117,7 @@
     .history-list {
         height: 50px;
         line-height: 40px;
-        background-color: whitesmoke;
+        background-color: #eaecf1;
         /*border-top: none;*/
         /*border-bottom: 1px solid #e8e8e8;*/
         overflow-x: auto;
