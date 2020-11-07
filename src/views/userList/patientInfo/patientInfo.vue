@@ -4,7 +4,6 @@
         <div class="a-input-group" data-msg="空"></div>
         <div class="a-input-group">
             <a-row type="flex" justify="space-between" align="middle">
-                {{!!patientBasicInfo}}
                 <a-col v-if="patientBasicInfo">
                     <a-button type="primary" @click="confirmOutHospital"
                               v-if="patientBasicInfo.patientStatus == 1"
@@ -29,7 +28,8 @@
 <script>
     import PatientBasicInfo from '@/components/userList/patientInfo/patientBasicInfo.vue';
     import { mapGetters, mapActions } from 'vuex';
-    import {  requestPatientUpdate } from '../../../api/userList/userList';
+    import { requestPatientUpdate } from '../../../api/userList/userList';
+    import { getLoginInfo } from '../../../utils/auth';
 
     export default {
         components: {
@@ -49,12 +49,6 @@
                 return this.$route.params.patientId;
             }
         },
-        watch: {
-            //  检测这个变化⚠️发请求
-            $route(){
-                this.searchFn();
-            }
-        },
         inject: ['userList_searchFn'],
         data(){
             return {
@@ -62,14 +56,7 @@
                 patientInfo: null,
             };
         },
-        created(){
-            this.searchFn();
-        },
         methods: {
-            //  主要请求
-            searchFn(){
-            
-            },
             //  确认出院
             confirmOutHospital(){
                 this.$confirm({
@@ -112,7 +99,18 @@
                                     title: '保存成功',
                                     onOk: () => {
                                         console.log('更新左侧列表');
-                                        this.userList_searchFn();
+                                        const { doctorId } = this.patientBasicInfo;
+                                        const loginInfo = getLoginInfo();
+                                        const p = this.userList_searchFn();
+                                        //  如果没有更新病人的医生，那么保持在这个页面，左侧的列表刷新完了就行了
+                                        if (loginInfo.doctorId === doctorId) {
+                                            return;
+                                        }
+                                        p.then(v => {
+                                            //  这是换了医生了，所以要刷新路由
+                                            console.log(loginInfo.doctorId);
+                                            this.$router.push({ name: 'userList', params: {} });
+                                        });
                                     }
                                 });
                             });
@@ -122,7 +120,7 @@
                     });
 
             },
-           
+
         }
     };
 </script>
