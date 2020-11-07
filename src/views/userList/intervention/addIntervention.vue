@@ -81,6 +81,14 @@
             mealData(){
                 return this.$store.state.intervention.mealData;
             },
+            //  肠内备注
+            intestinalRemark(){
+                return this.$store.state.intervention.intestinalRemark;
+            },
+            //  口腔备注
+            oralRemark(){
+                return this.$store.state.intervention.oralRemark;
+            },
         },
         data(){
             return {
@@ -267,7 +275,7 @@
                     detail.push({
                         detailGoods,
                         plain,
-                        remark: '',
+                        remark: this.intestinalRemark,
                         templateType: 2,
                         usageMethod,
                     });
@@ -286,7 +294,7 @@
                     detail.push({
                         detailGoods,
                         plain,
-                        remark: '',
+                        remark: this.oralRemark,
                         templateType: 1,
                         usageMethod,
                     });
