@@ -467,6 +467,12 @@
                 nutritionistList: []
             };
         },
+        watch: {
+            //  检测这个变化⚠️发请求
+            $route(){
+                this.searchFn();
+            }
+        },
         created(){
             this.searchFn();
         },
