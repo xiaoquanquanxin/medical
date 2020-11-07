@@ -28,7 +28,7 @@
                 />
             </a-form-item>
             <a-form-item label="膳食营养计划" required>
-                <div style="width:calc((100vw - 200px)*.65)">
+                <div style="width:600px;">
                     <!--表头-->
                     <a-row type="flex" justify="space-between" align="middle" class="table-group-title">
                         <a-space>
@@ -134,27 +134,27 @@
         {
             title: '序号',
             dataIndex: 'index',
-            width: 100,
+            width: 60,
         },
         {
             title: '用餐时间',
             scopedSlots: { customRender: 'usageTime' },
-            width: 200,
+            width: 150,
         },
         {
             title: '用餐内容',
-            width: 200,
+            width: 160,
             scopedSlots: { customRender: 'entryName' },
         },
         {
             title: '用量',
-            width: 200,
+            width: 150,
             scopedSlots: { customRender: 'quantityUsed' },
         },
         {
             title: '操作',
             scopedSlots: { customRender: 'operation' },
-            width: 100,
+            width: 80,
         },
     ];
 
