@@ -8,7 +8,7 @@
         </a-row>
         <div class="wrap">
             <div class="left-info">
-                <a-card title="就诊信息">
+                <a-card title="就诊信息" style='border-bottom: none;margin-bottom: -10px;'>
                     <a-form class="form"
                             v-bind="{
                                  labelCol: { span: 6 },
@@ -29,11 +29,29 @@
                                             @search="searchFn"/>
                         </a-form-item>
                     </a-form>
+                    <a-row type="flex" justify="space-between" align="middle" v-if="currentPatientInfo"
+                           class="medical-information-list">
+                        <span>性别：{{+currentPatientInfo.sex === 1 ?'男':'女'}}</span>
+                        <span>年龄：{{currentPatientInfo.birth}}</span>
+                        <span v-if=" +currentPatientInfo.patientStatus === 1">状态：住院</span>
+                        <span v-else-if=" +currentPatientInfo.patientStatus === 2">状态：出院</span>
+                        <span v-else>状态：永久注销</span>
+                    </a-row>
+                    <hr>
+                    <a-row type="flex" justify="space-between" align="middle"
+                           v-if="currentPatientInfo"
+                           class="medical-information-list">
+                        <span>科室：科室有问题故展示：需要文字{{currentPatientInfo.departTreatment}}</span>
+                        <span>床号：{{currentPatientInfo.bedCode}}</span>
+                    </a-row>
+                    <hr>
+                    <a-row type="flex" justify="space-between" align="middle" v-if="currentPatientInfo"
+                           class="medical-information-list">
+                        <span>住院号：{{currentPatientInfo.hospitalCode}}</span>
+                    </a-row>
                 </a-card>
                 <a-card title="病人列表">
-                    <div class="a-input-group">
-                        <a-button type="primary" @click="addAdmittedHospitalFn">新增用户</a-button>
-                    </div>
+                    <a-button slot="extra" type="primary" @click="addAdmittedHospitalFn">+新患者登记</a-button>
                     <a-table
                             id="userListTable"
                             :columns="columns"
@@ -148,6 +166,19 @@
                 //  console.log(window.document.getElementById('userListTable'));
                 return Number(this.$route.params.patientId);
             },
+//            //  全部科室的map
+//            deptMap(){
+//                const { deptMap } = this.$store.state.constants;
+//                console.log(deptMap);
+//                return deptMap;
+//            },
+            //  当前的病人
+            currentPatientInfo(){
+                if (!this.patientInfoMap) {
+                    return null;
+                }
+                return this.patientInfoMap[this.patientId];
+            }
         },
         data(){
             return {
@@ -161,6 +192,9 @@
 
                 //  搜索数据
                 searchData: {},
+
+                //  数据的map，key:id,value:item
+                patientInfoMap: null,
             };
         },
         created(){
@@ -177,9 +211,12 @@
                 requestPatientPage(Object.assign({ param: this.searchData }, paginationEncode(this.pagination)))
                     .then(v => {
                         const { data } = v;
+                        const patientInfoMap = {};
                         data.records.forEach((item, index) => {
                             item.key = index;
+                            patientInfoMap[item.id] = item;
                         });
+                        this.patientInfoMap = patientInfoMap;
                         //  data.records.length = 0;
                         this.data = data.records;
                         this.pagination = paginationDecode(this.pagination, data);
@@ -281,13 +318,14 @@
     }
     
     .tab-info {
-        flex: 1 auto auto;
-        border-top: 2px solid #eaecf1;
+        flex: 1 auto;
+        /*border-top: 2px solid #eaecf1;*/
     }
     
+    /*右侧菜单切换*/
     .user-list-menu {
-        padding-top: 1px;
-        background-color: #eaecf1;;
+        /*padding-top: 1px;*/
+        background-color: #eaecf1;
     }
     
     
@@ -328,6 +366,11 @@
     
     /*左上角病人信息间距*/
     .form .ant-form-item {
-        margin-bottom: 10px;
+        margin-bottom: 8px;
+    }
+    
+    /*就诊信息的小内容间距*/
+    .medical-information-list {
+        line-height: 38px;
     }
 </style>
