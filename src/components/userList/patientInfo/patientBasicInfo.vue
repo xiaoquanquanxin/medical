@@ -49,6 +49,7 @@
                     <div slot="label" class="descriptions-label descriptions-label-require require-left-34">年龄:</div>
                     <a-input-number style='width:100%;'
                                     :precision="0"
+                                    :min="1"
                                     v-if="activeElementId === 3 ||!patientBasicInfo.birth"
                                     placeholder="请输入年龄"
                                     v-model="patientBasicInfo.birth"
@@ -66,6 +67,7 @@
                     </div>
                     <a-input-number style='width:100%;'
                                     :precision="0"
+                                    :min="1"
                                     v-if="activeElementId === 4 ||!patientBasicInfo.height"
                                     placeholder="请输入身高"
                                     v-model="patientBasicInfo.height"
@@ -83,6 +85,7 @@
                     </div>
                     <a-input-number style='width:100%;'
                                     :precision="0"
+                                    :min="1"
                                     v-if="activeElementId === 5 ||!patientBasicInfo.weight"
                                     placeholder="请输入体重"
                                     v-model="patientBasicInfo.weight"
