@@ -183,7 +183,7 @@
                                                     :min="1"
                                                     placeholder="请输入使用量"
                                                     v-model="item.dosage"
-                                                    @input="dosageChangeFn(scope,item)"
+                                                    @change="dosageChangeFn(scope,item)"
                                     />
                                     <span v-if="prescriptionType===1" data-msg="院内配置" class="nowrap">
                                         {{unitTypeMap[item.basicUnitItem.uname].label}}
