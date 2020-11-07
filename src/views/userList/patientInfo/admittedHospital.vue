@@ -98,8 +98,11 @@
                             });
                     })
                     .catch(error => {
+                        if (error === true) {
+                            console.log('数据组织异常');
+                            return;
+                        }
                         console.log(error);
-                        console.log('有错');
                         this.$message.error('操作失败');
                     });
 
