@@ -96,8 +96,7 @@
         {
             title: '渠道商地区',
             width: 150,
-            dataIndex: 'area',
-            //  scopedSlots: { customRender: 'area' },
+            dataIndex: 'region',
         },
         {
             title: '状态',
@@ -144,7 +143,6 @@
                             item.key = index;
                             //  状态需要布尔值
                             item.statusBooleanFormat = item.status === 0;
-                            item.area = `${item.province}-${item.city}`;
                         });
                         this.data = data.records;
                         this.pagination = paginationDecode(this.pagination, data);
