@@ -549,8 +549,15 @@
             groupChat(e){
                 console.log(e);
             },
-            patientBasicInfoCheck(){
-
+            //  验证
+            patientBasicInfoCheck(checkList){
+                for (let item of checkList) {
+                    if (item.name === '' || item.name === undefined || item.name === null) {
+                        this.$message.error(item.message);
+                        return false;
+                    }
+                }
+                return true;
             },
             //  保存
             handleSubmit(){
@@ -589,9 +596,62 @@
                         sex,
                         weight,
                     } = patientBasicInfo;
-
-                    console.log(name, sex, birth, height, weight, bmi, phone, departTreatment, hospitalTreatment);
-                    return;
+                    const isValidated = this.patientBasicInfoCheck([
+                        {
+                            name: name,
+                            message: '请输入姓名'
+                        },
+                        {
+                            name: sex,
+                            message: '请选择年龄'
+                        },
+                        {
+                            name: birth,
+                            message: '请输入生日'
+                        },
+                        {
+                            name: height,
+                            message: '请输入身高'
+                        },
+                        {
+                            name: weight,
+                            message: '请输入体重'
+                        },
+                        {
+                            name: bmi,
+                            message: '请输入BMI'
+                        },
+                        {
+                            name: idCard,
+                            message: '请输入身份证号'
+                        },
+                        {
+                            name: phone,
+                            message: '请输入电话'
+                        },
+                        {
+                            name: departTreatment,
+                            message: '请选择就诊医院'
+                        },
+                        {
+                            name: hospitalTreatment,
+                            message: '请选择就诊科室'
+                        },
+                        {
+                            name: doctorId,
+                            message: '请选择医生'
+                        },
+                        {
+                            name: nutritionistId,
+                            message: '请选择营养师'
+                        },
+                    ]);
+                    console.log('是否通过前端验证', isValidated);
+                    if (!isValidated) {
+                        reject(true);
+                        return;
+                    }
+                    //  console.log(name, sex, birth, height, weight, bmi, phone, departTreatment, hospitalTreatment, doctorId, nutritionistId);
                     patientBasicInfo.address = String(address || '') || undefined;
                     patientBasicInfo.allergy = String(allergy || '') || undefined;
                     patientBasicInfo.bedCode = String(bedCode || '') || undefined;
@@ -625,11 +685,7 @@
                     //  bmi赋值
 
                     resolve();
-                })
-                    .catch(err => {
-                        console.log('数据组织异常');
-                        console.log(err);
-                    });
+                });
             },
 
             dropdownVisibleChange,
