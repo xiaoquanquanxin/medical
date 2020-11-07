@@ -93,15 +93,14 @@
                         requestPatientUpdate(data)
                             .then(v => {
                                 console.log(v);
-                                this.$success({
-                                    title: '保存成功',
-                                });
+                                this.$message.success('操作成功');
                                 this.$router.push({ name: 'patientInfo' });
                             });
                     })
                     .catch(error => {
                         console.log(error);
                         console.log('有错');
+                        this.$message.error('操作失败');
                     });
 
             },
