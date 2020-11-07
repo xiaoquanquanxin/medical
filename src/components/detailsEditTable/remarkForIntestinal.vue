@@ -13,7 +13,6 @@
     export default {
         computed: {
             intestinalRemark(){
-                debugger
                 return this.$store.state.intervention.intestinalRemark;
             },
             style(){
