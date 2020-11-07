@@ -17,6 +17,7 @@
 
 .layout-content-inner-main {
     min-width: 900px;
+    position: relative;
 }
 
 .col-right {
