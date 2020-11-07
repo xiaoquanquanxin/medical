@@ -101,7 +101,7 @@
                     </a-form-item>
                 </a-col>
             </a-row>
-            <a-form-item label="营养素小计" required>
+            <a-form-item label="营养素小计" required v-if="false">
                 <div style="width:800px;">
                     <EnergyEditTable
                             :energyTableData="energyTableData"
