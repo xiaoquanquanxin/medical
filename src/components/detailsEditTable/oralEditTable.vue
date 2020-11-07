@@ -402,14 +402,14 @@
                         scopedSlots: { customRender: 'dosage' }
                     },
                     {
-                        title: '温水/ml',
-                        width: 120,
-                        scopedSlots: { customRender: 'warmWater' }
-                    },
-                    {
                         title: '操作',
                         width: 80,
                         scopedSlots: { customRender: 'operation' },
+                    },
+                    {
+                        title: '温水/ml',
+                        width: 120,
+                        scopedSlots: { customRender: 'warmWater' }
                     },
                     {
                         title: '备注',
