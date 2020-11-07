@@ -305,7 +305,6 @@
                         timeTableData: cnyyzcData.timeTableData
                     },
                 };
-                return;
 
                 console.log(cnyyzcData.commodityTableData);
                 console.log(kqcnData.commodityTableData);
