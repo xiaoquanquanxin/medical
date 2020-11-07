@@ -6,6 +6,7 @@ interface STATE {
 	unitTypeList: any;
 	unitTypeMap: any;
 	//	全部科室	⚠️并不是所有的都用这个，该查询还是查询，这个是用来给就诊信息用的
+	//	⚠️并且，现在并没有被用到
 	deptList: any;
 	deptMap: any;
 }
