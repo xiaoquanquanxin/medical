@@ -41,7 +41,7 @@
                     <a-row type="flex" justify="space-between" align="middle"
                            v-if="currentPatientInfo"
                            class="medical-information-list">
-                        <span>科室：科室有问题故展示：需要文字{{currentPatientInfo.departTreatment}}</span>
+                        <span>科室：科室有问题故展示：需要文字而不仅仅是id，需要在列表接口里组织此字段 /api/patient/page{{currentPatientInfo.departTreatment}}</span>
                         <span>床号：{{currentPatientInfo.bedCode}}</span>
                     </a-row>
                     <hr>
