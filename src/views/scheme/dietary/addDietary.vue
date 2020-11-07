@@ -122,6 +122,7 @@
     import { twoRowSearch } from '@/utils/tableScroll';
     import { formItemLayout } from '@/utils/layout.ts';
     import GoBackButton from '@/components/goBackButton.vue';
+    //  可编辑的能量表格
     import EnergyEditTable from '@/components/detailsEditTable/energyEditTable.vue';
     import { liquidEnergyList, usageMethodList, foodTypeList } from '../../../utils/constants';
     import { requestHospitalGetList } from '../../../api/hospital';
