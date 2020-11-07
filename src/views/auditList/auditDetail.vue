@@ -71,7 +71,9 @@
                 <br>
             </div>
             <!--能量表-->
-            <EnergyTable/>
+            <EnergyTable
+                    :totalEnergyData="totalEnergyData"
+            />
         </div>
         <!--驳回莫泰框-->
         <a-modal v-model="dialogReject.visible"
@@ -187,6 +189,9 @@
 
                 //  商品单位下拉
                 unitTypeList: [],
+
+                //  能量表数据
+                totalEnergyData: [],
             };
         },
         created(){
@@ -231,12 +236,13 @@
                         //  合计
                         const { energy, protein, fat, carbohydrates } = data;
                         //  设置能量数据
-                        this.setEnergyData({
+                        this.totalEnergyData = [{
+                            key: 1,
                             energy,
                             protein,
                             fat,
                             carbohydrates,
-                        });
+                        }];
                         console.log(JSON.parse(JSON.stringify(data)));
                     });
             },
