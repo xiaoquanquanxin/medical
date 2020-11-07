@@ -11,7 +11,7 @@
                     size="small"
             >
                 <a-descriptions-item>
-                    <div slot="label" class="descriptions-label require-left-34">姓名</div>
+                    <div slot="label" class="descriptions-label descriptions-label-require require-left-34">姓名:</div>
                     <a-input
                             v-if="activeElementId === 0 ||!patientBasicInfo.name"
                             placeholder="请输入姓名"
@@ -26,7 +26,7 @@
                     >{{patientBasicInfo.name}}</p>
                 </a-descriptions-item>
                 <a-descriptions-item>
-                    <div slot="label" class="descriptions-label require-left-34">性别:</div>
+                    <div slot="label" class="descriptions-label descriptions-label-require require-left-34">性别:</div>
                     <a-select
                             style="width:100%"
                             v-if="activeElementId === 1 ||!patientBasicInfo.sex"
@@ -34,7 +34,11 @@
                             v-model="patientBasicInfo.sex"
                             class="form-element"
                             @focus="descriptionFormFocusFn(1)"
+                            @dropdownVisibleChange="dropdownVisibleChange($event,1)"
                     >
+                        <span slot="suffixIcon" style="color:black;"
+                              :class="selectSuffixIconMap[1]?'suffix-icon':'suffix-icon suffix-icon-down'"
+                        >⬇️</span>
                         <a-select-option :value="1">男</a-select-option>
                         <a-select-option :value="2">女</a-select-option>
                     </a-select>
@@ -44,7 +48,7 @@
                     >{{patientBasicInfo.sex===1?'男':'女'}}</p>
                 </a-descriptions-item>
                 <a-descriptions-item>
-                    <div slot="label" class="descriptions-label require-left-34">年龄:</div>
+                    <div slot="label" class="descriptions-label descriptions-label-require require-left-34">年龄:</div>
                     <a-input
                             v-if="activeElementId === 3 ||!patientBasicInfo.birth"
                             placeholder="请输入年龄"
@@ -59,7 +63,7 @@
                     >{{patientBasicInfo.birth}}</p>
                 </a-descriptions-item>
                 <a-descriptions-item>
-                    <div slot="label" class="descriptions-label require-left-34">身高:</div>
+                    <div slot="label" class="descriptions-label descriptions-label-require require-left-64">身高(cm):</div>
                     <a-input
                             v-if="activeElementId === 4 ||!patientBasicInfo.height"
                             placeholder="请输入身高"
@@ -74,7 +78,7 @@
                     >{{patientBasicInfo.height}}</p>
                 </a-descriptions-item>
                 <a-descriptions-item>
-                    <div slot="label" class="descriptions-label require-left-34">体重</div>
+                    <div slot="label" class="descriptions-label descriptions-label-require require-left-64">体重(kg):</div>
                     <a-input
                             v-if="activeElementId === 5 ||!patientBasicInfo.weight"
                             placeholder="请输入体重"
@@ -89,11 +93,11 @@
                     >{{patientBasicInfo.weight}}</p>
                 </a-descriptions-item>
                 <a-descriptions-item>
-                    <div slot="label" class="descriptions-label require-left-34">BMI</div>
+                    <div slot="label" class="descriptions-label descriptions-label-require require-left-34">BMI:</div>
                     <p class="description-content">{{bmi}}</p>
                 </a-descriptions-item>
                 <a-descriptions-item>
-                    <div slot="label" class="descriptions-label require-left-64">身份证号</div>
+                    <div slot="label" class="descriptions-label descriptions-label-require require-left-64">身份证号:</div>
                     <a-input
                             v-if="activeElementId === 7 ||!patientBasicInfo.idCard"
                             placeholder="请输入身份证号"
@@ -138,7 +142,7 @@
                     >{{patientBasicInfo.address}}</p>
                 </a-descriptions-item>
                 <a-descriptions-item>
-                    <div slot="label" class="descriptions-label require-left-34">电话</div>
+                    <div slot="label" class="descriptions-label descriptions-label-require require-left-34">电话:</div>
                     <a-input
                             v-if="activeElementId === 10 ||!patientBasicInfo.phone"
                             placeholder="请输入电话"
@@ -168,18 +172,23 @@
                     >{{patientBasicInfo.professional}}</p>
                 </a-descriptions-item>
                 <a-descriptions-item></a-descriptions-item>
-                <a-descriptions-item label="就诊号">
+                <a-descriptions-item>
+                    <div slot="label" class="descriptions-label">就诊号:</div>
                     {{patientBasicInfo.jzbh}}
                 </a-descriptions-item>
                 <a-descriptions-item>
-                    <div slot="label" class="descriptions-label require-left-64">就诊医院</div>
+                    <div slot="label" class="descriptions-label descriptions-label-require require-left-64">就诊医院:</div>
                     <a-select style="min-width: 100%;"
-                              placeholder="请输入就诊医院"
+                              placeholder="请选择就诊医院"
                               v-model="patientBasicInfo.departTreatment"
                               class="form-element basic-select-width"
                               @focus="descriptionFormFocusFn(14)"
                               @change="selectHospitalChange"
+                              @dropdownVisibleChange="dropdownVisibleChange($event,5)"
                     >
+                        <span slot="suffixIcon" style="color:black;"
+                              :class="selectSuffixIconMap[5]?'suffix-icon':'suffix-icon suffix-icon-down'"
+                        >⬇️</span>
                         <a-select-option v-for="item in hospitalList"
                                          :value="item.id.toString()">
                             {{item.hospitalName}}
@@ -187,21 +196,26 @@
                     </a-select>
                 </a-descriptions-item>
                 <a-descriptions-item>
-                    <div slot="label" class="descriptions-label require-left-64">就诊科室</div>
+                    <div slot="label" class="descriptions-label descriptions-label-require require-left-64">就诊科室:</div>
                     <a-select style="min-width: 100%;"
                               placeholder="请选择就诊科室"
                               v-model="patientBasicInfo.hospitalTreatment"
                               class="form-element basic-select-width"
                               @change="hospitalTreatmentChange"
                               @focus="descriptionFormFocusFn(14)"
+                              @dropdownVisibleChange="dropdownVisibleChange($event,2)"
                     >
+                        <span slot="suffixIcon" style="color:black;"
+                              :class="selectSuffixIconMap[2]?'suffix-icon':'suffix-icon suffix-icon-down'"
+                        >⬇️</span>
                         <a-select-option v-for="item in hospitalDeptList"
                                          :value="item.id">
                             {{item.deptName}}
                         </a-select-option>
                     </a-select>
                 </a-descriptions-item>
-                <a-descriptions-item label="病例号">
+                <a-descriptions-item>
+                    <div slot="label" class="descriptions-label">病例号:</div>
                     <a-input
                             v-if="activeElementId === 15 ||!patientBasicInfo.treatCode"
                             placeholder="请输入病例号"
@@ -215,7 +229,8 @@
                        class="description-content"
                     >{{patientBasicInfo.treatCode}}</p>
                 </a-descriptions-item>
-                <a-descriptions-item label="住院号">
+                <a-descriptions-item>
+                    <div slot="label" class="descriptions-label">住院号:</div>
                     <a-input
                             v-if="activeElementId === 16 ||!patientBasicInfo.hospitalCode"
                             placeholder="请输入住院号"
@@ -229,7 +244,8 @@
                        class="description-content"
                     >{{patientBasicInfo.hospitalCode}}</p>
                 </a-descriptions-item>
-                <a-descriptions-item label="病床号">
+                <a-descriptions-item>
+                    <div slot="label" class="descriptions-label">病床号:</div>
                     <a-input
                             v-if="activeElementId === 17 ||!patientBasicInfo.bedCode"
                             placeholder="请输入病床号"
@@ -243,20 +259,26 @@
                        class="description-content"
                     >{{patientBasicInfo.bedCode}}</p>
                 </a-descriptions-item>
-                <a-descriptions-item label="ICD诊断">
+                <a-descriptions-item>
+                    <div slot="label" class="descriptions-label">ICD诊断:</div>
                     <a-select style="min-width: 100%;"
                               placeholder="请输入ICD诊断"
                               v-model="patientBasicInfo.icd"
                               class="form-element basic-select-width"
                               @focus="descriptionFormFocusFn(18)"
+                              @dropdownVisibleChange="dropdownVisibleChange($event,6)"
                     >
+                        <span slot="suffixIcon" style="color:black;"
+                              :class="selectSuffixIconMap[6]?'suffix-icon':'suffix-icon suffix-icon-down'"
+                        >⬇️</span>
                         <a-select-option :value="item.code"
                                          v-for="item in ICDList"
                         >{{item.name}}
                         </a-select-option>
                     </a-select>
                 </a-descriptions-item>
-                <a-descriptions-item label="民族">
+                <a-descriptions-item>
+                    <div slot="label" class="descriptions-label">民族:</div>
                     <a-input
                             v-if="activeElementId === 19 ||!patientBasicInfo.nation"
                             placeholder="请输入民族"
@@ -270,7 +292,8 @@
                        class="description-content"
                     >{{patientBasicInfo.nation}}</p>
                 </a-descriptions-item>
-                <a-descriptions-item label="现病史">
+                <a-descriptions-item>
+                    <div slot="label" class="descriptions-label">现病史:</div>
                     <a-input
                             v-if="activeElementId === 20 ||!patientBasicInfo.now"
                             placeholder="请输入现病史"
@@ -284,7 +307,8 @@
                        class="description-content"
                     >{{patientBasicInfo.now}}</p>
                 </a-descriptions-item>
-                <a-descriptions-item label="过敏史">
+                <a-descriptions-item>
+                    <div slot="label" class="descriptions-label">过敏史:</div>
                     <a-input
                             v-if="activeElementId === 21 ||!patientBasicInfo.allergy"
                             placeholder="请输入过敏史"
@@ -298,7 +322,8 @@
                        class="description-content"
                     >{{patientBasicInfo.allergy}}</p>
                 </a-descriptions-item>
-                <a-descriptions-item label="既往史">
+                <a-descriptions-item>
+                    <div slot="label" class="descriptions-label">既往史:</div>
                     <a-input
                             v-if="activeElementId === 22 ||!patientBasicInfo.past"
                             placeholder="请输入既往史"
@@ -312,7 +337,8 @@
                        class="description-content"
                     >{{patientBasicInfo.past}}</p>
                 </a-descriptions-item>
-                <a-descriptions-item label="家族史">
+                <a-descriptions-item>
+                    <div slot="label" class="descriptions-label">家族史:</div>
                     <a-input
                             v-if="activeElementId === 23 ||!patientBasicInfo.family"
                             placeholder="请输入家族史"
@@ -344,12 +370,16 @@
             >
                 <!--主管医生-->
                 <a-descriptions-item>
-                    <div slot="label" class="descriptions-label require-left-64">主管医生</div>
+                    <div slot="label" class="descriptions-label descriptions-label-require require-left-64">主管医生:</div>
                     <a-select style="min-width: 100%;"
                               placeholder="请选择主管医生"
                               v-model="patientBasicInfo.doctorId"
                               @change="doctorChange"
+                              @dropdownVisibleChange="dropdownVisibleChange($event,3)"
                     >
+                        <span slot="suffixIcon" style="color:black;"
+                              :class="selectSuffixIconMap[3]?'suffix-icon':'suffix-icon suffix-icon-down'"
+                        >⬇️</span>
                         <a-select-option v-for="item in doctorList"
                                          :key="item.id"
                                          :value="item.id">
@@ -359,12 +389,16 @@
                 </a-descriptions-item>
                 <!--主管医生-->
                 <a-descriptions-item>
-                    <div slot="label" class="descriptions-label require-left-50">营养师</div>
+                    <div slot="label" class="descriptions-label descriptions-label-require require-left-50">营养师:</div>
                     <a-select style="min-width: 100%;"
                               placeholder="请选择营养师"
                               v-model="patientBasicInfo.nutritionistId"
                               @change="nutritionistChange"
+                              @dropdownVisibleChange="dropdownVisibleChange($event,4)"
                     >
+                        <span slot="suffixIcon" style="color:black;"
+                              :class="selectSuffixIconMap[4]?'suffix-icon':'suffix-icon suffix-icon-down'"
+                        >⬇️</span>
                         <a-select-option v-for="item in nutritionistList"
                                          :key="item.id"
                                          :value="item.id">
@@ -377,6 +411,8 @@
     </div>
 </template>
 <script>
+    import { dropdownVisibleChange, selectSuffixIconMap } from '../../../utils/select';
+
     import { requestPatientSelectICD } from '../../../api/userList/userList';
     import { requestDeptListDeptHospitalId, requestHospitalGetList } from '../../../api/hospital';
     import { requestDeptList } from '../../../api/department';
@@ -402,6 +438,7 @@
         },
         data(){
             return {
+                selectSuffixIconMap,
 //                patientInfoLabel: PatientInfoLabel,
                 //  编辑的index
                 activeElementId: null,
@@ -601,6 +638,7 @@
                     });
             },
 
+            dropdownVisibleChange,
             //	病人信息、直接编辑用的 描述框的方法
             ...descriptionsMethods,
         }
@@ -612,7 +650,7 @@
         float: right;
     }
     
-    .descriptions-label::after {
+    .descriptions-label.descriptions-label-require::after {
         content: '*';
         display: block;
         color: red;
@@ -620,15 +658,15 @@
         top: -2px;
     }
     
-    .descriptions-label.require-left-34::after {
+    .descriptions-label-require.require-left-34::after {
         right: 34px;
     }
     
-    .descriptions-label.require-left-50::after {
+    .descriptions-label-require.require-left-50::after {
         right: 50px;
     }
     
-    .descriptions-label.require-left-64::after {
+    .descriptions-label-require.require-left-64::after {
         right: 64px;
     }
 </style>
