@@ -20,11 +20,12 @@
             </div>
             <!--周期-->
             <div slot="priod" slot-scope="scope,sItem,sIndex,extra">
-                <a-input-number
-                        :min="0"
-                        placeholder="请输入周期"
-                        v-model="scope.priod"
-                        class="basic-input-width"
+                <a-input-number style='width:100%;'
+                                :precision="0"
+                                :min="1"
+                                placeholder="请输入周期"
+                                v-model="scope.priod"
+                                class="basic-input-width"
                 />
                 天
             </div>
