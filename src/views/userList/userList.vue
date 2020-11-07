@@ -282,7 +282,7 @@
     
     .tab-info {
         flex: 1 auto auto;
-        border-top: 2px solid red;
+        border-top: 2px solid #eaecf1;
     }
     
     .user-list-menu {
