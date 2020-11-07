@@ -234,6 +234,15 @@
                         this.nutrition = nutrition;
                         //  合计
                         const { energy, protein, fat, carbohydrates } = data;
+                        this.setEnergyData(
+                            {
+                                key: 1,
+                                energy,
+                                protein,
+                                fat,
+                                carbohydrates,
+                            }
+                        );
                         //  设置能量数据
                         this.totalEnergyData = [{
                             key: 1,
