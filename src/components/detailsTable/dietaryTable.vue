@@ -16,7 +16,7 @@
 <script>
     const oralColumns = [
         {
-            title: '时间',
+            title: '用餐时间',
             width: 100,
             dataIndex: 'usageTime'
         },
@@ -24,7 +24,12 @@
             title: '用餐内容',
             width: 100,
             dataIndex: 'entryName'
-        }
+        },
+        {
+            title: '用量',
+            width: 100,
+            dataIndex: 'quantityUsed',
+        },
     ];
     //  膳食
     export default {
