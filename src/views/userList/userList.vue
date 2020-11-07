@@ -267,7 +267,6 @@
         width: 900px;
     }
     
-    
     /*页面左右分块*/
     .wrap {
         display: flex;
@@ -324,5 +323,11 @@
     
     .ant-menu-horizontal > .ant-menu-item:hover,
     .ant-menu-horizontal > .ant-menu-submenu:hover {
+    }
+    
+    
+    /*左上角病人信息间距*/
+    .form .ant-form-item {
+        margin-bottom: 10px;
     }
 </style>
