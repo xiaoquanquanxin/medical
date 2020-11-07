@@ -61,7 +61,7 @@
             };
         },
         created(){
-            console.log('🍉');
+            //  console.log('🍉');
             const { templateType, usageMethod, detailGoods } = this.dataSource;
             detailGoods.forEach((item, index) => {
                 item.key = index;
