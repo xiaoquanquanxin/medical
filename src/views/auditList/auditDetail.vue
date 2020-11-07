@@ -4,11 +4,13 @@
             <div class="a-input-group">
                 <!--返回按钮-->
                 <GoBackButton/>
-                <!--只有营养干预详情 、 待审核才能编辑-->
-                <router-link v-if="detailType === 1 && auditStatus === 1"
-                             :to="{name:'editIntervention',params:{patientId,detailId}}">
-                    <a-button class="basic-button-width" type="primary">编辑</a-button>
-                </router-link>
+                <div v-if="false" data-msg="不能编辑！！！">
+                    <!--只有营养干预详情 、 待审核才能编辑-->
+                    <router-link v-if="detailType === 1 && auditStatus === 1"
+                                 :to="{name:'editIntervention',params:{patientId,detailId}}">
+                        <a-button class="basic-button-width" type="primary">编辑</a-button>
+                    </router-link>
+                </div>
                 <!--只有处方审核才有通过、驳回-->
                 <a-button v-if="detailType ===2 && (auditStatus === 1)"
                           class="basic-button-width" type="primary" @click="passFn">通过
