@@ -25,5 +25,11 @@
 14.操作类型的不滚动，仅列表滚动               ⚠️延期
 
 问题：
-1.膳食模板的用量，只能是数字？
-2.左侧菜单顶部logo图片给的粗糙
+1.膳食模板的用量，只能是数字？            ⚠️不能，但是服务端实体数据格式暂时不支持
+2.根据医院查询营养师列表，把这个医院下所有的医生都查出来了
+/api/patient/selectNutritionByHospital/{hospitalId}
+method:get
+接口文档：
+http://49.232.14.93:8080/doc.html#/%E5%90%8E%E5%8F%B0%E7%AE%A1%E7%90%86/%E7%97%85%E4%BA%BA%E4%BF%A1%E6%81%AF/selectNutritionByHospitalUsingGET
+
+
