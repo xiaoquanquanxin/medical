@@ -195,7 +195,6 @@
             };
         },
         created(){
-            console.log('编辑detailId', this.detailId);
             //  清空能量
             this.setEnergyData(null);
             this.searchFn();
@@ -231,7 +230,7 @@
                         nutrition.forEach((item, index) => {
                             item.key = index;
                         });
-                        console.log(JSON.parse(JSON.stringify(nutrition)));
+                        //  console.log(JSON.parse(JSON.stringify(nutrition)));
                         this.nutrition = nutrition;
                         //  合计
                         const { energy, protein, fat, carbohydrates } = data;
