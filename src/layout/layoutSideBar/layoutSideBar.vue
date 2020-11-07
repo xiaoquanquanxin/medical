@@ -1,6 +1,8 @@
 <template>
     <a-layout-sider v-model="collapsed" :trigger="null" class="slider">
-        <div class="logo">铭方营养</div>
+        <div class="logo">
+            <img :src="menuLogo" alt="">
+        </div>
         <div class="menu-wrapper">
             <a-menu v-if="(currentMeta)"
                     :default-open-keys="[currentMeta.openRouteKey||'']"
@@ -45,6 +47,7 @@
     </a-layout-sider>
 </template>
 <script>
+    import menuLogo from '@/assets/menu-logo.png';
     import { mapGetters } from 'vuex';
     import { jumpTo } from '@/utils/routerMeta';
     import { platform } from '@/utils/common';
@@ -70,6 +73,7 @@
         },
         data(){
             return {
+                menuLogo,
                 platform,
             };
         },
@@ -117,6 +121,8 @@
         text-align: center;
         color: white;
         vertical-align: middle;
-        line-height: 49px;
+        background: rgba(255, 255, 255, 0.2);
+        margin: 16px;
+        padding: 4px 0;
     }
 </style>
