@@ -282,7 +282,7 @@
     
     .tab-info {
         flex: 1 auto auto;
-        /*background-color: lightblue;*/
+        border-top: 2px solid red;
     }
     
     .user-list-menu {
@@ -317,8 +317,8 @@
     .ant-menu-horizontal > .ant-menu-submenu-selected {
         color: var(--user-list-ant-menu-item-active-c) !important;;
         background-color: white !important;;
-        height: 58px;
-        line-height: 58px;
+        /*height: 48px;*/
+        /*line-height: 48px;*/
     }
     
     .ant-menu-horizontal > .ant-menu-item:hover,
