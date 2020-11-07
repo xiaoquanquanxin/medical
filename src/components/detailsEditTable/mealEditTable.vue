@@ -135,11 +135,12 @@
             //  切换能量
             energyChangeFn(id){
                 const data = JSON.parse(JSON.stringify(this.mealPlanMap[id]));
-                data.forEach(item => {
+                const { mealPlanTableData } = data;
+                mealPlanTableData.forEach(item => {
                     item.moment = moment(item.moment);
                 });
-                this.data = data;
-
+                console.log(JSON.parse(JSON.stringify(mealPlanTableData))[0]);
+                this.data = mealPlanTableData;
             },
             //  删除营养计划
             deleteNutritionPlan,
