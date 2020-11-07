@@ -91,9 +91,9 @@
             plain.forEach((item, index) => {
                 item.key = index;
                 item.configWater = configWater;
+                item.remark = remark;
             });
-            console.log(`备注是：${remark}`);
-            console.log(JSON.parse(JSON.stringify(this.dataSource.plain[0].nutritionPlain[0])));
+            //  console.log(JSON.parse(JSON.stringify(this.dataSource.plain[0].nutritionPlain[0])));
         }
     };
 </script>
