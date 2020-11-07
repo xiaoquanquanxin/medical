@@ -41,9 +41,9 @@ const actions = {
 		commit('SET_UNIT_TYPE_MAP', unitTypeMap);
 	},
 	setDeptList: ({commit}: COMMIT_INTERFACE<STATE>, deptList: []) => {
-		const deptMap: any = {}
+		const deptMap: any = {};
 		deptList.forEach((item: any) => {
-			deptMap[item.value] = item;
+			deptMap[item.id] = item;
 		});
 		commit('SET_DEPT_LIST', deptList);
 		commit('SET_DEPT_MAP', deptMap);
