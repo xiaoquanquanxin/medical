@@ -187,7 +187,7 @@
                     <div slot="label" class="descriptions-label descriptions-label-require require-left-64">就诊医院:</div>
                     <a-select style="min-width: 100%;"
                               placeholder="请选择就诊医院"
-                              v-model="patientBasicInfo.departTreatment"
+                              v-model="patientBasicInfo.hospitalTreatment"
                               class="form-element basic-select-width"
                               @focus="descriptionFormFocusFn(14)"
                               @change="selectHospitalChange"
@@ -195,7 +195,7 @@
                     >
                         <SuffixIcon :iconNum="5" slot="suffixIcon"></SuffixIcon>
                         <a-select-option v-for="item in hospitalList"
-                                         :value="item.id.toString()">
+                                         :value="item.id">
                             {{item.hospitalName}}
                         </a-select-option>
                     </a-select>
@@ -204,9 +204,9 @@
                     <div slot="label" class="descriptions-label descriptions-label-require require-left-64">就诊科室:</div>
                     <a-select style="min-width: 100%;"
                               placeholder="请选择就诊科室"
-                              v-model="patientBasicInfo.hospitalTreatment"
+                              v-model="patientBasicInfo.departTreatment"
                               class="form-element basic-select-width"
-                              @change="hospitalTreatmentChange"
+                              @change="keshiChange(patientBasicInfo.hospitalTreatment,$event)"
                               @focus="descriptionFormFocusFn(14)"
                               @dropdownVisibleChange="dropdownVisibleChangeFn($event,2)"
                     >
@@ -373,6 +373,7 @@
                 <a-descriptions-item>
                     <div slot="label" class="descriptions-label descriptions-label-require require-left-64">主管医生:</div>
                     <a-select style="min-width: 100%;"
+                              v-if="doctorList.length"
                               placeholder="请选择主管医生"
                               v-model="patientBasicInfo.doctorId"
                               @change="doctorChange"
@@ -380,7 +381,6 @@
                     >
                         <SuffixIcon :iconNum="3" slot="suffixIcon"></SuffixIcon>
                         <a-select-option v-for="item in doctorList"
-                                         :key="item.id"
                                          :value="item.id">
                             {{item.doctorName}}
                         </a-select-option>
@@ -411,7 +411,11 @@
     //  ⚠️医院下掉科室，需要调取木木掉接口
 
     import { dropdownVisibleChangeFn, selectSuffixIconMap } from '../../../utils/select';
-    import { requestPatientSelectICD, requestPatientSelectNutritionByHospital } from '../../../api/userList/userList';
+    import {
+        requestPatientSelectICD,
+        requestPatientSelectNutritionByHospital,
+        requestPatientSelectOnePatient
+    } from '../../../api/userList/userList';
     import { requestDeptListDeptHospitalId, requestHospitalGetList } from '../../../api/hospital';
     import { requestDeptList } from '../../../api/department';
     import { descriptionsMethods } from '@/utils/patientInfo';
@@ -430,13 +434,18 @@
                 const { patientBasicInfo } = this.$store.state.userList;
                 return patientBasicInfo;
             },
+            //  bmi计算
             bmi(){
-                console.log('计算');
+                //  console.log('bmi计算');
                 if (!this.patientBasicInfo) {
                     return 0;
                 }
                 const bmi = this.patientBasicInfo.weight / this.patientBasicInfo.height / this.patientBasicInfo.height * 10000;
                 return isNaN(bmi) ? '' : bmi.toFixed(1);
+            },
+            //  页面参数 - 病人id
+            patientId(){
+                return this.$route.params.patientId;
             }
         },
         data(){
@@ -463,27 +472,63 @@
         },
         methods: {
             searchFn(){
-                //  ICD
-                requestPatientSelectICD()
-                    .then(ICDList => {
-                        this.ICDList = ICDList;
-                    });
-                //  医院list
-                requestHospitalGetList()
-                    .then(hospitalList => {
-                        this.hospitalList = hospitalList;
-                    });
-                //  全部科室
-                requestDeptList()
-                    .then(deptList => {
-                        this.deptList = deptList;
-                        this.setDeptList(deptList);
+                Promise.all([
+                    //  ICD
+                    requestPatientSelectICD()
+                        .then(ICDList => {
+                            this.ICDList = ICDList;
+                        }),
+                    //  医院list
+                    requestHospitalGetList()
+                        .then(hospitalList => {
+                            console.log('查询出所有医院的list', '某一个医院的id是 ： ', hospitalList[0].id);
+                            this.hospitalList = hospitalList;
+                        }),
+                    //  全部科室
+                    requestDeptList()
+                        .then(deptList => {
+                            this.deptList = deptList;
+                            this.setDeptList(deptList);
+                        }),
+                ])
+                    .then(v => {
+                        if (!this.patientId) {
+                            console.log('是新增');
+                            return;
+                        }
+                        console.log('是编辑');
+                        //  console.log('病人信息tab-病人id', this.patientId);
+                        requestPatientSelectOnePatient(this.patientId)
+                            .then(v => {
+                                console.log('病人详情');
+                                const { data } = v;
+                                console.log(JSON.parse(JSON.stringify(data)));
+                                this.patientInfo = data;
+                                //  保存病人信息到store
+                                this.setPatientBasicInfo(this.patientInfo);
+                                //  直接查医院下的科室
+                                this.getDeptListDeptHospitalId(data.hospitalTreatment);
+                                //  直接查医院下的营养师
+                                this.requestPatientSelectNutritionByHospital(data.hospitalTreatment);
+                                //  规范格式
+                                //  医院
+                                data.hospitalTreatment = Number(data.hospitalTreatment);
+                                //  科室
+                                data.departTreatment = Number(data.departTreatment);
+                                //  医生
+                                data.doctorId = Number(data.doctorId);
+                                //  营养师
+                                data.nutritionistId = Number(data.nutritionistId);
+                                //  直接查医院、科室下的医生
+                                this.keshiChange(data.hospitalTreatment, data.departTreatment);
+                            });
                     });
             },
             //  切换医院
             selectHospitalChange(value){
+                console.log(`切换后的医院id${value},type: ${typeof value}`);
                 //  清空科室id和列表
-                this.patientBasicInfo.hospitalTreatment = undefined;
+                this.patientBasicInfo.departTreatment = undefined;
                 this.hospitalDeptList = [];
                 //  清空医生id和列表
                 this.patientBasicInfo.doctorId = undefined;
@@ -495,16 +540,19 @@
             },
             //  查询医院下的营养师，因为编辑直接调用，所以写出来
             requestPatientSelectNutritionByHospital(value){
-                console.log('查询医院下的营养师');
+                console.log(`查询医院下的营养师，医院id${value}`);
                 requestPatientSelectNutritionByHospital(value)
                     .then(nutritionistList => {
+                        nutritionistList.forEach(item => {
+                            item.id = Number(item.id);
+                        });
                         console.log(`当前医院下营养师的数量：${nutritionistList.length}`);
                         this.nutritionistList = nutritionistList;
                     });
             },
             //  查询医院下的科室
             getDeptListDeptHospitalId(value){
-                console.log('查询医院下的科室');
+                console.log(`查询医院下的科室，医院id${value}`);
                 requestDeptListDeptHospitalId(value)
                     .then(v => {
                         //  ⚠️别改这里了！
@@ -521,18 +569,23 @@
                     });
             },
             //  切换科室
-            hospitalTreatmentChange(deptId){
-                console.log(deptId);
+            keshiChange(hospitalId, deptId){
                 //  设置科室id
-                this.patientBasicInfo.hospitalTreatment = deptId;
+                this.patientBasicInfo.departTreatment = deptId;
+                //  医院id有可能是没有的
+                hospitalId = this.patientBasicInfo.hospitalTreatment;
+                console.log('切换科室，请求参数', `医院id:${hospitalId}`, `科室id:${deptId}`);
                 //  拿医生、营养师list
                 const data = {
-                    deptId: deptId,
-                    hospitalId: this.patientBasicInfo.departTreatment,
+                    deptId,
+                    hospitalId,
                 };
                 console.log('切换科室需要，根据当前科室查询所有医生');
                 requestPatientSelectDoctorByHospital(data)
                     .then(doctorList => {
+                        doctorList.forEach(item => {
+                            item.id = Number(item.id);
+                        });
                         this.doctorList = doctorList;
                     });
                 //  强制更新
@@ -597,11 +650,11 @@
                         bedCode,
                         birth,
                         bmi,
-                        departTreatment,
+                        hospitalTreatment,
                         doctorId,
                         family,
                         hospitalCode,
-                        hospitalTreatment,
+                        departTreatment,
                         icd,
                         idCard,
                         idSocial,
@@ -662,13 +715,13 @@
                             message: '请输入电话'
                         },
                         {
-                            value: departTreatment,
-                            label: 'departTreatment',
+                            value: hospitalTreatment,
+                            label: 'hospitalTreatment',
                             message: '请选择就诊医院'
                         },
                         {
-                            value: hospitalTreatment,
-                            label: 'hospitalTreatment',
+                            value: departTreatment,
+                            label: 'departTreatment',
                             message: '请选择就诊科室'
                         },
                         {
@@ -687,33 +740,37 @@
                         reject(true);
                         return;
                     }
-                    //  console.log(name, sex, birth, height, weight, bmi, phone, departTreatment, hospitalTreatment, doctorId, nutritionistId);
+                    //  console.log(name, sex, birth, height, weight, bmi, phone, hospitalTreatment, departTreatment, doctorId, nutritionistId);
                     patientBasicInfo.address = String(address || '') || undefined;
                     patientBasicInfo.allergy = String(allergy || '') || undefined;
                     patientBasicInfo.bedCode = String(bedCode || '') || undefined;
-                    patientBasicInfo.birth = String(birth || '') || undefined;
+                    //  patientBasicInfo.birth = String(birth || '') || undefined;
                     patientBasicInfo.bmi = String(bmi || '') || undefined;
-                    patientBasicInfo.departTreatment = String(departTreatment || '') || undefined;
-                    patientBasicInfo.doctorId = String(doctorId || '') || undefined;
+                    //  todo    尝试科室id
+                    patientBasicInfo.departTreatment = Number(departTreatment);
+                    //  todo    尝试医生id
+                    patientBasicInfo.doctorId = Number(doctorId);
                     patientBasicInfo.family = String(family || '') || undefined;
                     patientBasicInfo.hospitalCode = String(hospitalCode || '') || undefined;
-                    patientBasicInfo.hospitalTreatment = String(hospitalTreatment || '') || undefined;
+                    //  todo    尝试医院id
+                    patientBasicInfo.hospitalTreatment = Number(hospitalTreatment);
                     patientBasicInfo.icd = String(icd || '') || undefined;
                     patientBasicInfo.idCard = String(idCard || '') || undefined;
                     patientBasicInfo.idSocial = String(idSocial || '') || undefined;
-                    patientBasicInfo.name = String(name || '') || undefined;
+                    //  patientBasicInfo.name = String(name || '') || undefined;
                     patientBasicInfo.nation = String(nation || '') || undefined;
                     patientBasicInfo.now = String(now || '') || undefined;
-                    patientBasicInfo.nutritionistId = String(nutritionistId || '') || undefined;
+                    //  todo    尝试营养师id
+                    patientBasicInfo.nutritionistId = Number(nutritionistId);
                     patientBasicInfo.past = String(past || '') || undefined;
                     patientBasicInfo.patientStatus = String(patientStatus || '') || undefined;
                     patientBasicInfo.phone = String(phone || '') || undefined;
                     patientBasicInfo.professional = String(professional || '') || undefined;
                     patientBasicInfo.treatCode = String(treatCode || '') || undefined;
 
-                    patientBasicInfo.height = Number(height) || undefined;
-                    patientBasicInfo.sex = Number(sex) || undefined;
-                    patientBasicInfo.weight = Number(weight) || undefined;
+                    //  patientBasicInfo.height = Number(height) || undefined;
+                    //  patientBasicInfo.sex = Number(sex) || undefined;
+                    //  patientBasicInfo.weight = Number(weight) || undefined;
 
                     console.log('调用病人组件');
                     //  console.log(JSON.stringify(this.patientBasicInfo));
@@ -731,6 +788,10 @@
             ...mapActions('constants', [
                 //  弹框id
                 'setDeptList',
+            ]),
+            ...mapActions('userList', [
+                //  保存病人信息，这是为了给组件用，而不是页面，所以要store
+                'setPatientBasicInfo',
             ]),
         }
     };
