@@ -411,7 +411,7 @@
     //  ⚠️医院下掉科室，需要调取木木掉接口
 
     import { dropdownVisibleChangeFn, selectSuffixIconMap } from '../../../utils/select';
-    import { requestPatientSelectICD } from '../../../api/userList/userList';
+    import { requestPatientSelectICD, requestPatientSelectNutritionByHospital } from '../../../api/userList/userList';
     import { requestDeptListDeptHospitalId, requestHospitalGetList } from '../../../api/hospital';
     import { requestDeptList } from '../../../api/department';
     import { descriptionsMethods } from '@/utils/patientInfo';
@@ -482,68 +482,61 @@
             },
             //  切换医院
             selectHospitalChange(value){
+                //  清空科室id和列表
                 this.patientBasicInfo.hospitalTreatment = undefined;
-                //  清空科室
                 this.hospitalDeptList = [];
+                //  清空医生id和列表
+                this.patientBasicInfo.doctorId = undefined;
+                this.doctorList = [];
+                //  查询医院下的科室
                 this.getDeptListDeptHospitalId(value);
+                //  查询医院下的营养师
+                this.requestPatientSelectNutritionByHospital(value);
             },
-            //  查询科室下的医院
-            getDeptListDeptHospitalId(value){
-                requestDeptListDeptHospitalId(value)
-                    .then(v => {
-                        const map = {};
-                        const mapList = v.data || [];
-                        mapList.forEach(item => {
-                            map[item] = true;
-                        });
-                        //  console.log(map);
-                        this.hospitalDeptList = this.deptList.filter((item => {
-                            return map[item.id];
-                        }));
-                        console.log(this.hospitalDeptList);
-                        this.$forceUpdate();
-                        //  清空医生和营养师
-                        this.resetDoctorNutritionistListFn();
-                    });
-            },
-            //  切换科室
-            hospitalTreatmentChange(value){
-                console.log(value);
-                //  设置科室id
-                this.patientBasicInfo.hospitalTreatment = value;
-                //  强制更新
-                this.$forceUpdate();
-                //  拿医生、营养师list
-                this.getDoctorNutritionistListFn(value);
-            },
-            //  根据当前医院查询所有医生
-            getDoctorNutritionistListFn(deptId){
-                const data = {
-                    deptId,
-                    hospitalId: this.patientBasicInfo.departTreatment,
-                };
-                console.log('根据当前医院查询所有医生');
-                requestPatientSelectDoctorByHospital(Object.assign({
-                    doctorType: 1,
-                }, data))
-                    .then(doctorList => {
-                        this.doctorList = doctorList;
-                    });
-                console.log('根据当前医院查询所有营养师');
-                data.deptId = 1;
-                requestPatientSelectDoctorByHospital(Object.assign({
-                    doctorType: 2,
-                }, data))
+            //  查询医院下的营养师，因为编辑直接调用，所以写出来
+            requestPatientSelectNutritionByHospital(value){
+                console.log('查询医院下的营养师');
+                requestPatientSelectNutritionByHospital(value)
                     .then(nutritionistList => {
+                        console.log(`当前医院下营养师的数量：${nutritionistList.length}`);
                         this.nutritionistList = nutritionistList;
                     });
             },
-            //  清空医生和营养师list
-            resetDoctorNutritionistListFn(){
-                this.patientBasicInfo.doctorId = undefined;
-                this.patientBasicInfo.nutritionistId = undefined;
-                this.doctorList = [];
-                this.nutritionistList = [];
+            //  查询医院下的科室
+            getDeptListDeptHospitalId(value){
+                console.log('查询医院下的科室');
+                requestDeptListDeptHospitalId(value)
+                    .then(v => {
+                        //  ⚠️别改这里了！
+                        const hospitalDeptList = v.data;
+                        const map = {};
+                        hospitalDeptList.forEach(item => {
+                            map[item] = true;
+                        });
+                        this.hospitalDeptList = this.deptList.filter((item => {
+                            return map[item.id];
+                        }));
+                        console.log(`当前医院下科室的数量：${hospitalDeptList.length}`);
+                        this.$forceUpdate();
+                    });
+            },
+            //  切换科室
+            hospitalTreatmentChange(deptId){
+                console.log(deptId);
+                //  设置科室id
+                this.patientBasicInfo.hospitalTreatment = deptId;
+                //  拿医生、营养师list
+                const data = {
+                    deptId: deptId,
+                    hospitalId: this.patientBasicInfo.departTreatment,
+                };
+                console.log('切换科室需要，根据当前科室查询所有医生');
+                requestPatientSelectDoctorByHospital(data)
+                    .then(doctorList => {
+                        this.doctorList = doctorList;
+                    });
+                //  强制更新
+                this.$forceUpdate();
             },
             //  医生营养师切花
             doctorChange(doctorId){
