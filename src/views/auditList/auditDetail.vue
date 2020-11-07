@@ -243,6 +243,7 @@
                                 carbohydrates,
                             }
                         );
+                        //  todo    这是新版本
                         //  设置能量数据
                         this.totalEnergyData = [{
                             key: 1,
