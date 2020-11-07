@@ -18,6 +18,10 @@
     border-left: 1px solid #e8e8e8;
 }
 
+.radio-group-item-content .ant-checkbox-group {
+    width: 100%;
+}
+
 /*ul外一层*/
 .radio-group-row .radio-group {
     width: 100%;
