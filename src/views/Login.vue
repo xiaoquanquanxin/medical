@@ -2,6 +2,7 @@
     <div class="login-container">
         <div class="login-form">
             <div class="login-inner">
+                <div class="for-title"></div>
                 <div class="for-img"></div>
                 <a-form class="login-wrap"
                         @submit="handleSubmit"
@@ -11,7 +12,7 @@
                     <a-form-item>
                         <p class="login-title">综合管理平台</p>
                     </a-form-item>
-                    <a-form-item>
+                    <a-form-item v-if="false">
                         <a-select default-value="1"
                                   @change="selectChange"
                         >
@@ -23,6 +24,8 @@
                             <!--                    </a-select-option>-->
                         </a-select>
                     </a-form-item>
+                    <br>
+                    <br>
                     <div v-show="basicForm" data-msg="常规输入框">
                         <a-form-item>
                             <a-input
@@ -94,6 +97,7 @@
                         >登录
                         </a-button>
                     </a-form-item>
+                    <br>
                 </a-form>
             </div>
         </div>
@@ -234,8 +238,8 @@
     }
     
     .login-wrap {
-        margin-top: 20px;
-        width: 400px;
+        margin-top: 60px;
+        width: 360px;
         padding: 50px 60px 40px;
         border-radius: 10px;
         /*position: absolute;*/
@@ -269,15 +273,25 @@
         right: 0;
         margin: auto;
         z-index: +2;
+    }
+    
+    
+    .for-title {
+        width: 584px;
+        height: 274px;
+        position: absolute;
+        top: -40px;
+        left: 0;
+        z-index: +2;
         background-image: url(/login-tilte.png);
         background-repeat: no-repeat;
     }
     
     .for-img {
-        width:584px;
+        width: 584px;
         height: 274px;
         position: absolute;
-        bottom: 0;
+        bottom: 50px;
         left: -94px;
         z-index: +2;
         background-image: url(/login-img01.png);
