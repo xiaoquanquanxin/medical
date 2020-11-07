@@ -28,7 +28,7 @@
                 />
             </a-form-item>
             <a-form-item label="膳食营养计划" required>
-                <div style="width:600px;">
+                <div style="width:800px;">
                     <!--表头-->
                     <a-row type="flex" justify="space-between" align="middle" class="table-group-title">
                         <a-space>
@@ -101,6 +101,13 @@
                     </a-form-item>
                 </a-col>
             </a-row>
+            <a-form-item label="营养素小计" required>
+                <div style="width:800px;">
+                    <EnergyEditTable
+                            :energyTableData="energyTableData"
+                    />
+                </div>
+            </a-form-item>
             <!--保存-->
             <a-form-item :wrapper-col="{ span: 4, offset: 5 }">
                 <a-button type="primary" html-type="submit">
@@ -115,6 +122,7 @@
     import { twoRowSearch } from '@/utils/tableScroll';
     import { formItemLayout } from '@/utils/layout.ts';
     import GoBackButton from '@/components/goBackButton.vue';
+    import EnergyEditTable from '@/components/detailsEditTable/energyEditTable.vue';
     import { liquidEnergyList, usageMethodList, foodTypeList } from '../../../utils/constants';
     import { requestHospitalGetList } from '../../../api/hospital';
     import {
@@ -132,18 +140,13 @@
 
     const columns = [
         {
-            title: '序号',
-            dataIndex: 'index',
-            width: 60,
-        },
-        {
             title: '用餐时间',
             scopedSlots: { customRender: 'usageTime' },
-            width: 150,
+            width: 200,
         },
         {
             title: '用餐内容',
-            width: 160,
+            width: 200,
             scopedSlots: { customRender: 'entryName' },
         },
         {
@@ -154,7 +157,7 @@
         {
             title: '操作',
             scopedSlots: { customRender: 'operation' },
-            width: 80,
+            width: 100,
         },
     ];
 
@@ -162,6 +165,7 @@
     export default {
         components: {
             GoBackButton,
+            EnergyEditTable,
         },
         beforeCreate(){
             this.form = this.$form.createForm(this);
@@ -228,6 +232,15 @@
                 },
                 //  设置横向或纵向滚动，也可用于指定滚动区域的宽和高
                 scroll: twoRowSearch(columns),
+
+                //  能量表
+                energyTableData: [{
+                    key: 1,
+                    energy: '',
+                    protein: '',
+                    fat: '',
+                    carbohydrates: '',
+                }]
             };
         },
         created(){
@@ -259,15 +272,15 @@
                         tableForm.customEnergy = list[1].split('】')[0];
                         tableForm.templateName = templateName;
                         tableForm.hospitalId = hospitalId;
-                        const mealPlanTableData = JSON.parse(prescriptionContent);
-                        console.log(mealPlanTableData);
-                        //  console.log(mealPlanTableData);
+                        const prescriptionContentData = JSON.parse(prescriptionContent);
+                        const { mealPlanTableData, energyTableData } = prescriptionContentData;
                         mealPlanTableData.forEach((item, index) => {
                             //  console.log(item);
                             item.index = index + 1;
                             item.moment = moment(item.moment);
                         });
                         this.data = mealPlanTableData;
+                        this.energyTableData = energyTableData;
                         //  this.$forceUpdate();
                     });
             },
@@ -328,7 +341,10 @@
                     item.usageTime = `${time.getHours()}:${time.getMinutes()}`;
                 });
                 //  console.log(JSON.stringify(this.data));
-                const prescriptionContent = JSON.stringify(this.data);
+                const prescriptionContent = JSON.stringify({
+                    mealPlanTableData: this.data,
+                    energyTableData: this.energyTableData
+                });
                 console.log(JSON.parse(prescriptionContent));
                 const data = Object.assign({}, this.tableForm,
                     {
