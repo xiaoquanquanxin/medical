@@ -28,8 +28,8 @@
                 <a-select v-decorator="statusDecorator"
                           class="add-form-input"
                           placeholder="请选择状态">
-                    <a-select-option :value="0">停用</a-select-option>
-                    <a-select-option :value="1">启用</a-select-option>
+                    <a-select-option :value="0">启用</a-select-option>
+                    <a-select-option :value="1">停用</a-select-option>
                 </a-select>
             </a-form-item>
             <a-form-item :wrapper-col="{ span: 4, offset: 5 }">
