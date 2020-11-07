@@ -33,3 +33,4 @@ method:get
 http://49.232.14.93:8080/doc.html#/%E5%90%8E%E5%8F%B0%E7%AE%A1%E7%90%86/%E7%97%85%E4%BA%BA%E4%BF%A1%E6%81%AF/selectNutritionByHospitalUsingGET
 
 
+3.已解决的4，但是木木的只支持整数
