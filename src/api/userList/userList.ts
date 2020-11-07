@@ -48,10 +48,8 @@ export function requestPatientSelectDeptByHospital() {
 //	根据当前医院查询所有医生	 ✅
 export function requestPatientSelectDoctorByHospital(data: {
 	"deptId": string,
-	"doctorType": string,
 	"hospitalId": string
 }) {
-	//	type1 医生，type2，营养师
 	return request({
 		url: `/api/patient/selectDoctorByHospital`,
 		method: 'post',
@@ -60,10 +58,15 @@ export function requestPatientSelectDoctorByHospital(data: {
 		.then(unifiedHandlingList);
 }
 
+//	根据医院查询营养师列表
+export function requestPatientSelectNutritionByHospital(hospitalId: string | number) {
+	return request({
+		url: `/api/patient/selectNutritionByHospital/${hospitalId}`,
+		method: 'get',
+	})
+		.then(unifiedHandlingList);
+}
 
-//	id的格式不统一，联动存在隐患：doctorId是 1 还是 '1'，为什么要字符串'1'？但目前没问题
-
-//	缺少确认出院、确认入院？我没找见
 
 //	ICD诊断配置
 export function requestPatientSelectICD() {
