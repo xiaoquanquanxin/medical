@@ -87,7 +87,10 @@
                     </a-menu-item>
                 </a-menu>
                 <div class="router-view">
-                    <div class="layout-content-inner">
+                    <div v-if="$route.name === 'userList'" class="layout-content-inner">
+                        <a-empty style="padding-top: 200px;"/>
+                    </div>
+                    <div v-else class="layout-content-inner">
                         <router-view/>
                     </div>
                 </div>
@@ -144,11 +147,6 @@
                 return Number(this.$route.params.patientId);
             },
         },
-//        watch: {
-//            $route(value){
-//                console.log(value.params.patientId);
-//            }
-//        },
         data(){
             return {
                 //  分页信息
@@ -172,16 +170,6 @@
             };
         },
         methods: {
-            rowClassNameFn(record, index){
-                if (this.patientId === record.id) {
-//                    console.log('🍉🍉🍉🍉🍉🍉');
-//                    console.log(this.patientId);
-//                    console.log(record.id);
-//                    console.log('🍉🍉🍉🍉🍉🍉');
-                    return 'user-list-high-light';
-                }
-            },
-
             //  主要请求
             searchFn(){
                 requestPatientPage(Object.assign({ param: this.searchData }, paginationEncode(this.pagination)))
@@ -190,9 +178,21 @@
                         data.records.forEach((item, index) => {
                             item.key = index;
                         });
-                        //  console.log(JSON.parse(JSON.stringify(data.records)));
+                        //  data.records.length = 0;
                         this.data = data.records;
                         this.pagination = paginationDecode(this.pagination, data);
+                        console.log(JSON.parse(JSON.stringify(data.records))[0]);
+                        //  如果没有病人
+                        if (!data.records.length) {
+                            return;
+                        }
+                        //  如果当前是在userList路由下，那么应该进入第一个病人列表的路由
+                        if (this.$route.name === 'userList') {
+                            //  第一个病人的id
+                            const { id } = data.records[0];
+                            this.$router.push({ name: 'patientInfo', params: { patientId: id.toString() } });
+                        }
+                        console.log(this.$route.name);
                     });
             },
             //  自定义表格事件
@@ -202,6 +202,16 @@
                         click: () => {this.tableClickFn(scope);}
                     }
                 };
+            },
+            //  被激活的颜色
+            rowClassNameFn(record, index){
+                if (this.patientId === record.id) {
+//                    console.log('🍉🍉🍉🍉🍉🍉');
+//                    console.log(this.patientId);
+//                    console.log(record.id);
+//                    console.log('🍉🍉🍉🍉🍉🍉');
+                    return 'user-list-high-light';
+                }
             },
             //  点击table事件
             tableClickFn(scope){
