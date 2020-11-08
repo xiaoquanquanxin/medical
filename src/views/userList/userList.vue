@@ -41,9 +41,8 @@
                     <a-row type="flex" justify="space-between" align="middle"
                            v-if="currentPatientInfo"
                            class="medical-information-list">
-                        <span>科室：科室有问题故展示：需要文字而不仅仅是id，需要在列表接口里组织此字段 /api/patient/page{{currentPatientInfo.deptName}}</span>
+                        <span>科室：{{currentPatientInfo.deptName}}</span>
                         <br>
-                        <span>涛哥说他更新了，但是没出来，可能发版有问题，文档里是deptName字段</span>
                         <span>床号：{{currentPatientInfo.bedCode}}</span>
                     </a-row>
                     <hr>
