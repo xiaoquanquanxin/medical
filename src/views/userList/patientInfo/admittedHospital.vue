@@ -5,7 +5,7 @@
             <GoBackButton/>
             <a-button type="primary" @click="handleCheck">保存</a-button>
         </div>
-        <div class="patient-basic-info-like" >
+        <div class="patient-basic-info-like">
             <PatientBasicInfo ref="refPatientBasicInfo"/>
         </div>
     </div>
