@@ -28,3 +28,9 @@ hr {
 /*    !*display: none;*!*/
 /*    visibility: hidden;*/
 /*}*/
+
+/*下拉的后缀*/
+.caret-down svg {
+    transform: scale(1.3);
+    color: #ababab;
+}
