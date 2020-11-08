@@ -927,6 +927,16 @@ export const asyncRoutesList = [
 			},
 			{
 				meta: {
+					chName: '配置历史',
+					selectRouteKey: 'configurationHistory',
+					openRouteKey: 'task',
+				},
+				name: 'configurationHistory',
+				path: '/task/configurationHistory',
+				component: () => import(/* webpackChunkName: "configuration" */ '@/views/task/configurationHistory.vue'),
+			},
+			{
+				meta: {
 					chName: '领药任务',
 					selectRouteKey: 'getDrug',
 					openRouteKey: 'task',
