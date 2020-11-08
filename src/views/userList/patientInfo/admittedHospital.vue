@@ -1,11 +1,13 @@
 <template>
-    <div class="layout-content-inner-main">
+    <div class="layout-content-inner-main patient-basic-info-like-wrap">
         <div class="a-input-group">
             <!--返回按钮-->
             <GoBackButton/>
             <a-button type="primary" @click="handleCheck">保存</a-button>
         </div>
-        <PatientBasicInfo ref="refPatientBasicInfo"/>
+        <div class="patient-basic-info-like" style="height: calc(100% - 40px);">
+            <PatientBasicInfo ref="refPatientBasicInfo"/>
+        </div>
     </div>
 </template>
 <script>
