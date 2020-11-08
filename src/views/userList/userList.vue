@@ -51,7 +51,7 @@
                         :columns="columns"
                         :data-source="data"
                         :pagination="false"
-                        :scroll="{x: 'auto', y: 'calc(100vh - 470px)'}"
+                        :scroll="{x: 'auto', y: 'calc(100vh - 550px)'}"
                         :filtered="true"
                         :customRow="customRow"
                         :rowClassName="rowClassNameFn"
@@ -201,8 +201,26 @@
         watch: {
             $route(value){
                 console.log('🍎', value.name);
+                //  如果是首页，进入第一个人
                 if (value.name === 'userList') {
                     this.getFirstPatient();
+                    return;
+                }
+                if (!this.data.length) {
+                    this.push({ name: 'userList' });
+                    return;
+                }
+                //  如果不是首页，判断当前病人id在不在列表里
+                if (value.name === 'patientInfo') {
+                    console.log(this.patientId);
+                    for (let item of this.data) {
+                        console.log(item.id);
+                        //  如果存在，是正常的
+                        if (item.id === this.patientId) {
+                            return;
+                        }
+                    }
+                    this.$router.push({ name: 'patientInfo', params: { patientId: this.patientId.toString() } });
                 }
             }
         },
