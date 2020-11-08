@@ -1,119 +1,111 @@
 <template>
-    <div>
-        <a-row type="flex" justify="start" align="top" v-if="false">
-            <a-col style="width:300px;">
-            </a-col>
-            <a-col style="width:calc(100vw - 500px);min-width: 900px;">
-            </a-col>
-        </a-row>
-        <div class="wrap">
-            <div class="left-info">
-                <a-card title="就诊信息" style='border-bottom: none;margin-bottom: -10px;'>
-                    <a-form class="form"
-                            v-bind="{
+    <div class="wrap">
+        <div class="left-info">
+            <a-card title="就诊信息" style='border-bottom: none;margin-bottom: -10px;'>
+                <a-form class="form"
+                        v-bind="{
                                  labelCol: { span: 6 },
                                  wrapperCol: { offset: 1, span: 17 },
                             }"
-                            autocomplete="off"
-                    >
-                        <a-form-item label="姓名">
-                            <a-input-search placeholder="请输入姓名"
-                                            v-model="searchData.name"
-                                            enter-button="搜索"
-                                            @search="searchFn"/>
-                        </a-form-item>
-                        <a-form-item label="身份证号">
-                            <a-input-search placeholder="请输入身份证号"
-                                            v-model="searchData.idCard"
-                                            enter-button="搜索"
-                                            @search="searchFn"/>
-                        </a-form-item>
-                    </a-form>
-                    <a-row type="flex" justify="space-between" align="middle" v-if="currentPatientInfo"
-                           class="medical-information-list">
-                        <span>性别：{{+currentPatientInfo.sex === 1 ?'男':'女'}}</span>
-                        <span>年龄：{{currentPatientInfo.birth}}</span>
-                        <span v-if=" +currentPatientInfo.patientStatus === 1">状态：住院</span>
-                        <span v-else-if=" +currentPatientInfo.patientStatus === 2">状态：出院</span>
-                        <span v-else>状态：永久注销</span>
-                    </a-row>
-                    <hr>
-                    <a-row type="flex" justify="space-between" align="middle"
-                           v-if="currentPatientInfo"
-                           class="medical-information-list">
-                        <span>科室：{{currentPatientInfo.deptName}}</span>
-                        <br>
-                        <span>床号：{{currentPatientInfo.bedCode}}</span>
-                    </a-row>
-                    <hr>
-                    <a-row type="flex" justify="space-between" align="middle" v-if="currentPatientInfo"
-                           class="medical-information-list">
-                        <span>住院号：{{currentPatientInfo.hospitalCode}}</span>
-                    </a-row>
-                </a-card>
-                <a-card title="病人列表">
-                    <a-button slot="extra" type="primary" @click="addAdmittedHospitalFn">+新患者登记</a-button>
-                    <a-table
-                            id="userListTable"
-                            :columns="columns"
-                            :data-source="data"
-                            :pagination="false"
-                            :scroll="{x: 'auto', y: 'calc(100vh - 550px)'}"
-                            :filtered="true"
-                            :customRow="customRow"
-                            :rowClassName="rowClassNameFn"
-                    >
-                        <!--年龄/性别-->
-                        <div slot="info" slot-scope="scope,sItem,sIndex,extra">
-                            {{scope.birth}}/{{scope.sex===1?'男':'女'}}
-                        </div>
-                        <!--状态-->
-                        <div slot="patientStatus" slot-scope="scope,sItem,sIndex,extra">
-                            <span v-if="scope.patientStatus==='1'" style="color:">住院</span>
-                            <span v-if="scope.patientStatus==='2'">院外</span>
-                            <span v-if="scope.patientStatus==='3'">永久注销</span>
-                        </div>
-                    </a-table>
-                    <!--分页-->
-                    <a-row type="flex" justify="end" class="a-pagination">
-                        <a-pagination
-                                v-if="pagination.total"
-                                v-model="pagination.current"
-                                :page-size-options="pagination.pageSizeOptions"
-                                :total="pagination.total"
-                                show-size-changer
-                                :page-size="pagination.pageSize"
-                                @showSizeChange="onShowSizeChange"
-                                @change="pageChange"
-                        >
-                            <template slot="buildOptionText" slot-scope="props">
-                                <span>{{ props.value }}条/页</span>
-                            </template>
-                        </a-pagination>
-                    </a-row>
-                </a-card>
-            </div>
-            <div class="tab-info">
-                <a-menu v-if="currentMeta"
-                        class="user-list-menu"
-                        v-model="transverseSubPaths2"
-                        mode="horizontal">
-                    <a-menu-item
-                            style="margin-right: 6px;"
-                            v-for="(item , index) in userRouteList"
-                            :key="item.name"
-                            @click="userListJumpTo(item)"
-                    >
-                        {{item.meta.chName}}
-                    </a-menu-item>
-                </a-menu>
-                <div class="router-view">
-                    <div v-if="$route.name === 'userList'" class="layout-content-inner">
-                        <a-empty style="padding-top: 200px;"/>
+                        autocomplete="off"
+                >
+                    <a-form-item label="姓名">
+                        <a-input-search placeholder="请输入姓名"
+                                        v-model="searchData.name"
+                                        enter-button="搜索"
+                                        @search="searchFn"/>
+                    </a-form-item>
+                    <a-form-item label="身份证号">
+                        <a-input-search placeholder="请输入身份证号"
+                                        v-model="searchData.idCard"
+                                        enter-button="搜索"
+                                        @search="searchFn"/>
+                    </a-form-item>
+                </a-form>
+                <a-row type="flex" justify="space-between" align="middle" v-if="currentPatientInfo"
+                       class="medical-information-list">
+                    <span>性别：{{+currentPatientInfo.sex === 1 ?'男':'女'}}</span>
+                    <span>年龄：{{currentPatientInfo.birth}}</span>
+                    <span v-if=" +currentPatientInfo.patientStatus === 1">状态：住院</span>
+                    <span v-else-if=" +currentPatientInfo.patientStatus === 2">状态：出院</span>
+                    <span v-else>状态：永久注销</span>
+                </a-row>
+                <hr>
+                <a-row type="flex" justify="space-between" align="middle"
+                       v-if="currentPatientInfo"
+                       class="medical-information-list">
+                    <span>科室：{{currentPatientInfo.deptName}}</span>
+                    <br>
+                    <span>床号：{{currentPatientInfo.bedCode}}</span>
+                </a-row>
+                <hr>
+                <a-row type="flex" justify="space-between" align="middle" v-if="currentPatientInfo"
+                       class="medical-information-list">
+                    <span>住院号：{{currentPatientInfo.hospitalCode}}</span>
+                </a-row>
+            </a-card>
+            <a-card title="病人列表">
+                <a-button slot="extra" type="primary" @click="addAdmittedHospitalFn">+新患者登记</a-button>
+                <a-table
+                        id="userListTable"
+                        :columns="columns"
+                        :data-source="data"
+                        :pagination="false"
+                        :scroll="{x: 'auto', y: 'calc(100vh - 550px)'}"
+                        :filtered="true"
+                        :customRow="customRow"
+                        :rowClassName="rowClassNameFn"
+                >
+                    <!--年龄/性别-->
+                    <div slot="info" slot-scope="scope,sItem,sIndex,extra">
+                        {{scope.birth}}/{{scope.sex===1?'男':'女'}}
                     </div>
-                    <div v-else class="layout-content-inner">
-                        <router-view/>
+                    <!--状态-->
+                    <div slot="patientStatus" slot-scope="scope,sItem,sIndex,extra">
+                        <span v-if="scope.patientStatus==='1'" style="color:">住院</span>
+                        <span v-if="scope.patientStatus==='2'">院外</span>
+                        <span v-if="scope.patientStatus==='3'">永久注销</span>
                     </div>
+                </a-table>
+                <!--分页-->
+                <a-row type="flex" justify="end" class="a-pagination">
+                    <a-pagination
+                            v-if="pagination.total"
+                            v-model="pagination.current"
+                            :page-size-options="pagination.pageSizeOptions"
+                            :total="pagination.total"
+                            show-size-changer
+                            :page-size="pagination.pageSize"
+                            @showSizeChange="onShowSizeChange"
+                            @change="pageChange"
+                    >
+                        <template slot="buildOptionText" slot-scope="props">
+                            <span>{{ props.value }}条/页</span>
+                        </template>
+                    </a-pagination>
+                </a-row>
+            </a-card>
+        </div>
+        <div class="tab-info">
+            <a-menu v-if="currentMeta"
+                    class="user-list-menu"
+                    v-model="transverseSubPaths2"
+                    mode="horizontal">
+                <a-menu-item
+                        style="margin-right: 6px;"
+                        v-for="(item , index) in userRouteList"
+                        :key="item.name"
+                        @click="userListJumpTo(item)"
+                >
+                    {{item.meta.chName}}
+                </a-menu-item>
+            </a-menu>
+            <div class="router-view">
+                <div v-if="$route.name === 'userList'" class="layout-content-inner">
+                    <a-empty style="padding-top: 200px;"/>
+                </div>
+                <div v-else class="layout-content-inner">
+                    <router-view/>
                 </div>
             </div>
         </div>
@@ -316,11 +308,6 @@
 <style scoped>
     @import "~@/css/table.css";
     
-    .router-view {
-        height: calc(100vh - 180px);
-        overflow: auto;
-        width: 900px;
-    }
     
     /*页面左右分块*/
     .wrap {
@@ -329,15 +316,19 @@
         min-width: 1200px;
     }
     
+    /*左侧整体*/
     .left-info {
+        width: 300px;
         min-width: 300px;
         max-width: 300px;
         /*background-color: lightyellow;*/
     }
     
+    /*右侧整体*/
     .tab-info {
         flex: 1 auto;
         /*border-top: 2px solid #eaecf1;*/
+        width: calc(100% - 300px - 200px);
     }
     
     /*右侧菜单切换*/
@@ -379,6 +370,13 @@
     
     .ant-menu-horizontal > .ant-menu-item:hover,
     .ant-menu-horizontal > .ant-menu-submenu:hover {
+    }
+    
+    
+    /*视口*/
+    .router-view {
+        height: calc(100vh - 180px);
+        overflow: auto;
     }
     
     
