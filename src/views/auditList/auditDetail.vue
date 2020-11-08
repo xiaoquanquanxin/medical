@@ -1,5 +1,5 @@
 <template>
-    <div class="layout-content-inner-main">
+    <div class="layout-content-inner-main patient-basic-info-like-wrap">
         <a-row type="flex" justify="space-between" align="middle">
             <div class="a-input-group">
                 <!--返回按钮-->
@@ -44,36 +44,38 @@
                 </span>
             </b>
         </a-row>
-        <div id="printContent">
-            <!--基础表格-->
-            <BasicInfoTable
-                    :data-source="basicInfoData"
-            />
-            <br>
-            <div v-for="item in detail" v-if="true">
-                <!--商品表格-->
-                <OralLikeBasicTable
-                        :dataSource="item"
+        <div class="patient-basic-info-like">
+            <div id="printContent">
+                <!--基础表格-->
+                <BasicInfoTable
+                        :data-source="basicInfoData"
                 />
                 <br>
-                <!--时间表格-->
-                <OralLikeComplexTable
-                        :dataSource="item"
+                <div v-for="item in detail" v-if="true">
+                    <!--商品表格-->
+                    <OralLikeBasicTable
+                            :dataSource="item"
+                    />
+                    <br>
+                    <!--时间表格-->
+                    <OralLikeComplexTable
+                            :dataSource="item"
+                    />
+                    <br>
+                </div>
+                <!--营养干预详情和处方审核详情，才有膳食的表格-->
+                <div v-if="detailType === 1 || detailType === 2">
+                    <!--膳食营养计划-->
+                    <DietaryTable
+                            :dataSource="nutrition"
+                    />
+                    <br>
+                </div>
+                <!--能量表-->
+                <EnergyTable
+                        :totalEnergyData="totalEnergyData"
                 />
-                <br>
             </div>
-            <!--营养干预详情和处方审核详情，才有膳食的表格-->
-            <div v-if="detailType === 1 || detailType === 2">
-                <!--膳食营养计划-->
-                <DietaryTable
-                        :dataSource="nutrition"
-                />
-                <br>
-            </div>
-            <!--能量表-->
-            <EnergyTable
-                    :totalEnergyData="totalEnergyData"
-            />
         </div>
         <!--驳回莫泰框-->
         <a-modal v-model="dialogReject.visible"
