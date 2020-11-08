@@ -51,7 +51,7 @@
                         :columns="columns"
                         :data-source="data"
                         :pagination="false"
-                        :scroll="{x: 'auto', y: 'calc(100vh - 550px)'}"
+                        :scroll="{x: 'auto', y: 'calc(100vh - 470px)'}"
                         :filtered="true"
                         :customRow="customRow"
                         :rowClassName="rowClassNameFn"
