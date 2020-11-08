@@ -227,3 +227,20 @@ span.ant-radio + * {
     margin-top: 4px;
     margin-bottom: 0;
 }
+
+
+/*病人列表，处理页面滚动*/
+/*!*整体*!*/
+.patient-basic-info-like-wrap {
+    height: 100%;
+    overflow: hidden;
+    /*background-color: lightcoral;*/
+}
+
+/*主要填写内容部分*/
+.patient-basic-info-like {
+    /*不要写height: 100%;自己去各个页面配置*/
+    position: relative;
+    background-color: lightgreen;
+    overflow-y: auto;
+}
