@@ -6,7 +6,7 @@
             <a-date-picker
                     class="lengthen-select-width"
                     placeholder="请选择开具日期"
-                    :default-value="moment(new Date())"
+                    v-model="selectDateMoment"
                     @change="onDatePickerChangeFn"
             />
             <!--审核状态(1.待审核，2，已审核，3，已驳回)-->
@@ -131,6 +131,8 @@
     export default {
         data(){
             return {
+                //  时间 的默认值
+                selectDateMoment: this.moment(new Date()),
                 deptList: [],
                 data: [],
                 columns,
@@ -139,7 +141,9 @@
                 //  分页信息
                 pagination: paginationInit(),
                 //  搜索数据
-                searchData: {},
+                searchData: {
+                    orderTime: this.moment(new Date()).format('YYYY-MM-DD'),
+                },
             };
         },
         created(){
