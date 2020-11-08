@@ -91,7 +91,6 @@
     import { twoRowSearch } from '@/utils/tableScroll';
     import { mapGetters, mapActions } from 'vuex';
     import { requestMenuRoleTree, requestRoleDelete, requestRolePage } from '../../api/system/role';
-    import { requestPrescriptionConfigConfirmSave } from '../../api/task/configuration';
 
     const columns = [
         {
@@ -230,6 +229,7 @@
                                 this.searchFn();
                             })
                             .catch(err => {
+                                console.log(err);
                                 this.$message.error('操作失败');
                             });
                     },

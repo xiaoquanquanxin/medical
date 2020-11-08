@@ -241,7 +241,7 @@
                     })
                     .catch(err => {
                         console.log(err);
-                        alert('接口报错');
+                        this.$message.error('操作失败');
                     });
             },
             //  关联疾病确定
@@ -301,7 +301,7 @@
                     })
                     .catch(err => {
                         console.log(err);
-                        alert('接口报错');
+                        this.$message.error('操作失败');
                     });
             },
 

@@ -466,6 +466,7 @@
                             })
                             .catch(err => {
                                 console.log(err);
+                                this.$message.error('操作失败');
                                 reject(err);
                             });
                     });

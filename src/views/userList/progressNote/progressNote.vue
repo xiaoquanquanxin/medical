@@ -147,7 +147,8 @@
                                 this.$message.success('操作成功');
                                 this.searchFn();
                             })
-                            .catch(v => {
+                            .catch(err => {
+                                console.log(err);
                                 this.$message.error('操作失败');
                             });
                     },

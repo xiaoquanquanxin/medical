@@ -197,6 +197,7 @@
                             })
                             .catch(err => {
                                 console.log(err);
+                                this.$message.error('密码错误或用户不存在');
                             });
                     }
                 });

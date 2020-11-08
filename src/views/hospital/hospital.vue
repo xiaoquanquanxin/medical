@@ -263,7 +263,7 @@
                     })
                     .catch(err => {
                         console.log(err);
-                        //  alert('接口报错');
+                        this.$message.error('操作失败');
                     });
             },
             //  关联科室确定
@@ -311,6 +311,10 @@
                         console.log(list[0]);
                         this.setDistributorsList(list);
                         this.showModal(DIALOG_TYPE.ASSOCIATED_CHANNEL_PROVIDER);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        this.$message.error('操作失败');
                     });
             },
             //  关联渠道商确定

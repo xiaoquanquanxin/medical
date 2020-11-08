@@ -68,7 +68,14 @@
                         console.log(err);
                     }
                     //  修改用户
-                    requestUserUpdate(values);
+                    requestUserUpdate(values)
+                        .then(v => {
+
+                        })
+                        .catch(err => {
+                            console.log(err);
+                            this.$message.error('操作失败');
+                        });
                 });
             },
         }

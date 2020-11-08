@@ -85,8 +85,11 @@
                                         title: '保存成功',
                                     });
                                     this.$router.push({ name: 'userList' });
+                                })
+                                .catch(err => {
+                                    console.log(err);
+                                    this.$message.error('操作失败');
                                 });
-                            return;
                         }
                         //  如果是编辑
                         data.id = this.patientId;
@@ -95,6 +98,10 @@
                                 console.log(v);
                                 this.$message.success('操作成功');
                                 this.$router.push({ name: 'patientInfo' });
+                            })
+                            .catch(err => {
+                                console.log(err);
+                                this.$message.error('操作失败');
                             });
                     })
                     .catch(error => {

@@ -384,6 +384,10 @@
                         this.shuttleOriginTargetKey = shuttleOriginTargetKey;
                         this.showModal(DIALOG_TYPE.AUTHORIZATION_DISTRIBUTORS);
                         this.setShuttleBoxType(SHUTTLE_BOX.DIALOG_AUTHORIZATION_DISTRIBUTORS);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        this.$message.error('操作失败');
                     });
             },
             //  授权医院
