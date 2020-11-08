@@ -106,7 +106,7 @@
         {
             title: '医院',
             dataIndex: 'hospitalName',
-            width: 100,
+            width: 150,
         },
         {
             title: '科室',
