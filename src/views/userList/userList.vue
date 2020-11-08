@@ -264,7 +264,7 @@
             },
             //  点击table事件
             tableClickFn(scope){
-                console.log('选中的列表的id ', scope.id, '应该监听病人信息页面');
+                //  console.log('选中的列表的id ', scope.id, '应该监听病人信息页面');
                 //  todo    区分点击的是谁
                 this.$router.push({ name: 'patientInfo', params: { patientId: scope.id.toString() } });
             },
