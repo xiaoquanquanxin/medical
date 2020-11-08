@@ -268,7 +268,7 @@
                               @focus="descriptionFormFocusFn(18)"
                     >
                         <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
-                        <a-select-option :value="item.code"
+                        <a-select-option :value="item.id"
                                          v-for="item in ICDList"
                         >{{item.name}}
                         </a-select-option>
