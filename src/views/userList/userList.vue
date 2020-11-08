@@ -10,13 +10,13 @@
                         autocomplete="off"
                 >
                     <a-form-item label="姓名">
-                        <a-input-search placeholder="请输入姓名"
+                        <a-input-search size="" placeholder="请输入姓名"
                                         v-model="searchData.name"
                                         enter-button="搜索"
                                         @search="searchFn"/>
                     </a-form-item>
                     <a-form-item label="身份证号">
-                        <a-input-search placeholder="请输入身份证号"
+                        <a-input-search size="" placeholder="请输入身份证号"
                                         v-model="searchData.idCard"
                                         enter-button="搜索"
                                         @search="searchFn"/>
@@ -45,7 +45,7 @@
                 </a-row>
             </a-card>
             <a-card title="病人列表">
-                <a-button slot="extra" type="primary" @click="addAdmittedHospitalFn">+新患者登记</a-button>
+                <a-button slot="extra" type="primary" size="small" @click="addAdmittedHospitalFn">+新患者登记</a-button>
                 <a-table
                         id="userListTable"
                         :columns="columns"
@@ -382,7 +382,7 @@
     
     /*左上角病人信息间距*/
     .form .ant-form-item {
-        margin-bottom: 8px;
+        margin-bottom: 2px;
     }
     
     /*就诊信息的小内容间距*/
