@@ -19,6 +19,7 @@
                           v-decorator="goodsIdDecorator"
                           placeholder="请选择商品"
                 >
+                    <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                     <a-select-option v-for="item in goodsPurchaseList"
                                      :value="item.id"
                     >
@@ -31,6 +32,7 @@
                           v-decorator="unitNameIdDecorator"
                           placeholder="请选择单位"
                 >
+                    <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                     <a-select-option v-for="item in unitTypeList"
                                      :value="item.value"
                     >

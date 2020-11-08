@@ -10,6 +10,7 @@
                 <a-select placeholder="请选择出库商品"
                           v-decorator="outboundGoodsDecorator"
                 >
+                    <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                     <a-select-option value="1">
                         xxx
                     </a-select-option>
@@ -27,6 +28,7 @@
                 <a-select placeholder="请选择出库医院"
                           v-decorator="hospitalDecorator"
                 >
+                    <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                     <a-select-option value="1">
                         xxx
                     </a-select-option>

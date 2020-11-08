@@ -10,6 +10,7 @@
                 </a-space>
                 <a-select class="lengthen-select-width" v-model="dataTitle.usageMethod" placeholder="请选择食用方法"
                           @change="usageMethodChangeFn">
+                    <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                     <a-select-option :value="item.id"
                                      v-for="item in usageMethodList"
                     >{{item.name}}
@@ -40,6 +41,7 @@
                                       v-model="sItem.checked_uname"
                                       @change="unameChangeFn(sItem,$event)"
                             >
+                                <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                                 <a-select-option v-for="item in sItem.uintListVos"
                                                  :value="item.uname"
                                                  :key="item.uname"

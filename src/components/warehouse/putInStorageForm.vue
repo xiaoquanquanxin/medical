@@ -10,6 +10,7 @@
                 <a-select placeholder="请选择采购单号"
                           v-decorator="purchaseOrderNoDecorator"
                 >
+                    <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                     <a-select-option value="1">
                         xxx
                     </a-select-option>

@@ -16,6 +16,7 @@
                           placeholder="请选择单位"
                           v-decorator="purchaseOrderUnitIdDecorator"
                 >
+                    <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                     <a-select-option v-for="item in unitTypeList"
                                      :value="item.value"
                     >

@@ -24,6 +24,7 @@
                           placeholder="请选择仓库地址-省份"
                           @change="_provinceChange"
                 >
+                    <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                     <a-select-option :value="item.id"
                                      :key="item.id"
                                      v-for="item in areaList.provinceList"
@@ -36,6 +37,7 @@
                           v-decorator="cityDecorator"
                           placeholder="请选择仓库地址-市区"
                 >
+                    <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                     <a-select-option :value="item.id"
                                      :key="item.id"
                                      v-for="item in areaList.cityList"

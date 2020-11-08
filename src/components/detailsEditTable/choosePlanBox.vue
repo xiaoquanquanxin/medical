@@ -6,6 +6,7 @@
                       placeholder="请选择能量"
                       @change="energyChange"
             >
+                <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                 <a-select-option :value="item.id"
                                  v-for="item in energyList"
                 >{{item.name}}

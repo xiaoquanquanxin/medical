@@ -34,9 +34,8 @@
                             v-model="patientBasicInfo.sex"
                             class="form-element"
                             @focus="descriptionFormFocusFn(1)"
-                            @dropdownVisibleChange="dropdownVisibleChangeFn($event,1)"
                     >
-                        <SuffixIcon :iconNum="1" slot="suffixIcon"></SuffixIcon>
+                        <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                         <a-select-option :value="1">男</a-select-option>
                         <a-select-option :value="2">女</a-select-option>
                     </a-select>
@@ -191,9 +190,8 @@
                               class="form-element basic-select-width"
                               @focus="descriptionFormFocusFn(14)"
                               @change="selectHospitalChange"
-                              @dropdownVisibleChange="dropdownVisibleChangeFn($event,5)"
                     >
-                        <SuffixIcon :iconNum="5" slot="suffixIcon"></SuffixIcon>
+                        <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                         <a-select-option v-for="item in hospitalList"
                                          :value="item.id">
                             {{item.hospitalName}}
@@ -208,9 +206,8 @@
                               class="form-element basic-select-width"
                               @change="keshiChange(patientBasicInfo.hospitalTreatment,$event)"
                               @focus="descriptionFormFocusFn(14)"
-                              @dropdownVisibleChange="dropdownVisibleChangeFn($event,2)"
                     >
-                        <SuffixIcon :iconNum="2" slot="suffixIcon"></SuffixIcon>
+                        <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                         <a-select-option v-for="item in hospitalDeptList"
                                          :value="item.id">
                             {{item.deptName}}
@@ -269,9 +266,8 @@
                               v-model="patientBasicInfo.icd"
                               class="form-element basic-select-width"
                               @focus="descriptionFormFocusFn(18)"
-                              @dropdownVisibleChange="dropdownVisibleChangeFn($event,6)"
                     >
-                        <SuffixIcon :iconNum="6" slot="suffixIcon"></SuffixIcon>
+                        <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                         <a-select-option :value="item.code"
                                          v-for="item in ICDList"
                         >{{item.name}}
@@ -377,9 +373,8 @@
                               placeholder="请选择主管医生"
                               v-model="patientBasicInfo.doctorId"
                               @change="doctorChange"
-                              @dropdownVisibleChange="dropdownVisibleChangeFn($event,3)"
                     >
-                        <SuffixIcon :iconNum="3" slot="suffixIcon"></SuffixIcon>
+                        <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                         <a-select-option v-for="item in doctorList"
                                          :value="item.id">
                             {{item.doctorName}}
@@ -393,9 +388,8 @@
                               placeholder="请选择营养师"
                               v-model="patientBasicInfo.nutritionistId"
                               @change="nutritionistChange"
-                              @dropdownVisibleChange="dropdownVisibleChangeFn($event,4)"
                     >
-                        <SuffixIcon :iconNum="4" slot="suffixIcon"></SuffixIcon>
+                        <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                         <a-select-option v-for="item in nutritionistList"
                                          :key="item.id"
                                          :value="item.id">
@@ -409,8 +403,6 @@
 </template>
 <script>
     //  ⚠️医院下掉科室，需要调取木木掉接口
-
-    import { dropdownVisibleChangeFn, selectSuffixIconMap } from '../../../utils/select';
     import {
         requestPatientSelectICD,
         requestPatientSelectNutritionByHospital,
@@ -420,14 +412,10 @@
     import { requestDeptList } from '../../../api/department';
     import { descriptionsMethods } from '@/utils/patientInfo';
     import { requestPatientSelectDoctorByHospital } from '../../../api/userList/userList';
-    import SuffixIcon from '@/components/suffixIcon.vue';
     import { getAgeByIdCard, getSexByIdCard, isIdCard } from '../../../utils/validate';
     import { mapGetters, mapActions } from 'vuex';
     //  病人信息组件
     export default {
-        components: {
-            SuffixIcon,
-        },
         computed: {
             //  基础信息，请求来了就会出现数据
             patientBasicInfo(){
@@ -450,7 +438,6 @@
         },
         data(){
             return {
-                selectSuffixIconMap,
                 //  编辑的index
                 activeElementId: null,
                 //  全部科室列表
@@ -786,8 +773,7 @@
                     resolve();
                 });
             },
-
-            dropdownVisibleChangeFn,
+            
             //	病人信息、直接编辑用的 描述框的方法
             ...descriptionsMethods,
 

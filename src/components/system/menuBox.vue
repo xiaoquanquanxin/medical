@@ -33,6 +33,7 @@
                       class="add-form-input"
                       placeholder="请选择菜单类型"
             >
+                <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                 <a-select-option :value="0">左菜单</a-select-option>
                 <a-select-option :value="1">按钮</a-select-option>
                 <!--                <a-select-option :value="2">顶菜单</a-select-option>-->

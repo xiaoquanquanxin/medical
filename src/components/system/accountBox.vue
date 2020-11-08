@@ -9,6 +9,7 @@
             <a-select class="add-form-input"
                       v-decorator="roleDecorator"
                       placeholder="请选择角色">
+                <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                 <a-select-option :value="item.roleId"
                                  v-for="item in roleList"
                 >{{item.roleName}}

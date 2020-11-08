@@ -36,6 +36,7 @@
                           placeholder="请选择处方类型"
                           @change="changeFn"
                 >
+                    <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                     <a-select-option v-for="item in prescriptionTypeList"
                                      :value="item.id"
                     >{{item.name}}
