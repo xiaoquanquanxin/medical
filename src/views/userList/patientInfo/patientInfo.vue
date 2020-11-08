@@ -22,7 +22,7 @@
                 </a-col>
             </a-row>
         </div>
-        <div class="patient-basic-info-like">
+        <div class="patient-basic-info-like" style="height: calc(100% - 20px);">
             <PatientBasicInfo ref="refPatientBasicInfo"/>
         </div>
     </div>
