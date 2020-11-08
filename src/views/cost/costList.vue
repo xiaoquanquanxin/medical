@@ -25,14 +25,8 @@
         >
             <!--缴退状态（0,缴费，1,退款）)-->
             <div slot="isRefund" slot-scope="scope,sItem,sIndex,extra">
-                <span v-if="scope.payStatus == 0">
-                    <span v-if="scope.payStatus == 0">待缴费</span>
-                    <span v-if="scope.payStatus == 1">已缴费</span>
-                </span>
-                <span v-if="scope.payStatus == 1">
-                    <span v-if="scope.payStatus == 0">待退费</span>
-                    <span v-if="scope.payStatus == 1">已退费</span>
-                </span>
+                <span v-if="scope.isRefund == 0">已缴费</span>
+                <span v-if="scope.isRefund == 1">已退款</span>
             </div>
             <!--支付状态(0,待支付,1,已支付)-->
             <div slot="payStatus" slot-scope="scope,sItem,sIndex,extra">
@@ -221,6 +215,7 @@
                         const { data } = v;
                         data.records.forEach((item, index) => {
                             item.key = index;
+                            console.log(item.isRefund);
                         });
                         this.data = data.records;
                         console.log(JSON.parse(JSON.stringify(data.records[0])));
