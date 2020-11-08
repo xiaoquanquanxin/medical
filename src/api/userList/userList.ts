@@ -75,9 +75,6 @@ export function requestPatientSelectICD(hospitalId: number | string) {
 		url: `/api/patient/selectICD/${hospitalId}`,
 		method: 'get',
 	})
-		.then(v => {
-			return v.data;
-		})
 		.then(unifiedHandlingList);
 }
 
