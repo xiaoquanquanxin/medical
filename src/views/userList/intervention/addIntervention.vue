@@ -1,33 +1,38 @@
 <template>
-    <div class="layout-content-inner-main">
+    <div class="layout-content-inner-main patient-basic-info-like-wrap">
         <div class="a-input-group">
-            <!--返回按钮-->
-            <GoBackButton/>
+            <a-row type="flex" justify="space-between" align="middle">
+                <!--返回按钮-->
+                <GoBackButton/>
+                <a-button type="primary" @click="saveIntervention">保存</a-button>
+            </a-row>
+            <br>
         </div>
-        <!--基础数据-->
-        <BasicInfoEditTable v-if="true"/>
-        <br>
-        <!--肠内-->
-        <OralEditTable
-                :dataTitle="cnyyzcOralEditDataTitle"
-                ref="cnyyzcOralEditTableRef"
-        />
-        <br>
-        <!--口腔肠内-->
-        <OralEditTable
-                :dataTitle="kqcnOralEditDataTitle"
-                ref="kqcnOralEditTableRef"
-        />
-        <br>
-        <!--膳食营养计划-->
-        <MealEditTable
-                ref="refMealEditTable"
-        />
-        <br>
-        <!--能量表-->
-        <EnergyTable/>
-        <br>
-        <a-button type="primary" @click="saveIntervention">保存</a-button>
+        <div class="patient-basic-info-like" style="height: calc(100% - 40px);">
+            <!--基础数据-->
+            <BasicInfoEditTable v-if="true"/>
+            <br>
+            <!--肠内-->
+            <OralEditTable
+                    :dataTitle="cnyyzcOralEditDataTitle"
+                    ref="cnyyzcOralEditTableRef"
+            />
+            <br>
+            <!--口腔肠内-->
+            <OralEditTable
+                    :dataTitle="kqcnOralEditDataTitle"
+                    ref="kqcnOralEditTableRef"
+            />
+            <br>
+            <!--膳食营养计划-->
+            <MealEditTable
+                    ref="refMealEditTable"
+            />
+            <br>
+            <!--能量表-->
+            <EnergyTable/>
+            <br>
+        </div>
     </div>
 </template>
 <script>
