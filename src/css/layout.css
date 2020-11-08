@@ -127,8 +127,8 @@
 
 /*卡片标题-额外的slot*/
 .ant-card-extra {
-    padding-top: 8px;
-    padding-bottom: 8px;
+    padding-top: 4px;
+    padding-bottom: 4px;
 }
 
 /*卡片身体*/
