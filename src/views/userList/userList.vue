@@ -210,6 +210,8 @@
                     this.push({ name: 'userList' });
                     return;
                 }
+                return;
+                //  可能多余
                 //  如果不是首页，判断当前病人id在不在列表里
                 if (value.name === 'patientInfo') {
                     console.log(this.patientId);
