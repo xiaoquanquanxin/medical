@@ -78,9 +78,10 @@
                         const data = Object.assign({}, this.patientBasicInfo, { patientStatus: '1' });
                         //  console.log(this.patientBasicInfo);
                         console.log(data);
+                        console.log(this.patientId);
                         //  如果是新增
                         if (!this.patientId) {
-                            requestPatientSave(data)
+                            return requestPatientSave(data)
                                 .then(v => {
                                     console.log(v);
                                     this.$success({
@@ -95,7 +96,7 @@
                         }
                         //  如果是编辑
                         data.id = this.patientId;
-                        requestPatientUpdate(data)
+                        return requestPatientUpdate(data)
                             .then(v => {
                                 console.log(v);
                                 this.$message.success('操作成功');
