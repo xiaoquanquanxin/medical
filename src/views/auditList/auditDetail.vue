@@ -15,7 +15,7 @@
                 <a-button v-if="detailType ===2 && (auditStatus === 1)"
                           class="basic-button-width" type="primary" @click="passFn">通过
                 </a-button>
-                <a-button v-if="detailType ===2 && auditStatus === 2"
+                <a-button v-if="detailType ===2 && (auditStatus === 1 || auditStatus === 2)"
                           class="basic-button-width" type="primary" @click="rejectFn">驳回
                 </a-button>
                 <a-button v-if="detailType ===5"
