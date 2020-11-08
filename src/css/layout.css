@@ -239,8 +239,8 @@ span.ant-radio + * {
 
 /*主要填写内容部分*/
 .patient-basic-info-like {
-    /*不要写height: 100%;自己去各个页面配置*/
+    height: calc(100% - 40px);
     position: relative;
-    background-color: lightgreen;
+    /*background-color: lightgreen;*/
     overflow-y: auto;
 }
