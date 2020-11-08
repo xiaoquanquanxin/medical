@@ -34,3 +34,14 @@ hr {
     transform: scale(1.3);
     color: #b5b5b5;
 }
+
+
+/*表格*/
+.ant-table td, .ant-table th {
+    white-space: nowrap !important;
+}
+
+/*滚动*/
+.ant-table-fixed-header > .ant-table-content > .ant-table-scroll > .ant-table-body {
+    overflow: auto !important;
+}
