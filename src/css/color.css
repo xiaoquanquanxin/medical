@@ -19,6 +19,8 @@
 
     /*基础边框颜色*/
     --basic-border-color: #e8e8e8;
+    /*激活的历史记录的边框颜色*/
+    --history-border-bottom-color: #dadce8;
 
     /*基础a标签*/
     --basic-a: #576fcb;
