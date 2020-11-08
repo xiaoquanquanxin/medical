@@ -1103,53 +1103,53 @@
                 typeOneList: [],
                 typeOneListData: [
                     [
-                        { score: '0', id: 1, key: 1, label: '严重的食欲减退(0分)', },
-                        { score: '1', id: 2, key: 2, label: '中等程度食欲减退(1分)', },
-                        { score: '2', id: 3, key: 3, label: '食欲减退(2分)' },
+                        { score: '0', id: '1', key: 1, label: '严重的食欲减退(0分)', },
+                        { score: '1', id: '2', key: 2, label: '中等程度食欲减退(1分)', },
+                        { score: '2', id: '3', key: 3, label: '食欲减退(2分)' },
                     ],
                     [
-                        { score: '0', id: 1, key: 1, label: '体重减轻超过(0分)', },
-                        { score: '1', id: 2, key: 2, label: '不清楚(1分)', },
-                        { score: '2', id: 3, key: 3, label: '体重减轻1～3kg(2分)' },
-                        { score: '3', id: 4, key: 4, label: '无体重下降(3分)' },
+                        { score: '0', id: '1', key: 1, label: '体重减轻超过(0分)', },
+                        { score: '1', id: '2', key: 2, label: '不清楚(1分)', },
+                        { score: '2', id: '3', key: 3, label: '体重减轻1～3kg(2分)' },
+                        { score: '3', id: '4', key: 4, label: '无体重下降(3分)' },
                     ],
                     [
-                        { score: '0', id: 1, key: 1, label: '卧床或长期坐着(0分)', },
-                        { score: '1', id: 2, key: 2, label: '能离床或椅子，但不能外出(1分)', },
-                        { score: '2', id: 3, key: 3, label: '能独立外出(2分)' }
+                        { score: '0', id: '1', key: 1, label: '卧床或长期坐着(0分)', },
+                        { score: '1', id: '2', key: 2, label: '能离床或椅子，但不能外出(1分)', },
+                        { score: '2', id: '3', key: 3, label: '能独立外出(2分)' }
                     ],
                     [
-                        { score: '0', id: 1, key: 1, label: '是(0分)', },
-                        { score: '2', id: 2, key: 2, label: '否(2分)', },
+                        { score: '0', id: '1', key: 1, label: '是(0分)', },
+                        { score: '2', id: '2', key: 2, label: '否(2分)', },
                     ],
                     [
-                        { score: '0', id: 1, key: 1, label: '严重痴呆或抑郁(0分)', },
-                        { score: '1', id: 2, key: 2, label: '轻度痴呆(1分)', },
-                        { score: '2', id: 3, key: 3, label: '无心理问题(2分)' },
+                        { score: '0', id: '1', key: 1, label: '严重痴呆或抑郁(0分)', },
+                        { score: '1', id: '2', key: 2, label: '轻度痴呆(1分)', },
+                        { score: '2', id: '3', key: 3, label: '无心理问题(2分)' },
                     ],
 
                     [
-                        { score: '0', id: 1, key: 1, label: '小于19(0分)', },
-                        { score: '1', id: 2, key: 2, label: '19-21(1分)', },
-                        { score: '2', id: 3, key: 3, label: '21～23(2分)' },
-                        { score: '3', id: 4, key: 4, label: '大于或等于23(3分)' },
+                        { score: '0', id: '1', key: 1, label: '小于19(0分)', },
+                        { score: '1', id: '2', key: 2, label: '19-21(1分)', },
+                        { score: '2', id: '3', key: 3, label: '21～23(2分)' },
+                        { score: '3', id: '4', key: 4, label: '大于或等于23(3分)' },
                     ],
                     [
-                        { score: '0', id: 1, key: 1, label: '否(0分)', },
-                        { score: '1', id: 2, key: 2, label: '是(1分)', },
+                        { score: '0', id: '1', key: 1, label: '否(0分)', },
+                        { score: '1', id: '2', key: 2, label: '是(1分)', },
                     ],
                     [
-                        { score: '0', id: 1, key: 1, label: '是(0分)', },
-                        { score: '1', id: 2, key: 2, label: '否(1分)', },
+                        { score: '0', id: '1', key: 1, label: '是(0分)', },
+                        { score: '1', id: '2', key: 2, label: '否(1分)', },
                     ],
                     [
-                        { score: '0', id: 1, key: 1, label: '是(0分)', },
-                        { score: '1', id: 2, key: 2, label: '否(1分)', },
+                        { score: '0', id: '1', key: 1, label: '是(0分)', },
+                        { score: '1', id: '2', key: 2, label: '否(1分)', },
                     ],
                     [
-                        { score: '0', id: 1, key: 1, label: '1餐(0分)', },
-                        { score: '1', id: 2, key: 2, label: '2餐(1分)', },
-                        { score: '2', id: 3, key: 3, label: '3餐(2分)' },
+                        { score: '0', id: '1', key: 1, label: '1餐(0分)', },
+                        { score: '1', id: '2', key: 2, label: '2餐(1分)', },
+                        { score: '2', id: '3', key: 3, label: '3餐(2分)' },
                     ],
 
                     //  todo    蛋白质的摄入量是多少？
@@ -1159,51 +1159,51 @@
                     //  0.0＝0或1个“是”  0.5＝2个“是”  1.0＝3个“是”
 
                     [
-                        { score: '0', id: 1, key: 1, label: '否(0分)', },
-                        { score: '1', id: 2, key: 2, label: '是(1分)', },
+                        { score: '0', id: '1', key: 1, label: '否(0分)', },
+                        { score: '1', id: '2', key: 2, label: '是(1分)', },
                     ],
                     [
-                        { score: '0', id: 1, key: 1, label: '否(0分)', },
-                        { score: '1', id: 2, key: 2, label: '是(1分)', },
+                        { score: '0', id: '1', key: 1, label: '否(0分)', },
+                        { score: '1', id: '2', key: 2, label: '是(1分)', },
                     ],
                     [
-                        { score: '0', id: 1, key: 1, label: '否(0分)', },
-                        { score: '1', id: 2, key: 2, label: '是(1分)', },
+                        { score: '0', id: '1', key: 1, label: '否(0分)', },
+                        { score: '1', id: '2', key: 2, label: '是(1分)', },
                     ],
                     [
-                        { score: '0', id: 1, key: 1, label: '否(0分)', },
-                        { score: '1', id: 2, key: 2, label: '是(1分)', },
+                        { score: '0', id: '1', key: 1, label: '否(0分)', },
+                        { score: '1', id: '2', key: 2, label: '是(1分)', },
                     ],
                     [
-                        { score: '0', id: 1, key: 1, label: '小于3杯(0分)', },
-                        { score: '0.5', id: 2, key: 2, label: '3-5杯(0.5分)', },
-                        { score: '1', id: 3, key: 3, label: '大于5杯(1分)' },
+                        { score: '0', id: '1', key: 1, label: '小于3杯(0分)', },
+                        { score: '0.5', id: '2', key: 2, label: '3-5杯(0.5分)', },
+                        { score: '1', id: '3', key: 3, label: '大于5杯(1分)' },
                     ],
 
                     [
-                        { score: '0', id: 1, key: 1, label: '无法独立进食(0分)', },
-                        { score: '1', id: 2, key: 2, label: '独立进食稍有困难(1分)', },
-                        { score: '2', id: 3, key: 3, label: '完全独立进食(2分)' },
+                        { score: '0', id: '1', key: 1, label: '无法独立进食(0分)', },
+                        { score: '1', id: '2', key: 2, label: '独立进食稍有困难(1分)', },
+                        { score: '2', id: '3', key: 3, label: '完全独立进食(2分)' },
                     ],
                     [
-                        { score: '0', id: 1, key: 1, label: '营养不良(0分)', },
-                        { score: '1', id: 2, key: 2, label: '不能确定(1分)', },
-                        { score: '2', id: 3, key: 3, label: '营养良好(2分)' },
+                        { score: '0', id: '1', key: 1, label: '营养不良(0分)', },
+                        { score: '1', id: '2', key: 2, label: '不能确定(1分)', },
+                        { score: '2', id: '3', key: 3, label: '营养良好(2分)' },
                     ],
                     [
-                        { score: '0', id: 1, key: 1, label: '不太好(0分)', },
-                        { score: '0.5', id: 2, key: 2, label: '不知道(0.5分)', },
-                        { score: '1', id: 3, key: 3, label: '一样好(1分)' },
-                        { score: '2', id: 4, key: 4, label: '更好(2分)' },
+                        { score: '0', id: '1', key: 1, label: '不太好(0分)', },
+                        { score: '0.5', id: '2', key: 2, label: '不知道(0.5分)', },
+                        { score: '1', id: '3', key: 3, label: '一样好(1分)' },
+                        { score: '2', id: '4', key: 4, label: '更好(2分)' },
                     ],
                     [
-                        { score: '0', id: 1, key: 1, label: '小于21(0分)', },
-                        { score: '1', id: 2, key: 2, label: '21-22(1分)', },
-                        { score: '2', id: 3, key: 3, label: '大于等于22(2分)' },
+                        { score: '0', id: '1', key: 1, label: '小于21(0分)', },
+                        { score: '1', id: '2', key: 2, label: '21-22(1分)', },
+                        { score: '2', id: '3', key: 3, label: '大于等于22(2分)' },
                     ],
                     [
-                        { score: '0', id: 1, key: 1, label: '小于31(0分)', },
-                        { score: '1', id: 2, key: 2, label: '大于等于31(1分)', },
+                        { score: '0', id: '1', key: 1, label: '小于31(0分)', },
+                        { score: '1', id: '2', key: 2, label: '大于等于31(1分)', },
                     ]
                 ],
                 //  类型2
@@ -1531,12 +1531,14 @@
                             if (v20 !== undefined) {
                                 this.tableTypeSelect = 1;
                                 this.setOneData(data);
+                                this.$forceUpdate();
                                 return;
                             }
                             //  PG - SGA主观营养状况评估
                             if (weightCondition !== undefined) {
                                 this.setThreeData(data);
                                 this.tableTypeSelect = 3;
+                                this.$forceUpdate();
                                 return;
                             }
                             //  一般评估表
@@ -1681,9 +1683,29 @@
             },
             //  赋值，微型营养评价表
             setOneData(data){
+                console.log(data);
                 const { v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20 } = data;
-                const typeOneList = [v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20];
-                this.typeOneList = typeOneList;
+                this.typeOneList[0] = this.typeOneListData[0].filter(item => item.id === v1)[0];
+                this.typeOneList[1] = this.typeOneListData[1].filter(item => item.id === v2)[0];
+                this.typeOneList[2] = this.typeOneListData[2].filter(item => item.id === v3)[0];
+                this.typeOneList[3] = this.typeOneListData[3].filter(item => item.id === v4)[0];
+                this.typeOneList[4] = this.typeOneListData[4].filter(item => item.id === v5)[0];
+                this.typeOneList[5] = this.typeOneListData[5].filter(item => item.id === v6)[0];
+                this.typeOneList[6] = this.typeOneListData[6].filter(item => item.id === v7)[0];
+                this.typeOneList[7] = this.typeOneListData[7].filter(item => item.id === v8)[0];
+                this.typeOneList[8] = this.typeOneListData[8].filter(item => item.id === v9)[0];
+                this.typeOneList[9] = this.typeOneListData[9].filter(item => item.id === v10)[0];
+                this.typeOneList[10] = this.typeOneListData[10].filter(item => item.id === v11)[0];
+                this.typeOneList[11] = this.typeOneListData[11].filter(item => item.id === v12)[0];
+                this.typeOneList[12] = this.typeOneListData[12].filter(item => item.id === v13)[0];
+                this.typeOneList[13] = this.typeOneListData[13].filter(item => item.id === v14)[0];
+                this.typeOneList[14] = this.typeOneListData[14].filter(item => item.id === v15)[0];
+                this.typeOneList[15] = this.typeOneListData[15].filter(item => item.id === v16)[0];
+                this.typeOneList[16] = this.typeOneListData[16].filter(item => item.id === v17)[0];
+                this.typeOneList[17] = this.typeOneListData[17].filter(item => item.id === v18)[0];
+                this.typeOneList[18] = this.typeOneListData[18].filter(item => item.id === v19)[0];
+                this.typeOneList[19] = this.typeOneListData[19].filter(item => item.id === v20)[0];
+                console.log(JSON.parse(JSON.stringify(this.typeOneList)));
             },
             //  保存，类型2转换 一般评估表
             twoDataTransform(){
@@ -1722,12 +1744,13 @@
                 this.typeTwoList[2] = this.typeTwoListData[2].filter(item => item.id === v3)[0];
                 this.typeTwoList[3] = this.typeTwoListData[3].filter(item => item.id === v4)[0];
                 this.typeTwoList[5] = this.typeTwoListData[5].filter(item => item.id === v6)[0];
-                console.log(this.typeTwoList);
-                console.log(v5);
+                //  console.log(this.typeTwoList);
+                //  console.log(v5);
                 //  多选那个地方
                 const v5Set = new Set(v5.split(','));
                 this.typeTwoList[4] = this.typeTwoListData[4].filter(item => v5Set.has(item.id));
-                console.log(this.typeTwoList[4]);
+                //  console.log(this.typeTwoList[4]);
+                console.log(JSON.parse(JSON.stringify(this.typeTwoList)));
             },
 
             //  保存，类型3转换 PG - SGA主观营养状况评估
