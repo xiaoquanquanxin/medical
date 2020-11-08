@@ -17,7 +17,7 @@
                 <a-select-option :value="3">PG - SGA主观营养状况评估</a-select-option>
             </a-select>
         </div>
-        <div class="patient-basic-info-like" style="height: calc(100% - 40px);">
+        <div class="patient-basic-info-like">
             <div id="printContent">
                 <ScreeningBasicInfo v-if="true"/>
                 <br>
