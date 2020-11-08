@@ -375,8 +375,8 @@
     
     /*视口*/
     .router-view {
-        height: calc(100vh - 180px);
-        overflow: auto;
+        height: calc(100vh - 160px);
+        overflow: hidden;
     }
     
     
