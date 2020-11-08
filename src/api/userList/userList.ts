@@ -1,4 +1,5 @@
 import request, {unifiedHandlingList} from '@/utils/request';
+import hospital from "@/store/modules/hospital"
 
 //	病人列表分页		✅
 export function requestPatientPage(data: any) {
@@ -69,11 +70,14 @@ export function requestPatientSelectNutritionByHospital(hospitalId: string | num
 
 
 //	ICD诊断配置
-export function requestPatientSelectICD() {
+export function requestPatientSelectICD(hospitalId: number | string) {
 	return request({
-		url: `/api/patient/selectICD`,
+		url: `/api/patient/selectICD/${hospitalId}`,
 		method: 'get',
 	})
+		.then(v => {
+			return v.data;
+		})
 		.then(unifiedHandlingList);
 }
 
