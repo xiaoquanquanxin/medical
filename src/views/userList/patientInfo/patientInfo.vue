@@ -104,11 +104,13 @@
                                         const { doctorId } = this.patientBasicInfo;
                                         const loginInfo = getLoginInfo();
                                         const p = this.userList_searchFn();
+                                        debugger
                                         //  如果没有更新病人的医生，那么保持在这个页面，左侧的列表刷新完了就行了
                                         if (loginInfo.doctorId === doctorId) {
                                             return;
                                         }
                                         p.then(v => {
+                                            debugger
                                             //  这是换了医生了，所以要刷新路由
                                             console.log(loginInfo.doctorId);
                                             this.$router.push({ name: 'userList', params: {} });
@@ -117,6 +119,7 @@
                                 });
                             })
                             .catch(err => {
+                                debugger
                                 console.log(err);
                                 this.$message.error('操作失败');
                             });
