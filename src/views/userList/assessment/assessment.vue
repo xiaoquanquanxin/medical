@@ -49,7 +49,7 @@
         },
         {
             title: '得分',
-            dataIndex: '得分',
+            dataIndex: 'totalScore',
             width: 100,
         },
         {
