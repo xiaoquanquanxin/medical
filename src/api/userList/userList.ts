@@ -1,4 +1,4 @@
-import request, {unifiedHandlingList} from '@/utils/request';
+import request, {standardListById, unifiedHandlingList} from '@/utils/request';
 import hospital from "@/store/modules/hospital"
 
 //	病人列表分页		✅
@@ -56,7 +56,8 @@ export function requestPatientSelectDoctorByHospital(data: {
 		method: 'post',
 		data,
 	})
-		.then(unifiedHandlingList);
+		.then(unifiedHandlingList)
+		.then(standardListById)
 }
 
 //	根据医院查询营养师列表
