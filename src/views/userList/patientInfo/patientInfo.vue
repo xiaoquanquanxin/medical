@@ -27,7 +27,6 @@
 </template>
 <script>
     import PatientBasicInfo from '@/components/userList/patientInfo/patientBasicInfo.vue';
-    import { mapGetters, mapActions } from 'vuex';
     import { requestPatientUpdate } from '../../../api/userList/userList';
     import { getLoginInfo } from '../../../utils/auth';
 
@@ -51,16 +50,14 @@
         },
         inject: ['userList_searchFn'],
         data(){
-            return {
-                //  病人信息
-                patientInfo: null,
-            };
+            return {};
         },
         methods: {
             //  确认出院
             confirmOutHospital(){
+                debugger;
                 this.$confirm({
-                    title: `确定${this.patientInfo.name}出院`,
+                    title: `确定${this.patientBasicInfo.name}出院`,
                     okText: '确认',
                     cancelText: '取消',
                     class: 'out-of-hospital-info',
