@@ -10,13 +10,13 @@
                         autocomplete="off"
                 >
                     <a-form-item label="姓名">
-                        <a-input-search size="" placeholder="请输入姓名"
+                        <a-input-search placeholder="请输入姓名"
                                         v-model="searchData.name"
                                         enter-button="搜索"
                                         @search="searchFn"/>
                     </a-form-item>
                     <a-form-item label="身份证号">
-                        <a-input-search size="" placeholder="请输入身份证号"
+                        <a-input-search placeholder="请输入身份证号"
                                         v-model="searchData.idCard"
                                         enter-button="搜索"
                                         @search="searchFn"/>
@@ -387,6 +387,7 @@
     
     /*就诊信息的小内容间距*/
     .medical-information-list {
-        line-height: 38px;
+        line-height: 34px;
+        padding-top: 10px;
     }
 </style>
