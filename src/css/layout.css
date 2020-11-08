@@ -213,8 +213,8 @@ span.ant-radio + * {
 .ant-menu-vertical .ant-menu-item:not(:last-child), .ant-menu-vertical-left .ant-menu-item:not(:last-child), .ant-menu-vertical-right .ant-menu-item:not(:last-child), .ant-menu-inline .ant-menu-item:not(:last-child) {
     margin-top: 0;
     margin-bottom: 0;
-    padding-top: 4px;
-    padding-bottom: 4px;
+    padding-top: 0;
+    padding-bottom: 8px;
 }
 
 /*父级菜单展开后的阴影*/
