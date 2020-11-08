@@ -105,22 +105,22 @@
         },
         {
             title: '医院',
-            dataIndex: 'hospitalId',
+            dataIndex: 'hospitalName',
             width: 100,
         },
         {
             title: '科室',
-            dataIndex: 'deptId',
+            dataIndex: 'deptName',
             width: 100,
         },
         {
             title: '医生类型',
-            dataIndex: 'doctorType',
+            dataIndex: 'doctorTypeName',
             width: 100,
         },
         {
             title: '医生职称',
-            dataIndex: 'doctorTitle',
+            dataIndex: 'doctorTitleName',
             width: 100,
         },
         {
