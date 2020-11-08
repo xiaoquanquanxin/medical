@@ -41,6 +41,7 @@
                               placeholder="请选择商品分类"
                               v-decorator="goodsCategoryIdDecorator"
                     >
+                        <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                         <a-select-option :value="item.id"
                                          :key="item.id"
                                          v-for="item in goodsCategoryList"
@@ -53,6 +54,7 @@
                               placeholder="请选择商品品牌"
                               v-decorator="goodsBrandIdDecorator"
                     >
+                        <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                         <a-select-option :value="item.id"
                                          :key="item.id"
                                          v-for="item in goodsBrandList"
@@ -65,6 +67,7 @@
                               placeholder="请选择供应商"
                               v-decorator="supplierIdDecorator"
                     >
+                        <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                         <a-select-option :value="item.id"
                                          :key="item.id"
                                          v-for="item in supplierList"
@@ -77,6 +80,7 @@
                               placeholder="请选择厂家"
                               v-decorator="manufactorIdDecorator"
                     >
+                        <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                         <a-select-option :value="item.id.toString()"
                                          v-for="item in manufactorList"
                         >{{item.manufactorName}}
@@ -93,6 +97,7 @@
                               placeholder="请选择保存方式"
                               v-decorator="preservationMethodDecorator"
                     >
+                        <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                         <a-select-option :value="1">冷藏</a-select-option>
                         <a-select-option :value="2">常温</a-select-option>
                         <a-select-option :value="3">冷冻</a-select-option>
@@ -103,6 +108,7 @@
                               placeholder="请选择状态"
                               v-decorator="statusDecorator"
                     >
+                        <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                         <a-select-option :value="0">启用</a-select-option>
                         <a-select-option :value="1">停用</a-select-option>
                     </a-select>
@@ -128,6 +134,7 @@
                             <a-select v-model="sItem.uname"
                                       placeholder="请选择单位"
                             >
+                                <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                                 <a-select-option v-for="item in unitTypeList"
                                                  :value="item.value"
                                 >
@@ -223,6 +230,7 @@
                             <a-select v-model="sItem.uname"
                                       placeholder="请选择单位"
                             >
+                                <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                                 <a-select-option v-for="item in unitTypeList"
                                                  :value="item.value"
                                 >
@@ -285,6 +293,7 @@
                             <a-select v-model="sItem.unitUse"
                                       placeholder="请选择使用单位"
                             >
+                                <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                                 <a-select-option v-for="item in unitTypeList"
                                                  :value="item.value"
                                 >

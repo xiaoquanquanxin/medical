@@ -4,6 +4,7 @@
         <div class="a-input-group">
             <a-input class="lengthen-input-width" v-model="searchData.goodsName" placeholder="请输入商品名称"/>
             <a-select class="lengthen-select-width" v-model="searchData.status" placeholder="请选择商品状态">
+                <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                 <a-select-option :value="0">启用</a-select-option>
                 <a-select-option :value="1">停用</a-select-option>
             </a-select>

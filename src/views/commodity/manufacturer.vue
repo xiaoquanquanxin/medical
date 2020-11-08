@@ -7,15 +7,9 @@
                       v-model="searchData.status"
                       placeholder="请选择商品状态"
             >
-                <a-select-option value="">
-                    商品状态
-                </a-select-option>
-                <a-select-option value="1">
-                    山西
-                </a-select-option>
-                <a-select-option value="2">
-                    陕西
-                </a-select-option>
+                <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
+                <a-select-option :value="0">启用</a-select-option>
+                <a-select-option :value="1">停用</a-select-option>
             </a-select>
             <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
         </div>
@@ -93,7 +87,7 @@
         {
             title: '生产厂家编码',
             dataIndex: 'manufactorCode',
-            width: 150,
+            width: 200,
         },
         {
             title: '地址',
@@ -158,7 +152,7 @@
                 //  设置被选中的商品列表
                 'setManufacturerId',
             ]),
-               onShowSizeChange,
+            onShowSizeChange,
             pageChange,
 
             //  新增生产厂家

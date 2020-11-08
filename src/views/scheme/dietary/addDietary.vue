@@ -15,6 +15,7 @@
                           placeholder="请选择医院"
                           @change="selectHospitalChange"
                 >
+                    <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                     <a-select-option v-for="item in hospitalList"
                                      :value="item.id"
                     >{{item.hospitalName}}

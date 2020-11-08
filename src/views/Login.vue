@@ -16,6 +16,7 @@
                         <a-select default-value="1"
                                   @change="selectChange"
                         >
+                            <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                             <a-select-option value="1">医生登录</a-select-option>
                             <a-select-option value="2">平台登录</a-select-option>
                             <a-select-option value="3">渠道商登录</a-select-option>

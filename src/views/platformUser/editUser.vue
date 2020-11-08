@@ -14,6 +14,7 @@
             </a-form-item>
             <a-form-item label="性别">
                 <a-select placeholder="请选择地址" default-value="1">
+                    <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                     <a-select-option value="1">男</a-select-option>
                     <a-select-option value="2">女</a-select-option>
                 </a-select>
@@ -35,24 +36,28 @@
             </a-form-item>
             <a-form-item label="医院">
                 <a-select placeholder="请选择医院">
+                    <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                     <a-select-option value="1">男</a-select-option>
                     <a-select-option value="2">女</a-select-option>
                 </a-select>
             </a-form-item>
             <a-form-item label="科室">
                 <a-select placeholder="请选择科室">
+                    <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                     <a-select-option value="1">男</a-select-option>
                     <a-select-option value="2">女</a-select-option>
                 </a-select>
             </a-form-item>
             <a-form-item label="主治医生">
                 <a-select placeholder="请选择主治医生">
+                    <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                     <a-select-option value="1">男</a-select-option>
                     <a-select-option value="2">女</a-select-option>
                 </a-select>
             </a-form-item>
             <a-form-item label="营养师">
                 <a-select placeholder="请选择营养师">
+                    <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                     <a-select-option value="1">男</a-select-option>
                     <a-select-option value="2">女</a-select-option>
                 </a-select>

@@ -10,6 +10,7 @@
             />
             <!--审核状态(1.待审核，2，已审核，3，已驳回)-->
             <a-select v-model="searchData.auditStatus" class="basic-select-width" placeholder="请选择状态">
+                <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                 <a-select-option value="1">待审核</a-select-option>
                 <a-select-option value="2">已审核</a-select-option>
                 <a-select-option value="3">已驳回</a-select-option>

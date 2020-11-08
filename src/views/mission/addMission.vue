@@ -15,6 +15,7 @@
                 <a-select placeholder="请选择文章类型"
                           v-decorator="articleTypeDecorator"
                 >
+                    <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                     <a-select-option v-for="(item,index) in articleTypeList"
                                      :value="index"
                                      :key="index"

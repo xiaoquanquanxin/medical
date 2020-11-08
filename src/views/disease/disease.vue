@@ -4,6 +4,7 @@
         <div class="a-input-group">
             <a-input class="lengthen-input-width" v-model="searchData.diseaseName" placeholder="请输入疾病名称"/>
             <a-select class="basic-select-width" v-model="searchData.status" placeholder="请选择状态">
+                <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                 <a-select-option :value="0">正常</a-select-option>
                 <a-select-option :value="1">关闭</a-select-option>
             </a-select>

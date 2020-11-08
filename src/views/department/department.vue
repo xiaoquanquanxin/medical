@@ -6,6 +6,7 @@
             <a-select class="basic-select-width" v-model="searchData.status"
                       placeholder="请选择状态"
             >
+                <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                 <a-select-option value="1">正常</a-select-option>
                 <a-select-option value="0">关闭</a-select-option>
             </a-select>
@@ -193,7 +194,7 @@
                 //  设置被选中的数据
                 'setSelectList',
             ]),
-               onShowSizeChange,
+            onShowSizeChange,
             pageChange,
             //  切换状态
             aSwitchChange(sItem, checked){

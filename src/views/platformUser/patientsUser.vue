@@ -4,6 +4,7 @@
         <div class="a-input-group">
             <a-input class="basic-input-width" v-model="searchData.name" placeholder="请输入姓名"/>
             <a-select class="basic-select-width" v-model="searchData.hospital" placeholder="请选择医院">
+                <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                 <a-select-option value="Option2">
                     Option2
                 </a-select-option>
@@ -12,6 +13,7 @@
                 </a-select-option>
             </a-select>
             <a-select class="basic-select-width" v-model="searchData.department" placeholder="请选择科室">
+                <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                 <a-select-option value="Option2">
                     Option2
                 </a-select-option>
@@ -20,6 +22,7 @@
                 </a-select-option>
             </a-select>
             <a-select class="basic-select-width" v-model="searchData.doctor" placeholder="请选择医生">
+                <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                 <a-select-option value="Option2">
                     Option2
                 </a-select-option>
@@ -28,6 +31,7 @@
                 </a-select-option>
             </a-select>
             <a-select class="longer-select-width" v-model="searchData.isPatient" placeholder="请选择是否为病患">
+                <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                 <a-select-option value="3223">
                     是
                 </a-select-option>

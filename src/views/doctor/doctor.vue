@@ -7,6 +7,7 @@
             <a-select class="basic-select-width" placeholder="请选择医院" v-model="searchData.hospitalId"
                       @change="selectHospitalChange"
             >
+                <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                 <a-select-option v-for="item in hospitalList"
                                  :value="item.id"
                 >
@@ -14,6 +15,7 @@
                 </a-select-option>
             </a-select>
             <a-select class="basic-select-width" placeholder="请选择科室" v-model="searchData.department">
+                <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                 <a-select-option v-for="item in deptInHospitalList"
                                  :value="item.id">
                     {{item.deptName}}

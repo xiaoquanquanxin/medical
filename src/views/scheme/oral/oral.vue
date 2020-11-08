@@ -4,12 +4,14 @@
         <div class="a-input-group">
             <a-input class="lengthen-input-width" v-model="searchData.templateName" placeholder="请输入方案名称"/>
             <a-select class="basic-select-width" v-model="searchData.energy" placeholder="请选择能量">
+                <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                 <a-select-option :value="item.id"
                                  v-for="item in energyList"
                 >{{item.name}}
                 </a-select-option>
             </a-select>
             <a-select class="lengthen-select-width" v-model="searchData.usageMethod" placeholder="请选择食用方法">
+                <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                 <a-select-option :value="item.id"
                                  v-for="item in usageMethodList"
                 >{{item.name}}
@@ -17,6 +19,7 @@
             </a-select>
             <a-select class="basic-select-width" placeholder="请选择医院" v-model="searchData.hospitalId"
             >
+                <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                 <a-select-option v-for="(item,index) in hospitalList"
                                  :value="item.id"
                 >{{item.hospitalName}}

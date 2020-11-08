@@ -5,18 +5,21 @@
             <a-input class="basic-input-width" v-model="searchData.goodsName" placeholder="请输入商品名称"/>
             <a-input class="basic-input-width" v-model="searchData.goodsProductCode" placeholder="请输入商品货号"/>
             <a-select class="basic-select-width" v-model="searchData.brandId" placeholder="请选择品牌">
+                <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                 <a-select-option :value="item.id"
                                  v-for="item in goodsBrandList"
                 >{{item.brandName}}
                 </a-select-option>
             </a-select>
             <a-select class="basic-select-width" v-model="searchData.categoryId" placeholder="请选择分类">
+                <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                 <a-select-option :value="item.id"
                                  v-for="item in goodsCategoryList"
                 >{{item.categoryName}}
                 </a-select-option>
             </a-select>
             <a-select class="basic-select-width" v-model="searchData.status" placeholder="请选择状态" v-if="false">
+                <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                 <a-select-option value="1">上架</a-select-option>
                 <a-select-option value="2">下架</a-select-option>
             </a-select>

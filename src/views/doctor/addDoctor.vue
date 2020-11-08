@@ -20,6 +20,7 @@
                           placeholder="请选择性别"
                           v-decorator="sexDecorator"
                 >
+                    <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                     <a-select-option :value="1">男</a-select-option>
                     <a-select-option :value="2">女</a-select-option>
                 </a-select>
@@ -29,6 +30,7 @@
                           placeholder="请选择医院"
                           v-decorator="hospitalDecorator"
                 >
+                    <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                     <a-select-option v-for="item in hospitalList"
                                      :value="item.id"
                     >
@@ -41,6 +43,7 @@
                           placeholder="请选择科室"
                           v-decorator="deptIdDecorator"
                 >
+                    <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                     <a-select-option v-for="item in deptList"
                                      :value="item.id">
                         {{item.deptName}}
@@ -52,6 +55,7 @@
                           placeholder="请选择医生类型"
                           v-decorator="doctorTypeDecorator"
                 >
+                    <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                     <a-select-option v-for="item in doctorTypeList"
                                      :value="item.value"
                     >{{item.label}}
@@ -63,6 +67,7 @@
                           placeholder="请选择医生职称"
                           v-decorator="doctorTitleDecorator"
                 >
+                    <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                     <a-select-option :value="item.value"
                                      v-for="item in doctorTitleList"
                     >{{item.label}}
@@ -74,6 +79,7 @@
                           placeholder="请选择医生状态"
                           v-decorator="doctorStatusDecorator"
                 >
+                    <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                     <a-select-option value="1">可用</a-select-option>
                     <a-select-option value="0">不可用</a-select-option>
                 </a-select>
@@ -89,6 +95,7 @@
                           placeholder="医生角色"
                           v-decorator="roleIdDecorator"
                 >
+                    <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                     <a-select-option :value="item.roleId"
                                      v-for="item in roleList"
                     >{{item.roleName}}

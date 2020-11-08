@@ -12,6 +12,7 @@
                         @change="onDateChange"
                 />
                 <a-select class="basic-select-width" placeholder="请选择科室" v-model="searchData.deptId">
+                    <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                     <a-select-option v-for="item in deptList"
                                      :value="item.id">
                         {{item.deptName}}
@@ -19,6 +20,7 @@
                 </a-select>
                 <!--(1.待签收，2，待配置，3.已配置，4，待领取，5，已领取)-->
                 <a-select v-model="searchData.orderStatus" class="basic-select-width" placeholder="请选择状态">
+                    <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                     <a-select-option value="1">待签收</a-select-option>
                     <a-select-option value="2">待配置</a-select-option>
                     <a-select-option value="3">已配置</a-select-option>

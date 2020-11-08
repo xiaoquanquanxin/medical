@@ -5,10 +5,12 @@
             <a-input class="basic-input-width" v-model="searchData.prescriptionCode" placeholder="请输入处方号"/>
             <a-input class="basic-input-width" v-model="searchData.name" placeholder="请输入患者姓名"/>
             <a-select class="lengthen-select-width" v-model="searchData.payStatus" placeholder="请选择支付状态">
+                <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                 <a-select-option value="0">待支付</a-select-option>
                 <a-select-option value="1">已支付</a-select-option>
             </a-select>
             <a-select class="lengthen-select-width" v-model="searchData.isRefund" placeholder="请选择缴退状态">
+                <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                 <a-select-option value="0">已缴费</a-select-option>
                 <a-select-option value="1">已退费</a-select-option>
             </a-select>

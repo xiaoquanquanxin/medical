@@ -3,6 +3,7 @@
         <!--搜索相关-->
         <div class="a-input-group">
             <a-select v-model="searchData.prescriptionType" class="lengthen-select-width" placeholder="请选择方案类型">
+                <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                 <a-select-option value="1">待签收</a-select-option>
                 <a-select-option value="2">待配置</a-select-option>
                 <a-select-option value="3">已配置</a-select-option>
@@ -10,11 +11,13 @@
                 <a-select-option value="5">已领取</a-select-option>
             </a-select>
             <a-select v-model="searchData.auditStatus" class="lengthen-select-width" placeholder="请选择审核状态">
+                <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                 <a-select-option value="1">待审核</a-select-option>
                 <a-select-option value="2">已审核</a-select-option>
                 <a-select-option value="3">已驳回</a-select-option>
             </a-select>
             <a-select v-model="searchData.payStatus" class="lengthen-select-width" placeholder="请选择付款状态">
+                <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                 <a-select-option value="0">待支付</a-select-option>
                 <a-select-option value="1">已支付</a-select-option>
             </a-select>

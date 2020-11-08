@@ -4,6 +4,7 @@
         <div class="a-input-group">
             <a-input class="lengthen-input-width" v-model="searchData.purchaseOrderCode" placeholder="请输入采购单号"/>
             <a-select class="basic-select-width" v-model="searchData.status" placeholder="请选择状态">
+                <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                 <a-select-option value="全部">全部</a-select-option>
                 <a-select-option value="待发货">待发货</a-select-option>
                 <a-select-option value="待签收">待签收</a-select-option>

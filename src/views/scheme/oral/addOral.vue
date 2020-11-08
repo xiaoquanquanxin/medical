@@ -12,6 +12,7 @@
                               placeholder="请选择医院"
                               @change="selectHospitalChange"
                     >
+                        <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                         <a-select-option v-for="item in hospitalList"
                                          :value="item.id">
                             {{item.hospitalName}}
@@ -22,6 +23,7 @@
                               placeholder="请选择处方类型"
                               @change="selectPrescriptionChange"
                     >
+                        <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                         <a-select-option v-for="item in prescriptionTypeList"
                                          :value="item.id"
                         >{{item.name}}
@@ -90,6 +92,7 @@
                                       v-model="sItem.checked_uname"
                                       @change="unameChangeFn(sItem,$event)"
                             >
+                                <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                                 <a-select-option v-for="item in sItem.uintListVos"
                                                  :value="item.uname"
                                                  :key="item.uname"

@@ -20,6 +20,7 @@
                 <a-select v-decorator="statusDecorator"
                           class="add-form-input"
                           placeholder="请选择状态">
+                    <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                     <a-select-option :value="0">启用</a-select-option>
                     <a-select-option :value="1">停用</a-select-option>
                 </a-select>
