@@ -55,7 +55,6 @@
         methods: {
             //  确认出院
             confirmOutHospital(){
-                debugger;
                 this.$confirm({
                     title: `确定${this.patientBasicInfo.name}出院`,
                     okText: '确认',
