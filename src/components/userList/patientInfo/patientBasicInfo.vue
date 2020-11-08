@@ -580,10 +580,14 @@
                 console.log('切换科室需要，根据当前科室查询所有医生');
                 requestPatientSelectDoctorByHospital(data)
                     .then(doctorList => {
-                        doctorList.forEach(item => {
-                            item.id = Number(item.id);
-                        });
                         this.doctorList = doctorList;
+                        console.log(JSON.parse(JSON.stringify(doctorList)));
+                        for (let i = 0; i < doctorList.length; i++) {
+                            if (doctorList[i].id === this.patientBasicInfo.doctorId) {
+                                return;
+                            }
+                        }
+                        this.patientBasicInfo.doctorId = undefined;
                     });
                 //  强制更新
                 this.$forceUpdate();
