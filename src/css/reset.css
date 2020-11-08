@@ -36,9 +36,14 @@ hr {
 }
 
 
-/*表格*/
-.ant-table td, .ant-table th {
+/*表头*/
+.ant-table th {
     white-space: nowrap !important;
+}
+
+/*表格*/
+.ant-table td {
+    /*white-space: nowrap !important;*/
 }
 
 /*滚动*/
