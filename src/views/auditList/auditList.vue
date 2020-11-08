@@ -6,6 +6,7 @@
             <a-date-picker
                     class="lengthen-select-width"
                     placeholder="请选择开具日期"
+                    :default-value="moment(new Date())"
                     @change="onDatePickerChangeFn"
             />
             <!--审核状态(1.待审核，2，已审核，3，已驳回)-->
@@ -62,6 +63,7 @@
     </div>
 </template>
 <script>
+    import moment from 'moment';
     import {
         paginationInit,
         paginationDecode,
@@ -168,6 +170,7 @@
             },
             onShowSizeChange,
             pageChange,
+            moment,
         }
     };
 </script>
