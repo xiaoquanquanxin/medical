@@ -38,14 +38,10 @@
                                            :disabled="!!assessmentDetailId"
                             >
                                 <ul class="radio-group-list">
-                                    <li class="radio-group-item">
-                                        <a-radio value="1">严重的食欲减退</a-radio>
-                                    </li>
-                                    <li class="radio-group-item">
-                                        <a-radio value="2">中等程度食欲减退</a-radio>
-                                    </li>
-                                    <li class="radio-group-item">
-                                        <a-radio value="3">食欲减退</a-radio>
+                                    <li class="radio-group-item"
+                                        v-for="item in typeOneListData[0]"
+                                    >
+                                        <a-radio :value="item">{{item.label}}</a-radio>
                                     </li>
                                 </ul>
                             </a-radio-group>
@@ -62,17 +58,10 @@
                                            :disabled="!!assessmentDetailId"
                             >
                                 <ul class="radio-group-list">
-                                    <li class="radio-group-item">
-                                        <a-radio value="1">体重减轻超过3千克</a-radio>
-                                    </li>
-                                    <li class="radio-group-item">
-                                        <a-radio value="2">不清楚</a-radio>
-                                    </li>
-                                    <li class="radio-group-item">
-                                        <a-radio value="3">体重减轻1 ~ 3kg</a-radio>
-                                    </li>
-                                    <li class="radio-group-item">
-                                        <a-radio value="4">无体重下降</a-radio>
+                                    <li class="radio-group-item"
+                                        v-for="item in typeOneListData[1]"
+                                    >
+                                        <a-radio :value="item">{{item.label}}</a-radio>
                                     </li>
                                 </ul>
                             </a-radio-group>
@@ -89,14 +78,10 @@
                                            :disabled="!!assessmentDetailId"
                             >
                                 <ul class="radio-group-list">
-                                    <li class="radio-group-item">
-                                        <a-radio value="1">卧床或长期坐着</a-radio>
-                                    </li>
-                                    <li class="radio-group-item">
-                                        <a-radio value="2">能离床或椅子，但不能外出</a-radio>
-                                    </li>
-                                    <li class="radio-group-item">
-                                        <a-radio value="3">能独立外出</a-radio>
+                                    <li class="radio-group-item"
+                                        v-for="item in typeOneListData[2]"
+                                    >
+                                        <a-radio :value="item">{{item.label}}</a-radio>
                                     </li>
                                 </ul>
                             </a-radio-group>
@@ -113,11 +98,10 @@
                                            :disabled="!!assessmentDetailId"
                             >
                                 <ul class="radio-group-list">
-                                    <li class="radio-group-item">
-                                        <a-radio value="1">是</a-radio>
-                                    </li>
-                                    <li class="radio-group-item">
-                                        <a-radio value="2">否</a-radio>
+                                    <li class="radio-group-item"
+                                        v-for="item in typeOneListData[3]"
+                                    >
+                                        <a-radio :value="item">{{item.label}}</a-radio>
                                     </li>
                                 </ul>
                             </a-radio-group>
@@ -134,14 +118,10 @@
                                            :disabled="!!assessmentDetailId"
                             >
                                 <ul class="radio-group-list">
-                                    <li class="radio-group-item">
-                                        <a-radio value="1">严重痴呆或抑郁</a-radio>
-                                    </li>
-                                    <li class="radio-group-item">
-                                        <a-radio value="2">轻度痴呆</a-radio>
-                                    </li>
-                                    <li class="radio-group-item">
-                                        <a-radio value="3">无心里问题</a-radio>
+                                    <li class="radio-group-item"
+                                        v-for="item in typeOneListData[4]"
+                                    >
+                                        <a-radio :value="item">{{item.label}}</a-radio>
                                     </li>
                                 </ul>
                             </a-radio-group>
@@ -158,17 +138,10 @@
                                            :disabled="!!assessmentDetailId"
                             >
                                 <ul class="radio-group-list">
-                                    <li class="radio-group-item">
-                                        <a-radio value="1">小于19</a-radio>
-                                    </li>
-                                    <li class="radio-group-item">
-                                        <a-radio value="2">19 - 21</a-radio>
-                                    </li>
-                                    <li class="radio-group-item">
-                                        <a-radio value="3">21 - 23</a-radio>
-                                    </li>
-                                    <li class="radio-group-item">
-                                        <a-radio value="3">大于或等于23</a-radio>
+                                    <li class="radio-group-item"
+                                        v-for="item in typeOneListData[5]"
+                                    >
+                                        <a-radio :value="item">{{item.label}}</a-radio>
                                     </li>
                                 </ul>
                             </a-radio-group>
@@ -185,11 +158,10 @@
                                            :disabled="!!assessmentDetailId"
                             >
                                 <ul class="radio-group-list">
-                                    <li class="radio-group-item">
-                                        <a-radio value="1">是</a-radio>
-                                    </li>
-                                    <li class="radio-group-item">
-                                        <a-radio value="2">否</a-radio>
+                                    <li class="radio-group-item"
+                                        v-for="item in typeOneListData[6]"
+                                    >
+                                        <a-radio :value="item">{{item.label}}</a-radio>
                                     </li>
                                 </ul>
                             </a-radio-group>
@@ -206,11 +178,10 @@
                                            :disabled="!!assessmentDetailId"
                             >
                                 <ul class="radio-group-list">
-                                    <li class="radio-group-item">
-                                        <a-radio value="1">是</a-radio>
-                                    </li>
-                                    <li class="radio-group-item">
-                                        <a-radio value="2">否</a-radio>
+                                    <li class="radio-group-item"
+                                        v-for="item in typeOneListData[7]"
+                                    >
+                                        <a-radio :value="item">{{item.label}}</a-radio>
                                     </li>
                                 </ul>
                             </a-radio-group>
@@ -227,11 +198,10 @@
                                            :disabled="!!assessmentDetailId"
                             >
                                 <ul class="radio-group-list">
-                                    <li class="radio-group-item">
-                                        <a-radio value="1">是</a-radio>
-                                    </li>
-                                    <li class="radio-group-item">
-                                        <a-radio value="2">否</a-radio>
+                                    <li class="radio-group-item"
+                                        v-for="item in typeOneListData[8]"
+                                    >
+                                        <a-radio :value="item">{{item.label}}</a-radio>
                                     </li>
                                 </ul>
                             </a-radio-group>
@@ -248,14 +218,10 @@
                                            :disabled="!!assessmentDetailId"
                             >
                                 <ul class="radio-group-list">
-                                    <li class="radio-group-item">
-                                        <a-radio value="1">1餐</a-radio>
-                                    </li>
-                                    <li class="radio-group-item">
-                                        <a-radio value="2">2餐</a-radio>
-                                    </li>
-                                    <li class="radio-group-item">
-                                        <a-radio value="3">3餐</a-radio>
+                                    <li class="radio-group-item"
+                                        v-for="item in typeOneListData[9]"
+                                    >
+                                        <a-radio :value="item">{{item.label}}</a-radio>
                                     </li>
                                 </ul>
                             </a-radio-group>
@@ -272,11 +238,10 @@
                                            :disabled="!!assessmentDetailId"
                             >
                                 <ul class="radio-group-list">
-                                    <li class="radio-group-item">
-                                        <a-radio value="1">是</a-radio>
-                                    </li>
-                                    <li class="radio-group-item">
-                                        <a-radio value="2">否</a-radio>
+                                    <li class="radio-group-item"
+                                        v-for="item in typeOneListData[10]"
+                                    >
+                                        <a-radio :value="item">{{item.label}}</a-radio>
                                     </li>
                                 </ul>
                             </a-radio-group>
@@ -293,11 +258,10 @@
                                            :disabled="!!assessmentDetailId"
                             >
                                 <ul class="radio-group-list">
-                                    <li class="radio-group-item">
-                                        <a-radio value="1">是</a-radio>
-                                    </li>
-                                    <li class="radio-group-item">
-                                        <a-radio value="2">否</a-radio>
+                                    <li class="radio-group-item"
+                                        v-for="item in typeOneListData[11]"
+                                    >
+                                        <a-radio :value="item">{{item.label}}</a-radio>
                                     </li>
                                 </ul>
                             </a-radio-group>
@@ -314,11 +278,10 @@
                                            :disabled="!!assessmentDetailId"
                             >
                                 <ul class="radio-group-list">
-                                    <li class="radio-group-item">
-                                        <a-radio value="1">是</a-radio>
-                                    </li>
-                                    <li class="radio-group-item">
-                                        <a-radio value="2">否</a-radio>
+                                    <li class="radio-group-item"
+                                        v-for="item in typeOneListData[12]"
+                                    >
+                                        <a-radio :value="item">{{item.label}}</a-radio>
                                     </li>
                                 </ul>
                             </a-radio-group>
@@ -335,11 +298,10 @@
                                            :disabled="!!assessmentDetailId"
                             >
                                 <ul class="radio-group-list">
-                                    <li class="radio-group-item">
-                                        <a-radio value="1">是</a-radio>
-                                    </li>
-                                    <li class="radio-group-item">
-                                        <a-radio value="2">否</a-radio>
+                                    <li class="radio-group-item"
+                                        v-for="item in typeOneListData[13]"
+                                    >
+                                        <a-radio :value="item">{{item.label}}</a-radio>
                                     </li>
                                 </ul>
                             </a-radio-group>
@@ -356,14 +318,10 @@
                                            :disabled="!!assessmentDetailId"
                             >
                                 <ul class="radio-group-list">
-                                    <li class="radio-group-item">
-                                        <a-radio value="1">小于3杯</a-radio>
-                                    </li>
-                                    <li class="radio-group-item">
-                                        <a-radio value="2">3 ~ 5杯</a-radio>
-                                    </li>
-                                    <li class="radio-group-item">
-                                        <a-radio value="3">大于5杯</a-radio>
+                                    <li class="radio-group-item"
+                                        v-for="item in typeOneListData[14]"
+                                    >
+                                        <a-radio :value="item">{{item.label}}</a-radio>
                                     </li>
                                 </ul>
                             </a-radio-group>
@@ -380,14 +338,10 @@
                                            :disabled="!!assessmentDetailId"
                             >
                                 <ul class="radio-group-list">
-                                    <li class="radio-group-item">
-                                        <a-radio value="1">无法独立进食</a-radio>
-                                    </li>
-                                    <li class="radio-group-item">
-                                        <a-radio value="2">独立进食稍有困难</a-radio>
-                                    </li>
-                                    <li class="radio-group-item">
-                                        <a-radio value="3">完全独立进食</a-radio>
+                                    <li class="radio-group-item"
+                                        v-for="item in typeOneListData[15]"
+                                    >
+                                        <a-radio :value="item">{{item.label}}</a-radio>
                                     </li>
                                 </ul>
                             </a-radio-group>
@@ -403,14 +357,10 @@
                                            class="radio-group"
                                            :disabled="!!assessmentDetailId">
                                 <ul class="radio-group-list">
-                                    <li class="radio-group-item">
-                                        <a-radio value="1">营养不良</a-radio>
-                                    </li>
-                                    <li class="radio-group-item">
-                                        <a-radio value="2">不能确定</a-radio>
-                                    </li>
-                                    <li class="radio-group-item">
-                                        <a-radio value="3">营养良好</a-radio>
+                                    <li class="radio-group-item"
+                                        v-for="item in typeOneListData[16]"
+                                    >
+                                        <a-radio :value="item">{{item.label}}</a-radio>
                                     </li>
                                 </ul>
                             </a-radio-group>
@@ -427,17 +377,10 @@
                                            :disabled="!!assessmentDetailId"
                             >
                                 <ul class="radio-group-list">
-                                    <li class="radio-group-item">
-                                        <a-radio value="1">不太好</a-radio>
-                                    </li>
-                                    <li class="radio-group-item">
-                                        <a-radio value="2">不知道</a-radio>
-                                    </li>
-                                    <li class="radio-group-item">
-                                        <a-radio value="3">一样好</a-radio>
-                                    </li>
-                                    <li class="radio-group-item">
-                                        <a-radio value="4">更好</a-radio>
+                                    <li class="radio-group-item"
+                                        v-for="item in typeOneListData[17]"
+                                    >
+                                        <a-radio :value="item">{{item.label}}</a-radio>
                                     </li>
                                 </ul>
                             </a-radio-group>
@@ -454,14 +397,10 @@
                                            :disabled="!!assessmentDetailId"
                             >
                                 <ul class="radio-group-list">
-                                    <li class="radio-group-item">
-                                        <a-radio value="1">小于21</a-radio>
-                                    </li>
-                                    <li class="radio-group-item">
-                                        <a-radio value="2">21 ~ 22</a-radio>
-                                    </li>
-                                    <li class="radio-group-item">
-                                        <a-radio value="3">大于等于22</a-radio>
+                                    <li class="radio-group-item"
+                                        v-for="item in typeOneListData[18]"
+                                    >
+                                        <a-radio :value="item">{{item.label}}</a-radio>
                                     </li>
                                 </ul>
                             </a-radio-group>
@@ -478,11 +417,10 @@
                                            :disabled="!!assessmentDetailId"
                             >
                                 <ul class="radio-group-list">
-                                    <li class="radio-group-item">
-                                        <a-radio value="1">小于31</a-radio>
-                                    </li>
-                                    <li class="radio-group-item">
-                                        <a-radio value="2">大于等于31</a-radio>
+                                    <li class="radio-group-item"
+                                        v-for="item in typeOneListData[19]"
+                                    >
+                                        <a-radio :value="item">{{item.label}}</a-radio>
                                     </li>
                                 </ul>
                             </a-radio-group>
@@ -1163,7 +1101,114 @@
                 tableTypeSelect: 1,
                 //  类型1
                 typeOneList: [],
+                typeOneListData: [
+                    [
+                        { score: '0', id: 1, key: 1, label: '严重的食欲减退(0分)', },
+                        { score: '1', id: 2, key: 2, label: '中等程度食欲减退(1分)', },
+                        { score: '2', id: 3, key: 3, label: '食欲减退(2分)' },
+                    ],
+                    [
+                        { score: '0', id: 1, key: 1, label: '体重减轻超过(0分)', },
+                        { score: '1', id: 2, key: 2, label: '不清楚(1分)', },
+                        { score: '2', id: 3, key: 3, label: '体重减轻1～3kg(2分)' },
+                        { score: '3', id: 4, key: 4, label: '无体重下降(3分)' },
+                    ],
+                    [
+                        { score: '0', id: 1, key: 1, label: '卧床或长期坐着(0分)', },
+                        { score: '1', id: 2, key: 2, label: '能离床或椅子，但不能外出(1分)', },
+                        { score: '2', id: 3, key: 3, label: '能独立外出(2分)' }
+                    ],
+                    [
+                        { score: '0', id: 1, key: 1, label: '是(0分)', },
+                        { score: '2', id: 2, key: 2, label: '否(2分)', },
+                    ],
+                    [
+                        { score: '0', id: 1, key: 1, label: '严重痴呆或抑郁(0分)', },
+                        { score: '1', id: 2, key: 2, label: '轻度痴呆(1分)', },
+                        { score: '2', id: 3, key: 3, label: '无心理问题(2分)' },
+                    ],
 
+                    [
+                        { score: '0', id: 1, key: 1, label: '小于19(0分)', },
+                        { score: '1', id: 2, key: 2, label: '19-21(1分)', },
+                        { score: '2', id: 3, key: 3, label: '21～23(2分)' },
+                        { score: '3', id: 4, key: 4, label: '大于或等于23(3分)' },
+                    ],
+                    [
+                        { score: '0', id: 1, key: 1, label: '否(0分)', },
+                        { score: '1', id: 2, key: 2, label: '是(1分)', },
+                    ],
+                    [
+                        { score: '0', id: 1, key: 1, label: '是(0分)', },
+                        { score: '1', id: 2, key: 2, label: '否(1分)', },
+                    ],
+                    [
+                        { score: '0', id: 1, key: 1, label: '是(0分)', },
+                        { score: '1', id: 2, key: 2, label: '否(1分)', },
+                    ],
+                    [
+                        { score: '0', id: 1, key: 1, label: '1餐(0分)', },
+                        { score: '1', id: 2, key: 2, label: '2餐(1分)', },
+                        { score: '2', id: 3, key: 3, label: '3餐(2分)' },
+                    ],
+
+                    //  todo    蛋白质的摄入量是多少？
+                    //  每日至少1份奶制品（牛奶、奶酪、酸奶）?  A）是   B）否
+                    //  每周2-3份豆制品或鸡蛋?  A）是   B）否
+                    //  每日吃肉、鱼或家禽?  A）是   B）否
+                    //  0.0＝0或1个“是”  0.5＝2个“是”  1.0＝3个“是”
+
+                    [
+                        { score: '0', id: 1, key: 1, label: '否(0分)', },
+                        { score: '1', id: 2, key: 2, label: '是(1分)', },
+                    ],
+                    [
+                        { score: '0', id: 1, key: 1, label: '否(0分)', },
+                        { score: '1', id: 2, key: 2, label: '是(1分)', },
+                    ],
+                    [
+                        { score: '0', id: 1, key: 1, label: '否(0分)', },
+                        { score: '1', id: 2, key: 2, label: '是(1分)', },
+                    ],
+                    [
+                        { score: '0', id: 1, key: 1, label: '否(0分)', },
+                        { score: '1', id: 2, key: 2, label: '是(1分)', },
+                    ],
+                    [
+                        { score: '0', id: 1, key: 1, label: '小于3杯(0分)', },
+                        { score: '0.5', id: 2, key: 2, label: '3-5杯(0.5分)', },
+                        { score: '1', id: 3, key: 3, label: '大于5杯(1分)' },
+                    ],
+
+                    [
+                        { score: '0', id: 1, key: 1, label: '无法独立进食(0分)', },
+                        { score: '1', id: 2, key: 2, label: '独立进食稍有困难(1分)', },
+                        { score: '2', id: 3, key: 3, label: '完全独立进食(2分)' },
+                    ],
+                    [
+                        { score: '0', id: 1, key: 1, label: '营养不良(0分)', },
+                        { score: '1', id: 2, key: 2, label: '不能确定(1分)', },
+                        { score: '2', id: 3, key: 3, label: '营养良好(2分)' },
+                    ],
+                    [
+                        { score: '0', id: 1, key: 1, label: '不太好(0分)', },
+                        { score: '0.5', id: 2, key: 2, label: '不知道(0.5分)', },
+                        { score: '1', id: 3, key: 3, label: '一样好(1分)' },
+                        { score: '2', id: 4, key: 4, label: '更好(2分)' },
+                    ],
+                    [
+                        { score: '0', id: 1, key: 1, label: '小于21(0分)', },
+                        { score: '1', id: 2, key: 2, label: '21-22(1分)', },
+                        { score: '2', id: 3, key: 3, label: '大于等于22(2分)' },
+                    ],
+                    [
+                        { score: '0', id: 1, key: 1, label: '小于31(0分)', },
+                        { score: '1', id: 2, key: 2, label: '大于等于31(1分)', },
+                    ]
+                ],
+                //  类型2
+                typeTwoList: [],
+                //  类型2的模板
                 typeTwoListData: [
                     [
                         { label: '饱满（0分）', score: '0', id: '1', key: '1' },
@@ -1209,9 +1254,9 @@
                         { label: '一天三餐基本正常，可以吃到5 ~ 6两主食，3两肉及相应的油脂，1个鸡蛋，奶及加餐水果（0分）', score: '0', id: '5', key: '5' },
                     ]
                 ],
-                //  类型2
-                typeTwoList: [],
-
+                //  类型3
+                typeThreeList: {},
+                //  类型3的模板
                 typeThreeListData: {
                     //  在过去的两周，患者的体重
                     weightCondition: [
@@ -1354,8 +1399,6 @@
                         { label: '3分', score: '3', id: '4', key: '4' },
                     ]
                 },
-                //  类型3
-                typeThreeList: {},
             };
         },
         created(){
@@ -1370,7 +1413,7 @@
                 'setPatientBasicInfo',
             ]),
             initList(){
-                this.typeOneList = new Array(20).fill('');
+                this.typeOneList = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {},];
                 this.typeTwoList = [{}, {}, {}, {}, [], {},];
                 this.typeThreeList = {
                     //  目前患者的身高约为
@@ -1520,16 +1563,12 @@
                         case 1:
                             //  微型营养评估表保存
                             const oneData = this.oneDataTransform();
-                            const oneDataTotalScore = this.typeOneList.reduce((a, b) => {return +a + +b;}, 0);
+                            console.log(oneData);
                             return requestPatientAssessSaveMna(Object.assign({
-                                age, bmi, height, name, sex, weight, patientId, totalScore: oneDataTotalScore,
+                                age, bmi, height, name, sex, weight, patientId,
                             }, oneData));
                         case 2:
                             //  一般营养评估表保存
-                            if (this.typeTwoList.length !== 6) {
-                                this.$error({ title: '请完善表格' });
-                                return Promise.reject();
-                            }
                             const twoData = this.twoDataTransform();
                             console.log(twoData);
                             return requestPatientAssessSaveYbpgb(Object.assign({
@@ -1560,14 +1599,9 @@
                     });
             },
 
-            //  微型营养评价表
-            setOneData(data){
-                const { v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20 } = data;
-                const typeOneList = [v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20];
-                this.typeOneList = typeOneList;
-            },
-            //  类型1转换 微型营养评价表
+            //  保存，类型1转换 微型营养评价表
             oneDataTransform(){
+                let totalScore = 0;
                 const v1 = this.typeOneList[0];
                 const v2 = this.typeOneList[1];
                 const v3 = this.typeOneList[2];
@@ -1588,10 +1622,70 @@
                 const v18 = this.typeOneList[17];
                 const v19 = this.typeOneList[18];
                 const v20 = this.typeOneList[19];
-                return { v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20 };
+                totalScore += +(v1.score || 0);
+                totalScore += +(v2.score || 0);
+                totalScore += +(v3.score || 0);
+                totalScore += +(v4.score || 0);
+                totalScore += +(v5.score || 0);
+                totalScore += +(v6.score || 0);
+                totalScore += +(v7.score || 0);
+                totalScore += +(v8.score || 0);
+                totalScore += +(v9.score || 0);
+                totalScore += +(v10.score || 0);
+                console.log((+v11.score || 0), (+v12.score || 0), (+v13.score || 0));
+                //  ⚠️这里特殊
+                const subScore = (+v11.score || 0) + (+v12.score || 0) + (+v13.score || 0);
+                switch (subScore) {
+                    case 0:
+                    case 1:
+                        break;
+                    case 2:
+                        totalScore += 0.5;
+                        break;
+                    case 3:
+                        totalScore += 1;
+                        break;
+                    default:
+                        break;
+                }
+                totalScore += +(v14.score || 0);
+                totalScore += +(v15.score || 0);
+                totalScore += +(v16.score || 0);
+                totalScore += +(v17.score || 0);
+                totalScore += +(v18.score || 0);
+                totalScore += +(v19.score || 0);
+                totalScore += +(v20.score || 0);
+                return {
+                    v1: v1.id,
+                    v2: v2.id,
+                    v3: v3.id,
+                    v4: v4.id,
+                    v5: v5.id,
+                    v6: v6.id,
+                    v7: v7.id,
+                    v8: v8.id,
+                    v9: v9.id,
+                    v10: v10.id,
+                    v11: v11.id,
+                    v12: v12.id,
+                    v13: v13.id,
+                    v14: v14.id,
+                    v15: v15.id,
+                    v16: v16.id,
+                    v17: v17.id,
+                    v18: v18.id,
+                    v19: v19.id,
+                    v20: v20.id,
+                    totalScore,
+                };
             },
-
-            //  类型2转换 一般评估表
+            //  赋值，微型营养评价表
+            setOneData(data){
+                const { v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20 } = data;
+                const typeOneList = [v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20];
+                this.typeOneList = typeOneList;
+            },
+            //  保存，类型2转换 一般评估表
             twoDataTransform(){
                 let totalScore = 0;
                 const v1 = this.typeTwoList[0];
@@ -1636,7 +1730,7 @@
                 console.log(this.typeTwoList[4]);
             },
 
-            //  类型3转换 PG - SGA主观营养状况评估
+            //  保存，类型3转换 PG - SGA主观营养状况评估
             threeDataTransform(){
                 console.log('转换🍗');
                 const {
