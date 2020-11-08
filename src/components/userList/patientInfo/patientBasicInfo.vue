@@ -414,6 +414,7 @@
     import { requestPatientSelectDoctorByHospital } from '../../../api/userList/userList';
     import { getAgeByIdCard, getSexByIdCard, isIdCard } from '../../../utils/validate';
     import { mapGetters, mapActions } from 'vuex';
+    import { getLoginInfo } from '../../../utils/auth';
     //  病人信息组件
     export default {
         computed: {
@@ -465,9 +466,11 @@
         },
         methods: {
             searchFn(){
+                const loginInfo = getLoginInfo();
+                //  console.log(loginInfo.hospitalId);
                 Promise.all([
                     //  ICD
-                    requestPatientSelectICD()
+                    requestPatientSelectICD(loginInfo.hospitalId)
                         .then(ICDList => {
                             this.ICDList = ICDList;
                         }),
@@ -773,7 +776,7 @@
                     resolve();
                 });
             },
-            
+
             //	病人信息、直接编辑用的 描述框的方法
             ...descriptionsMethods,
 
