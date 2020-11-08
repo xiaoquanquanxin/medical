@@ -205,6 +205,8 @@ export const routeMap = {
 	'getDrugDetail': true,
 	//	报损
 	'taskReportedLoss': true,
+	//	配置历史
+	'configurationHistory': true,
 
 	//	收计费
 	'cost': true,

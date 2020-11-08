@@ -102,3 +102,24 @@ a {
 .ant-switch-checked {
     background-color: var(--basic-a);
 }
+
+
+/*左侧菜单*/
+.ant-layout-sider {
+    background-color: #39509b;
+}
+
+/*激活菜单的里衬*/
+.ant-menu-dark, .ant-menu-dark .ant-menu-sub {
+    background-color: #39509b;
+}
+
+/*激活菜单*/
+.ant-menu.ant-menu-dark .ant-menu-item-selected, .ant-menu-submenu-popup.ant-menu-dark .ant-menu-item-selected {
+    background-color: #6276b9;
+}
+
+/*父级菜单展开后的子菜单*/
+.ant-menu-dark .ant-menu-inline.ant-menu-sub {
+    background-color: #626cab;
+}

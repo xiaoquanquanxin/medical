@@ -208,3 +208,22 @@ span.ant-radio + * {
 .nowrap {
     white-space: nowrap;
 }
+
+/*左侧菜单*/
+.ant-menu-vertical .ant-menu-item:not(:last-child), .ant-menu-vertical-left .ant-menu-item:not(:last-child), .ant-menu-vertical-right .ant-menu-item:not(:last-child), .ant-menu-inline .ant-menu-item:not(:last-child) {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+/*父级菜单展开后的阴影*/
+.ant-menu-dark .ant-menu-inline.ant-menu-sub {
+    box-shadow: 0 2px 8px rgba(81, 81, 103, 0.45) inset
+}
+
+/*父及菜单*/
+.ant-menu-vertical .ant-menu-item, .ant-menu-vertical-left .ant-menu-item, .ant-menu-vertical-right .ant-menu-item, .ant-menu-inline .ant-menu-item, .ant-menu-vertical .ant-menu-submenu-title, .ant-menu-vertical-left .ant-menu-submenu-title, .ant-menu-vertical-right .ant-menu-submenu-title, .ant-menu-inline .ant-menu-submenu-title {
+    margin-top: 4px;
+    margin-bottom: 0;
+}
