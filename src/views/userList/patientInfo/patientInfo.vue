@@ -1,5 +1,5 @@
 <template>
-    <div class="layout-content-inner-main">
+    <div class="layout-content-inner-main patient-basic-info-like-wrap">
         <!--头部信息-->
         <div class="a-input-group" data-msg="空"></div>
         <div class="a-input-group">
@@ -22,7 +22,9 @@
                 </a-col>
             </a-row>
         </div>
-        <PatientBasicInfo ref="refPatientBasicInfo" id=""/>
+        <div class="patient-basic-info-like">
+            <PatientBasicInfo ref="refPatientBasicInfo"/>
+        </div>
     </div>
 </template>
 <script>
@@ -128,7 +130,7 @@
         }
     };
 </script>
-<style>
+<style scoped>
     .out-of-hospital-info .ant-modal {
         top: 260px;
     }
