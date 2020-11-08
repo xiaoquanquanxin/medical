@@ -8,7 +8,7 @@
                 <a-date-picker
                         class="lengthen-select-width"
                         placeholder="请选择配置日期"
-                        v-model="selectDateMoment"
+                        v-model="defaultDate"
                         @change="onDateChange"
                 />
                 <a-select class="basic-select-width" placeholder="请选择科室" v-model="searchData.deptId">
@@ -233,11 +233,13 @@
                 //  分页信息
                 pagination: paginationInit(),
                 //  搜索数据
-                searchData: {},
+                searchData: {
+                    orderTime: undefined,
+                },
 
-                //  选择日期的值的对象
-                selectDateMoment: moment(new Date()),
-
+                //  时间 的默认值
+                defaultDate: moment(new Date()),
+                
                 //  打印处方
                 printBottle: {
                     id: '#printBottle',
@@ -251,6 +253,7 @@
             };
         },
         created(){
+            this.searchData.orderTime = this.defaultDate.format('YYYY-MM-DD');
             this.searchFn();
             //  全部科室
             requestDeptList()

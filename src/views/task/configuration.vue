@@ -232,8 +232,10 @@
                 //  分页信息
                 pagination: paginationInit(),
                 //  搜索数据
-                searchData: {},
-                
+                searchData: {
+                    orderTime: undefined,
+                },
+
                 //  时间 的默认值
                 defaultDate: moment(new Date()),
 
