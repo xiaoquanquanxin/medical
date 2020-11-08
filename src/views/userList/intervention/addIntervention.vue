@@ -8,7 +8,7 @@
             </a-row>
             <br>
         </div>
-        <div class="patient-basic-info-like" style="height: calc(100% - 40px);">
+        <div class="patient-basic-info-like">
             <!--基础数据-->
             <BasicInfoEditTable v-if="true"/>
             <br>
