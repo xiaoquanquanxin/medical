@@ -74,7 +74,7 @@
         {
             title: '仓库名称',
             dataIndex: 'warehouseName',
-            width: 100,
+            width: 150,
         },
         {
             title: '仓库代码',
