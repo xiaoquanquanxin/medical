@@ -211,7 +211,7 @@
             searchFn(){
                 return requestPatientPage(Object.assign({ param: this.searchData }, paginationEncode(this.pagination)))
                     .then(v => {
-                        console.log('病人列表');
+                        //  console.log('病人列表');
                         const { data } = v;
                         const patientInfoMap = {};
                         data.records.forEach((item, index) => {
@@ -222,7 +222,7 @@
                         //  data.records.length = 0;
                         this.data = data.records;
                         this.pagination = paginationDecode(this.pagination, data);
-                        console.log(JSON.parse(JSON.stringify(data.records))[0]);
+                        //  console.log(JSON.parse(JSON.stringify(data.records))[0]);
                         //  如果当前是在userList路由下，那么应该进入第一个病人列表的路由
                         if (this.$route.name === 'userList') {
                             this.getFirstPatient();
