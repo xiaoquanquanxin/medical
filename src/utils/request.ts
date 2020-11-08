@@ -76,6 +76,13 @@ export const unifiedHandlingList = (v: any): [] => {
 	});
 	return data;
 }
+//	规范数据的id
+export const standardListById = (list: []) => {
+	list.forEach((item: { id: string | number }) => {
+		item.id = Number(item.id)
+	});
+	return list
+}
 
 //	统一处理常规列表，for分页，为了加key字段
 export const unifiedHandlingPag = (v: any): [] => {
