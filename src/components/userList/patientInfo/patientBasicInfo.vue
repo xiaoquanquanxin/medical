@@ -477,7 +477,7 @@
                     //  医院list
                     requestHospitalGetList()
                         .then(hospitalList => {
-                            console.log('查询出所有医院的list', '某一个医院的id是 ： ', hospitalList[0].id);
+                            //  console.log('查询出所有医院的list', '某一个医院的id是 ： ', hospitalList[0].id);
                             this.hospitalList = hospitalList;
                         }),
                     //  全部科室
@@ -489,15 +489,15 @@
                 ])
                     .then(v => {
                         if (!this.patientId) {
-                            console.log('是新增');
+                            //  console.log('是新增');
                             return;
                         }
-                        console.log('是编辑');
+                        //  console.log('是编辑');
                         //  console.log('病人信息tab-病人id', this.patientId);
                         requestPatientSelectOnePatient(this.patientId)
                             .then(v => {
-                                console.log('病人详情');
                                 const { data } = v;
+                                console.log('病人详情');
                                 console.log(JSON.parse(JSON.stringify(data)));
                                 this.patientInfo = data;
                                 //  保存病人信息到store
@@ -522,7 +522,7 @@
             },
             //  切换医院
             selectHospitalChange(value){
-                console.log(`切换后的医院id${value},type: ${typeof value}`);
+                //  console.log(`切换后的医院id${value},type: ${typeof value}`);
                 //  清空科室id和列表
                 this.patientBasicInfo.departTreatment = undefined;
                 this.hospitalDeptList = [];
@@ -536,19 +536,19 @@
             },
             //  查询医院下的营养师，因为编辑直接调用，所以写出来
             requestPatientSelectNutritionByHospital(value){
-                console.log(`查询医院下的营养师，医院id${value}`);
+                //  console.log(`查询医院下的营养师，医院id${value}`);
                 requestPatientSelectNutritionByHospital(value)
                     .then(nutritionistList => {
                         nutritionistList.forEach(item => {
                             item.id = Number(item.id);
                         });
-                        console.log(`当前医院下营养师的数量：${nutritionistList.length}`);
+                        //  console.log(`当前医院下营养师的数量：${nutritionistList.length}`);
                         this.nutritionistList = nutritionistList;
                     });
             },
             //  查询医院下的科室
             getDeptListDeptHospitalId(value){
-                console.log(`查询医院下的科室，医院id${value}`);
+                //  console.log(`查询医院下的科室，医院id${value}`);
                 requestDeptListDeptHospitalId(value)
                     .then(v => {
                         //  ⚠️别改这里了！
@@ -560,7 +560,7 @@
                         this.hospitalDeptList = this.deptList.filter((item => {
                             return map[item.id];
                         }));
-                        console.log(`当前医院下科室的数量：${hospitalDeptList.length}`);
+                        //  console.log(`当前医院下科室的数量：${hospitalDeptList.length}`);
                         this.$forceUpdate();
                     });
             },
@@ -570,12 +570,13 @@
                 this.patientBasicInfo.departTreatment = deptId;
                 //  医院id有可能是没有的
                 hospitalId = this.patientBasicInfo.hospitalTreatment;
-                console.log('切换科室，请求参数', `医院id:${hospitalId}`, `科室id:${deptId}`);
+                //  console.log('切换科室，请求参数', `医院id:${hospitalId}`, `科室id:${deptId}`);
                 //  拿医生、营养师list
                 const data = {
                     deptId,
                     hospitalId,
                 };
+                //  todo
                 console.log('切换科室需要，根据当前科室查询所有医生');
                 requestPatientSelectDoctorByHospital(data)
                     .then(doctorList => {
@@ -609,7 +610,7 @@
                 }
                 const age = getAgeByIdCard(value);
                 const sex = getSexByIdCard(value);
-                console.log(age, sex);
+                //  console.log(age, sex);
                 const patientBasicInfo = this.patientBasicInfo;
                 patientBasicInfo.birth = age;
                 patientBasicInfo.sex = sex;
@@ -623,7 +624,7 @@
                     }
                     if (item.label === 'idCard') {
                         const res = isIdCard(item.value);
-                        console.log(res);
+                        //  console.log(res);
                         if (!res) {
                             this.$message.error(item.message);
                             return false;
@@ -768,7 +769,7 @@
                     //  patientBasicInfo.sex = Number(sex) || undefined;
                     //  patientBasicInfo.weight = Number(weight) || undefined;
 
-                    console.log('调用病人组件');
+                    //  console.log('调用病人组件');
                     //  console.log(JSON.stringify(this.patientBasicInfo));
                     //  console.table(JSON.parse(JSON.stringify(this.patientBasicInfo)));
                     //  bmi赋值
