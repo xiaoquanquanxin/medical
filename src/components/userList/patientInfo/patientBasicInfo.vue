@@ -349,6 +349,22 @@
                        class="description-content"
                     >{{patientBasicInfo.family}}</p>
                 </a-descriptions-item>
+                <a-descriptions-item :span="2">
+                    <div slot="label" class="descriptions-label">其他内容:</div>
+                    <a-input
+                            v-if="activeElementId === 22 ||!patientBasicInfo.otherContent"
+                            placeholder="请输入其他内容"
+                            v-model="patientBasicInfo.otherContent"
+                            class="form-element"
+                            @focus="descriptionFormFocusFn(22)"
+                            @blur="descriptionFormBlurFn('otherContent')"
+                    />
+                    <p v-else
+                       @click="descriptionFormClickFn(22,$event)"
+                       class="description-content"
+                    >{{patientBasicInfo.otherContent}}</p>
+                </a-descriptions-item>
+                <a-descriptions-item></a-descriptions-item>
             </a-descriptions>
         </div>
         <br>
@@ -668,6 +684,7 @@
                         phone,
                         professional,
                         treatCode,
+                        otherContent,
 
                         //  数字
                         height,
@@ -747,13 +764,13 @@
                     patientBasicInfo.bedCode = String(bedCode || '') || undefined;
                     //  patientBasicInfo.birth = String(birth || '') || undefined;
                     patientBasicInfo.bmi = String(bmi || '') || undefined;
-                    //  todo    尝试科室id
+                    //  ⚠️科室id
                     patientBasicInfo.departTreatment = Number(departTreatment);
-                    //  todo    尝试医生id
+                    //  ⚠️医生id
                     patientBasicInfo.doctorId = Number(doctorId);
                     patientBasicInfo.family = String(family || '') || undefined;
                     patientBasicInfo.hospitalCode = String(hospitalCode || '') || undefined;
-                    //  todo    尝试医院id
+                    //  ⚠️医院id
                     patientBasicInfo.hospitalTreatment = Number(hospitalTreatment);
                     patientBasicInfo.icd = String(icd || '') || undefined;
                     patientBasicInfo.idCard = String(idCard || '') || undefined;
@@ -761,13 +778,14 @@
                     //  patientBasicInfo.name = String(name || '') || undefined;
                     patientBasicInfo.nation = String(nation || '') || undefined;
                     patientBasicInfo.now = String(now || '') || undefined;
-                    //  todo    尝试营养师id
+                    //  ⚠️营养师id
                     patientBasicInfo.nutritionistId = Number(nutritionistId);
                     patientBasicInfo.past = String(past || '') || undefined;
                     patientBasicInfo.patientStatus = String(patientStatus || '') || undefined;
                     patientBasicInfo.phone = String(phone || '') || undefined;
                     patientBasicInfo.professional = String(professional || '') || undefined;
                     patientBasicInfo.treatCode = String(treatCode || '') || undefined;
+                    patientBasicInfo.otherContent = String(otherContent || '') || undefined;
 
                     //  patientBasicInfo.height = Number(height) || undefined;
                     //  patientBasicInfo.sex = Number(sex) || undefined;
