@@ -352,15 +352,15 @@
                 <a-descriptions-item :span="2">
                     <div slot="label" class="descriptions-label">其他内容:</div>
                     <a-input
-                            v-if="activeElementId === 22 ||!patientBasicInfo.otherContent"
+                            v-if="activeElementId === 24 ||!patientBasicInfo.otherContent"
                             placeholder="请输入其他内容"
                             v-model="patientBasicInfo.otherContent"
                             class="form-element"
-                            @focus="descriptionFormFocusFn(22)"
+                            @focus="descriptionFormFocusFn(24)"
                             @blur="descriptionFormBlurFn('otherContent')"
                     />
                     <p v-else
-                       @click="descriptionFormClickFn(22,$event)"
+                       @click="descriptionFormClickFn(24,$event)"
                        class="description-content"
                     >{{patientBasicInfo.otherContent}}</p>
                 </a-descriptions-item>
