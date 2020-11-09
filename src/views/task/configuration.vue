@@ -4,27 +4,12 @@
         <div class="a-input-group">
             <a-input class="basic-input-width" v-model="searchData.name" placeholder="请输入患者姓名"/>
             <a-input class="basic-input-width" v-model="searchData.commodityName" placeholder="请输入处方号"/>
-            <a-date-picker
-                    class="lengthen-select-width"
-                    placeholder="请选择配置日期"
-                    v-model="defaultDate"
-                    @change="onDateChange"
-            />
             <a-select class="basic-select-width" placeholder="请选择科室" v-model="searchData.deptId">
                 <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                 <a-select-option v-for="item in deptList"
                                  :value="item.id">
                     {{item.deptName}}
                 </a-select-option>
-            </a-select>
-            <!--(1.待签收，2，待配置，3.已配置，4，待领取，5，已领取)-->
-            <a-select v-model="searchData.orderStatus" class="basic-select-width" placeholder="请选择状态">
-                <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
-                <a-select-option value="1">待签收</a-select-option>
-                <a-select-option value="2">待配置</a-select-option>
-                <a-select-option value="3">已配置</a-select-option>
-                <a-select-option value="4">待领取</a-select-option>
-                <a-select-option value="5">已领取</a-select-option>
             </a-select>
             <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
         </div>
@@ -170,8 +155,7 @@
     import { oneRowSearch } from '@/utils/tableScroll';
     import { requestPrescriptionConfigConfirmSave, requestPrescriptionConfigPzrw } from '../../api/task/configuration';
     import { requestDeptList } from '../../api/department';
-    import moment from 'moment';
-
+    
     const columns = [
         {
             title: '序号',
@@ -232,12 +216,7 @@
                 //  分页信息
                 pagination: paginationInit(),
                 //  搜索数据
-                searchData: {
-                    orderTime: undefined,
-                },
-
-                //  时间 的默认值
-                defaultDate: moment(new Date()),
+                searchData: {},
 
                 //  打印瓶贴
                 printBottle: {
@@ -252,7 +231,6 @@
             };
         },
         created(){
-            this.searchData.orderTime = this.defaultDate.format('YYYY-MM-DD');
             this.searchFn();
             //  全部科室
             requestDeptList()
@@ -277,10 +255,6 @@
                         this.pagination = paginationDecode(this.pagination, data);
                         console.log(JSON.parse(JSON.stringify(data.records[0])));
                     });
-            },
-            //  选择过期日期
-            onDateChange(value, orderTime){
-                this.searchData.orderTime = orderTime;
             },
             //  确定签收
             confirmReceiving(sItem){
