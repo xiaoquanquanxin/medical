@@ -207,6 +207,8 @@ export const routeMap = {
 	'taskReportedLoss': true,
 	//	配置历史
 	'configurationHistory': true,
+	//	配置历史详情
+	'configurationHistoryDetail': true,
 
 	//	收计费
 	'cost': true,

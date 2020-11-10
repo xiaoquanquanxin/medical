@@ -50,3 +50,9 @@ hr {
 .ant-table-fixed-header > .ant-table-content > .ant-table-scroll > .ant-table-body {
     overflow: auto !important;
 }
+
+/*表格的空隙*/
+.ant-table-thead > tr > th, .ant-table-tbody > tr > td {
+    /*padding-left: 0;*/
+    /*padding-right: 0;*/
+}

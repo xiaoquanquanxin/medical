@@ -49,7 +49,7 @@
                         v-model="scope.executionTimeMoment"
                         class="lengthen-select-width"
                         placeholder="请选择执行日期"
-                        :disabledDate="disabledDateForExecutionTime"
+                        :disabledDate="todayAndAfterToday"
                 />
                 <!--                @change="executionTimeChangeFn"-->
             </div>
@@ -59,7 +59,8 @@
 <script>
     import moment from 'moment';
     import { mapGetters, mapActions } from 'vuex';
-    import { prescriptionTypeList } from '../../utils/constants';
+    import { oneDataTimestamp, prescriptionTypeList } from '../../utils/constants';
+    import { todayAndAfterToday } from '../../utils/monthly';
     //  基本信息 表格 列的意义
     const basicInfoColumns = [
         {
@@ -119,10 +120,8 @@
 //                const data = Object.assign({}, this.basicInfoEditData[0], { executionTime });
 //                this.setBasicInfoEditData([data]);
 //            },
-            //  执行日期选择规则
-            disabledDateForExecutionTime(current){
-                return current && current <= moment(new Date(new Date().getTime() - 60 * 60 * 24));
-            },
+
+            todayAndAfterToday,
             moment,
         }
     };

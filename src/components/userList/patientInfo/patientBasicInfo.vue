@@ -37,7 +37,7 @@
                     >
                         <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                         <a-select-option :value="1">男</a-select-option>
-                        <a-select-option :value="2">女</a-select-option>
+                        <a-select-option :value="0">女</a-select-option>
                     </a-select>
                     <p v-else
                        @click="descriptionFormClickFn(1,$event)"
@@ -655,6 +655,7 @@
             },
             //  保存
             handleSubmit(){
+                alert('api文档里没有otherContent，传了也没效果');
                 return new Promise((resolve, reject) => {
                     //  console.table(JSON.parse(JSON.stringify(this.patientBasicInfo)));
                     const patientBasicInfo = this.patientBasicInfo;

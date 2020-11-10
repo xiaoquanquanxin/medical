@@ -933,7 +933,19 @@ export const asyncRoutesList = [
 				},
 				name: 'configurationHistory',
 				path: '/task/configurationHistory',
-				component: () => import(/* webpackChunkName: "configuration" */ '@/views/task/configurationHistory.vue'),
+				component: () => import(/* webpackChunkName: "configuration" */ '@/views/task/configuration.vue'),
+			},
+			{
+				meta: {
+					chName: '配置历详情',
+					selectRouteKey: 'configurationHistoryDetail',
+					openRouteKey: 'task',
+					hiddenHistory: true,
+					hidden: true,
+				},
+				name: 'configurationHistoryDetail',
+				path: '/task/configurationHistoryDetail/:detailId',
+				component: () => import(/* webpackChunkName: "auditDetail" */ '@/views/auditList/auditDetail.vue'),
 			},
 			{
 				meta: {

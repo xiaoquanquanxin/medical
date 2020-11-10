@@ -90,3 +90,6 @@ export const unameTypeMap = {
 	3: '辅助单位',
 }
 
+
+//	一天的毫秒数
+export const oneDataTimestamp = 1000 * 60 * 60 * 24;
