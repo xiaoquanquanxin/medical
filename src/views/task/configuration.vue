@@ -69,7 +69,6 @@
             </div>
             <!--是否签收-->
             <div slot="signFor" slot-scope="scope,sItem,sIndex,extra">
-                {{scope.configStatus}}na
                 <span v-if="scope.configStatus == 4 ">已签收</span>
                 <span v-else-if="scope.configStatus == 5 ">未签收</span>
                 <span v-else>其他</span>
