@@ -65,7 +65,7 @@
             </li>
         </ul>
         <br>
-        <ul class="pay-cost-form-content">
+        <ul class="pay-cost-form-content" v-if="isRefund === 1">
             <li>
                 <a-row type="flex" justify="start" align="middle">
                     <a-col class="label" type="flex" justify="space-between">退费原因</a-col>
@@ -152,7 +152,7 @@
     /*需要被对齐对文字*/
     .label {
         height: 21px;
-        overflow-y: hidden;
+        overflow: hidden;
         text-align: justify;
         width: 72px;
         margin-right: 0.3em;
