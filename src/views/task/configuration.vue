@@ -202,41 +202,41 @@
             dataIndex: 'index',
             width: 40,
         },
-//        {
-//            title: '处方名称',
-//            dataIndex: 'prescriptionName',
-//            width: 150,
-//        },
-//        {
-//            title: '姓名',
-//            dataIndex: 'name',
-//            width: 100,
-//        },
-//        {
-//            title: '性别',
-//            scopedSlots: { customRender: 'sex' },
-//            width: 100,
-//        },
-//        {
-//            title: '科室',
-//            dataIndex: 'deptName',
-//            width: 100,
-//        },
-//        {
-//            title: '病区/床号',
-//            dataIndex: 'bedCode',
-//            width: 100,
-//        },
-//        {
-//            title: '处方医生',
-//            dataIndex: 'doctorName',
-//            width: 100,
-//        },
-//        {
-//            title: '处方开具时间',
-//            dataIndex: 'orderTime',
-//            width: 200,
-//        },
+        {
+            title: '处方名称',
+            dataIndex: 'prescriptionName',
+            width: 150,
+        },
+        {
+            title: '姓名',
+            dataIndex: 'name',
+            width: 100,
+        },
+        {
+            title: '性别',
+            scopedSlots: { customRender: 'sex' },
+            width: 100,
+        },
+        {
+            title: '科室',
+            dataIndex: 'deptName',
+            width: 100,
+        },
+        {
+            title: '病区/床号',
+            dataIndex: 'bedCode',
+            width: 100,
+        },
+        {
+            title: '处方医生',
+            dataIndex: 'doctorName',
+            width: 100,
+        },
+        {
+            title: '处方开具时间',
+            dataIndex: 'orderTime',
+            width: 200,
+        },
         {
             title: '处方状态',
             scopedSlots: { customRender: 'auditStatus' },
