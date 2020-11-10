@@ -1,120 +1,174 @@
 <template>
     <div class="table-in-box">
-        <a-form class="form"
-                :form="form"
-                v-bind="formItemLayout"
-                @submit="handleSubmit"
-                autocomplete="off"
-        >
-            <a-form-item :label="!isRefund?'应缴金额':'应退金额'">
-                {{selectCostData.amountPayable}}
-            </a-form-item>
-            <a-form-item :label="!isRefund?'实际缴费金额':'实际退费金额'">
-                <a-input-number
-                        class="add-form-input"
-                        :placeholder="!isRefund?'请输入实际缴费金额':'请输入实际退费金额'"
-                        :min="0.1"
-                        :step="0.1"
-                        :max="selectCostData.amountPayable"
-                        v-decorator="amountPaidDecorator"
-                        @pressEnter="preventDefault"
-                />
-            </a-form-item>
-            <a-form-item label="支付方式">
-                <a-radio-group v-decorator="payWayDecorator">
-                    <!--<a-radio value="1">支付宝支付</a-radio>-->
-                    <!--<a-radio value="2">微信支付</a-radio>-->
-                    <a-radio value="3">现金支付</a-radio>
-                </a-radio-group>
-            </a-form-item>
-        </a-form>
+        <a-row type="flex" justify="space-between" align="middle" class="table-group-title no-border-bottom">
+            <span v-if="isRefund === 0">缴费人信息</span>
+            <span v-else>退费人信息</span>
+        </a-row>
+        <div class="item-3">
+            <a-descriptions
+                    :title="null"
+                    bordered
+                    :column="3"
+                    size="small"
+            >
+                <a-descriptions-item label="姓名">
+                    {{costData.name}}
+                </a-descriptions-item>
+                <a-descriptions-item label="科室">
+                    {{costData.deptName}}
+                </a-descriptions-item>
+                <a-descriptions-item label="身份证">
+                    {{costData.idCard}}
+                </a-descriptions-item>
+            </a-descriptions>
+        </div>
+        <br>
+        <a-row type="flex" justify="space-between" align="middle" class="table-group-title no-border-bottom">
+            <span v-if="isRefund === 0">缴费信息</span>
+            <span v-else>退费信息</span>
+        </a-row>
+        <ul class="pay-cost-form-content">
+            <li>
+                <a-row type="flex" justify="start" align="middle">
+                    <a-col class="label" type="flex" justify="space-between">处方号</a-col>
+                    <a-col class="colon">:</a-col>
+                    <a-col>处方号{{costData.aaaa}}</a-col>
+                </a-row>
+            </li>
+            <li>
+                <a-row type="flex" justify="start" align="middle">
+                    <a-col class="label" type="flex" justify="space-between">
+                        <span v-if="isRefund === 0">缴费金额</span>
+                        <span v-else>退费金额</span>
+                    </a-col>
+                    <a-col class="colon">:</a-col>
+                    <a-col>{{costData.amountPayable}}</a-col>
+                </a-row>
+            </li>
+            <li v-if="isRefund === 1">
+                <a-row type="flex" justify="start" align="middle">
+                    <a-col class="label" type="flex" justify="space-between">
+                        对账单号
+                    </a-col>
+                    <a-col class="colon">:</a-col>
+                    <a-col>对账单号{{costData.amountPayable}}</a-col>
+                </a-row>
+            </li>
+            <li v-if="isRefund === 1">
+                <a-row type="flex" justify="start" align="middle">
+                    <a-col class="label" type="flex" justify="space-between">
+                        收款人
+                    </a-col>
+                    <a-col class="colon">:</a-col>
+                    <a-col>收款人{{costData.amountPayable}}</a-col>
+                </a-row>
+            </li>
+        </ul>
+        <br>
+        <ul class="pay-cost-form-content">
+            <li>
+                <a-row type="flex" justify="start" align="middle">
+                    <a-col class="label" type="flex" justify="space-between">退费原因</a-col>
+                    <a-col class="colon">:</a-col>
+                    <a-col>
+                        <a-input v-model="reason" placeholder="请输入退费原因"/>
+                    </a-col>
+                </a-row>
+            </li>
+        </ul>
     </div>
 </template>
 <script>
-    import { preventDefault } from '@/utils/common';
-
-    import { formItemLayout } from '@/utils/layout.ts';
     import { requestBillingsPayment, requestBillingsRefund } from '../../api/cost/costList';
+    import { requestPrescriptionDetail } from '../../api/userList/intervention';
 
     export default {
-        beforeCreate(){
-            this.form = this.$form.createForm(this);
-        },
         computed: {
             //  支付id
-            selectCostData(){
-                return this.$store.state.cost.selectCostData;
+            selectCostId(){
+                return this.$store.state.cost.selectCostId;
             },
             //  操作类型	0,缴费，1退款）
             isRefund(){
                 return this.$store.state.cost.isRefund;
             },
         },
-        created(){
-            console.log('支付对象', JSON.parse(JSON.stringify(this.selectCostData)));
-            console.log('支付类型', this.isRefund);
-        },
         data(){
             return {
-                formItemLayout,
-                //  金额
-                amountPaidDecorator: ['amountPaid', {
-                    initialValue: 0.1,
-                    rules: [{
-                        required: true,
-                        message: '请输入金额',
-                    },]
-                }],
-                //  支付方式(1支付宝，2微信,3现金缴费)
-                payWayDecorator: ['payWay', {
-                    initialValue: '3',
-                    rules: [{
-                        required: true,
-                        message: '请输入金额',
-                    },]
-                }]
+                //  数据对象
+                costData: {},
+                //  退费原因
+                reason: '',
             };
         },
+        created(){
+            console.log('支付类型', this.isRefund);
+            this.searchFn();
+        },
         methods: {
-            preventDefault,
+            searchFn(){
+                requestPrescriptionDetail(this.selectCostId)
+                    .then(v => {
+                        console.log(v.data);
+                        this.costData = v.data;
+                    });
+            },
             //  表单提交 保存
             handleSubmit(){
-                return new Promise((resolve, reject) => {
-                    this.form.validateFields((err, values) => {
-                        if (err) {
-                            reject();
-                            return;
-                        }
-                        //  console.table(values);
-                        const data = {
-                            id: this.selectCostData.id,
-                            amountPaid: values.amountPaid,
-                            isRefund: this.isRefund,
-                            payWay: values.payWay,
-                        };
-                        (() => {
-                            switch (this.isRefund) {
-                                case 0:
-                                    //  如果是缴费
-                                    return requestBillingsPayment(data);
-                                case 1:
-                                    //  如果是退费
-                                    return requestBillingsRefund(data);
-                                default:
-                                    throw new Error('错误的类型');
-                            }
-                        })()
-                            .then(v => {
-                                console.log(v);
-                                resolve();
-                            })
-                            .catch(err => {
-                                console.log(err);
-                                reject(err);
-                            });
-                    });
-                });
+                const { amountPayable: amountPaid, } = this.costData;
+                const data = {
+                    id: this.selectCostId,
+                    amountPaid,
+                    isRefund: this.isRefund,
+                    payWay: 3,
+                };
+                console.log(data);
+                switch (this.isRefund) {
+                    case 0:
+                        //  如果是缴费
+                        return requestBillingsPayment(data);
+                    case 1:
+                        //  退费原因
+                        data.reason = this.reason;
+                        //  如果是退费
+                        return requestBillingsRefund(data);
+                    default:
+                        throw new Error('错误的类型');
+                }
             },
         }
     };
 </script>
+<style scoped>
+    .pay-cost-form-content {
+        padding: 16px;
+        border: 1px solid var(--basic-border-color);
+    }
+    
+    .pay-cost-form-content li + li {
+        margin-top: 16px;
+    }
+    
+    /*需要被对齐对文字*/
+    .label {
+        height: 21px;
+        overflow-y: hidden;
+        text-align: justify;
+        width: 72px;
+        margin-right: 0.3em;
+        position: relative;
+    }
+    
+    .label::after {
+        content: '';
+        display: inline-block;
+        width: 100px;
+        line-height: 0;
+        height: 0;
+    }
+    
+    /*冒号*/
+    .colon {
+        margin-right: .7em;
+    }
+</style>
