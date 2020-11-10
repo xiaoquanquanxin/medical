@@ -81,49 +81,50 @@
         </div>
         <div v-show="false">
             <a-button class="basic-button-width" type="primary" v-print="printObj" id="printButton">打印</a-button>
-            <div id="paper">
-                <a-row type="flex" justify="center">
-                    <h2>缴费凭证</h2>
-                </a-row>
-                <a-row type="flex" justify="space-between" align="middle">
-                    <a-col>山西省人民医院</a-col>
-                    <a-col>缴费日期{{payCostInfo}}</a-col>
-                </a-row>
-                <a-divider/>
-                <div class="print-patient-basic-info">
-                    <a-row type="flex" justify="start" align="middle">
-                        <b class="weight-label">患者姓名:</b>
-                        <span>xxx{{payCostInfo}}</span>
+            <div class="print-wrap">
+                <div id="paper">
+                    <a-row type="flex" justify="center">
+                        <h2>缴费凭证</h2>
                     </a-row>
-                    <a-row type="flex" justify="start" align="middle">
-                        <b class="weight-label">住院号:</b>
-                        <span>xxx{{payCostInfo}}</span>
+                    <a-row type="flex" justify="space-between" align="middle">
+                        <a-col>山西省人民医院</a-col>
+                        <a-col>缴费日期{{payCostInfo}}</a-col>
                     </a-row>
-                    <a-row type="flex" justify="start" align="middle">
-                        <b class="weight-label">科室:</b>
-                        <span>xxx{{payCostInfo}}</span>
-                    </a-row>
-                    <a-row type="flex" justify="start" align="middle">
-                        <b class="weight-label">详情如下:</b>
-                    </a-row>
-                </div>
-                <a-table
-                        :columns="printColumns"
-                        :data-source="data"
-                        :scroll="scroll"
-                        :pagination="false"
-                        :bordered="true"
-                >
-                </a-table>
-                <div class="print-patient-basic-info">
-                    <a-row type="flex" justify="start" align="middle">
-                        <b class="weight-label">操作人员:</b>
-                        <span>xxx{{payCostInfo}}</span>
-                    </a-row>
-                    <a-row type="flex" justify="start" align="middle">
-                        <b class="weight-label">打印时间:</b>
-                        <span>xxx{{payCostInfo}}</span>
-                    </a-row>
+                    <a-divider/>
+                    <div class="print-patient-basic-info">
+                        <a-row type="flex" justify="start" align="middle">
+                            <b class="weight-label">患者姓名:</b>
+                            <span>xxx{{payCostInfo}}</span>
+                        </a-row>
+                        <a-row type="flex" justify="start" align="middle">
+                            <b class="weight-label">住院号:</b>
+                            <span>xxx{{payCostInfo}}</span>
+                        </a-row>
+                        <a-row type="flex" justify="start" align="middle">
+                            <b class="weight-label">科室:</b>
+                            <span>xxx{{payCostInfo}}</span>
+                        </a-row>
+                        <a-row type="flex" justify="start" align="middle">
+                            <b class="weight-label">详情如下:</b>
+                        </a-row>
+                    </div>
+                    <a-table
+                            :columns="printColumns"
+                            :data-source="data"
+                            :pagination="false"
+                            :bordered="true"
+                    >
+                    </a-table>
+                    <div class="print-patient-basic-info">
+                        <a-row type="flex" justify="start" align="middle">
+                            <b class="weight-label">操作人员:</b>
+                            <span>xxx{{payCostInfo}}</span>
+                        </a-row>
+                        <a-row type="flex" justify="start" align="middle">
+                            <b class="weight-label">打印时间:</b>
+                            <span>xxx{{payCostInfo}}</span>
+                        </a-row>
+                    </div>
                 </div>
             </div>
         </div>
@@ -340,13 +341,12 @@
     };
 </script>
 <style scoped>
-    /*票据*/
-    #paper {
-        width: 600px;
+    .print-wrap {
         margin: 20px auto;
+        width: 600px;
     }
     
-    /*风格线*/
+    /*风格线⚠️保留*/
     .ant-divider-horizontal {
         margin: .6em 0;
     }
@@ -360,4 +360,9 @@
     .print-patient-basic-info {
         line-height: 2.4em;
     }
+    
+    /*@page {*/
+    /*    size: 8.5in 11in ;*/
+    /*    margin: 2cm;*/
+    /*}*/
 </style>
