@@ -141,14 +141,6 @@
                     //  处方审核详情
                     detailType = 2;
                     break;
-//                case  'costDetail':
-//                    //  收计费详情
-//                    detailType = 4;
-//                    break;
-//                case 'orderDetail':
-//                    //  订单详情
-//                    detailType = 5;
-//                    break;
                 default:
                     throw new Error(`这是什么页面？${name}`);
             }
