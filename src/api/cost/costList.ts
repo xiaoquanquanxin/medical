@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 
-//	收计费列表分页			✅，⚠️接口文档请求参数和原型不同
+//	收计费列表分页			✅
 export function requestBillingsBillingPage(data: any) {
 	return request({
 		url: '/api/billings/billingPage',
