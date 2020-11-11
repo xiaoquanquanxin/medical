@@ -14,7 +14,7 @@
                     {{dataSource.name}}
                 </a-descriptions-item>
                 <a-descriptions-item label="性别">
-                    {{dataSource.sex}}
+                    <b class="red">{{dataSource.sex}}</b>
                 </a-descriptions-item>
                 <a-descriptions-item label="科室">
                     {{dataSource.deptName}}
@@ -26,10 +26,10 @@
                     {{dataSource.name}}
                 </a-descriptions-item>
                 <a-descriptions-item label="处方日期">
-                    {{dataSource.deptName}}
+                    {{dataSource.payTime}}
                 </a-descriptions-item>
                 <a-descriptions-item label="缴费状态">
-                    {{dataSource.idCard}}
+                    {{dataSource.payStatus === 0 ? '待支付':'已支付'}}
                 </a-descriptions-item>
                 <a-descriptions-item></a-descriptions-item>
             </a-descriptions>
