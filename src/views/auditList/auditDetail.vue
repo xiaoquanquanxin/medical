@@ -18,8 +18,8 @@
                 <a-button v-if="detailType ===2 && (auditStatus === 1 || auditStatus === 2)"
                           class="basic-button-width" type="primary" @click="rejectFn">驳回
                 </a-button>
-                <a-button v-if="detailType ===5"
-                          class="basic-button-width" type="primary" v-print="printObj">打印
+                <a-button
+                        class="basic-button-width" type="primary" v-print="printObj">打印
                 </a-button>
             </div>
             <span data-msg="占位"></span>
@@ -45,6 +45,9 @@
             </b>
         </a-row>
         <div class="patient-basic-info-like">
+            <b class="red">作废是哪个状态？木木的配置任务详情有configStatus ：0 未配置 1 已配置 2 已过期 3 已作废 4 已签收 5 未签收</b>
+            <br>
+            <b class="red">但是涛哥的处方详情接口"/api/prescription/detail"文档没有作废这个状态</b>
             <div id="printContent">
                 <!--基础表格-->
                 <BasicInfoTable
