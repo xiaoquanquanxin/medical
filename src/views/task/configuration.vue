@@ -3,7 +3,7 @@
         <!--搜索相关-->
         <div class="a-input-group">
             <a-input class="basic-input-width" v-model="searchData.name" placeholder="请输入患者姓名"/>
-            <a-input class="basic-input-width" v-model="searchData.commodityName" placeholder="请输入处方号"/>
+            <a-input class="basic-input-width" v-model="searchData.prescriptionCode" placeholder="请输入处方号"/>
             <a-date-picker
                     data-msg="只有配置历史有"
                     v-if="!isConfigurationPage"
