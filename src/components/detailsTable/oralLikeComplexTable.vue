@@ -1,5 +1,8 @@
 <template>
     <div>
+        <a-row type="flex" justify="start" align="middle" class="table-group-title no-border-bottom">
+            <span>{{templateName}}</span>
+        </a-row>
         <a-table
                 :columns="columns"
                 :data-source="dataSource.plain"
@@ -29,6 +32,8 @@
     </div>
 </template>
 <script>
+    import { usageMethodMap, templateTypeMap } from '../../utils/constants';
+
     export default {
         props: ['dataSource'],
         data(){
@@ -71,14 +76,23 @@
                 },
             ];
             return {
+                //  食用方法
+                usageMethodMap,
+                //  模板类型
+                templateTypeMap,
                 columns,
-
+                //  模板类型
+                templateName: undefined,
+                //  食用方法
+                usageMethod: undefined,
             };
         },
         created(){
             const {
                 plain,
-                remark
+                remark,
+                templateType,
+                usageMethod,
             } = this.dataSource;
             if (!plain.length) {
                 throw new Error('缺少数据');
@@ -93,6 +107,8 @@
                 item.configWater = configWater;
                 item.remark = remark;
             });
+            this.templateName = this.templateTypeMap[templateType].name;
+            this.usageMethod = this.usageMethodMap[usageMethod || 1].name;
             //  console.log(JSON.parse(JSON.stringify(this.dataSource.plain[0].nutritionPlain[0])));
         }
     };
