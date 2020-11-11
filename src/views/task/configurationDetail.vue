@@ -23,12 +23,6 @@
                 />
                 <br>
             </div>
-            <!--营养干预详情和处方审核详情，才有膳食的表格-->
-            <!---->
-            <!--能量表-->
-            <!--                <EnergyTable-->
-            <!--                        :totalEnergyData="totalEnergyData"-->
-            <!--                />-->
         </div>
         <div class="print-wrap" v-show="false">
             <div id="printContent" data-msg="打印配置单">
@@ -104,8 +98,6 @@
     import ConfigDetailTimeTable from '@/components/detailsTable/configDetailTimeTable.vue';
     //  膳食营养计划
     import DietaryTable from '@/components/detailsTable/dietaryTable.vue';
-    //  能量
-    //    import EnergyTable from '@/components/detailsTable/energyTable.vue';
     //  驳回
     import RejectForm from '@/components/auditList/rejectForm.vue';
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
@@ -119,7 +111,6 @@
             ConfigDetailTimeTable,
             DietaryTable,
             RejectForm,
-//            EnergyTable,
         },
         data(){
             const { name } = this.$route;
@@ -174,14 +165,9 @@
 
                 //  商品单位下拉
                 unitTypeList: [],
-
-                //  能量表数据
-//                totalEnergyData: [],
             };
         },
         created(){
-            //  清空能量
-//            this.setEnergyData(null);
             this.searchFn();
         },
         methods: {
