@@ -239,7 +239,7 @@
 
                 //  时间 的默认值
                 defaultDate: moment(new Date()),
-                
+
                 //  打印处方
                 printBottle: {
                     id: '#printBottle',
@@ -314,5 +314,5 @@
     };
 </script>
 <style scoped>
-    @import "~@/css/cost.css";
+    /*@import "~@/css/cost.css";*/
 </style>
