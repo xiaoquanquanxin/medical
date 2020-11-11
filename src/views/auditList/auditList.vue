@@ -2,7 +2,7 @@
     <div class="layout-content-inner-main">
         <!--搜索相关-->
         <div class="a-input-group">
-            <a-input class="basic-input-width" v-model="searchData.prescriptionCode" placeholder="请输入处方条码"/>
+            <a-input class="basic-input-width" v-model="searchData.prescriptionCode" placeholder="请输入处方编号"/>
             <a-date-picker
                     class="lengthen-select-width"
                     placeholder="请选择开具日期"
@@ -17,7 +17,6 @@
                 <a-select-option value="3">已驳回</a-select-option>
             </a-select>
             <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
-            <b>搜索条件没区分</b>
         </div>
         <!--表格-->
         <a-table
@@ -73,7 +72,6 @@
     } from '@/utils/pagination.ts';
     import { oneRowSearch } from '@/utils/tableScroll';
     import { requestPrescriptionAuditPage } from '../../api/auditList';
-    import { requestDeptList } from '../../api/department';
 
     const columns = [
         {
