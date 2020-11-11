@@ -13,7 +13,7 @@
                 <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
             </div>
             <p>需要告知列表判断是否展示缴费、退费按钮的区分字段；操作的具体字段。</p>
-            <b class="red">缴费状态、是否可以缴费的判断可能是错的</b>
+            <b class="red">缴费状态、是否可以缴费的判断可能是错的【前端】</b>
             <!--表格-->
             <a-table
                     :columns="columns"
