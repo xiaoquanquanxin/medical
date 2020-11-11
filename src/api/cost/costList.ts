@@ -27,4 +27,12 @@ export function requestBillingsRefund(data: any) {
 	});
 }
 
-//	缺少详情接口【开会说这个应该是处方审核列表的详情，我可以直接处理】，进行缴费需要先调缴费详情等等
+//	收计费详情
+export function requestBillingsBillingDetails(id: string | number) {
+	return request({
+		url: `/api/billings/billingDetails/${id}`,
+		method: 'get',
+	});
+}
+
+
