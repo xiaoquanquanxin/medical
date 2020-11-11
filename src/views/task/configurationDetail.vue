@@ -16,13 +16,18 @@
                     :dataSource="basicInfoData"
             />
             <br>
-            <div v-for="item in detail" v-if="true">
-                <!--时间表格-->
+            <div v-for="item in detail" v-if="detailType === 1">
+                <!--配置详情时间表格-->
                 <ConfigDetailTimeTable
                         :dataSource="item"
                 />
-                <br>
             </div>
+            <!--领药商品列表-->
+            <DrugCommodityListTable
+                    v-if="detailType === 2 && drugDetailList.length"
+                    :dataSource="drugDetailList"
+            />
+            <br>
         </div>
         <div class="print-wrap" v-show="false">
             <div id="printContent" data-msg="打印配置单">
@@ -91,16 +96,13 @@
     </div>
 </template>
 <script>
-    import { mapGetters, mapActions } from 'vuex';
     //  基础数据
     import ConfigDetailBasicInfo from '@/components/detailsTable/configDetailBasicInfo.vue';
     //  时间表格
     import ConfigDetailTimeTable from '@/components/detailsTable/configDetailTimeTable.vue';
-    //  膳食营养计划
-    import DietaryTable from '@/components/detailsTable/dietaryTable.vue';
-    //  驳回
-    import RejectForm from '@/components/auditList/rejectForm.vue';
-    import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
+    //  领药列表
+    import DrugCommodityListTable from '@/components/detailsTable/drugCommodityListTable.vue';
+
     import GoBackButton from '@/components/goBackButton.vue';
     import { requestPrescriptionDetail } from '../../api/userList/intervention';
 
@@ -109,8 +111,7 @@
             GoBackButton,
             ConfigDetailBasicInfo,
             ConfigDetailTimeTable,
-            DietaryTable,
-            RejectForm,
+            DrugCommodityListTable,
         },
         data(){
             const { name } = this.$route;
@@ -125,44 +126,27 @@
                     //  领药任务详情
                     detailType = 2;
                     break;
-                case  'costDetail':
-                    //  收计费详情
-                    detailType = 3;
-                    break;
                 default:
                     throw new Error(`这是什么页面？${name}`);
             }
             return {
-                //  审核状态(1.待审核，2，已审核，3，已驳回)
-                auditStatus: null,
-                //  配置状态(1.待签收，2，待配置，3.已配置，4，待领取，5，已领取)
-                orderStatus: null,
-                //  病人id
-                patientId: null,
-
                 //  详情的类型
                 detailType,
 
                 //  详情的id
                 detailId: this.$route.params.detailId,
-
                 //  基础数据
                 basicInfoData: {},
-                //  膳食营养计划数据
-                nutrition: [],
-
-                //  拒绝的莫泰框
-                dialogReject: this.initModal(DIALOG_TYPE.REJECT),
-
                 //  打印配置单
                 printObj: {
                     id: '#printContent',
                     popTitle: '配置单',
                 },
-
-                //  主要详情
+                //  配置详情
                 detail: [],
 
+                //  领药详情
+                drugDetailList: [],
                 //  商品单位下拉
                 unitTypeList: [],
             };
@@ -190,49 +174,17 @@
                         this.patientId = data.patientId;
                         const {
                             detail,
-                            nutrition
                         } = data;
                         this.detail = detail;
-                        nutrition.forEach((item, index) => {
-                            item.key = index;
+                        const drugDetailList = [];
+                        data.detail.forEach(item => {
+                            item.detailGoods.forEach(_item => {
+                                drugDetailList.push(_item);
+                            });
                         });
-                        //  console.log(JSON.parse(JSON.stringify(nutrition)));
-                        this.nutrition = nutrition;
-                        //  合计
-//                        const { energy, protein, fat, carbohydrates } = data;
-//                        this.setEnergyData(
-//                            {
-//                                key: 1,
-//                                energy,
-//                                protein,
-//                                fat,
-//                                carbohydrates,
-//                            }
-//                        );
-                        //  todo    这是新版本
-                        //  设置能量数据
-//                        this.totalEnergyData = [{
-//                            key: 1,
-//                            energy,
-//                            protein,
-//                            fat,
-//                            carbohydrates,
-//                        }];
-                        console.log(JSON.parse(JSON.stringify(data)));
+                        this.drugDetailList = drugDetailList;
                     });
             },
-
-            ...mapActions('constants', [
-                //  设置单元数据
-                'setUnitTypeList',
-            ]),
-//            ...mapActions('intervention', [
-            //  设置能量数据
-//                'setEnergyData',
-//            ]),
-            //    莫泰框方法
-            ...dialogMethods,
-
         }
     };
 </script>
