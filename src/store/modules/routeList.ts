@@ -8,7 +8,7 @@ import {getRoutes} from "@/api/basic"
 import {RouteConfig} from "vue-router"
 import {setRouteListByMap} from "@/utils/routerBasicMap"
 import {asyncRoutesList} from "@/router/modules/asyncRoutes"
-import {routeMap} from '@/store/a.ts';
+import {routeMap} from "@/router/routeMap"
 import {COMMIT_INTERFACE} from "@/store"
 import {convertRouting, getLoginInfo} from "@/utils/auth"
 import {requestMenuAllTree, requestMenuUserMenu} from "@/api/system/menu"
