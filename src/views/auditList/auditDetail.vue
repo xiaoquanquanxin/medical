@@ -67,6 +67,7 @@
                 <div v-if="detailType === 1 || detailType === 2">
                     <!--膳食营养计划-->
                     <DietaryTable
+                            v-if="nutrition.length"
                             :dataSource="nutrition"
                     />
                     <br>
@@ -133,14 +134,6 @@
                 case 'auditDetail':
                     //  处方审核详情
                     detailType = 2;
-                    break;
-                case 'configurationDetail':
-                    //  配置任务详情
-                    detailType = 3;
-                    break;
-                case 'getDrugDetail':
-                    //  领药任务详情
-                    detailType = 3;
                     break;
                 case  'costDetail':
                     //  收计费详情
