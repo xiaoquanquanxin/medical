@@ -30,12 +30,6 @@
             <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
             <span v-if="isConfigurationPage">配置历史按钮在左侧菜单</span>
         </div>
-        <div class="a-input-group" v-if="false" data-msg="暂时不做">
-            <a-space>
-                <a-button type="primary" v-print="printBottle">打印瓶贴</a-button>
-                <a-button type="primary" v-print="printMenu">打印配置单</a-button>
-            </a-space>
-        </div>
         <!--表格-->
         <a-table
                 :columns="columns"
@@ -104,77 +98,6 @@
                 </template>
             </a-pagination>
         </a-row>
-        <!--打印-->
-        <div v-show="false">
-            <div id="printBottle" data-msg="打印瓶贴">
-                <ul class="bottle-list">
-                    <li class="bottle-item">3290；外壳</li>
-                    <li class="bottle-item"><b>功能处方</b></li>
-                    <li class="bottle-item">
-                        <ul class="bottle-inner-list">
-                            <li class="bottle-item bottle-item-flex">
-                                <div class='bottle-inner-no'><b>序号</b></div>
-                                <div class="bottle-inner-prod"><b>产品</b></div>
-                                <div class="bottle-inner-count"><b>用量</b></div>
-                            </li>
-                            <li class="bottle-item bottle-item-flex">
-                                <div class='bottle-inner-no'>序号</div>
-                                <div class="bottle-inner-prod">产品</div>
-                                <div class="bottle-inner-count">用量</div>
-                            </li>
-                            <li class="bottle-item bottle-item-flex">
-                                <div class='bottle-inner-no'>序号</div>
-                                <div class="bottle-inner-prod">产品</div>
-                                <div class="bottle-inner-count">用量</div>
-                            </li>
-                            <li class="bottle-item bottle-item-flex">
-                                <div class='bottle-inner-no'>序号</div>
-                                <div class="bottle-inner-prod">产品</div>
-                                <div class="bottle-inner-count">用量</div>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="bottle-item"><b>用法用量：</b>sss</li>
-                    <li class="bottle-item"><b>营养医师：</b>feaw <b>处方日期：</b>恩爱fae</li>
-                    <li class="bottle-item"><b>配置员：</b>额发<b>领货人：</b>额发</li>
-                </ul>
-            </div>
-            <div id="printMenu" data-msg="打印配置单">
-                <ul class="menu-list">
-                    <li class="menu-item">
-                        <div><b>科室：</b>蛇精</div>
-                        <div class="menu-item-last"><b>病区：</b>蛇精</div>
-                    </li>
-                    <li class="menu-item">
-                        <div><b>姓名：</b>蛇精</div>
-                        <div class="menu-item-last"><b>床号：</b>蛇精</div>
-                    </li>
-                    <li class="menu-item">
-                        <div><b>住院号：</b>蛇精</div>
-                        <div class="menu-item-last"><b>液量：</b>蛇精</div>
-                    </li>
-                    <li class="menu-item">
-                        <div><b>热量：</b>蛇精</div>
-                        <div class="menu-item-last"><b>蛋白质：</b>蛇精</div>
-                    </li>
-                    <li class="menu-item">
-                        <b>营养师</b>xxx
-                    </li>
-                    <li class="menu-item">
-                        <b>用法用量</b>
-                        xxxx
-                    </li>
-                    <li class="menu-item">
-                        <b>配置时间</b>
-                        xxxx
-                    </li>
-                    <li class="menu-item">
-                        <b>餐次</b>
-                        xxxx
-                    </li>
-                </ul>
-            </div>
-        </div>
     </div>
 </template>
 <script>
@@ -285,17 +208,6 @@
 
                 //  选择日期的值的对象
                 selectDateMoment: moment(new Date() - oneDataTimestamp),
-
-                //  打印瓶贴
-                printBottle: {
-                    id: '#printBottle',
-                    popTitle: '打印瓶贴',
-                },
-                //  打印配置单
-                printMenu: {
-                    id: '#printMenu',
-                    popTitle: '打印配置单',
-                },
 
             };
         },
@@ -412,5 +324,5 @@
     };
 </script>
 <style scoped>
-    @import "~@/css/cost.css";
+    /*@import "~@/css/cost.css";*/
 </style>
