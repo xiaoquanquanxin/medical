@@ -5,20 +5,14 @@
             <div class="a-input-group">
                 <a-input class="basic-input-width" v-model="searchData.prescriptionCode" placeholder="请输入处方号"/>
                 <a-input class="basic-input-width" v-model="searchData.name" placeholder="请输入患者姓名"/>
-                <a-select class="lengthen-select-width" v-model="searchData.payStatus" placeholder="请选择支付状态">
-                    <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
-                    <a-select-option value="0">待支付</a-select-option>
-                    <a-select-option value="1">已支付</a-select-option>
-                </a-select>
-                <a-select class="lengthen-select-width" v-model="searchData.isRefund" placeholder="请选择缴退状态">
+                <a-select class="lengthen-select-width" v-model="searchData.isRefund" placeholder="请选择支付状态">
                     <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
                     <a-select-option value="0">已缴费</a-select-option>
                     <a-select-option value="1">已退费</a-select-option>
                 </a-select>
                 <a-button class="basic-button-width" type="primary" @click="searchFn">搜索</a-button>
             </div>
-            <br>
-            需要告知列表判断是否展示缴费、退费按钮的区分字段；操作的具体字段。
+            <p>需要告知列表判断是否展示缴费、退费按钮的区分字段；操作的具体字段。</p>
             <b class="red">缴费状态、是否可以缴费的判断可能是错的</b>
             <!--表格-->
             <a-table
