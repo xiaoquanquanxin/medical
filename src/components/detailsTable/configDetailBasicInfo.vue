@@ -29,7 +29,7 @@
                     {{dataSource.payTime}}
                 </a-descriptions-item>
                 <a-descriptions-item label="缴费状态">
-                    {{dataSource.payStatus === 0 ? '待支付':'已支付'}}
+                    <span style="color:var(--basic-a)">{{dataSource.payStatus === 0 ? '待支付':'已支付'}}</span>
                 </a-descriptions-item>
                 <a-descriptions-item></a-descriptions-item>
             </a-descriptions>
