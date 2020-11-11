@@ -1,9 +1,9 @@
 <template>
     <div>
         <div v-if="true">
-            <b class="red">如果使用量和使用单位分开【以前是配置量】那么使用量应该放前面并且使用量不要单位</b>
-            <br>
-            <b class="red">食用方法什么时候整合到列表里了？填营养干预只有那一类，那应该抽出来</b>
+            <p class="red">如果使用量和使用单位分开【以前是配置量】那么使用量应该放前面并且使用量不要单位</p>
+            <p class="red">食用方法什么时候整合到列表里了？填营养干预只有那一类，那应该抽出来</p>
+            <p class="red">打印瓶贴，由于是根据时间区，所以木木提供的营养干预保存接口，得在每一项里加额外的字段</p>
             <a-row type="flex" justify="space-between" align="middle" class="table-group-title no-border-bottom">
                 <span>{{templateName}}</span>
                 <span>{{usageMethod}}</span>
