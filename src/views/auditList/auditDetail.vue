@@ -4,27 +4,23 @@
             <div class="a-input-group">
                 <!--返回按钮-->
                 <GoBackButton/>
-                <div v-if="false" data-msg="不能编辑！！！">
-                    <!--只有营养干预详情 、 待审核才能编辑-->
-                    <router-link v-if="detailType === 1 && auditStatus === 1"
-                                 :to="{name:'editIntervention',params:{patientId,detailId}}">
-                        <a-button class="basic-button-width" type="primary">编辑</a-button>
-                    </router-link>
-                </div>
-                <!--只有处方审核才有通过、驳回-->
+                <!--只有处方审核详情 detailType === 2，且待审核 auditStatus === 1才有通过、驳回-->
                 <a-button v-if="detailType ===2 && (auditStatus === 1)"
                           class="basic-button-width" type="primary" @click="passFn">通过
                 </a-button>
-                <a-button v-if="detailType ===2 && (auditStatus === 1 || auditStatus === 2)"
+                <a-button v-if="detailType ===2 && auditStatus === 1"
                           class="basic-button-width" type="primary" @click="rejectFn">驳回
                 </a-button>
                 <a-button
-                        class="basic-button-width" type="primary" v-print="printObj">打印
+                        class="basic-button-width" type="primary" @click="invalidFn">作废
+                </a-button>
+                <a-button v-if="!false"
+                          class="basic-button-width" type="primary" v-print="printObj">打印
                 </a-button>
             </div>
             <span data-msg="占位"></span>
             <b>
-                <span v-if="detailType !== 4">状态：</span>
+                <span>状态：</span>
                 <span v-if="detailType === 1" data-msg="营养干预方案详情">
                     <span v-if="auditStatus === 1 ">待审核</span>
                     <span v-if="auditStatus === 2 ">已审核</span>
@@ -35,19 +31,26 @@
                     <span v-if="auditStatus === 2 ">已审核</span>
                     <span v-if="auditStatus === 3 ">已驳回</span>
                 </span>
-                <span v-if="detailType === 3 || detailType === 5" data-msg="配置任务详情">
-                    <span v-if="orderStatus === 1 ">待签收</span>
-                    <span v-if="orderStatus === 2 ">待配置</span>
-                    <span v-if="orderStatus === 3 ">已配置</span>
-                    <span v-if="orderStatus === 4 ">待领取</span>
-                    <span v-if="orderStatus === 5 ">已领取</span>
-                </span>
+<!--                <span v-if="detailType === 订单" data-msg="配置任务详情">-->
+<!--                    <span v-if="orderStatus === 1 ">待签收</span>-->
+<!--                    <span v-if="orderStatus === 2 ">待配置</span>-->
+<!--                    <span v-if="orderStatus === 3 ">已配置</span>-->
+<!--                    <span v-if="orderStatus === 4 ">待领取</span>-->
+<!--                    <span v-if="orderStatus === 5 ">已领取</span>-->
+<!--                </span>-->
             </b>
         </a-row>
+        <div data-msg="说明：">
+            <b>现在按钮的逻辑：</b>
+            <p>1.通过按钮：是处方审核详情&&未审核</p>
+            <p>2.驳回按钮：是处方审核详情&&未审核</p>
+            <p>3.作废按钮：是处方审核详情&&(!已缴费 || !已作废)缺字段？</p>
+            <p>4.打印按钮：!已作废【目前不知道怎么区分作废】</p>
+        </div>
+        <p class="red">作废是哪个状态？木木的配置任务详情有configStatus ：0 未配置 1 已配置 2 已过期 3 已作废 4 已签收 5 未签收</p>
+        <p class="red">但是涛哥的处方详情接口"/api/prescription/detail"文档没有作废这个状态</p>
+        <p class="red">把这段话删了下面的布局就正常了</p>
         <div class="patient-basic-info-like">
-            <b class="red">作废是哪个状态？木木的配置任务详情有configStatus ：0 未配置 1 已配置 2 已过期 3 已作废 4 已签收 5 未签收</b>
-            <br>
-            <b class="red">但是涛哥的处方详情接口"/api/prescription/detail"文档没有作废这个状态</b>
             <div id="printContent">
                 <!--基础表格-->
                 <BasicInfoTable
@@ -138,14 +141,14 @@
                     //  处方审核详情
                     detailType = 2;
                     break;
-                case  'costDetail':
-                    //  收计费详情
-                    detailType = 4;
-                    break;
-                case 'orderDetail':
-                    //  订单详情
-                    detailType = 5;
-                    break;
+//                case  'costDetail':
+//                    //  收计费详情
+//                    detailType = 4;
+//                    break;
+//                case 'orderDetail':
+//                    //  订单详情
+//                    detailType = 5;
+//                    break;
                 default:
                     throw new Error(`这是什么页面？${name}`);
             }
@@ -179,7 +182,7 @@
                 //  打印对象
                 printObj: {
                     id: '#printContent',
-                    popTitle: 'xxxxxxx详情',
+                    popTitle: '处方详情',
                 },
 
                 //  主要详情
@@ -255,6 +258,37 @@
             },
             //  通过
             passFn(){
+                const { prescriptionType, prescriptionName } = this.basicInfoData[0];
+                this.$confirm({
+                    title: `确定通过${prescriptionName}`,
+                    okText: '确认',
+                    cancelText: '取消',
+                    onOk: () => {
+                        const data = {
+                            //  审核状态auditStatus(1.待审核，2.已审核，3.已驳回)
+                            id: this.detailId,
+                            auditStatus: 2,
+                            prescriptionType,
+                        };
+                        return requestPrescriptionAuditUpdate(data)
+                            .then(v => {
+                                this.$message.success('操作成功');
+                                this.searchFn();
+                            })
+                            .catch(err => {
+                                console.log(err);
+                                this.$message.error('操作失败');
+                            });
+                    },
+                    onCancel(){
+                        console.log('取消');
+                    },
+                });
+            },
+            //  作废
+            invalidFn(){
+                alert('接口？参数？');
+                return;
                 const { prescriptionType, prescriptionName } = this.basicInfoData[0];
                 this.$confirm({
                     title: `确定通过${prescriptionName}`,
