@@ -144,6 +144,11 @@
 }
 
 /*不同的大小，每行的数量*/
+.item-4 .ant-descriptions-row .ant-descriptions-item-content {
+    width: 16%;
+}
+
+/*不同的大小，每行的数量*/
 .item-3 .ant-descriptions-row .ant-descriptions-item-content {
     width: 21%;
 }
