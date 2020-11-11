@@ -923,7 +923,7 @@ export const asyncRoutesList = [
 				},
 				name: 'configurationDetail',
 				path: '/task/configurationDetail/:detailId',
-				component: () => import(/* webpackChunkName: "auditDetail" */ '@/views/auditList/auditDetail.vue'),
+				component: () => import(/* webpackChunkName: "configurationDetail" */ '@/views/task/configurationDetail.vue'),
 			},
 			{
 				meta: {
@@ -945,7 +945,7 @@ export const asyncRoutesList = [
 				},
 				name: 'configurationHistoryDetail',
 				path: '/task/configurationHistoryDetail/:detailId',
-				component: () => import(/* webpackChunkName: "auditDetail" */ '@/views/auditList/auditDetail.vue'),
+				component: () => import(/* webpackChunkName: "configurationDetail" */ '@/views/task/configurationDetail.vue'),
 			},
 			{
 				meta: {
@@ -967,7 +967,7 @@ export const asyncRoutesList = [
 				},
 				name: 'getDrugDetail',
 				path: '/task/getDrugDetail/:detailId',
-				component: () => import(/* webpackChunkName: "auditDetail" */ '@/views/auditList/auditDetail.vue'),
+				component: () => import(/* webpackChunkName: "configurationDetail" */ '@/views/task/configurationDetail.vue'),
 			},
 			// {
 			// 	meta: {
