@@ -1031,7 +1031,7 @@ export const asyncRoutesList = [
 				},
 				name: 'costDetail',
 				path: '/cost/costDetail/:detailId',
-				component: () => import(/* webpackChunkName: "auditDetail" */ '@/views/auditList/auditDetail.vue'),
+				component: () => import(/* webpackChunkName: "costDetail" */ '@/views/cost/costDetail.vue'),
 			}
 		]
 	},
