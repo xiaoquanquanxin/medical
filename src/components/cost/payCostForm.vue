@@ -42,7 +42,7 @@
                         <span v-else>退费金额</span>
                     </a-col>
                     <a-col class="colon">:</a-col>
-                    <a-col>{{costData.amountPayable}}</a-col>
+                    <a-col>{{costData.amountPaid}}</a-col>
                 </a-row>
             </li>
             <li v-if="isRefund === 1">
@@ -79,7 +79,11 @@
     </div>
 </template>
 <script>
-    import { requestBillingsPayment, requestBillingsRefund } from '../../api/cost/costList';
+    import {
+        requestBillingsBillingDetails,
+        requestBillingsPayment,
+        requestBillingsRefund
+    } from '../../api/cost/costList';
     import { requestPrescriptionDetail } from '../../api/userList/intervention';
 
     export default {
@@ -107,7 +111,7 @@
         },
         methods: {
             searchFn(){
-                requestPrescriptionDetail(this.selectCostId)
+                requestBillingsBillingDetails(this.selectCostId)
                     .then(v => {
                         console.log(v.data);
                         this.costData = v.data;
