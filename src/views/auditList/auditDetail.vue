@@ -1,6 +1,6 @@
 <template>
     <div class="layout-content-inner-main patient-basic-info-like-wrap">
-        <a-row type="flex" justify="space-between" align="middle" v-if="false">
+        <a-row type="flex" justify="space-between" align="middle" v-if="true">
             <div class="a-input-group">
                 <!--返回按钮-->
                 <GoBackButton/>
@@ -38,7 +38,7 @@
             <!--                    <span v-if="orderStatus === 5 ">已领取</span>-->
             <!--                </span>-->
         </a-row>
-        <div data-msg="说明：" v-if="false">
+        <div data-msg="说明：" v-if="true">
             <b>现在按钮的逻辑：</b>
             <p>1.通过按钮：是处方审核详情&&未审核</p>
             <p>2.驳回按钮：是处方审核详情&&未审核</p>
@@ -48,7 +48,7 @@
             <p class="red">但是涛哥的处方详情接口"/api/prescription/detail"文档没有作废这个状态</p>
             <p class="red">把这段话删了下面的布局就正常了</p>
         </div>
-        <div class="patient-basic-info-like" v-if="false">
+        <div class="patient-basic-info-like" v-if="true">
             <!--基础表格-->
             <BasicInfoTable
                     :data-source="basicInfoData"
@@ -80,7 +80,7 @@
                     :totalEnergyData="totalEnergyData"
             />
         </div>
-        <div class="patient-basic-info-like print-wrap" id="printContent">
+        <div class="patient-basic-info-like print-wrap" v-show="false">
             <div id="printObj" data-msg="打印营养干预">
                 <a-row type="flex" justify="center">
                     <h2>营养专用处方戋</h2>
@@ -223,7 +223,7 @@
 
                 //  打印对象
                 printObj: {
-                    id: '#printContent',
+                    id: '#printObj',
                     popTitle: '处方详情',
 
                     amountPayable: undefined,
@@ -417,7 +417,7 @@
 </script>
 <style scoped>
     .print-wrap {
-        /*margin: 20px auto;*/
+        margin: 0 auto;
         width: 500px;
     }
     
