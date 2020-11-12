@@ -1,6 +1,6 @@
 <template>
     <div class="layout-content-inner-main patient-basic-info-like-wrap">
-        <a-row type="flex" justify="space-between" align="middle">
+        <a-row type="flex" justify="space-between" align="middle" v-if="false">
             <div class="a-input-group">
                 <!--返回按钮-->
                 <GoBackButton/>
@@ -19,69 +19,117 @@
                 </a-button>
             </div>
             <span data-msg="占位"></span>
-            <b>
-                <span>状态：</span>
-                <span v-if="detailType === 1" data-msg="营养干预方案详情">
+            <span>状态：</span>
+            <span v-if="detailType === 1" data-msg="营养干预方案详情">
                     <span v-if="auditStatus === 1 ">待审核</span>
                     <span v-if="auditStatus === 2 ">已审核</span>
                     <span v-if="auditStatus === 3 ">已驳回</span>
                 </span>
-                <span v-if="detailType === 2" data-msg="处方审核详情">
+            <span v-if="detailType === 2" data-msg="处方审核详情">
                     <span v-if="auditStatus === 1 ">待审核</span>
                     <span v-if="auditStatus === 2 ">已审核</span>
                     <span v-if="auditStatus === 3 ">已驳回</span>
                 </span>
-<!--                <span v-if="detailType === 订单" data-msg="配置任务详情">-->
-<!--                    <span v-if="orderStatus === 1 ">待签收</span>-->
-<!--                    <span v-if="orderStatus === 2 ">待配置</span>-->
-<!--                    <span v-if="orderStatus === 3 ">已配置</span>-->
-<!--                    <span v-if="orderStatus === 4 ">待领取</span>-->
-<!--                    <span v-if="orderStatus === 5 ">已领取</span>-->
-<!--                </span>-->
-            </b>
+            <!--                <span v-if="detailType === 订单" data-msg="配置任务详情">-->
+            <!--                    <span v-if="orderStatus === 1 ">待签收</span>-->
+            <!--                    <span v-if="orderStatus === 2 ">待配置</span>-->
+            <!--                    <span v-if="orderStatus === 3 ">已配置</span>-->
+            <!--                    <span v-if="orderStatus === 4 ">待领取</span>-->
+            <!--                    <span v-if="orderStatus === 5 ">已领取</span>-->
+            <!--                </span>-->
         </a-row>
-        <div data-msg="说明：">
+        <div data-msg="说明：" v-if="false">
             <b>现在按钮的逻辑：</b>
             <p>1.通过按钮：是处方审核详情&&未审核</p>
             <p>2.驳回按钮：是处方审核详情&&未审核</p>
             <p>3.作废按钮：是处方审核详情&&(!已缴费 || !已作废)缺字段？</p>
             <p>4.打印按钮：!已作废【目前不知道怎么区分作废】</p>
+            <p class="red">作废是哪个状态？木木的配置任务详情有configStatus ：0 未配置 1 已配置 2 已过期 3 已作废 4 已签收 5 未签收</p>
+            <p class="red">但是涛哥的处方详情接口"/api/prescription/detail"文档没有作废这个状态</p>
+            <p class="red">把这段话删了下面的布局就正常了</p>
         </div>
-        <p class="red">作废是哪个状态？木木的配置任务详情有configStatus ：0 未配置 1 已配置 2 已过期 3 已作废 4 已签收 5 未签收</p>
-        <p class="red">但是涛哥的处方详情接口"/api/prescription/detail"文档没有作废这个状态</p>
-        <p class="red">把这段话删了下面的布局就正常了</p>
-        <div class="patient-basic-info-like">
-            <div id="printContent">
-                <!--基础表格-->
-                <BasicInfoTable
-                        :data-source="basicInfoData"
+        <div class="patient-basic-info-like" v-if="false">
+            <!--基础表格-->
+            <BasicInfoTable
+                    :data-source="basicInfoData"
+            />
+            <br>
+            <div v-for="item in detail" v-if="true">
+                <!--商品表格-->
+                <OralLikeBasicTable
+                        :dataSource="item"
                 />
                 <br>
-                <div v-for="item in detail" v-if="true">
-                    <!--商品表格-->
-                    <OralLikeBasicTable
-                            :dataSource="item"
-                    />
-                    <br>
-                    <!--时间表格-->
-                    <OralLikeComplexTable
-                            :dataSource="item"
-                    />
-                    <br>
-                </div>
-                <!--营养干预详情和处方审核详情，才有膳食的表格-->
-                <div v-if="detailType === 1 || detailType === 2">
-                    <!--膳食营养计划-->
-                    <DietaryTable
-                            v-if="nutrition.length"
-                            :dataSource="nutrition"
-                    />
-                    <br>
-                </div>
-                <!--能量表-->
-                <EnergyTable
-                        :totalEnergyData="totalEnergyData"
+                <!--时间表格-->
+                <OralLikeComplexTable
+                        :dataSource="item"
                 />
+                <br>
+            </div>
+            <!--营养干预详情和处方审核详情，才有膳食的表格-->
+            <div v-if="detailType === 1 || detailType === 2">
+                <!--膳食营养计划-->
+                <DietaryTable
+                        v-if="nutrition.length"
+                        :dataSource="nutrition"
+                />
+                <br>
+            </div>
+            <!--能量表-->
+            <EnergyTable
+                    :totalEnergyData="totalEnergyData"
+            />
+        </div>
+        <div class="patient-basic-info-like print-wrap" id="printContent">
+            <div id="printObj" data-msg="打印营养干预">
+                <a-row type="flex" justify="center">
+                    <h2>营养专用处方戋</h2>
+                </a-row>
+                <a-row type="flex" justify="space-between" align="middle" class="bottle-list">
+                    <div>住院号：{{printObj.hospitalCode}}</div>
+                    <div>科室：{{printObj.deptName}}</div>
+                    <div>费别：自费</div>
+                    <div>年&emsp;月&emsp;日</div>
+                </a-row>
+                <a-row type="flex" justify="space-between" align="middle" class="bottle-list">
+                    <div>姓名：{{printObj.name}}</div>
+                    <div>病区/床号：{{printObj.bedCode}}</div>
+                    <div>联系电话：{{printObj.phone}}</div>
+                    <div></div>
+                </a-row>
+                <a-row type="flex" justify="space-between" align="middle" class="bottle-list">
+                    <div>临床诊断：{{printObj.bedCode}}</div>
+                    <div>库房：营养治疗室</div>
+                </a-row>
+                <br>
+                <div style="font-size: 36px;">R</div>
+                
+                
+                <br>
+                <a-row type="flex" justify="end" align="middle">
+                    <span style="padding-right: 5em;">医师签字：</span>
+                </a-row>
+                <br>
+                <div>
+                    <a-row type="flex" justify="space-between" align="middle" class="allocate-list">
+                        <div class="allocate-label">审核/调配</div>
+                        <div class="allocate-content"></div>
+                        <div class="allocate-label">核对/发放</div>
+                        <div class="allocate-content"></div>
+                    </a-row>
+                    <a-row type="flex" justify="space-between" align="middle" class="allocate-list">
+                        <div class="allocate-label">缴费</div>
+                        <div class="allocate-content">{{printObj.amountPayable}}</div>
+                        <div class="allocate-label">划价员</div>
+                        <div class="allocate-content"></div>
+                    </a-row>
+                </div>
+                <br>
+                <a-row type="flex" justify="start" align="middle">
+                    <img :src="qrcode" alt="" style="width:100px;">
+                    <span style="writing-mode:lr-tb;writing-mode:tb-rl;">用药指导</span>
+                    <span style="padding-left: 3em;">注：处方当日有效</span>
+                </a-row>
             </div>
         </div>
         <!--驳回莫泰框-->
@@ -100,6 +148,7 @@
     </div>
 </template>
 <script>
+    import qrcode from '@/assets/qrcode.jpeg';
     import { mapGetters, mapActions } from 'vuex';
     //  基础数据
     import BasicInfoTable from '@/components/detailsTable/basicInfoTable.vue';
@@ -145,6 +194,8 @@
                     throw new Error(`这是什么页面？${name}`);
             }
             return {
+                //  二维码
+                qrcode,
                 //  审核状态(1.待审核，2，已审核，3，已驳回)
                 auditStatus: null,
                 //  配置状态(1.待签收，2，待配置，3.已配置，4，待领取，5，已领取)
@@ -175,6 +226,8 @@
                 printObj: {
                     id: '#printContent',
                     popTitle: '处方详情',
+
+                    amountPayable: undefined,
                 },
 
                 //  主要详情
@@ -246,6 +299,9 @@
                             carbohydrates,
                         }];
                         console.log(JSON.parse(JSON.stringify(data)));
+
+                        const printObj = this.printObj;
+                        printObj.amountPayable = 1;
                     });
             },
             //  通过
@@ -357,3 +413,43 @@
         }
     };
 </script>
+<style scoped>
+    .print-wrap {
+        /*margin: 20px auto;*/
+        width: 500px;
+    }
+    
+    .bottle-list {
+        padding: 0.5em 0.6em;
+        border-bottom: 1px solid var(--basic-border-color);
+    }
+    
+    
+    /*调配表的list*/
+    .allocate-list {
+        line-height: 2em;
+        border-top: 1px solid var(--basic-border-color);
+    }
+    
+    .allocate-list:last-child {
+        border-bottom: 1px solid var(--basic-border-color);
+    }
+    
+    /*调配表的label*/
+    .allocate-label {
+        width: 100px;
+        padding-left: 0.4em;
+        border-left: 1px solid var(--basic-border-color);
+        border-right: 1px solid var(--basic-border-color);
+    }
+    
+    .allocate-label:first-child {
+        border-left: none;
+    }
+    
+    /*内容*/
+    .allocate-content {
+        flex: 1;
+        padding-left: 0.4em;
+    }
+</style>
