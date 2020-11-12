@@ -217,7 +217,7 @@
                         const checkedItem = uintListVos.find(_item => {
                             return _item.id === purchaseUnitCheckId;
                         });
-                        const { type, uname, unitPrice: price } = checkedItem;
+                        const { type, uname, unitPrice: price, unitUse } = checkedItem;
                         let goodsUnit;
                         //  如果是院内，取单位
                         if (type === 1) {
