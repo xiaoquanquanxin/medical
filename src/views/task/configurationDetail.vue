@@ -13,7 +13,6 @@
         <div class="patient-basic-info-like">
             <!--基础表格-->
             <ConfigDetailBasicInfo
-                    v-show="false"
                     :dataSource="basicInfoData"
             />
             <br>
@@ -169,7 +168,14 @@
                 //  详情的id
                 detailId: this.$route.params.detailId,
                 //  基础数据
-                basicInfoData: {},
+                basicInfoData: {
+                    name: undefined,
+                    sex: undefined,
+                    deptName: undefined,
+                    bedCode: undefined,
+                    doctorName: undefined,
+                    orderTime: undefined,
+                },
                 //  打印配置单
                 printObj: {
                     id: '#printContent',
