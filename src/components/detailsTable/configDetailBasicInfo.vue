@@ -20,13 +20,13 @@
                     {{dataSource.deptName}}
                 </a-descriptions-item>
                 <a-descriptions-item label="病床/床号">
-                    {{dataSource.idCard}}
+                    {{dataSource.bedCode}}
                 </a-descriptions-item>
                 <a-descriptions-item label="处方医生">
-                    {{dataSource.name}}
+                    {{dataSource.doctorName}}
                 </a-descriptions-item>
                 <a-descriptions-item label="处方日期">
-                    {{dataSource.payTime}}
+                    {{dataSource.orderTime}}
                 </a-descriptions-item>
                 <a-descriptions-item label="缴费状态">
                     <span style="color:var(--basic-a)">{{dataSource.payStatus === 0 ? '待支付':'已支付'}}</span>
@@ -39,12 +39,9 @@
 <script>
     export default {
         props: ['dataSource'],
-//        data(){
-//            return {
-//            };
-//        },
         created(){
-            console.log(JSON.parse(JSON.stringify(this.dataSource)));
+            console.log('我是配置详情的基础数据')
+              //    console.log(JSON.parse(JSON.stringify(this.dataSource)));
         }
     };
 </script>
