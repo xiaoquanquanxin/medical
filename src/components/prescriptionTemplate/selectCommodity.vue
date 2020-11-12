@@ -63,12 +63,18 @@
     //  选择商品
     export default {
         computed: {
+            //  处方类型-处方类型 (1.院内配置,2门诊领药)
+            prescriptionType(){
+                const { prescriptionType } = this.$store.state.intervention;
+                console.log(prescriptionType);
+                return prescriptionType;
+            },
             //  全部单位map
             unitTypeMap(){
                 return this.$store.state.constants.unitTypeMap;
             }
         },
-        props: ['prescriptionType', 'timeOriginList', 'originCommodityList'],
+        props: ['timeOriginList', 'originCommodityList'],
         data(){
             return {
                 data: [],
