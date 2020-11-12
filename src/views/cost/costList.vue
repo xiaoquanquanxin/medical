@@ -39,6 +39,7 @@
                         <router-link :to="{name:'costDetail',params:{detailId:scope.id}}">详情</router-link>
                         <a @click="payCost(sItem)" v-if="scope.payStatus == 0">缴费</a>
                         <a @click="returnCost(sItem)" v-if="scope.payStatus == 1">退费</a>
+                        <a @click="requestBillingsBillingDetails(sItem.id)">打印</a>
                     </a-space>
                 </div>
             </a-table>
@@ -73,7 +74,7 @@
                 <PayCostForm ref="refPayCostForm"/>
             </a-modal>
         </div>
-        <div v-show="false">
+        <div v-show="false" data-msg="打印缴费凭证">
             <a-button class="basic-button-width" type="primary" v-print="printObj" id="printButton">打印</a-button>
             <div class="print-wrap">
                 <div id="paper">
@@ -81,22 +82,22 @@
                         <h2>缴费凭证</h2>
                     </a-row>
                     <a-row type="flex" justify="space-between" align="middle">
-                        <a-col>山西省人民医院</a-col>
-                        <a-col>缴费日期{{payCostInfo}}</a-col>
+                        <a-col>{{printObj.hospitalName}}</a-col>
+                        <a-col>缴费日期：{{printObj.payTime}}</a-col>
                     </a-row>
                     <a-divider/>
                     <div class="print-patient-basic-info">
                         <a-row type="flex" justify="start" align="middle">
                             <b class="weight-label">患者姓名:</b>
-                            <span>xxx{{payCostInfo}}</span>
+                            <span>{{printObj.name}}</span>
                         </a-row>
                         <a-row type="flex" justify="start" align="middle">
                             <b class="weight-label">住院号:</b>
-                            <span>xxx{{payCostInfo}}</span>
+                            <span>{{printObj.bedCode}}</span>
                         </a-row>
                         <a-row type="flex" justify="start" align="middle">
                             <b class="weight-label">科室:</b>
-                            <span>xxx{{payCostInfo}}</span>
+                            <span>{{printObj.deptName}}</span>
                         </a-row>
                         <a-row type="flex" justify="start" align="middle">
                             <b class="weight-label">详情如下:</b>
@@ -104,19 +105,22 @@
                     </div>
                     <a-table
                             :columns="printColumns"
-                            :data-source="data"
+                            :data-source="printObj.goodsList"
                             :pagination="false"
                             :bordered="true"
                     >
                     </a-table>
+                    <a-row type="flex" justify="end" class="a-pagination">
+                        amountPaid
+                    </a-row>
                     <div class="print-patient-basic-info">
                         <a-row type="flex" justify="start" align="middle">
                             <b class="weight-label">操作人员:</b>
-                            <span>xxx{{payCostInfo}}</span>
+                            <span>{{printObj.createByName}}</span>
                         </a-row>
                         <a-row type="flex" justify="start" align="middle">
                             <b class="weight-label">打印时间:</b>
-                            <span>xxx{{payCostInfo}}</span>
+                            <span>{{printObj.printTime}}</span>
                         </a-row>
                     </div>
                 </div>
@@ -136,7 +140,7 @@
     import { dialogMethods, DIALOG_TYPE } from '@/utils/dialog';
     import { mapGetters, mapActions } from 'vuex';
     import PayCostForm from '@/components/cost/payCostForm.vue';
-    import { requestBillingsBillingPage } from '../../api/cost/costList';
+    import { requestBillingsBillingDetails, requestBillingsBillingPage } from '../../api/cost/costList';
 
     //  数据列表
     const columns = [
@@ -200,7 +204,7 @@
         },
         {
             title: '营养产品名称',
-            dataIndex: 'name',
+            dataIndex: 'goodsName',
             width: 100,
         },
         {
@@ -210,7 +214,7 @@
         },
         {
             title: '金额',
-            dataIndex: 'cost',
+            dataIndex: 'price',
             width: 100,
         },
     ];
@@ -219,10 +223,14 @@
         components: {
             PayCostForm,
         },
-        //  操作类型	0,缴费，1退款）
         computed: {
+            //  操作类型	0,缴费，1退款）
             isRefund(){
                 return this.$store.state.cost.isRefund;
+            },
+            //  支付id
+            selectCostId(){
+                return this.$store.state.cost.selectCostId;
             },
         },
         data(){
@@ -242,16 +250,23 @@
 
                 //  缴费莫泰框
                 dialogPayCost: this.initModal(DIALOG_TYPE.PAY_COST),
-                //  退费莫泰框
-//                dialogReturnCost: this.initModal(DIALOG_TYPE.RETURN_COST),
 
                 //  打印对象
                 printObj: {
                     id: '#paper',
-                    popTitle: '票据',
+                    //  popTitle: '票据',
+                    hospitalName: undefined,
+                    payTime: undefined,
+                    name: undefined,
+                    bedCode: undefined,
+                    deptName: undefined,
+
+                    //  列表数据
+                    goodsList: undefined,
+                    //  amountPaid: undefined,
+                    createByName: undefined,
+                    printTime: undefined,
                 },
-                //  缴费、退费成功信息
-                payCostInfo: {}
             };
         },
         created(){
@@ -278,14 +293,6 @@
                         //  this.returnCost(data.records[0]);
                     });
             },
-            //  莫泰框方法
-            ...dialogMethods,
-            ...mapActions('cost', [
-                //  弹框id
-                'setSelectCostId',
-                //  操作类型	0,缴费，1退款
-                'setCostType',
-            ]),
             //  缴费
             payCost(sItem){
                 console.log(sItem.id);
@@ -301,24 +308,63 @@
                 const promise = this.$refs[refPayCostForm].handleSubmit();
                 promise.then(v => {
                     this.hideModal(DIALOG_TYPE.PAY_COST);
+                    this.searchFn();
                     this.$message.success('操作成功');
                     //  如果是退费
                     if (this.isRefund === 1) {
                         return;
                     }
-                    setTimeout(() => {
-                        //  打印票据
-                        const printButton = document.getElementById('printButton');
-                        console.log(printButton);
-                        printButton.click();
-                    }, 300);
+                    //  如果是缴费，需要先请求详情数据，然后打印
+                    this.requestBillingsBillingDetails();
                 }).catch(error => {
+                    console.log(error);
                     console.log('有错');
                     this.$message.error('操作失败');
                 }).then(v => {
                     //  最后设置可以再次点击
                     this.setConfirmLoading(DIALOG_TYPE.PAY_COST, false);
                 });
+            },
+            //  缴费单详情
+            requestBillingsBillingDetails(id){
+                //  todo    id为开发使用
+                requestBillingsBillingDetails(id || this.selectCostId)
+                    .then(v => {
+                        const { data } = v;
+                        const { hospitalName, payTime, name, bedCode, deptName, createByName, printTime, amountPaid } = data;
+                        const printObj = this.printObj;
+                        printObj.hospitalName = hospitalName;
+                        printObj.payTime = payTime;
+                        printObj.name = name;
+                        printObj.bedCode = bedCode;
+                        printObj.deptName = deptName;
+                        printObj.createByName = createByName;
+                        printObj.printTime = printTime;
+                        //  printObj.amountPaid = amountPaid;
+                        console.log(hospitalName, payTime, name, bedCode, deptName, createByName, printTime,);
+                        console.table(data);
+                        data.goodsList.forEach((item, index) => {
+                            item.key = index;
+                            item.index = index + 1;
+                            item.price = `¥${item.price}`;
+                            item.num = `${item.quantity} ${item.goodsUnit}`;
+                        });
+                        data.goodsList.push({
+                            key: -1,
+                            num: '合计：',
+                            price: `¥${amountPaid || 0}`,
+                        });
+                        //  console.log(JSON.parse(JSON.stringify(data.goodsList[0])));
+                        printObj.goodsList = data.goodsList;
+                        return;
+                        this.$forceUpdate();
+                        this.$nextTick(() => {
+                            //  打印票据
+                            const printButton = document.getElementById('printButton');
+                            console.log(printButton);
+                            printButton.click();
+                        });
+                    });
             },
             //  退费
             returnCost(sItem){
@@ -331,6 +377,15 @@
             onShowSizeChange,
             //  切换分页页码
             pageChange,
+
+            //  莫泰框方法
+            ...dialogMethods,
+            ...mapActions('cost', [
+                //  弹框id
+                'setSelectCostId',
+                //  操作类型	0,缴费，1退款
+                'setCostType',
+            ]),
         }
     };
 </script>
