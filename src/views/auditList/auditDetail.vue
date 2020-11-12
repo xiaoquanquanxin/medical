@@ -303,7 +303,7 @@
                             amountPayable
                         } = data;
                         printObj.amountPayable = toChinesNum(amountPayable);
-                        console.log(JSON.parse(JSON.stringify(data.detail)));
+                        console.log(JSON.parse(JSON.stringify(data.detail))[0]);
                     });
             },
             //  通过
