@@ -10,7 +10,7 @@
             </a-row>
             <a-table
                     :columns="columns"
-                    :data-source="dataSource.plain"
+                    :data-source="dataSource"
                     :pagination="false"
                     bordered
                     :hover="false"
@@ -18,76 +18,67 @@
                 <!--商品名称-->
                 <div slot="goodsName" slot-scope="scope,sItem,sIndex,extra">
                     <div class="negative-margin-16">
-                        <div v-for="(item , index) in scope.nutritionPlain"
+                        <div v-for="(item , index) in scope.goodsList"
                              class="negative-margin-item">
                             {{item.goodsName}}
                         </div>
                     </div>
                 </div>
-                <!--配置量-->
-                <div slot="quality" slot-scope="scope,sItem,sIndex,extra">
+                <!--使用量-->
+                <div slot="quantity" slot-scope="scope,sItem,sIndex,extra">
                     <div class="negative-margin-16">
-                        <div v-for="(item , index) in scope.nutritionPlain"
+                        <div v-for="(item , index) in scope.goodsList"
                              class="negative-margin-item">
-                            {{item.configNum}}/{{item.configUnit}}
-                        </div>
-                    </div>
-                </div>
-                <!--配置量-->
-                <div slot="configNum" slot-scope="scope,sItem,sIndex,extra">
-                    <div class="negative-margin-16">
-                        <div v-for="(item , index) in scope.nutritionPlain"
-                             class="negative-margin-item">
-                            {{item.configNum}}
+                            {{item.quantity}}
                         </div>
                     </div>
                 </div>
                 <!--单位-->
-                <div slot="configUnit" slot-scope="scope,sItem,sIndex,extra">
+                <div slot="goodsUnit" slot-scope="scope,sItem,sIndex,extra">
                     <div class="negative-margin-16">
-                        <div v-for="(item , index) in scope.nutritionPlain"
+                        <div v-for="(item , index) in scope.goodsList"
                              class="negative-margin-item">
-                            {{item.configUnit}}
+                            {{item.goodsUnit}}
                         </div>
                     </div>
                 </div>
                 <!--操作-->
                 <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
-                    <a v-print="printBottle">打印瓶贴</a>
+                    <a v-print="printBottle" @click="printBottleFn(sItem)">打印瓶贴</a>
                 </div>
             </a-table>
         </div>
         <!--打印-->
-        <div v-show="false" class="print-wrap">
+        <div v-show="true" class="print-wrap">
             <div id="printBottle" data-msg="打印瓶贴">
                 <a-row type="flex" justify="start" align="middle" class="bottle-list">
-                    <div class="bottle-list-label"><b>科室：</b>xxx</div>
-                    <div class="bottle-list-label"><b>病区：</b>xxx</div>
+                    <div class="bottle-list-label"><b>科室：</b>{{dataForPrint.deptName}}</div>
+                    <div class="bottle-list-label"><b>病区：</b>{{dataForPrint.bedCode}}</div>
                 </a-row>
                 <a-row type="flex" justify="start" align="middle" class="bottle-list">
-                    <div class="bottle-list-label"><b>姓名：</b>xxx</div>
-                    <div class="bottle-list-label"><b>床号：</b>xxx</div>
+                    <div class="bottle-list-label"><b>姓名：</b>{{dataForPrint.name}}</div>
+                    <div class="bottle-list-label"><b>床号：</b>{{dataForPrint.bedCode}}</div>
                 </a-row>
                 <a-row type="flex" justify="start" align="middle" class="bottle-list">
-                    <div class="bottle-list-label"><b>住院号：</b>xx</div>
-                    <div class="bottle-list-label"><b>总液量：</b>xxx</div>
+                    <div class="bottle-list-label"><b>住院号：</b>{{dataForPrint.bedCode}}</div>
+                    <div class="bottle-list-label"><b>总液量：</b>{{printBottle.configWater}}ml</div>
                 </a-row>
                 <a-row type="flex" justify="start" align="middle" class="bottle-list">
-                    <div class="bottle-list-label"><b>热量：</b>xx</div>
-                    <div class="bottle-list-label"><b>蛋白质：</b>xxx</div>
+                    <div class="bottle-list-label"><b>热量：</b>{{dataForPrint.fat}}</div>
+                    <div class="bottle-list-label"><b>蛋白质：</b>{{dataForPrint.protein}}</div>
                 </a-row>
                 <a-row type="flex" justify="start" align="middle" class="bottle-list">
-                    <div><b>营养师：</b>xx</div>
+                    <div><b>营养师：</b>{{dataForPrint.doctorName}}</div>
                 </a-row>
                 <a-row type="flex" justify="start" align="middle" class="bottle-list">
-                    <div><b>配置时间：</b>xx</div>
+                    <div><b>配置时间：</b>{{dataForPrint.orderTime}}</div>
                 </a-row>
                 <a-row type="flex" justify="start" align="middle" class="bottle-list">
-                    <div><b>用法用量及餐次：</b>xx</div>
+                    <div><b>用法用量及餐次：</b>{{usageMethod}}</div>
                 </a-row>
                 <a-row type="flex" justify="start" align="middle" class="bottle-list">
-                    <div class="bottle-list-label">xxx</div>
-                    <div class="bottle-list-label">xxx</div>
+                    <div class="bottle-list-label">{{printBottle.usageTime}}</div>
+                    <div class="bottle-list-label">{{printBottle.configWater}}ml</div>
                 </a-row>
             </div>
         </div>
@@ -97,7 +88,7 @@
     import { usageMethodMap, templateTypeMap } from '../../utils/constants';
 
     export default {
-        props: ['dataSource'],
+        props: ['dataSource', 'templateType', 'dataForPrint'],
         data(){
             const columns = [
                 {
@@ -118,12 +109,12 @@
                 {
                     title: '使用量',
                     width: 100,
-                    scopedSlots: { customRender: 'configNum' },
+                    scopedSlots: { customRender: 'quantity' },
                 },
                 {
                     title: '单位',
                     width: 100,
-                    scopedSlots: { customRender: 'configUnit' },
+                    scopedSlots: { customRender: 'goodsUnit' },
                 },
                 {
                     title: '温水/ml',
@@ -135,22 +126,6 @@
                     width: 100,
                     scopedSlots: { customRender: 'operation' },
                 },
-//                {
-//                    title: '备注',
-//                    width: 100,
-//                    customRender: (text, row, index) => {
-//                        const obj = {
-//                            children: text.remark,
-//                            attrs: {},
-//                        };
-//                        if (index === 0) {
-//                            obj.attrs.rowSpan = 1000;
-//                        } else {
-//                            obj.attrs.rowSpan = 0;
-//                        }
-//                        return obj;
-//                    },
-//                },
             ];
             return {
                 //  打印瓶贴
@@ -167,34 +142,43 @@
                 usageMethodMap,
                 //  模板类型
                 templateTypeMap,
-
             };
         },
         created(){
-            const {
-                plain,
-                remark,
-                templateType,
-                usageMethod,
-            } = this.dataSource;
-            if (!plain.length) {
-                throw new Error('缺少数据');
-            }
-            const { nutritionPlain } = plain[0];
-            if (!nutritionPlain || !nutritionPlain.length) {
-                throw new Error('缺少数据');
-            }
-            const { configWater } = nutritionPlain[0];
-            plain.forEach((item, index) => {
+            const { configWater, usageMethod } = this.dataSource[0];
+            //  console.log(configWater, usageMethod, this.templateType);
+            this.dataSource.forEach((item, index) => {
                 item.key = index;
                 item.index = index + 1;
                 item.configWater = configWater;
-                item.remark = remark;
+                console.log('每一条数据');
+                console.log(JSON.parse(JSON.stringify(item.goodsList[0])));
             });
-            this.templateName = this.templateTypeMap[templateType].name;
+            this.templateName = this.templateTypeMap[this.templateType].name;
             this.usageMethod = this.usageMethodMap[usageMethod || 1].name;
-            //  Object.assign(this.printBottle, plain[0]);
-            //  console.log(JSON.parse(JSON.stringify(this.dataSource.plain[0].nutritionPlain[0])));
+        },
+        methods: {
+            //  打印瓶贴
+            printBottleFn(sItem){
+                const {
+                    protein,
+                    fat,
+                    usageTime,
+                    configWater,
+                } = sItem;
+                this.printBottle = Object.assign({}, this.printBottle, {
+                    //  蛋白质
+                    protein: protein || 0,
+                    //  热量
+                    fat: fat || 0,
+                    //  时间
+                    usageTime: usageTime || null,
+                    //  总液量
+                    configWater: configWater || 0,
+                });
+                console.log('打印的单项数据是');
+                console.log(this.printBottle);
+            }
         }
     };
 </script>
