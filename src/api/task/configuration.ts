@@ -18,6 +18,15 @@ export function requestPrescriptionConfigConfirmSave(data: any) {
 	});
 }
 
+//	配置单详情
+export function requestPrescriptionConfigConfirmDetail(id: number | string) {
+	return request({
+		url: `/api/prescription/config/configDetails/${id}`,
+		method: 'get',
+	});
+}
+
+
 
 
 
