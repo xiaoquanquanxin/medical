@@ -113,7 +113,7 @@
         },
         {
             title: '方案周期（天）',
-            dataIndex: 'protein',
+            dataIndex: 'priod',
             width: 150,
         },
         {
