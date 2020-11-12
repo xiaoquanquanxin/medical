@@ -64,8 +64,8 @@
                     <div class="bottle-list-label"><b>总液量：</b>{{printBottle.configWater}}ml</div>
                 </a-row>
                 <a-row type="flex" justify="start" align="middle" class="bottle-list">
-                    <div class="bottle-list-label"><b>热量：</b>{{dataForPrint.fat}}</div>
-                    <div class="bottle-list-label"><b>蛋白质：</b>{{dataForPrint.protein}}</div>
+                    <div class="bottle-list-label"><b>热量：</b>{{dataForPrint.fat}}kcal</div>
+                    <div class="bottle-list-label"><b>蛋白质：</b>{{dataForPrint.protein}}g</div>
                 </a-row>
                 <a-row type="flex" justify="start" align="middle" class="bottle-list">
                     <div><b>营养师：</b>{{dataForPrint.doctorName}}</div>
