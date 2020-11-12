@@ -103,8 +103,6 @@
                 </a-row>
                 <br>
                 <div style="font-size: 36px;">R</div>
-                
-                
                 <br>
                 <a-row type="flex" justify="end" align="middle">
                     <span style="padding-right: 5em;">医师签字：</span>
@@ -166,6 +164,7 @@
     import GoBackButton from '@/components/goBackButton.vue';
     import { requestPrescriptionDetail } from '../../api/userList/intervention';
     import { requestPrescriptionAuditUpdate } from '../../api/auditList';
+    import { toChinesNum } from '../../utils/amount';
 
     export default {
         components: {
@@ -298,10 +297,13 @@
                             fat,
                             carbohydrates,
                         }];
-                        console.log(JSON.parse(JSON.stringify(data)));
-
+                        //  打印
                         const printObj = this.printObj;
-                        printObj.amountPayable = 1;
+                        const {
+                            amountPayable
+                        } = data;
+                        printObj.amountPayable = toChinesNum(amountPayable);
+                        console.log(JSON.parse(JSON.stringify(data.detail)));
                     });
             },
             //  通过
