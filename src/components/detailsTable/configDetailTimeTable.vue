@@ -49,7 +49,7 @@
             </a-table>
         </div>
         <!--打印-->
-        <div v-show="true" class="print-wrap">
+        <div v-show="false" class="print-wrap">
             <div id="printBottle" data-msg="打印瓶贴">
                 <a-row type="flex" justify="start" align="middle" class="bottle-list">
                     <div class="bottle-list-label"><b>科室：</b>{{dataForPrint.deptName}}</div>
