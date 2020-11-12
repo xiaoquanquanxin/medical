@@ -10,16 +10,27 @@
                 </a-button>
             </div>
         </a-row>
-        <div class="patient-basic-info-like" v-show="true">
+        <div class="patient-basic-info-like" v-show="false">
             <!--基础表格-->
             <ConfigDetailBasicInfo
+                    v-show="false"
                     :dataSource="basicInfoData"
             />
             <br>
-            <div v-for="item in detail" v-if="detailType === 1">
-                <!--配置详情时间表格-->
+            <div v-if="detailType === 1">
+                <!--肠内-->
                 <ConfigDetailTimeTable
-                        :dataSource="item"
+                        :templateType="2"
+                        v-if="enteralNutrition"
+                        :dataSource="enteralNutrition"
+                        :dataForPrint="basicInfoData"
+                />
+                <!--口服肠内-->
+                <ConfigDetailTimeTable
+                        :templateType="1"
+                        v-if="oralIntraintestinal"
+                        :dataSource="oralIntraintestinal"
+                        :dataForPrint="basicInfoData"
                 />
             </div>
             <!--领药商品列表-->
@@ -29,66 +40,82 @@
             />
             <br>
         </div>
-        <div class="print-wrap" v-show="false">
+        <div class="print-wrap patient-basic-info-like" v-show="true">
             <div id="printContent" data-msg="打印配置单">
                 <h2 type="flex" justify="center" align="middle">营养专用配置单</h2>
                 <a-row type="flex" justify="space-between" align="middle">
-                    <div>配置医院：xxx</div>
-                    <div>配置日期：xxxx</div>
+                    <div>配置医院：{{printObj.hospitalName}}</div>
+                    <div>配置日期：{{printObj.orderTime}}</div>
                 </a-row>
                 <a-row type="flex" justify="start" align="middle" class="config-basic-list">
-                    <div class="config-basic-item">住院号：xxx</div>
-                    <div class="config-basic-item">姓名：xxxx</div>
-                    <div class="config-basic-item">性别：xxxx</div>
+                    <div class="config-basic-item">住院号：{{printObj.hospitalCode}}</div>
+                    <div class="config-basic-item">姓名：{{printObj.name}}</div>
+                    <div class="config-basic-item">性别：{{printObj.sex}}</div>
                 </a-row>
                 <a-row type="flex" justify="start" align="middle" class="config-basic-list">
-                    <div class="config-basic-item">科室：xxx</div>
-                    <div class="config-basic-item">病区/床位：xxxx</div>
-                    <div class="config-basic-item">电话：xxxx</div>
+                    <div class="config-basic-item">科室：{{printObj.deptName}}</div>
+                    <div class="config-basic-item">病区/床位：{{printObj.bedCode}}</div>
+                    <div class="config-basic-item">电话：{{printObj.phone}}</div>
                 </a-row>
                 <a-row type="flex" justify="start" align="middle" class="config-basic-list">
                     <div class="config-basic-item"><b>营养干预方案</b></div>
-                    <div>干预第 1 天 ；第 1 / 5 人次</div>
+                    <div>{{printObj.prescriptionName}}</div>
                 </a-row>
                 <div class="config-table">
                     <div class="config-table-columns" style="width:15%;">
                         <div class="list-in-table"><b>序号</b></div>
-                        <div class="list-in-table">1</div>
-                        <div class="list-in-table">2</div>
-                        <div class="list-in-table">3</div>
+                        <div class="list-in-table"
+                             v-for="item in printObj.configList"
+                             :key="item.key"
+                        >{{item.key}}
+                        </div>
                     </div>
                     <div class="config-table-columns" style="width:25%;">
                         <div class="list-in-table"><b>营养产品名称</b></div>
-                        <div class="list-in-table">1</div>
-                        <div class="list-in-table">2</div>
-                        <div class="list-in-table">3</div>
+                        <div v-for="(item,index) in printObj.configList">
+                            <p :class="
+                            !((index+1===printObj.configList.length) && (_index+1===item.goodsList.length))
+                            ? 'list-border-bottom list-in-table':'list-in-table'"
+                               v-for="(_item,_index) in item.goodsList">
+                                {{_item.goodsName}}
+                            </p>
+                        </div>
                     </div>
                     <div class="config-table-columns" style="width:15%;">
                         <div class="list-in-table"><b>用量</b></div>
-                        <div class="list-in-table">1</div>
-                        <div class="list-in-table">2</div>
-                        <div class="list-in-table">3</div>
+                        <div v-for="(item,index) in printObj.configList">
+                            <p :class="
+                            !((index+1===printObj.configList.length) && (_index+1===item.goodsList.length))
+                            ? 'list-border-bottom list-in-table':'list-in-table'"
+                               v-for="(_item,_index) in item.goodsList">
+                                {{_item.quantity}}
+                            </p>
+                        </div>
                     </div>
                     <div class="config-table-columns" style="width:15%;">
                         <div class="list-in-table"><b>温水</b></div>
-                        <div class="list-in-table">100ml</div>
+                        <div class="list-in-table" v-for="item in printObj.configList">
+                            {{item.configWater}}
+                        </div>
                     </div>
                     <div class="config-table-columns" style="width:15%;">
                         <div class="list-in-table"><b>时间</b></div>
-                        <div class="list-in-table">10:03</div>
+                        <div class="list-in-table" v-for="item in printObj.configList">
+                            {{item.usageTime}}
+                        </div>
                     </div>
                     <div class="config-table-columns" style="width:15%;">
                         <div class="list-in-table"><b>备注</b></div>
-                        <div class="list-in-table">备注。。</div>
+                        <div class="list-in-table">备注。。.</div>
                     </div>
                 </div>
                 <a-row type="flex" justify="start" align="middle" class="config-basic-list">
-                    <div class="config-basic-item">医生：xxx</div>
-                    <div class="config-basic-item">处方日期</div>
+                    <div class="config-basic-item">医生：{{printObj.doctorName}}</div>
+                    <div class="config-basic-item">处方日期：{{printObj.orderTime}}</div>
                 </a-row>
                 <a-row type="flex" justify="start" align="middle" class="config-basic-list">
-                    <div class="config-basic-item">配置员：xxx</div>
-                    <div class="config-basic-item">领货人：xxxx</div>
+                    <div class="config-basic-item">配置员：{{printObj.configurator}}</div>
+                    <div class="config-basic-item">领货人：{{printObj._name}}</div>
                 </a-row>
                 <hr>
             </div>
@@ -102,9 +129,8 @@
     import ConfigDetailTimeTable from '@/components/detailsTable/configDetailTimeTable.vue';
     //  领药列表
     import DrugCommodityListTable from '@/components/detailsTable/drugCommodityListTable.vue';
-
     import GoBackButton from '@/components/goBackButton.vue';
-    import { requestPrescriptionDetail } from '../../api/userList/intervention';
+    import { requestPrescriptionConfigConfirmDetail } from '../../api/task/configuration';
 
     export default {
         components: {
@@ -116,7 +142,6 @@
         data(){
             const { name } = this.$route;
             let detailType;
-            console.log('页面name', name);
             switch (name) {
                 case 'configurationDetail':
                     //  配置任务详情
@@ -129,6 +154,7 @@
                 default:
                     throw new Error(`这是什么页面？${name}`);
             }
+            //  console.log('页面name', name);
             return {
                 //  详情的类型
                 detailType,
@@ -141,14 +167,27 @@
                 printObj: {
                     id: '#printContent',
                     popTitle: '配置单',
+                    hospitalName: '配置医院配置医院',
+                    name: '姓名姓名',
+                    sex: '性别性别',
+                    deptName: '科室科室',
+                    hospitalCode: '住院号住院号',
+                    bedCode: '床位床位',
+                    phone: '电话电话',
+                    prescriptionName: '营养干预方案',
+                    doctorName: '医生医生',
+                    orderTime: '处方日期处方日期',
+                    configurator: '配置员配置员',
+                    _name: '领货人领货人',
+                    //  打印配置单的主体数据
+                    configList: null,
                 },
-                //  配置详情
-                detail: [],
-
+                //  肠内
+                enteralNutrition: null,
+                //  口服肠内
+                oralIntraintestinal: null,
                 //  领药详情
                 drugDetailList: [],
-                //  商品单位下拉
-                unitTypeList: [],
             };
         },
         created(){
@@ -157,32 +196,50 @@
         methods: {
             //  主要请求
             searchFn(){
-                requestPrescriptionDetail(this.detailId)
+                requestPrescriptionConfigConfirmDetail(this.detailId)
                     .then(v => {
                         const { data } = v;
-                        const {
-                            prescriptionName,
-                            priod,
-                            prescriptionType,
-                            executionTime,
-                        } = data;
-
+                        const { name, sex, deptName, bedCode, doctorName, orderTime } = data;
                         //  头部
-                        this.basicInfoData = {};
-                        this.auditStatus = data.auditStatus;
-                        this.orderStatus = data.orderStatus;
-                        this.patientId = data.patientId;
-                        const {
-                            detail,
-                        } = data;
-                        this.detail = detail;
-                        const drugDetailList = [];
-                        data.detail.forEach(item => {
-                            item.detailGoods.forEach(_item => {
-                                drugDetailList.push(_item);
-                            });
+                        Object.assign(this.basicInfoData, {
+                            name,
+                            sex,
+                            deptName,
+                            bedCode,
+                            doctorName,
+                            orderTime
                         });
-                        this.drugDetailList = drugDetailList;
+                        const { enteralNutrition, oralIntraintestinal, } = data;
+                        //  肠内和口服肠内
+                        if (enteralNutrition && enteralNutrition.length) {
+                            this.enteralNutrition = enteralNutrition;
+                        }
+                        if (oralIntraintestinal && oralIntraintestinal.length) {
+                            this.oralIntraintestinal = oralIntraintestinal;
+                        }
+
+                        const { hospitalCode, phone, prescriptionName, } = data;
+                        //  打印配置单
+                        Object.assign(this.printObj, {
+                            orderTime,
+                            name,
+                            sex,
+                            deptName,
+                            hospitalCode,
+                            bedCode,
+                            phone,
+                            //  prescriptionName,
+                            doctorName,
+                        });
+                        console.log('全部详情');
+                        console.log(JSON.parse(JSON.stringify(data)));
+                        const configList = [].concat(enteralNutrition).concat(oralIntraintestinal);
+                        configList.forEach((item, index) => {
+                            item.key = (index + 1);
+                        });
+                        console.table(JSON.parse(JSON.stringify(configList)));
+                        this.printObj.configList = configList;
+                        this.$forceUpdate();
                     });
             },
         }
@@ -226,9 +283,16 @@
     
     .list-in-table {
         padding: 0.4em 0.6em;
+        line-height: 21px;
+        height: 21px;
+        box-sizing: content-box;
     }
     
     .list-in-table:not(:last-child) {
+        border-bottom: 1px solid var(--basic-border-color);
+    }
+    
+    .list-border-bottom {
         border-bottom: 1px solid var(--basic-border-color);
     }
 </style>
