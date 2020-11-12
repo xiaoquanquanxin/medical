@@ -10,7 +10,7 @@
                 </a-button>
             </div>
         </a-row>
-        <div class="patient-basic-info-like" v-show="false">
+        <div class="patient-basic-info-like">
             <!--基础表格-->
             <ConfigDetailBasicInfo
                     v-show="false"
@@ -40,7 +40,7 @@
             />
             <br>
         </div>
-        <div class="print-wrap patient-basic-info-like" v-show="true">
+        <div class="print-wrap" v-show="true">
             <div id="printContent" data-msg="打印配置单">
                 <h2 type="flex" justify="center" align="middle">营养专用配置单</h2>
                 <a-row type="flex" justify="space-between" align="middle">
@@ -106,7 +106,14 @@
                     </div>
                     <div class="config-table-columns" style="width:15%;">
                         <div class="list-in-table"><b>备注</b></div>
-                        <div class="list-in-table">备注。。.</div>
+                        <div v-for="(item,index) in printObj.configList">
+                            <p :class="
+                            !((index+1===printObj.configList.length) && (_index+1===item.goodsList.length))
+                            ? 'list-border-bottom list-in-table':'list-in-table'"
+                               v-for="(_item,_index) in item.goodsList">
+                                {{_item.remark}}
+                            </p>
+                        </div>
                     </div>
                 </div>
                 <a-row type="flex" justify="start" align="middle" class="config-basic-list">
@@ -212,10 +219,10 @@
                         const { enteralNutrition, oralIntraintestinal, } = data;
                         //  肠内和口服肠内
                         if (enteralNutrition && enteralNutrition.length) {
-                            this.enteralNutrition = enteralNutrition;
+                            this.enteralNutrition = JSON.parse(JSON.stringify(enteralNutrition));
                         }
                         if (oralIntraintestinal && oralIntraintestinal.length) {
-                            this.oralIntraintestinal = oralIntraintestinal;
+                            this.oralIntraintestinal = JSON.parse(JSON.stringify(oralIntraintestinal));
                         }
 
                         const { hospitalCode, phone, prescriptionName, } = data;
@@ -233,11 +240,25 @@
                         });
                         console.log('全部详情');
                         console.log(JSON.parse(JSON.stringify(data)));
-                        const configList = [].concat(enteralNutrition).concat(oralIntraintestinal);
+                        const _enteralNutrition = JSON.parse(JSON.stringify(enteralNutrition));
+                        _enteralNutrition.forEach(item => {
+                            const { remark } = item;
+                            item.goodsList.forEach(_item => {
+                                _item.remark = remark;
+                            });
+                        });
+                        const _oralIntraintestinal = JSON.parse(JSON.stringify(oralIntraintestinal));
+                        _oralIntraintestinal.forEach(item => {
+                            const { remark } = item;
+                            item.goodsList.forEach(_item => {
+                                _item.remark = remark;
+                            });
+                        });
+                        const configList = [].concat(_enteralNutrition).concat(_oralIntraintestinal);
                         configList.forEach((item, index) => {
                             item.key = (index + 1);
                         });
-                        console.table(JSON.parse(JSON.stringify(configList)));
+                        console.log(JSON.parse(JSON.stringify(configList)));
                         this.printObj.configList = configList;
                         this.$forceUpdate();
                     });
