@@ -151,8 +151,8 @@
                 item.key = index;
                 item.index = index + 1;
                 item.configWater = configWater;
-                console.log('每一条数据');
-                console.log(JSON.parse(JSON.stringify(item.goodsList[0])));
+                //  console.log('每一条数据');
+                //  console.log(JSON.parse(JSON.stringify(item.goodsList[0])));
             });
             this.templateName = this.templateTypeMap[this.templateType].name;
             this.usageMethod = this.usageMethodMap[usageMethod || 1].name;
