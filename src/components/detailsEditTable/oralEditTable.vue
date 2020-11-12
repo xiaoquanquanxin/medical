@@ -211,7 +211,6 @@
                  cancel-text="取消"
                  @ok="selectCommodityModalCheck('refSelectCommodity')">
             <SelectCommodity ref="refSelectCommodity"
-                             :prescriptionType="prescriptionType"
                              :timeOriginList="timeOriginList"
                              :isMainButton="isMainButton"
                              :originCommodityList="originCommodityList"
@@ -464,12 +463,12 @@
             };
         },
         watch: {
-            //  处方类型
-            prescriptionType(value){
-                console.log(value);
-                this.resetTableData();
-                this.setPrescriptionType(value);
-            },
+//            //  处方类型
+//            prescriptionType(value){
+//                console.log(value);
+//                this.resetTableData();
+//                this.setPrescriptionType(value);
+//            },
             //  计算能量
             calcEnergy(value){
                 console.log('计算能量');
@@ -595,7 +594,7 @@
             ]),
             ...mapActions('intervention', [
                 //  更换处方类型
-                'setPrescriptionType',
+                //  'setPrescriptionType',
                 //	根据templateType，分别设置肠内、口腔的数据
                 'setEnergyDataByTemplateType',
                 //  肠内备注

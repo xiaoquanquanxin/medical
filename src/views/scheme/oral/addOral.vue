@@ -240,7 +240,6 @@
                  cancel-text="取消"
                  @ok="selectCommodityModalCheck('refSelectCommodity')">
             <SelectCommodity ref="refSelectCommodity"
-                             :prescriptionType="prescriptionType"
                              :timeOriginList="timeOriginList"
                              :isMainButton="isMainButton"
                              :originCommodityList="originCommodityList"
