@@ -32,7 +32,7 @@
                 <a-row type="flex" justify="start" align="middle">
                     <a-col class="label" type="flex" justify="space-between">处方号</a-col>
                     <a-col class="colon">:</a-col>
-                    <a-col>处方号{{costData.aaaa}}</a-col>
+                    <a-col>处方号{{costData.prescriptionCode}}</a-col>
                 </a-row>
             </li>
             <li>
