@@ -136,7 +136,10 @@
     //  领药列表
     import DrugCommodityListTable from '@/components/detailsTable/drugCommodityListTable.vue';
     import GoBackButton from '@/components/goBackButton.vue';
-    import { requestPrescriptionConfigConfirmDetail } from '../../api/task/configuration';
+    import {
+        requestPrescriptionConfigConfirmDetail,
+        requestPrescriptionConfigGetMedicineDetails
+    } from '../../api/task/configuration';
 
     export default {
         components: {
@@ -209,65 +212,89 @@
         methods: {
             //  主要请求
             searchFn(){
-                requestPrescriptionConfigConfirmDetail(this.detailId)
-                    .then(v => {
-                        const { data } = v;
-                        const { name, sex, deptName, bedCode, doctorName, orderTime } = data;
-                        //  头部
-                        Object.assign(this.basicInfoData, {
-                            name,
-                            sex,
-                            deptName,
-                            bedCode,
-                            doctorName,
-                            orderTime
-                        });
-                        const { enteralNutrition, oralIntraintestinal, } = data;
-                        //  肠内和口服肠内
-                        if (enteralNutrition && enteralNutrition.length) {
-                            this.enteralNutrition = JSON.parse(JSON.stringify(enteralNutrition));
-                        }
-                        if (oralIntraintestinal && oralIntraintestinal.length) {
-                            this.oralIntraintestinal = JSON.parse(JSON.stringify(oralIntraintestinal));
-                        }
+                if (this.detailType === 1) {
+                    //  配置详情
+                    requestPrescriptionConfigConfirmDetail(this.detailId)
+                        .then(v => {
+                            const { data } = v;
+                            const { name, sex, deptName, bedCode, doctorName, orderTime } = data;
+                            //  头部
+                            Object.assign(this.basicInfoData, {
+                                name,
+                                sex,
+                                deptName,
+                                bedCode,
+                                doctorName,
+                                orderTime
+                            });
+                            const { enteralNutrition, oralIntraintestinal, } = data;
+                            //  肠内和口服肠内
+                            if (enteralNutrition && enteralNutrition.length) {
+                                this.enteralNutrition = JSON.parse(JSON.stringify(enteralNutrition));
+                            }
+                            if (oralIntraintestinal && oralIntraintestinal.length) {
+                                this.oralIntraintestinal = JSON.parse(JSON.stringify(oralIntraintestinal));
+                            }
 
-                        const { hospitalCode, phone, prescriptionName, } = data;
-                        //  打印配置单
-                        Object.assign(this.printObj, {
-                            orderTime,
-                            name,
-                            sex,
-                            deptName,
-                            hospitalCode,
-                            bedCode,
-                            phone,
-                            //  prescriptionName,
-                            doctorName,
-                        });
-                        console.log('全部详情');
-                        console.log(JSON.parse(JSON.stringify(data)));
-                        const _enteralNutrition = JSON.parse(JSON.stringify(enteralNutrition));
-                        _enteralNutrition.forEach(item => {
-                            const { remark } = item;
-                            item.goodsList.forEach(_item => {
-                                _item.remark = remark;
+                            const { hospitalCode, phone, prescriptionName, } = data;
+                            //  打印配置单
+                            Object.assign(this.printObj, {
+                                orderTime,
+                                name,
+                                sex,
+                                deptName,
+                                hospitalCode,
+                                bedCode,
+                                phone,
+                                //  prescriptionName,
+                                doctorName,
                             });
-                        });
-                        const _oralIntraintestinal = JSON.parse(JSON.stringify(oralIntraintestinal));
-                        _oralIntraintestinal.forEach(item => {
-                            const { remark } = item;
-                            item.goodsList.forEach(_item => {
-                                _item.remark = remark;
+                            console.log('全部详情');
+                            console.log(JSON.parse(JSON.stringify(data)));
+                            //  打印
+                            const _enteralNutrition = JSON.parse(JSON.stringify(enteralNutrition));
+                            _enteralNutrition.forEach(item => {
+                                const { remark } = item;
+                                item.goodsList.forEach(_item => {
+                                    _item.remark = remark;
+                                });
                             });
+                            const _oralIntraintestinal = JSON.parse(JSON.stringify(oralIntraintestinal));
+                            _oralIntraintestinal.forEach(item => {
+                                const { remark } = item;
+                                item.goodsList.forEach(_item => {
+                                    _item.remark = remark;
+                                });
+                            });
+                            const configList = [].concat(_enteralNutrition).concat(_oralIntraintestinal);
+                            configList.forEach((item, index) => {
+                                item.key = (index + 1);
+                            });
+                            console.log(JSON.parse(JSON.stringify(configList)));
+                            //  打印配置
+                            this.printObj.configList = configList;
+
+                            //  门诊领药
+                            const drugDetailList = [];
+                            configList.forEach(item => {
+                                item.goodsList.forEach(_item => {
+                                    drugDetailList.push(_item);
+                                });
+                            });
+                            this.drugDetailList = drugDetailList;
+                            this.$forceUpdate();
                         });
-                        const configList = [].concat(_enteralNutrition).concat(_oralIntraintestinal);
-                        configList.forEach((item, index) => {
-                            item.key = (index + 1);
+                }
+                if (this.detailType === 2) {
+                    //  领药详情
+                    requestPrescriptionConfigGetMedicineDetails(this.detailId)
+                        .then(v => {
+
+                        })
+                        .catch(err => {
+                            alert('领药接口报错');
                         });
-                        console.log(JSON.parse(JSON.stringify(configList)));
-                        this.printObj.configList = configList;
-                        this.$forceUpdate();
-                    });
+                }
             },
         }
     };
