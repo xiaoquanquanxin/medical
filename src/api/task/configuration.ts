@@ -26,6 +26,13 @@ export function requestPrescriptionConfigConfirmDetail(id: number | string) {
 	});
 }
 
+//	领药详情
+export function requestPrescriptionConfigGetMedicineDetails(id: number | string) {
+	return request({
+		url: `/api/prescription/config/getMedicineDetails/${id}`,
+		method: 'get',
+	});
+}
 
 
 
