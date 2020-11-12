@@ -123,7 +123,7 @@
         },
         created(){
             console.log('参数', this.$route.params);
-            //  没有编辑
+            //  头部数据
             this.setBasicInfoEditData([{
                 key: 1,
                 prescriptionName: '',
@@ -132,6 +132,9 @@
                 executionTime: '2020-11-06',
                 executionTimeMoment: momentFn(new Date()),
             }]);
+            //  初始化门诊、领药类型
+            this.setPrescriptionType(1);
+
             //  清空能量
             this.setEnergyData(null);
         },
@@ -372,6 +375,8 @@
             ...mapActions('intervention', [
                 //  处方头部信息
                 'setBasicInfoEditData',
+                //  更换处方类型
+                'setPrescriptionType',
                 //  设置能量数据
                 'setEnergyData',
             ]),
