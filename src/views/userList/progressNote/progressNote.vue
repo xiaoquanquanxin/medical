@@ -94,10 +94,8 @@
         methods: {
             //  主要请求
             searchFn(){
-                requestDiseaseRecordPage(Object.assign({}, {
-                    param: {
-                        patientId: this.patientId,
-                    }
+                requestDiseaseRecordPage(Object.assign({
+                    patientId: this.patientId,
                 }, noPaginationData))
                     .then(v => {
                         const { data } = v;

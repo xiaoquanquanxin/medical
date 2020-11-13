@@ -171,9 +171,7 @@
         methods: {
             //  主要请求
             searchFn(){
-                requestPrescriptionPage(Object.assign({
-                    param: Object.assign({ patientId: this.patientId }, this.searchData)
-                }, noPaginationData))
+                requestPrescriptionPage(Object.assign({ patientId: this.patientId }, this.searchData, noPaginationData))
                     .then(v => {
                         const { data } = v;
                         console.log(JSON.parse(JSON.stringify(data.records[0])));
@@ -184,7 +182,7 @@
                         this.data = data.records;
                     });
             },
-               onShowSizeChange,
+            onShowSizeChange,
             pageChange,
             //  选择日期范围
             onRangePickerChange(value, selectDateValue){
