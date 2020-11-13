@@ -11,7 +11,7 @@
                 <a-button v-if="detailType ===2 && auditStatus === 1"
                           class="basic-button-width" type="primary" @click="rejectFn">驳回
                 </a-button>
-                <a-button
+                <a-button  v-if="payStatus === 0 && orderStatus !== 3"
                         class="basic-button-width" type="primary" @click="invalidFn">作废
                 </a-button>
                 <a-button v-if="!false"
@@ -38,16 +38,6 @@
             <!--                    <span v-if="orderStatus === 5 ">已领取</span>-->
             <!--                </span>-->
         </a-row>
-        <div data-msg="说明：" v-if="true">
-            <b>现在按钮的逻辑：</b>
-            <p>1.通过按钮：是处方审核详情&&未审核</p>
-            <p>2.驳回按钮：是处方审核详情&&未审核</p>
-            <p>3.作废按钮：是处方审核详情&&(!已缴费 || !已作废)缺字段？</p>
-            <p>4.打印按钮：!已作废【目前不知道怎么区分作废】</p>
-            <p class="red">作废是哪个状态？木木的配置任务详情有configStatus ：0 未配置 1 已配置 2 已过期 3 已作废 4 已签收 5 未签收</p>
-            <p class="red">但是涛哥的处方详情接口"/api/prescription/detail"文档没有作废这个状态</p>
-            <p class="red">把这段话删了下面的布局就正常了</p>
-        </div>
         <div class="patient-basic-info-like" v-if="true">
             <!--基础表格-->
             <BasicInfoTable
@@ -164,6 +154,7 @@
     import GoBackButton from '@/components/goBackButton.vue';
     import { requestPrescriptionDetail } from '../../api/userList/intervention';
     import { requestPrescriptionAuditUpdate } from '../../api/auditList';
+    import { requestPrescriptionCancelPrescription } from '../../api/auditList';
     import { toChinesNum } from '../../utils/amount';
 
     export default {
@@ -175,6 +166,7 @@
             DietaryTable,
             RejectForm,
             EnergyTable,
+            
         },
         data(){
             const { name } = this.$route;
@@ -199,6 +191,8 @@
                 auditStatus: null,
                 //  配置状态(1.待签收，2，待配置，3.已配置，4，待领取，5，已领取)
                 orderStatus: null,
+                //支付状态
+                payStatus:null,
                 //  病人id
                 patientId: null,
 
@@ -245,6 +239,7 @@
             this.searchFn();
         },
         methods: {
+        	
             //  主要请求
             searchFn(){
                 requestPrescriptionDetail(this.detailId)
@@ -264,9 +259,17 @@
                             prescriptionType,
                             executionTime,
                         }];
-                        this.auditStatus = data.auditStatus;
                         this.orderStatus = data.orderStatus;
+//                      if(this.orderStatus===3){
+//                      	this.auditStatus=4;
+//                      }else{
+//                      	this.auditStatus = data.auditStatus;
+//                      }
+                        this.payStatus=data.payStatus;
+//                      console.log(data.payStatus+"bin"+data.orderStatus);
                         this.patientId = data.patientId;
+                        
+                        
                         const {
                             detail,
                             nutrition
@@ -335,26 +338,22 @@
                     },
                 });
             },
-            //  作废
+            //  作废按钮操作
             invalidFn(){
-                alert('接口？参数？');
-                return;
                 const { prescriptionType, prescriptionName } = this.basicInfoData[0];
                 this.$confirm({
-                    title: `确定通过${prescriptionName}`,
+                    title: `确定作废${prescriptionName}`,
                     okText: '确认',
                     cancelText: '取消',
                     onOk: () => {
                         const data = {
                             //  审核状态auditStatus(1.待审核，2.已审核，3.已驳回)
-                            id: this.detailId,
-                            auditStatus: 2,
-                            prescriptionType,
+                            id: this.detailId
                         };
-                        return requestPrescriptionAuditUpdate(data)
+                        return requestPrescriptionCancelPrescription(data)
                             .then(v => {
                                 this.$message.success('操作成功');
-                                this.searchFn();
+//                              this.searchFn();
                             })
                             .catch(err => {
                                 console.log(err);
