@@ -152,7 +152,7 @@
             //  主要请求
             searchFn(){
                 requestPrescriptionAuditPage(Object.assign({},
-                    { param: this.searchData },
+                    this.searchData,
                     paginationEncode(this.pagination)
                 ))
                     .then(v => {
