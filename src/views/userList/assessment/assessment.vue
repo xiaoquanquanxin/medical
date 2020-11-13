@@ -103,13 +103,11 @@
         methods: {
             //  主要请求
             searchFn(){
-                requestPatientAssessPage(Object.assign({},
-                    {
-                        param: {
-                            patientId: this.patientId,
-                            assesType: this.searchData.assesType,
-                        },
-                    }, paginationEncode(this.pagination))
+                requestPatientAssessPage(Object.assign({
+                        patientId: this.patientId,
+                        assesType: this.searchData.assesType,
+                    },
+                    paginationEncode(this.pagination))
                 )
                     .then(v => {
                         const { data } = v;
