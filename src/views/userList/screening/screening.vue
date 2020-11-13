@@ -116,8 +116,7 @@
         },
         methods: {
             searchFn(){
-                requestScreenPage(Object.assign({},
-                    { param: { patientId: this.patientId } },
+                requestScreenPage(Object.assign({ patientId: this.patientId },
                     paginationEncode(this.pagination))
                 )
                     .then(v => {
