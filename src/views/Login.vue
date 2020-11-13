@@ -283,7 +283,7 @@
         height: 274px;
         position: absolute;
         top: -40px;
-        left: 0;
+        left: -84px;
         z-index: +2;
         background-image: url(/login-tilte.png);
         background-repeat: no-repeat;
