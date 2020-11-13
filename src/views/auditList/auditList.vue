@@ -36,6 +36,7 @@
                 <span v-if="scope.auditStatus == 1">待审核</span>
                 <span v-if="scope.auditStatus == 2">已审核</span>
                 <span v-if="scope.auditStatus == 3">已驳回</span>
+                <span v-if="scope.auditStatus == 4">已作废</span>
             </div>
             <!--操作-->
             <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
