@@ -18,4 +18,12 @@ export function requestPrescriptionAuditUpdate(data: any) {
 	});
 }
 
+//	作废按钮的状态
+export function requestPrescriptionCancelPrescription(id: string | number) {
+	return request({
+		url: `/api/prescription/cancelPrescription/${id}`,
+		method: 'get',
+	});
+}
+
 
