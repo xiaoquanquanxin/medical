@@ -276,7 +276,7 @@
             //  主要请求
             searchFn(){
                 requestBillingsBillingPage(Object.assign({},
-                    { param: this.searchData },
+                    this.searchData,
                     paginationEncode(this.pagination))
                 )
                     .then(v => {
