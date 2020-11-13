@@ -4,11 +4,8 @@
         <div class="a-input-group">
             <a-select v-model="searchData.prescriptionType" class="lengthen-select-width" placeholder="请选择方案类型">
                 <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
-                <a-select-option value="1">待签收</a-select-option>
-                <a-select-option value="2">待配置</a-select-option>
-                <a-select-option value="3">已配置</a-select-option>
-                <a-select-option value="4">待领取</a-select-option>
-                <a-select-option value="5">已领取</a-select-option>
+                <a-select-option value="1">院内配置</a-select-option>
+                <a-select-option value="2">门诊领药</a-select-option>
             </a-select>
             <a-select v-model="searchData.auditStatus" class="lengthen-select-width" placeholder="请选择审核状态">
                 <a-icon slot="suffixIcon" type="caret-down" class="caret-down"/>
@@ -50,6 +47,7 @@
                 <span v-if="sItem.auditStatus == 1">待审核</span>
                 <span v-if="sItem.auditStatus == 2">已审核</span>
                 <span v-if="sItem.auditStatus == 3">已驳回</span>
+                <span v-if="sItem.auditStatus == 4">已作废</span>
             </div>
             <!--支付状态((1.待签收，2，待配置，3.已配置，4，待领取，5，已领取))-->
             <div slot="orderStatus" slot-scope="scope,sItem,sIndex,extra">
@@ -66,7 +64,8 @@
             </div>
             <!--操作-->
             <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
-                <router-link :to="{name:'interventionDetail',params:{detailId:sItem.id}}">详情</router-link>
+                <router-link :to="{name:'interventionDetail',params:{detailId:sItem.id}}">详情</router-link>&nbsp;
+                 <a @click="requestBillingsBillingDetails(sItem.id)">打印</a>
             </div>
         </a-table>
         <!--分页-->
@@ -99,6 +98,7 @@
     import { threeRowSearch } from '@/utils/tableScroll';
     import { requestPrescriptionPage } from '../../../api/userList/intervention';
     import { noPaginationData } from '../../../utils/pagination';
+    import { requestBillingsBillingDetails, requestBillingsBillingPage } from '../../../api/cost/costList';
 
     const columns = [
         {
@@ -145,7 +145,7 @@
         {
             title: '操作',
             scopedSlots: { customRender: 'operation' },
-            width: 100,
+            width: 200,
         },
     ];
 
@@ -178,6 +178,11 @@
                         data.records.forEach((item, index) => {
                             item.key = index;
                             item.index = index + 1;
+                             if(item.orderStatus===3){
+		                        item.auditStatus=4;
+		                     }else{
+		                        item.auditStatus = item.auditStatus;
+		                     }
                         });
                         this.data = data.records;
                     });
