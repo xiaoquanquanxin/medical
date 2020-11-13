@@ -92,10 +92,7 @@
         methods: {
             //  主要请求
             searchFn(){
-                requestFeedbackPage(Object.assign({},
-                    { param: { patientId: this.patientId } },
-                    noPaginationData)
-                )
+                requestFeedbackPage(Object.assign({ patientId: this.patientId }, noPaginationData))
                     .then(v => {
                         const { data } = v;
                         data.records.forEach((item, index) => {
