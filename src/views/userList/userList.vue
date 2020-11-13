@@ -229,7 +229,7 @@
         methods: {
             //  主要请求
             searchFn(){
-                return requestPatientPage(Object.assign({ param: this.searchData }, paginationEncode(this.pagination)))
+                return requestPatientPage(Object.assign(this.searchData, paginationEncode(this.pagination)))
                     .then(v => {
                         //  console.log('病人列表');
                         const { data } = v;
