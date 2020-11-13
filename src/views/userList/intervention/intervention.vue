@@ -65,7 +65,6 @@
             <!--操作-->
             <div slot="operation" slot-scope="scope,sItem,sIndex,extra">
                 <router-link :to="{name:'interventionDetail',params:{detailId:sItem.id}}">详情</router-link>&nbsp;
-                 <a @click="requestBillingsBillingDetails(sItem.id)">打印</a>
             </div>
         </a-table>
         <!--分页-->
@@ -98,7 +97,6 @@
     import { threeRowSearch } from '@/utils/tableScroll';
     import { requestPrescriptionPage } from '../../../api/userList/intervention';
     import { noPaginationData } from '../../../utils/pagination';
-    import { requestBillingsBillingDetails, requestBillingsBillingPage } from '../../../api/cost/costList';
 
     const columns = [
         {
