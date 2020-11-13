@@ -474,7 +474,13 @@
                 console.log('计算能量');
                 const { templateType } = this.dataTitle;
                 this.setEnergyDataByTemplateType(Object.assign({ templateType }, value));
-            }
+            },
+
+            //  监听处方类型，变化则清空组件内全部数据
+            prescriptionType(){
+                this.resetTableData();
+            },
+
         },
         created(){
             this.searchFn();
