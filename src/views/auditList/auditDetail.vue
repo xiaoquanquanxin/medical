@@ -85,6 +85,7 @@
                 <a-row type="flex" justify="center">
                     <h2>营养专用处方戋</h2>
                 </a-row>
+                <svg id="barcode"></svg>
                 <a-row type="flex" justify="space-between" align="middle" class="bottle-list">
                     <div>住院号：{{printObj.hospitalCode}}</div>
                     <div>科室：{{printObj.deptName}}</div>
@@ -103,6 +104,21 @@
                 </a-row>
                 <br>
                 <div style="font-size: 36px;">R</div>
+                <div v-for="item in printObj.printList" style="padding-left: 1em;">
+                    <div v-for="_item in item.plain">
+                        <a-row type="flex" justify="space-between" align="middle"
+                               v-for="__item in _item.nutritionPlain"
+                        >
+                            <span>{{__item.goodsName}}</span>
+                            <span>
+                                {{__item.configWater}}ml x {{__item.configNum}} {{__item.configUnit}}
+                            </span>
+                            <span>{{__item.configWater* __item.configNum}}ml</span>
+                        </a-row>
+                    </div>
+                    用法：
+                    <div style="padding-left: 2em;width:300px;">{{item.remark}}</div>
+                </div>
                 <br>
                 <a-row type="flex" justify="end" align="middle">
                     <span style="padding-right: 5em;">医师签字：</span>
@@ -165,6 +181,7 @@
     import { requestPrescriptionDetail } from '../../api/userList/intervention';
     import { requestPrescriptionAuditUpdate } from '../../api/auditList';
     import { toChinesNum } from '../../utils/amount';
+    import jsbarcodeFn from 'jsbarcode';
 
     export default {
         components: {
@@ -227,6 +244,8 @@
                     popTitle: '处方详情',
 
                     amountPayable: undefined,
+                    //  打印的主要数据
+                    printList: undefined,
                 },
 
                 //  主要详情
@@ -271,7 +290,7 @@
                             detail,
                             nutrition
                         } = data;
-                        this.detail = detail;
+                        this.detail = JSON.parse(JSON.stringify(detail));
                         nutrition.forEach((item, index) => {
                             item.key = index;
                         });
@@ -299,11 +318,21 @@
                         }];
                         //  打印
                         const printObj = this.printObj;
-                        const {
-                            amountPayable
-                        } = data;
+                        const { amountPayable, prescriptionCode } = data;
                         printObj.amountPayable = toChinesNum(amountPayable);
-                        console.log(JSON.parse(JSON.stringify(data.detail))[0]);
+                        const printList = [];
+                        detail.forEach(item => {
+                            printList.push(JSON.parse(JSON.stringify(item)));
+                        });
+                        printObj.printList = printList;
+                        //  console.log(JSON.parse(JSON.stringify(printList))[0]);
+                        console.log(JSON.parse(JSON.stringify(data)));
+                        jsbarcodeFn('#barcode', prescriptionCode, {
+                            format: 'pharmacode',
+                            width: 4,
+                            height: 36,
+                            displayValue: true
+                        });
                     });
             },
             //  通过
