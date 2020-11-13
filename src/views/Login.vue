@@ -10,7 +10,7 @@
                         :style="loginWrapStyle"
                 >
                     <a-form-item>
-                        <p class="login-title">综合管理平台</p>
+                        <p class="login-title">登录</p>
                     </a-form-item>
                     <a-form-item v-if="false">
                         <a-select default-value="1"
@@ -27,7 +27,7 @@
                     </a-form-item>
                     <br>
                     <br>
-                    <div v-show="basicForm" data-msg="常规输入框">
+                    <div v-show="basicForm" data-msg="常规输入框" id="basicFormheight">
                         <a-form-item>
                             <a-input
                                     placeholder="请输入用户名"
@@ -51,7 +51,7 @@
                             <a-tab-pane key="1" tab="账号登录">
                                 <a-form-item>
                                     <a-input
-                                            placeholder="请输入用户名"
+                                            placeholder="请输入账号"
                                             v-decorator="usernameDecorator"
                                     >
                                         <a-icon slot="prefix" type="user" class="icon-color"/>
@@ -117,7 +117,7 @@
             loginWrapStyle(){
                 const basicForm = this.basicForm;
                 return {
-                    height: `${basicForm ? 380 : 420}px`,
+                    height: `${basicForm ? 470 : 420}px`,
                     top: `${basicForm ? -60 : 40}px`,
                 };
             }
@@ -240,9 +240,9 @@
     }
     
     .login-wrap {
-        margin-top: 60px;
+        margin-top: -50px;
         width: 360px;
-        padding: 50px 60px 40px;
+        padding: 40px 50px 40px;
         border-radius: 10px;
         /*position: absolute;*/
         /*top: 0;*/
@@ -259,12 +259,21 @@
     .login-title {
         text-align: center;
         font-size: 30px;
+        margin-bottom: 0px !important;
     }
     
     .icon-color {
         color: rgba(0, 0, 0, .25);
     }
-    
+    #basicFormheight{
+    	margin-top:-40px;
+    }
+    /deep/.ant-input-affix-wrapper .ant-input:not(:first-child){
+    	height:42px !important;
+    }
+    .a, area, button, [role='button'], input:not([type='range']), label, select, summary, textarea{
+    	height:42px !important;
+    }
     .login-inner {
         width: 980px;
         height: 440px;
@@ -280,20 +289,22 @@
     
     .for-title {
         width: 584px;
-        height: 274px;
+        height: 50px;
         position: absolute;
-        top: -40px;
-        left: -84px;
+        top: -156px;
+        left: -94px;
         z-index: +2;
-        background-image: url(/login-tilte.png);
+        background-image: url(/login-title.png);
         background-repeat: no-repeat;
     }
+    
+    
     
     .for-img {
         width: 584px;
         height: 274px;
         position: absolute;
-        bottom: 50px;
+        bottom: 150px;
         left: -94px;
         z-index: +2;
         background-image: url(/login-img01.png);
