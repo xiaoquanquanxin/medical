@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-if="true">
+        <div v-if="false">
             <p class="red">如果使用量和使用单位分开【以前是配置量】那么使用量应该放前面并且使用量不要单位</p>
             <p class="red">食用方法什么时候整合到列表里了？填营养干预只有那一类，那应该抽出来</p>
             <p class="red">打印瓶贴，由于是根据时间区，所以木木提供的营养干预保存接口，得在每一项里加额外的字段</p>
@@ -49,7 +49,7 @@
             </a-table>
         </div>
         <!--打印-->
-        <div v-show="false" class="print-wrap">
+        <div v-show="true" class="print-wrap">
             <div id="printBottle" data-msg="打印瓶贴">
                 <a-row type="flex" justify="start" align="middle" class="bottle-list">
                     <div class="bottle-list-label"><b>科室：</b>{{dataForPrint.deptName}}</div>
