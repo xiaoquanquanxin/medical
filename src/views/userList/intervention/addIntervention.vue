@@ -243,9 +243,29 @@
                 const getPlain = (timeData) => {
                     //  console.log(JSON.parse(JSON.stringify(timeData)));
                     return timeData.map(item => {
+                        //  forDetail
+                        //  碳水化合物
+                        let carbohydrates = 0;
+                        //  能量
+                        let energy = 0;
+                        //  脂肪
+                        let fat = 0;
+                        //  蛋白质
+                        let protein = 0;
                         const { time: usageTime, warmWater: configWater, list } = item;
                         const nutritionPlain = list.map(_item => {
-                            const { type, goodsId, goodsName, dosage, uname, unitUse } = _item;
+                            const { type, goodsId, goodsName, dosage, uname, unitUse, basicUnitItem } = _item;
+                            //  console.log(_item);
+                            const {
+                                unitCarbohydrate,
+                                unitEnergy,
+                                unitFat,
+                                unitProtein,
+                            } = basicUnitItem;
+                            carbohydrates += unitCarbohydrate * dosage;
+                            energy += unitEnergy * dosage;
+                            fat += unitFat * dosage;
+                            protein += unitProtein * dosage;
                             let configUnit;
                             //  如果是院内，取单位
                             if (type === 1) {
@@ -263,6 +283,10 @@
                             };
                         });
                         return {
+                            carbohydrates: Number(carbohydrates.toFixed(2)),
+                            energy: Number(energy.toFixed(2)),
+                            fat: Number(fat.toFixed(2)),
+                            protein: Number(protein.toFixed(2)),
                             nutritionPlain,
                             usageTime,
                         };
@@ -351,10 +375,10 @@
                     prescriptionName,
                     executionTime,
                     amountPayable,
-                    carbohydrates,
-                    energy,
-                    fat,
-                    protein,
+                    carbohydrates: Number(carbohydrates.toFixed(2)),
+                    energy: Number(energy.toFixed(2)),
+                    fat: Number(fat.toFixed(2)),
+                    protein: Number(protein.toFixed(2)),
                     detail,
                     nutrition,
                     //  prescriptionDetail: JSON.stringify(prescriptionDetail)
