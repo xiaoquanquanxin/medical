@@ -150,11 +150,7 @@
         methods: {
             //  主要请求
             searchFn(){
-                requestSettlementyjxq(Object.assign({}, noPaginationData, {
-                    param: {
-                        statementId: this.monthlyDetailId
-                    },
-                }))
+                requestSettlementyjxq(Object.assign({}, noPaginationData, { statementId: this.monthlyDetailId }))
                     .then(v => {
                         const { data } = v;
                         console.log(data);
