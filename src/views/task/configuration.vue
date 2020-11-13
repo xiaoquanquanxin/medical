@@ -238,7 +238,7 @@
                 }
                 console.log(JSON.parse(JSON.stringify(this.searchData)));
                 requestPrescriptionConfigPzrw(Object.assign({},
-                    { param: this.searchData },
+                    this.searchData,
                     paginationEncode(this.pagination)
                 ))
                     .then(v => {

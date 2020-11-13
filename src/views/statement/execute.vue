@@ -148,7 +148,7 @@
             //  主要请求
             searchFn(){
                 requestSettlementMonthOverSelect(Object.assign({},
-                    { param: this.searchData },
+                    this.searchData,
                     paginationEncode(this.pagination)
                 ))
                     .then(v => {

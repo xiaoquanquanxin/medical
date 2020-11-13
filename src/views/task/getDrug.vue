@@ -265,7 +265,7 @@
             //  主要请求
             searchFn(){
                 requestPrescriptionConfigCfly(Object.assign({},
-                    { param: this.searchData },
+                    this.searchData,
                     paginationEncode(this.pagination)
                 ))
                     .then(v => {

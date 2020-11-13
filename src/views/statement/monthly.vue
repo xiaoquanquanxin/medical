@@ -121,7 +121,7 @@
             //  主要请求
             searchFn(){
                 requestSettlementPage(Object.assign({},
-                    { param: this.searchData },
+                    this.searchData,
                     paginationEncode(this.pagination)))
                     .then(v => {
                         const { data } = v;
